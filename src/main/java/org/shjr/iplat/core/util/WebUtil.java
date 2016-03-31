@@ -19,6 +19,8 @@ import org.shjr.iplat.core.Constants;
  * @version $Id: WebUtil.java, v 0.1 2014年4月4日 上午8:58:19 ShenHuaJie Exp $
  */
 public class WebUtil {
+	private WebUtil() {
+	}
 
 	/**
 	 * 获取一个Session属性对象

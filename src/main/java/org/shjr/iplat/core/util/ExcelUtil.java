@@ -22,6 +22,9 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  * @author ShenHuaJie
  */
 public class ExcelUtil {
+	private ExcelUtil() {
+	}
+
 	private static final Log log = LogFactory.getLog(ExcelUtil.class);
 
 	/**

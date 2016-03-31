@@ -12,6 +12,8 @@ import java.util.Date;
  * @version $Id: DateUtil.java, v 0.1 2014年3月28日 上午8:58:11 ShenHuaJie Exp $
  */
 public class DateUtil {
+	private DateUtil() {
+	}
 
 	static String PATTERN = "yyyy-MM-dd";
 
@@ -45,6 +47,7 @@ public class DateUtil {
 
 	/**
 	 * 获取日期
+	 * 
 	 * @return
 	 */
 	public static String getDate() {
@@ -53,6 +56,7 @@ public class DateUtil {
 
 	/**
 	 * 获取日期时间
+	 * 
 	 * @return
 	 */
 	public static String getDateTime() {

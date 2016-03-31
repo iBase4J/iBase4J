@@ -15,6 +15,9 @@ import net.coobird.thumbnailator.Thumbnails;
  * @since 2012-03-21
  */
 public class ImageUtil {
+	private ImageUtil() {
+	}
+
 	/**
 	 * * 转换图片大小，不变形
 	 * 

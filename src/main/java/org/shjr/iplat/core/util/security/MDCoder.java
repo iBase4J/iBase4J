@@ -17,15 +17,13 @@ public abstract class MDCoder extends SecurityCoder {
 	/**
 	 * MD2加密
 	 * 
-	 * @param data
-	 *            待加密数据
+	 * @param data 待加密数据
 	 * @return byte[] 消息摘要
 	 * @throws Exception
 	 */
 	public static byte[] encodeMD2(byte[] data) throws Exception {
 		// 初始化MessageDigest
 		MessageDigest md = MessageDigest.getInstance("MD2");
-
 		// 执行消息摘要
 		return md.digest(data);
 	}
@@ -33,17 +31,13 @@ public abstract class MDCoder extends SecurityCoder {
 	/**
 	 * MD4加密
 	 * 
-	 * @param data
-	 *            待加密数据
+	 * @param data 待加密数据
 	 * @return byte[] 消息摘要
-	 * 
 	 * @throws Exception
 	 */
 	public static byte[] encodeMD4(byte[] data) throws Exception {
-
 		// 初始化MessageDigest
 		MessageDigest md = MessageDigest.getInstance("MD4");
-
 		// 执行消息摘要
 		return md.digest(data);
 	}
@@ -51,16 +45,13 @@ public abstract class MDCoder extends SecurityCoder {
 	/**
 	 * MD5加密
 	 * 
-	 * @param data
-	 *            待加密数据
+	 * @param data 待加密数据
 	 * @return byte[] 消息摘要
-	 * 
 	 * @throws Exception
 	 */
 	public static byte[] encodeMD5(byte[] data) throws Exception {
 		// 初始化MessageDigest
 		MessageDigest md = MessageDigest.getInstance("MD5");
-
 		// 执行消息摘要
 		return md.digest(data);
 	}
@@ -68,17 +59,13 @@ public abstract class MDCoder extends SecurityCoder {
 	/**
 	 * Tiger加密
 	 * 
-	 * @param data
-	 *            待加密数据
+	 * @param data 待加密数据
 	 * @return byte[] 消息摘要
-	 * 
 	 * @throws Exception
 	 */
 	public static byte[] encodeTiger(byte[] data) throws Exception {
-
 		// 初始化MessageDigest
 		MessageDigest md = MessageDigest.getInstance("Tiger");
-
 		// 执行消息摘要
 		return md.digest(data);
 	}
@@ -86,17 +73,13 @@ public abstract class MDCoder extends SecurityCoder {
 	/**
 	 * TigerHex加密
 	 * 
-	 * @param data
-	 *            待加密数据
+	 * @param data 待加密数据
 	 * @return byte[] 消息摘要
-	 * 
 	 * @throws Exception
 	 */
 	public static String encodeTigerHex(byte[] data) throws Exception {
-
 		// 执行消息摘要
 		byte[] b = encodeTiger(data);
-
 		// 做十六进制编码处理
 		return new String(Hex.encode(b));
 	}
@@ -104,17 +87,13 @@ public abstract class MDCoder extends SecurityCoder {
 	/**
 	 * Whirlpool加密
 	 * 
-	 * @param data
-	 *            待加密数据
+	 * @param data 待加密数据
 	 * @return byte[] 消息摘要
-	 * 
 	 * @throws Exception
 	 */
 	public static byte[] encodeWhirlpool(byte[] data) throws Exception {
-
 		// 初始化MessageDigest
 		MessageDigest md = MessageDigest.getInstance("Whirlpool");
-
 		// 执行消息摘要
 		return md.digest(data);
 	}
@@ -122,17 +101,13 @@ public abstract class MDCoder extends SecurityCoder {
 	/**
 	 * WhirlpoolHex加密
 	 * 
-	 * @param data
-	 *            待加密数据
+	 * @param data 待加密数据
 	 * @return byte[] 消息摘要
-	 * 
 	 * @throws Exception
 	 */
 	public static String encodeWhirlpoolHex(byte[] data) throws Exception {
-
 		// 执行消息摘要
 		byte[] b = encodeWhirlpool(data);
-
 		// 做十六进制编码处理
 		return new String(Hex.encode(b));
 	}
@@ -140,17 +115,13 @@ public abstract class MDCoder extends SecurityCoder {
 	/**
 	 * GOST3411加密
 	 * 
-	 * @param data
-	 *            待加密数据
+	 * @param data 待加密数据
 	 * @return byte[] 消息摘要
-	 * 
 	 * @throws Exception
 	 */
 	public static byte[] encodeGOST3411(byte[] data) throws Exception {
-
 		// 初始化MessageDigest
 		MessageDigest md = MessageDigest.getInstance("GOST3411");
-
 		// 执行消息摘要
 		return md.digest(data);
 	}
@@ -158,17 +129,13 @@ public abstract class MDCoder extends SecurityCoder {
 	/**
 	 * GOST3411Hex加密
 	 * 
-	 * @param data
-	 *            待加密数据
+	 * @param data 待加密数据
 	 * @return byte[] 消息摘要
-	 * 
 	 * @throws Exception
 	 */
 	public static String encodeGOST3411Hex(byte[] data) throws Exception {
-
 		// 执行消息摘要
 		byte[] b = encodeGOST3411(data);
-
 		// 做十六进制编码处理
 		return new String(Hex.encode(b));
 	}

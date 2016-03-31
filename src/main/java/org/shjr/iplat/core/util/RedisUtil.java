@@ -13,6 +13,8 @@ import redis.clients.jedis.ShardedJedisPool;
  * Created by jonson.xu on 15-4-23.
  */
 public class RedisUtil {
+	private RedisUtil() {
+	}
 
 	private static ShardedJedisPool shardedJedisPool = null;
 	private static Integer EXPIRE = 60 * 60 * 1; // 1小时

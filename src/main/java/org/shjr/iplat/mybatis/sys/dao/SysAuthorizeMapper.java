@@ -6,12 +6,12 @@ import org.shjr.iplat.mybatis.generator.model.SysMenu;
 
 public interface SysAuthorizeMapper {
 
-	void deleteUserMenu(Integer user_id);
+	void deleteUserMenu(Integer userId);
 
-	void deleteUserRole(Integer user_id);
+	void deleteUserRole(Integer userId);
 
-	void deleteRoleMenu(Integer role_id);
+	void deleteRoleMenu(Integer roleId);
 
-	List<SysMenu> getAuthorize(Integer user_id);
+	List<SysMenu> getAuthorize(Integer userId);
 
 }

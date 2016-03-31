@@ -30,7 +30,7 @@ public class SysAuthorizeService {
 	@Transactional
 	@CacheEvict("getAuthorize")
 	public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
-		sysAuthorizeMapper.deleteUserMenu(sysUserMenus.get(0).getUser_id());
+		sysAuthorizeMapper.deleteUserMenu(sysUserMenus.get(0).getUserId());
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
 			sysUserMenuMapper.insert(sysUserMenu);
 		}
@@ -39,7 +39,7 @@ public class SysAuthorizeService {
 	@Transactional
 	@CacheEvict("getAuthorize")
 	public void updateUserRole(List<SysUserRole> sysUserRoles) {
-		sysAuthorizeMapper.deleteUserRole(sysUserRoles.get(0).getUser_id());
+		sysAuthorizeMapper.deleteUserRole(sysUserRoles.get(0).getUserId());
 		for (SysUserRole sysUserRole : sysUserRoles) {
 			sysUserRoleMapper.insert(sysUserRole);
 		}
@@ -48,14 +48,14 @@ public class SysAuthorizeService {
 	@Transactional
 	@CacheEvict("getAuthorize")
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus) {
-		sysAuthorizeMapper.deleteRoleMenu(sysRoleMenus.get(0).getRole_id());
+		sysAuthorizeMapper.deleteRoleMenu(sysRoleMenus.get(0).getRoleId());
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
 			sysRoleMenuMapper.insert(sysRoleMenu);
 		}
 	}
 
 	@Cacheable("getAuthorize")
-	public List<SysMenu> getAuthorize(Integer user_id) {
-		return sysAuthorizeMapper.getAuthorize(user_id);
+	public List<SysMenu> getAuthorize(Integer userId) {
+		return sysAuthorizeMapper.getAuthorize(userId);
 	}
 }

@@ -31,7 +31,7 @@
             <property name="rootInterface" value=""/>
         </javaClientGenerator>
         <table tableName="%">
-            <property name="useActualColumnNames" value="true"/>
+            <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="JDBC" />
         </table>
     </context>

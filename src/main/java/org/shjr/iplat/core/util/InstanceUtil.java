@@ -30,13 +30,14 @@ import org.apache.commons.beanutils.PropertyUtils;
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class InstanceUtil {
+	private InstanceUtil() {
+	}
+
 	/**
 	 * JavaBean之间对象属性值拷贝
 	 * 
-	 * @param pFromObj
-	 *            Bean源对象
-	 * @param pToObj
-	 *            Bean目标对象
+	 * @param pFromObj Bean源对象
+	 * @param pToObj Bean目标对象
 	 */
 	public static void copyProperties(Object pFromObj, Object pToObj) {
 		copyProperties(pFromObj, pToObj, true);
@@ -45,10 +46,8 @@ public class InstanceUtil {
 	/**
 	 * JavaBean之间对象属性值拷贝
 	 * 
-	 * @param pFromObj
-	 *            Bean源对象
-	 * @param pToObj
-	 *            Bean目标对象
+	 * @param pFromObj Bean源对象
+	 * @param pToObj Bean目标对象
 	 */
 	public static void copyProperties(Object pFromObj, Object pToObj, boolean isNotNull) {
 		if (pFromObj != null && pToObj != null) {
@@ -98,10 +97,8 @@ public class InstanceUtil {
 	/**
 	 * JavaBean之间对象属性值拷贝;
 	 * 
-	 * @param pFromObj
-	 *            Bean源对象
-	 * @param pToObj
-	 *            Bean目标对象
+	 * @param pFromObj Bean源对象
+	 * @param pToObj Bean目标对象
 	 */
 	public static void copyProperties(String prefix, String suffix, Object pFromObj, Object pToObj) {
 		if (pFromObj != null && pToObj != null) {
@@ -155,8 +152,7 @@ public class InstanceUtil {
 	 * loader) when the class might be in a different classloader (e.g. in a
 	 * webapp).
 	 * 
-	 * @param clazz
-	 *            the name of the class to instantiate
+	 * @param clazz the name of the class to instantiate
 	 * @return the requested Class object
 	 */
 	public static Class<?> getClass(String clazz) {
@@ -181,10 +177,8 @@ public class InstanceUtil {
 	/**
 	 * 封装实体
 	 * 
-	 * @param cls
-	 *            实体类
-	 * @param list
-	 *            实体Map集合
+	 * @param cls 实体类
+	 * @param list 实体Map集合
 	 * @return
 	 */
 	public static <E> List<E> getInstanceList(Class<E> cls, List<?> list) {
@@ -201,10 +195,8 @@ public class InstanceUtil {
 	/**
 	 * 封装实体
 	 * 
-	 * @param cls
-	 *            实体类
-	 * @param list
-	 *            数据查询结果集
+	 * @param cls 实体类
+	 * @param list 数据查询结果集
 	 * @return
 	 */
 	public static <E> List<E> getInstanceList(Class<E> cls, ResultSet rs) {
@@ -229,10 +221,8 @@ public class InstanceUtil {
 	/**
 	 * 新建实例
 	 * 
-	 * @param cls
-	 *            实体类
-	 * @param list
-	 *            实体属性Map
+	 * @param cls 实体类
+	 * @param list 实体属性Map
 	 * @return
 	 */
 	public static <E> E newInstance(Class<E> cls, Map<?, ?> map) {
@@ -253,8 +243,7 @@ public class InstanceUtil {
 	 * calls the System class loader) when the class might be in a different
 	 * classloader (e.g. in a webapp).
 	 * 
-	 * @param clazz
-	 *            the name of the class to instantiate
+	 * @param clazz the name of the class to instantiate
 	 * @return an instance of the specified class
 	 */
 	public static Object newInstance(String clazz) {
@@ -268,10 +257,8 @@ public class InstanceUtil {
 	/**
 	 * 新建实例
 	 * 
-	 * @param className
-	 *            类名
-	 * @param args
-	 *            构造函数的参数
+	 * @param className 类名
+	 * @param args 构造函数的参数
 	 * @return 新建的实例
 	 */
 	public static Object newInstance(String className, Object[] args) {
@@ -291,12 +278,9 @@ public class InstanceUtil {
 	/**
 	 * 执行某对象方法
 	 * 
-	 * @param owner
-	 *            对象
-	 * @param methodName
-	 *            方法名
-	 * @param args
-	 *            参数
+	 * @param owner 对象
+	 * @param methodName 方法名
+	 * @param args 参数
 	 * @return 方法返回值
 	 */
 	public static Object invokeMethod(Object owner, String methodName, Object[] args) {

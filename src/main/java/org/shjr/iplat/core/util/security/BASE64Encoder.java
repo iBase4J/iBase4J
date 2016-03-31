@@ -18,12 +18,10 @@ public class BASE64Encoder {
 	/**
 	 * 译码数据源
 	 */
-	private static final char[] PEM_ARRAY = { 'a', 'b', 'c', 'd', 'e', 'f',
-			'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-			't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6',
-			'7', '8', '9', '0', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
-			'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-			'W', 'X', 'Y', 'Z', '+', '/' };
+	private static final char[] PEM_ARRAY = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+			'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+			'V', 'W', 'X', 'Y', 'Z', '+', '/' };
 
 	private static final byte[] pem_convert_array = new byte[256];
 
@@ -66,7 +64,6 @@ public class BASE64Encoder {
 				}
 				break;
 			default:
-				// never hanppen
 				break;
 			}
 			curPos += 6;
@@ -90,30 +87,25 @@ public class BASE64Encoder {
 		return outputStream.toByteArray();
 	}
 
-	private void decodeBuffer(InputStream paramInputStream,
-			OutputStream paramOutputStream) throws IOException {
-		PushbackInputStream localPushbackInputStream = new PushbackInputStream(
-				paramInputStream);
+	private void decodeBuffer(InputStream paramInputStream, OutputStream paramOutputStream) throws IOException {
+		PushbackInputStream localPushbackInputStream = new PushbackInputStream(paramInputStream);
 		int j = 0;
 		while (true) {
 			try {
 				int k = bytesPerLine();
 				int i = 0;
 				if (i + bytesPerAtom() < k) {
-					decodeAtom(localPushbackInputStream, paramOutputStream,
-							bytesPerAtom());
+					decodeAtom(localPushbackInputStream, paramOutputStream, bytesPerAtom());
 					j += bytesPerAtom();
 					i += bytesPerAtom();
 					continue;
 				}
 
 				if (i + bytesPerAtom() == k) {
-					decodeAtom(localPushbackInputStream, paramOutputStream,
-							bytesPerAtom());
+					decodeAtom(localPushbackInputStream, paramOutputStream, bytesPerAtom());
 					j += bytesPerAtom();
 				} else {
-					decodeAtom(localPushbackInputStream, paramOutputStream, k
-							- i);
+					decodeAtom(localPushbackInputStream, paramOutputStream, k - i);
 					j += k - i;
 				}
 			} catch (RuntimeException e) {
@@ -131,26 +123,26 @@ public class BASE64Encoder {
 		return 72;
 	}
 
-	private void decodeAtom(PushbackInputStream paramPushbackInputStream,
-			OutputStream paramOutputStream, int paramInt) throws IOException {
+	private void decodeAtom(PushbackInputStream paramPushbackInputStream, OutputStream paramOutputStream, int paramInt)
+			throws IOException {
 		int i;
 		int j = -1;
 		int k = -1;
 		int m = -1;
 		int n = -1;
 
-		if (paramInt < 2)
-			throw new java.lang.ArrayStoreException(
-					"BASE64Decoder: Not enough bytes for an atom.");
+		if (paramInt < 2) {
+			throw new java.lang.ArrayStoreException("BASE64Decoder: Not enough bytes for an atom.");
+		}
 		do {
 			i = paramPushbackInputStream.read();
-			if (i == -1)
+			if (i == -1) {
 				throw new RuntimeException();
+			}
 		} while ((i == 10) || (i == 13));
 		this.decode_buffer[0] = (byte) i;
 
-		i = readFully(paramPushbackInputStream, this.decode_buffer, 1,
-				paramInt - 1);
+		i = readFully(paramPushbackInputStream, this.decode_buffer, 1, paramInt - 1);
 		if (i == -1) {
 			throw new RuntimeException();
 		}
@@ -186,13 +178,13 @@ public class BASE64Encoder {
 		}
 	}
 
-	private int readFully(InputStream paramInputStream,
-			byte[] paramArrayOfByte, int paramInt1, int paramInt2)
+	private int readFully(InputStream paramInputStream, byte[] paramArrayOfByte, int paramInt1, int paramInt2)
 			throws IOException {
 		for (int i = 0; i < paramInt2; i++) {
 			int j = paramInputStream.read();
-			if (j == -1)
+			if (j == -1) {
 				return i == 0 ? -1 : i;
+			}
 			paramArrayOfByte[(i + paramInt1)] = (byte) j;
 		}
 		return paramInt2;
