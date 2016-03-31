@@ -2,10 +2,6 @@ package org.shjr.iplat.core.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -13,12 +9,17 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Created by jonson.xu on 10/30/14.
  */
 public class Request2ModelUtils {
 	private Request2ModelUtils() {
 	}
+
+	private static Logger logger = LogManager.getLogger();
 
 	public static <K> K covert(Class<K> T, HttpServletRequest request) {
 		try {
@@ -31,12 +32,12 @@ public class Request2ModelUtils {
 				String key = method.getName().substring(3, 4).toLowerCase() + method.getName().substring(4);
 				String value = request.getParameter(key);
 				Class<?>[] type = method.getParameterTypes();
-				Object[] param_value = convert_param_type(type, value);
+				Object[] param_value = new Object[] { TypeParseUtil.convert(value, type[0], null) };
 				method.invoke(obj, param_value);
 			}
 			return obj;
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			logger.error("", ex);
 		}
 		return null;
 	}
@@ -93,61 +94,6 @@ public class Request2ModelUtils {
 	}
 
 	/**
-	 * @param type
-	 * @param value
-	 * @return 转换参数类型
-	 */
-	private static Object[] convert_param_type(Class<?>[] type, Object value) {
-		Object[] objects = new Object[type.length];
-		int index = 0;
-		for (Class<?> c : type) {
-			if (value == null || value.toString().equals("")) {
-				objects[index] = null;
-				continue;
-			}
-			if (c.getName().equals("int") || c.getName().equals(Integer.class.getName())) {
-				objects[index] = Integer.parseInt(value.toString().trim());
-			} else if (c.getName().equals("byte") || c.getName().equals(Byte.class.getName())) {
-				objects[index] = Byte.parseByte(value.toString().trim());
-			} else if (c.getName().equals(Float.class.getName()) || c.getName().equals("float")) {
-				objects[index] = Float.parseFloat(value.toString().trim());
-			} else if (c.getName().equals("short") || c.getName().equals(Short.class.getName())) {
-				objects[index] = Short.parseShort(value.toString().trim());
-			} else if (c.getName().equals("double") || c.getName().equals(Double.class.getName())) {
-				objects[index] = Double.parseDouble(value.toString().trim());
-			} else if (c.getName().equals(String.class.getName())) {
-				objects[index] = value.toString().trim();
-			} else if (c.getName().equals(Date.class.getName())) {
-				String[] date_format = date_format_string();
-				for (String date_format_str : date_format) {
-					DateFormat format1 = new SimpleDateFormat(date_format_str);
-					try {
-						objects[index] = format1.parse(value.toString().trim());
-						break;
-					} catch (Exception ex) {
-						// ex.printStackTrace();
-					}
-				}
-			} else if (c.getName().equals(BigDecimal.class.getCanonicalName())) {
-				objects[index] = new BigDecimal(value.toString().trim());
-			} else {
-				// new Throwable("发现未定义的类型！类型名：" +
-				// c.getName()).printStackTrace();
-			}
-			index++;
-		}
-		return objects;
-	}
-
-	/*
-	 * 字符串日期格式集合
-	 */
-	private static String[] date_format_string() {
-		String[] date_format = { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM-dd" };
-		return date_format;
-	}
-
-	/**
 	 * 根据传递的参数修改数据
 	 * 
 	 * @param o
@@ -165,12 +111,12 @@ public class Request2ModelUtils {
 				if (method != null) {
 					Class<?>[] parameterTypes = method.getParameterTypes();
 					if (method != null) {
-						Object[] param_value = convert_param_type(parameterTypes, value);
+						Object[] param_value = new Object[] { TypeParseUtil.convert(value, parameterTypes[0], null) };
 						method.invoke(o, param_value);
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 	}
@@ -193,12 +139,12 @@ public class Request2ModelUtils {
 				if (method != null) {
 					Class<?>[] parameterTypes = method.getParameterTypes();
 					if (method != null) {
-						Object[] param_value = convert_param_type(parameterTypes, value);
+						Object[] param_value = new Object[] { TypeParseUtil.convert(value, parameterTypes[0], null) };
 						method.invoke(o, param_value);
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 	}
@@ -225,7 +171,7 @@ public class Request2ModelUtils {
 					}
 				}
 			} catch (Exception e) {
-				// e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 	}
@@ -242,13 +188,13 @@ public class Request2ModelUtils {
 		while (ite.hasNext()) {
 			try {
 				Method method = ite.next();
-				String name = method.getName();// getPosition
+				String name = method.getName();
 				String fileName = name.substring(3, 4).toLowerCase() + name.substring(4, name.length());
-				Object o = method.invoke(obj);// get
+				Object o = method.invoke(obj);
 				Method setMethod = Request2ModelUtils.setMethod(fileName, clazz);
-				setMethod.invoke(obiExtend, o);// set
+				setMethod.invoke(obiExtend, o);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 		return obiExtend;
@@ -266,7 +212,7 @@ public class Request2ModelUtils {
 			Method method = clazz.getMethod(sb.toString(), parameterTypes);
 			return method;
 		} catch (Exception e) {
-			// e.printStackTrace();
+			logger.error("", e);
 		}
 		return null;
 	}
@@ -279,7 +225,7 @@ public class Request2ModelUtils {
 		try {
 			return clazz.getMethod(sb.toString());
 		} catch (Exception e) {
-
+			logger.error("", e);
 		}
 		return null;
 	}
