@@ -9,6 +9,9 @@ import java.util.HashMap;
  * @date 2016-03-28
  */
 public class HttpCode {
+	private HttpCode() {
+	}
+
 	/**
 	 * 请求成功
 	 */
