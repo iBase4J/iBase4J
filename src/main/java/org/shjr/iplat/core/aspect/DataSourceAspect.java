@@ -7,17 +7,19 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
 /**
  * 切换数据源
  */
-@Component
 @Aspect
+@Component
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class DataSourceAspect {
 	Logger Logger = LogManager.getLogger();
 
-	@Pointcut("execution(* org.shjr.plat.mybatis.*.dao.*.*(..))")
+	@Pointcut("execution(* org.shjr.iplat.mybatis.*.dao.*.*(..))")
 	public void aspect() {
 	}
 
