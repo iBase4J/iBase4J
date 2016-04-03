@@ -14,9 +14,8 @@ import org.shjr.iplat.core.Constants;
 
 /**
  * Web层辅助类
- * 
  * @author ShenHuaJie
- * @version $Id: WebUtil.java, v 0.1 2014年4月4日 上午8:58:19 ShenHuaJie Exp $
+ * @version 2016年4月2日 下午4:19:28
  */
 public class WebUtil {
 	private WebUtil() {

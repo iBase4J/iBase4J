@@ -27,8 +27,7 @@
 	</bean>
 	<bean id="jedisConnectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.password}"
-		p:pool-config-ref="jedisPoolConfig" />
+		p:shard-info-ref="jedisShardInfo" p:pool-config-ref="jedisPoolConfig" />
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
 		<property name="connectionFactory" ref="jedisConnectionFactory" />
 		<property name="valueSerializer">

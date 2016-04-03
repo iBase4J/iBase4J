@@ -18,8 +18,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * 登录拦截器
- * 
  * @author ShenHuaJie
+ * @version 2016年4月2日 下午4:19:47
  */
 @PropertySource("classpath:/whiteURL.properties")
 public class HandlerInterceptor extends HandlerInterceptorAdapter {

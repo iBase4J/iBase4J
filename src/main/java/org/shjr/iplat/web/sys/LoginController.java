@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.shjr.iplat.core.Constants;
 import org.shjr.iplat.core.exception.ParameterException;
 import org.shjr.iplat.core.util.RedisUtil;
+import org.shjr.iplat.core.util.Request2ModelUtils;
 import org.shjr.iplat.core.util.SecurityUtil;
 import org.shjr.iplat.core.util.WebUtil;
+import org.shjr.iplat.mybatis.generator.model.SysUser;
 import org.shjr.iplat.service.sys.SysUserService;
 import org.shjr.iplat.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,11 @@ public class LoginController extends BaseController {
 	@Autowired
 	private SysUserService sysUserService;
 
+	// 登录
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelMap login(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap,
-			@RequestParam(value = "account", required = true) String account,
+	public ModelMap login(HttpServletRequest request, HttpServletResponse response,
+			ModelMap modelMap, @RequestParam(value = "account", required = true) String account,
 			@RequestParam(value = "password", required = true) String password) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("usable", 1);
@@ -45,10 +48,24 @@ public class LoginController extends BaseController {
 		throw new ParameterException("用户名或密码错误");
 	}
 
+	// 登出
 	@ResponseBody
 	@RequestMapping("/logout")
 	public ModelMap logout(ModelMap modelMap, HttpServletRequest request) {
 		RedisUtil.hdel(Constants.CURRENT_USER, request.getSession().getId());
+		return setSuccessModelMap(modelMap);
+	}
+
+	// 注册
+	@ResponseBody
+	@RequestMapping(value = "/regin", method = RequestMethod.POST)
+	public ModelMap regin(HttpServletRequest request, HttpServletResponse response,
+			ModelMap modelMap, @RequestParam(value = "account", required = true) String account,
+			@RequestParam(value = "password", required = true) String password) {
+		SysUser sysUser = Request2ModelUtils.covert(SysUser.class, request);
+		sysUser.setPassword(SecurityUtil.encryptSHA(password));
+		sysUserService.add(sysUser);
+		WebUtil.saveCurrentUser(request, response, sysUser.getId());
 		return setSuccessModelMap(modelMap);
 	}
 }

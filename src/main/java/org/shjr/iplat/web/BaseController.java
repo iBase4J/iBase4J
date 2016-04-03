@@ -32,12 +32,15 @@ public class BaseController {
 	}
 
 	/** 设置成功响应代码 */
-	protected ModelMap setSuccessModelMap(ModelMap modelMap) {
-		return setModelMap(modelMap, HttpCode.HTTP_CODE_200);
+	protected ModelMap setSuccessModelMap(ModelMap modelMap, Object... data) {
+		return setModelMap(modelMap, HttpCode.HTTP_CODE_200, data);
 	}
 
 	/** 设置相应代码 */
-	protected ModelMap setModelMap(ModelMap modelMap, Integer code) {
+	protected ModelMap setModelMap(ModelMap modelMap, Integer code, Object... data) {
+		if (data != null) {
+			modelMap.put("data", data);
+		}
 		modelMap.put("httpCode", code);
 		modelMap.put("msg", HttpCode.MSG.get(code));
 		return modelMap;

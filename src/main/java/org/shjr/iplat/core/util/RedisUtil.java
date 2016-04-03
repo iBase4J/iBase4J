@@ -12,7 +12,9 @@ import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
 /**
- * Created by jonson.xu on 15-4-23.
+ * 
+ * @author ShenHuaJie
+ * @version 2016年4月2日 下午4:17:22
  */
 public class RedisUtil {
 	private RedisUtil() {
@@ -63,7 +65,7 @@ public class RedisUtil {
 				jedis.close();
 			}
 		}
-		return "";
+		return null;
 	}
 
 	public static List<String> lrange(String key, long start, long end) {

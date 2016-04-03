@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.shjr.iplat.core.exception.ParameterException;
 import org.shjr.iplat.core.util.Request2ModelUtils;
@@ -28,25 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author ShenHuaJie
  */
 @Controller
-@RequestMapping
+@RequestMapping("/user")
 public class SysUserController extends BaseController {
 	@Autowired
 	private SysUserService sysUserService;
 
 	@ResponseBody
-	@RequestMapping(value = "/regin", method = RequestMethod.POST)
-	public ModelMap regin(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap,
-			@RequestParam(value = "account", required = true) String account,
-			@RequestParam(value = "password", required = true) String password) {
-		SysUser sysUser = Request2ModelUtils.covert(SysUser.class, request);
-		sysUser.setPassword(SecurityUtil.encryptSHA(password));
-		sysUserService.add(sysUser);
-		WebUtil.saveCurrentUser(request, response, sysUser.getId());
-		return setSuccessModelMap(modelMap);
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/user/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelMap update(ModelMap modelMap, HttpServletRequest request,
 			@RequestParam(value = "account", required = true) String account,
 			@RequestParam(value = "password", required = true) String password) {
@@ -61,7 +48,7 @@ public class SysUserController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/user/update/password", method = RequestMethod.POST)
+	@RequestMapping(value = "/update/password", method = RequestMethod.POST)
 	public ModelMap updatePassword(ModelMap modelMap, HttpServletRequest request,
 			@RequestParam(value = "id", required = true) Integer id,
 			@RequestParam(value = "password", required = true) String password) {
@@ -75,11 +62,10 @@ public class SysUserController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/user/list")
+	@RequestMapping(value = "/read/list")
 	public ModelMap get(ModelMap modelMap, HttpServletRequest request) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		List<?> list = sysUserService.query(params);
-		modelMap.put("list", list);
-		return setSuccessModelMap(modelMap);
+		return setSuccessModelMap(modelMap, list);
 	}
 }
