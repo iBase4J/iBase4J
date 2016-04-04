@@ -25,6 +25,7 @@
 			</list>
 		</constructor-arg>
 	</bean>
+	<!--  -->
 	<bean id="jedisConnectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
 		p:shard-info-ref="jedisShardInfo" p:pool-config-ref="jedisPoolConfig" />
