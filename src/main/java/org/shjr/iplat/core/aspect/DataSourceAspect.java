@@ -28,8 +28,9 @@ public class DataSourceAspect {
 	 */
 	@Before("aspect()")
 	public void before(JoinPoint point) {
+		String className = point.getTarget().getClass().getName();
 		String method = point.getSignature().getName();
-		Logger.info(method + "(" + StringUtils.join(point.getArgs(), ",") + ")");
+		Logger.info(className + "." + method + "(" + StringUtils.join(point.getArgs(), ",") + ")");
 		try {
 			for (String key : ChooseDataSource.METHODTYPE.keySet()) {
 				for (String type : ChooseDataSource.METHODTYPE.get(key)) {

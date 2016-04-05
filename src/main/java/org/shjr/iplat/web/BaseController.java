@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 import org.shjr.iplat.core.Constants;
 import org.shjr.iplat.core.HttpCode;
 import org.shjr.iplat.core.exception.BusinessException;
-import org.shjr.iplat.core.exception.ParameterException;
 import org.shjr.iplat.core.util.RedisUtil;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -59,9 +58,9 @@ public class BaseController {
 	/** 异常处理 */
 	@ExceptionHandler(RuntimeException.class)
 	public void exceptionHandler(HttpServletResponse response, Exception ex) throws Exception {
-		logger.error("", ex);
+		logger.error(Constants.Exception_Head, ex);
 		ModelMap modelMap = new ModelMap();
-		if (ex instanceof ParameterException) {
+		if (ex instanceof IllegalArgumentException) {
 			if (StringUtils.isNotBlank(ex.getMessage())) {
 				modelMap.put("httpCode", HttpCode.HTTP_CODE_400);
 				modelMap.put("msg", ex.getMessage());

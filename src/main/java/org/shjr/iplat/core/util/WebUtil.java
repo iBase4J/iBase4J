@@ -1,67 +1,24 @@
 package org.shjr.iplat.core.util;
 
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.shjr.iplat.core.Constants;
+import org.springframework.web.util.WebUtils;
 
 /**
  * Web层辅助类
+ * 
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:19:28
  */
 public class WebUtil {
 	private WebUtil() {
-	}
-
-	/**
-	 * 获取一个Session属性对象
-	 * 
-	 * @param request
-	 * @param sessionName
-	 * @return
-	 */
-	public static Object getSessionAttribute(HttpServletRequest request, String sessionKey) {
-		Object objSessionAttribute = null;
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			objSessionAttribute = session.getAttribute(sessionKey);
-		}
-		return objSessionAttribute;
-	}
-
-	/**
-	 * 设置一个Session属性对象
-	 * 
-	 * @param request
-	 * @param sessionName
-	 * @return
-	 */
-	public static void setSessionAttribute(HttpServletRequest request, String sessionKey, Object objSessionAttribute) {
-		HttpSession session = request.getSession();
-		if (session != null)
-			session.setAttribute(sessionKey, objSessionAttribute);
-	}
-
-	/**
-	 * 移除Session对象属性值
-	 * 
-	 * @param request
-	 * @param sessionName
-	 * @return
-	 */
-	public static void removeSessionAttribute(HttpServletRequest request, String sessionKey) {
-		HttpSession session = request.getSession();
-		if (session != null)
-			session.removeAttribute(sessionKey);
 	}
 
 	/**
@@ -72,23 +29,18 @@ public class WebUtil {
 	 * @param defaultValue 缺省值
 	 * @return
 	 */
-	public static String getCookieValue(Cookie[] cookies, String cookieName, String defaultValue) {
-		if (cookies == null) {
+	public static String getCookieValue(HttpServletRequest request, String cookieName, String defaultValue) {
+		Cookie cookie = WebUtils.getCookie(request, cookieName);
+		if (cookie == null) {
 			return defaultValue;
 		}
-		for (int i = 0; i < cookies.length; i++) {
-			Cookie cookie = cookies[i];
-			if (cookieName.equals(cookie.getName()))
-				return (cookie.getValue());
-		}
-		return defaultValue;
+		return cookie.getValue();
 	}
 
 	// 获取SessionId
 	private static String getSessionId(HttpServletRequest request, HttpServletResponse response) {
-		Cookie[] cookies = request.getCookies();
 		String sessionName = "RSESSIONID";
-		String sessionId = getCookieValue(cookies, sessionName, null);
+		String sessionId = getCookieValue(request, sessionName, null);
 		if (StringUtils.isBlank(sessionId)) {
 			sessionId = request.getSession().getId();
 		}
@@ -124,14 +76,6 @@ public class WebUtil {
 	 * @return
 	 */
 	public static Map<String, Object> getParameterMap(HttpServletRequest request) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		Enumeration<?> names = null;
-		names = request.getParameterNames();
-		String name = null;
-		while (names.hasMoreElements()) {
-			name = (String) names.nextElement();
-			map.put(name, request.getParameter(name));
-		}
-		return map;
+		return WebUtils.getParametersStartingWith(request, null);
 	}
 }
