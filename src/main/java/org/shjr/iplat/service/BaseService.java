@@ -16,6 +16,9 @@ public class BaseService {
 		if (DataUtil.isEmpty(params.get("pageSize"))) {
 			params.put("pageSize", 10);
 		}
+		if (DataUtil.isEmpty(params.get("orderBy"))) {
+			params.put("orderBy", "id");
+		}
 		PageHelper.startPage(params);
 	}
 }
