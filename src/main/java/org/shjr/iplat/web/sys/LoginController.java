@@ -1,7 +1,6 @@
 package org.shjr.iplat.web.sys;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
+
 @Controller
 public class LoginController extends BaseController {
 	@Autowired
@@ -32,16 +33,17 @@ public class LoginController extends BaseController {
 	// 登录
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelMap login(HttpServletRequest request, HttpServletResponse response,
-			ModelMap modelMap, @RequestParam(value = "account", required = true) String account,
+	public ModelMap login(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap,
+			@RequestParam(value = "account", required = true) String account,
 			@RequestParam(value = "password", required = true) String password) {
 		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("countSql", 0);
 		params.put("usable", 1);
 		params.put("account", account);
 		params.put("password", SecurityUtil.encryptSHA(password));
-		List<Map<String, Object>> list = sysUserService.query(params);
-		if (list.size() == 1) {
-			Map<String, Object> user = list.get(0);
+		PageInfo<Map<String, Object>> pageInfo = sysUserService.query(params);
+		if (pageInfo.getSize() == 1) {
+			Map<String, Object> user = pageInfo.getList().get(0);
 			WebUtil.saveCurrentUser(request, response, user.get("id"));
 			return setSuccessModelMap(modelMap);
 		}
@@ -59,8 +61,8 @@ public class LoginController extends BaseController {
 	// 注册
 	@ResponseBody
 	@RequestMapping(value = "/regin", method = RequestMethod.POST)
-	public ModelMap regin(HttpServletRequest request, HttpServletResponse response,
-			ModelMap modelMap, @RequestParam(value = "account", required = true) String account,
+	public ModelMap regin(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap,
+			@RequestParam(value = "account", required = true) String account,
 			@RequestParam(value = "password", required = true) String password) {
 		SysUser sysUser = Request2ModelUtils.covert(SysUser.class, request);
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));

@@ -3,7 +3,6 @@
  */
 package org.shjr.iplat.web.sys;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.pagehelper.PageInfo;
 
 /**
  * @author ShenHuaJie
@@ -65,7 +66,7 @@ public class SysUserController extends BaseController {
 	@RequestMapping(value = "/read/list")
 	public ModelMap get(ModelMap modelMap, HttpServletRequest request) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
-		List<?> list = sysUserService.query(params);
+		PageInfo<?> list = sysUserService.query(params);
 		return setSuccessModelMap(modelMap, list);
 	}
 }
