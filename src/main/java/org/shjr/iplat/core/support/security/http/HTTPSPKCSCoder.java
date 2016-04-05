@@ -1,7 +1,7 @@
 /**
  * 2011-01-11
  */
-package org.shjr.iplat.core.util.security.http;
+package org.shjr.iplat.core.support.security.http;
 
 import java.io.FileInputStream;
 import java.security.KeyStore;
@@ -20,7 +20,8 @@ import javax.net.ssl.TrustManagerFactory;
  * @version 1.0
  * @since 1.0
  */
-public abstract class HTTPSCoder {
+public abstract class HTTPSPKCSCoder {
+
 	/**
 	 * 协议
 	 */
@@ -36,7 +37,8 @@ public abstract class HTTPSCoder {
 	 */
 	private static KeyStore getKeyStore(String keyStorePath, String password) throws Exception {
 		// 实例化密钥库
-		KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+		KeyStore ks = KeyStore.getInstance("PKCS12");
+		// KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
 		// 获得密钥库文件流
 		FileInputStream is = new FileInputStream(keyStorePath);
 		// 加载密钥库

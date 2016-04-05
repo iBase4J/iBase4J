@@ -1,7 +1,7 @@
 /**
  * 2011-01-11
  */
-package org.shjr.iplat.core.util.security;
+package org.shjr.iplat.core.support.security;
 
 import java.security.MessageDigest;
 

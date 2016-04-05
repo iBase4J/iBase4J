@@ -1,4 +1,4 @@
-package org.shjr.iplat.core;
+package org.shjr.iplat.core.support;
 
 import java.util.HashMap;
 

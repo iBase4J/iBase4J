@@ -59,7 +59,7 @@ public class SysUserController extends BaseController {
 		Assert.notNull(id, Constants.USER_ID_IS_NULL);
 		Assert.notNull(password, Constants.PASSWORD_IS_NULL);
 		SysUser sysUser = sysUserService.queryById(id);
-		Assert.notNull(sysUser, Constants.USER_IS_NULL);
+		Assert.notNull(sysUser, String.format(Constants.USER_IS_NULL, id));
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
 		sysUserService.update(sysUser);
 		return setSuccessModelMap(modelMap);

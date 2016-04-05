@@ -1,4 +1,4 @@
-package org.shjr.iplat.core.exception;
+package org.shjr.iplat.core.support;
 
 @SuppressWarnings("serial")
 public class BusinessException extends RuntimeException {

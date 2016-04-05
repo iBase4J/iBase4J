@@ -1,4 +1,4 @@
-package org.shjr.iplat.core.util.security;
+package org.shjr.iplat.core.support.security;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
