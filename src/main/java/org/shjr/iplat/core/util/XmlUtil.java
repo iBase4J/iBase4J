@@ -45,8 +45,7 @@ public class XmlUtil {
 			document = DocumentHelper.parseText(pStrXml);
 
 		} catch (DocumentException e) {
-			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:");
-			e.printStackTrace();
+			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:", e);
 		}
 		// 获取根节点
 		Element elNode = document.getRootElement();
@@ -74,8 +73,7 @@ public class XmlUtil {
 			document = DocumentHelper.parseText(pStrXml);
 
 		} catch (DocumentException e) {
-			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:");
-			e.printStackTrace();
+			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:", e);
 		}
 		// 获取根节点
 		Element elNode = document.getRootElement();
@@ -173,8 +171,7 @@ public class XmlUtil {
 				pStrXml = strTitle + pStrXml;
 			document = DocumentHelper.parseText(pStrXml);
 		} catch (DocumentException e) {
-			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:");
-			e.printStackTrace();
+			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:", e);
 		}
 		// 获取根节点
 		Element elNode = document.getRootElement();
@@ -202,8 +199,7 @@ public class XmlUtil {
 				pStrXml = strTitle + pStrXml;
 			document = DocumentHelper.parseText(pStrXml);
 		} catch (DocumentException e) {
-			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:");
-			e.printStackTrace();
+			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:", e);
 		}
 		// 根据Xpath搜索节点
 		Element elRoot = (Element) document.selectSingleNode(pXPath);
@@ -354,8 +350,7 @@ public class XmlUtil {
 				pStrXml = strTitle + pStrXml;
 			document = DocumentHelper.parseText(pStrXml);
 		} catch (DocumentException e) {
-			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:");
-			e.printStackTrace();
+			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:", e);
 		}
 		// 获取到根节点
 		Element elRoot = document.getRootElement();
@@ -451,7 +446,6 @@ public class XmlUtil {
 			}
 		} catch (Exception e) {
 			log.error(XmlUtil.class, e);
-			System.out.println(recv);
 		}
 		return map;
 	}

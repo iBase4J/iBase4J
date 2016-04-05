@@ -9,6 +9,9 @@ import java.security.ProtectionDomain;
 import java.util.Collection;
 import java.util.Map;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 常见的辅助类
  * 
@@ -198,13 +201,13 @@ public class DataUtil {
 	 * @return
 	 */
 	public static String[] trim(String[] paramArray) {
-		if (StringUtil.isEmpty(paramArray)) {
+		if (ArrayUtils.isEmpty(paramArray)) {
 			return paramArray;
 		}
 		String[] resultArray = new String[paramArray.length];
 		for (int i = 0; i < paramArray.length; i++) {
 			String param = paramArray[i];
-			resultArray[i] = StringUtil.trim(param);
+			resultArray[i] = StringUtils.trim(param);
 		}
 		return resultArray;
 	}

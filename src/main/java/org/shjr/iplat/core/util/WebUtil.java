@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.shjr.iplat.core.Constants;
 
 /**
@@ -88,7 +89,7 @@ public class WebUtil {
 		Cookie[] cookies = request.getCookies();
 		String sessionName = "RSESSIONID";
 		String sessionId = getCookieValue(cookies, sessionName, null);
-		if (StringUtil.isBlank(sessionId)) {
+		if (StringUtils.isBlank(sessionId)) {
 			sessionId = request.getSession().getId();
 		}
 		return sessionId;

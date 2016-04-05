@@ -6,6 +6,7 @@ package org.shjr.iplat.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.shjr.iplat.core.Constants;
@@ -13,7 +14,6 @@ import org.shjr.iplat.core.HttpCode;
 import org.shjr.iplat.core.exception.BusinessException;
 import org.shjr.iplat.core.exception.ParameterException;
 import org.shjr.iplat.core.util.RedisUtil;
-import org.shjr.iplat.core.util.StringUtil;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -32,12 +32,22 @@ public class BaseController {
 	}
 
 	/** 设置成功响应代码 */
-	protected ModelMap setSuccessModelMap(ModelMap modelMap, Object... data) {
+	protected ModelMap setSuccessModelMap(ModelMap modelMap) {
+		return setSuccessModelMap(modelMap, null);
+	}
+
+	/** 设置成功响应代码 */
+	protected ModelMap setSuccessModelMap(ModelMap modelMap, Object data) {
 		return setModelMap(modelMap, HttpCode.HTTP_CODE_200, data);
 	}
 
 	/** 设置相应代码 */
-	protected ModelMap setModelMap(ModelMap modelMap, Integer code, Object... data) {
+	protected ModelMap setModelMap(ModelMap modelMap, Integer code) {
+		return setModelMap(modelMap, code, null);
+	}
+
+	/** 设置相应代码 */
+	protected ModelMap setModelMap(ModelMap modelMap, Integer code, Object data) {
 		if (data != null) {
 			modelMap.put("data", data);
 		}
@@ -52,14 +62,14 @@ public class BaseController {
 		logger.error("", ex);
 		ModelMap modelMap = new ModelMap();
 		if (ex instanceof ParameterException) {
-			if (StringUtil.isNotBlank(ex.getMessage())) {
+			if (StringUtils.isNotBlank(ex.getMessage())) {
 				modelMap.put("httpCode", HttpCode.HTTP_CODE_400);
 				modelMap.put("msg", ex.getMessage());
 			} else {
 				setModelMap(modelMap, HttpCode.HTTP_CODE_400);
 			}
 		} else if (ex instanceof BusinessException) {
-			if (StringUtil.isNotBlank(ex.getMessage())) {
+			if (StringUtils.isNotBlank(ex.getMessage())) {
 				modelMap.put("httpCode", HttpCode.HTTP_CODE_409);
 				modelMap.put("msg", ex.getMessage());
 			} else {

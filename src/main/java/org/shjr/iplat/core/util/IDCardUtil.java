@@ -24,12 +24,12 @@ public class IDCardUtil {
 	 * @return String 十八位身份证号码
 	 * @throws 无效的身份证号
 	 */
-	public static String fixPersonIDCodeWithCheck(String personIDCode) throws Exception {
+	public static String fixPersonIDCodeWithCheck(String personIDCode) throws Throwable {
 		if (personIDCode == null || personIDCode.trim().length() != 15)
-			throw new Exception("输入的身份证号不足15位，请检查");
+			throw new RuntimeException("输入的身份证号不足15位，请检查");
 
 		if (!isIdentity(personIDCode))
-			throw new Exception("输入的身份证号无效，请检查");
+			throw new RuntimeException("输入的身份证号无效，请检查");
 
 		return fixPersonIDCodeWithoutCheck(personIDCode);
 	}
@@ -41,9 +41,9 @@ public class IDCardUtil {
 	 * @return 十八位身份证号码
 	 * @throws 身份证号参数不是15位
 	 */
-	public static String fixPersonIDCodeWithoutCheck(String personIDCode) throws Exception {
+	public static String fixPersonIDCodeWithoutCheck(String personIDCode) throws Throwable {
 		if (personIDCode == null || personIDCode.trim().length() != 15)
-			throw new Exception("输入的身份证号不足15位，请检查");
+			throw new RuntimeException("输入的身份证号不足15位，请检查");
 
 		String id17 = personIDCode.substring(0, 6) + "19" + personIDCode.substring(6, 15); // 15位身份证补'19'
 
@@ -69,14 +69,14 @@ public class IDCardUtil {
 	 * @return 出生日期
 	 * @throws 身份证号出生日期段有误
 	 */
-	public static Timestamp getBirthdayFromPersonIDCode(String identity) throws Exception {
+	public static Timestamp getBirthdayFromPersonIDCode(String identity) throws Throwable {
 		String id = getFixedPersonIDCode(identity);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		try {
 			Timestamp birthday = new Timestamp(sdf.parse(id.substring(6, 14)).getTime());
 			return birthday;
 		} catch (ParseException e) {
-			throw new Exception("不是有效的身份证号，请检查");
+			throw new RuntimeException("不是有效的身份证号，请检查");
 		}
 	}
 
@@ -87,19 +87,19 @@ public class IDCardUtil {
 	 * @return String 十八位身份证号码
 	 * @throws 无效的身份证号
 	 */
-	public static String getFixedPersonIDCode(String personIDCode) throws Exception {
+	public static String getFixedPersonIDCode(String personIDCode) throws Throwable {
 		if (personIDCode == null)
-			throw new Exception("输入的身份证号无效，请检查");
+			throw new RuntimeException("输入的身份证号无效，请检查");
 
 		if (personIDCode.length() == 18) {
 			if (isIdentity(personIDCode))
 				return personIDCode;
 			else
-				throw new Exception("输入的身份证号无效，请检查");
+				throw new RuntimeException("输入的身份证号无效，请检查");
 		} else if (personIDCode.length() == 15)
 			return fixPersonIDCodeWithCheck(personIDCode);
 		else
-			throw new Exception("输入的身份证号无效，请检查");
+			throw new RuntimeException("输入的身份证号无效，请检查");
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class IDCardUtil {
 	 * @return 性别代码
 	 * @throws Exception 无效的身份证号码
 	 */
-	public static Sex getGenderFromPersonIDCode(String identity) throws Exception {
+	public static Sex getGenderFromPersonIDCode(String identity) throws Throwable {
 		String id = getFixedPersonIDCode(identity);
 		char sex = id.charAt(16);
 		return sex % 2 == 0 ? Sex.Female : Sex.Male;
@@ -121,7 +121,7 @@ public class IDCardUtil {
 	 * @param identity 18位或15位居民身份证号码
 	 * @return 是否为有效的身份证号码
 	 */
-	public static boolean isIdentity(String identity) {
+	public static boolean isIdentity(String identity) throws Throwable {
 		if (identity == null)
 			return false;
 		if (identity.length() == 18 || identity.length() == 15) {
@@ -146,14 +146,10 @@ public class IDCardUtil {
 			return false;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Throwable {
 		String idcard1 = "11010519491231002X";
 		String idcard2 = "440524188001010014";
-		try {
-			System.out.println(IDCardUtil.getGenderFromPersonIDCode(idcard1));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		System.out.println(IDCardUtil.getGenderFromPersonIDCode(idcard1));
 		System.out.println(IDCardUtil.isIdentity(idcard2));
 	}
 

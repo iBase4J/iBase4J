@@ -5,4 +5,9 @@
 	<settings>
 		<setting name="logImpl" value="SLF4J" />
 	</settings>
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageHelper">
+			<property name="dialect" value="Mysql" />
+		</plugin>
+	</plugins>
 </configuration>
