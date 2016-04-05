@@ -1,12 +1,15 @@
 /**
  * 2011-01-11
  */
-package org.shjr.iplat.core.support.security;
+package org.shjr.iplat.core.support.security.coder;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.shjr.iplat.core.support.security.Hex;
+import org.shjr.iplat.core.support.security.SecurityCoder;
 
 /**
  * HMAC加密组件

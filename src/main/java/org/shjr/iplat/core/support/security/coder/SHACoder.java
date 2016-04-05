@@ -1,9 +1,11 @@
 /**
  * 2011-01-11
  */
-package org.shjr.iplat.core.support.security;
+package org.shjr.iplat.core.support.security.coder;
 
 import java.security.MessageDigest;
+
+import org.shjr.iplat.core.support.security.SecurityCoder;
 
 /**
  * SHA加密组件

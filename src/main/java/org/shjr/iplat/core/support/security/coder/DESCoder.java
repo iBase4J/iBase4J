@@ -1,7 +1,7 @@
 /**
  * 2011-01-11
  */
-package org.shjr.iplat.core.support.security;
+package org.shjr.iplat.core.support.security.coder;
 
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -17,6 +17,8 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
+
+import org.shjr.iplat.core.support.security.SecurityCoder;
 
 /**
  * DES安全编码组件

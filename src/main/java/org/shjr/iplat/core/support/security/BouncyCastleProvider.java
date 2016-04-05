@@ -30,8 +30,8 @@ import java.security.Provider;
  */
 @SuppressWarnings("serial")
 public class BouncyCastleProvider extends Provider {
-    private static String info          = "BouncyCastle Security Provider v1.23";
-    public static String  PROVIDER_NAME = "BC";
+    private static final String info          = "BouncyCastle Security Provider v1.23";
+    public static final String  PROVIDER_NAME = "BC";
 
     /**
      * Construct a new provider.  This should only be required when

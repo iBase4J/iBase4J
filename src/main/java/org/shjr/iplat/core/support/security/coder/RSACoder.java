@@ -1,7 +1,7 @@
 /**
  * 2011-01-11
  */
-package org.shjr.iplat.core.support.security;
+package org.shjr.iplat.core.support.security.coder;
 
 import java.security.Key;
 import java.security.KeyFactory;
@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.Cipher;
+
+import org.shjr.iplat.core.support.security.SecurityCoder;
 
 /**
  * RSA安全编码组件
