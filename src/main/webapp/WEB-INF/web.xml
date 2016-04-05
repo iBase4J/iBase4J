@@ -6,7 +6,7 @@
 	<display-name>iPlat</display-name>
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>smw</param-value>
+		<param-value>iPlat</param-value>
 	</context-param>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
