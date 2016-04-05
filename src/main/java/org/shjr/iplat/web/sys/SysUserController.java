@@ -34,6 +34,7 @@ public class SysUserController extends BaseController {
 	@Autowired
 	private SysUserService sysUserService;
 
+	// 修改用户信息
 	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelMap update(HttpServletRequest request, ModelMap modelMap,
@@ -51,6 +52,7 @@ public class SysUserController extends BaseController {
 		return setSuccessModelMap(modelMap);
 	}
 
+	// 修改密码
 	@ResponseBody
 	@RequestMapping(value = "/update/password", method = RequestMethod.POST)
 	public ModelMap updatePassword(HttpServletRequest request, ModelMap modelMap,
@@ -65,6 +67,7 @@ public class SysUserController extends BaseController {
 		return setSuccessModelMap(modelMap);
 	}
 
+	 // 查询用户
 	@ResponseBody
 	@RequestMapping(value = "/read/list")
 	public ModelMap get(ModelMap modelMap, HttpServletRequest request) {
