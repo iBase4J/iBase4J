@@ -40,4 +40,6 @@
         <property name="userTransaction" ref="atomikosUserTransaction"/>
     </bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 配置事务异常封装 -->
+   <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 </beans>

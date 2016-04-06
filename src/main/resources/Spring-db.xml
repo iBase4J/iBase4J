@@ -14,23 +14,44 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="druidPasswordCallback" class="org.shjr.iplat.core.config.DBPasswordCallback" />
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+	    <property name="slowSqlMillis" value="10000" />
+	    <property name="logSlowSql" value="true" />
+    	<property name="mergeSql" value="true" />
+	</bean>
 	<bean id="readDataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		destroy-method="close" init-method="init">
 		<property name="driverClassName" value="${driver}" />
 		<property name="url" value="${url1}" />
 		<property name="username" value="${username}" />
-		<property name="password" value="${password}" />
+		<property name="password" value="${password}"/>
 		<!-- 初始化连接大小 -->
 		<property name="initialSize" value="${initialSize}" />
 		<!-- 连接池最大数量 -->
 		<property name="maxActive" value="${maxActive}" />
-		<!-- 连接池最大空闲 -->
-		<property name="maxIdle" value="${maxIdle}" />
 		<!-- 连接池最小空闲 -->
 		<property name="minIdle" value="${minIdle}" />
 		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="${maxWait}" />
-		<property name="filters" value="stat,log4j" />
+		<!--  -->
+		<property name="proxyFilters">
+	        <list>
+	            <ref bean="stat-filter" />
+	        </list>
+	    </property>
+		<property name="defaultReadOnly" value="true" />
+		<property name="passwordCallback"  ref="druidPasswordCallback" />
+		<property name="connectionProperties" value="password=${password}"/>
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="timeBetweenLogStatsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
 	</bean>
 
 	<bean id="writeDataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -38,18 +59,25 @@
 		<property name="driverClassName" value="${driver}" />
 		<property name="url" value="${url}" />
 		<property name="username" value="${username}" />
-		<property name="password" value="${password}" />
-		<!-- 初始化连接大小 -->
+		<property name="password" value="${password}"/>
 		<property name="initialSize" value="${initialSize}" />
-		<!-- 连接池最大数量 -->
 		<property name="maxActive" value="${maxActive}" />
-		<!-- 连接池最大空闲 -->
-		<property name="maxIdle" value="${maxIdle}" />
-		<!-- 连接池最小空闲 -->
 		<property name="minIdle" value="${minIdle}" />
-		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="${maxWait}" />
-		<property name="filters" value="stat,log4j" />
+		<property name="proxyFilters">
+	        <list>
+	            <ref bean="stat-filter" />
+	        </list>
+	    </property>
+		<property name="passwordCallback"  ref="druidPasswordCallback" />
+		<property name="connectionProperties" value="password=${password}"/>
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="timeBetweenLogStatsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
 	</bean>
 
 	<bean id="dataSource" class="org.shjr.iplat.core.aspect.ChooseDataSource">
@@ -65,7 +93,7 @@
 		<property name="methodType">
 			<map key-type="java.lang.String">
 				<!-- read -->
-				<entry key="read" value=",get,select,count,list," />
+				<entry key="read" value=",get,select,count,list,query" />
 				<!-- write -->
 				<entry key="write" value=",add,create,update,delete,remove," />
 			</map>
