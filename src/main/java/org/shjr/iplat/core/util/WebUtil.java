@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.shjr.iplat.core.Constants;
@@ -38,8 +37,8 @@ public class WebUtil {
 	}
 
 	// 获取SessionId
-	private static String getSessionId(HttpServletRequest request, HttpServletResponse response) {
-		String sessionName = "RSESSIONID";
+	private static String getSessionId(HttpServletRequest request) {
+		String sessionName = request.getServletContext().getSessionCookieConfig().getName();
 		String sessionId = getCookieValue(request, sessionName, null);
 		if (StringUtils.isBlank(sessionId)) {
 			sessionId = request.getSession().getId();
@@ -48,13 +47,23 @@ public class WebUtil {
 	}
 
 	/** 保存当前用户 */
-	public static void saveCurrentUser(HttpServletRequest request, HttpServletResponse response, Object user) {
-		RedisUtil.hset(Constants.CURRENT_USER, getSessionId(request, response), user);
+	public static void saveCurrentUser(HttpServletRequest request, Object user) {
+		RedisUtil.set(Constants.CURRENT_USER + getSessionId(request), user);
 	}
 
 	/** 获取当前用户 */
-	public static String getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
-		return RedisUtil.hget(Constants.CURRENT_USER, getSessionId(request, response));
+	public static String getCurrentUser(HttpServletRequest request) {
+		return RedisUtil.get(Constants.CURRENT_USER + getSessionId(request));
+	}
+
+	/** 移除当前用户 */
+	public static void removeCurrentUser(HttpServletRequest request) {
+		WebUtil.removeCurrentUser(getSessionId(request));
+	}
+
+	/** 移除当前用户 */
+	public static void removeCurrentUser(String sessionId) {
+		RedisUtil.del(Constants.CURRENT_USER + sessionId);
 	}
 
 	/**

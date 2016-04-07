@@ -1,10 +1,10 @@
 package org.shjr.iplat.core.util;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.shjr.iplat.core.Constants;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -12,7 +12,6 @@ import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
 /**
- * 
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
@@ -25,13 +24,22 @@ public class RedisUtil {
 	private static ShardedJedisPool shardedJedisPool = null;
 	private static Integer EXPIRE = 60 * 60 * 1; // 1小时
 
+	// 获取线程
 	private static ShardedJedisPool getPool() {
 		if (shardedJedisPool == null) {
 			WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
-			EXPIRE = wac.getServletContext().getSessionCookieConfig().getMaxAge();
 			shardedJedisPool = wac.getBean(ShardedJedisPool.class);
 		}
 		return shardedJedisPool;
+	}
+
+	// 获取有效期
+	private static Integer getExpire(String key) {
+		if (key.startsWith(Constants.CURRENT_USER)) {
+			WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
+			return wac.getServletContext().getSessionCookieConfig().getMaxAge();
+		}
+		return EXPIRE;
 	}
 
 	public static Long rpush(String key, String value) {
@@ -39,7 +47,7 @@ public class RedisUtil {
 		try {
 			jedis = getPool().getResource();
 			Long result = jedis.rpush(key, value);
-			jedis.expire(key, EXPIRE);
+			jedis.expire(key, getExpire(key));
 			return result;
 		} catch (Exception ex) {
 			logger.error("", ex);
@@ -56,7 +64,7 @@ public class RedisUtil {
 		try {
 			jedis = getPool().getResource();
 			String result = jedis.hget(key, field);
-			jedis.expire(key, EXPIRE);
+			jedis.expire(key, getExpire(key));
 			return result;
 		} catch (Exception ex) {
 			logger.error("", ex);
@@ -73,7 +81,7 @@ public class RedisUtil {
 		try {
 			jedis = getPool().getResource();
 			List<String> result = jedis.lrange(key, start, end);
-			jedis.expire(key, EXPIRE);
+			jedis.expire(key, getExpire(key));
 			return result;
 		} catch (Exception ex) {
 			logger.error("", ex);
@@ -105,7 +113,7 @@ public class RedisUtil {
 		try {
 			jedis = getPool().getResource();
 			String result = jedis.get(key);
-			jedis.expire(key, EXPIRE);
+			jedis.expire(key, getExpire(key));
 			return result;
 		} catch (Exception ex) {
 			logger.error("", ex);
@@ -121,60 +129,7 @@ public class RedisUtil {
 		ShardedJedis jedis = null;
 		try {
 			jedis = getPool().getResource();
-			String result = jedis.set(key, value.toString());
-			jedis.expire(key, EXPIRE);
-			return result;
-		} catch (Exception ex) {
-			logger.error("", ex);
-		} finally {
-			if (jedis != null) {
-				jedis.close();
-			}
-		}
-		return null;
-	}
-
-	public static Long hset(String key, String field, Object value) {
-		ShardedJedis jedis = null;
-		try {
-			jedis = getPool().getResource();
-			Long result = jedis.hset(key, field, value.toString());
-			jedis.expire(key, EXPIRE);
-			return result;
-		} catch (Exception ex) {
-			logger.error("", ex);
-		} finally {
-			if (jedis != null) {
-				jedis.close();
-			}
-		}
-		return null;
-	}
-
-	public static Long hdel(String key, String... field) {
-		ShardedJedis jedis = null;
-		try {
-			jedis = getPool().getResource();
-			Long result = jedis.hdel(key, field);
-			jedis.expire(key, EXPIRE);
-			return result;
-		} catch (Exception ex) {
-			logger.error("", ex);
-		} finally {
-			if (jedis != null) {
-				jedis.close();
-			}
-		}
-		return null;
-	}
-
-	public static Map<String, String> getAll(String key) {
-		ShardedJedis jedis = null;
-		try {
-			jedis = getPool().getResource();
-			Map<String, String> result = jedis.hgetAll(key);
-			jedis.expire(key, EXPIRE);
-			return result;
+			return jedis.setex(key, getExpire(key), value.toString());
 		} catch (Exception ex) {
 			logger.error("", ex);
 		} finally {

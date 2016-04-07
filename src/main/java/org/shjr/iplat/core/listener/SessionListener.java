@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.shjr.iplat.core.Constants;
 import org.shjr.iplat.core.util.RedisUtil;
+import org.shjr.iplat.core.util.WebUtil;
 
 /**
  * 会话监听器
@@ -30,7 +31,7 @@ public class SessionListener implements HttpSessionListener {
 		HttpSession session = event.getSession();
 		session.setAttribute(Constants.WEBTHEME, "default");
 		logger.info("创建了一个Session连接:[" + session.getId() + "]");
-		RedisUtil.set(Constants.ALLUSER_NUMBER, getAllUserNumber(1));
+		setAllUserNumber(1);
 	}
 
 	/*
@@ -44,12 +45,14 @@ public class SessionListener implements HttpSessionListener {
 	public void sessionDestroyed(HttpSessionEvent event) {
 		HttpSession session = event.getSession();
 		logger.info("销毁了一个Session连接:[" + session.getId() + "]");
-		RedisUtil.hdel(Constants.CURRENT_USER, session.getId());
-		RedisUtil.set(Constants.ALLUSER_NUMBER, getAllUserNumber(-1));
+		WebUtil.removeCurrentUser(session.getId());
+		setAllUserNumber(-1);
 	}
 
-	private Long getAllUserNumber(int n) {
-		return getAllUserNumber() + n;
+	private void setAllUserNumber(int n) {
+		Long number = getAllUserNumber() + n;
+		logger.info("用户数：" + number);
+		RedisUtil.set(Constants.ALLUSER_NUMBER, number);
 	}
 
 	/** 获取在线用户数量 */

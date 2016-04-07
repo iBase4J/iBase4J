@@ -19,7 +19,7 @@ public class Constants implements SysConstants {
 	/** 客户端主题 */
 	public static final String WEBTHEME = "webTheme";
 	/** Session容器 */
-	public static final String CURRENT_USER = "CURRENT_USER";
+	public static final String CURRENT_USER = "REDIS_SESSION_USER:";
 	/** 在线用户数量 */
 	public static final String ALLUSER_NUMBER = "ALLUSER_NUMBER";
 	/** 登录用户数量 */

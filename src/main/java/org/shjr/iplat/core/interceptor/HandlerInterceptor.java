@@ -49,7 +49,7 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
 
 		String url = request.getServletPath();
 		logger.info(url);
-		String curruser = WebUtil.getCurrentUser(request, response);
+		String curruser = WebUtil.getCurrentUser(request);
 		if (reqUri.indexOf("online") == -1) { // 后端请求后端数据
 			if (curruser == null) {
 				success = false;
