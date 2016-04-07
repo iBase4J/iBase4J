@@ -23,28 +23,28 @@ import com.github.pagehelper.PageInfo;
  * @author ShenHuaJie
  */
 @Service
-@CacheConfig(cacheNames = { "queryById", "query" })
+@CacheConfig(cacheNames = "sysUser")
 public class SysUserService extends BaseService {
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	@Autowired
 	private SysUserExpandMapper sysUserExpandMapper;
 
+	@CacheEvict
 	@Transactional
-	@CacheEvict(allEntries = true)
 	public void add(SysUser record) {
 		record.setUsable(1);
 		sysUserMapper.insert(record);
 	}
 
+	@CacheEvict
 	@Transactional
-	@CacheEvict(allEntries = true)
 	public void update(SysUser record) {
 		sysUserMapper.updateByPrimaryKey(record);
 	}
 
+	@CacheEvict
 	@Transactional
-	@CacheEvict(allEntries = true)
 	public void delete(Integer id) {
 		sysUserMapper.deleteByPrimaryKey(id);
 	}

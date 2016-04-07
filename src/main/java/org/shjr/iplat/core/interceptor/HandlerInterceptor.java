@@ -18,6 +18,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * 登录拦截器
+ * 
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:19:47
  */
@@ -41,14 +42,13 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		boolean success = true;
 		String reqUri = request.getRequestURI();
+		String url = request.getServletPath();
+		logger.info(url);
 		for (String s : notFilter) { // 如果uri中包含不过滤的uri，则不进行过滤
 			if (reqUri.indexOf(s) != -1 && StringUtils.isNotBlank(s)) {
 				return success;
 			}
 		}
-
-		String url = request.getServletPath();
-		logger.info(url);
 		String curruser = WebUtil.getCurrentUser(request);
 		if (reqUri.indexOf("online") == -1) { // 后端请求后端数据
 			if (curruser == null) {

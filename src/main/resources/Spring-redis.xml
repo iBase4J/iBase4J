@@ -42,4 +42,8 @@
 		<constructor-arg index="0" ref="redisTemplate" />
 		<property name="defaultExpiration" value="${redis.timeout}" />
 	</bean>
+	<!-- SPRING-SESSION -->
+	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+        <property name="maxInactiveIntervalInSeconds" value="600" />
+	</bean>
 </beans>

@@ -30,15 +30,12 @@ public class RedisUtil {
 		return shardedJedisPool;
 	}
 
-	public static Long rpush(String key, String value, Integer expire) {
+	public static Long rpush(String key, String value) {
 		ShardedJedis jedis = null;
 		try {
-			if (expire == null) {
-				expire = EXPIRE;
-			}
 			jedis = getPool().getResource();
 			Long result = jedis.rpush(key, value);
-			jedis.expire(key, expire);
+			jedis.expire(key, EXPIRE);
 			return result;
 		} catch (Exception ex) {
 			logger.error("", ex);
@@ -65,14 +62,11 @@ public class RedisUtil {
 		return null;
 	}
 
-	public static String get(String key, Integer expire) {
+	public static String get(String key) {
 		ShardedJedis jedis = null;
 		try {
-			if (expire == null) {
-				expire = EXPIRE;
-			}
 			jedis = getPool().getResource();
-			jedis.expire(key, expire);
+			jedis.expire(key, EXPIRE);
 			return jedis.get(key);
 		} catch (Exception ex) {
 			logger.error("", ex);
@@ -84,14 +78,11 @@ public class RedisUtil {
 		return null;
 	}
 
-	public static String set(String key, Object value, Integer expire) {
+	public static String set(String key, Object value) {
 		ShardedJedis jedis = null;
 		try {
-			if (expire == null) {
-				expire = EXPIRE;
-			}
 			jedis = getPool().getResource();
-			return jedis.setex(key, expire, value.toString());
+			return jedis.setex(key, EXPIRE, value.toString());
 		} catch (Exception ex) {
 			logger.error("", ex);
 		} finally {

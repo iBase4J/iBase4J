@@ -9,7 +9,7 @@ import com.alibaba.druid.util.DruidPasswordCallback;
 
 @SuppressWarnings("serial")
 public class DBPasswordCallback extends DruidPasswordCallback {
-	static final byte[] key = { 9, -1, 0, 5, 39, 8, 6, 19 };
+	private static final byte[] key = { 9, -1, 0, 5, 39, 8, 6, 19 };
 
 	public void setProperties(Properties properties) {
 		super.setProperties(properties);

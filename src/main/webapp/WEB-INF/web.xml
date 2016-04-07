@@ -49,6 +49,14 @@
 		<filter-name>DruidWebStatFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	<filter>
+		<filter-name>springSessionRepositoryFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSessionRepositoryFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -85,9 +93,5 @@
 	</welcome-file-list>
 	<session-config>
 		<session-timeout>10</session-timeout>
-		<cookie-config>
-			<name>ASESSIONID</name>
-			<path>/</path>
-		</cookie-config>
 	</session-config>
 </web-app>
