@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.shjr.iplat.core.Constants;
 import org.shjr.iplat.core.support.BusinessException;
 import org.shjr.iplat.core.support.HttpCode;
-import org.shjr.iplat.core.util.RedisUtil;
+import org.shjr.iplat.core.util.WebUtil;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -26,8 +26,8 @@ public class BaseController {
 	protected Logger logger = LogManager.getLogger(this.getClass());
 
 	/** 获取当前用户Id */
-	protected String getUserId(HttpServletRequest request) {
-		return RedisUtil.hget(Constants.CURRENT_USER, request.getSession().getId());
+	protected String getCurrUserId(HttpServletRequest request) {
+		return WebUtil.getCurrentUser(request);
 	}
 
 	/** 设置成功响应代码 */

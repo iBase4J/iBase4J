@@ -1,10 +1,7 @@
 package org.shjr.iplat.core.util;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.shjr.iplat.core.Constants;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -33,55 +30,15 @@ public class RedisUtil {
 		return shardedJedisPool;
 	}
 
-	// 获取有效期
-	private static Integer getExpire(String key) {
-		if (key.startsWith(Constants.CURRENT_USER)) {
-			WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
-			return wac.getServletContext().getSessionCookieConfig().getMaxAge();
-		}
-		return EXPIRE;
-	}
-
-	public static Long rpush(String key, String value) {
+	public static Long rpush(String key, String value, Integer expire) {
 		ShardedJedis jedis = null;
 		try {
+			if (expire == null) {
+				expire = EXPIRE;
+			}
 			jedis = getPool().getResource();
 			Long result = jedis.rpush(key, value);
-			jedis.expire(key, getExpire(key));
-			return result;
-		} catch (Exception ex) {
-			logger.error("", ex);
-		} finally {
-			if (jedis != null) {
-				jedis.close();
-			}
-		}
-		return null;
-	}
-
-	public static String hget(String key, String field) {
-		ShardedJedis jedis = null;
-		try {
-			jedis = getPool().getResource();
-			String result = jedis.hget(key, field);
-			jedis.expire(key, getExpire(key));
-			return result;
-		} catch (Exception ex) {
-			logger.error("", ex);
-		} finally {
-			if (jedis != null) {
-				jedis.close();
-			}
-		}
-		return null;
-	}
-
-	public static List<String> lrange(String key, long start, long end) {
-		ShardedJedis jedis = null;
-		try {
-			jedis = getPool().getResource();
-			List<String> result = jedis.lrange(key, start, end);
-			jedis.expire(key, getExpire(key));
+			jedis.expire(key, expire);
 			return result;
 		} catch (Exception ex) {
 			logger.error("", ex);
@@ -108,13 +65,15 @@ public class RedisUtil {
 		return null;
 	}
 
-	public static String get(String key) {
+	public static String get(String key, Integer expire) {
 		ShardedJedis jedis = null;
 		try {
+			if (expire == null) {
+				expire = EXPIRE;
+			}
 			jedis = getPool().getResource();
-			String result = jedis.get(key);
-			jedis.expire(key, getExpire(key));
-			return result;
+			jedis.expire(key, expire);
+			return jedis.get(key);
 		} catch (Exception ex) {
 			logger.error("", ex);
 		} finally {
@@ -125,11 +84,14 @@ public class RedisUtil {
 		return null;
 	}
 
-	public static String set(String key, Object value) {
+	public static String set(String key, Object value, Integer expire) {
 		ShardedJedis jedis = null;
 		try {
+			if (expire == null) {
+				expire = EXPIRE;
+			}
 			jedis = getPool().getResource();
-			return jedis.setex(key, getExpire(key), value.toString());
+			return jedis.setex(key, expire, value.toString());
 		} catch (Exception ex) {
 			logger.error("", ex);
 		} finally {

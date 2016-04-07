@@ -88,8 +88,6 @@
 		<cookie-config>
 			<name>ASESSIONID</name>
 			<path>/</path>
-			<max-age>600</max-age>
-			<http-only>true</http-only>
 		</cookie-config>
 	</session-config>
 </web-app>

@@ -52,12 +52,12 @@ public class SessionListener implements HttpSessionListener {
 	private void setAllUserNumber(int n) {
 		Long number = getAllUserNumber() + n;
 		logger.info("用户数：" + number);
-		RedisUtil.set(Constants.ALLUSER_NUMBER, number);
+		RedisUtil.set(Constants.ALLUSER_NUMBER, number, null);
 	}
 
 	/** 获取在线用户数量 */
 	public static Long getAllUserNumber() {
-		String v = RedisUtil.get(Constants.ALLUSER_NUMBER);
+		String v = RedisUtil.get(Constants.ALLUSER_NUMBER, null);
 		if (v != null) {
 			return Long.valueOf(v);
 		}

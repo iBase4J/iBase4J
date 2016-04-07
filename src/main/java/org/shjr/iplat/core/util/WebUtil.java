@@ -48,12 +48,14 @@ public class WebUtil {
 
 	/** 保存当前用户 */
 	public static void saveCurrentUser(HttpServletRequest request, Object user) {
-		RedisUtil.set(Constants.CURRENT_USER + getSessionId(request), user);
+		int expire = request.getSession().getMaxInactiveInterval();
+		RedisUtil.set(Constants.CURRENT_USER + getSessionId(request), user, expire);
 	}
 
 	/** 获取当前用户 */
 	public static String getCurrentUser(HttpServletRequest request) {
-		return RedisUtil.get(Constants.CURRENT_USER + getSessionId(request));
+		int expire = request.getSession().getMaxInactiveInterval();
+		return RedisUtil.get(Constants.CURRENT_USER + getSessionId(request), expire);
 	}
 
 	/** 移除当前用户 */
