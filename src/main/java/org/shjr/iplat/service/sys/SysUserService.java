@@ -49,12 +49,12 @@ public class SysUserService extends BaseService {
 		sysUserMapper.deleteByPrimaryKey(id);
 	}
 
-	@Cacheable("queryById")
+	@Cacheable
 	public SysUser queryById(Integer id) {
 		return sysUserMapper.selectByPrimaryKey(id);
 	}
 
-	@Cacheable("query")
+	@Cacheable
 	public PageInfo<Map<String, Object>> query(Map<String, Object> params) {
 		this.startPage(params);
 		Page<Map<String, Object>> list = sysUserExpandMapper.query(params);
