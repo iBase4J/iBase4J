@@ -64,7 +64,7 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 	<listener>
-		<listener-class>org.shjr.iplat.core.listener.SessionListener</listener-class>
+		<listener-class>org.shjr.ibase4j.core.listener.SessionListener</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>SpringMVC</servlet-name>

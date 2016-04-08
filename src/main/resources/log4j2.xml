@@ -55,7 +55,7 @@
 	<loggers>
 		<logger name="org.springframework" level="ERROR" />
 		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
-		<logger name="org.shjr.iplat" level="${OUTPUT_LOG_LEVEL}" additivity="false">  
+		<logger name="org.shjr.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false">  
             <appender-ref ref="ProductLog" />
         </logger>
 		<root level="DEBUG">

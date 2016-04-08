@@ -9,7 +9,7 @@
                         http://www.springframework.org/schema/tx
                         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	<!--引入Service -->
-	<context:component-scan base-package="org.shjr.iplat">
+	<context:component-scan base-package="org.shjr.ibase4j">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
@@ -18,12 +18,12 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations" value="classpath:org/shjr/iplat/mybatis/**/*.xml" />
+		<property name="mapperLocations" value="classpath:org/shjr/ibase4j/mybatis/**/*.xml" />
 	</bean>
 
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="org.shjr.iplat.mybatis.*.dao" />
+		<property name="basePackage" value="org.shjr.ibase4j.mybatis.*.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 

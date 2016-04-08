@@ -15,17 +15,17 @@
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
-        <javaModelGenerator targetPackage="org.shjr.iplat.mybatis.generator.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="org.shjr.ibase4j.mybatis.generator.model" targetProject="src/main/java">
             <property name="constructorBased" value="false"/>
             <property name="useActualColumnNames" value="true" />
             <property name="enableSubPackages" value="false"/>
             <property name="immutable" value="false"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
-        <sqlMapGenerator targetPackage="org.shjr.iplat.mybatis.generator.xml" targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="org.shjr.ibase4j.mybatis.generator.xml" targetProject="src/main/java">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
-        <javaClientGenerator targetPackage="org.shjr.iplat.mybatis.generator.dao" targetProject="src/main/java" type="XMLMAPPER">
+        <javaClientGenerator targetPackage="org.shjr.ibase4j.mybatis.generator.dao" targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value=""/>
             <property name="methodNameCalculator" value=""/>
             <property name="rootInterface" value=""/>

@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.shjr</groupId>
-	<artifactId>iPlat</artifactId>
+	<artifactId>iBase4J</artifactId>
 	<version>0.0.1</version>
 	<packaging>war</packaging>
-	<name>iPlat</name>
+	<name>iBase4J</name>
 	<url>http://maven.apache.org</url>
 
 	<!-- clean:clean package -P build tomcat7:run-war-only -->
