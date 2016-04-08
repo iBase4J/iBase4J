@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 -- 主机:                           127.0.0.1
--- 服务器版本:                        5.6.10 - MySQL Community Server (GPL)
--- 服务器操作系统:                      Win32
+-- 服务器版本:                        5.7.11-enterprise-commercial-advanced-log - MySQL Enterprise Server - Advanced Edition (Commercial)
+-- 服务器操作系统:                      Win64
 -- HeidiSQL 版本:                  9.3.0.4998
 -- --------------------------------------------------------
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `sys_field` (
   UNIQUE KEY `code` (`field`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='代码表';
 
--- 正在导出表  ibase4j.sys_field 的数据：~8 rows (大约)
+-- 正在导出表  ibase4j.sys_field 的数据：~10 rows (大约)
 /*!40000 ALTER TABLE `sys_field` DISABLE KEYS */;
 INSERT INTO `sys_field` (`id`, `field`, `field_desc`, `editable`) VALUES
 	(1, 'SEX', '性别', 0),
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   UNIQUE KEY `account` (`account`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.sys_user 的数据：~1 rows (大约)
+-- 正在导出表  ibase4j.sys_user 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
 INSERT INTO `sys_user` (`id`, `account`, `password`, `sex`, `user_name`, `avatar`, `user_type`, `dept_id`, `locked`, `usable`) VALUES
 	(2, 'admin', 'Llf678rVJnvTkZdk8CMaHv+s20wa37zzPidtDjQj7cE=', 0, NULL, NULL, 3, 1, 0, 1);
