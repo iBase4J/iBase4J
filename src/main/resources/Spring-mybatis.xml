@@ -38,6 +38,7 @@
     <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
         <property name="transactionManager" ref="atomikosTransactionManager"/>
         <property name="userTransaction" ref="atomikosUserTransaction"/>
+        <property name="allowCustomIsolationLevels" value="true"/>
     </bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<!-- 配置事务异常封装 -->
