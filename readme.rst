@@ -1,17 +1,17 @@
 1、数据库
-=============
+---------------
 
 Druid数据库连接池，监控数据库访问性能，详细统计SQL的执行性能，这对于线上分析数据库访问性能有帮助。 数据库密码加密。
 
 2、持久层
-============
+--------------------
 
-mybatis持久化，aop切换数据库实现读写分离，Jta事务。PageHelper分页。
+mybatis持久化，aop切换数据库实现读写分离，Jta事务。PageHelper分页。Transtraction注解事务。
 
 3、MVC
-=============
+---------------------
 
-基于spring mvc注解,Transtraction注解事务。Exception统一管理。
+基于spring mvc注解。Exception统一管理。
 
 4、调度
 ======
