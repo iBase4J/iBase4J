@@ -14,7 +14,7 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="dbPasswordCallback" class="org.shjr.ibase4j.core.config.DBPasswordCallback" lazy-init="true" />
+	<bean id="dbPasswordCallback" class="org.ibase4j.core.config.DBPasswordCallback" lazy-init="true" />
 	<bean id="statFilter" class="com.alibaba.druid.filter.stat.StatFilter" lazy-init="true">
 		<property name="slowSqlMillis" value="10000" />
 		<property name="logSlowSql" value="true" />
@@ -80,7 +80,7 @@
 		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
 	</bean>
 
-	<bean id="dataSource" class="org.shjr.ibase4j.core.aspect.ChooseDataSource" lazy-init="true">
+	<bean id="dataSource" class="org.ibase4j.core.aspect.ChooseDataSource" lazy-init="true">
 		<property name="targetDataSources">
 			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
 				<!-- write -->
