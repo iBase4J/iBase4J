@@ -3,10 +3,11 @@
  */
 package org.shjr.ibase4j.sys;
 
+import static org.apache.logging.log4j.LogManager.getLogger;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,9 +29,9 @@ import com.github.pagehelper.PageInfo;
 @ContextConfiguration(locations = { "classpath:Spring-db.xml", "classpath:Spring-mybatis.xml",
 		"classpath:Spring-redis.xml" })
 public class SysUserServiceTest {
+	private Logger logger = getLogger();
 	@Autowired
 	SysUserService sysUserService;
-	private Logger logger = LogManager.getLogger();
 
 	@Test
 	public void testEmptyCollection() {
