@@ -8,9 +8,14 @@
                         http://www.springframework.org/schema/context/spring-context-4.0.xsd
                         http://www.springframework.org/schema/task
                         http://www.springframework.org/schema/task/spring-task-4.0.xsd">
-	<!--定时任务 -->
-	<task:scheduled-tasks scheduler="scheduler">
+	<!--开启注解调度支持 @Async @Scheduled-->
+	<task:annotation-driven executor="executor" scheduler="scheduler" />
+	<!-- 任务调度器 -->
+	<task:scheduler id="scheduler" pool-size="10" />
+	<!-- 任务执行器 --> 
+	<task:executor id="executor" pool-size="5" />
+	<!-- <task:scheduled-tasks scheduler="scheduler">
 		<task:scheduled ref="testTask" method="run" cron="0 0/5 * * * ?" />
 	</task:scheduled-tasks>
-	<task:scheduler id="scheduler" pool-size="10" />
+	<task:scheduler id="scheduler" pool-size="10" /> -->
 </beans>
