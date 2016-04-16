@@ -173,7 +173,7 @@ public class EmailUtil {
 				host = properties.getProperty("mail.server.host");
 			}
 			if (from == null || "".equals(from.trim())) {
-				from = properties.getProperty("mail.from");
+				from = properties.getProperty("email.send.from");
 			}
 			if (name == null || "".equals(name.trim())) {
 				name = properties.getProperty("mail.name");
@@ -182,6 +182,7 @@ public class EmailUtil {
 				password = properties.getProperty("mail.password");
 			}
 		} catch (IOException e) {
+			logger.error("", e);
 		}
 		// 初始化邮件引擎
 		EmailEngine theMail = new EmailEngine(host);

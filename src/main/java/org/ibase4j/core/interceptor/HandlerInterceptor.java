@@ -24,7 +24,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @version 2016年4月2日 下午4:19:47
  */
 public class HandlerInterceptor extends HandlerInterceptorAdapter {
-	private Logger logger = LogManager.getLogger(HandlerInterceptor.class);
+	private static Logger logger = LogManager.getLogger(HandlerInterceptor.class);
 
 	private static String[] notFilter = new String[] {};
 	static {
@@ -37,6 +37,7 @@ public class HandlerInterceptor extends HandlerInterceptorAdapter {
 			}
 			notFilter = url.split(",");
 		} catch (IOException e) {
+			logger.error("", e);
 		}
 	}
 
