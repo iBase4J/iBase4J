@@ -1,9 +1,10 @@
 package org.ibase4j.core.interceptor;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.util.Enumeration;
-import java.util.ResourceBundle;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.WebUtil;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
@@ -22,19 +23,21 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:19:47
  */
-@PropertySource("classpath:/whiteURL.properties")
 public class HandlerInterceptor extends HandlerInterceptorAdapter {
 	private Logger logger = LogManager.getLogger(HandlerInterceptor.class);
 
 	private static String[] notFilter = new String[] {};
-	private static final ResourceBundle bundle = ResourceBundle.getBundle("whiteURL");
 	static {
-		String url = "";
-		for (Enumeration<?> iterator = bundle.getKeys(); iterator.hasMoreElements();) {
-			String key = (String) iterator.nextElement();
-			url += "," + bundle.getString(key) + ",";
+		try {
+			String url = "";
+			Properties properties = PropertiesLoaderUtils.loadAllProperties("classpath:config/whiteURL.properties");
+			for (Enumeration<?> iterator = properties.keys(); iterator.hasMoreElements();) {
+				String key = (String) iterator.nextElement();
+				url += "," + properties.getProperty(key) + ",";
+			}
+			notFilter = url.split(",");
+		} catch (IOException e) {
 		}
-		notFilter = url.split(",");
 	}
 
 	@Override

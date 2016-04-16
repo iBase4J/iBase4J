@@ -5,15 +5,16 @@
                         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
-	<!-- 引入配置文件 -->
+    <!-- 引入配置文件 -->
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:jdbc.properties</value>
-				<value>classpath:redis.properties</value>
+				<value>classpath:config/jdbc.properties</value>
+				<value>classpath:config/redis.properties</value>
 			</list>
 		</property>
 	</bean>
+	<!-- 数据库连接 -->
 	<bean id="dbPasswordCallback" class="org.ibase4j.core.config.DBPasswordCallback" lazy-init="true" />
 	<bean id="statFilter" class="com.alibaba.druid.filter.stat.StatFilter" lazy-init="true">
 		<property name="slowSqlMillis" value="10000" />
