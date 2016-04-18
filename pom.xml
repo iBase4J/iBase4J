@@ -16,11 +16,18 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
 		<spring.version>4.2.4.RELEASE</spring.version>
+		<spring-session.version>1.2.0.RC2</spring-session.version>
+		<spring-data-redis.version>1.6.4.RELEASE</spring-data-redis.version>
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.2.6</mybatis.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.9</slf4j.version>
 		<log4j.version>2.1</log4j.version>
+		<!-- -->
+		<fastjson.version>1.2.8</fastjson.version>
+		<druid.version>1.0.18</druid.version>
+		<jedis.version>2.7.3</jedis.version>
+		<dubbo.version>2.5.3</dubbo.version>
 	</properties>
 
 	<dependencies>
@@ -66,11 +73,27 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<!-- 导入druid的jar包，用来配置数据库 -->
+		<!-- alibaba工具包 druid用来配置数据库 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
-			<version>1.0.18</version>
+			<version>${druid.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>${dubbo.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- 导入Mysql数据库链接jar包 -->
 		<dependency>
@@ -127,12 +150,12 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
-			<version>1.6.4.RELEASE</version>
+			<version>${spring-data-redis.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session</artifactId>
-			<version>1.2.0.RC2</version>
+			<version>${spring-session.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.transaction</groupId>
@@ -147,7 +170,7 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>2.7.3</version>
+			<version>${jedis.version}</version>
 		</dependency>
 		<!-- 切面 -->
 		<dependency>
@@ -211,11 +234,6 @@
 			<version>${log4j.version}</version>
 		</dependency>
 		<!-- 格式化对象，方便输出日志 -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.1.41</version>
-		</dependency>
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
