@@ -17,7 +17,6 @@
 	<!-- 数据库连接 -->
 	<bean id="dbPasswordCallback" class="org.ibase4j.core.config.DBPasswordCallback" lazy-init="true" />
 	<bean id="statFilter" class="com.alibaba.druid.filter.stat.StatFilter" lazy-init="true">
-		<property name="slowSqlMillis" value="10000" />
 		<property name="logSlowSql" value="true" />
 		<property name="mergeSql" value="true" />
 	</bean>
@@ -42,6 +41,7 @@
 				<ref bean="statFilter" />
 			</list>
 		</property>
+		<property name="filters" value="${druid.filters}" />
 		<property name="connectionProperties" value="password=${password}" />
 		<property name="passwordCallback" ref="dbPasswordCallback" />
 		<property name="testWhileIdle" value="true" />
@@ -70,6 +70,7 @@
 				<ref bean="statFilter" />
 			</list>
 		</property>
+		<property name="filters" value="${druid.filters}" />
 		<property name="connectionProperties" value="password=${password}" />
 		<property name="passwordCallback" ref="dbPasswordCallback" />
 		<property name="testWhileIdle" value="true" />
