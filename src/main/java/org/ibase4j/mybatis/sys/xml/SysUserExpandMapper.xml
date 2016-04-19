@@ -4,8 +4,8 @@
 
 	<select id="query" parameterType="java.util.Map" resultType="java.util.Map">
 		select * from sys_user where 1=1
-		<if test="usable != null">and usable=#{usable}</if>
-		<if test="account != null">and account=#{account}</if>
-		<if test="password != null">and password=#{password}</if>
+		<if test="usable != null">and usable_=#{usable}</if>
+		<if test="account != null">and account_=#{account}</if>
+		<if test="password != null">and password_=#{password}</if>
 	</select>
 </mapper>

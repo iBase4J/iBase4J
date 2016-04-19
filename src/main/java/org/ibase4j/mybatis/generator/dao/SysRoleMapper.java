@@ -1,7 +1,6 @@
 package org.ibase4j.mybatis.generator.dao;
 
 import java.util.List;
-
 import org.ibase4j.mybatis.generator.model.SysRole;
 
 public interface SysRoleMapper {

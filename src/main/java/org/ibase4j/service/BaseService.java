@@ -17,7 +17,7 @@ public class BaseService {
 			params.put("pageSize", 10);
 		}
 		if (DataUtil.isEmpty(params.get("orderBy"))) {
-			params.put("orderBy", "id");
+			params.put("orderBy", "id_ desc");
 		}
 		PageHelper.startPage(params);
 	}

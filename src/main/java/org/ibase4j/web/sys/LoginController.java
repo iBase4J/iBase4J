@@ -45,7 +45,7 @@ public class LoginController extends BaseController {
 		PageInfo<Map<String, Object>> pageInfo = sysUserService.query(params);
 		if (pageInfo.getSize() == 1) {
 			Map<String, Object> user = pageInfo.getList().get(0);
-			WebUtil.saveCurrentUser(request, user.get("id"));
+			WebUtil.saveCurrentUser(request, user.get("id_"));
 			return setSuccessModelMap(modelMap);
 		}
 		throw new IllegalArgumentException("用户名或密码错误.");
