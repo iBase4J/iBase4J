@@ -26,18 +26,19 @@ public class LoginInterceptor extends BaseInterceptor {
 			return true;
 		}
 		boolean success = true;
+		HttpCode httpCode = null;
 		String curruser = WebUtil.getCurrentUser(request);
 		if (url.indexOf("online") == -1) { // 后端请求后端数据
 			if (curruser == null) {
 				success = false;
-				response.setStatus(HttpCode.HTTP_CODE_401);
+				httpCode = HttpCode.FORBIDDEN;
 			}
 		} else { // 前端请求后端数据
 			if (curruser == null) {
 				success = false;
 				String isAjax = request.getHeader("x-requested-with");
 				if (StringUtils.isNotEmpty(isAjax)) {
-					response.setStatus(HttpCode.HTTP_CODE_401);
+					httpCode = HttpCode.FORBIDDEN;
 				} else {
 					String host = InetAddress.getLocalHost().getHostAddress();
 					String redirect = "/home.html#/login";
@@ -51,8 +52,10 @@ public class LoginInterceptor extends BaseInterceptor {
 				}
 			}
 		}
-		if (!success)
-			logger.info("Interceptor:" + HttpCode.MSG.get(response.getStatus()));
+		if (httpCode != null) {
+			response.setStatus(httpCode.value());
+			logger.info("Interceptor:" + httpCode.msg());
+		}
 		return success;
 	}
 }
