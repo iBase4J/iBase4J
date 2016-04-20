@@ -4,6 +4,7 @@
 <configuration>
 	<settings>
 		<setting name="logImpl" value="SLF4J" />
+		<setting name="callSettersOnNulls" value="true"/>
 	</settings>
 	<plugins>
 		<plugin interceptor="com.github.pagehelper.PageHelper">
