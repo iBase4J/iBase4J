@@ -15,7 +15,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
-		<spring.version>4.2.4.RELEASE</spring.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
 		<spring-session.version>1.2.0.RC2</spring-session.version>
 		<spring-data-redis.version>1.6.4.RELEASE</spring-data-redis.version>
 		<!-- mybatis版本号 -->
@@ -269,9 +269,9 @@
 			<version>0.4.8</version>
 		</dependency>
 		<dependency>
-			<groupId>com.microsoft.azure</groupId>
-			<artifactId>azure-storage</artifactId>
-			<version>2.1.0</version>
+			<groupId>org.apache.sshd</groupId>
+			<artifactId>sshd-sftp</artifactId>
+			<version>0.11.0</version>
 		</dependency>
 		<!-- 中文拼音 -->
 		<dependency>
