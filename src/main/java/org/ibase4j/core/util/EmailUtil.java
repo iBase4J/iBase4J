@@ -1,12 +1,7 @@
 package org.ibase4j.core.util;
 
-import java.io.IOException;
-import java.util.Properties;
-
+import org.ibase4j.core.config.EmailConfig;
 import org.ibase4j.core.support.EmailEngine;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 /**
  * 发送邮件辅助类
@@ -15,7 +10,8 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
  * @version $Id: MailUtil.java, v 0.1 2014年12月4日 下午8:22:43 ShenHuaJie Exp $
  */
 public class EmailUtil {
-	protected static Logger logger = LoggerFactory.getLogger(EmailUtil.class);
+	private EmailUtil() {
+	}
 
 	/**
 	 * 发送邮件
@@ -96,7 +92,7 @@ public class EmailUtil {
 	 */
 	public static boolean sendMail(String from, String sendTo, String copyTo, String topic, String body,
 			String[] fileAffix) {
-		return sendMail(from, null, null, sendTo, copyTo, topic, body, fileAffix);
+		return sendMail(from, null, null, null, sendTo, copyTo, topic, body, fileAffix);
 	}
 
 	/**
@@ -111,9 +107,9 @@ public class EmailUtil {
 	 * @param body 内容
 	 * @return
 	 */
-	public static boolean sendMail(String from, String name, String password, String sendTo, String copyTo,
+	public static boolean sendMail(String from, String name, String password, String key, String sendTo, String copyTo,
 			String topic, String body) {
-		return sendMail(null, from, name, password, sendTo, copyTo, topic, body, null);
+		return sendMail(null, from, name, password, key, sendTo, copyTo, topic, body, null);
 	}
 
 	/**
@@ -129,9 +125,9 @@ public class EmailUtil {
 	 * @param fileAffix 附件
 	 * @return
 	 */
-	public static boolean sendMail(String from, String name, String password, String sendTo, String copyTo,
+	public static boolean sendMail(String from, String name, String password, String key, String sendTo, String copyTo,
 			String topic, String body, String[] fileAffix) {
-		return sendMail(null, from, name, password, sendTo, copyTo, topic, body, fileAffix);
+		return sendMail(null, from, name, password, key, sendTo, copyTo, topic, body, fileAffix);
 	}
 
 	/**
@@ -146,9 +142,9 @@ public class EmailUtil {
 	 * @param topic 主题
 	 * @param body 内容
 	 */
-	public static boolean sendMail(String host, String from, String name, String password, String sendTo, String copyTo,
-			String topic, String body) {
-		return sendMail(host, from, name, password, sendTo, copyTo, topic, body, null);
+	public static boolean sendMail(String host, String from, String name, String password, String key, String sendTo,
+			String copyTo, String topic, String body) {
+		return sendMail(host, from, name, password, key, sendTo, copyTo, topic, body, null);
 	}
 
 	/**
@@ -164,29 +160,31 @@ public class EmailUtil {
 	 * @param body 内容
 	 * @param fileAffix 附件
 	 */
-	public static boolean sendMail(String host, String from, String name, String password, String sendTo, String copyTo,
-			String topic, String body, String[] fileAffix) {
-		try {
-			Properties properties = PropertiesLoaderUtils.loadAllProperties("classpath:config/email.properties");
-			// 获取邮件服务器配置
-			if (host == null || "".equals(host.trim())) {
-				host = properties.getProperty("mail.server.host");
-			}
-			if (from == null || "".equals(from.trim())) {
-				from = properties.getProperty("email.send.from");
-			}
-			if (name == null || "".equals(name.trim())) {
-				name = properties.getProperty("mail.name");
-			}
-			if (password == null || "".equals(password.trim())) {
-				password = properties.getProperty("mail.password");
-			}
-		} catch (IOException e) {
-			logger.error("", e);
+	public static boolean sendMail(String host, String from, String name, String password, String key, String sendTo,
+			String copyTo, String topic, String body, String[] fileAffix) {
+		EmailConfig emailConfig = new EmailConfig();
+		// 获取邮件服务器配置
+		if (host == null || "".equals(host.trim())) {
+			host = emailConfig.getHost();
+		}
+		if (from == null || "".equals(from.trim())) {
+			from = emailConfig.getFrom();
+		}
+		if (name == null || "".equals(name.trim())) {
+			name = emailConfig.getName();
+		}
+		if (password == null || "".equals(password.trim())) {
+			password = emailConfig.getPassword();
 		}
 		// 初始化邮件引擎
 		EmailEngine theMail = new EmailEngine(host);
-		theMail.setNeedAuth(true);
+		if (key == null || "".equals(key.trim())) {
+			key = emailConfig.getKey();
+			theMail.setNeedAuth(true);
+		}
+		theMail.setNamePass(name, password, key);
+		if (theMail.setFrom(from) == false)
+			return false;
 		if (theMail.setSubject(topic) == false)
 			return false;
 		if (theMail.setBody(body) == false)
@@ -195,15 +193,12 @@ public class EmailUtil {
 			return false;
 		if (copyTo != null && theMail.setCopyTo(copyTo) == false)
 			return false;
-		if (theMail.setFrom(from) == false)
-			return false;
 		if (fileAffix != null) {
 			for (int i = 0; i < fileAffix.length; i++) {
 				if (theMail.addFileAffix(fileAffix[i]) == false)
 					return false;
 			}
 		}
-		theMail.setNamePass(name, password);
 		// 发送
 		return theMail.sendout();
 	}

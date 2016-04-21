@@ -318,7 +318,7 @@
 							<include>**/*.properties</include>
 							<include>**/*.xml</include>
 						</includes>
-						<filtering>false</filtering>
+						<filtering>true</filtering>
 					</resource>
 					<resource>
 						<directory>src/main/resources</directory>
@@ -418,6 +418,9 @@
 						<source>1.7</source>
 						<target>1.7</target>
 						<encoding>UTF-8</encoding>
+						<testIncludes>
+							<testInclude></testInclude>
+						</testIncludes>
 					</configuration>
 				</plugin>
 			</plugins>
