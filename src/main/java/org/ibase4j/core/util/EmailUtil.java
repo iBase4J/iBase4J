@@ -185,13 +185,13 @@ public class EmailUtil {
 		theMail.setNamePass(name, password, key);
 		if (theMail.setFrom(from) == false)
 			return false;
-		if (theMail.setSubject(topic) == false)
-			return false;
-		if (theMail.setBody(body) == false)
-			return false;
 		if (theMail.setTo(sendTo) == false)
 			return false;
 		if (copyTo != null && theMail.setCopyTo(copyTo) == false)
+			return false;
+		if (theMail.setSubject(topic) == false)
+			return false;
+		if (theMail.setBody(body) == false)
 			return false;
 		if (fileAffix != null) {
 			for (int i = 0; i < fileAffix.length; i++) {

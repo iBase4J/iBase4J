@@ -47,11 +47,12 @@ public class EmailEngine {
 	private static final String PRE_MIME = "准备创建MIME邮件对象！";
 	private static final String ERROR_MIME = "创建MIME邮件对象失败！";
 	private static final String SET_AUTH = "设置smtp身份认证：mail.smtp.auth = ";
-	private static final String SET_SUBJECT = "设置邮件主题！";
+	private static final String SET_SUBJECT = "设置邮件主题[{}]！";
 	private static final String ERROR_SUBJECT = "设置邮件主题发生错误！";
 	private static final String ERROR_BODY = "设置邮件正文时发生错误！";
-	private static final String ADD_ATTEND = "增加邮件附件：";
-	private static final String SET_FROM = "设置发信人！";
+	private static final String ADD_ATTEND = "增加邮件附件[{}]！";
+	private static final String SET_TO = "设置收信人[{}]！";
+	private static final String SET_COPYTO = "设置抄送人[{}]！";
 	private static final String SENDING = "正在发送邮件....";
 	private static final String SEND_SUCC = "发送邮件成功！";
 	private static final String SEND_ERR = "邮件发送失败！";
@@ -138,7 +139,7 @@ public class EmailEngine {
 	 * @return boolean
 	 */
 	public boolean setSubject(String mailSubject) {
-		logger.info(SET_SUBJECT);
+		logger.info(SET_SUBJECT, mailSubject);
 		try {
 			mimeMsg.setSubject(mailSubject, "UTF-8");
 			return true;
@@ -172,7 +173,7 @@ public class EmailEngine {
 	 * @param pass String
 	 */
 	public boolean addFileAffix(String filename) {
-		logger.info(ADD_ATTEND + filename);
+		logger.info(ADD_ATTEND, filename);
 		try {
 			BodyPart bp = new MimeBodyPart();
 			FileDataSource fileds = new FileDataSource(filename);
@@ -193,7 +194,6 @@ public class EmailEngine {
 	 * @param pass String
 	 */
 	public boolean setFrom(String from) {
-		logger.info(SET_FROM);
 		try {
 			String[] f = from.split(",");
 			if (f.length > 1) {
@@ -216,6 +216,7 @@ public class EmailEngine {
 	public boolean setTo(String to) {
 		if (to == null)
 			return false;
+		logger.info(SET_TO, to);
 		try {
 			mimeMsg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			return true;
@@ -234,6 +235,7 @@ public class EmailEngine {
 	public boolean setCopyTo(String copyto) {
 		if (copyto == null)
 			return false;
+		logger.info(SET_COPYTO, copyto);
 		try {
 			mimeMsg.setRecipients(Message.RecipientType.CC, (Address[]) InternetAddress.parse(copyto));
 			return true;
