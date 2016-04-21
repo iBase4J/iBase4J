@@ -10,8 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.support.BusinessException;
 import org.ibase4j.core.support.HttpCode;
+import org.ibase4j.core.support.exception.BusinessException;
 import org.ibase4j.core.util.WebUtil;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,7 +50,7 @@ public class BaseController {
 		if (data != null) {
 			modelMap.put("data", data);
 		}
-		modelMap.put("httpCode", code);
+		modelMap.put("httpCode", code.value());
 		modelMap.put("msg", code.msg());
 		return modelMap;
 	}
@@ -62,14 +62,14 @@ public class BaseController {
 		ModelMap modelMap = new ModelMap();
 		if (ex instanceof IllegalArgumentException) {
 			if (StringUtils.isNotBlank(ex.getMessage())) {
-				modelMap.put("httpCode", HttpCode.BAD_REQUEST);
+				modelMap.put("httpCode", HttpCode.BAD_REQUEST.value());
 				modelMap.put("msg", ex.getMessage());
 			} else {
 				setModelMap(modelMap, HttpCode.BAD_REQUEST);
 			}
 		} else if (ex instanceof BusinessException) {
 			if (StringUtils.isNotBlank(ex.getMessage())) {
-				modelMap.put("httpCode", HttpCode.CONFLICT);
+				modelMap.put("httpCode", HttpCode.CONFLICT.value());
 				modelMap.put("msg", ex.getMessage());
 			} else {
 				setModelMap(modelMap, HttpCode.CONFLICT);

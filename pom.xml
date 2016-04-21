@@ -158,6 +158,7 @@
 			<artifactId>spring-session</artifactId>
 			<version>${spring-session.version}</version>
 		</dependency>
+		<!-- 事务 -->
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
@@ -168,6 +169,7 @@
 			<artifactId>transactions-jta</artifactId>
 			<version>4.0.2</version>
 		</dependency>
+		<!-- 缓存 -->
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
@@ -184,7 +186,7 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.8.9</version>
 		</dependency>
-		<!-- mybatis核心包 -->
+		<!-- mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -200,11 +202,16 @@
 			<artifactId>pagehelper</artifactId>
 			<version>4.1.3</version>
 		</dependency>
-		<!-- 导入java ee jar 包 -->
+		<!-- 导入java ee -->
 		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>7.0</version>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.0-b01</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.5.0-b01</version>
 		</dependency>
 		<!-- JSTL标签类 -->
 		<dependency>
@@ -213,7 +220,6 @@
 			<version>1.2</version>
 		</dependency>
 		<!-- 日志文件管理包 -->
-		<!-- log start -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
@@ -229,12 +235,13 @@
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
-		<!-- 格式化对象，方便输出日志 -->
+		<!-- json -->
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.12.0.GA</version>
 		</dependency>
+		<!-- excel -->
 		<dependency>
 			<groupId>net.sourceforge.jexcelapi</groupId>
 			<artifactId>jxl</artifactId>
@@ -255,16 +262,11 @@
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>3.9</version>
 		</dependency>
-		<!-- 图片切割 -->
+		<!-- 文件图片处理 -->
 		<dependency>
 			<groupId>net.coobird</groupId>
 			<artifactId>thumbnailator</artifactId>
 			<version>0.4.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.im4java</groupId>
-			<artifactId>im4java</artifactId>
-			<version>1.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.microsoft.azure</groupId>

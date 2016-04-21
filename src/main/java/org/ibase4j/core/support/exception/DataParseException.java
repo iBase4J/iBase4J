@@ -1,4 +1,4 @@
-package org.ibase4j.core.support;
+package org.ibase4j.core.support.exception;
 
 @SuppressWarnings("serial")
 public class DataParseException extends RuntimeException {
