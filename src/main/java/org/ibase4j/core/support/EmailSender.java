@@ -2,6 +2,7 @@ package org.ibase4j.core.support;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -21,6 +22,7 @@ import javax.mail.internet.MimeUtility;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * 邮件引擎
@@ -28,9 +30,11 @@ import org.slf4j.LoggerFactory;
  * @author ShenHuaJie
  * @version $Id: MailEntrance.java, v 0.1 2014年12月4日 下午8:34:48 ShenHuaJie Exp $
  */
-public class EmailEngine {
-	private Logger logger = LoggerFactory.getLogger(EmailEngine.class);
+@PropertySource("classpath:config/email.properties")
+public class EmailSender {
+	private Logger logger = LoggerFactory.getLogger(EmailSender.class);
 
+	private ResourceBundle bundle = ResourceBundle.getBundle("config/email");
 	private MimeMessage mimeMsg; // MIME邮件对象
 	private Session session; // 邮件会话对象
 	private Properties props; // 系统属性
@@ -57,11 +61,7 @@ public class EmailEngine {
 	private static final String SEND_SUCC = "发送邮件成功！";
 	private static final String SEND_ERR = "邮件发送失败！";
 
-	public EmailEngine() {
-		createMimeMessage();
-	}
-
-	public EmailEngine(String smtp) {
+	public EmailSender(String smtp) {
 		try {
 			setSmtpHost(smtp);
 			createMimeMessage();
@@ -76,6 +76,9 @@ public class EmailEngine {
 	 * @param hostName String
 	 */
 	public void setSmtpHost(String hostName) {
+		if (hostName == null || hostName.trim().equals("")) {
+			hostName = bundle.getString("smtp.host");
+		}
 		logger.info(SET_HOST + hostName);
 		if (props == null)
 			props = System.getProperties(); // 获得系统属性对象
@@ -111,14 +114,18 @@ public class EmailEngine {
 	/**
 	 * @param need boolean
 	 */
-	public void setNeedAuth(boolean need) {
-		logger.info(SET_AUTH + need);
+	private void setNeedAuth() {
 		if (props == null)
 			props = System.getProperties();
-		if (need) {
-			props.put("mail.smtp.auth", "true");
-		} else {
+		if (userkey == null || userkey.trim().equals("")) {
+			userkey = bundle.getString("authorisation.code");
+		}
+		if (userkey == null || userkey.trim().equals("")) {
 			props.put("mail.smtp.auth", "false");
+			logger.info(SET_AUTH + "false");
+		} else {
+			props.put("mail.smtp.auth", "true");
+			logger.info(SET_AUTH + "true");
 		}
 	}
 
@@ -127,9 +134,16 @@ public class EmailEngine {
 	 * @param pass String
 	 */
 	public void setNamePass(String name, String pass, String key) {
+		if (name == null || name.trim().equals("")) {
+			name = bundle.getString("user.name");
+		}
+		if (pass == null || pass.trim().equals("")) {
+			pass = bundle.getString("user.password");
+		}
 		username = name;
 		password = pass;
 		userkey = key;
+		setNeedAuth();
 	}
 
 	/**
@@ -194,6 +208,9 @@ public class EmailEngine {
 	 * @param pass String
 	 */
 	public boolean setFrom(String from) {
+		if (from == null || from.trim().equals("")) {
+			from = bundle.getString("send.from");
+		}
 		try {
 			String[] f = from.split(",");
 			if (f.length > 1) {

@@ -1,4 +1,4 @@
-package org.ibase4j.core.util;
+package org.ibase4j.core.support.ftp;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
  * 
  * @author ShenHuaJie
  */
-public class FtpUtil {
+public class FtpClient {
 	private Logger logger = LogManager.getLogger(getClass());
 	private static final byte[] LOCK = { 0 };
 	private static FTPClient ftpClient = null;
@@ -37,7 +37,7 @@ public class FtpUtil {
 		String localUpPath = "C:/bankData/Send/";
 		String localDnPath = "C:/bankData/Feedback";
 		String remotePath = "Feedback";
-		FtpUtil ftpClient = new FtpUtil(host, port, username, password);
+		FtpClient ftpClient = new FtpClient(host, port, username, password);
 
 		// FTP上传文件
 		ftpClient.uploadFile("send", localUpPath);
@@ -47,7 +47,7 @@ public class FtpUtil {
 		ftpClient.close();
 	}
 
-	public FtpUtil() {
+	public FtpClient() {
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class FtpUtil {
 	 *            密码
 	 * @throws FtpException
 	 */
-	public FtpUtil(String host, int port, String username, String password)
+	public FtpClient(String host, int port, String username, String password)
 			throws FtpException {
 		init(host, port, username, password);
 	}
@@ -361,24 +361,5 @@ public class FtpUtil {
 		for (int i = 0; i < key.length; i++) {
 			this.properties.put(key[i], properties.get(key[i]));
 		}
-	}
-}
-
-/**
- * FTP连接异常
- * 
- * @author ShenHuJie
- */
-@SuppressWarnings("serial")
-class FtpException extends RuntimeException {
-	public FtpException() {
-	}
-
-	public FtpException(String message) {
-		super(message);
-	}
-
-	public FtpException(String message, Throwable throwable) {
-		super(message, throwable);
 	}
 }

@@ -1,7 +1,6 @@
 package org.ibase4j.core.util;
 
-import org.ibase4j.core.config.EmailConfig;
-import org.ibase4j.core.support.EmailEngine;
+import org.ibase4j.core.support.EmailSender;
 
 /**
  * 发送邮件辅助类
@@ -162,44 +161,26 @@ public class EmailUtil {
 	 */
 	public static boolean sendMail(String host, String from, String name, String password, String key, String sendTo,
 			String copyTo, String topic, String body, String[] fileAffix) {
-		EmailConfig emailConfig = new EmailConfig();
-		// 获取邮件服务器配置
-		if (host == null || "".equals(host.trim())) {
-			host = emailConfig.getHost();
-		}
-		if (from == null || "".equals(from.trim())) {
-			from = emailConfig.getFrom();
-		}
-		if (name == null || "".equals(name.trim())) {
-			name = emailConfig.getName();
-		}
-		if (password == null || "".equals(password.trim())) {
-			password = emailConfig.getPassword();
-		}
 		// 初始化邮件引擎
-		EmailEngine theMail = new EmailEngine(host);
-		if (key == null || "".equals(key.trim())) {
-			key = emailConfig.getKey();
-			theMail.setNeedAuth(true);
-		}
-		theMail.setNamePass(name, password, key);
-		if (theMail.setFrom(from) == false)
+		EmailSender sender = new EmailSender(host);
+		sender.setNamePass(name, password, key);
+		if (sender.setFrom(from) == false)
 			return false;
-		if (theMail.setTo(sendTo) == false)
+		if (sender.setTo(sendTo) == false)
 			return false;
-		if (copyTo != null && theMail.setCopyTo(copyTo) == false)
+		if (copyTo != null && sender.setCopyTo(copyTo) == false)
 			return false;
-		if (theMail.setSubject(topic) == false)
+		if (sender.setSubject(topic) == false)
 			return false;
-		if (theMail.setBody(body) == false)
+		if (sender.setBody(body) == false)
 			return false;
 		if (fileAffix != null) {
 			for (int i = 0; i < fileAffix.length; i++) {
-				if (theMail.addFileAffix(fileAffix[i]) == false)
+				if (sender.addFileAffix(fileAffix[i]) == false)
 					return false;
 			}
 		}
 		// 发送
-		return theMail.sendout();
+		return sender.sendout();
 	}
 }
