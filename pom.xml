@@ -419,9 +419,22 @@
 						<target>1.7</target>
 						<encoding>UTF-8</encoding>
 						<testIncludes>
-							<testInclude></testInclude>
+							<testInclude>none</testInclude>
 						</testIncludes>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jdeps-plugin</artifactId>
+					<version>3.0.0</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>jdkinternals</goal>
+								<goal>test-jdkinternals</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
