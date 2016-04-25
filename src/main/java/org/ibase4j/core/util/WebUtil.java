@@ -37,7 +37,7 @@ public class WebUtil {
 
 	/** 保存当前用户 */
 	public static void saveCurrentUser(HttpServletRequest request, Object user) {
-		request.getSession().setAttribute(Constants.CURRENT_USER , user.toString());
+		request.getSession().setAttribute(Constants.CURRENT_USER, user.toString());
 	}
 
 	/** 获取当前用户 */

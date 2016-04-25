@@ -18,6 +18,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -254,6 +255,22 @@ public class InstanceUtil {
 		}
 	}
 
+	public static <K> K newInstance(Class<K> cls, Object... args) {
+		try {
+			Class<?>[] argsClass = null;
+			if (args != null) {
+				argsClass = new Class[args.length];
+				for (int i = 0, j = args.length; i < j; i++) {
+					argsClass[i] = args[i].getClass();
+				}
+			}
+			Constructor<K> cons = cls.getConstructor(argsClass);
+			return cons.newInstance(args);
+		} catch (Exception e) {
+			throw new InstanceException(e);
+		}
+	}
+
 	/**
 	 * 新建实例
 	 * 
@@ -261,15 +278,10 @@ public class InstanceUtil {
 	 * @param args 构造函数的参数
 	 * @return 新建的实例
 	 */
-	public static Object newInstance(String className, Object[] args) {
+	public static Object newInstance(String className, Object... args) {
 		try {
 			Class<?> newoneClass = Class.forName(className);
-			Class<?>[] argsClass = new Class[args.length];
-			for (int i = 0, j = args.length; i < j; i++) {
-				argsClass[i] = args[i].getClass();
-			}
-			Constructor<?> cons = newoneClass.getConstructor(argsClass);
-			return cons.newInstance(args);
+			return newInstance(newoneClass, args);
 		} catch (Exception e) {
 			throw new InstanceException(e);
 		}
@@ -381,6 +393,13 @@ public class InstanceUtil {
 		Map<k, v> map = newHashMap();
 		map.put(key, value);
 		return map;
+	}
+
+	/**
+	 * Constructs an empty ConcurrentHashMap.
+	 */
+	public static <k, v> ConcurrentHashMap<k, v> newConcurrentHashMap() {
+		return new ConcurrentHashMap<k, v>();
 	}
 }
 

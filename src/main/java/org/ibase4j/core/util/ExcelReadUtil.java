@@ -17,15 +17,15 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
- * Excel辅助类
+ * 读取Excel辅助类
  * 
  * @author ShenHuaJie
  */
-public class ExcelUtil {
-	private ExcelUtil() {
+public class ExcelReadUtil {
+	private ExcelReadUtil() {
 	}
 
-	private static final Log log = LogFactory.getLog(ExcelUtil.class);
+	private static final Log log = LogFactory.getLog(ExcelReadUtil.class);
 
 	/**
 	 * 获取Excel数据,返回List<String[]>

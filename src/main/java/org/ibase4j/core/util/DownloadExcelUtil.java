@@ -41,8 +41,8 @@ import jxl.write.biff.RowsExceededException;
  * @since 2011-11-08
  */
 @SuppressWarnings("deprecation")
-public class DownLoadExlUtil {
-    private static final Log   log        = LogFactory.getLog(DownLoadExlUtil.class);
+public class DownloadExcelUtil {
+    private static final Log   log        = LogFactory.getLog(DownloadExcelUtil.class);
 
     private Integer            icol       = 0;                                       // 记录列
     private Integer            irow       = -1;                                      // 记录行
@@ -69,7 +69,7 @@ public class DownLoadExlUtil {
      *            工作表名
      * @throws IOException
      */
-    public DownLoadExlUtil(HttpServletResponse response, String fileName, String sheetName)
+    public DownloadExcelUtil(HttpServletResponse response, String fileName, String sheetName)
                                                                                            throws IOException {
         startTime = System.currentTimeMillis();
         if (fileName.indexOf(".xls") < 0) {

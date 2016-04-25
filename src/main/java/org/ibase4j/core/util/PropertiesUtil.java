@@ -29,12 +29,10 @@ public class PropertiesUtil {
 			objProperties = new Properties();
 			objProperties.load(is);
 		} catch (FileNotFoundException e) {
-			log.error("未找到属性资源文件!");
-			e.printStackTrace();
+			log.error("未找到属性资源文件!", e);
 			throw e;
 		} catch (Exception e) {
-			log.error("读取属性资源文件发生未知错误!");
-			e.printStackTrace();
+			log.error("读取属性资源文件发生未知错误!", e);
 			throw e;
 		} finally {
 			is.close();
@@ -53,15 +51,13 @@ public class PropertiesUtil {
 		try {
 			File file = new File(pFileName + ".properties");
 			outStream = new FileOutputStream(file);
-			objProperties.store(outStream, "#G4Studio");
+			objProperties.store(outStream, "#iBase4J");
 		} catch (Exception e) {
-			log.error("保存属性文件出错.");
-			e.printStackTrace();
+			log.error("保存属性文件出错.", e);
 		} finally {
 			try {
 				outStream.close();
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 
