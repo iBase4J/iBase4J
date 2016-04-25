@@ -1,6 +1,5 @@
 package org.ibase4j.core.support.ftp;
 
-import java.io.File;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -72,11 +71,19 @@ public class SftpClient {
 		}
 	}
 
+	/** 发送文件 */
 	public void put(String src, String dst) {
-		File file = new File(src);
-		long fileSize = file.length();
 		try {
-			channel.put(src, dst, new FileProgressMonitor(fileSize));
+			channel.put(src, dst, new FileProgressMonitor());
+		} catch (SftpException e) {
+			throw new FtpException("", e);
+		}
+	}
+
+	/** 获取文件 */
+	public void get(String src, String dst) {
+		try {
+			channel.get(src, dst, new FileProgressMonitor());
 		} catch (SftpException e) {
 			throw new FtpException("", e);
 		}

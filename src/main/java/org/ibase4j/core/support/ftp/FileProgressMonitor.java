@@ -15,48 +15,37 @@ public class FileProgressMonitor implements SftpProgressMonitor {
 	private int minInterval = 100; // 打印日志时间间隔
 	private long start; // 开始时间
 	private DecimalFormat df = new DecimalFormat("#.##");
-	private long preInterval;
+	private long preTime;
 
-	public FileProgressMonitor(long fileSize) {
-		this.fileSize = fileSize;
-	}
-
+	/** 传输开始 */
 	public void init(int op, String src, String dest, long max) {
+		this.fileSize = max;
 		logger.info("Transferring begin.");
 		start = System.currentTimeMillis();
 	}
 
-	/**
-	 * 实现了SftpProgressMonitor接口的count方法
-	 */
+	/** 传输中 */
 	public boolean count(long count) {
 		if (fileSize != 0 && transfered == 0) {
-			logger.info("Sending progress message: {}%", df.format(0));
-			preInterval = System.currentTimeMillis();
+			logger.info("Transferring progress message: {}%", df.format(0));
+			preTime = System.currentTimeMillis();
 		}
-		add(count);
+		transfered += count;
 		if (fileSize != 0) {
-			long interval = System.currentTimeMillis() - preInterval;
+			long interval = System.currentTimeMillis() - preTime;
 			if (transfered == fileSize || interval > minInterval) {
-				preInterval = System.currentTimeMillis();
+				preTime = System.currentTimeMillis();
 				double d = ((double) transfered * 100) / (double) fileSize;
-				logger.info("Sending progress message: {}%", df.format(d));
+				logger.info("Transferring progress message: {}%", df.format(d));
 			}
 		} else {
-			logger.info("Sending progress message: " + transfered);
+			logger.info("Transferring progress message: " + transfered);
 		}
 		return true;
 	}
 
-	/**
-	 * 实现了SftpProgressMonitor接口的end方法
-	 */
+	/** 传输结束 */
 	public void end() {
 		logger.info("Transferring end. used time: {}ms", System.currentTimeMillis() - start);
 	}
-
-	private void add(long count) {
-		transfered = transfered + count;
-	}
-
 }
