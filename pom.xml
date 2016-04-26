@@ -27,8 +27,9 @@
 		<!-- -->
 		<fastjson.version>1.2.8</fastjson.version>
 		<druid.version>1.0.18</druid.version>
-		<jedis.version>2.7.3</jedis.version>
 		<dubbo.version>2.5.3</dubbo.version>
+		<jedis.version>2.7.3</jedis.version>
+		<netty.version>3.2.10.Final</netty.version>
 	</properties>
 
 	<dependencies>
@@ -74,7 +75,7 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<!-- alibaba工具包 druid用来配置数据库 -->
+		<!-- alibaba工具包 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
@@ -94,11 +95,12 @@
 					<groupId>org.springframework</groupId>
 					<artifactId>spring</artifactId>
 				</exclusion>
-				<exclusion>
-					<groupId>org.jboss.netty</groupId>
-					<artifactId>netty</artifactId>
-				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>${netty.version}</version>
 		</dependency>
 		<!-- 导入Mysql数据库链接jar包 -->
 		<dependency>
