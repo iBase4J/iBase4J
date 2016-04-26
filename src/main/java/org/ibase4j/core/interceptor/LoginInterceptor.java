@@ -28,16 +28,16 @@ public class LoginInterceptor extends BaseInterceptor {
 		boolean success = true;
 		HttpCode httpCode = null;
 		String curruser = WebUtil.getCurrentUser(request);
-		if (url.indexOf("online") == -1) { // 后端请求后端数据
+		if (url.indexOf("online") == -1) { // 后端请求
 			if (curruser == null) {
 				success = false;
 				httpCode = HttpCode.FORBIDDEN;
 			}
-		} else { // 前端请求后端数据
+		} else { // 前端请求
 			if (curruser == null) {
 				success = false;
 				String isAjax = request.getHeader("x-requested-with");
-				if (StringUtils.isNotEmpty(isAjax)) {
+				if (StringUtils.isNotEmpty(isAjax)) { // 异步
 					httpCode = HttpCode.FORBIDDEN;
 				} else {
 					String host = InetAddress.getLocalHost().getHostAddress();

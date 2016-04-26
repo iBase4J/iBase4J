@@ -11,7 +11,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
 /**
- * 切换数据源
+ * 切换数据源(不同方法调用不同数据源)
  */
 @Aspect
 @Component

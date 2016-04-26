@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ibase4j.core.Constants;
+import org.ibase4j.core.config.Resource;
 import org.ibase4j.core.util.Request2ModelUtils;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.core.util.WebUtil;
@@ -35,8 +35,8 @@ public class LoginController extends BaseController {
 	public ModelMap login(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap,
 			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
-		Assert.notNull(account, Constants.ACCOUNT_IS_NULL);
-		Assert.notNull(password, Constants.PASSWORD_IS_NULL);
+		Assert.notNull(account, Resource.RESOURCE.getString("ACCOUNT_IS_NULL"));
+		Assert.notNull(password, Resource.RESOURCE.getString("PASSWORD_IS_NULL"));
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("countSql", 0);
 		params.put("usable", 1);
@@ -65,8 +65,8 @@ public class LoginController extends BaseController {
 	public ModelMap regin(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap,
 			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
-		Assert.notNull(account, Constants.ACCOUNT_IS_NULL);
-		Assert.notNull(password, Constants.PASSWORD_IS_NULL);
+		Assert.notNull(account, Resource.RESOURCE.getString("ACCOUNT_IS_NULL"));
+		Assert.notNull(password, Resource.RESOURCE.getString("PASSWORD_IS_NULL"));
 		SysUser sysUser = Request2ModelUtils.covert(SysUser.class, request);
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
 		sysUserService.add(sysUser);

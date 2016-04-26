@@ -2,7 +2,6 @@ package org.ibase4j.core.support;
 
 import java.util.Date;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -20,9 +19,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
+import org.ibase4j.core.config.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.PropertySource;
 
 /**
  * 邮件引擎
@@ -30,11 +29,9 @@ import org.springframework.context.annotation.PropertySource;
  * @author ShenHuaJie
  * @version $Id: MailEntrance.java, v 0.1 2014年12月4日 下午8:34:48 ShenHuaJie Exp $
  */
-@PropertySource("classpath:config/email.properties")
 public class EmailSender {
 	private Logger logger = LoggerFactory.getLogger(EmailSender.class);
 
-	private ResourceBundle bundle = ResourceBundle.getBundle("config/email");
 	private MimeMessage mimeMsg; // MIME邮件对象
 	private Session session; // 邮件会话对象
 	private Properties props; // 系统属性
@@ -77,7 +74,7 @@ public class EmailSender {
 	 */
 	public void setSmtpHost(String hostName) {
 		if (hostName == null || hostName.trim().equals("")) {
-			hostName = bundle.getString("smtp.host");
+			hostName = Resource.EMAIL.getString("smtp.host");
 		}
 		logger.info(SET_HOST + hostName);
 		if (props == null)
@@ -118,7 +115,7 @@ public class EmailSender {
 		if (props == null)
 			props = System.getProperties();
 		if (userkey == null || userkey.trim().equals("")) {
-			userkey = bundle.getString("authorisation.code");
+			userkey = Resource.EMAIL.getString("authorisation.code");
 		}
 		if (userkey == null || userkey.trim().equals("")) {
 			props.put("mail.smtp.auth", "false");
@@ -135,10 +132,10 @@ public class EmailSender {
 	 */
 	public void setNamePass(String name, String pass, String key) {
 		if (name == null || name.trim().equals("")) {
-			name = bundle.getString("user.name");
+			name = Resource.EMAIL.getString("user.name");
 		}
 		if (pass == null || pass.trim().equals("")) {
-			pass = bundle.getString("user.password");
+			pass = Resource.EMAIL.getString("user.password");
 		}
 		username = name;
 		password = pass;
@@ -209,7 +206,7 @@ public class EmailSender {
 	 */
 	public boolean setFrom(String from) {
 		if (from == null || from.trim().equals("")) {
-			from = bundle.getString("send.from");
+			from = Resource.EMAIL.getString("send.from");
 		}
 		try {
 			String[] f = from.split(",");

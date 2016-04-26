@@ -13,7 +13,7 @@ public class PermissionInterceptor extends BaseInterceptor {
 		}
 		boolean success = true;
 		// String url = request.getServletPath();
-
+		// 判断用户是否有该请求的权限
 		return success;
 	}
 }

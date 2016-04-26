@@ -1,11 +1,10 @@
 package org.ibase4j.core.support.ftp;
 
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.annotation.PropertySource;
+import org.ibase4j.core.config.Resource;
 
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
@@ -18,10 +17,8 @@ import com.jcraft.jsch.SftpException;
  * 
  * @author
  */
-@PropertySource("classpath:config/ssh.properties")
 public class SftpClient {
 	private Logger logger = LogManager.getLogger();
-	private ResourceBundle bundle = ResourceBundle.getBundle("config/ssh");
 	private Session session = null;
 	private ChannelSftp channel = null;
 
@@ -35,12 +32,12 @@ public class SftpClient {
 	public SftpClient init() {
 		try {
 			Properties config = new Properties();
-			String host = bundle.getString("host");
-			int port = Integer.valueOf(bundle.getString("port"));
-			String userName = bundle.getString("user.name");
-			String password = bundle.getString("user.password");
-			int timeout = Integer.valueOf(bundle.getString("timeout"));
-			int aliveMax = Integer.valueOf(bundle.getString("aliveMax"));
+			String host = Resource.SSH.getString("host");
+			int port = Integer.valueOf(Resource.SSH.getString("port"));
+			String userName = Resource.SSH.getString("user.name");
+			String password = Resource.SSH.getString("user.password");
+			int timeout = Integer.valueOf(Resource.SSH.getString("timeout"));
+			int aliveMax = Integer.valueOf(Resource.SSH.getString("aliveMax"));
 			JSch jsch = new JSch(); // 创建JSch对象
 			session = jsch.getSession(userName, host, port); // 根据用户名，主机ip，端口获取一个Session对象
 			if (password != null) {

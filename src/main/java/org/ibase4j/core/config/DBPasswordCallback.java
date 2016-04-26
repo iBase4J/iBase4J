@@ -7,6 +7,7 @@ import org.ibase4j.core.util.SecurityUtil;
 
 import com.alibaba.druid.util.DruidPasswordCallback;
 
+/** 数据库密码回调解密 */
 @SuppressWarnings("serial")
 public class DBPasswordCallback extends DruidPasswordCallback {
 	private static final byte[] key = { 9, -1, 0, 5, 39, 8, 6, 19 };
@@ -24,6 +25,7 @@ public class DBPasswordCallback extends DruidPasswordCallback {
 		}
 	}
 
+	// 请使用该方法加密后，把密文写入classpath:/config/jdbc.properties
 	public static void main(String[] args) {
 		System.out.println(SecurityUtil.encryptDes("", key));
 	}

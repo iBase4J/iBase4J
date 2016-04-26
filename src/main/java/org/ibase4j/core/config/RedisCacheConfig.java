@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import com.alibaba.fastjson.JSON;
 
 /**
+ * Redis缓存配置
  * @author ShenHuaJie
  */
 @Configuration
