@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 	http://www.springframework.org/schema/jee
@@ -13,17 +12,14 @@
 	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
 	default-lazy-init="false">
 	<!-- 提供方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用暴露出来的 -->
-	<dubbo:application name="${dubbo.application.name}_provider" />
+	<dubbo:application name="${dubbo.application.name}" />
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
-	<dubbo:registry address="${dubbo.registry.address}" usename="" password=""
+	<dubbo:registry address="${dubbo.registry.address}"
 		check="false" subscribe="true" />
-	<!-- expose this service through dubbo protocol, through port 20880 -->
-	<!-- <dubbo:protocol name="dubbo" port="9090" server="netty" client="netty" 
-		codec="dubbo" serialization="hessian2" charset="UTF-8" threadpool="fixed" 
-		threads="100" queues="0" iothreads="9" buffer="8192" accepts="1000" payload="8388608" 
-		/> -->
 	<!-- 用dubbo协议在20880端口暴露服务 -->
 	<dubbo:protocol name="dubbo" port="20880" />
-	<!-- 要暴露的服务接口@com.alibaba.dubbo.config.annotation.Service -->
+	<!-- 服务端要暴露的服务接口@com.alibaba.dubbo.config.annotation.Service -->
+	<!-- 消费端要引用的服务@Reference -->
 	<dubbo:annotation package="org.ibase4j" />
+	<dubbo:consumer timeout="5000" />
 </beans>
