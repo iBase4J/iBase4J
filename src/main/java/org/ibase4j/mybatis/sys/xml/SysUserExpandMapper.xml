@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.ibase4j.mybatis.sys.dao.SysUserExpandMapper">
 
-	<select id="query" parameterType="java.util.Map" resultType="java.util.Map">
+	<select id="query" parameterType="java.util.Map"
+		resultMap="org.ibase4j.mybatis.generator.dao.SysUserMapper.BaseResultMap">
 		select * from sys_user where 1=1
 		<if test="usable != null">and usable_=#{usable}</if>
 		<if test="account != null">and account_=#{account}</if>

@@ -42,10 +42,10 @@ public class LoginController extends BaseController {
 		params.put("usable", 1);
 		params.put("account", account);
 		params.put("password", SecurityUtil.encryptSHA(password));
-		PageInfo<Map<String, Object>> pageInfo = sysUserService.query(params);
+		PageInfo<SysUser> pageInfo = sysUserService.query(params);
 		if (pageInfo.getSize() == 1) {
-			Map<String, Object> user = pageInfo.getList().get(0);
-			WebUtil.saveCurrentUser(request, user.get("id_"));
+			SysUser user = pageInfo.getList().get(0);
+			WebUtil.saveCurrentUser(request, user.getId());
 			return setSuccessModelMap(modelMap);
 		}
 		throw new IllegalArgumentException("用户名或密码错误.");

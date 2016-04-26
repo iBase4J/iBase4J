@@ -55,9 +55,9 @@ public class SysUserService extends BaseService {
 	}
 
 	@Cacheable
-	public PageInfo<Map<String, Object>> query(Map<String, Object> params) {
+	public PageInfo<SysUser> query(Map<String, Object> params) {
 		this.startPage(params);
-		Page<Map<String, Object>> list = sysUserExpandMapper.query(params);
-		return new PageInfo<Map<String, Object>>(list);
+		Page<SysUser> list = sysUserExpandMapper.query(params);
+		return new PageInfo<SysUser>(list);
 	}
 }

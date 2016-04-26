@@ -5,6 +5,8 @@ package org.ibase4j.mybatis.sys.dao;
 
 import java.util.Map;
 
+import org.ibase4j.mybatis.generator.model.SysUser;
+
 import com.github.pagehelper.Page;
 
 /**
@@ -12,6 +14,6 @@ import com.github.pagehelper.Page;
  */
 public interface SysUserExpandMapper {
 
-	Page<Map<String, Object>> query(Map<String, Object> params);
+	Page<SysUser> query(Map<String, Object> params);
 
 }
