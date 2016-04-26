@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @ComponentScan
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:Spring-db.xml" })
+@ContextConfiguration(locations = { "classpath:Spring-test.xml" })
 public class EmailTest {
 	@Test
 	public void sendEmail() {

@@ -26,8 +26,7 @@ import com.github.pagehelper.PageInfo;
  */
 @ComponentScan
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:Spring-db.xml", "classpath:Spring-mybatis.xml",
-		"classpath:Spring-redis.xml" })
+@ContextConfiguration("classpath:Spring-config.xml")
 public class SysUserServiceTest {
 	private Logger logger = getLogger();
 	@Autowired

@@ -1,5 +1,7 @@
 package org.ibase4j.core.support;
 
+import org.ibase4j.core.config.Resource;
+
 /**
  * Ajax 请求时的自定义查询状态码，主要参考Http状态码，但并不完全对应
  * 
@@ -8,32 +10,30 @@ package org.ibase4j.core.support;
  */
 public enum HttpCode {
 	/** 200请求成功 */
-	OK(200, "请求成功"),
+	OK(200),
 	/** 400请求参数出错 */
-	BAD_REQUEST(400, "请求参数出错"),
+	BAD_REQUEST(400),
 	/** 401没有登录 */
-	UNAUTHORIZED(401, "没有登录"),
+	UNAUTHORIZED(401),
 	/** 403没有权限 */
-	FORBIDDEN(403, "没有权限"),
+	FORBIDDEN(403),
 	/** 404找不到页面 */
-	NOT_FOUND(404, "找不到页面"),
+	NOT_FOUND(404),
 	/** 408请求超时 */
-	REQUEST_TIMEOUT(408, "请求超时"),
+	REQUEST_TIMEOUT(408),
 	/** 409发生冲突 */
-	CONFLICT(409, "发生冲突"),
+	CONFLICT(409),
 	/** 410已被删除 */
-	GONE(410, "已被删除"),
+	GONE(410),
 	/** 423已被锁定 */
-	LOCKED(423, "已被锁定"),
+	LOCKED(423),
 	/** 500服务器出错 */
-	INTERNAL_SERVER_ERROR(500, "服务器出错");
+	INTERNAL_SERVER_ERROR(500);
 
 	private final Integer value;
-	private final String msg;
 
-	private HttpCode(Integer value, String msg) {
+	private HttpCode(Integer value) {
 		this.value = value;
-		this.msg = msg;
 	}
 
 	/**
@@ -44,7 +44,7 @@ public enum HttpCode {
 	}
 
 	public String msg() {
-		return this.msg;
+		return Resource.RESOURCE.getString("HTTPCODE_" + this.value);
 	}
 
 	public String toString() {
