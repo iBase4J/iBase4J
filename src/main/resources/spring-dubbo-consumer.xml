@@ -13,12 +13,11 @@
 	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
 	default-lazy-init="false">
 	<!-- 提供方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用暴露出来的 -->
-	<dubbo:application name="dubbo_provider" />
+	<dubbo:application name="${dubbo.application.name}_consumer" />
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
-	<dubbo:registry address="zookeeper://127.0.0.1:2181"
+	<dubbo:registry address="${dubbo.registry.address}" usename="" password=""
 		check="false" loadbalance="leastactive" />
-	<!-- 要引用的服务 -->
+	<!-- 要引用的服务@Reference -->
 	<dubbo:consumer timeout="5000" />
-	<dubbo:reference interface="cn.test.dubbo.registry.service.TestRegistryService"
-		id="testRegistryService" />
+	<dubbo:annotation package="org.ibase4j" />
 </beans>

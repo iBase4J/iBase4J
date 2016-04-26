@@ -13,9 +13,9 @@
 	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
 	default-lazy-init="false">
 	<!-- 提供方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用暴露出来的 -->
-	<dubbo:application name="dubbo_provider" />
+	<dubbo:application name="${dubbo.application.name}_provider" />
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
-	<dubbo:registry address="zookeeper://127.0.0.1:2181"
+	<dubbo:registry address="${dubbo.registry.address}" usename="" password=""
 		check="false" subscribe="true" />
 	<!-- expose this service through dubbo protocol, through port 20880 -->
 	<!-- <dubbo:protocol name="dubbo" port="9090" server="netty" client="netty" 
@@ -24,7 +24,6 @@
 		/> -->
 	<!-- 用dubbo协议在20880端口暴露服务 -->
 	<dubbo:protocol name="dubbo" port="20880" />
-	<!-- 要暴露的服务接口 -->
-	<dubbo:service interface="cn.test.dubbo.registry.service.TestRegistryService"
-		ref="testRegistryService" />
+	<!-- 要暴露的服务接口@com.alibaba.dubbo.config.annotation.Service -->
+	<dubbo:annotation package="org.ibase4j" />
 </beans>

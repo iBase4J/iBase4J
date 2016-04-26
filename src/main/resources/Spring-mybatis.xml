@@ -30,15 +30,15 @@
 	<!-- 分布式事务 -->
     <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
     	init-method="init" destroy-method="close">
-        <property name="forceShutdown" value="true"/>
+        <property name="forceShutdown" value="true" />
     </bean>
     <bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
-        <property name="transactionTimeout" value="300"/>
+        <property name="transactionTimeout" value="300" />
     </bean>
     <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
-        <property name="transactionManager" ref="atomikosTransactionManager"/>
-        <property name="userTransaction" ref="atomikosUserTransaction"/>
-        <property name="allowCustomIsolationLevels" value="true"/>
+        <property name="transactionManager" ref="atomikosTransactionManager" />
+        <property name="userTransaction" ref="atomikosUserTransaction" />
+        <property name="allowCustomIsolationLevels" value="true" />
     </bean>
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<!-- 配置事务异常封装 -->
