@@ -4,6 +4,6 @@ import org.ibase4j.web.BaseController;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class SysCodeController extends BaseController {
+public class SysDicController extends BaseController {
 
 }

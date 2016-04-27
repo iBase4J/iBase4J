@@ -38,17 +38,15 @@ public class SysUserController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ModelMap update(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "account", required = false) String account,
-			@RequestParam(value = "password", required = false) String password) {
+			@RequestParam(value = "id", required = false) Integer id,
+			@RequestParam(value = "account", required = false) String account) {
+		Assert.notNull(id, Resource.RESOURCE.getString("USER_ID_IS_NULL"));
 		Assert.notNull(account, Resource.RESOURCE.getString("ACCOUNT_IS_NULL"));
-		Assert.notNull(password, Resource.RESOURCE.getString("PASSWORD_IS_NULL"));
 		SysUser sysUser = Request2ModelUtils.covert(SysUser.class, request);
-		if (sysUser.getId() == null) {
-			sysUser.setPassword(SecurityUtil.encryptSHA(password));
-			sysUserService.add(sysUser);
-		} else {
-			sysUserService.update(sysUser);
-		}
+		SysUser user = sysUserService.queryById(sysUser.getId());
+		Assert.notNull(user, String.format(Resource.RESOURCE.getString("USER_IS_NULL"), id));
+		sysUser.setPassword(user.getPassword());
+		sysUserService.update(sysUser);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -67,7 +65,7 @@ public class SysUserController extends BaseController {
 		return setSuccessModelMap(modelMap);
 	}
 
-	 // 查询用户
+	// 查询用户
 	@ResponseBody
 	@RequestMapping(value = "/read/list")
 	public ModelMap get(ModelMap modelMap, HttpServletRequest request) {

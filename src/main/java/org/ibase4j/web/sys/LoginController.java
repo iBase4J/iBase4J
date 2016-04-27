@@ -69,7 +69,7 @@ public class LoginController extends BaseController {
 		Assert.notNull(password, Resource.RESOURCE.getString("PASSWORD_IS_NULL"));
 		SysUser sysUser = Request2ModelUtils.covert(SysUser.class, request);
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
-		sysUserService.add(sysUser);
+		sysUserService.update(sysUser);
 		WebUtil.saveCurrentUser(request, sysUser.getId());
 		return setSuccessModelMap(modelMap);
 	}
