@@ -5,15 +5,17 @@
                         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
-	<!--  -->
-	<bean id="dbPasswordCallback" class="org.ibase4j.core.config.DBPasswordCallback" lazy-init="true" />
+	<bean id="dbPasswordCallback" class="org.ibase4j.core.config.DBPasswordCallback">
+		<description>数据库连接回调密码解密</description>
+	</bean>
 	<bean id="statFilter" class="com.alibaba.druid.filter.stat.StatFilter" lazy-init="true">
+		<description>状态过滤器</description>
 		<property name="logSlowSql" value="true" />
 		<property name="mergeSql" value="true" />
 	</bean>
-	<!-- 数据库连接 -->
 	<bean id="readDataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		destroy-method="close" init-method="init" lazy-init="true">
+		<description>只读数据库连接</description>
 		<property name="driverClassName" value="${driver}" />
 		<property name="url" value="${url1}" />
 		<property name="username" value="${username}" />
@@ -46,9 +48,9 @@
 		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
 		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
 	</bean>
-
 	<bean id="writeDataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		destroy-method="close" init-method="init" lazy-init="true">
+		<description>只写数据库连接</description>
 		<property name="driverClassName" value="${driver}" />
 		<property name="url" value="${url}" />
 		<property name="username" value="${username}" />
@@ -73,8 +75,8 @@
 		<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
 		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
 	</bean>
-	<!-- 数据源 -->
 	<bean id="dataSource" class="org.ibase4j.core.aspect.ChooseDataSource" lazy-init="true">
+		<description>数据源</description>
 		<property name="targetDataSources">
 			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
 				<!-- write -->

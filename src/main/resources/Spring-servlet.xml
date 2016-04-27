@@ -16,14 +16,15 @@
 		<bean class="org.ibase4j.core.interceptor.LoginInterceptor" />
 		<bean class="org.ibase4j.core.interceptor.PermissionInterceptor" />
 	</mvc:interceptors>
-	<!-- 视图模式配置 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<description>视图模式配置</description>
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 	<!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<description>注解controller方法适配器</description>
 		<property name="messageConverters">
 			<list>
 				<!--JSON转换器 -->
@@ -42,9 +43,8 @@
 			</list>
 		</property>
 	</bean>
-	<!-- 配置文件上传 -->
 	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- 默认编码 -->
+		<description>配置文件上传</description>
 		<property name="defaultEncoding" value="utf-8" />
 		<!-- 文件大小最大值 -->
 		<property name="maxUploadSize" value="10485760000" />
