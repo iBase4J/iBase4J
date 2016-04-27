@@ -51,9 +51,6 @@
 		<!-- 内存中的最大值 -->
 		<property name="maxInMemorySize" value="40960" />
 	</bean>
-	<!-- 资源重定向 -->
-	<mvc:resources mapping="js/**" location="/WEB-INF/velocity/js/" cache-period="600" />
-	<mvc:resources mapping="css/**" location="/WEB-INF/velocity/css/" cache-period="600" />
-	<mvc:resources mapping="images/**" location="/WEB-INF/resources/images/" cache-period="600" />
-	<mvc:resources mapping="upload/**" location="/WEB-INF/resources/upload/" cache-period="300" />
+	<!-- 资源重定向(仅作为后台使用不提供静态资源) -->
+	<!-- <mvc:resources mapping="upload/**" location="/WEB-INF/resources/upload/" cache-period="300" /> -->
 </beans>
