@@ -1,4 +1,4 @@
-**说明：Redis,ZooKeeper均使用默认配置，启动项目前请安装Redis和ZooKeeper。Redis，ZooKeeper请在附件下载。**
+**说明：启动项目前请安装Redis和ZooKeeper，您可以在附件中下载。系统中均使用默认配置。**
 
 eclipse使用maven命令: ::
 
