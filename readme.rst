@@ -1,11 +1,9 @@
-Italic, Emphasis
+
 说明：Redis,ZooKeeper均使用默认配置，启动项目前请安装Redis和ZooKeeper。Redis，ZooKeeper请在附件下载。
 
-Italic, Emphasis
-		   eclipse使用maven命令mybatis-generator:generate生成mybatis文件；
+		  eclipse使用maven命令mybatis-generator:generate生成mybatis文件；
 
-Italic, Emphasis
-		   clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
+          clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
 
 1、数据库
 ---------------
