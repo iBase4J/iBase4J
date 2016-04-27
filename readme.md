@@ -1,11 +1,11 @@
-**说明：启动项目前请安装Redis和ZooKeeper，您可以在附件中下载。系统中均使用默认配置。**
-
+>#说明：启动项目前请安装Redis和ZooKeeper，您可以在附件中下载。系统中均使用默认配置。
+...
 eclipse使用maven命令: ::
 
          mybatis-generator:generate生成mybatis文件；
 
          clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
-
+...
 1、数据库
 ---------------
 
