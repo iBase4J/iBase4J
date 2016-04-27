@@ -1,3 +1,6 @@
+说明：Redis,ZooKeeper均使用默认配置，启动项目前请安装Redis和ZooKeeper。
+		   Redis，ZooKeeper请在附件下载。
+
 1、数据库
 ---------------
 
