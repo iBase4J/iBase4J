@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `sys_dept` (
   `dept_name` varchar(50) DEFAULT NULL COMMENT '部门名称',
   `parent_id` int(20) DEFAULT NULL COMMENT '上级部门编号',
   `enable_` int(1) DEFAULT NULL COMMENT '启用状态',
-  `sortno_` int(3) DEFAULT NULL COMMENT '排序号',
+  `sort_no` int(3) DEFAULT NULL COMMENT '排序号',
   `leaf_` int(1) DEFAULT NULL COMMENT '叶子节点(0:树枝节点;1:叶子节点)',
   `remark_` varchar(100) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id_`)
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   `iconcls_` varchar(50) DEFAULT NULL COMMENT '节点图标CSS类名',
   `request_` varchar(100) DEFAULT NULL COMMENT '请求地址',
   `expand_` int(1) NOT NULL DEFAULT '0' COMMENT '展开状态(1:展开;0:收缩)',
-  `sortno_` int(2) DEFAULT NULL COMMENT '排序号',
+  `sort_no` int(2) DEFAULT NULL COMMENT '排序号',
   `leaf_` int(1) NOT NULL DEFAULT '0' COMMENT '叶子节点(0:树枝节点;1:叶子节点)',
   `remark_` varchar(100) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id_`)
