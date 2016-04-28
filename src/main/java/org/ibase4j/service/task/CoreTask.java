@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component("coreTask")
 public class CoreTask {
-	Logger logger = LogManager.getLogger();
+	private final Logger logger = LogManager.getLogger();
 
 	/** 定时清除国际化信息 */
 	public void run() {

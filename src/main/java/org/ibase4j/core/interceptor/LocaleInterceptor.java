@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -16,9 +18,12 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @author ShenHuaJie
  */
 public class LocaleInterceptor extends HandlerInterceptorAdapter {
+	private final Logger logger = LogManager.getLogger();
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		String url = request.getServletPath();
+		logger.info(url);
 		// 设置客户端语言
 		HttpSession session = request.getSession();
 		Locale locale = (Locale) session.getAttribute("LOCALE");

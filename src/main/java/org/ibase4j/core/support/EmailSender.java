@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @version $Id: MailEntrance.java, v 0.1 2014年12月4日 下午8:34:48 ShenHuaJie Exp $
  */
 public class EmailSender {
-	private Logger logger = LoggerFactory.getLogger(EmailSender.class);
+	private final Logger logger = LoggerFactory.getLogger(EmailSender.class);
 
 	private MimeMessage mimeMsg; // MIME邮件对象
 	private Session session; // 邮件会话对象

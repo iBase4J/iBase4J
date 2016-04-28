@@ -9,7 +9,7 @@ import com.jcraft.jsch.SftpProgressMonitor;
 
 /** 监控 */
 public class FileProgressMonitor implements SftpProgressMonitor {
-	private Logger logger = LogManager.getLogger();
+	private final Logger logger = LogManager.getLogger();
 	private long transfered; // 记录已传输的数据总大小
 	private long fileSize; // 记录文件总大小
 	private int minInterval = 100; // 打印日志时间间隔

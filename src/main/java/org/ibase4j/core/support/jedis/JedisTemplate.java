@@ -9,7 +9,7 @@ import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
 public class JedisTemplate {
-	private static Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger();
 
 	private static ShardedJedisPool shardedJedisPool = null;
 	private static Integer EXPIRE = 60 * 60 * 1; // 1小时

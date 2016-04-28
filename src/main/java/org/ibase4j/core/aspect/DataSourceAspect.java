@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class DataSourceAspect {
-	Logger Logger = LogManager.getLogger();
+	private final Logger Logger = LogManager.getLogger();
 
 	@Pointcut("execution(* org.ibase4j.mybatis.*.dao.*.*(..))")
 	public void aspect() {

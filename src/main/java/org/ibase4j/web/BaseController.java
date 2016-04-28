@@ -23,7 +23,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
  * @author ShenHuaJie
  */
 public class BaseController {
-	protected Logger logger = LogManager.getLogger(this.getClass());
+	protected final Logger logger = LogManager.getLogger(this.getClass());
 
 	/** 获取当前用户Id */
 	protected String getCurrUserId(HttpServletRequest request) {

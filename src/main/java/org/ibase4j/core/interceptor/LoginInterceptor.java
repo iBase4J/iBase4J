@@ -20,14 +20,13 @@ public class LoginInterceptor extends BaseInterceptor {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		String url = request.getServletPath();
-		logger.info(url);
 		if (super.whiteURL(request)) {
 			return true;
 		}
 		boolean success = true;
 		HttpCode httpCode = null;
 		String curruser = WebUtil.getCurrentUser(request);
+		String url = request.getServletPath();
 		if (url.indexOf("online") == -1) { // 后端请求
 			if (curruser == null) {
 				success = false;

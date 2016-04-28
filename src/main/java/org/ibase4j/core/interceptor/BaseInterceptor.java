@@ -11,7 +11,7 @@ import org.ibase4j.core.config.Resources;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class BaseInterceptor extends HandlerInterceptorAdapter {
-	protected static Logger logger = LogManager.getLogger();
+	protected final Logger logger = LogManager.getLogger();
 	protected static String[] notFilter = new String[] {};
 
 	static {
