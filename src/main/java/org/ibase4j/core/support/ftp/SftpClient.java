@@ -4,7 +4,8 @@ import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.config.Resource;
+import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.exception.FtpException;
 
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
@@ -32,12 +33,12 @@ public class SftpClient {
 	public SftpClient init() {
 		try {
 			Properties config = new Properties();
-			String host = Resource.SSH.getString("host");
-			int port = Integer.valueOf(Resource.SSH.getString("port"));
-			String userName = Resource.SSH.getString("user.name");
-			String password = Resource.SSH.getString("user.password");
-			int timeout = Integer.valueOf(Resource.SSH.getString("timeout"));
-			int aliveMax = Integer.valueOf(Resource.SSH.getString("aliveMax"));
+			String host = Resources.SSH.getString("host");
+			int port = Integer.valueOf(Resources.SSH.getString("port"));
+			String userName = Resources.SSH.getString("user.name");
+			String password = Resources.SSH.getString("user.password");
+			int timeout = Integer.valueOf(Resources.SSH.getString("timeout"));
+			int aliveMax = Integer.valueOf(Resources.SSH.getString("aliveMax"));
 			JSch jsch = new JSch(); // 创建JSch对象
 			session = jsch.getSession(userName, host, port); // 根据用户名，主机ip，端口获取一个Session对象
 			if (password != null) {

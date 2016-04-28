@@ -5,7 +5,7 @@ package org.ibase4j.service.sys;
 
 import java.util.Map;
 
-import org.ibase4j.core.config.Resource;
+import org.ibase4j.core.config.Resources;
 import org.ibase4j.mybatis.generator.dao.SysUserMapper;
 import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.mybatis.sys.dao.SysUserExpandMapper;
@@ -47,7 +47,7 @@ public class SysUserService extends BaseService {
 	@Transactional
 	public void delete(Integer id) {
 		SysUser record = queryById(id);
-		Assert.notNull(record, String.format(Resource.RESOURCE.getString("USER_IS_NULL"), id));
+		Assert.notNull(record, String.format(Resources.getResouce("USER_IS_NULL"), id));
 		record.setUsable(0);
 		update(record);
 	}

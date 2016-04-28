@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.config.Resource;
+import org.ibase4j.core.config.Resources;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class BaseInterceptor extends HandlerInterceptorAdapter {
@@ -16,9 +16,9 @@ public class BaseInterceptor extends HandlerInterceptorAdapter {
 
 	static {
 		String url = "";
-		for (Enumeration<?> iterator = Resource.WHITEURL.getKeys(); iterator.hasMoreElements();) {
+		for (Enumeration<?> iterator = Resources.WHITEURL.getKeys(); iterator.hasMoreElements();) {
 			String key = (String) iterator.nextElement();
-			url += "," + Resource.WHITEURL.getString(key) + ",";
+			url += "," + Resources.WHITEURL.getString(key) + ",";
 		}
 		notFilter = StringUtils.split(url, ",");
 	}

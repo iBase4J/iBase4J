@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.ftp;
+package org.ibase4j.core.support.exception;
 
 /** FTP异常 */
 @SuppressWarnings("serial")

@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.ibase4j.core.config.Resource;
+import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.util.Request2ModelUtils;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.core.util.WebUtil;
@@ -40,11 +40,11 @@ public class SysUserController extends BaseController {
 	public ModelMap update(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id,
 			@RequestParam(value = "account", required = false) String account) {
-		Assert.notNull(id, Resource.RESOURCE.getString("USER_ID_IS_NULL"));
-		Assert.notNull(account, Resource.RESOURCE.getString("ACCOUNT_IS_NULL"));
+		Assert.notNull(id, Resources.getResouce("USER_ID_IS_NULL"));
+		Assert.notNull(account, Resources.getResouce("ACCOUNT_IS_NULL"));
 		SysUser sysUser = Request2ModelUtils.covert(SysUser.class, request);
 		SysUser user = sysUserService.queryById(sysUser.getId());
-		Assert.notNull(user, String.format(Resource.RESOURCE.getString("USER_IS_NULL"), id));
+		Assert.notNull(user, String.format(Resources.getResouce("USER_IS_NULL"), id));
 		sysUser.setPassword(user.getPassword());
 		sysUserService.update(sysUser);
 		return setSuccessModelMap(modelMap);
@@ -56,10 +56,10 @@ public class SysUserController extends BaseController {
 	public ModelMap updatePassword(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id,
 			@RequestParam(value = "password", required = false) String password) {
-		Assert.notNull(id, Resource.RESOURCE.getString("USER_ID_IS_NULL"));
-		Assert.notNull(password, Resource.RESOURCE.getString("PASSWORD_IS_NULL"));
+		Assert.notNull(id, Resources.getResouce("USER_ID_IS_NULL"));
+		Assert.notNull(password, Resources.getResouce("PASSWORD_IS_NULL"));
 		SysUser sysUser = sysUserService.queryById(id);
-		Assert.notNull(sysUser, String.format(Resource.RESOURCE.getString("USER_IS_NULL"), id));
+		Assert.notNull(sysUser, String.format(Resources.getResouce("USER_IS_NULL"), id));
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
 		sysUserService.update(sysUser);
 		return setSuccessModelMap(modelMap);

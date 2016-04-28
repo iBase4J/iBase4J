@@ -1,6 +1,6 @@
 package org.ibase4j.core.support;
 
-import org.ibase4j.core.config.Resource;
+import org.ibase4j.core.config.Resources;
 
 /**
  * Ajax 请求时的自定义查询状态码，主要参考Http状态码，但并不完全对应
@@ -44,7 +44,7 @@ public enum HttpCode {
 	}
 
 	public String msg() {
-		return Resource.RESOURCE.getString("HTTPCODE_" + this.value);
+		return Resources.getResouce("HTTPCODE_" + this.value);
 	}
 
 	public String toString() {
