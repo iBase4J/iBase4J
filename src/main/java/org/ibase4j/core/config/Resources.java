@@ -37,7 +37,7 @@ public final class Resources {
 		return message.getString(key);
 	}
 
-	/** 清楚国际化信息 */
+	/** 清除国际化信息 */
 	public static void flushMessage() {
 		MESSAGES.clear();
 	}

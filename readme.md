@@ -19,7 +19,7 @@ eclipse使用maven命令:
 3、MVC
 ======
 
-    基于spring mvc注解。Exception统一管理。
+    基于spring mvc注解。Exception统一管理。基于session的国际化提示信息，登录拦截器，权限拦截器。
 
 4、调度
 ======

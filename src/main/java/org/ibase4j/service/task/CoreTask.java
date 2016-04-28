@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class CoreTask {
 	Logger logger = LogManager.getLogger();
 
+	/** 定时清除国际化信息 */
 	@Scheduled(cron = "0 0/30 * * * ?")
 	public void run() {
 		Resources.flushMessage();
