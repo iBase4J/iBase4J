@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.WebUtil;
-import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
  * 登录拦截器
@@ -56,8 +55,6 @@ public class LoginInterceptor extends BaseInterceptor {
 		if (httpCode != null) {
 			response.setStatus(httpCode.value());
 			logger.info("Interceptor:" + httpCode.msg());
-		} else { // 设置客户端语言
-			LocaleContextHolder.setLocale(request.getLocale());
 		}
 		return success;
 	}

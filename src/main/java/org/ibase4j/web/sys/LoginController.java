@@ -35,8 +35,8 @@ public class LoginController extends BaseController {
 	public ModelMap login(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap,
 			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
-		Assert.notNull(account, Resources.getResouce("ACCOUNT_IS_NULL"));
-		Assert.notNull(password, Resources.getResouce("PASSWORD_IS_NULL"));
+		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
+		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("countSql", 0);
 		params.put("usable", 1);
@@ -48,7 +48,7 @@ public class LoginController extends BaseController {
 			WebUtil.saveCurrentUser(request, user.getId());
 			return setSuccessModelMap(modelMap);
 		}
-		throw new IllegalArgumentException(Resources.getResouce("LOGIN_FAIL"));
+		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
 	}
 
 	// 登出
@@ -65,8 +65,8 @@ public class LoginController extends BaseController {
 	public ModelMap regin(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap,
 			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
-		Assert.notNull(account, Resources.getResouce("ACCOUNT_IS_NULL"));
-		Assert.notNull(password, Resources.getResouce("PASSWORD_IS_NULL"));
+		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
+		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
 		SysUser sysUser = Request2ModelUtils.covert(SysUser.class, request);
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
 		sysUserService.update(sysUser);

@@ -47,7 +47,7 @@ public class SysUserService extends BaseService {
 	@Transactional
 	public void delete(Integer id) {
 		SysUser record = queryById(id);
-		Assert.notNull(record, String.format(Resources.getResouce("USER_IS_NULL"), id));
+		Assert.notNull(record, String.format(Resources.getMessage("USER_IS_NULL"), id));
 		record.setUsable(0);
 		update(record);
 	}

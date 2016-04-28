@@ -60,7 +60,7 @@ public class EmailSender {
 		if (hostName == null || hostName.trim().equals("")) {
 			hostName = Resources.EMAIL.getString("smtp.host");
 		}
-		logger.info(Resources.getResouce("EMAIL.SET_HOST"), hostName);
+		logger.info(Resources.getMessage("EMAIL.SET_HOST"), hostName);
 		if (props == null)
 			props = System.getProperties(); // 获得系统属性对象
 		props.put("mail.smtp.host", hostName); // 设置SMTP主机
@@ -75,19 +75,19 @@ public class EmailSender {
 	 */
 	public boolean createMimeMessage() {
 		try {
-			logger.info(Resources.getResouce("EMAIL.PRE_TALK"));
+			logger.info(Resources.getMessage("EMAIL.PRE_TALK"));
 			session = Session.getDefaultInstance(props, null); // 获得邮件会话对象
 		} catch (Exception e) {
-			logger.error(Resources.getResouce("EMAIL.ERROR_TALK"), e.getLocalizedMessage());
+			logger.error(Resources.getMessage("EMAIL.ERROR_TALK"), e.getLocalizedMessage());
 			return false;
 		}
-		logger.info(Resources.getResouce("EMAIL.PRE_MIME"));
+		logger.info(Resources.getMessage("EMAIL.PRE_MIME"));
 		try {
 			mimeMsg = new MimeMessage(session); // 创建MIME邮件对象
 			mp = new MimeMultipart();
 			return true;
 		} catch (Exception e) {
-			logger.error(Resources.getResouce("EMAIL.ERROR_MIME"), e.getLocalizedMessage());
+			logger.error(Resources.getMessage("EMAIL.ERROR_MIME"), e.getLocalizedMessage());
 			return false;
 		}
 	}
@@ -103,10 +103,10 @@ public class EmailSender {
 		}
 		if (userkey == null || userkey.trim().equals("")) {
 			props.put("mail.smtp.auth", "false");
-			logger.info(Resources.getResouce("EMAIL.SET_AUTH"), "false");
+			logger.info(Resources.getMessage("EMAIL.SET_AUTH"), "false");
 		} else {
 			props.put("mail.smtp.auth", "true");
-			logger.info(Resources.getResouce("EMAIL.SET_AUTH"), "true");
+			logger.info(Resources.getMessage("EMAIL.SET_AUTH"), "true");
 		}
 	}
 
@@ -134,12 +134,12 @@ public class EmailSender {
 	 * @return boolean
 	 */
 	public boolean setSubject(String mailSubject) {
-		logger.info(Resources.getResouce("EMAIL.SET_SUBJECT"), mailSubject);
+		logger.info(Resources.getMessage("EMAIL.SET_SUBJECT"), mailSubject);
 		try {
 			mimeMsg.setSubject(mailSubject, "UTF-8");
 			return true;
 		} catch (Exception e) {
-			logger.error(Resources.getResouce("EMAIL.ERROR_SUBJECT"), e);
+			logger.error(Resources.getMessage("EMAIL.ERROR_SUBJECT"), e);
 			return false;
 		}
 	}
@@ -156,7 +156,7 @@ public class EmailSender {
 			mp.addBodyPart(bp);
 			return true;
 		} catch (Exception e) {
-			logger.error(Resources.getResouce("EMAIL.ERROR_BODY"), e);
+			logger.error(Resources.getMessage("EMAIL.ERROR_BODY"), e);
 			return false;
 		}
 	}
@@ -168,7 +168,7 @@ public class EmailSender {
 	 * @param pass String
 	 */
 	public boolean addFileAffix(String filename) {
-		logger.info(Resources.getResouce("EMAIL.ADD_ATTEND"), filename);
+		logger.info(Resources.getMessage("EMAIL.ADD_ATTEND"), filename);
 		try {
 			BodyPart bp = new MimeBodyPart();
 			FileDataSource fileds = new FileDataSource(filename);
@@ -214,7 +214,7 @@ public class EmailSender {
 	public boolean setTo(String to) {
 		if (to == null)
 			return false;
-		logger.info(Resources.getResouce("EMAIL.SET_TO"), to);
+		logger.info(Resources.getMessage("EMAIL.SET_TO"), to);
 		try {
 			mimeMsg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			return true;
@@ -233,7 +233,7 @@ public class EmailSender {
 	public boolean setCopyTo(String copyto) {
 		if (copyto == null)
 			return false;
-		logger.info(Resources.getResouce("EMAIL.SET_COPYTO"), copyto);
+		logger.info(Resources.getMessage("EMAIL.SET_COPYTO"), copyto);
 		try {
 			mimeMsg.setRecipients(Message.RecipientType.CC, (Address[]) InternetAddress.parse(copyto));
 			return true;
@@ -253,7 +253,7 @@ public class EmailSender {
 			mimeMsg.setContent(mp);
 			mimeMsg.saveChanges();
 
-			logger.info(Resources.getResouce("EMAIL.SENDING"));
+			logger.info(Resources.getMessage("EMAIL.SENDING"));
 			Session mailSession = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					if (userkey == null || "".equals(userkey.trim())) {
@@ -271,11 +271,11 @@ public class EmailSender {
 			if (mimeMsg.getRecipients(Message.RecipientType.CC) != null) {
 				transport.sendMessage(mimeMsg, mimeMsg.getRecipients(Message.RecipientType.CC));
 			}
-			logger.info(Resources.getResouce("EMAIL.SEND_SUCC"));
+			logger.info(Resources.getMessage("EMAIL.SEND_SUCC"));
 			transport.close();
 			return true;
 		} catch (Exception e) {
-			logger.error(Resources.getResouce("EMAIL.SEND_ERR"), e);
+			logger.error(Resources.getMessage("EMAIL.SEND_ERR"), e);
 			return false;
 		}
 	}

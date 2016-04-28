@@ -1,24 +1,18 @@
-/**
- * 
- */
 package org.ibase4j.service.task;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ibase4j.core.config.Resources;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-/**
- * 
- * @author ShenHuaJie
- * @version 2016年4月2日 下午4:19:58
- */
-@Service
-public class TestTask {
+@Component
+public class CoreTask {
 	Logger logger = LogManager.getLogger();
 
-	@Scheduled(cron="0 0/5 * * * ?")
+	@Scheduled(cron = "0 0/30 * * * ?")
 	public void run() {
-		logger.info("I am a test.");
+		Resources.flushMessage();
+		logger.info("Messages flushed!");
 	}
 }
