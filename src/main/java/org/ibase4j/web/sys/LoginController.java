@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.util.Request2ModelUtils;
+import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.mybatis.generator.model.SysUser;
@@ -67,7 +67,7 @@ public class LoginController extends BaseController {
 			@RequestParam(value = "password", required = false) String password) {
 		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
 		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
-		SysUser sysUser = Request2ModelUtils.covert(SysUser.class, request);
+		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
 		sysUserService.update(sysUser);
 		WebUtil.saveCurrentUser(request, sysUser.getId());

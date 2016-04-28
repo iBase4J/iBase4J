@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.util.Request2ModelUtils;
+import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.mybatis.generator.model.SysUser;
@@ -42,7 +42,7 @@ public class SysUserController extends BaseController {
 			@RequestParam(value = "account", required = false) String account) {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
-		SysUser sysUser = Request2ModelUtils.covert(SysUser.class, request);
+		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
 		SysUser user = sysUserService.queryById(sysUser.getId());
 		Assert.notNull(user, String.format(Resources.getMessage("USER_IS_NULL"), id));
 		sysUser.setPassword(user.getPassword());

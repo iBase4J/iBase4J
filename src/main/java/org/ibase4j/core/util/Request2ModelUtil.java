@@ -15,8 +15,8 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by jonson.xu on 10/30/14.
  */
-public class Request2ModelUtils {
-	private Request2ModelUtils() {
+public class Request2ModelUtil {
+	private Request2ModelUtil() {
 	}
 
 	private static Logger logger = LogManager.getLogger();
@@ -183,7 +183,7 @@ public class Request2ModelUtils {
 	 */
 	public static Object init(Object obj, Object obiExtend) {
 		Class<?> clazz = obj.getClass();
-		Set<Method> getMethods = Request2ModelUtils.get_getDeclared_methods(clazz);
+		Set<Method> getMethods = Request2ModelUtil.get_getDeclared_methods(clazz);
 		Iterator<Method> ite = getMethods.iterator();
 		while (ite.hasNext()) {
 			try {
@@ -191,7 +191,7 @@ public class Request2ModelUtils {
 				String name = method.getName();
 				String fileName = name.substring(3, 4).toLowerCase() + name.substring(4, name.length());
 				Object o = method.invoke(obj);
-				Method setMethod = Request2ModelUtils.setMethod(fileName, clazz);
+				Method setMethod = Request2ModelUtil.setMethod(fileName, clazz);
 				setMethod.invoke(obiExtend, o);
 			} catch (Exception e) {
 				logger.error("", e);

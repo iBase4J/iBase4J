@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by jonson.xu on 10/30/14.
  */
-public class Request2ListUtils {
-	private Request2ListUtils() {
+public class Request2ListUtil {
+	private Request2ListUtil() {
 	}
 
 	private static Integer paramSize(Set<Method> methodSet, Map<String, String[]> stringMap) {
