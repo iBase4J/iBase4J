@@ -1,37 +1,30 @@
 package org.ibase4j.core.interceptor;
 
-import java.util.Enumeration;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.config.Resources;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class BaseInterceptor extends HandlerInterceptorAdapter {
 	protected final Logger logger = LogManager.getLogger();
-	protected static String[] notFilter = new String[] {};
+	private BaseInterceptor[] nextInterceptor;
 
-	static {
-		String url = "";
-		for (Enumeration<?> iterator = Resources.WHITEURL.getKeys(); iterator.hasMoreElements();) {
-			String key = (String) iterator.nextElement();
-			url += "," + Resources.WHITEURL.getString(key) + ",";
-		}
-		notFilter = StringUtils.split(url, ",");
+	public void setNextInterceptor(BaseInterceptor... nextInterceptor) {
+		this.nextInterceptor = nextInterceptor;
 	}
 
-	// 拦截器白名单
-	protected boolean whiteURL(HttpServletRequest request) throws Exception {
-		String url = request.getServletPath();
-		boolean success = true;
-		for (String s : notFilter) { // 如果uri中包含不过滤的uri，则不进行过滤
-			if (url.indexOf(s) != -1 && StringUtils.isNotBlank(s)) {
-				return success;
+	protected boolean nextInterceptor(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		if (nextInterceptor == null) {
+			return true;
+		}
+		for (int i = 0; i < nextInterceptor.length; i++) {
+			if (!nextInterceptor[i].preHandle(request, response, handler)) {
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 }

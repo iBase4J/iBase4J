@@ -20,9 +20,6 @@ public class LoginInterceptor extends BaseInterceptor {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		if (super.whiteURL(request)) {
-			return true;
-		}
 		boolean success = true;
 		HttpCode httpCode = null;
 		String curruser = WebUtil.getCurrentUser(request);
@@ -55,6 +52,10 @@ public class LoginInterceptor extends BaseInterceptor {
 			response.setStatus(httpCode.value());
 			logger.info("Interceptor:" + httpCode.msg());
 		}
-		return success;
+		if (success) {
+			return nextInterceptor(request, response, handler);
+		} else {
+			return success;
+		}
 	}
 }

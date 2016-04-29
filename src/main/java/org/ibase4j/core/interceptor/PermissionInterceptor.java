@@ -8,12 +8,13 @@ public class PermissionInterceptor extends BaseInterceptor {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		if (super.whiteURL(request)) {
-			return true;
-		}
 		boolean success = true;
 		// String url = request.getServletPath();
 		// 判断用户是否有该请求的权限
-		return success;
+		if (success) {
+			return nextInterceptor(request, response, handler);
+		} else {
+			return success;
+		}
 	}
 }

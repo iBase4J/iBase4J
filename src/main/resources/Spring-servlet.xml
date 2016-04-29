@@ -13,9 +13,15 @@
 	<context:component-scan base-package="org.ibase4j.web" />
 	<!-- 拦截器 -->
 	<mvc:interceptors>
-		<bean class="org.ibase4j.core.interceptor.LocaleInterceptor" />
-		<bean class="org.ibase4j.core.interceptor.LoginInterceptor" />
-		<bean class="org.ibase4j.core.interceptor.PermissionInterceptor" />
+		<bean class="org.ibase4j.core.interceptor.LocaleInterceptor">
+			<property name="nextInterceptor">
+				<bean class="org.ibase4j.core.interceptor.LoginInterceptor">
+					<property name="nextInterceptor">
+						<bean class="org.ibase4j.core.interceptor.PermissionInterceptor" />
+					</property>
+				</bean>
+			</property>
+		</bean>
 	</mvc:interceptors>
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<description>视图模式配置</description>
