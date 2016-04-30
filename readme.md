@@ -14,12 +14,12 @@ eclipse使用maven命令:
 2、持久层
 ======
 
-    mybatis持久化，aop切换数据库实现读写分离，Jta事务。PageHelper分页。Transtraction注解事务。
+    mybatis持久化，aop切换数据库实现读写分离，PageHelper分页。Transtraction注解Jta事务。
 
 3、MVC
 ======
 
-    基于spring mvc注解。Exception统一管理。基于session的国际化提示信息，登录拦截器，权限拦截器。
+    基于spring mvc注解。Exception统一管理。基于session的国际化提示信息，职责链模式的本地语言拦截器、登录拦截器、权限拦截器。
 
 4、调度
 ======
@@ -49,7 +49,7 @@ eclipse使用maven命令:
 9、项目构建
 ===========
 
-    maven构建项目，生成mybatis映射文件。 
+    maven构建项目，mybatis generator生成mybatis映射文件。 
 
 10、其它
 ===========
