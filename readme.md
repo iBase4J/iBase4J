@@ -23,7 +23,7 @@
 5、缓存和Session
 ===========
 
-    注解redis缓存数据，Spring-session和redis实现分布式session同步。
+    注解redis缓存数据，Spring-session和redis实现分布式session同步(建议按功能模块划分系统)。
 
 6、多系统交互
 ===========
