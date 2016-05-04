@@ -8,6 +8,8 @@ import java.util.Set;
 import org.ibase4j.core.support.jedis.Executor;
 import org.ibase4j.core.support.jedis.JedisTemplate;
 
+import com.alibaba.fastjson.JSON;
+
 import redis.clients.jedis.BinaryClient.LIST_POSITION;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisShardInfo;
@@ -34,7 +36,7 @@ public class RedisUtil {
 	public static String set(final String key, final Integer seconds, final Object value) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
-				return jedis.setex(key, seconds, value.toString());
+				return jedis.setex(key, seconds, JSON.toJSONString(value));
 			}
 		}, true);
 	}
