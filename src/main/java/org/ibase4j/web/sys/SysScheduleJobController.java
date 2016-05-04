@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -31,5 +32,12 @@ public class SysScheduleJobController extends BaseController {
 	public ModelMap list(ModelMap modelMap) {
 		List<ScheduleJob> jobs = scheduleJobService.getAllJobDetail();
 		return setSuccessModelMap(modelMap, jobs);
+	}
+
+	@ResponseBody
+	@RequestMapping("/run/jobs")
+	public ModelMap exec(ModelMap modelMap, @RequestParam("id") Integer id) {
+		scheduleJobService.execTask(id);
+		return setSuccessModelMap(modelMap);
 	}
 }

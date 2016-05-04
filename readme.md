@@ -60,3 +60,14 @@ eclipse使用maven命令:
     clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
 ```
 ![配置](http://git.oschina.net/iBase4J/iBase4J/raw/9caa79d7beb3f528bcaa66feec472315024d82ee/maven-config.png "maven配置")
+
+```
+暂时没有UI，已完成接口地址：
+       登录：/login
+       退出：/logout
+       注册：/regin
+       用户列表：/user/read/list
+       用户信息修改：/user/update
+       用户密码修改：/user/update/password
+       任务列表：/schedule/read/jobs
+       执行任务：/schedule/run/jobs
