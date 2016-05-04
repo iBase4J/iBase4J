@@ -1,11 +1,5 @@
->####说明：启动项目前请安装Redis和ZooKeeper，您可以在附件中下载。系统中均使用默认配置。
-
-```
-eclipse使用maven命令: 
-    mybatis-generator:generate生成mybatis文件；
-    clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
-```
-
+主要功能如下：
+=====
 1、数据库
 ======
 
@@ -57,3 +51,12 @@ eclipse使用maven命令:
     还需要什么功能? ? ? ?
 ![QQ](http://pub.idqqimg.com/wpa/images/group.png "QQ")
 [538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
+
+>####说明：启动项目前请安装Redis和ZooKeeper，您可以在附件中下载。系统中均使用默认配置。
+
+```
+eclipse使用maven命令: 
+    mybatis-generator:generate生成mybatis文件；
+    clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
+    ![配置](http://git.oschina.net/iBase4J/iBase4J/raw/9caa79d7beb3f528bcaa66feec472315024d82ee/maven-config.png "maven配置")
+```
