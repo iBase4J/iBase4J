@@ -13,7 +13,7 @@
 3、MVC
 ======
 
-    基于spring mvc注解。Exception统一管理。基于session的国际化提示信息，职责链模式的本地语言拦截器、登录拦截器、权限拦截器。
+    基于spring mvc注解。Exception统一管理。基于session的国际化提示信息，职责链模式的本地语言拦截器,Shiro权限管理。
 
 4、调度
 ======
