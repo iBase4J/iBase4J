@@ -18,7 +18,7 @@
 		<!-- 要求登录时的链接 -->
 		<property name="loginUrl" value="/unauthorized" />
 		<!-- 用户访问未对其授权的资源时,所显示的连接 -->
-		<property name="unauthorizedUrl" value="/unauthorized" />
+		<property name="unauthorizedUrl" value="forbidden" />
 		<!-- Shiro连接约束配置,即过滤链的定义 -->
 		<!-- anon：它对应的过滤器里面是空的,什么都没做 -->
 		<!-- authc：该过滤器下的页面必须验证后才能访问,它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter -->

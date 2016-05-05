@@ -80,10 +80,17 @@ public class LoginController extends BaseController {
 		return setSuccessModelMap(modelMap);
 	}
 
-	// 没有权限
+	// 没有登录
 	@ResponseBody
 	@RequestMapping("/unauthorized")
 	public ModelMap unauthorized(ModelMap modelMap) {
+		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
+	}
+
+	// 没有权限
+	@ResponseBody
+	@RequestMapping("/forbidden")
+	public ModelMap forbidden(ModelMap modelMap) {
 		return setModelMap(modelMap, HttpCode.FORBIDDEN);
 	}
 }
