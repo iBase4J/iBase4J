@@ -1,4 +1,4 @@
-package org.ibase4j.core.support;
+package org.ibase4j.core.support.shiro;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +37,6 @@ public class Realm extends AuthorizingRealm {
 
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		String currentUserAccount = (String) super.getAvailablePrincipal(principals);
-		List<String> roleList = new ArrayList<String>();
 		List<String> permissionList = new ArrayList<String>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("countSql", 0);
@@ -48,7 +47,7 @@ public class Realm extends AuthorizingRealm {
 			SysUser user = pageInfo.getList().get(0);
 			// 从数据库中获取当前登录用户的详细信息
 			List<SysMenu> menus = sysAuthorizeService.getAuthorize(user.getId());
-			if (null != menus) {
+			if (null != menus && menus.size() > 0) {
 				for (SysMenu pmss : menus) {
 					if (StringUtils.isNotBlank(pmss.getRequest())) {
 						permissionList.add(pmss.getRequest());
@@ -59,7 +58,6 @@ public class Realm extends AuthorizingRealm {
 			}
 			// 为当前用户设置角色和权限
 			SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
-			simpleAuthorInfo.addRoles(roleList);
 			simpleAuthorInfo.addStringPermissions(permissionList);
 			return simpleAuthorInfo;
 		}
