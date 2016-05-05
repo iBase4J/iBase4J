@@ -80,7 +80,7 @@ public class LoginController extends BaseController {
 		return setSuccessModelMap(modelMap);
 	}
 
-	// 登出
+	// 没有权限
 	@ResponseBody
 	@RequestMapping("/unauthorized")
 	public ModelMap unauthorized(ModelMap modelMap) {
