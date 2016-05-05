@@ -1,15 +1,18 @@
 package org.ibase4j.web.sys;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.DisabledAccountException;
+import org.apache.shiro.authc.ExpiredCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.SecurityUtil;
-import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.service.sys.SysUserService;
 import org.ibase4j.web.BaseController;
@@ -21,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.github.pagehelper.PageInfo;
 
 @Controller
 public class LoginController extends BaseController {
@@ -37,16 +38,22 @@ public class LoginController extends BaseController {
 			@RequestParam(value = "password", required = false) String password) {
 		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
 		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("countSql", 0);
-		params.put("usable", 1);
-		params.put("account", account);
-		params.put("password", SecurityUtil.encryptSHA(password));
-		PageInfo<SysUser> pageInfo = sysUserService.query(params);
-		if (pageInfo.getSize() == 1) {
-			SysUser user = pageInfo.getList().get(0);
-			WebUtil.saveCurrentUser(request, user.getId());
-			return setSuccessModelMap(modelMap);
+		UsernamePasswordToken token = new UsernamePasswordToken(account, SecurityUtil.encryptSHA(password));
+		token.setRememberMe(true);
+		Subject subject = SecurityUtils.getSubject();
+		try {
+			subject.login(token);
+			if (subject.isAuthenticated()) {
+				return setSuccessModelMap(modelMap);
+			}
+		} catch (LockedAccountException e) {
+			throw new IllegalArgumentException(Resources.getMessage("ACCOUNT_LOCKED", token.getPrincipal()));
+		} catch (DisabledAccountException e) {
+			throw new IllegalArgumentException(Resources.getMessage("ACCOUNT_DISABLED", token.getPrincipal()));
+		} catch (ExpiredCredentialsException e) {
+			throw new IllegalArgumentException(Resources.getMessage("ACCOUNT_EXPIRED", token.getPrincipal()));
+		} catch (Exception e) {
+			throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"), e);
 		}
 		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
 	}
@@ -55,7 +62,7 @@ public class LoginController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/logout")
 	public ModelMap logout(ModelMap modelMap, HttpServletRequest request) {
-		WebUtil.removeCurrentUser(request);
+		SecurityUtils.getSubject().logout();
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -70,7 +77,13 @@ public class LoginController extends BaseController {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
 		sysUserService.update(sysUser);
-		WebUtil.saveCurrentUser(request, sysUser.getId());
 		return setSuccessModelMap(modelMap);
+	}
+
+	// 登出
+	@ResponseBody
+	@RequestMapping("/unauthorized")
+	public ModelMap unauthorized(ModelMap modelMap) {
+		return setModelMap(modelMap, HttpCode.FORBIDDEN);
 	}
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.WebUtil;
+import org.ibase4j.mybatis.generator.model.SysUser;
 
 /**
  * 登录拦截器
@@ -22,7 +23,7 @@ public class LoginInterceptor extends BaseInterceptor {
 			throws Exception {
 		boolean success = true;
 		HttpCode httpCode = null;
-		String curruser = WebUtil.getCurrentUser(request);
+		SysUser curruser = WebUtil.getCurrentUser();
 		String url = request.getServletPath();
 		if (url.indexOf("online") == -1) { // 后端请求
 			if (curruser == null) {

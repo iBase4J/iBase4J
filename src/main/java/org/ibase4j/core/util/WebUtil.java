@@ -6,7 +6,11 @@ import java.util.ResourceBundle;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.Constants;
+import org.ibase4j.mybatis.generator.model.SysUser;
 import org.springframework.web.util.WebUtils;
 
 /**
@@ -36,13 +40,26 @@ public class WebUtil {
 	}
 
 	/** 保存当前用户 */
-	public static void saveCurrentUser(HttpServletRequest request, Object user) {
-		request.getSession().setAttribute(Constants.CURRENT_USER, user.toString());
+	public static void saveCurrentUser(Object user) {
+		Subject currentUser = SecurityUtils.getSubject();
+		if (null != currentUser) {
+			Session session = currentUser.getSession();
+			if (null != session) {
+				session.setAttribute(Constants.CURRENT_USER, user);
+			}
+		}
 	}
 
 	/** 获取当前用户 */
-	public static String getCurrentUser(HttpServletRequest request) {
-		return (String) request.getSession().getAttribute(Constants.CURRENT_USER);
+	public static SysUser getCurrentUser() {
+		Subject currentUser = SecurityUtils.getSubject();
+		if (null != currentUser) {
+			Session session = currentUser.getSession();
+			if (null != session) {
+				return (SysUser) session.getAttribute(Constants.CURRENT_USER);
+			}
+		}
+		return null;
 	}
 
 	/** 移除当前用户 */

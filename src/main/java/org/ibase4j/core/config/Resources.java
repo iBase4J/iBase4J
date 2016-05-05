@@ -22,7 +22,7 @@ public final class Resources {
 	private static final Map<String, ResourceBundle> MESSAGES = new HashMap<String, ResourceBundle>();
 
 	/** 国际化信息 */
-	public static String getMessage(String key) {
+	public static String getMessage(String key, Object... params) {
 		Locale locale = LocaleContextHolder.getLocale();
 		ResourceBundle message = MESSAGES.get(locale.getLanguage());
 		if (message == null) {
@@ -33,6 +33,9 @@ public final class Resources {
 					MESSAGES.put(locale.getLanguage(), message);
 				}
 			}
+		}
+		if (params != null) {
+			return String.format(message.getString(key), params);
 		}
 		return message.getString(key);
 	}
