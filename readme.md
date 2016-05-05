@@ -63,7 +63,7 @@ eclipse使用maven命令:
 
 ```
 暂时没有UI，已完成接口地址：
-       登录：/login
+       登录：/login?account=admin&password=111111
        退出：/logout
        注册：/regin
        用户列表：/user/read/list
