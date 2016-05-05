@@ -58,6 +58,7 @@
 eclipse使用maven命令: 
     mybatis-generator:generate生成mybatis文件；
     clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
+    哪个框架不需要：删掉pom里的jar导入，删除报错的类，删除spring对应的配置。
 ```
 ![配置](http://git.oschina.net/iBase4J/iBase4J/raw/9caa79d7beb3f528bcaa66feec472315024d82ee/maven-config.png "maven配置")
 
