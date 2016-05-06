@@ -27,7 +27,7 @@ public class LoginController extends BaseController {
 
 	// 登录
 	@ResponseBody
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login")
 	public ModelMap login(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap,
 			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
