@@ -11,11 +11,13 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- 导出 ibase4j 的数据库结构
+DROP DATABASE IF EXISTS `ibase4j`;
 CREATE DATABASE IF NOT EXISTS `ibase4j` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ibase4j`;
 
 
 -- 导出  表 ibase4j.sys_catalog 结构
+DROP TABLE IF EXISTS `sys_catalog`;
 CREATE TABLE IF NOT EXISTS `sys_catalog` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '流水号',
   `cascade_id` varchar(255) NOT NULL COMMENT '节点语义ID',
@@ -51,6 +53,7 @@ INSERT INTO `sys_catalog` (`id_`, `cascade_id`, `root_key`, `root_name`, `name_`
 
 
 -- 导出  表 ibase4j.sys_dept 结构
+DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE IF NOT EXISTS `sys_dept` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '部门编号',
   `dept_name` varchar(50) DEFAULT NULL COMMENT '部门名称',
@@ -68,6 +71,7 @@ CREATE TABLE IF NOT EXISTS `sys_dept` (
 
 
 -- 导出  表 ibase4j.sys_dic 结构
+DROP TABLE IF EXISTS `sys_dic`;
 CREATE TABLE IF NOT EXISTS `sys_dic` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `index_id` int(20) DEFAULT NULL,
@@ -111,6 +115,7 @@ INSERT INTO `sys_dic` (`id_`, `index_id`, `code_`, `code_text`, `enable_`, `sort
 
 
 -- 导出  表 ibase4j.sys_dic_index 结构
+DROP TABLE IF EXISTS `sys_dic_index`;
 CREATE TABLE IF NOT EXISTS `sys_dic_index` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `catalog_id` int(20) NOT NULL DEFAULT '0',
@@ -138,6 +143,7 @@ INSERT INTO `sys_dic_index` (`id_`, `catalog_id`, `key_`, `name_`, `remark_`) VA
 
 
 -- 导出  表 ibase4j.sys_menu 结构
+DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE IF NOT EXISTS `sys_menu` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
   `menu_name` varchar(50) DEFAULT NULL COMMENT '菜单名称',
@@ -158,6 +164,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
 
 
 -- 导出  表 ibase4j.sys_param 结构
+DROP TABLE IF EXISTS `sys_param`;
 CREATE TABLE IF NOT EXISTS `sys_param` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '参数编号',
   `param_key` varchar(50) DEFAULT NULL COMMENT '参数键名',
@@ -173,6 +180,7 @@ CREATE TABLE IF NOT EXISTS `sys_param` (
 
 
 -- 导出  表 ibase4j.sys_role 结构
+DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE IF NOT EXISTS `sys_role` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '角色编号',
   `role_name` varchar(50) DEFAULT NULL COMMENT '角色名称',
@@ -189,6 +197,7 @@ CREATE TABLE IF NOT EXISTS `sys_role` (
 
 
 -- 导出  表 ibase4j.sys_role_menu 结构
+DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE IF NOT EXISTS `sys_role_menu` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `role_id` int(20) DEFAULT NULL,
@@ -206,6 +215,7 @@ CREATE TABLE IF NOT EXISTS `sys_role_menu` (
 
 
 -- 导出  表 ibase4j.sys_user 结构
+DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE IF NOT EXISTS `sys_user` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `account_` varchar(20) DEFAULT NULL COMMENT '登陆帐户',
@@ -217,18 +227,20 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `dept_id` int(20) DEFAULT '1' COMMENT '部门编号',
   `locked_` int(1) DEFAULT '0' COMMENT '锁定标志(1:锁定;0:激活)',
   `usable_` int(1) DEFAULT '1',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `account` (`account_`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.sys_user 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_user 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
-INSERT INTO `sys_user` (`id_`, `account_`, `password_`, `sex_`, `user_name`, `avatar_`, `user_type`, `dept_id`, `locked_`, `usable_`) VALUES
-	(2, 'admin', 'Llf678rVJnvTkZdk8CMaHv+s20wa37zzPidtDjQj7cE=', 0, NULL, NULL, 3, 1, 0, 1);
+INSERT INTO `sys_user` (`id_`, `account_`, `password_`, `sex_`, `user_name`, `avatar_`, `user_type`, `dept_id`, `locked_`, `usable_`, `create_time`) VALUES
+	(2, 'admin', 'Llf678rVJnvTkZdk8CMaHv+s20wa37zzPidtDjQj7cE=', 0, 'admin', NULL, 3, 1, 0, 1, '2016-05-06 10:06:52');
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_user_menu 结构
+DROP TABLE IF EXISTS `sys_user_menu`;
 CREATE TABLE IF NOT EXISTS `sys_user_menu` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(20) DEFAULT NULL,
@@ -245,6 +257,7 @@ CREATE TABLE IF NOT EXISTS `sys_user_menu` (
 
 
 -- 导出  表 ibase4j.sys_user_role 结构
+DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE IF NOT EXISTS `sys_user_role` (
   `id_` int(20) NOT NULL,
   `user_id` int(20) DEFAULT NULL,
@@ -258,6 +271,23 @@ CREATE TABLE IF NOT EXISTS `sys_user_role` (
 -- 正在导出表  ibase4j.sys_user_role 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_user_role` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_user_role` ENABLE KEYS */;
+
+
+-- 导出  表 ibase4j.sys_user_thirdparty 结构
+DROP TABLE IF EXISTS `sys_user_thirdparty`;
+CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
+  `id_` int(20) NOT NULL AUTO_INCREMENT,
+  `user_id` int(20) NOT NULL,
+  `provider_` varchar(50) NOT NULL COMMENT '第三方类型',
+  `open_id` varchar(50) NOT NULL COMMENT '第三方Id',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_`),
+  UNIQUE KEY `user_id_provider__open_id` (`user_id`,`provider_`,`open_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='第三方用户';
+
+-- 正在导出表  ibase4j.sys_user_thirdparty 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `sys_user_thirdparty` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_user_thirdparty` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
