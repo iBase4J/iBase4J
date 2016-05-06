@@ -62,6 +62,6 @@ eclipse使用maven命令:
 ```
 ![配置](http://git.oschina.net/iBase4J/iBase4J/raw/9caa79d7beb3f528bcaa66feec472315024d82ee/maven-config.png "maven配置")
 
-[UI效果图](http://git.oschina.net/iBase4J/iBase4j-UI)
+[UI效果图](http://git.oschina.net/iBase4J/iBase4J-UI)
 
 ![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/src/upload/login.png "登录")
