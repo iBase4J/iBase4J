@@ -61,8 +61,7 @@ eclipse使用maven命令:
     哪个框架不需要：删掉pom里的jar导入，删除报错的类，删除spring对应的配置。
 ```
 ![配置](http://git.oschina.net/iBase4J/iBase4J/raw/9caa79d7beb3f528bcaa66feec472315024d82ee/maven-config.png "maven配置")
-[UI](http://git.oschina.net/iBase4J/iBase4j-UI)
 
-效果图
+[UI效果图](http://git.oschina.net/iBase4J/iBase4j-UI)
 
 ![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/src/upload/login.png "登录")
