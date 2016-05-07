@@ -13,7 +13,9 @@
 3、MVC
 ======
 
-    基于spring mvc注解。Exception统一管理。基于session的国际化提示信息，职责链模式的本地语言拦截器,Shiro权限管理。QQ、微信、新浪微博第三方登录。
+    基于spring mvc注解。Exception统一管理。
+    基于session的国际化提示信息，职责链模式的本地语言拦截器,Shiro权限管理。
+    QQ、微信、新浪微博第三方登录。
 
 4、调度
 ======
@@ -52,7 +54,7 @@
 ![QQ](http://pub.idqqimg.com/wpa/images/group.png "QQ")
 [538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
 
->####说明：启动项目前请安装Redis和ZooKeeper，您可以在附件中下载。系统中均使用默认配置。
+>####说明：启动项目前请安装activemq、Redis和ZooKeeper，并启动服务，您可以在附件中下载。系统中均使用默认配置。
 
 ```
 eclipse使用maven命令: 
