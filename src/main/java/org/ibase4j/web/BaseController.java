@@ -12,7 +12,6 @@ import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.support.exception.BusinessException;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.mybatis.generator.model.SysUser;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -26,7 +25,7 @@ public class BaseController {
 	protected final Logger logger = LogManager.getLogger(this.getClass());
 
 	/** 获取当前用户Id */
-	protected SysUser getCurrUser() {
+	protected Integer getCurrUser() {
 		return WebUtil.getCurrentUser();
 	}
 

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,10 +15,8 @@ import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
-import org.ibase4j.core.Constants;
+import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.mybatis.generator.model.SysMenu;
 import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.service.sys.SysAuthorizeService;
@@ -79,7 +76,7 @@ public class Realm extends AuthorizingRealm {
 		PageInfo<SysUser> pageInfo = sysUserService.query(params);
 		if (pageInfo.getSize() == 1) {
 			SysUser user = pageInfo.getList().get(0);
-			setSession(Constants.CURRENT_USER, user);
+			WebUtil.saveCurrentUser(user.getId());
 			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
 					user.getUserName());
 			return authcInfo;
@@ -88,18 +85,4 @@ public class Realm extends AuthorizingRealm {
 		}
 	}
 
-	/**
-	 * 将一些数据放到ShiroSession中,以便于其它地方使用
-	 * 
-	 * @see 比如Controller,使用时直接用HttpSession.getAttribute(key)就可以取到
-	 */
-	private void setSession(Object key, Object value) {
-		Subject currentUser = SecurityUtils.getSubject();
-		if (null != currentUser) {
-			Session session = currentUser.getSession();
-			if (null != session) {
-				session.setAttribute(key, value);
-			}
-		}
-	}
 }

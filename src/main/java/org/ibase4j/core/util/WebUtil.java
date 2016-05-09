@@ -10,7 +10,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.Constants;
-import org.ibase4j.mybatis.generator.model.SysUser;
 import org.springframework.web.util.WebUtils;
 
 /**
@@ -41,25 +40,34 @@ public class WebUtil {
 
 	/** 保存当前用户 */
 	public static void saveCurrentUser(Object user) {
-		Subject currentUser = SecurityUtils.getSubject();
-		if (null != currentUser) {
-			Session session = currentUser.getSession();
-			if (null != session) {
-				session.setAttribute(Constants.CURRENT_USER, user);
-			}
-		}
+		setSession(Constants.CURRENT_USER, user);
 	}
 
 	/** 获取当前用户 */
-	public static SysUser getCurrentUser() {
+	public static Integer getCurrentUser() {
 		Subject currentUser = SecurityUtils.getSubject();
 		if (null != currentUser) {
 			Session session = currentUser.getSession();
 			if (null != session) {
-				return (SysUser) session.getAttribute(Constants.CURRENT_USER);
+				return (Integer) session.getAttribute(Constants.CURRENT_USER);
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 将一些数据放到ShiroSession中,以便于其它地方使用
+	 * 
+	 * @see 比如Controller,使用时直接用HttpSession.getAttribute(key)就可以取到
+	 */
+	public static void setSession(Object key, Object value) {
+		Subject currentUser = SecurityUtils.getSubject();
+		if (null != currentUser) {
+			Session session = currentUser.getSession();
+			if (null != session) {
+				session.setAttribute(key, value);
+			}
+		}
 	}
 
 	/** 移除当前用户 */
