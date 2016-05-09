@@ -91,6 +91,7 @@ public class SysUserController extends BaseController {
 		Integer id = getCurrUser();
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		SysUser sysUser = sysUserService.queryById(id);
+		sysUser.setPassword(null);
 		return setSuccessModelMap(modelMap, sysUser);
 	}
 }
