@@ -33,6 +33,14 @@ public class LocaleInterceptor extends BaseInterceptor {
 			}
 		}
 		LocaleContextHolder.setLocale(locale);
+		Long preRequestTime = (Long) session.getAttribute("PREREQUESTTIME");
+		if (preRequestTime != null) { // 过滤频繁操作
+			if (System.currentTimeMillis() - preRequestTime < 1000) {
+				response.setStatus(409);
+				return false;
+			}
+		}
+		session.setAttribute("PREREQUESTTIME", System.currentTimeMillis());
 		return nextInterceptor(request, response, handler);
 	}
 }
