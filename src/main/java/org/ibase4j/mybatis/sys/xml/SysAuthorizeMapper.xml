@@ -15,14 +15,14 @@
 	<delete id="deleteRoleMenu">
 		delete from sys_role_menu where role_id=#{roleId}
 	</delete>
-	<select id="getAuthorize" resultType="org.ibase4j.mybatis.generator.model.SysMenu">
+	<select id="getAuthorize" resultMap="org.ibase4j.mybatis.generator.dao.SysMenuMapper.BaseResultMap">
 		select 
 		<include refid="baseMenuColumn" />
 		from sys_menu menu
 		where exists (select 1 from sys_user_menu um where
-		um.user_id=#{userId} and um.menu_id=menu.menu_id)
+		um.user_id=#{userId} and um.menu_id=menu.id_)
 		or exists (select 1
 		from sys_user_role ur join sys_role_menu rm on ur.role_id=rm.role_id
-		where ur.user_id=#{userId} and rm.menu_id=menu.menu_id)
+		where ur.user_id=#{userId} and rm.menu_id=menu.id_)
 	</select>
 </mapper>

@@ -3,6 +3,7 @@
  */
 package org.ibase4j.web.sys;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,9 @@ import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.core.util.WebUtil;
+import org.ibase4j.mybatis.generator.model.SysMenu;
 import org.ibase4j.mybatis.generator.model.SysUser;
+import org.ibase4j.service.sys.SysAuthorizeService;
 import org.ibase4j.service.sys.SysUserService;
 import org.ibase4j.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,8 @@ import com.github.pagehelper.PageInfo;
 public class SysUserController extends BaseController {
 	@Autowired
 	private SysUserService sysUserService;
+	@Autowired
+	private SysAuthorizeService authorizeService;
 
 	// 修改用户信息
 	@ResponseBody
@@ -81,6 +86,7 @@ public class SysUserController extends BaseController {
 	public ModelMap detail(ModelMap modelMap, HttpServletRequest request, @PathVariable("id") Integer id) {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		SysUser sysUser = sysUserService.queryById(id);
+		sysUser.setPassword(null);
 		return setSuccessModelMap(modelMap, sysUser);
 	}
 
@@ -92,6 +98,9 @@ public class SysUserController extends BaseController {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		SysUser sysUser = sysUserService.queryById(id);
 		sysUser.setPassword(null);
-		return setSuccessModelMap(modelMap, sysUser);
+		List<SysMenu> menus= authorizeService.getAuthorize(id);
+		modelMap.put("user", sysUser);
+		modelMap.put("menus", menus);
+		return setSuccessModelMap(modelMap);
 	}
 }
