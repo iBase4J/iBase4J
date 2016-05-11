@@ -7,7 +7,7 @@ import org.apache.shiro.SecurityUtils;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.Request2ModelUtil;
-import org.ibase4j.core.util.SecurityUtil;
+import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.service.sys.SysUserService;
 import org.ibase4j.web.BaseController;
@@ -33,7 +33,7 @@ public class LoginController extends BaseController {
 			@RequestParam(value = "password", required = false) String password) {
 		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
 		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
-		if (sysUserService.login(account, SecurityUtil.encryptSHA(password))) {
+		if (sysUserService.login(account, WebUtil.encryptPassword(password))) {
 			return setSuccessModelMap(modelMap);
 		}
 		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
@@ -56,7 +56,7 @@ public class LoginController extends BaseController {
 		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
 		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
-		sysUser.setPassword(SecurityUtil.encryptSHA(password));
+		sysUser.setPassword(WebUtil.encryptPassword(password));
 		sysUserService.update(sysUser);
 		if (sysUserService.login(account, password)) {
 			return setSuccessModelMap(modelMap);
@@ -68,6 +68,7 @@ public class LoginController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/unauthorized")
 	public ModelMap unauthorized(ModelMap modelMap) {
+		SecurityUtils.getSubject().logout();
 		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
 	}
 

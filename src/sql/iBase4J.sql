@@ -11,13 +11,11 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- 导出 ibase4j 的数据库结构
-DROP DATABASE IF EXISTS `ibase4j`;
 CREATE DATABASE IF NOT EXISTS `ibase4j` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ibase4j`;
 
 
 -- 导出  表 ibase4j.sys_catalog 结构
-DROP TABLE IF EXISTS `sys_catalog`;
 CREATE TABLE IF NOT EXISTS `sys_catalog` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '流水号',
   `cascade_id` varchar(255) NOT NULL COMMENT '节点语义ID',
@@ -53,7 +51,6 @@ INSERT INTO `sys_catalog` (`id_`, `cascade_id`, `root_key`, `root_name`, `name_`
 
 
 -- 导出  表 ibase4j.sys_dept 结构
-DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE IF NOT EXISTS `sys_dept` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '部门编号',
   `dept_name` varchar(50) DEFAULT NULL COMMENT '部门名称',
@@ -63,15 +60,16 @@ CREATE TABLE IF NOT EXISTS `sys_dept` (
   `leaf_` int(1) DEFAULT NULL COMMENT '叶子节点(0:树枝节点;1:叶子节点)',
   `remark_` varchar(100) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='部门';
 
--- 正在导出表  ibase4j.sys_dept 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_dept 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_dept` DISABLE KEYS */;
+INSERT INTO `sys_dept` (`id_`, `dept_name`, `parent_id`, `enable_`, `sort_no`, `leaf_`, `remark_`) VALUES
+	(1, 'iBase4J', 0, 1, 1, 0, NULL);
 /*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_dic 结构
-DROP TABLE IF EXISTS `sys_dic`;
 CREATE TABLE IF NOT EXISTS `sys_dic` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `index_id` int(20) DEFAULT NULL,
@@ -83,9 +81,9 @@ CREATE TABLE IF NOT EXISTS `sys_dic` (
   `remark_` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `field_id_code` (`index_id`,`code_`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.sys_dic 的数据：~23 rows (大约)
+-- 正在导出表  ibase4j.sys_dic 的数据：~27 rows (大约)
 /*!40000 ALTER TABLE `sys_dic` DISABLE KEYS */;
 INSERT INTO `sys_dic` (`id_`, `index_id`, `code_`, `code_text`, `enable_`, `sort_no`, `editable_`, `remark_`) VALUES
 	(1, 1, '0', '未知', 1, 1, 0, '1'),
@@ -110,12 +108,15 @@ INSERT INTO `sys_dic` (`id_`, `index_id`, `code_`, `code_text`, `enable_`, `sort
 	(20, 9, '2', '管理员', 1, 2, 0, '1'),
 	(21, 9, '3', '系统内置用户', 1, 3, 0, '1'),
 	(22, 10, '0', '收缩', 1, 1, 0, '1'),
-	(23, 10, '1', '展开', 1, 2, 0, '1');
+	(23, 10, '1', '展开', 1, 2, 0, '1'),
+	(24, 11, 'add', '新增', 1, 1, 0, NULL),
+	(25, 11, 'read', '查询', 1, 2, 0, NULL),
+	(26, 11, 'update', '修改', 1, 3, 0, NULL),
+	(27, 11, 'delete', '删除', 1, 4, 0, NULL);
 /*!40000 ALTER TABLE `sys_dic` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_dic_index 结构
-DROP TABLE IF EXISTS `sys_dic_index`;
 CREATE TABLE IF NOT EXISTS `sys_dic_index` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `catalog_id` int(20) NOT NULL DEFAULT '0',
@@ -124,9 +125,9 @@ CREATE TABLE IF NOT EXISTS `sys_dic_index` (
   `remark_` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `code` (`key_`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='代码表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='代码表';
 
--- 正在导出表  ibase4j.sys_dic_index 的数据：~10 rows (大约)
+-- 正在导出表  ibase4j.sys_dic_index 的数据：~11 rows (大约)
 /*!40000 ALTER TABLE `sys_dic_index` DISABLE KEYS */;
 INSERT INTO `sys_dic_index` (`id_`, `catalog_id`, `key_`, `name_`, `remark_`) VALUES
 	(1, 6, 'SEX', '性别', NULL),
@@ -138,12 +139,12 @@ INSERT INTO `sys_dic_index` (`id_`, `catalog_id`, `key_`, `name_`, `remark_`) VA
 	(7, 5, 'AUTHORIZELEVEL', '权限级别', NULL),
 	(8, 5, 'MENUTYPE', '菜单类型', NULL),
 	(9, 5, 'USERTYPE', '人员类型', NULL),
-	(10, 6, 'EXPAND', '展开状态', NULL);
+	(10, 6, 'EXPAND', '展开状态', NULL),
+	(11, 5, 'CRUD', '操作类型', NULL);
 /*!40000 ALTER TABLE `sys_dic_index` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_menu 结构
-DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE IF NOT EXISTS `sys_menu` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
   `menu_name` varchar(50) DEFAULT NULL COMMENT '菜单名称',
@@ -156,15 +157,18 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   `leaf_` int(1) NOT NULL DEFAULT '0' COMMENT '叶子节点(0:树枝节点;1:叶子节点)',
   `remark_` varchar(100) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='菜单';
 
--- 正在导出表  ibase4j.sys_menu 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_menu 的数据：~3 rows (大约)
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
+INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`, `request_`, `expand_`, `sort_no`, `leaf_`, `remark_`) VALUES
+	(1, '系统管理', 1, NULL, NULL, '#', 0, 1, 0, NULL),
+	(2, '用户管理', 1, 1, NULL, 'main.user', 0, 1, 1, NULL),
+	(3, '部门管理', 1, 1, NULL, 'main.dept', 0, 2, 1, NULL);
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_param 结构
-DROP TABLE IF EXISTS `sys_param`;
 CREATE TABLE IF NOT EXISTS `sys_param` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '参数编号',
   `param_key` varchar(50) DEFAULT NULL COMMENT '参数键名',
@@ -179,8 +183,23 @@ CREATE TABLE IF NOT EXISTS `sys_param` (
 /*!40000 ALTER TABLE `sys_param` ENABLE KEYS */;
 
 
+-- 导出  表 ibase4j.sys_permission 结构
+CREATE TABLE IF NOT EXISTS `sys_permission` (
+  `id_` int(11) NOT NULL AUTO_INCREMENT,
+  `permission_url` varchar(50) DEFAULT NULL,
+  `permission_name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_`),
+  UNIQUE KEY `permit_url` (`permission_url`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='权限';
+
+-- 正在导出表  ibase4j.sys_permission 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `sys_permission` DISABLE KEYS */;
+INSERT INTO `sys_permission` (`id_`, `permission_url`, `permission_name`) VALUES
+	(1, '/user/read/current', '获取当前用户');
+/*!40000 ALTER TABLE `sys_permission` ENABLE KEYS */;
+
+
 -- 导出  表 ibase4j.sys_role 结构
-DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE IF NOT EXISTS `sys_role` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '角色编号',
   `role_name` varchar(50) DEFAULT NULL COMMENT '角色名称',
@@ -189,15 +208,16 @@ CREATE TABLE IF NOT EXISTS `sys_role` (
   `enable_` int(1) NOT NULL DEFAULT '1',
   `remark_` varchar(100) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='角色信息表';
 
--- 正在导出表  ibase4j.sys_role 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_role 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
+INSERT INTO `sys_role` (`id_`, `role_name`, `dept_id`, `role_type`, `enable_`, `remark_`) VALUES
+	(1, '管理员', 1, 1, 1, NULL);
 /*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_role_menu 结构
-DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE IF NOT EXISTS `sys_role_menu` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `role_id` int(20) DEFAULT NULL,
@@ -207,15 +227,36 @@ CREATE TABLE IF NOT EXISTS `sys_role_menu` (
   `operator_id` int(20) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_`),
   UNIQUE KEY `role_id_menu_id` (`role_id`,`menu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色授权表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色授权表';
 
--- 正在导出表  ibase4j.sys_role_menu 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_role_menu 的数据：~4 rows (大约)
 /*!40000 ALTER TABLE `sys_role_menu` DISABLE KEYS */;
+INSERT INTO `sys_role_menu` (`id_`, `role_id`, `menu_id`, `authorize_`, `operate_time`, `operator_id`) VALUES
+	(1, 1, 1, 2, '2016-05-10 08:43:39', 1),
+	(2, 1, 2, 2, '2016-05-10 08:44:02', 1),
+	(3, 1, 3, 2, '2016-05-10 08:44:17', 1),
+	(4, 1, 4, 2, '2016-05-10 08:44:23', 1);
 /*!40000 ALTER TABLE `sys_role_menu` ENABLE KEYS */;
 
 
+-- 导出  表 ibase4j.sys_role_permission 结构
+CREATE TABLE IF NOT EXISTS `sys_role_permission` (
+  `id_` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) DEFAULT NULL,
+  `permission_id` int(11) DEFAULT NULL,
+  `permission_type` varchar(20) DEFAULT NULL COMMENT 'CRUD',
+  PRIMARY KEY (`id_`),
+  UNIQUE KEY `permit_id_permit_type` (`permission_id`,`permission_type`,`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='角色操作权限';
+
+-- 正在导出表  ibase4j.sys_role_permission 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `sys_role_permission` DISABLE KEYS */;
+INSERT INTO `sys_role_permission` (`id_`, `role_id`, `permission_id`, `permission_type`) VALUES
+	(1, 1, 1, 'read');
+/*!40000 ALTER TABLE `sys_role_permission` ENABLE KEYS */;
+
+
 -- 导出  表 ibase4j.sys_user 结构
-DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE IF NOT EXISTS `sys_user` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `account_` varchar(20) DEFAULT NULL COMMENT '登陆帐户',
@@ -230,17 +271,16 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `account` (`account_`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  ibase4j.sys_user 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
 INSERT INTO `sys_user` (`id_`, `account_`, `password_`, `sex_`, `user_name`, `avatar_`, `user_type`, `dept_id`, `locked_`, `usable_`, `create_time`) VALUES
-	(2, 'admin', 'Llf678rVJnvTkZdk8CMaHv+s20wa37zzPidtDjQj7cE=', 0, 'admin', NULL, 3, 1, 0, 1, '2016-05-06 10:06:52');
+	(1, 'admin', 'i/sV2VpTPy7Y+ppesmkCmM==', 0, 'admin', NULL, 3, 1, 0, 1, '2016-05-06 10:06:52');
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_user_menu 结构
-DROP TABLE IF EXISTS `sys_user_menu`;
 CREATE TABLE IF NOT EXISTS `sys_user_menu` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(20) DEFAULT NULL,
@@ -257,24 +297,24 @@ CREATE TABLE IF NOT EXISTS `sys_user_menu` (
 
 
 -- 导出  表 ibase4j.sys_user_role 结构
-DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE IF NOT EXISTS `sys_user_role` (
-  `id_` int(20) NOT NULL,
+  `id_` int(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(20) DEFAULT NULL,
   `role_id` int(20) DEFAULT NULL,
-  `operate_time` timestamp NULL DEFAULT NULL,
+  `operate_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `operator_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `user_id_role_id` (`user_id`,`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户授权表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户授权表';
 
 -- 正在导出表  ibase4j.sys_user_role 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_user_role` DISABLE KEYS */;
+INSERT INTO `sys_user_role` (`id_`, `user_id`, `role_id`, `operate_time`, `operator_id`) VALUES
+	(1, 1, 1, '2016-05-10 08:45:51', 1);
 /*!40000 ALTER TABLE `sys_user_role` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_user_thirdparty 结构
-DROP TABLE IF EXISTS `sys_user_thirdparty`;
 CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(20) NOT NULL,

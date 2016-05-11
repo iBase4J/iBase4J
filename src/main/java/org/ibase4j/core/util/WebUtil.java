@@ -38,6 +38,11 @@ public class WebUtil {
 		return cookie.getValue();
 	}
 
+	/** 用户密码加密 */
+	public static String encryptPassword(String password) {
+		return SecurityUtil.encryptMd5(SecurityUtil.encryptSHA(password));
+	}
+
 	/** 保存当前用户 */
 	public static void saveCurrentUser(Object user) {
 		setSession(Constants.CURRENT_USER, user);

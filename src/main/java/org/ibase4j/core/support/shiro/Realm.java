@@ -5,30 +5,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.mybatis.generator.model.SysMenu;
 import org.ibase4j.mybatis.generator.model.SysUser;
-import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysPermissionService;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.PageInfo;
 
-
 public class Realm extends AuthorizingRealm {
 	@Autowired
-	private SysAuthorizeService sysAuthorizeService;
+	private SysPermissionService sysPermissionService;
 	@Autowired
 	private SysUserService sysUserService;
 
@@ -43,15 +39,11 @@ public class Realm extends AuthorizingRealm {
 		if (pageInfo.getSize() == 1) {
 			SysUser user = pageInfo.getList().get(0);
 			// 从数据库中获取当前登录用户的详细信息
-			List<SysMenu> menus = sysAuthorizeService.getAuthorize(user.getId());
-			if (null != menus && menus.size() > 0) {
-				for (SysMenu pmss : menus) {
-					if (StringUtils.isNotBlank(pmss.getRequest())) {
-						permissionList.add(pmss.getRequest());
-					}
-				}
+			List<String> permissions = sysPermissionService.getPermissionTypesByUserId(user.getId());
+			if (null != permissions && permissions.size() > 0) {
+				permissionList.addAll(permissions);
 			} else {
-				throw new AuthorizationException();
+				return null;
 			}
 			// 为当前用户设置角色和权限
 			SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();

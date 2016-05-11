@@ -36,8 +36,19 @@ public class LocaleInterceptor extends BaseInterceptor {
 		Long preRequestTime = (Long) session.getAttribute("PREREQUESTTIME");
 		if (preRequestTime != null) { // 过滤频繁操作
 			if (System.currentTimeMillis() - preRequestTime < 1000) {
-				response.setStatus(409);
-				return false;
+				Integer illRequestTimes = (Integer) session.getAttribute("ILLREQUESTTIMES");
+				if (illRequestTimes == null) {
+					illRequestTimes = 1;
+				} else {
+					illRequestTimes++;
+				}
+				if (illRequestTimes > 2) {
+					response.setStatus(409);
+					return false;
+				}
+				session.setAttribute("ILLREQUESTTIMES", illRequestTimes);
+			} else {
+				session.setAttribute("ILLREQUESTTIMES", 0);
 			}
 		}
 		session.setAttribute("PREREQUESTTIME", System.currentTimeMillis());

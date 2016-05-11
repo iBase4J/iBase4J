@@ -14,7 +14,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.login.ThirdPartyUser;
-import org.ibase4j.core.util.SecurityUtil;
+import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.mybatis.generator.dao.SysUserMapper;
 import org.ibase4j.mybatis.generator.dao.SysUserThirdpartyMapper;
 import org.ibase4j.mybatis.generator.model.SysUser;
@@ -107,7 +107,7 @@ public class SysUserService extends BaseService {
 		SysUser sysUser = new SysUser();
 		sysUser.setSex(0);
 		sysUser.setUserType(1);
-		sysUser.setPassword(SecurityUtil.encryptSHA("123456"));
+		sysUser.setPassword(WebUtil.encryptPassword("123456"));
 		sysUser.setUserName(thirdPartyUser.getUserName());
 		sysUser.setAvatar(thirdPartyUser.getAvatarUrl());
 		this.update(sysUser);
