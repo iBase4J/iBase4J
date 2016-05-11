@@ -248,4 +248,11 @@ public class DataUtil {
 		return result;
 	}
 
+	// 初始化设置默认值
+	public <K> K ifNull(K k, K defaultValue) {
+		if (k == null) {
+			return defaultValue;
+		}
+		return k;
+	}
 }
