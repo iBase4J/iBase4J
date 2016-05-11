@@ -22,4 +22,9 @@ public class Constants {
 	public static final String ALLUSER_NUMBER = "ALLUSER_NUMBER";
 	/** 登录用户数量 */
 	public static final String USER_NUMBER = "USER_NUMBER";
+
+	public static final String PREREQUEST = "PREREQUEST";
+	public static final String PREREQUEST_TIME = "PREREQUEST_TIME";
+	public static final String MALICIOUS_REQUEST_TIMES = "MALICIOUS_REQUEST_TIMES";
+
 }
