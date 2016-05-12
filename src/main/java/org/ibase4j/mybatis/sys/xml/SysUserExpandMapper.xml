@@ -5,7 +5,7 @@
 		sys_user.id_, sys_user.account_, sys_user.password_, sys_user.sex_,
 		sys_user.user_name, sys_user.avatar_, sys_user.user_type,
 		sys_user.dept_id, sys_user.locked_,
-		sys_user.usable_,sys_user.phone_
+		sys_user.usable_, sys_user.phone_
 	</sql>
 	<select id="query" parameterType="java.util.Map"
 		resultMap="org.ibase4j.mybatis.generator.dao.SysUserMapper.BaseResultMap">
