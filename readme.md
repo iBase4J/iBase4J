@@ -1,4 +1,4 @@
-主要功能如下：
+系统主要功能如下：
 =====
 1、数据库
 ======
@@ -25,7 +25,7 @@
 5、缓存和Session
 ===========
 
-    注解redis缓存数据，Spring-session和redis实现分布式session同步。
+    注解redis缓存数据，Spring-session和redis实现分布式session同步，重启服务会话不丢失。会话管理，强制结束会话。
 
 6、多系统交互
 ===========
