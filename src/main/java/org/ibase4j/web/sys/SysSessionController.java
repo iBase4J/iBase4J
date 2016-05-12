@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.listener.SessionListener;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.service.sys.SysSessionService;
 import org.ibase4j.web.BaseController;
@@ -34,6 +35,8 @@ public class SysSessionController extends BaseController {
 	public ModelMap get(ModelMap modelMap, HttpServletRequest request) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = sessionService.query(params);
+		Long number = SessionListener.getAllUserNumber();
+		modelMap.put("userNumber", number); // 用户数大于会话数,有用户没有登录
 		return setSuccessModelMap(modelMap, list);
 	}
 
