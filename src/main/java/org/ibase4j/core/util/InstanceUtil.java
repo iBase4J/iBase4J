@@ -226,7 +226,7 @@ public class InstanceUtil {
 	 * @param list 实体属性Map
 	 * @return
 	 */
-	public static <E> E newInstance(Class<E> cls, Map<?, ?> map) {
+	public static <E> E newInstance(Class<E> cls, Map<String, ?> map) {
 		E object = null;
 		try {
 			object = cls.newInstance();
