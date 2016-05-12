@@ -46,4 +46,11 @@
 	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
         <property name="maxInactiveIntervalInSeconds" value="600" />
 	</bean>
+	<bean class="org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration">
+		<property name="httpSessionListeners">
+			<list>
+				<bean class="org.ibase4j.core.listener.SessionListener" />
+			</list>
+		</property>
+	</bean>
 </beans>

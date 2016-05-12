@@ -14,7 +14,7 @@
 ======
 
     基于spring mvc注解。Exception统一管理。
-    基于session的国际化提示信息，职责链模式的本地语言拦截器,Shiro权限管理。
+    基于session的国际化提示信息，职责链模式的本地语言拦截器,Shiro登录、URL权限管理。
     QQ、微信、新浪微博第三方登录。
 
 4、调度
@@ -25,7 +25,7 @@
 5、缓存和Session
 ===========
 
-    注解redis缓存数据，Spring-session和redis实现分布式session同步(建议按功能模块划分系统)。
+    注解redis缓存数据，Spring-session和redis实现分布式session同步。
 
 6、多系统交互
 ===========

@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `sys_dept` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='部门';
 
--- 正在导出表  ibase4j.sys_dept 的数据：~1 rows (大约)
+-- 正在导出表  ibase4j.sys_dept 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_dept` DISABLE KEYS */;
 INSERT INTO `sys_dept` (`id_`, `dept_name`, `parent_id`, `enable_`, `sort_no`, `leaf_`, `remark_`) VALUES
 	(1, 'iBase4J', 0, 1, 1, 0, NULL);
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `sys_dic_index` (
   UNIQUE KEY `code` (`key_`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='代码表';
 
--- 正在导出表  ibase4j.sys_dic_index 的数据：~11 rows (大约)
+-- 正在导出表  ibase4j.sys_dic_index 的数据：~10 rows (大约)
 /*!40000 ALTER TABLE `sys_dic_index` DISABLE KEYS */;
 INSERT INTO `sys_dic_index` (`id_`, `catalog_id`, `key_`, `name_`, `remark_`) VALUES
 	(1, 6, 'SEX', '性别', NULL),
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='菜单';
 
--- 正在导出表  ibase4j.sys_menu 的数据：~3 rows (大约)
+-- 正在导出表  ibase4j.sys_menu 的数据：~2 rows (大约)
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
 INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`, `request_`, `expand_`, `sort_no`, `leaf_`, `remark_`) VALUES
 	(1, '系统管理', 1, NULL, NULL, '#', 0, 1, 0, NULL),
@@ -190,12 +190,18 @@ CREATE TABLE IF NOT EXISTS `sys_permission` (
   `permission_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `permit_url` (`permission_url`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='权限';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='权限';
 
--- 正在导出表  ibase4j.sys_permission 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_permission 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_permission` DISABLE KEYS */;
 INSERT INTO `sys_permission` (`id_`, `permission_url`, `permission_name`) VALUES
-	(1, '/user/read/current', '获取当前用户');
+	(1, '/user/read/current', '获取当前用户'),
+	(2, '/user/update', '修改用户信息'),
+	(3, '/user/update/password', '修改用户密码'),
+	(4, '/user/read/list', '获取用户列表'),
+	(5, '/user/read/detail', '获取用户详情'),
+	(6, '/session/read/list', '获取会话列表'),
+	(7, '/session/delete', '删除会话');
 /*!40000 ALTER TABLE `sys_permission` ENABLE KEYS */;
 
 
@@ -210,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `sys_role` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='角色信息表';
 
--- 正在导出表  ibase4j.sys_role 的数据：~1 rows (大约)
+-- 正在导出表  ibase4j.sys_role 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
 INSERT INTO `sys_role` (`id_`, `role_name`, `dept_id`, `role_type`, `enable_`, `remark_`) VALUES
 	(1, '管理员', 1, 1, 1, NULL);
@@ -244,16 +250,30 @@ CREATE TABLE IF NOT EXISTS `sys_role_permission` (
   `id_` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) DEFAULT NULL,
   `permission_id` int(11) DEFAULT NULL,
-  `permission_type` varchar(20) DEFAULT NULL COMMENT 'CRUD',
   PRIMARY KEY (`id_`),
-  UNIQUE KEY `permit_id_permit_type` (`permission_id`,`permission_type`,`role_id`)
+  UNIQUE KEY `permit_id_permit_type` (`permission_id`,`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='角色操作权限';
 
--- 正在导出表  ibase4j.sys_role_permission 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_role_permission 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_role_permission` DISABLE KEYS */;
-INSERT INTO `sys_role_permission` (`id_`, `role_id`, `permission_id`, `permission_type`) VALUES
-	(1, 1, 1, 'read');
+INSERT INTO `sys_role_permission` (`id_`, `role_id`, `permission_id`) VALUES
+	(1, 1, 1);
 /*!40000 ALTER TABLE `sys_role_permission` ENABLE KEYS */;
+
+
+-- 导出  表 ibase4j.sys_session 结构
+CREATE TABLE IF NOT EXISTS `sys_session` (
+  `id_` int(20) NOT NULL AUTO_INCREMENT,
+  `session_id` varchar(50) DEFAULT NULL,
+  `account_` varchar(50) DEFAULT NULL,
+  `ip_` varchar(50) DEFAULT NULL,
+  `start_time` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会话管理';
+
+-- 正在导出表  ibase4j.sys_session 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_user 结构

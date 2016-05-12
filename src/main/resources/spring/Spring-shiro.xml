@@ -32,6 +32,7 @@
 			<value>
 				/regin=anon
 				/login=anon
+				/logout=anon
 				/unauthorized=anon
 				/forbidden=anon
 				/sns*=anon

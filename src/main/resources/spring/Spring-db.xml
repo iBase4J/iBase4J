@@ -91,7 +91,7 @@
 				<!-- read -->
 				<entry key="read" value=",get,select,count,list,query" />
 				<!-- write -->
-				<entry key="write" value=",add,create,update,delete,remove," />
+				<entry key="write" value=",add,insert,create,update,delete,remove," />
 			</map>
 		</property>
 	</bean>

@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -82,8 +81,9 @@ public class SysUserController extends BaseController {
 
 	// 用户详细信息
 	@ResponseBody
-	@RequestMapping(value = "/read/{id}")
-	public ModelMap detail(ModelMap modelMap, HttpServletRequest request, @PathVariable("id") Integer id) {
+	@RequestMapping(value = "/read/detail")
+	public ModelMap detail(ModelMap modelMap, HttpServletRequest request,
+			@RequestParam(value = "id", required = false) Integer id) {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		SysUser sysUser = sysUserService.queryById(id);
 		sysUser.setPassword(null);
@@ -98,7 +98,7 @@ public class SysUserController extends BaseController {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		SysUser sysUser = sysUserService.queryById(id);
 		sysUser.setPassword(null);
-		List<SysMenu> menus= authorizeService.getAuthorize(id);
+		List<SysMenu> menus = authorizeService.getAuthorize(id);
 		modelMap.put("user", sysUser);
 		modelMap.put("menus", menus);
 		return setSuccessModelMap(modelMap);
