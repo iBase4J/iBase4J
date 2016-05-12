@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `sys_permission` (
   UNIQUE KEY `permit_url` (`permission_url`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='权限';
 
--- 正在导出表  ibase4j.sys_permission 的数据：~1 rows (大约)
+-- 正在导出表  ibase4j.sys_permission 的数据：~7 rows (大约)
 /*!40000 ALTER TABLE `sys_permission` DISABLE KEYS */;
 INSERT INTO `sys_permission` (`id_`, `permission_url`, `permission_name`) VALUES
 	(1, '/user/read/current', '获取当前用户'),
@@ -252,12 +252,18 @@ CREATE TABLE IF NOT EXISTS `sys_role_permission` (
   `permission_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `permit_id_permit_type` (`permission_id`,`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='角色操作权限';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='角色操作权限';
 
--- 正在导出表  ibase4j.sys_role_permission 的数据：~1 rows (大约)
+-- 正在导出表  ibase4j.sys_role_permission 的数据：~7 rows (大约)
 /*!40000 ALTER TABLE `sys_role_permission` DISABLE KEYS */;
 INSERT INTO `sys_role_permission` (`id_`, `role_id`, `permission_id`) VALUES
-	(1, 1, 1);
+	(1, 1, 1),
+	(2, 1, 2),
+	(3, 1, 3),
+	(4, 1, 4),
+	(5, 1, 5),
+	(6, 1, 6),
+	(7, 1, 7);
 /*!40000 ALTER TABLE `sys_role_permission` ENABLE KEYS */;
 
 
@@ -271,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会话管理';
 
--- 正在导出表  ibase4j.sys_session 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_session 的数据：~4 rows (大约)
 /*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
@@ -281,9 +287,10 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `account_` varchar(20) DEFAULT NULL COMMENT '登陆帐户',
   `password_` varchar(50) DEFAULT NULL COMMENT '密码',
+  `phone_` varchar(50) DEFAULT NULL COMMENT '电话',
   `sex_` int(1) NOT NULL DEFAULT '0' COMMENT '性别(0:未知;1:男;2:女)',
   `user_name` varchar(30) DEFAULT NULL COMMENT '用户名',
-  `avatar_` varchar(50) DEFAULT NULL,
+  `avatar_` varchar(500) DEFAULT NULL,
   `user_type` int(1) DEFAULT '1' COMMENT '人员类型(1:经办员;2:管理员;3:系统内置人员;)',
   `dept_id` int(20) DEFAULT '1' COMMENT '部门编号',
   `locked_` int(1) DEFAULT '0' COMMENT '锁定标志(1:锁定;0:激活)',
@@ -293,10 +300,10 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   UNIQUE KEY `account` (`account_`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.sys_user 的数据：~1 rows (大约)
+-- 正在导出表  ibase4j.sys_user 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
-INSERT INTO `sys_user` (`id_`, `account_`, `password_`, `sex_`, `user_name`, `avatar_`, `user_type`, `dept_id`, `locked_`, `usable_`, `create_time`) VALUES
-	(1, 'admin', 'i/sV2VpTPy7Y+ppesmkCmM==', 0, 'admin', NULL, 3, 1, 0, 1, '2016-05-06 10:06:52');
+INSERT INTO `sys_user` (`id_`, `account_`, `password_`, `phone_`, `sex_`, `user_name`, `avatar_`, `user_type`, `dept_id`, `locked_`, `usable_`, `create_time`) VALUES
+	(1, 'admin', 'i/sV2VpTPy7Y+ppesmkCmM==', '15333821711', 0, 'admin', 'res/img/favicon.jpg', 3, 1, 0, 1, '2016-05-06 10:06:52');
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 
 
