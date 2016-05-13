@@ -2,7 +2,7 @@ package org.ibase4j.mybatis.sys.dao;
 
 import java.util.List;
 
-import org.ibase4j.mybatis.generator.model.SysMenu;
+import org.ibase4j.mybatis.sys.model.SysMenuBean;
 
 public interface SysAuthorizeMapper {
 
@@ -12,6 +12,6 @@ public interface SysAuthorizeMapper {
 
 	void deleteRoleMenu(Integer roleId);
 
-	List<SysMenu> getAuthorize(Integer userId);
+	List<SysMenuBean> getAuthorize(Integer userId);
 
 }

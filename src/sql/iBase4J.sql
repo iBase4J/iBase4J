@@ -155,16 +155,17 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   `expand_` int(1) NOT NULL DEFAULT '0' COMMENT '展开状态(1:展开;0:收缩)',
   `sort_no` int(2) DEFAULT NULL COMMENT '排序号',
   `leaf_` int(1) NOT NULL DEFAULT '0' COMMENT '叶子节点(0:树枝节点;1:叶子节点)',
+  `state_` varchar(50) NOT NULL DEFAULT '0' COMMENT '路由状态',
   `remark_` varchar(100) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='菜单';
 
--- 正在导出表  ibase4j.sys_menu 的数据：~2 rows (大约)
+-- 正在导出表  ibase4j.sys_menu 的数据：~3 rows (大约)
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
-INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`, `request_`, `expand_`, `sort_no`, `leaf_`, `remark_`) VALUES
-	(1, '系统管理', 1, NULL, NULL, '#', 0, 1, 0, NULL),
-	(2, '用户管理', 1, 1, NULL, 'main.user', 0, 1, 1, NULL),
-	(3, '部门管理', 1, 1, NULL, 'main.dept', 0, 2, 1, NULL);
+INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`, `request_`, `expand_`, `sort_no`, `leaf_`, `state_`, `remark_`) VALUES
+	(1, '系统管理', 1, 0, 'glyphicon glyphicon-cog', '#', 0, 1, 0, '**.sys.**', NULL),
+	(2, '用户管理', 1, 1, 'glyphicon glyphicon-user', 'main.sys.user.list', 0, 1, 1, '**.sys.user.**', NULL),
+	(3, '部门管理', 1, 1, 'glyphicon glyphicon-align-justify', 'main.sys.dept.list', 0, 2, 1, '**.sys.dept.**', NULL);
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 
 
@@ -277,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会话管理';
 
--- 正在导出表  ibase4j.sys_session 的数据：~4 rows (大约)
+-- 正在导出表  ibase4j.sys_session 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
@@ -298,12 +299,13 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `account` (`account_`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.sys_user 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_user 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
 INSERT INTO `sys_user` (`id_`, `account_`, `password_`, `phone_`, `sex_`, `user_name`, `avatar_`, `user_type`, `dept_id`, `locked_`, `usable_`, `create_time`) VALUES
-	(1, 'admin', 'i/sV2VpTPy7Y+ppesmkCmM==', '15333821711', 0, 'admin', 'res/img/favicon.jpg', 3, 1, 0, 1, '2016-05-06 10:06:52');
+	(1, 'admin', 'i/sV2VpTPy7Y+ppesmkCmM==', '15333821711', 0, 'admin', 'res/img/favicon.jpg', 3, 1, 0, 1, '2016-05-06 10:06:52'),
+	(2, 'test', 'i/sV2VpTPy7Y+ppesmkCmM==', '12345678901', 0, 'test', NULL, 1, 1, 0, 1, '2016-05-13 16:58:17');
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 
 

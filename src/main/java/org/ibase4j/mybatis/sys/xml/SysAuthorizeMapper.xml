@@ -3,7 +3,7 @@
 <mapper namespace="org.ibase4j.mybatis.sys.dao.SysAuthorizeMapper">
 	<sql id="baseMenuColumn">
 		menu.id_, menu.menu_name, menu.menu_type, menu.parent_id, menu.iconcls_,
-		menu.request_, menu.expand_, menu.sort_no,
+		menu.request_, menu.expand_, menu.sort_no,menu.state_,
 		menu.leaf_, menu.remark_
 	</sql>
 	<delete id="deleteUserMenu">
@@ -15,7 +15,10 @@
 	<delete id="deleteRoleMenu">
 		delete from sys_role_menu where role_id=#{roleId}
 	</delete>
-	<select id="getAuthorize" resultMap="org.ibase4j.mybatis.generator.dao.SysMenuMapper.BaseResultMap">
+	<resultMap id="menuBaseResultMap" type="org.ibase4j.mybatis.sys.model.SysMenuBean"
+		extends="org.ibase4j.mybatis.generator.dao.SysMenuMapper.BaseResultMap">
+	</resultMap>
+	<select id="getAuthorize" resultMap="menuBaseResultMap">
 		select 
 		<include refid="baseMenuColumn" />
 		from sys_menu menu

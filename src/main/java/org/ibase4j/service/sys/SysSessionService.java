@@ -13,6 +13,7 @@ import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class SysSessionService extends BaseService {
 	@Autowired
 	private SysSessionExpandMapper sessionExpandMapper;
 
-	@CacheEvict
+	@CachePut
 	public void update(SysSession record) {
 		if (record.getId() == null) {
 			SysSession session = sessionExpandMapper.queryBySessionId(record.getSessionId());

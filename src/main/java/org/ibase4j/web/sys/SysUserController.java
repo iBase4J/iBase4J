@@ -12,8 +12,8 @@ import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.mybatis.generator.model.SysMenu;
 import org.ibase4j.mybatis.generator.model.SysUser;
+import org.ibase4j.mybatis.sys.model.SysMenuBean;
 import org.ibase4j.service.sys.SysAuthorizeService;
 import org.ibase4j.service.sys.SysUserService;
 import org.ibase4j.web.BaseController;
@@ -98,7 +98,7 @@ public class SysUserController extends BaseController {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		SysUser sysUser = sysUserService.queryById(id);
 		sysUser.setPassword(null);
-		List<SysMenu> menus = authorizeService.getAuthorize(id);
+		List<SysMenuBean> menus = authorizeService.getAuthorize(id);
 		modelMap.put("user", sysUser);
 		modelMap.put("menus", menus);
 		return setSuccessModelMap(modelMap);

@@ -32,10 +32,10 @@
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
 		<property name="connectionFactory" ref="jedisConnectionFactory" />
 		<property name="valueSerializer">
-			<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+			<bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
 		</property>
 		<property name="hashValueSerializer">
-			<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+			<bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
 		</property>
 	</bean>
 	<bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">

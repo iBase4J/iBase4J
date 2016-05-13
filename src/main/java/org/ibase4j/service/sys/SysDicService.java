@@ -6,6 +6,7 @@ import org.ibase4j.mybatis.generator.model.SysDic;
 import org.ibase4j.mybatis.generator.model.SysDicIndex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ public class SysDicService {
 	private SysDicIndexMapper dicIndexMapper;
 
 	@Transactional
-	@CacheEvict(cacheNames = "sysDicIndex")
+	@CachePut(cacheNames = "sysDicIndex")
 	public void updateDicIndex(SysDicIndex record) {
 		if (record.getId() == null) {
 			dicIndexMapper.insert(record);
@@ -28,7 +29,7 @@ public class SysDicService {
 	}
 
 	@Transactional
-	@CacheEvict(cacheNames = "sysDic")
+	@CachePut(cacheNames = "sysDic")
 	public void updateDic(SysDic record) {
 		if (record.getId() == null) {
 			dicMapper.insert(record);
