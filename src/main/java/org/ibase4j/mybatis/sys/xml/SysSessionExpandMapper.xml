@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ibase4j.mybatis.sys.dao.SysSessionExpandMapper">
+	<delete id="deleteBySessionId" parameterType="java.lang.String">
+		delete from
+		sys_session where session_id=#{sessionId}
+	</delete>
+	<select id="query" parameterType="java.util.Map"
+		resultMap="org.ibase4j.mybatis.generator.dao.SysSessionMapper.BaseResultMap">
+		select * from sys_session where 1=1
+		<if test="keyword != null">
+			and (account_ like "%"#{keyword}"%" or session_id like "%"#{keyword}"%"
+			or ip_ like "%"#{keyword}"%")
+		</if>
+	</select>
+	<select id="queryBySessionId"
+		resultMap="org.ibase4j.mybatis.generator.dao.SysSessionMapper.BaseResultMap">
+		select * from sys_session where session_id = #{keyword}
+	</select>
+</mapper>
