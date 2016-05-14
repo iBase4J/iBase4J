@@ -4,10 +4,10 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="ibase4j-base-service-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/iBase4J-Base-Service/iBase4J-Base-Service">
+        <dependent-module archiveName="ibase4j-sys-interface-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/iBase4j-SYS-Interface/iBase4j-SYS-Interface">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="ibase4j-sys-interface-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/iBase4j-SYS-Interface/iBase4j-SYS-Interface">
+        <dependent-module archiveName="ibase4j-base-0.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/iBase4J-Base/iBase4J-Base">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/iBase4J-SYS-Service/target/classes"/>

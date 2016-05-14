@@ -30,7 +30,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>ibase4j-base-web</artifactId>
+			<artifactId>ibase4j-base</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
