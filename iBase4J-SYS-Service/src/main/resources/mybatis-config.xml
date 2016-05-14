@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="logImpl" value="SLF4J" />
+		<!-- 字段为空时仍调用model的set方法或map的put方法 -->
+		<setting name="callSettersOnNulls" value="true"/>
+	</settings>
+	<plugins>
+		<!-- 分页查询插件 -->
+		<plugin interceptor="com.github.pagehelper.PageHelper">
+			<property name="dialect" value="mysql" />
+			<property name="reasonable" value="true" />
+		</plugin>
+	</plugins>
+</configuration>

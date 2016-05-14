@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+                        http://www.springframework.org/schema/mvc  
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
+	<context:component-scan base-package="org.ibase4j.web" />
+    <!-- 引入属性配置文件 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/dubbo.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- controller注入 -->
+	<import resource="spring/Spring-dubbo.xml" />
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<bean class="org.ibase4j.core.interceptor.MaliciousRequestInterceptor">
+			<property name="minRequestIntervalTime" value="1000" />
+			<property name="maxMaliciousTimes" value="0" />
+			<property name="nextInterceptor">
+				<bean class="org.ibase4j.core.interceptor.LocaleInterceptor" />
+			</property>
+		</bean>
+	</mvc:interceptors>
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<description>视图模式配置</description>
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<description>注解controller方法适配器</description>
+		<property name="messageConverters">
+			<list>
+				<!--JSON转换器 -->
+				<bean
+					class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+					<property name="supportedMediaTypes" value="application/json;charset=UTF-8" />
+					<property name="features">
+						<array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
+							<bean
+								class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+								<property name="staticField"
+									value="com.alibaba.fastjson.serializer.SerializerFeature.DisableCircularReferenceDetect" />
+							</bean>
+							<value>WriteMapNullValue</value>
+							<value>WriteNullStringAsEmpty</value>
+						</array>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<description>配置文件上传</description>
+		<property name="defaultEncoding" value="utf-8" />
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760000" />
+		<!-- 内存中的最大值 -->
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+	<!-- 资源重定向(仅作为后台使用不提供静态资源) -->
+	<!-- <mvc:resources mapping="upload/**" location="/WEB-INF/resources/upload/" 
+		cache-period="300" /> -->
+</beans>

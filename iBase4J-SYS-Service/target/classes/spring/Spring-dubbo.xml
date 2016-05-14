@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/jee
+	http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://code.alibabatech.com/schema/dubbo
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	default-lazy-init="false">
+	<!-- 提供方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用暴露出来的 -->
+	<dubbo:application name="${dubbo.application.name}" logger="slf4j" />
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry address="${dubbo.registry.address}"
+		check="false" subscribe="false" />
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" threads="${dubbo.protocol.threads}" />
+	<!-- 服务端要暴露的服务接口,注解@com.alibaba.dubbo.config.annotation.Service -->
+	<dubbo:annotation package="org.ibase4j" />
+	<!-- 服务端要暴露的服务接口(有事务服务) -->
+	<dubbo:service interface="org.ibase4j.facade.sys.SysDicFacade" ref="sysDicService" />
+	<dubbo:service interface="org.ibase4j.facade.sys.SysUserFacade" ref="sysUserService" />
+	<dubbo:service interface="org.ibase4j.facade.sys.SysSessionFacade" ref="sysSessionService" />
+	<dubbo:service interface="org.ibase4j.facade.sys.SysAuthorizeFacade" ref="sysAuthorizeService" />
+	<dubbo:service interface="org.ibase4j.facade.sys.SysPermissionFacade" ref="sysPermissionService" />
+</beans>

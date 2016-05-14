@@ -1,0 +1,13 @@
+org\ibase4j\web\sys\ThirdPartyLoginController.class
+org\ibase4j\web\BaseController.class
+org\ibase4j\web\sys\SysDicController.class
+org\ibase4j\web\sys\SysDeptController.class
+org\ibase4j\web\sys\ThirdPartyLoginHelper.class
+org\ibase4j\web\sys\SysSessionController.class
+org\ibase4j\web\sys\SysRoleController.class
+org\ibase4j\web\sys\SysScheduleJobController.class
+org\ibase4j\web\sys\SysAuthorizeController.class
+org\ibase4j\web\sys\SysUserController.class
+org\ibase4j\web\sys\LoginController.class
+org\ibase4j\web\sys\SysParamController.class
+org\ibase4j\web\sys\SysMenuController.class

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ibase4j.mybatis.sys.dao.SysPermissionExpandMapper">
+	
+	<select id="getPermissionByUserId" resultType="java.lang.Integer">
+		select count(1)
+		from sys_user_role ur join sys_role_permission rp on ur.role_id=rp.role_id
+		join sys_permission p on rp.permission_id=p.id_
+		where ur.user_id=#{userId} and p.permission_url=#{url}
+	</select>
+</mapper>
