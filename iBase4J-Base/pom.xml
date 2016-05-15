@@ -6,7 +6,13 @@
 	<version>0.1.0</version>
 	<name>iBase4J-Base</name>
 	<url>http://maven.apache.org</url>
-
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>ibase4j-web</module>
+		<module>ibase4j-sys-service</module>
+	</modules>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.2.5.RELEASE</spring.version>
@@ -17,7 +23,7 @@
 		<fastjson.version>1.2.8</fastjson.version>
 		<jedis.version>2.8.1</jedis.version>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
