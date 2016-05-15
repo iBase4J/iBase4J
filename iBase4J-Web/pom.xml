@@ -34,7 +34,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>ibase4j-sys-interface</artifactId>
+			<artifactId>ibase4j-sys-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
