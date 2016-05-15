@@ -1,83 +1,81 @@
 -- --------------------------------------------------------
-
--- Ö÷»ú:                           127.0.0.1
-
--- ·şÎñÆ÷°æ±¾:                        5.7.11-enterprise-commercial-advanced-log - MySQL Enterprise Server - Advanced Edition (Commercial)
-
--- ·şÎñÆ÷²Ù×÷ÏµÍ³:                      Win64
-
--- HeidiSQL °æ±¾:                  9.3.0.4998
-
+-- ä¸»æœº:                           127.0.0.1
+-- æœåŠ¡å™¨ç‰ˆæœ¬:                        5.7.11-enterprise-commercial-advanced-log - MySQL Enterprise Server - Advanced Edition (Commercial)
+-- æœåŠ¡å™¨æ“ä½œç³»ç»Ÿ:                      Win64
+-- HeidiSQL ç‰ˆæœ¬:                  9.3.0.4998
 -- --------------------------------------------------------
-
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- µ¼³ö ibase4j µÄÊı¾İ¿â½á¹¹
+-- å¯¼å‡º ibase4j çš„æ•°æ®åº“ç»“æ„
 
 CREATE DATABASE IF NOT EXISTS `ibase4j` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `ibase4j`;
 
 
--- µ¼³ö  ±í ibase4j.sys_catalog ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_catalog ç»“æ„
 
 CREATE TABLE IF NOT EXISTS `sys_catalog` (
 
-  `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT 'Á÷Ë®ºÅ',
-  `cascade_id` varchar(255) NOT NULL COMMENT '½ÚµãÓïÒåID',
-  `root_key` varchar(255) NOT NULL COMMENT '¿ÆÄ¿±êÊ¶¼ü',
-  `root_name` varchar(255) NOT NULL COMMENT '¿ÆÄ¿Ãû³Æ',
-  `name_` varchar(255) NOT NULL COMMENT '·ÖÀàÃû³Æ',
-  `hotkey_` varchar(255) DEFAULT NULL COMMENT 'ÈÈ¼ü',
-  `parent_id` varchar(64) NOT NULL COMMENT '¸¸½ÚµãÁ÷Ë®ºÅ',
-  `is_leaf_` varchar(255) NOT NULL DEFAULT '1' COMMENT 'ÊÇ·ñÒ¶×Ó½Úµã',
-  `is_auto_expand` varchar(255) NOT NULL DEFAULT '0' COMMENT 'ÊÇ·ñ×Ô¶¯Õ¹¿ª',
-  `icon_name` varchar(255) DEFAULT NULL COMMENT 'Í¼±êÎÄ¼şÃû³Æ',
-  `sort_no` int(10) DEFAULT NULL COMMENT 'ÅÅĞòºÅ',
+  `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT 'æµæ°´å·',
+  `cascade_id` varchar(255) NOT NULL COMMENT 'èŠ‚ç‚¹è¯­ä¹‰ID',
+  `root_key` varchar(255) NOT NULL COMMENT 'ç§‘ç›®æ ‡è¯†é”®',
+  `root_name` varchar(255) NOT NULL COMMENT 'ç§‘ç›®åç§°',
+  `name_` varchar(255) NOT NULL COMMENT 'åˆ†ç±»åç§°',
+  `hotkey_` varchar(255) DEFAULT NULL COMMENT 'çƒ­é”®',
+  `parent_id` varchar(64) NOT NULL COMMENT 'çˆ¶èŠ‚ç‚¹æµæ°´å·',
+  `is_leaf_` varchar(255) NOT NULL DEFAULT '1' COMMENT 'æ˜¯å¦å¶å­èŠ‚ç‚¹',
+  `is_auto_expand` varchar(255) NOT NULL DEFAULT '0' COMMENT 'æ˜¯å¦è‡ªåŠ¨å±•å¼€',
+  `icon_name` varchar(255) DEFAULT NULL COMMENT 'å›¾æ ‡æ–‡ä»¶åç§°',
+  `sort_no` int(10) DEFAULT NULL COMMENT 'æ’åºå·',
   PRIMARY KEY (`id_`),
   UNIQUE KEY `sys_catalog_ukey` (`cascade_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='·ÖÀà±í';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='åˆ†ç±»è¡¨';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_catalog µÄÊı¾İ£º~11 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_catalog çš„æ•°æ®ï¼š~11 rows (å¤§çº¦)
+
 
 /*!40000 ALTER TABLE `sys_catalog` DISABLE KEYS */;
 
 INSERT INTO `sys_catalog` (`id_`, `cascade_id`, `root_key`, `root_name`, `name_`, `hotkey_`, `parent_id`, `is_leaf_`, `is_auto_expand`, `icon_name`, `sort_no`) VALUES
-	(1, '0.001', 'PARAM_TYPE', '²ÎÊı·ÖÀà¿ÆÄ¿', '²ÎÊı·ÖÀà', NULL, '0', '0', '0', 'book.png', 0),
-	(2, '0.002', 'DIC_TYPE', '´Êµä·ÖÀà¿ÆÄ¿', 'Êı¾İ×Öµä·ÖÀà', NULL, '0', '0', '0', 'book.png', 2),
-	(3, '0.001.001', 'PARAM_TYPE', '²ÎÊı·ÖÀà¿ÆÄ¿', 'ÒµÎñ²ÎÊı', NULL, '1', '1', '0', 'user20.png', 2),
-	(4, '0.001.002', 'PARAM_TYPE', '²ÎÊı·ÖÀà¿ÆÄ¿', 'ÏµÍ³²ÎÊı', NULL, '1', '0', '1', 'folder22.png', 1),
-	(5, '0.002.001', 'DIC_TYPE', '´Êµä·ÖÀà¿ÆÄ¿', 'ÏµÍ³¹ÜÀí', NULL, '2', '0', '1', 'folder22.png', 2),
-	(6, '0.002.002', 'DIC_TYPE', '´Êµä·ÖÀà¿ÆÄ¿', 'È«¾ÖÍ¨ÓÃ', NULL, '2', '1', '0', 'folder24.png', 3),
-	(7, '0.002.006', 'DIC_TYPE', '´Êµä·ÖÀà¿ÆÄ¿', 'Æ½Ì¨ÅäÖÃ', NULL, '2', '1', '0', 'folder2.png', 1),
-	(8, '0.001.002.001', 'PARAM_TYPE', '²ÎÊı·ÖÀà¿ÆÄ¿', 'ÑéÖ¤Âë', NULL, '4', '1', '0', 'ok3.png', 2),
-	(9, '0.001.002.002', 'PARAM_TYPE', '²ÎÊı·ÖÀà¿ÆÄ¿', '½çÃæÏÔÊ¾', NULL, '4', '1', '0', 'icon59.png', 1),
-	(10, '0.001.002.003', 'PARAM_TYPE', '²ÎÊı·ÖÀà¿ÆÄ¿', 'ÆäËü', NULL, '4', '1', '0', 'icon150.png', 9),
-	(11, '0.001.002.004', 'PARAM_TYPE', '²ÎÊı·ÖÀà¿ÆÄ¿', 'µ¼º½Óë²Ëµ¥', NULL, '4', '1', '0', 'icon152.png', 3),
-	(12, '0.002.001.001', 'DIC_TYPE', '´Êµä·ÖÀà¿ÆÄ¿', '¹¤×÷Á÷', NULL, '5', '1', '0', 'folder6.png', 1);
+	(1, '0.001', 'PARAM_TYPE', 'å‚æ•°åˆ†ç±»ç§‘ç›®', 'å‚æ•°åˆ†ç±»', NULL, '0', '0', '0', 'book.png', 0),
+	(2, '0.002', 'DIC_TYPE', 'è¯å…¸åˆ†ç±»ç§‘ç›®', 'æ•°æ®å­—å…¸åˆ†ç±»', NULL, '0', '0', '0', 'book.png', 2),
+	(3, '0.001.001', 'PARAM_TYPE', 'å‚æ•°åˆ†ç±»ç§‘ç›®', 'ä¸šåŠ¡å‚æ•°', NULL, '1', '1', '0', 'user20.png', 2),
+	(4, '0.001.002', 'PARAM_TYPE', 'å‚æ•°åˆ†ç±»ç§‘ç›®', 'ç³»ç»Ÿå‚æ•°', NULL, '1', '0', '1', 'folder22.png', 1),
+	(5, '0.002.001', 'DIC_TYPE', 'è¯å…¸åˆ†ç±»ç§‘ç›®', 'ç³»ç»Ÿç®¡ç†', NULL, '2', '0', '1', 'folder22.png', 2),
+	(6, '0.002.002', 'DIC_TYPE', 'è¯å…¸åˆ†ç±»ç§‘ç›®', 'å…¨å±€é€šç”¨', NULL, '2', '1', '0', 'folder24.png', 3),
+	(7, '0.002.006', 'DIC_TYPE', 'è¯å…¸åˆ†ç±»ç§‘ç›®', 'å¹³å°é…ç½®', NULL, '2', '1', '0', 'folder2.png', 1),
+	(8, '0.001.002.001', 'PARAM_TYPE', 'å‚æ•°åˆ†ç±»ç§‘ç›®', 'éªŒè¯ç ', NULL, '4', '1', '0', 'ok3.png', 2),
+	(9, '0.001.002.002', 'PARAM_TYPE', 'å‚æ•°åˆ†ç±»ç§‘ç›®', 'ç•Œé¢æ˜¾ç¤º', NULL, '4', '1', '0', 'icon59.png', 1),
+	(10, '0.001.002.003', 'PARAM_TYPE', 'å‚æ•°åˆ†ç±»ç§‘ç›®', 'å…¶å®ƒ', NULL, '4', '1', '0', 'icon150.png', 9),
+	(11, '0.001.002.004', 'PARAM_TYPE', 'å‚æ•°åˆ†ç±»ç§‘ç›®', 'å¯¼èˆªä¸èœå•', NULL, '4', '1', '0', 'icon152.png', 3),
+	(12, '0.002.001.001', 'DIC_TYPE', 'è¯å…¸åˆ†ç±»ç§‘ç›®', 'å·¥ä½œæµ', NULL, '5', '1', '0', 'folder6.png', 1);
 /*!40000 ALTER TABLE `sys_catalog` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_dept ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_dept ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_dept` (
 
-  `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '²¿ÃÅ±àºÅ',
-  `dept_name` varchar(50) DEFAULT NULL COMMENT '²¿ÃÅÃû³Æ',
-  `parent_id` int(20) DEFAULT NULL COMMENT 'ÉÏ¼¶²¿ÃÅ±àºÅ',
-  `enable_` int(1) DEFAULT NULL COMMENT 'ÆôÓÃ×´Ì¬',
-  `sort_no` int(3) DEFAULT NULL COMMENT 'ÅÅĞòºÅ',
-  `leaf_` int(1) DEFAULT NULL COMMENT 'Ò¶×Ó½Úµã(0:Ê÷Ö¦½Úµã;1:Ò¶×Ó½Úµã)',
-  `remark_` varchar(100) DEFAULT NULL COMMENT '±¸×¢',
+  `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT 'éƒ¨é—¨ç¼–å·',
+  `dept_name` varchar(50) DEFAULT NULL COMMENT 'éƒ¨é—¨åç§°',
+  `parent_id` int(20) DEFAULT NULL COMMENT 'ä¸Šçº§éƒ¨é—¨ç¼–å·',
+  `enable_` int(1) DEFAULT NULL COMMENT 'å¯ç”¨çŠ¶æ€',
+  `sort_no` int(3) DEFAULT NULL COMMENT 'æ’åºå·',
+  `leaf_` int(1) DEFAULT NULL COMMENT 'å¶å­èŠ‚ç‚¹(0:æ ‘æèŠ‚ç‚¹;1:å¶å­èŠ‚ç‚¹)',
+  `remark_` varchar(100) DEFAULT NULL COMMENT 'å¤‡æ³¨',
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='²¿ÃÅ';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='éƒ¨é—¨';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_dept µÄÊı¾İ£º~0 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_dept çš„æ•°æ®ï¼š~0 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_dept` DISABLE KEYS */;
 
@@ -86,7 +84,9 @@ INSERT INTO `sys_dept` (`id_`, `dept_name`, `parent_id`, `enable_`, `sort_no`, `
 /*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_dic ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_dic ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_dic` (
 
@@ -102,42 +102,46 @@ CREATE TABLE IF NOT EXISTS `sys_dic` (
   UNIQUE KEY `field_id_code` (`index_id`,`code_`)
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_dic µÄÊı¾İ£º~27 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_dic çš„æ•°æ®ï¼š~27 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_dic` DISABLE KEYS */;
 
 INSERT INTO `sys_dic` (`id_`, `index_id`, `code_`, `code_text`, `enable_`, `sort_no`, `editable_`, `remark_`) VALUES
-	(1, 1, '0', 'Î´Öª', 1, 1, 0, '1'),
-	(2, 1, '1', 'ÄĞ', 1, 2, 0, '1'),
-	(3, 1, '2', 'Å®', 1, 3, 0, '1'),
-	(4, 2, '0', '¼¤»î', 1, 1, 0, '1'),
-	(5, 2, '1', 'Ëø¶¨', 1, 2, 0, '1'),
-	(6, 3, '1', 'ÒµÎñ½ÇÉ«', 1, 1, 0, '1'),
-	(7, 3, '2', '¹ÜÀí½ÇÉ«', 1, 2, 0, '1'),
-	(8, 3, '3', 'ÏµÍ³ÄÚÖÃ½ÇÉ«', 1, 3, 0, '1'),
-	(9, 4, '0', 'Ê÷Ö¦½Úµã', 1, 1, 0, '1'),
-	(10, 4, '1', 'Ò¶×Ó½Úµã', 1, 2, 0, '1'),
-	(11, 5, '0', 'Ö»¶Á', 1, 1, 0, '1'),
-	(12, 5, '1', '¿É±à¼­', 1, 2, 0, '1'),
-	(13, 6, '0', '½ûÓÃ', 1, 1, 0, '1'),
-	(14, 6, '1', 'ÆôÓÃ', 1, 2, 0, '1'),
-	(15, 7, '1', '·ÃÎÊÈ¨ÏŞ', 1, 1, 0, '1'),
-	(16, 7, '2', '¹ÜÀíÈ¨ÏŞ', 1, 2, 0, '1'),
-	(17, 8, '1', 'ÏµÍ³²Ëµ¥', 1, 1, 0, '1'),
-	(18, 8, '2', 'ÒµÎñ²Ëµ¥', 1, 2, 0, '1'),
-	(19, 9, '1', '¾­°ìÔ±', 1, 1, 0, '1'),
-	(20, 9, '2', '¹ÜÀíÔ±', 1, 2, 0, '1'),
-	(21, 9, '3', 'ÏµÍ³ÄÚÖÃÓÃ»§', 1, 3, 0, '1'),
-	(22, 10, '0', 'ÊÕËõ', 1, 1, 0, '1'),
-	(23, 10, '1', 'Õ¹¿ª', 1, 2, 0, '1'),
-	(24, 11, 'add', 'ĞÂÔö', 1, 1, 0, NULL),
-	(25, 11, 'read', '²éÑ¯', 1, 2, 0, NULL),
-	(26, 11, 'update', 'ĞŞ¸Ä', 1, 3, 0, NULL),
-	(27, 11, 'delete', 'É¾³ı', 1, 4, 0, NULL);
+	(1, 1, '0', 'æœªçŸ¥', 1, 1, 0, '1'),
+	(2, 1, '1', 'ç”·', 1, 2, 0, '1'),
+	(3, 1, '2', 'å¥³', 1, 3, 0, '1'),
+	(4, 2, '0', 'æ¿€æ´»', 1, 1, 0, '1'),
+	(5, 2, '1', 'é”å®š', 1, 2, 0, '1'),
+	(6, 3, '1', 'ä¸šåŠ¡è§’è‰²', 1, 1, 0, '1'),
+	(7, 3, '2', 'ç®¡ç†è§’è‰²', 1, 2, 0, '1'),
+	(8, 3, '3', 'ç³»ç»Ÿå†…ç½®è§’è‰²', 1, 3, 0, '1'),
+	(9, 4, '0', 'æ ‘æèŠ‚ç‚¹', 1, 1, 0, '1'),
+	(10, 4, '1', 'å¶å­èŠ‚ç‚¹', 1, 2, 0, '1'),
+	(11, 5, '0', 'åªè¯»', 1, 1, 0, '1'),
+	(12, 5, '1', 'å¯ç¼–è¾‘', 1, 2, 0, '1'),
+	(13, 6, '0', 'ç¦ç”¨', 1, 1, 0, '1'),
+	(14, 6, '1', 'å¯ç”¨', 1, 2, 0, '1'),
+	(15, 7, '1', 'è®¿é—®æƒé™', 1, 1, 0, '1'),
+	(16, 7, '2', 'ç®¡ç†æƒé™', 1, 2, 0, '1'),
+	(17, 8, '1', 'ç³»ç»Ÿèœå•', 1, 1, 0, '1'),
+	(18, 8, '2', 'ä¸šåŠ¡èœå•', 1, 2, 0, '1'),
+	(19, 9, '1', 'ç»åŠå‘˜', 1, 1, 0, '1'),
+	(20, 9, '2', 'ç®¡ç†å‘˜', 1, 2, 0, '1'),
+	(21, 9, '3', 'ç³»ç»Ÿå†…ç½®ç”¨æˆ·', 1, 3, 0, '1'),
+	(22, 10, '0', 'æ”¶ç¼©', 1, 1, 0, '1'),
+	(23, 10, '1', 'å±•å¼€', 1, 2, 0, '1'),
+	(24, 11, 'add', 'æ–°å¢', 1, 1, 0, NULL),
+	(25, 11, 'read', 'æŸ¥è¯¢', 1, 2, 0, NULL),
+	(26, 11, 'update', 'ä¿®æ”¹', 1, 3, 0, NULL),
+	(27, 11, 'delete', 'åˆ é™¤', 1, 4, 0, NULL);
 /*!40000 ALTER TABLE `sys_dic` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_dic_index ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_dic_index ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_dic_index` (
 
@@ -148,76 +152,88 @@ CREATE TABLE IF NOT EXISTS `sys_dic_index` (
   `remark_` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `code` (`key_`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='´úÂë±í';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='ä»£ç è¡¨';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_dic_index µÄÊı¾İ£º~10 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_dic_index çš„æ•°æ®ï¼š~10 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_dic_index` DISABLE KEYS */;
 
 INSERT INTO `sys_dic_index` (`id_`, `catalog_id`, `key_`, `name_`, `remark_`) VALUES
-	(1, 6, 'SEX', 'ĞÔ±ğ', NULL),
-	(2, 6, 'LOCKED', 'Ëø¶¨', NULL),
-	(3, 5, 'ROLETYPE', '½ÇÉ«ÀàĞÍ', NULL),
-	(4, 6, 'LEAF', '½ÚµãÀàĞÍ', NULL),
-	(5, 5, 'EDITABLE', '±à¼­Ä£Ê½', NULL),
-	(6, 5, 'ENABLE', 'ÆôÓÃ×´Ì¬', NULL),
-	(7, 5, 'AUTHORIZELEVEL', 'È¨ÏŞ¼¶±ğ', NULL),
-	(8, 5, 'MENUTYPE', '²Ëµ¥ÀàĞÍ', NULL),
-	(9, 5, 'USERTYPE', 'ÈËÔ±ÀàĞÍ', NULL),
-	(10, 6, 'EXPAND', 'Õ¹¿ª×´Ì¬', NULL),
-	(11, 5, 'CRUD', '²Ù×÷ÀàĞÍ', NULL);
+	(1, 6, 'SEX', 'æ€§åˆ«', NULL),
+	(2, 6, 'LOCKED', 'é”å®š', NULL),
+	(3, 5, 'ROLETYPE', 'è§’è‰²ç±»å‹', NULL),
+	(4, 6, 'LEAF', 'èŠ‚ç‚¹ç±»å‹', NULL),
+	(5, 5, 'EDITABLE', 'ç¼–è¾‘æ¨¡å¼', NULL),
+	(6, 5, 'ENABLE', 'å¯ç”¨çŠ¶æ€', NULL),
+	(7, 5, 'AUTHORIZELEVEL', 'æƒé™çº§åˆ«', NULL),
+	(8, 5, 'MENUTYPE', 'èœå•ç±»å‹', NULL),
+	(9, 5, 'USERTYPE', 'äººå‘˜ç±»å‹', NULL),
+	(10, 6, 'EXPAND', 'å±•å¼€çŠ¶æ€', NULL),
+	(11, 5, 'CRUD', 'æ“ä½œç±»å‹', NULL);
 /*!40000 ALTER TABLE `sys_dic_index` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_menu ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_menu ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_menu` (
 
-  `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '²Ëµ¥±àºÅ',
-  `menu_name` varchar(50) DEFAULT NULL COMMENT '²Ëµ¥Ãû³Æ',
-  `menu_type` int(1) DEFAULT '0' COMMENT '²Ëµ¥ÀàĞÍ(1:ÏµÍ³²Ëµ¥;0:ÒµÎñ²Ëµ¥)',
-  `parent_id` int(20) DEFAULT NULL COMMENT 'ÉÏ¼¶²Ëµ¥±àºÅ',
-  `iconcls_` varchar(50) DEFAULT NULL COMMENT '½ÚµãÍ¼±êCSSÀàÃû',
-  `request_` varchar(100) DEFAULT NULL COMMENT 'ÇëÇóµØÖ·',
-  `expand_` int(1) NOT NULL DEFAULT '0' COMMENT 'Õ¹¿ª×´Ì¬(1:Õ¹¿ª;0:ÊÕËõ)',
-  `sort_no` int(2) DEFAULT NULL COMMENT 'ÅÅĞòºÅ',
-  `leaf_` int(1) NOT NULL DEFAULT '0' COMMENT 'Ò¶×Ó½Úµã(0:Ê÷Ö¦½Úµã;1:Ò¶×Ó½Úµã)',
-  `state_` varchar(50) NOT NULL DEFAULT '0' COMMENT 'Â·ÓÉ×´Ì¬',
-  `remark_` varchar(100) DEFAULT NULL COMMENT '±¸×¢',
+  `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT 'èœå•ç¼–å·',
+  `menu_name` varchar(50) DEFAULT NULL COMMENT 'èœå•åç§°',
+  `menu_type` int(1) DEFAULT '0' COMMENT 'èœå•ç±»å‹(1:ç³»ç»Ÿèœå•;0:ä¸šåŠ¡èœå•)',
+  `parent_id` int(20) DEFAULT NULL COMMENT 'ä¸Šçº§èœå•ç¼–å·',
+  `iconcls_` varchar(50) DEFAULT NULL COMMENT 'èŠ‚ç‚¹å›¾æ ‡CSSç±»å',
+  `request_` varchar(100) DEFAULT NULL COMMENT 'è¯·æ±‚åœ°å€',
+  `expand_` int(1) NOT NULL DEFAULT '0' COMMENT 'å±•å¼€çŠ¶æ€(1:å±•å¼€;0:æ”¶ç¼©)',
+  `sort_no` int(2) DEFAULT NULL COMMENT 'æ’åºå·',
+  `leaf_` int(1) NOT NULL DEFAULT '0' COMMENT 'å¶å­èŠ‚ç‚¹(0:æ ‘æèŠ‚ç‚¹;1:å¶å­èŠ‚ç‚¹)',
+  `state_` varchar(50) NOT NULL DEFAULT '0' COMMENT 'è·¯ç”±çŠ¶æ€',
+  `remark_` varchar(100) DEFAULT NULL COMMENT 'å¤‡æ³¨',
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='²Ëµ¥';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='èœå•';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_menu µÄÊı¾İ£º~3 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_menu çš„æ•°æ®ï¼š~3 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
 
 INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`, `request_`, `expand_`, `sort_no`, `leaf_`, `state_`, `remark_`) VALUES
-	(1, 'ÏµÍ³¹ÜÀí', 1, 0, 'glyphicon glyphicon-cog', '#', 0, 1, 0, '**.sys.**', NULL),
-	(2, 'ÓÃ»§¹ÜÀí', 1, 1, 'glyphicon glyphicon-user', 'main.sys.user.list', 0, 1, 1, '**.sys.user.**', NULL),
-	(3, '²¿ÃÅ¹ÜÀí', 1, 1, 'glyphicon glyphicon-align-justify', 'main.sys.dept.list', 0, 2, 1, '**.sys.dept.**', NULL);
+	(1, 'ç³»ç»Ÿç®¡ç†', 1, 0, 'glyphicon glyphicon-cog', '#', 0, 1, 0, '**.sys.**', NULL),
+	(2, 'ç”¨æˆ·ç®¡ç†', 1, 1, 'glyphicon glyphicon-user', 'main.sys.user.list', 0, 1, 1, '**.sys.user.**', NULL),
+	(3, 'éƒ¨é—¨ç®¡ç†', 1, 1, 'glyphicon glyphicon-align-justify', 'main.sys.dept.list', 0, 2, 1, '**.sys.dept.**', NULL);
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_param ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_param ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_param` (
 
-  `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '²ÎÊı±àºÅ',
-  `param_key` varchar(50) DEFAULT NULL COMMENT '²ÎÊı¼üÃû',
-  `param_value` varchar(100) DEFAULT NULL COMMENT '²ÎÊı¼üÖµ',
+  `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT 'å‚æ•°ç¼–å·',
+  `param_key` varchar(50) DEFAULT NULL COMMENT 'å‚æ•°é”®å',
+  `param_value` varchar(100) DEFAULT NULL COMMENT 'å‚æ•°é”®å€¼',
   `catalog_id` int(20) DEFAULT NULL,
-  `remark_` varchar(100) DEFAULT NULL COMMENT '±¸×¢',
+  `remark_` varchar(100) DEFAULT NULL COMMENT 'å¤‡æ³¨',
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='È«¾Ö²ÎÊı±í';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='å…¨å±€å‚æ•°è¡¨';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_param µÄÊı¾İ£º~0 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_param çš„æ•°æ®ï¼š~0 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_param` DISABLE KEYS */;
 
 /*!40000 ALTER TABLE `sys_param` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_permission ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_permission ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_permission` (
 
@@ -226,60 +242,70 @@ CREATE TABLE IF NOT EXISTS `sys_permission` (
   `permission_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `permit_url` (`permission_url`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='È¨ÏŞ';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='æƒé™';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_permission µÄÊı¾İ£º~7 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_permission çš„æ•°æ®ï¼š~7 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_permission` DISABLE KEYS */;
 
 INSERT INTO `sys_permission` (`id_`, `permission_url`, `permission_name`) VALUES
-	(1, '/user/read/current', '»ñÈ¡µ±Ç°ÓÃ»§'),
-	(2, '/user/update', 'ĞŞ¸ÄÓÃ»§ĞÅÏ¢'),
-	(3, '/user/update/password', 'ĞŞ¸ÄÓÃ»§ÃÜÂë'),
-	(4, '/user/read/list', '»ñÈ¡ÓÃ»§ÁĞ±í'),
-	(5, '/user/read/detail', '»ñÈ¡ÓÃ»§ÏêÇé'),
-	(6, '/session/read/list', '»ñÈ¡»á»°ÁĞ±í'),
-	(7, '/session/delete', 'É¾³ı»á»°');
+	(1, '/user/read/current', 'è·å–å½“å‰ç”¨æˆ·'),
+	(2, '/user/update', 'ä¿®æ”¹ç”¨æˆ·ä¿¡æ¯'),
+	(3, '/user/update/password', 'ä¿®æ”¹ç”¨æˆ·å¯†ç '),
+	(4, '/user/read/list', 'è·å–ç”¨æˆ·åˆ—è¡¨'),
+	(5, '/user/read/detail', 'è·å–ç”¨æˆ·è¯¦æƒ…'),
+	(6, '/session/read/list', 'è·å–ä¼šè¯åˆ—è¡¨'),
+	(7, '/session/delete', 'åˆ é™¤ä¼šè¯');
 /*!40000 ALTER TABLE `sys_permission` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_role ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_role ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_role` (
 
-  `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '½ÇÉ«±àºÅ',
-  `role_name` varchar(50) DEFAULT NULL COMMENT '½ÇÉ«Ãû³Æ',
-  `dept_id` int(20) DEFAULT NULL COMMENT 'ËùÊô²¿ÃÅ±àºÅ',
-  `role_type` int(1) NOT NULL DEFAULT '1' COMMENT '½ÇÉ«ÀàĞÍ(1:ÒµÎñ½ÇÉ«;2:¹ÜÀí½ÇÉ« ;3:ÏµÍ³ÄÚÖÃ½ÇÉ«)',
+  `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT 'è§’è‰²ç¼–å·',
+  `role_name` varchar(50) DEFAULT NULL COMMENT 'è§’è‰²åç§°',
+  `dept_id` int(20) DEFAULT NULL COMMENT 'æ‰€å±éƒ¨é—¨ç¼–å·',
+  `role_type` int(1) NOT NULL DEFAULT '1' COMMENT 'è§’è‰²ç±»å‹(1:ä¸šåŠ¡è§’è‰²;2:ç®¡ç†è§’è‰² ;3:ç³»ç»Ÿå†…ç½®è§’è‰²)',
   `enable_` int(1) NOT NULL DEFAULT '1',
-  `remark_` varchar(100) DEFAULT NULL COMMENT '±¸×¢',
+  `remark_` varchar(100) DEFAULT NULL COMMENT 'å¤‡æ³¨',
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='½ÇÉ«ĞÅÏ¢±í';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='è§’è‰²ä¿¡æ¯è¡¨';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_role µÄÊı¾İ£º~0 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_role çš„æ•°æ®ï¼š~0 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
 
 INSERT INTO `sys_role` (`id_`, `role_name`, `dept_id`, `role_type`, `enable_`, `remark_`) VALUES
-	(1, '¹ÜÀíÔ±', 1, 1, 1, NULL);
+	(1, 'ç®¡ç†å‘˜', 1, 1, 1, NULL);
 /*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_role_menu ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_role_menu ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_role_menu` (
 
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `role_id` int(20) DEFAULT NULL,
   `menu_id` int(20) DEFAULT NULL,
-  `authorize_` int(1) NOT NULL DEFAULT '1' COMMENT 'È¨ÏŞ¼¶±ğ(1:·ÃÎÊÈ¨ÏŞ;2:¹ÜÀíÈ¨ÏŞ)',
+  `authorize_` int(1) NOT NULL DEFAULT '1' COMMENT 'æƒé™çº§åˆ«(1:è®¿é—®æƒé™;2:ç®¡ç†æƒé™)',
   `operate_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `operator_id` int(20) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_`),
   UNIQUE KEY `role_id_menu_id` (`role_id`,`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='½ÇÉ«ÊÚÈ¨±í';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='è§’è‰²æˆæƒè¡¨';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_role_menu µÄÊı¾İ£º~4 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_role_menu çš„æ•°æ®ï¼š~4 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_role_menu` DISABLE KEYS */;
 
@@ -291,7 +317,9 @@ INSERT INTO `sys_role_menu` (`id_`, `role_id`, `menu_id`, `authorize_`, `operate
 /*!40000 ALTER TABLE `sys_role_menu` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_role_permission ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_role_permission ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_role_permission` (
 
@@ -300,9 +328,11 @@ CREATE TABLE IF NOT EXISTS `sys_role_permission` (
   `permission_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `permit_id_permit_type` (`permission_id`,`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='½ÇÉ«²Ù×÷È¨ÏŞ';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='è§’è‰²æ“ä½œæƒé™';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_role_permission µÄÊı¾İ£º~7 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_role_permission çš„æ•°æ®ï¼š~7 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_role_permission` DISABLE KEYS */;
 
@@ -317,7 +347,9 @@ INSERT INTO `sys_role_permission` (`id_`, `role_id`, `permission_id`) VALUES
 /*!40000 ALTER TABLE `sys_role_permission` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_session ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_session ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_session` (
 
@@ -327,36 +359,42 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   `ip_` varchar(50) DEFAULT NULL,
   `start_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='»á»°¹ÜÀí';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ä¼šè¯ç®¡ç†';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_session µÄÊı¾İ£º~0 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_session çš„æ•°æ®ï¼š~0 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
 
 /*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_user ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_user ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_user` (
 
   `id_` int(20) NOT NULL AUTO_INCREMENT,
-  `account_` varchar(20) DEFAULT NULL COMMENT 'µÇÂ½ÕÊ»§',
-  `password_` varchar(50) DEFAULT NULL COMMENT 'ÃÜÂë',
-  `phone_` varchar(50) DEFAULT NULL COMMENT 'µç»°',
-  `sex_` int(1) NOT NULL DEFAULT '0' COMMENT 'ĞÔ±ğ(0:Î´Öª;1:ÄĞ;2:Å®)',
-  `user_name` varchar(30) DEFAULT NULL COMMENT 'ÓÃ»§Ãû',
+  `account_` varchar(20) DEFAULT NULL COMMENT 'ç™»é™†å¸æˆ·',
+  `password_` varchar(50) DEFAULT NULL COMMENT 'å¯†ç ',
+  `phone_` varchar(50) DEFAULT NULL COMMENT 'ç”µè¯',
+  `sex_` int(1) NOT NULL DEFAULT '0' COMMENT 'æ€§åˆ«(0:æœªçŸ¥;1:ç”·;2:å¥³)',
+  `user_name` varchar(30) DEFAULT NULL COMMENT 'ç”¨æˆ·å',
   `avatar_` varchar(500) DEFAULT NULL,
-  `user_type` int(1) DEFAULT '1' COMMENT 'ÈËÔ±ÀàĞÍ(1:¾­°ìÔ±;2:¹ÜÀíÔ±;3:ÏµÍ³ÄÚÖÃÈËÔ±;)',
-  `dept_id` int(20) DEFAULT '1' COMMENT '²¿ÃÅ±àºÅ',
-  `locked_` int(1) DEFAULT '0' COMMENT 'Ëø¶¨±êÖ¾(1:Ëø¶¨;0:¼¤»î)',
+  `user_type` int(1) DEFAULT '1' COMMENT 'äººå‘˜ç±»å‹(1:ç»åŠå‘˜;2:ç®¡ç†å‘˜;3:ç³»ç»Ÿå†…ç½®äººå‘˜;)',
+  `dept_id` int(20) DEFAULT '1' COMMENT 'éƒ¨é—¨ç¼–å·',
+  `locked_` int(1) DEFAULT '0' COMMENT 'é”å®šæ ‡å¿—(1:é”å®š;0:æ¿€æ´»)',
   `usable_` int(1) DEFAULT '1',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `account` (`account_`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_user µÄÊı¾İ£º~1 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_user çš„æ•°æ®ï¼š~1 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
 
@@ -366,7 +404,9 @@ INSERT INTO `sys_user` (`id_`, `account_`, `password_`, `phone_`, `sex_`, `user_
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_user_menu ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_user_menu ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_user_menu` (
 
@@ -377,16 +417,20 @@ CREATE TABLE IF NOT EXISTS `sys_user_menu` (
   `operator_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `user_id_menu_id` (`user_id`,`menu_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ÓÃ»§ÊÚÈ¨±í';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·æˆæƒè¡¨';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_user_menu µÄÊı¾İ£º~0 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_user_menu çš„æ•°æ®ï¼š~0 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_user_menu` DISABLE KEYS */;
 
 /*!40000 ALTER TABLE `sys_user_menu` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_user_role ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_user_role ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_user_role` (
 
@@ -397,9 +441,11 @@ CREATE TABLE IF NOT EXISTS `sys_user_role` (
   `operator_id` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `user_id_role_id` (`user_id`,`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='ÓÃ»§ÊÚÈ¨±í';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='ç”¨æˆ·æˆæƒè¡¨';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_user_role µÄÊı¾İ£º~0 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_user_role çš„æ•°æ®ï¼š~0 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_user_role` DISABLE KEYS */;
 
@@ -408,20 +454,24 @@ INSERT INTO `sys_user_role` (`id_`, `user_id`, `role_id`, `operate_time`, `opera
 /*!40000 ALTER TABLE `sys_user_role` ENABLE KEYS */;
 
 
--- µ¼³ö  ±í ibase4j.sys_user_thirdparty ½á¹¹
+-- å¯¼å‡º  è¡¨ ibase4j.sys_user_thirdparty ç»“æ„
+
+
 
 CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
 
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(20) NOT NULL,
-  `provider_` varchar(50) NOT NULL COMMENT 'µÚÈı·½ÀàĞÍ',
-  `open_id` varchar(50) NOT NULL COMMENT 'µÚÈı·½Id',
+  `provider_` varchar(50) NOT NULL COMMENT 'ç¬¬ä¸‰æ–¹ç±»å‹',
+  `open_id` varchar(50) NOT NULL COMMENT 'ç¬¬ä¸‰æ–¹Id',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `user_id_provider__open_id` (`user_id`,`provider_`,`open_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='µÚÈı·½ÓÃ»§';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ç¬¬ä¸‰æ–¹ç”¨æˆ·';
 
--- ÕıÔÚµ¼³ö±í  ibase4j.sys_user_thirdparty µÄÊı¾İ£º~0 rows (´óÔ¼)
+-- æ­£åœ¨å¯¼å‡ºè¡¨  ibase4j.sys_user_thirdparty çš„æ•°æ®ï¼š~0 rows (å¤§çº¦)
+
+
 
 /*!40000 ALTER TABLE `sys_user_thirdparty` DISABLE KEYS */;
 
