@@ -64,6 +64,7 @@ iBase4J/pom.xml文件里<module>iBase4J-SYS-Service</module>与<module>iBase4J-W
 ===========
 
     还需要什么功能? ? ? ?
+加QQ群交流技术问题，下载一键启动服务工具。
 ![QQ](http://pub.idqqimg.com/wpa/images/group.png "QQ")
 [538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
 
