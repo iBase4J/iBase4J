@@ -66,4 +66,4 @@ eclipse使用maven命令:
 
 [UI效果图](http://git.oschina.net/iBase4J/iBase4J-UI)
 
-![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/src/upload/login.png "登录")
+![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/login.png "登录")
