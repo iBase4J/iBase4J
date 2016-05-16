@@ -8,7 +8,7 @@ eclipse使用maven命令:
 ```
 * 启动文件iBase4J/pom.xml里<module>iBase4J-SYS-Service</module>与<module>iBase4J-Web</module>，只有在前面的会执行；
 * 所以在启动完service后，请把service注释掉，再启动一次(web)。
-* 两个服务都启动后，使用nginx代理UI：修改配置里的UI目录后启动。
+* 两个项目都启动后，使用nginx代理UI：修改配置里的UI目录后启动。
 ```
 
 系统主要功能如下：
@@ -68,6 +68,8 @@ eclipse使用maven命令:
 ![QQ](http://pub.idqqimg.com/wpa/images/group.png "QQ")
 [538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
 
+maven启动配置图
+---
 ![配置](http://git.oschina.net/iBase4J/iBase4J/raw/9caa79d7beb3f528bcaa66feec472315024d82ee/maven-config.png "maven配置")
 
 [UI效果图](http://git.oschina.net/iBase4J/iBase4J-UI)
