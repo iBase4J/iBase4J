@@ -6,9 +6,9 @@ eclipse使用maven命令:
     clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
 ```
 ```
-    iBase4J/pom.xml文件里<module>iBase4J-SYS-Service</module>与<module>iBase4J-Web</module>，只有在前面的会执行；
-    所有在启动完service后，请把service注释掉，再启动一次(web)。
-    两个服务都启动后，使用nginx代理UI：修改配置里的UI目录后启动。
+iBase4J/pom.xml文件里<module>iBase4J-SYS-Service</module>与<module>iBase4J-Web</module>，只有在前面的会执行；
+所有在启动完service后，请把service注释掉，再启动一次(web)。
+两个服务都启动后，使用nginx代理UI：修改配置里的UI目录后启动。
 ```
 
 系统主要功能如下：
