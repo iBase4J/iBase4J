@@ -20,7 +20,7 @@
 		</property>
 	</bean>
 	<!-- controller注入 -->
-	<import resource="spring/Spring-dubbo.xml" />
+	<import resource="spring/dubbo-consumer.xml" />
 	<!-- 拦截器 -->
 	<mvc:interceptors>
 		<bean class="org.ibase4j.core.interceptor.MaliciousRequestInterceptor">
