@@ -1,3 +1,17 @@
+>####说明：启动项目前请安装activemq、Redis和ZooKeeper，并启动服务，您可以在附件中下载。系统中均使用默认配置。
+
+```
+eclipse使用maven命令: 
+    mybatis-generator:generate生成mybatis文件；
+    clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
+    哪个框架不需要：删掉pom里的jar导入，删除报错的类，删除spring对应的配置。
+```
+```
+    pom文件里<module>iBase4J-SYS-Service</module>与<module>iBase4J-Web</module>，只有在前面的会执行；
+    所有在启动完service后，请把service注释掉，再启动一次。
+    两个服务都启动后，使用nginx代理UI：修改配置里的UI目录后启动。
+```
+
 系统主要功能如下：
 =====
 1、数据库
@@ -54,16 +68,6 @@
 ![QQ](http://pub.idqqimg.com/wpa/images/group.png "QQ")
 [538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
 
->####说明：启动项目前请安装activemq、Redis和ZooKeeper，并启动服务，您可以在附件中下载。系统中均使用默认配置。
-
-```
-eclipse使用maven命令: 
-    mybatis-generator:generate生成mybatis文件；
-    clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
-    哪个框架不需要：删掉pom里的jar导入，删除报错的类，删除spring对应的配置。
-    pom文件里<module>iBase4J-SYS-Service</module>与<module>iBase4J-Web</module>，只有在前面的会执行；所有在启动完service后，请把service注释掉，再启动一次。
-    两个服务都启动后，使用nginx代理UI：修改配置里的UI目录后启动。
-```
 ![配置](http://git.oschina.net/iBase4J/iBase4J/raw/9caa79d7beb3f528bcaa66feec472315024d82ee/maven-config.png "maven配置")
 
 [UI效果图](http://git.oschina.net/iBase4J/iBase4J-UI)
