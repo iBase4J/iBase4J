@@ -75,3 +75,4 @@ maven启动配置图
 [UI效果图](http://git.oschina.net/iBase4J/iBase4J-UI)
 
 ![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/login.png "登录")
+![主页](http://git.oschina.net/iBase4J/iBase4J/raw/master/index.png "主页")
