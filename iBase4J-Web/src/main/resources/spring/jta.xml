@@ -44,4 +44,6 @@
 			<tx:method name="*_noTrans" propagation="NOT_SUPPORTED" />
 		</tx:attributes>
 	</tx:advice>
+	<!-- 配置事务异常封装 -->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 </beans>
