@@ -77,3 +77,5 @@ maven启动配置图
 ![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/login.png "登录")
 
 ![主页](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/index.png "主页")
+
+![捐赠](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/contribute.png "捐赠")
