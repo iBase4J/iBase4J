@@ -4,16 +4,15 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.support.shiro.LoginHelper;
-import org.ibase4j.facade.sys.SysUserFacade;
-import org.ibase4j.mybatis.generator.model.SysUser;
+import org.ibase4j.core.support.shiro.ThirdPartyLoginHelper;
 import org.ibase4j.mybatis.sys.model.ThirdPartyUser;
+import org.ibase4j.service.SysUserService;
 import org.ibase4j.web.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -23,8 +22,8 @@ import com.alibaba.fastjson.JSONObject;
  */
 @Controller
 public class ThirdPartyLoginController extends BaseController {
-	@Reference
-	private SysUserFacade sysUserFacade;
+	@Autowired
+	private SysUserService sysUserService;
 
 	@RequestMapping("/sns")
 	public void thirdLogin(@RequestParam("t") String type) throws Exception {
@@ -59,14 +58,8 @@ public class ThirdPartyLoginController extends BaseController {
 				if (StringUtils.isNotBlank(openId)) {// 如果openID存在
 					// 获取第三方用户信息存放到session中
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getWxUserinfo(map.get("access_token"), openId);
-					// 查询是否已经绑定过
-					String provider = "WX";
-					String userId = sysUserFacade.queryUserIdByThirdParty(openId, provider);
-					if (StringUtils.isBlank(userId)) { // 如果未绑定，创建临时账号并绑定user数据
-						thirdUser.setProvider(provider);
-						SysUser sysUser = sysUserFacade.insertThirdPartyUser(thirdUser);
-						LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
-					}
+					thirdUser.setProvider("WX");
+					sysUserService.thirdPartyLogin(thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -95,14 +88,8 @@ public class ThirdPartyLoginController extends BaseController {
 				if (StringUtils.isNotBlank(openId)) {// 如果openID存在
 					// 获取第三方用户信息存放到session中
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getQQUserinfo(map.get("access_token"), openId);
-					// 查询是否已经绑定过
-					String provider = "QQ";
-					String userId = sysUserFacade.queryUserIdByThirdParty(openId, provider);
-					if (StringUtils.isBlank(userId)) { // 如果未绑定，创建临时账号并绑定user数据
-						thirdUser.setProvider(provider);
-						SysUser sysUser = sysUserFacade.insertThirdPartyUser(thirdUser);
-						LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
-					}
+					thirdUser.setProvider("QQ");
+					sysUserService.thirdPartyLogin(thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -132,14 +119,8 @@ public class ThirdPartyLoginController extends BaseController {
 					// 获取第三方用户信息存放到session中
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getSinaUserinfo(json.getString("access_token"),
 							uid);
-					String provider = "SINA";
-					// 查询是否已经绑定过
-					String userId = sysUserFacade.queryUserIdByThirdParty(uid, provider);
-					if (StringUtils.isBlank(userId)) { // 如果未绑定，创建临时账号并绑定user数据
-						thirdUser.setProvider(provider);
-						SysUser sysUser = sysUserFacade.insertThirdPartyUser(thirdUser);
-						LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
-					}
+					thirdUser.setProvider("SINA");
+					sysUserService.thirdPartyLogin(thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID

@@ -15,5 +15,5 @@ public interface SysAuthorizeFacade {
 
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus);
 
-	public List<SysMenuBean> getAuthorize(Integer userId);
+	public List<SysMenuBean> queryAuthorizeByUserId(Integer userId);
 }

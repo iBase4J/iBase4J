@@ -8,9 +8,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.util.RedisUtil;
-import org.ibase4j.facade.sys.SysSessionFacade;
-
-import com.alibaba.dubbo.config.annotation.Reference;
+import org.ibase4j.service.SysSessionService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 会话监听器
@@ -21,8 +20,8 @@ import com.alibaba.dubbo.config.annotation.Reference;
 public class SessionListener implements HttpSessionListener {
 	private Logger logger = LogManager.getLogger(SessionListener.class);
 
-	@Reference
-	private SysSessionFacade sessionFacade;
+	@Autowired
+	private SysSessionService sessionService;
 
 	/*
 	 * (non-Javadoc)
@@ -49,7 +48,7 @@ public class SessionListener implements HttpSessionListener {
 		HttpSession session = event.getSession();
 		logger.info("销毁了一个Session连接:[" + session.getId() + "]");
 		session.removeAttribute(Constants.CURRENT_USER);
-		sessionFacade.deleteBySessionId(session.getId());
+		sessionService.deleteBySessionId(session.getId());
 		setAllUserNumber(-1);
 	}
 

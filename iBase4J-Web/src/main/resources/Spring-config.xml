@@ -9,8 +9,23 @@
 	<context:component-scan base-package="org.ibase4j">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+	<!-- 引入属性配置文件 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/mq.properties</value>
+				<value>classpath:config/redis.properties</value>
+				<value>classpath:config/dubbo.properties</value>
+			</list>
+		</property>
+		<property name="properties">
+			<props>
+				<prop key="dubbo.application.name">iBase4J-Web</prop>
+			</props>
+		</property>
+	</bean>
 	<!-- 引入SPRING配置文件 -->
-	<import resource="dubbo.xml"/>
+	<import resource="spring/dubbo.xml"/>
 	<import resource="spring/mq.xml"/>
 	<import resource="spring/redis.xml"/>
 	<import resource="spring/*.xml"/>

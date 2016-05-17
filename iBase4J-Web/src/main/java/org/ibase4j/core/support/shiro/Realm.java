@@ -15,19 +15,19 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.facade.sys.SysSessionFacade;
-import org.ibase4j.facade.sys.SysUserFacade;
 import org.ibase4j.mybatis.generator.model.SysSession;
 import org.ibase4j.mybatis.generator.model.SysUser;
+import org.ibase4j.service.SysSessionService;
+import org.ibase4j.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.PageInfo;
 
 public class Realm extends AuthorizingRealm {
 	@Autowired
-	private SysUserFacade sysUserFacade;
+	private SysUserService sysUserService;
 	@Autowired
-	private SysSessionFacade sysSessionFacade;
+	private SysSessionService sysSessionService;
 
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		return null;
@@ -45,7 +45,7 @@ public class Realm extends AuthorizingRealm {
 			sb.append(token.getPassword()[i]);
 		}
 		params.put("password", sb.toString());
-		PageInfo<SysUser> pageInfo = sysUserFacade.query(params);
+		PageInfo<SysUser> pageInfo = sysUserService.query(params);
 		if (pageInfo.getSize() == 1) {
 			SysUser user = pageInfo.getList().get(0);
 			WebUtil.saveCurrentUser(user.getId());
@@ -67,6 +67,6 @@ public class Realm extends AuthorizingRealm {
 		record.setSessionId(session.getId().toString());
 		record.setIp(session.getHost());
 		record.setStartTime(session.getStartTimestamp());
-		sysSessionFacade.update(record);
+		sysSessionService.update(record);
 	}
 }

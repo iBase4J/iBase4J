@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.facade.sys.SysPermissionFacade;
+import org.ibase4j.service.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class PermisssionFilter extends PermissionsAuthorizationFilter {
 	private final Logger logger = LogManager.getLogger(this.getClass());
 	@Autowired
-	private SysPermissionFacade sysPermissionFacade;
+	private SysPermissionService sysPermissionService;
 
 	public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws IOException {
@@ -29,7 +29,7 @@ public class PermisssionFilter extends PermissionsAuthorizationFilter {
 		if (userId == null) {
 			return false;
 		}
-		if (sysPermissionFacade.doCheckPermissionByUserId(userId, url)) {
+		if (sysPermissionService.doCheckPermissionByUserId(userId, url)) {
 			return true;
 		}
 		logger.warn("[{}]{}:{}", userId, HttpCode.FORBIDDEN.msg(), url);

@@ -59,7 +59,7 @@ public class SysAuthorizeService extends BaseService implements SysAuthorizeFaca
 	}
 
 	@Cacheable("getAuthorize")
-	public List<SysMenuBean> getAuthorize(Integer userId) {
+	public List<SysMenuBean> queryAuthorizeByUserId(Integer userId) {
 		List<SysMenuBean> menus = sysAuthorizeMapper.getAuthorize(userId);
 		Map<Integer, List<SysMenuBean>> map = InstanceUtil.newHashMap();
 		for (SysMenuBean sysMenuBean : menus) {

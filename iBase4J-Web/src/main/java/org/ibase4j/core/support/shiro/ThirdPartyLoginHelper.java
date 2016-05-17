@@ -1,4 +1,4 @@
-package org.ibase4j.web.sys;
+package org.ibase4j.core.support.shiro;
 
 import java.util.ArrayList;
 import java.util.HashMap;
