@@ -6,6 +6,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.DefaultSessionKey;
 import org.apache.shiro.session.mgt.SessionKey;
+import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.facade.sys.SysSessionFacade;
 import org.ibase4j.mybatis.generator.dao.SysSessionMapper;
 import org.ibase4j.mybatis.generator.model.SysSession;
@@ -16,12 +17,11 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 
-@Service
+@DubboService(interfaceClass = SysSessionFacade.class)
 @CacheConfig(cacheNames = "sysSession")
 public class SysSessionService extends BaseService implements SysSessionFacade {
 	@Autowired

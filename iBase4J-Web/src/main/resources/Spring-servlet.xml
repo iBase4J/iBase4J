@@ -44,22 +44,9 @@
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<description>注解controller方法适配器</description>
 		<property name="messageConverters">
-			<list>
-				<!--JSON转换器 -->
-				<bean
-					class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+			<list><!--JSON转换器 -->
+				<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 					<property name="supportedMediaTypes" value="application/json;charset=UTF-8" />
-					<property name="features">
-						<array value-type="com.alibaba.fastjson.serializer.SerializerFeature">
-							<bean
-								class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
-								<property name="staticField"
-									value="com.alibaba.fastjson.serializer.SerializerFeature.DisableCircularReferenceDetect" />
-							</bean>
-							<value>WriteMapNullValue</value>
-							<value>WriteNullStringAsEmpty</value>
-						</array>
-					</property>
 				</bean>
 			</list>
 		</property>

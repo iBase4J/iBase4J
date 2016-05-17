@@ -17,9 +17,9 @@
 		destroy-method="close" init-method="init" lazy-init="true">
 		<description>只读数据库连接</description>
 		<property name="driverClassName" value="${driver}" />
-		<property name="url" value="${url1}" />
-		<property name="username" value="${username}" />
-		<property name="password" value="${password}" />
+		<property name="url" value="${reader.url}" />
+		<property name="username" value="${reader.username}" />
+		<property name="password" value="${reader.password}" />
 		<!-- 初始化连接大小 -->
 		<property name="initialSize" value="${initialSize}" />
 		<!-- 连接池最大数量 -->
@@ -36,7 +36,7 @@
 			</list>
 		</property>
 		<property name="filters" value="${druid.filters}" />
-		<property name="connectionProperties" value="password=${password}" />
+		<property name="connectionProperties" value="password=${reader.password}" />
 		<property name="passwordCallback" ref="dbPasswordCallback" />
 		<property name="testWhileIdle" value="true" />
 		<property name="testOnBorrow" value="false" />
@@ -52,9 +52,9 @@
 		destroy-method="close" init-method="init" lazy-init="true">
 		<description>只写数据库连接</description>
 		<property name="driverClassName" value="${driver}" />
-		<property name="url" value="${url}" />
-		<property name="username" value="${username}" />
-		<property name="password" value="${password}" />
+		<property name="url" value="${writer.url}" />
+		<property name="username" value="${writer.username}" />
+		<property name="password" value="${writer.password}" />
 		<property name="initialSize" value="${initialSize}" />
 		<property name="maxActive" value="${maxActive}" />
 		<property name="minIdle" value="${minIdle}" />
@@ -65,7 +65,7 @@
 			</list>
 		</property>
 		<property name="filters" value="${druid.filters}" />
-		<property name="connectionProperties" value="password=${password}" />
+		<property name="connectionProperties" value="password=${writer.password}" />
 		<property name="passwordCallback" ref="dbPasswordCallback" />
 		<property name="testWhileIdle" value="true" />
 		<property name="testOnBorrow" value="false" />

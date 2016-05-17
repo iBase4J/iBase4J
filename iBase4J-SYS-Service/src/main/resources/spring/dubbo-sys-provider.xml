@@ -20,10 +20,4 @@
 	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" threads="${dubbo.protocol.threads}" />
 	<!-- 服务端要暴露的服务接口,注解@com.alibaba.dubbo.config.annotation.Service -->
 	<dubbo:annotation package="org.ibase4j" />
-	<!-- 服务端要暴露的服务接口(有事务服务) -->
-	<dubbo:service interface="org.ibase4j.facade.sys.SysDicFacade" ref="sysDicService" />
-	<dubbo:service interface="org.ibase4j.facade.sys.SysUserFacade" ref="sysUserService" />
-	<dubbo:service interface="org.ibase4j.facade.sys.SysSessionFacade" ref="sysSessionService" />
-	<dubbo:service interface="org.ibase4j.facade.sys.SysAuthorizeFacade" ref="sysAuthorizeService" />
-	<dubbo:service interface="org.ibase4j.facade.sys.SysPermissionFacade" ref="sysPermissionService" />
 </beans>

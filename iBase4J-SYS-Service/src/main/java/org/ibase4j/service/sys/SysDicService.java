@@ -1,5 +1,6 @@
 package org.ibase4j.service.sys;
 
+import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.facade.sys.SysDicFacade;
 import org.ibase4j.mybatis.generator.dao.SysDicIndexMapper;
 import org.ibase4j.mybatis.generator.dao.SysDicMapper;
@@ -10,10 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@DubboService(interfaceClass = SysDicFacade.class)
 public class SysDicService extends BaseService implements SysDicFacade {
 	@Autowired
 	private SysDicMapper dicMapper;

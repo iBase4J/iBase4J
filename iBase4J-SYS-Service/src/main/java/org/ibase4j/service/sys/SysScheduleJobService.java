@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.facade.sys.SysScheduleJobFacade;
 import org.ibase4j.mybatis.sys.model.ScheduleJob;
 import org.ibase4j.service.BaseService;
@@ -14,14 +15,12 @@ import org.springframework.scheduling.support.ScheduledMethodRunnable;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.alibaba.dubbo.config.annotation.Service;
-
 /**
  * 定时任务管理
  * 
  * @author ShenHuaJie
  */
-@Service
+@DubboService(interfaceClass = SysScheduleJobFacade.class)
 public class SysScheduleJobService extends BaseService implements SysScheduleJobFacade {
 	private Logger logger = LogManager.getLogger();
 

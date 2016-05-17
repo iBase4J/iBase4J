@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.facade.sys.SysUserFacade;
 import org.ibase4j.mybatis.generator.dao.SysUserMapper;
@@ -21,7 +22,6 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -31,7 +31,7 @@ import com.github.pagehelper.PageInfo;
 /**
  * @author ShenHuaJie
  */
-@Service
+@DubboService(interfaceClass = SysUserFacade.class)
 @CacheConfig(cacheNames = "sysUser")
 public class SysUserService extends BaseService implements SysUserFacade {
 	@Autowired
@@ -50,6 +50,9 @@ public class SysUserService extends BaseService implements SysUserFacade {
 			sysUserMapper.insert(record);
 		} else {
 			sysUserMapper.updateByPrimaryKey(record);
+		}
+		if (record.getId() != null) {
+			throw new RuntimeException();
 		}
 	}
 

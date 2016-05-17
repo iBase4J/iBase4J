@@ -24,7 +24,6 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.3</version>
 					<configuration>
 						<source>1.7</source>
 						<target>1.7</target>
@@ -32,20 +31,8 @@
 						<testIncludes>
 							<testInclude>none</testInclude>
 						</testIncludes>
+						<addMavenDescriptor>false</addMavenDescriptor>
 					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jdeps-plugin</artifactId>
-					<version>3.0.0</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>jdkinternals</goal>
-								<goal>test-jdkinternals</goal>
-							</goals>
-						</execution>
-					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.mybatis.generator</groupId>
