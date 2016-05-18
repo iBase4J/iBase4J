@@ -51,9 +51,6 @@ public class SysUserService extends BaseService implements SysUserFacade {
 		} else {
 			sysUserMapper.updateByPrimaryKey(record);
 		}
-		if (record.getId() != null) {
-			throw new RuntimeException();
-		}
 	}
 
 	@CacheEvict
