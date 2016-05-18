@@ -32,7 +32,7 @@ public class SysAuthorizeService extends BaseService implements SysAuthorizeFaca
 	private SysAuthorizeMapper sysAuthorizeMapper;
 
 	@Transactional
-	@CacheEvict("getAuthorize")
+	@CacheEvict(value = "getAuthorize")
 	public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
 		sysAuthorizeMapper.deleteUserMenu(sysUserMenus.get(0).getUserId());
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
@@ -41,7 +41,7 @@ public class SysAuthorizeService extends BaseService implements SysAuthorizeFaca
 	}
 
 	@Transactional
-	@CacheEvict("getAuthorize")
+	@CacheEvict(value = "getAuthorize")
 	public void updateUserRole(List<SysUserRole> sysUserRoles) {
 		sysAuthorizeMapper.deleteUserRole(sysUserRoles.get(0).getUserId());
 		for (SysUserRole sysUserRole : sysUserRoles) {
@@ -50,7 +50,7 @@ public class SysAuthorizeService extends BaseService implements SysAuthorizeFaca
 	}
 
 	@Transactional
-	@CacheEvict("getAuthorize")
+	@CacheEvict(value = "getAuthorize")
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus) {
 		sysAuthorizeMapper.deleteRoleMenu(sysRoleMenus.get(0).getRoleId());
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
@@ -58,7 +58,7 @@ public class SysAuthorizeService extends BaseService implements SysAuthorizeFaca
 		}
 	}
 
-	@Cacheable("getAuthorize")
+	@Cacheable(value = "getAuthorize")
 	public List<SysMenuBean> queryAuthorizeByUserId(Integer userId) {
 		List<SysMenuBean> menus = sysAuthorizeMapper.getAuthorize(userId);
 		Map<Integer, List<SysMenuBean>> map = InstanceUtil.newHashMap();

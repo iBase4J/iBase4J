@@ -28,7 +28,7 @@ public class SysDicService extends BaseService implements SysDicFacade {
 	private SysDicExpandMapper dicExpandMapper;
 
 	@Transactional
-	@CachePut(cacheNames = "sysDicIndex")
+	@CachePut(value = "sysDicIndex")
 	public void updateDicIndex(SysDicIndex record) {
 		if (record.getId() == null) {
 			dicIndexMapper.insert(record);
@@ -38,7 +38,7 @@ public class SysDicService extends BaseService implements SysDicFacade {
 	}
 
 	@Transactional
-	@CachePut(cacheNames = { "sysDic", "sysDics" })
+	@CachePut(value = "sysDic")
 	public void updateDic(SysDic record) {
 		if (record.getId() == null) {
 			dicMapper.insert(record);
@@ -48,28 +48,51 @@ public class SysDicService extends BaseService implements SysDicFacade {
 	}
 
 	@Transactional
-	@CacheEvict(cacheNames = { "sysDic", "sysDics" })
+	@CacheEvict(value = "sysDic")
 	public void deleteDic(Integer id) {
 		dicMapper.deleteByPrimaryKey(id);
 	}
 
-	@Cacheable("sysDicIndex")
+	@Cacheable(value = "sysDicIndex")
 	public SysDicIndex queryDicIndexById(Integer id) {
 		return dicIndexMapper.selectByPrimaryKey(id);
 	}
 
-	@Cacheable("sysDic")
+	@Cacheable(value = "sysDic")
 	public SysDic queryDicById(Integer id) {
 		return dicMapper.selectByPrimaryKey(id);
 	}
 
-	@Cacheable("sysDics")
-	public Map<String, String> queryDicByDicIndexKey(String key) {
-		List<SysDic> sysDics = dicExpandMapper.queryDicByDicIndexKey(key);
-		Map<String, String> dicMap = InstanceUtil.newHashMap();
-		for (SysDic sysDic : sysDics) {
-			dicMap.put(sysDic.getCode(), sysDic.getCodeText());
+	public void query() {
+		dicExpandMapper.queryDicByDicIndexKey(null);
+	}
+
+	@CacheEvict(value = "sysDics", allEntries = true)
+	public void clearCache() {
+	}
+
+	@Cacheable(value = "sysDics")
+	public Map<String, Map<String, String>> queryAllDic() {
+		List<SysDicIndex> sysDicIndexs = dicIndexMapper.selectAll();
+		Map<Integer, String> dicIndexMap = InstanceUtil.newHashMap();
+		for (SysDicIndex sysDicIndex : sysDicIndexs) {
+			dicIndexMap.put(sysDicIndex.getId(), sysDicIndex.getKey());
 		}
-		return dicMap;
+		List<SysDic> sysDics = dicMapper.selectAll();
+		Map<String, Map<String, String>> resultMap = InstanceUtil.newHashMap();
+		for (SysDic sysDic : sysDics) {
+			String key = dicIndexMap.get(sysDic.getIndexId());
+			if (resultMap.get(key) == null) {
+				Map<String, String> dicMap = InstanceUtil.newHashMap();
+				resultMap.put(key, dicMap);
+			}
+			resultMap.get(key).put(sysDic.getCode(), sysDic.getCodeText());
+		}
+		return resultMap;
+	}
+
+	@Cacheable(value = "sysDicMap")
+	public Map<String, String> queryDicByDicIndexKey(String key) {
+		return queryAllDic().get(key);
 	}
 }

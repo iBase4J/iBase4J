@@ -2,10 +2,6 @@ package org.ibase4j.service.sys;
 
 import java.util.Map;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.DefaultSessionKey;
-import org.apache.shiro.session.mgt.SessionKey;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.facade.sys.SysSessionFacade;
 import org.ibase4j.mybatis.generator.dao.SysSessionMapper;
@@ -46,14 +42,6 @@ public class SysSessionService extends BaseService implements SysSessionFacade {
 
 	@CacheEvict
 	public void delete(Integer id) {
-		SysSession sysSession = sessionMapper.selectByPrimaryKey(id);
-		if (sysSession != null) {
-			SessionKey sessionKey = new DefaultSessionKey(sysSession.getSessionId());
-			Session session = SecurityUtils.getSecurityManager().getSession(sessionKey);
-			if (session != null) {
-				session.stop();
-			}
-		}
 		sessionMapper.deleteByPrimaryKey(id);
 	}
 
@@ -63,14 +51,13 @@ public class SysSessionService extends BaseService implements SysSessionFacade {
 	}
 
 	@Cacheable
+	public SysSession queryById(Integer id) {
+		return sessionMapper.selectByPrimaryKey(id);
+	}
+
 	public PageInfo<SysSession> query(Map<String, Object> params) {
 		this.startPage(params);
 		Page<SysSession> list = sessionExpandMapper.query(params);
 		return new PageInfo<SysSession>(list);
-	}
-
-	@Override
-	public SysSession queryById(Integer id) {
-		return sessionMapper.selectByPrimaryKey(id);
 	}
 }

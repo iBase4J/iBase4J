@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * Redis缓存配置
+ * 
  * @author ShenHuaJie
  */
 @Configuration
@@ -28,9 +29,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 			public Object generate(Object o, Method method, Object... objects) {
 				StringBuilder sb = new StringBuilder();
 				sb.append(o.getClass().getName());
-				sb.append(method.getName());
-				for (Object obj : objects) {
-					sb.append(JSON.toJSON(obj));
+				sb.append(".").append(method.getName());
+				if (objects != null) {
+					sb.append("(");
+					for (Object obj : objects) {
+						sb.append(JSON.toJSON(obj));
+					}
+					sb.append(")");
 				}
 				return sb.toString();
 			}

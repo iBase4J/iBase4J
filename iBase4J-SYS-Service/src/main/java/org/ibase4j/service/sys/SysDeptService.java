@@ -11,7 +11,6 @@ import org.ibase4j.mybatis.sys.dao.SysDeptExpandMapper;
 import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +38,7 @@ public class SysDeptService extends BaseService implements SysDeptFacade {
 		}
 	}
 
-	@CacheEvict
+	@CachePut
 	@Transactional
 	public void delete(Integer id) {
 		SysDept record = queryById(id);
@@ -53,7 +52,6 @@ public class SysDeptService extends BaseService implements SysDeptFacade {
 		return sysDeptMapper.selectByPrimaryKey(id);
 	}
 
-	@Cacheable
 	public PageInfo<SysDept> query(Map<String, Object> params) {
 		this.startPage(params);
 		Page<SysDept> list = syDeptExpandMapper.query(params);

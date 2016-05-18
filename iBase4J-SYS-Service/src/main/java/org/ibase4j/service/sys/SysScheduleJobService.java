@@ -9,6 +9,7 @@ import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.facade.sys.SysScheduleJobFacade;
 import org.ibase4j.mybatis.sys.model.ScheduleJob;
 import org.ibase4j.service.BaseService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.config.CronTask;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.ScheduledMethodRunnable;
@@ -31,6 +32,7 @@ public class SysScheduleJobService extends BaseService implements SysScheduleJob
 	}
 
 	// 获取所有任务
+	@Cacheable
 	public List<ScheduleJob> getAllJobDetail() {
 		List<ScheduleJob> result = new LinkedList<ScheduleJob>();
 		try {

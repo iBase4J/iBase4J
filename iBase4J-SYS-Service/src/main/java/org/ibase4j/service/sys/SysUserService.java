@@ -20,7 +20,6 @@ import org.ibase4j.mybatis.sys.model.ThirdPartyUser;
 import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +55,7 @@ public class SysUserService extends BaseService implements SysUserFacade {
 		}
 	}
 
-	@CacheEvict
+	@CachePut
 	@Transactional
 	public void delete(Integer id) {
 		SysUser record = queryById(id);
@@ -74,8 +73,7 @@ public class SysUserService extends BaseService implements SysUserFacade {
 	public PageInfo<SysUser> query(Map<String, Object> params) {
 		return null;
 	}
-	
-	@Cacheable
+
 	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
 		this.startPage(params);
 		Page<SysUserBean> list = sysUserExpandMapper.query(params);
@@ -101,7 +99,6 @@ public class SysUserService extends BaseService implements SysUserFacade {
 	}
 
 	/** 保存第三方帐号 */
-	@CachePut
 	@Transactional
 	public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
 		SysUser sysUser = new SysUser();

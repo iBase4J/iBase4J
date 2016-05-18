@@ -2,8 +2,6 @@ package org.ibase4j.web.sys;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.ibase4j.core.listener.SessionListener;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.service.SysSessionService;
@@ -30,7 +28,7 @@ public class SysSessionController extends BaseController {
 	// 查询会话
 	@ResponseBody
 	@RequestMapping(value = "/read/list")
-	public ModelMap get(ModelMap modelMap, HttpServletRequest request) {
+	public ModelMap get() {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = sysSessionService.query(params);
 		Long number = SessionListener.getAllUserNumber();
@@ -41,8 +39,7 @@ public class SysSessionController extends BaseController {
 	// 删除会话
 	@ResponseBody
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public ModelMap update(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) Integer id) {
+	public ModelMap update(@RequestParam(value = "id", required = false) Integer id) {
 		sysSessionService.delete(id);
 		return setSuccessModelMap();
 	}

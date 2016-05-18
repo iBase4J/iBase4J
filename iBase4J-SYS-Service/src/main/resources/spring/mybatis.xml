@@ -27,14 +27,13 @@
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <!-- 缓存 -->
-	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+	<bean id="redisSerializer" class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
 		<property name="connectionFactory" ref="jedisConnectionFactory" />
-		<property name="valueSerializer">
-			<bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
-		</property>
-		<property name="hashValueSerializer">
-			<bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
-		</property>
+		<property name="keySerializer" ref="redisSerializer" />
+		<property name="valueSerializer" ref="redisSerializer" />
+		<property name="hashKeySerializer" ref="redisSerializer" />
+		<property name="hashValueSerializer" ref="redisSerializer" />
 	</bean>
 	<bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
 		<constructor-arg index="0" ref="redisTemplate" />
