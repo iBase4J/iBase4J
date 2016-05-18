@@ -41,7 +41,7 @@ public class SysUserController extends BaseController {
 			@RequestParam(value = "account", required = false) String account) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
 		sysUserService.updateUserInfo(sysUser);
-		return setSuccessModelMap(modelMap);
+		return setSuccessModelMap();
 	}
 
 	// 修改密码
@@ -50,7 +50,7 @@ public class SysUserController extends BaseController {
 	public ModelMap updatePassword(@RequestParam(value = "id", required = false) Integer id,
 			@RequestParam(value = "password", required = false) String password) {
 		sysUserService.updatePassword(id, password);
-		return setSuccessModelMap(modelMap);
+		return setSuccessModelMap();
 	}
 
 	// 查询用户
@@ -58,8 +58,8 @@ public class SysUserController extends BaseController {
 	@RequestMapping(value = "/read/list")
 	public ModelMap get() {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
-		PageInfo<?> list = sysUserService.query(params);
-		return setSuccessModelMap(modelMap, list);
+		PageInfo<?> list = sysUserService.queryBeans(params);
+		return setSuccessModelMap(list);
 	}
 
 	// 用户详细信息
@@ -67,7 +67,7 @@ public class SysUserController extends BaseController {
 	@RequestMapping(value = "/read/detail")
 	public ModelMap detail(@RequestParam(value = "id", required = false) Integer id) {
 		SysUser sysUser = sysUserService.queryById(id);
-		return setSuccessModelMap(modelMap, sysUser);
+		return setSuccessModelMap(sysUser);
 	}
 
 	// 当前用户
@@ -79,6 +79,6 @@ public class SysUserController extends BaseController {
 		List<SysMenuBean> menus = authorizeService.queryAuthorizeByUserId(id);
 		modelMap.put("user", sysUser);
 		modelMap.put("menus", menus);
-		return setSuccessModelMap(modelMap);
+		return setSuccessModelMap();
 	}
 }

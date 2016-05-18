@@ -35,7 +35,7 @@ public class SysSessionController extends BaseController {
 		PageInfo<?> list = sysSessionService.query(params);
 		Long number = SessionListener.getAllUserNumber();
 		modelMap.put("userNumber", number); // 用户数大于会话数,有用户没有登录
-		return setSuccessModelMap(modelMap, list);
+		return setSuccessModelMap(list);
 	}
 
 	// 删除会话
@@ -44,6 +44,6 @@ public class SysSessionController extends BaseController {
 	public ModelMap update(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {
 		sysSessionService.delete(id);
-		return setSuccessModelMap(modelMap);
+		return setSuccessModelMap();
 	}
 }

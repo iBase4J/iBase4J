@@ -8,6 +8,7 @@ import org.ibase4j.core.support.shiro.LoginHelper;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.facade.sys.SysUserFacade;
 import org.ibase4j.mybatis.generator.model.SysUser;
+import org.ibase4j.mybatis.sys.model.SysUserBean;
 import org.ibase4j.mybatis.sys.model.ThirdPartyUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,8 @@ public class SysUserService {
 		sysUserFacade.update(sysUser);
 	}
 
-	public PageInfo<SysUser> query(Map<String, Object> params) {
-		return sysUserFacade.query(params);
+	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
+		return sysUserFacade.queryBeans(params);
 	}
 
 	public SysUser queryById(Integer id) {

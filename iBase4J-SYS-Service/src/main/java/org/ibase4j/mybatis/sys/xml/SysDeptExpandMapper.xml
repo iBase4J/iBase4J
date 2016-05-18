@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ibase4j.mybatis.sys.dao.SysDeptExpandMapper">
+	<sql id="baseColumns">
+		sys_dept.id_, sys_dept.dept_name, sys_dept.parent_id, sys_dept.enable_,
+		sys_dept.sort_no, sys_dept.leaf_, sys_dept.remark_
+	</sql>
+	<select id="query" parameterType="java.util.Map" 
+	resultMap="org.ibase4j.mybatis.generator.dao.SysDeptMapper.BaseResultMap">
+		select
+		<include refid="baseColumns" />
+		from sys_dept
+		where 1=1
+		<if test="parent_id != null">
+			and parent_id = #{parent_id}
+		</if>
+		<if test="keyword != null">
+			and (dept_name like "%"#{keyword}"%")
+		</if>
+	</select>
+</mapper>

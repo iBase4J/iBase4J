@@ -68,4 +68,9 @@ public class SysSessionService extends BaseService implements SysSessionFacade {
 		Page<SysSession> list = sessionExpandMapper.query(params);
 		return new PageInfo<SysSession>(list);
 	}
+
+	@Override
+	public SysSession queryById(Integer id) {
+		return sessionMapper.selectByPrimaryKey(id);
+	}
 }

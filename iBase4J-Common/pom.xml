@@ -63,7 +63,9 @@
 					<testIncludes>
 						<testInclude>none</testInclude>
 					</testIncludes>
-					<addMavenDescriptor>false</addMavenDescriptor>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
 				</configuration>
 			</plugin>
 		</plugins>

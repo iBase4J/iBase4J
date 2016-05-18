@@ -15,6 +15,7 @@ import org.ibase4j.mybatis.generator.dao.SysUserThirdpartyMapper;
 import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.mybatis.generator.model.SysUserThirdparty;
 import org.ibase4j.mybatis.sys.dao.SysUserExpandMapper;
+import org.ibase4j.mybatis.sys.model.SysUserBean;
 import org.ibase4j.mybatis.sys.model.ThirdPartyUser;
 import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,8 @@ public class SysUserService extends BaseService implements SysUserFacade {
 	private SysUserExpandMapper sysUserExpandMapper;
 	@Autowired
 	private SysUserThirdpartyMapper thirdpartyMapper;
+	@Autowired
+	private SysDicService sysDicService;
 
 	@CachePut
 	@Transactional
@@ -69,9 +72,21 @@ public class SysUserService extends BaseService implements SysUserFacade {
 
 	@Cacheable
 	public PageInfo<SysUser> query(Map<String, Object> params) {
+		return null;
+	}
+	
+	@Cacheable
+	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
 		this.startPage(params);
-		Page<SysUser> list = sysUserExpandMapper.query(params);
-		return new PageInfo<SysUser>(list);
+		Page<SysUserBean> list = sysUserExpandMapper.query(params);
+		Map<String, String> userTypeMap = sysDicService.queryDicByDicIndexKey("USERTYPE");
+		PageInfo<SysUserBean> pageInfo = new PageInfo<SysUserBean>(list);
+		for (SysUserBean userBean : pageInfo.getList()) {
+			if (userBean.getUserType() != null) {
+				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType().toString()));
+			}
+		}
+		return pageInfo;
 	}
 
 	/** 查询第三方帐号用户Id */

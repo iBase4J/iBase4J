@@ -17,6 +17,7 @@ import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.mybatis.generator.model.SysSession;
 import org.ibase4j.mybatis.generator.model.SysUser;
+import org.ibase4j.mybatis.sys.model.SysUserBean;
 import org.ibase4j.service.SysSessionService;
 import org.ibase4j.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class Realm extends AuthorizingRealm {
 			sb.append(token.getPassword()[i]);
 		}
 		params.put("password", sb.toString());
-		PageInfo<SysUser> pageInfo = sysUserService.query(params);
+		PageInfo<SysUserBean> pageInfo = sysUserService.queryBeans(params);
 		if (pageInfo.getSize() == 1) {
 			SysUser user = pageInfo.getList().get(0);
 			WebUtil.saveCurrentUser(user.getId());

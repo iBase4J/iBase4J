@@ -7,11 +7,16 @@
 		sys_user.dept_id, sys_user.locked_,
 		sys_user.usable_, sys_user.phone_
 	</sql>
-	<select id="query" parameterType="java.util.Map"
-		resultMap="org.ibase4j.mybatis.generator.dao.SysUserMapper.BaseResultMap">
+	<resultMap id="BaseResultMap" type="org.ibase4j.mybatis.sys.model.SysUserBean"
+		extends="org.ibase4j.mybatis.generator.dao.SysUserMapper.BaseResultMap">
+   		<result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="query" parameterType="java.util.Map" resultMap="BaseResultMap">
 		select
 		<include refid="baseColumns" />
-		from sys_user where 1=1
+		,sys_dept.dept_name
+		from sys_user left join sys_dept on sys_user.dept_id=sys_dept.id_
+		where 1=1
 		<if test="usable != null">and usable_=#{usable}</if>
 		<if test="account != null">and account_=#{account}</if>
 		<if test="password != null">and password_=#{password}</if>

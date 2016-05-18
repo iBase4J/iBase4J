@@ -1,11 +1,16 @@
 package org.ibase4j.service.sys;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
+import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.facade.sys.SysDicFacade;
 import org.ibase4j.mybatis.generator.dao.SysDicIndexMapper;
 import org.ibase4j.mybatis.generator.dao.SysDicMapper;
 import org.ibase4j.mybatis.generator.model.SysDic;
 import org.ibase4j.mybatis.generator.model.SysDicIndex;
+import org.ibase4j.mybatis.sys.dao.SysDicExpandMapper;
 import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -19,6 +24,8 @@ public class SysDicService extends BaseService implements SysDicFacade {
 	private SysDicMapper dicMapper;
 	@Autowired
 	private SysDicIndexMapper dicIndexMapper;
+	@Autowired
+	private SysDicExpandMapper dicExpandMapper;
 
 	@Transactional
 	@CachePut(cacheNames = "sysDicIndex")
@@ -31,7 +38,7 @@ public class SysDicService extends BaseService implements SysDicFacade {
 	}
 
 	@Transactional
-	@CachePut(cacheNames = "sysDic")
+	@CachePut(cacheNames = { "sysDic", "sysDics" })
 	public void updateDic(SysDic record) {
 		if (record.getId() == null) {
 			dicMapper.insert(record);
@@ -41,7 +48,7 @@ public class SysDicService extends BaseService implements SysDicFacade {
 	}
 
 	@Transactional
-	@CacheEvict(cacheNames = "sysDic")
+	@CacheEvict(cacheNames = { "sysDic", "sysDics" })
 	public void deleteDic(Integer id) {
 		dicMapper.deleteByPrimaryKey(id);
 	}
@@ -54,5 +61,15 @@ public class SysDicService extends BaseService implements SysDicFacade {
 	@Cacheable("sysDic")
 	public SysDic queryDicById(Integer id) {
 		return dicMapper.selectByPrimaryKey(id);
+	}
+
+	@Cacheable("sysDics")
+	public Map<String, String> queryDicByDicIndexKey(String key) {
+		List<SysDic> sysDics = dicExpandMapper.queryDicByDicIndexKey(key);
+		Map<String, String> dicMap = InstanceUtil.newHashMap();
+		for (SysDic sysDic : sysDics) {
+			dicMap.put(sysDic.getCode(), sysDic.getCodeText());
+		}
+		return dicMap;
 	}
 }

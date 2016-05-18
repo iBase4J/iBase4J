@@ -5,7 +5,9 @@ package org.ibase4j.facade.sys;
 
 import java.util.Map;
 
+import org.ibase4j.core.support.dubbo.BaseFacade;
 import org.ibase4j.mybatis.generator.model.SysUser;
+import org.ibase4j.mybatis.sys.model.SysUserBean;
 import org.ibase4j.mybatis.sys.model.ThirdPartyUser;
 
 import com.github.pagehelper.PageInfo;
@@ -15,14 +17,9 @@ import com.github.pagehelper.PageInfo;
  * @author ShenHuaJie
  * @version 2016年5月15日 上午11:21:47
  */
-public interface SysUserFacade {
-	public void update(SysUser record);
+public interface SysUserFacade extends BaseFacade<SysUser> {
 
-	public void delete(Integer id);
-
-	public SysUser queryById(Integer id);
-
-	public PageInfo<SysUser> query(Map<String, Object> params);
+	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params);
 
 	public String encryptPassword(String password);
 

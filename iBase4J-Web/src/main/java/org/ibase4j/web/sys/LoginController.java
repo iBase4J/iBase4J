@@ -34,7 +34,7 @@ public class LoginController extends BaseController {
 		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
 		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
 		if (LoginHelper.login(account, sysUserService.encryptPassword(password))) {
-			return setSuccessModelMap(modelMap);
+			return setSuccessModelMap();
 		}
 		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
 	}
@@ -44,7 +44,7 @@ public class LoginController extends BaseController {
 	@RequestMapping("/logout")
 	public ModelMap logout() {
 		SecurityUtils.getSubject().logout();
-		return setSuccessModelMap(modelMap);
+		return setSuccessModelMap();
 	}
 
 	// 注册
@@ -55,7 +55,7 @@ public class LoginController extends BaseController {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
 		sysUserService.addUser(sysUser);
 		if (LoginHelper.login(account, password)) {
-			return setSuccessModelMap(modelMap);
+			return setSuccessModelMap();
 		}
 		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
 	}
@@ -65,13 +65,13 @@ public class LoginController extends BaseController {
 	@RequestMapping("/unauthorized")
 	public ModelMap unauthorized() {
 		SecurityUtils.getSubject().logout();
-		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
+		return setModelMap(HttpCode.UNAUTHORIZED);
 	}
 
 	// 没有权限
 	@ResponseBody
 	@RequestMapping("/forbidden")
 	public ModelMap forbidden() {
-		return setModelMap(modelMap, HttpCode.FORBIDDEN);
+		return setModelMap(HttpCode.FORBIDDEN);
 	}
 }
