@@ -54,6 +54,9 @@ public class SessionListener implements HttpSessionListener {
 
 	private void setAllUserNumber(int n) {
 		Long number = getAllUserNumber() + n;
+		if (number < 0) {
+			number = 0L;
+		}
 		logger.info("用户数：" + number);
 		RedisUtil.set(Constants.ALLUSER_NUMBER, 60 * 60 * 24, number);
 	}

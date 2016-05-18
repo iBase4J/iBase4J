@@ -28,6 +28,7 @@ public class SysSessionService {
 		SysSession sysSession = sysSessionFacade.queryById(id);
 		if (sysSession != null) {
 			sessionRepository.delete(sysSession.getSessionId());
+			sessionRepository.cleanupExpiredSessions();
 		}
 	}
 
