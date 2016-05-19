@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.core.util.WebUtil;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
@@ -32,6 +33,7 @@ public class LocaleInterceptor extends BaseInterceptor {
 				locale = request.getLocale();
 			}
 		}
+		session.setAttribute("HOST", WebUtil.getHost(request));
 		LocaleContextHolder.setLocale(locale);
 		return nextInterceptor(request, response, handler);
 	}

@@ -15,7 +15,7 @@
 			and parent_id = #{parent_id}
 		</if>
 		<if test="keyword != null">
-			and (dept_name like "%"#{keyword}"%")
+			and (dept_name like CONCAT('%',#{keyword},'%'))
 		</if>
 	</select>
 </mapper>

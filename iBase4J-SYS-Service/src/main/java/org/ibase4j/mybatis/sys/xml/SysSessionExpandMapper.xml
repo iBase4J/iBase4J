@@ -9,8 +9,8 @@
 		resultMap="org.ibase4j.mybatis.generator.dao.SysSessionMapper.BaseResultMap">
 		select * from sys_session where 1=1
 		<if test="keyword != null">
-			and (account_ like "%"#{keyword}"%" or session_id like "%"#{keyword}"%"
-			or ip_ like "%"#{keyword}"%")
+			and (account_ like CONCAT('%',#{keyword},'%') or session_id like CONCAT('%',#{keyword},'%')
+			or ip_ like CONCAT('%',#{keyword},'%'))
 		</if>
 	</select>
 	<select id="queryBySessionId"

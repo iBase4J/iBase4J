@@ -3,6 +3,7 @@ package org.ibase4j.core.support.shiro;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -66,7 +67,8 @@ public class Realm extends AuthorizingRealm {
 		Subject currentUser = SecurityUtils.getSubject();
 		Session session = currentUser.getSession();
 		record.setSessionId(session.getId().toString());
-		record.setIp(session.getHost());
+		String host = (String) session.getAttribute("HOST");
+		record.setIp(StringUtils.isBlank(host) ? session.getHost() : host);
 		record.setStartTime(session.getStartTimestamp());
 		sysSessionService.update(record);
 	}
