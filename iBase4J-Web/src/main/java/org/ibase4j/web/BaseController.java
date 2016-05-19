@@ -51,18 +51,20 @@ public class BaseController {
 		return setModelMap(HttpCode.OK, data);
 	}
 
-	/** 设置相应代码 */
-	protected ModelMap setModelMap( HttpCode code) {
+	/** 设置响应代码 */
+	protected ModelMap setModelMap(HttpCode code) {
 		return setModelMap(code, null);
 	}
 
-	/** 设置相应代码 */
+	/** 设置响应代码 */
 	protected ModelMap setModelMap(HttpCode code, Object data) {
+		modelMap.remove("void");
 		if (data != null) {
 			modelMap.put("data", data);
 		}
 		modelMap.put("httpCode", code.value());
 		modelMap.put("msg", code.msg());
+		modelMap.put("timestamp", System.currentTimeMillis());
 		return modelMap;
 	}
 
