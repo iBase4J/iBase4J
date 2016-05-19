@@ -51,6 +51,5 @@
 		<property name="maxInMemorySize" value="40960" />
 	</bean>
 	<!-- 资源重定向(仅作为后台使用不提供静态资源) -->
-	<!-- <mvc:resources mapping="upload/**" location="/WEB-INF/resources/upload/" 
-		cache-period="300" /> -->
+	<mvc:resources mapping="upload/**" location="/WEB-INF/upload/" cache-period="300" />
 </beans>

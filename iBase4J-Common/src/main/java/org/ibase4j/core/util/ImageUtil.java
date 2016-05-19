@@ -42,11 +42,11 @@ public class ImageUtil {
 	 * @param targetFile 缩放后的图片存放路径
 	 * @throws IOException
 	 */
-	public void scale(BufferedImage orgImg, double scale, String targetFile) throws IOException {
+	public static void scale(BufferedImage orgImg, double scale, String targetFile) throws IOException {
 		Thumbnails.of(orgImg).scale(scale).toFile(targetFile);
 	}
 
-	public void scale(String orgImgFile, double scale, String targetFile) throws IOException {
+	public static void scale(String orgImgFile, double scale, String targetFile) throws IOException {
 		Thumbnails.of(orgImgFile).scale(scale).toFile(targetFile);
 	}
 
@@ -60,7 +60,7 @@ public class ImageUtil {
 	 * @param targetFile
 	 * @throws IOException
 	 */
-	public void format(String orgImgFile, int width, int height, String suffixName, String targetFile)
+	public static void format(String orgImgFile, int width, int height, String suffixName, String targetFile)
 			throws IOException {
 		Thumbnails.of(orgImgFile).size(width, height).outputFormat(suffixName).toFile(targetFile);
 	}
@@ -74,7 +74,7 @@ public class ImageUtil {
 	 * @param targetFile 缩放后的图片存放路径
 	 * @throws IOException
 	 */
-	public double scaleWidth(BufferedImage orgImg, int targetWidth, String targetFile) throws IOException {
+	public static double scaleWidth(BufferedImage orgImg, int targetWidth, String targetFile) throws IOException {
 		int orgWidth = orgImg.getWidth();
 		// 计算宽度的缩放比例
 		double scale = targetWidth * 1.00 / orgWidth;
@@ -84,7 +84,7 @@ public class ImageUtil {
 		return scale;
 	}
 
-	public void scaleWidth(String orgImgFile, int targetWidth, String targetFile) throws IOException {
+	public static void scaleWidth(String orgImgFile, int targetWidth, String targetFile) throws IOException {
 		BufferedImage bufferedImage = ImageIO.read(new File(orgImgFile));
 		scaleWidth(bufferedImage, targetWidth, targetFile);
 	}
@@ -98,16 +98,29 @@ public class ImageUtil {
 	 * @param targetFile //缩放后的图片存放地址
 	 * @throws IOException
 	 */
-	public double scaleHeight(BufferedImage orgImg, int targetHeight, String targetFile) throws IOException {
+	public static double scaleHeight(BufferedImage orgImg, int targetHeight, String targetFile) throws IOException {
 		int orgHeight = orgImg.getHeight();
 		double scale = targetHeight * 1.00 / orgHeight;
 		scale(orgImg, scale, targetFile);
 		return scale;
 	}
 
-	public void scaleHeight(String orgImgFile, int targetHeight, String targetFile) throws IOException {
+	public static void scaleHeight(String orgImgFile, int targetHeight, String targetFile) throws IOException {
 		BufferedImage bufferedImage = ImageIO.read(new File(orgImgFile));
 		// int height = bufferedImage.getHeight();
 		scaleHeight(bufferedImage, targetHeight, targetFile);
+	}
+
+	// 原始比例缩放
+	public static void scaleWidth(File file, Integer width) throws IOException {
+		String fileName = file.getName();
+		String filePath = file.getAbsolutePath();
+		String postFix = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();
+		// 缩放
+		BufferedImage bufferedImg = ImageIO.read(file);
+		String targetFile = filePath + "_s" + postFix;
+		scaleWidth(bufferedImg, width, targetFile);
+		String targetFile2 = filePath + "@" + width;
+		new File(targetFile).renameTo(new File(targetFile2));
 	}
 }

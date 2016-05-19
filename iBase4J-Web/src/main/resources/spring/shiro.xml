@@ -40,6 +40,8 @@
 				/regin=anon
 				/login=anon
 				/logout=anon
+				/*.ico=anon
+				/upload/*=anon
 				/unauthorized=anon
 				/forbidden=anon
 				/sns*=anon
