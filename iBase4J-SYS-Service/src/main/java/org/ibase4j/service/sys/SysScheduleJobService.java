@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ibase4j.core.support.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.facade.sys.SysScheduleJobFacade;
 import org.ibase4j.mybatis.sys.model.ScheduleJob;
-import org.ibase4j.service.BaseService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.config.CronTask;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
@@ -22,7 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
  * @author ShenHuaJie
  */
 @DubboService(interfaceClass = SysScheduleJobFacade.class)
-public class SysScheduleJobService extends BaseService implements SysScheduleJobFacade {
+public class SysScheduleJobService extends BaseService<ScheduleJob> implements SysScheduleJobFacade {
 	private Logger logger = LogManager.getLogger();
 
 	// 获取任务工厂
@@ -68,5 +68,9 @@ public class SysScheduleJobService extends BaseService implements SysScheduleJob
 			logger.error("Try to exec Task cause error : " + e.getMessage(), e);
 		}
 		return false;
+	}
+
+	public ScheduleJob queryById(Integer id) {
+		return null;
 	}
 }

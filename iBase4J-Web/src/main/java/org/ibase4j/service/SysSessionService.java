@@ -27,8 +27,12 @@ public class SysSessionService {
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
 		SysSession sysSession = sysSessionFacade.queryById(id);
 		if (sysSession != null) {
-			sessionRepository.delete(sysSession.getSessionId());
-			sessionRepository.cleanupExpiredSessions();
+			if (sessionRepository.getSession(sysSession.getSessionId()) != null) {
+				sessionRepository.delete(sysSession.getSessionId());
+				sessionRepository.cleanupExpiredSessions();
+			} else {
+				sysSessionFacade.delete(id);
+			}
 		}
 	}
 

@@ -12,6 +12,12 @@
 	</parent>
 
 	<dependencies>
+		<!-- mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
 		<!-- excel -->
 		<dependency>
 			<groupId>net.sourceforge.jexcelapi</groupId>

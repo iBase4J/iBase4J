@@ -10,7 +10,7 @@ public interface SysSessionExpandMapper {
 
 	void deleteBySessionId(String sessionId);
 
-	Page<SysSession> query(Map<String, Object> params);
+	Page<Integer> query(Map<String, Object> params);
 
 	SysSession queryBySessionId(String sessionId);
 

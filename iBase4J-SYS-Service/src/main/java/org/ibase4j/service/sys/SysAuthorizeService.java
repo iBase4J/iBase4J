@@ -3,25 +3,26 @@ package org.ibase4j.service.sys;
 import java.util.List;
 import java.util.Map;
 
+import org.ibase4j.core.support.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.facade.sys.SysAuthorizeFacade;
 import org.ibase4j.mybatis.generator.dao.SysRoleMenuMapper;
 import org.ibase4j.mybatis.generator.dao.SysUserMenuMapper;
 import org.ibase4j.mybatis.generator.dao.SysUserRoleMapper;
+import org.ibase4j.mybatis.generator.model.SysMenu;
 import org.ibase4j.mybatis.generator.model.SysRoleMenu;
 import org.ibase4j.mybatis.generator.model.SysUserMenu;
 import org.ibase4j.mybatis.generator.model.SysUserRole;
 import org.ibase4j.mybatis.sys.dao.SysAuthorizeMapper;
 import org.ibase4j.mybatis.sys.model.SysMenuBean;
-import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 @DubboService(interfaceClass = SysAuthorizeFacade.class)
-public class SysAuthorizeService extends BaseService implements SysAuthorizeFacade {
+public class SysAuthorizeService extends BaseService<SysMenu> implements SysAuthorizeFacade {
 	@Autowired
 	private SysUserMenuMapper sysUserMenuMapper;
 	@Autowired
@@ -30,9 +31,11 @@ public class SysAuthorizeService extends BaseService implements SysAuthorizeFaca
 	private SysRoleMenuMapper sysRoleMenuMapper;
 	@Autowired
 	private SysAuthorizeMapper sysAuthorizeMapper;
+	@Autowired
+	private SysMenuService sysMenuService;
 
 	@Transactional
-	@CacheEvict(value = "getAuthorize")
+	@CacheEvict(value = "getAuthorize", allEntries = true)
 	public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
 		sysAuthorizeMapper.deleteUserMenu(sysUserMenus.get(0).getUserId());
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
@@ -41,7 +44,7 @@ public class SysAuthorizeService extends BaseService implements SysAuthorizeFaca
 	}
 
 	@Transactional
-	@CacheEvict(value = "getAuthorize")
+	@CacheEvict(value = "getAuthorize", allEntries = true)
 	public void updateUserRole(List<SysUserRole> sysUserRoles) {
 		sysAuthorizeMapper.deleteUserRole(sysUserRoles.get(0).getUserId());
 		for (SysUserRole sysUserRole : sysUserRoles) {
@@ -50,7 +53,7 @@ public class SysAuthorizeService extends BaseService implements SysAuthorizeFaca
 	}
 
 	@Transactional
-	@CacheEvict(value = "getAuthorize")
+	@CacheEvict(value = "getAuthorize", allEntries = true)
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus) {
 		sysAuthorizeMapper.deleteRoleMenu(sysRoleMenus.get(0).getRoleId());
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
@@ -60,7 +63,8 @@ public class SysAuthorizeService extends BaseService implements SysAuthorizeFaca
 
 	@Cacheable(value = "getAuthorize")
 	public List<SysMenuBean> queryAuthorizeByUserId(Integer userId) {
-		List<SysMenuBean> menus = sysAuthorizeMapper.getAuthorize(userId);
+		List<Integer> menuIds = sysAuthorizeMapper.getAuthorize(userId);
+		List<SysMenuBean> menus = getList(menuIds, SysMenuBean.class);
 		Map<Integer, List<SysMenuBean>> map = InstanceUtil.newHashMap();
 		for (SysMenuBean sysMenuBean : menus) {
 			if (map.get(sysMenuBean.getParentId()) == null) {
@@ -88,5 +92,9 @@ public class SysAuthorizeService extends BaseService implements SysAuthorizeFaca
 			}
 		}
 		return menus;
+	}
+
+	public SysMenu queryById(Integer id) {
+		return sysMenuService.queryById(id);
 	}
 }

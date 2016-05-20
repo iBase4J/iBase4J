@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.facade.sys.SysUserFacade;
@@ -17,7 +18,6 @@ import org.ibase4j.mybatis.generator.model.SysUserThirdparty;
 import org.ibase4j.mybatis.sys.dao.SysUserExpandMapper;
 import org.ibase4j.mybatis.sys.model.SysUserBean;
 import org.ibase4j.mybatis.sys.model.ThirdPartyUser;
-import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
@@ -33,7 +33,7 @@ import com.github.pagehelper.PageInfo;
  */
 @DubboService(interfaceClass = SysUserFacade.class)
 @CacheConfig(cacheNames = "sysUser")
-public class SysUserService extends BaseService implements SysUserFacade {
+public class SysUserService extends BaseService<SysUser> implements SysUserFacade {
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	@Autowired
@@ -42,6 +42,8 @@ public class SysUserService extends BaseService implements SysUserFacade {
 	private SysUserThirdpartyMapper thirdpartyMapper;
 	@Autowired
 	private SysDicService sysDicService;
+	@Autowired
+	private SysDeptService deptService;
 
 	@CachePut
 	@Transactional
@@ -69,21 +71,24 @@ public class SysUserService extends BaseService implements SysUserFacade {
 		return sysUserMapper.selectByPrimaryKey(id);
 	}
 
-	@Cacheable
 	public PageInfo<SysUser> query(Map<String, Object> params) {
 		return null;
 	}
 
 	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
 		this.startPage(params);
-		Page<SysUserBean> list = sysUserExpandMapper.query(params);
+		Page<Integer> userIds = sysUserExpandMapper.query(params);
 		Map<String, String> userTypeMap = sysDicService.queryDicByDicIndexKey("USERTYPE");
-		PageInfo<SysUserBean> pageInfo = new PageInfo<SysUserBean>(list);
-		for (SysUserBean userBean : pageInfo.getList()) {
+		Page<SysUserBean> userBeans = getPage(userIds, SysUserBean.class);
+		for (SysUserBean userBean : userBeans) {
 			if (userBean.getUserType() != null) {
 				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType().toString()));
 			}
+			if (userBean.getDeptId() != null) {
+				userBean.setDeptName(deptService.queryById(userBean.getDeptId()).getDeptName());
+			}
 		}
+		PageInfo<SysUserBean> pageInfo = new PageInfo<SysUserBean>(userBeans);
 		return pageInfo;
 	}
 

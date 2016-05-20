@@ -12,7 +12,7 @@
 		<module>iBase4J-SYS-API</module>
 		<!-- 请分别启动两个服务 -->
 		<!-- 1.启动service -->
-		<!-- <module>iBase4J-SYS-Service</module> -->
+		<module>iBase4J-SYS-Service</module>
 		<!-- 2.启动web后端 -->
 		<module>iBase4J-Web</module>
 		<!-- 3.Nginx代理UI -->

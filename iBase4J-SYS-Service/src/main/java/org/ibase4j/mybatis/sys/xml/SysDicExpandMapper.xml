@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.ibase4j.mybatis.sys.dao.SysDicExpandMapper">
-	<sql id="baseColumns">
-		sys_dic.id_, sys_dic.index_id, sys_dic.code_, sys_dic.code_text, 
-		sys_dic.enable_, sys_dic.sort_no, sys_dic.editable_, sys_dic.remark_
-	</sql>
-	<select id="queryDicByDicIndexKey" parameterType="java.util.Map"
-	resultMap="org.ibase4j.mybatis.generator.dao.SysDicMapper.BaseResultMap">
-		select
-		<include refid="baseColumns" />
-		from sys_dic
+	<select id="queryDicByDicIndexKey" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select id_ from sys_dic
 		where exists (select 1 from sys_dic_index where sys_dic.index_id=sys_dic_index.id_
 		and sys_dic_index.key_=#{key})
 	</select>

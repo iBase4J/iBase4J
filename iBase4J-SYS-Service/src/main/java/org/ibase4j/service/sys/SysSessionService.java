@@ -2,12 +2,12 @@ package org.ibase4j.service.sys;
 
 import java.util.Map;
 
+import org.ibase4j.core.support.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.facade.sys.SysSessionFacade;
 import org.ibase4j.mybatis.generator.dao.SysSessionMapper;
 import org.ibase4j.mybatis.generator.model.SysSession;
 import org.ibase4j.mybatis.sys.dao.SysSessionExpandMapper;
-import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -17,9 +17,9 @@ import org.springframework.cache.annotation.Cacheable;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 
-@DubboService(interfaceClass = SysSessionFacade.class)
 @CacheConfig(cacheNames = "sysSession")
-public class SysSessionService extends BaseService implements SysSessionFacade {
+@DubboService(interfaceClass = SysSessionFacade.class)
+public class SysSessionService extends BaseService<SysSession> implements SysSessionFacade {
 	@Autowired
 	private SysSessionMapper sessionMapper;
 	@Autowired
@@ -57,7 +57,7 @@ public class SysSessionService extends BaseService implements SysSessionFacade {
 
 	public PageInfo<SysSession> query(Map<String, Object> params) {
 		this.startPage(params);
-		Page<SysSession> list = sessionExpandMapper.query(params);
-		return new PageInfo<SysSession>(list);
+		Page<Integer> ids = sessionExpandMapper.query(params);
+		return new PageInfo<SysSession>(getPage(ids));
 	}
 }

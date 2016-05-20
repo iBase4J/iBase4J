@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.ibase4j.mybatis.sys.dao.SysAuthorizeMapper">
-	<sql id="baseMenuColumn">
-		menu.id_, menu.menu_name, menu.menu_type, menu.parent_id, menu.iconcls_,
-		menu.request_, menu.expand_, menu.sort_no,menu.state_,
-		menu.leaf_, menu.remark_
-	</sql>
 	<delete id="deleteUserMenu">
 		delete from sys_user_menu where user_id=#{userId}
 	</delete>
@@ -18,10 +13,8 @@
 	<resultMap id="menuBaseResultMap" type="org.ibase4j.mybatis.sys.model.SysMenuBean"
 		extends="org.ibase4j.mybatis.generator.dao.SysMenuMapper.BaseResultMap">
 	</resultMap>
-	<select id="getAuthorize" resultMap="menuBaseResultMap">
-		select 
-		<include refid="baseMenuColumn" />
-		from sys_menu menu
+	<select id="getAuthorize" resultType="java.lang.Integer">
+		select menu.id_ from sys_menu menu
 		where exists (select 1 from sys_user_menu um where
 		um.user_id=#{userId} and um.menu_id=menu.id_)
 		or exists (select 1

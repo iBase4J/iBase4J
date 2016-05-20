@@ -3,6 +3,7 @@ package org.ibase4j.service.sys;
 import java.util.List;
 import java.util.Map;
 
+import org.ibase4j.core.support.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.facade.sys.SysDicFacade;
@@ -11,7 +12,6 @@ import org.ibase4j.mybatis.generator.dao.SysDicMapper;
 import org.ibase4j.mybatis.generator.model.SysDic;
 import org.ibase4j.mybatis.generator.model.SysDicIndex;
 import org.ibase4j.mybatis.sys.dao.SysDicExpandMapper;
-import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -19,7 +19,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 @DubboService(interfaceClass = SysDicFacade.class)
-public class SysDicService extends BaseService implements SysDicFacade {
+public class SysDicService extends BaseService<SysDic> implements SysDicFacade {
 	@Autowired
 	private SysDicMapper dicMapper;
 	@Autowired
@@ -94,5 +94,9 @@ public class SysDicService extends BaseService implements SysDicFacade {
 	@Cacheable(value = "sysDicMap")
 	public Map<String, String> queryDicByDicIndexKey(String key) {
 		return queryAllDic().get(key);
+	}
+
+	public SysDic queryById(Integer id) {
+		return queryDicById(id);
 	}
 }

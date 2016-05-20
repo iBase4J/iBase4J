@@ -3,12 +3,12 @@ package org.ibase4j.service.sys;
 import java.util.Map;
 
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.facade.sys.SysDeptFacade;
 import org.ibase4j.mybatis.generator.dao.SysDeptMapper;
 import org.ibase4j.mybatis.generator.model.SysDept;
 import org.ibase4j.mybatis.sys.dao.SysDeptExpandMapper;
-import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
@@ -21,7 +21,7 @@ import com.github.pagehelper.PageInfo;
 
 @CacheConfig(cacheNames = "sysDept")
 @DubboService(interfaceClass = SysDeptFacade.class)
-public class SysDeptService extends BaseService implements SysDeptFacade {
+public class SysDeptService extends BaseService<SysDept> implements SysDeptFacade {
 	@Autowired
 	private SysDeptMapper sysDeptMapper;
 	@Autowired
@@ -54,7 +54,7 @@ public class SysDeptService extends BaseService implements SysDeptFacade {
 
 	public PageInfo<SysDept> query(Map<String, Object> params) {
 		this.startPage(params);
-		Page<SysDept> list = syDeptExpandMapper.query(params);
-		return new PageInfo<SysDept>(list);
+		Page<Integer> list = syDeptExpandMapper.query(params);
+		return new PageInfo<SysDept>(getPage(list));
 	}
 }
