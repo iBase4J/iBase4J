@@ -100,6 +100,7 @@ public class WebUtil {
 		return WebUtils.getParametersStartingWith(request, null);
 	}
 
+	/** 获取客户端IP */
 	public static String getHost(HttpServletRequest request) {
 		String ip = request.getHeader("x-forwarded-for");
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
