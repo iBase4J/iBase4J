@@ -21,7 +21,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
 /**
+ * 控制器基类
+ * 
  * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:47:58
  */
 public class BaseController {
 	protected final Logger logger = LogManager.getLogger(this.getClass());

@@ -21,6 +21,10 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 @DubboService(interfaceClass = SysAuthorizeFacade.class)
 public class SysAuthorizeService extends BaseService<SysMenu> implements SysAuthorizeFacade {
 	@Autowired

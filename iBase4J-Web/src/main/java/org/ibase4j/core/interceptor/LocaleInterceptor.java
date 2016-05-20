@@ -14,6 +14,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
  * 国际化信息设置(基于SESSION)
  * 
  * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:16:45
  */
 public class LocaleInterceptor extends BaseInterceptor {
 

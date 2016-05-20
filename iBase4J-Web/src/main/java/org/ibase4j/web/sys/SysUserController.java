@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
 
 /**
+ * 用户管理控制器
  * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:12:12
  */
 @Controller
 @RequestMapping("/user")

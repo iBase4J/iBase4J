@@ -10,6 +10,11 @@ import org.springframework.util.Assert;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 
+/**
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:16:20
+ */
 @Service
 public class SysScheduleJobService {
 	@Reference

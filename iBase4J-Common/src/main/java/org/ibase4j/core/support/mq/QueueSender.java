@@ -9,7 +9,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
-
+/**
+ * 队列消息发送类
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 @Component
 public class QueueSender {
 	@Autowired

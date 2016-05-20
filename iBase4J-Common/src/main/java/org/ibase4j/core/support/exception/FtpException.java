@@ -1,6 +1,11 @@
 package org.ibase4j.core.support.exception;
 
-/** FTP异常 */
+/**
+ * FTP异常
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 @SuppressWarnings("serial")
 public class FtpException extends RuntimeException {
 	public FtpException() {

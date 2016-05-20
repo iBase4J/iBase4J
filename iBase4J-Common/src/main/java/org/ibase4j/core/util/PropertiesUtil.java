@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
  * @author user
  * @version $Id: PropertiesUtil.java, v 0.1 2014年3月24日 上午9:08:18 user Exp $
  */
-public class PropertiesUtil {
+public final class PropertiesUtil {
 	private Logger log = LogManager.getLogger(getClass());
 	private Properties objProperties;
 

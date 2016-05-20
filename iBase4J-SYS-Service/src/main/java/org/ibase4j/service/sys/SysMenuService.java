@@ -15,6 +15,10 @@ import org.springframework.cache.annotation.Cacheable;
 
 import com.github.pagehelper.PageInfo;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 @CacheConfig(cacheNames = "sysMenu")
 @DubboService(interfaceClass = SysMenuFacade.class)
 public class SysMenuService extends BaseService<SysMenu> implements SysMenuFacade {

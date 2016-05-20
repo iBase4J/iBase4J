@@ -7,7 +7,12 @@ import org.apache.logging.log4j.Logger;
 
 import com.jcraft.jsch.SftpProgressMonitor;
 
-/** 监控 */
+/**
+ * 监控
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 public class FileProgressMonitor implements SftpProgressMonitor {
 	private final Logger logger = LogManager.getLogger();
 	private long transfered; // 记录已传输的数据总大小

@@ -18,6 +18,8 @@ import com.github.pagehelper.PageInfo;
 
 /**
  * 用户会话管理
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:13:06
  */
 @Controller
 @RequestMapping("/session")

@@ -12,6 +12,11 @@ import org.springframework.util.Assert;
 
 import com.github.pagehelper.PageInfo;
 
+/**
+ * 会话管理
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:08:32
+ */
 @Service
 public class SysSessionService {
 	@Autowired
@@ -23,6 +28,7 @@ public class SysSessionService {
 		return sysSessionFacade.query(params);
 	}
 
+	/** 删除会话 */
 	public void delete(Integer id) {
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
 		SysSession sysSession = sysSessionFacade.queryById(id);
@@ -33,10 +39,12 @@ public class SysSessionService {
 		}
 	}
 
+	/** 更新会话 */
 	public void update(SysSession record) {
 		sysSessionFacade.update(record);
 	}
 
+	/** 删除会话 */
 	public void deleteBySessionId(String sessionId) {
 		sysSessionFacade.deleteBySessionId(sessionId);
 	}

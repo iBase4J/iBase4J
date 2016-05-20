@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 /**
  * 切换数据源(不同方法调用不同数据源)
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:17:52
  */
 @Aspect
 @Component

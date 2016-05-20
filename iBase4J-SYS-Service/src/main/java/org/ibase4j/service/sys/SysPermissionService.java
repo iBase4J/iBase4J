@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.Cacheable;
  * URL权限管理
  * 
  * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:49
  */
 @DubboService(interfaceClass = SysPermissionFacade.class)
 @CacheConfig(cacheNames = "sysPermission")

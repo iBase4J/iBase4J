@@ -19,6 +19,10 @@ import org.springframework.util.Assert;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 @CacheConfig(cacheNames = "sysDept")
 @DubboService(interfaceClass = SysDeptFacade.class)
 public class SysDeptService extends BaseService<SysDept> implements SysDeptFacade {

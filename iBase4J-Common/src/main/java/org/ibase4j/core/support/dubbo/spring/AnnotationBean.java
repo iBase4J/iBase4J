@@ -35,6 +35,10 @@ import com.alibaba.dubbo.config.ServiceConfig;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.spring.ReferenceBean;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 @SuppressWarnings("serial")
 public class AnnotationBean extends AbstractConfig
 		implements DisposableBean, BeanFactoryPostProcessor, BeanPostProcessor, ApplicationContextAware {

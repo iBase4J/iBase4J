@@ -22,6 +22,7 @@ import org.ibase4j.core.support.exception.FtpException;
  * FTP上传下载
  * 
  * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
  */
 public class FtpClient {
 	private Logger logger = LogManager.getLogger(getClass());
@@ -54,18 +55,13 @@ public class FtpClient {
 	/**
 	 * 初始化
 	 * 
-	 * @param host
-	 *            IP
-	 * @param port
-	 *            端口
-	 * @param username
-	 *            用户名
-	 * @param password
-	 *            密码
+	 * @param host IP
+	 * @param port 端口
+	 * @param username 用户名
+	 * @param password 密码
 	 * @throws FtpException
 	 */
-	public FtpClient(String host, int port, String username, String password)
-			throws FtpException {
+	public FtpClient(String host, int port, String username, String password) throws FtpException {
 		init(host, port, username, password);
 	}
 
@@ -73,10 +69,8 @@ public class FtpClient {
 	 * FPT登录
 	 */
 	public void open() {
-		init(properties.getProperty("FTPHOSTNAME"),
-				Integer.valueOf(properties.getProperty("FTPPORT")),
-				properties.getProperty("FTPUSERNAME"),
-				properties.getProperty("FTPPASSWORD"));
+		init(properties.getProperty("FTPHOSTNAME"), Integer.valueOf(properties.getProperty("FTPPORT")),
+				properties.getProperty("FTPUSERNAME"), properties.getProperty("FTPPASSWORD"));
 	}
 
 	/**
@@ -88,8 +82,7 @@ public class FtpClient {
 	 * @return
 	 * @throws FtpException
 	 */
-	private void init(String host, int port, String username, String password)
-			throws FtpException {
+	private void init(String host, int port, String username, String password) throws FtpException {
 		synchronized (LOCK) {
 			if (ftpClient == null) {
 				ftpClient = new FTPClient();
@@ -138,23 +131,20 @@ public class FtpClient {
 				ftpClient = null;
 				throw new FtpException("FTP退出登录出错!", e);
 			}
-			logger.info("用户[" + properties.getProperty("userName") + "]退出登录["
-					+ properties.getProperty("hostName") + "].");
+			logger.info(
+					"用户[" + properties.getProperty("userName") + "]退出登录[" + properties.getProperty("hostName") + "].");
 		}
 	}
 
 	/**
 	 * 上传
 	 * 
-	 * @param remotePath
-	 *            上传目录
-	 * @param localPath
-	 *            本地目录
+	 * @param remotePath 上传目录
+	 * @param localPath 本地目录
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean uploadFile(String remotePath, String localPath)
-			throws FtpException {
+	public boolean uploadFile(String remotePath, String localPath) throws FtpException {
 		synchronized (LOCK) {
 			File file = new File(localPath);
 			File[] files = file.listFiles();
@@ -170,15 +160,12 @@ public class FtpClient {
 	/**
 	 * 递归上传文件
 	 * 
-	 * @param localeFile
-	 *            本地文件/目录
-	 * @param remotePath
-	 *            上传目录
+	 * @param localeFile 本地文件/目录
+	 * @param remotePath 上传目录
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean uploadFiles(File localeFile, String remotePath)
-			throws FtpException {
+	public boolean uploadFiles(File localeFile, String remotePath) throws FtpException {
 		synchronized (LOCK) {
 			FileInputStream fis = null;
 			try {
@@ -189,8 +176,7 @@ public class FtpClient {
 					logger.info("[" + localeFile.getAbsolutePath() + "]目录");
 					File[] files = localeFile.listFiles();
 					for (int i = 0; i < files.length; i++) {
-						if (uploadFiles(files[i],
-								remotePath + "/" + localeFile.getName())) {
+						if (uploadFiles(files[i], remotePath + "/" + localeFile.getName())) {
 							flag = true;
 						} else {
 							return false;
@@ -208,8 +194,7 @@ public class FtpClient {
 				return true;
 			} catch (IOException e) {
 				logger.error("", e);
-				throw new FtpException("FTP上传[" + localeFile.getAbsolutePath()
-						+ "]出错!", e);
+				throw new FtpException("FTP上传[" + localeFile.getAbsolutePath() + "]出错!", e);
 			} finally {
 				if (fis != null) {
 					try {
@@ -224,15 +209,12 @@ public class FtpClient {
 	/**
 	 * 下载
 	 * 
-	 * @param remotePath
-	 *            下载目录
-	 * @param localPath
-	 *            本地目录
+	 * @param remotePath 下载目录
+	 * @param localPath 本地目录
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean downLoadFile(String remotePath, String localPath)
-			throws FtpException {
+	public boolean downLoadFile(String remotePath, String localPath) throws FtpException {
 		synchronized (LOCK) {
 			try {
 				if (ftpClient.changeWorkingDirectory(remotePath)) {// 转移到FTP服务器目录
@@ -261,10 +243,8 @@ public class FtpClient {
 	/**
 	 * 递归下载文件
 	 * 
-	 * @param ftpFile
-	 *            下载文件/目录
-	 * @param localPath
-	 *            本地目录
+	 * @param ftpFile 下载文件/目录
+	 * @param localPath 本地目录
 	 * @return
 	 */
 	public boolean downLoadFile(FTPFile ftpFile, String localPath) {
@@ -341,8 +321,7 @@ public class FtpClient {
 	/**
 	 * 连接参数
 	 * 
-	 * @param properties
-	 * <br>
+	 * @param properties <br>
 	 *            FTPHOSTNAME:IP; FTPPORT:端口; FTPUSERNAME:用户名; FTPPASSWORD:密码
 	 */
 	public void setProperties(Properties properties) {
@@ -352,8 +331,7 @@ public class FtpClient {
 	/**
 	 * 连接参数
 	 * 
-	 * @param properties
-	 * <br>
+	 * @param properties <br>
 	 *            FTPHOSTNAME:IP; FTPPORT:端口; FTPUSERNAME:用户名; FTPPASSWORD:密码
 	 */
 	public void setProperties(Map<String, String> properties) {

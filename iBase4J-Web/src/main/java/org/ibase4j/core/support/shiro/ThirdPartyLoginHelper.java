@@ -14,7 +14,13 @@ import org.ibase4j.mybatis.sys.model.ThirdPartyUser;
 
 import com.alibaba.fastjson.JSONObject;
 
-public class ThirdPartyLoginHelper {
+/**
+ * 第三方登录辅助类
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:44:45
+ */
+public final class ThirdPartyLoginHelper {
 	private static final Logger logger = LogManager.getLogger();
 
 	/**
@@ -23,7 +29,7 @@ public class ThirdPartyLoginHelper {
 	 * @param token
 	 * @param openid
 	 */
-	public static ThirdPartyUser getQQUserinfo(String token, String openid) throws Exception {
+	public static final ThirdPartyUser getQQUserinfo(String token, String openid) throws Exception {
 		ThirdPartyUser user = new ThirdPartyUser();
 		String url = Resources.THIRDPARTY.getString("getUserInfoURL_qq");
 		url = url + "?format=json&access_token=" + token + "&oauth_consumer_key="
@@ -50,7 +56,7 @@ public class ThirdPartyLoginHelper {
 	}
 
 	/** 获取微信用户信息 */
-	public static ThirdPartyUser getWxUserinfo(String token, String openid) throws Exception {
+	public static final ThirdPartyUser getWxUserinfo(String token, String openid) throws Exception {
 		ThirdPartyUser user = new ThirdPartyUser();
 		String url = Resources.THIRDPARTY.getString("getUserInfoURL_wx");
 		url = url + "?access_token=" + token + "&openid=" + openid;
@@ -81,7 +87,7 @@ public class ThirdPartyLoginHelper {
 	 * @param uid
 	 * @return
 	 */
-	public static ThirdPartyUser getSinaUserinfo(String token, String uid) throws Exception {
+	public static final ThirdPartyUser getSinaUserinfo(String token, String uid) throws Exception {
 		ThirdPartyUser user = new ThirdPartyUser();
 		String url = Resources.THIRDPARTY.getString("getUserInfoURL_sina");
 		url = url + "?access_token=" + token + "&uid=" + uid;
@@ -109,7 +115,7 @@ public class ThirdPartyLoginHelper {
 	 * @param type
 	 * @return
 	 */
-	public static Map<String, String> getQQTokenAndOpenid(String code, String host) throws Exception {
+	public static final Map<String, String> getQQTokenAndOpenid(String code, String host) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		// 获取令牌
 		String tokenUrl = Resources.THIRDPARTY.getString("accessTokenURL_qq");
@@ -142,7 +148,7 @@ public class ThirdPartyLoginHelper {
 	 * @param type
 	 * @return
 	 */
-	public static Map<String, String> getWxTokenAndOpenid(String code, String host) throws Exception {
+	public static final Map<String, String> getWxTokenAndOpenid(String code, String host) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
 		// 获取令牌
 		String tokenUrl = Resources.THIRDPARTY.getString("accessTokenURL_wx");
@@ -167,7 +173,7 @@ public class ThirdPartyLoginHelper {
 	 * @param type
 	 * @return
 	 */
-	public static JSONObject getSinaTokenAndUid(String code, String host) {
+	public static final JSONObject getSinaTokenAndUid(String code, String host) {
 		JSONObject json = null;
 		try {
 			// 获取令牌
@@ -213,7 +219,7 @@ public class ThirdPartyLoginHelper {
 	 * @param str
 	 * @return
 	 */
-	private static Map<String, String> toMap(String str) {
+	private static final Map<String, String> toMap(String str) {
 		Map<String, String> map = new HashMap<String, String>();
 		String[] strs = str.split("&");
 		for (int i = 0; i < strs.length; i++) {

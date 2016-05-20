@@ -15,7 +15,7 @@ import org.ibase4j.core.support.security.coder.SHACoder;
  * @author ShenHuaJie
  * @since 2011-12-31
  */
-public class SecurityUtil {
+public final class SecurityUtil {
 	private SecurityUtil() {
 	}
 
@@ -33,7 +33,7 @@ public class SecurityUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static byte[] decryptBASE64(String key) {
+	public static final byte[] decryptBASE64(String key) {
 		try {
 			return new BASE64Encoder().decode(key);
 		} catch (Exception e) {
@@ -48,7 +48,7 @@ public class SecurityUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String encryptBASE64(byte[] key) {
+	public static final String encryptBASE64(byte[] key) {
 		try {
 			return new BASE64Encoder().encode(key);
 		} catch (Exception e) {
@@ -62,7 +62,7 @@ public class SecurityUtil {
 	 * @param cryptData 加密数据
 	 * @return 解密后的数据
 	 */
-	public static String decryptDes(String cryptData) {
+	public static final String decryptDes(String cryptData) {
 		return decryptDes(cryptData, ENCRYPT_KEY);
 	}
 
@@ -72,7 +72,7 @@ public class SecurityUtil {
 	 * @param data 要进行加密的数据
 	 * @return 加密后的数据
 	 */
-	public static String encryptDes(String data) {
+	public static final String encryptDes(String data) {
 		return encryptDes(data, ENCRYPT_KEY);
 	}
 
@@ -82,7 +82,7 @@ public class SecurityUtil {
 	 * @param strSrc 明文
 	 * @return 返回密文
 	 */
-	public static String encryptMd5(String strSrc) {
+	public static final String encryptMd5(String strSrc) {
 		String outString = null;
 		try {
 			outString = encryptBASE64(MDCoder.encodeMD5(strSrc.getBytes(CHARSET)));
@@ -99,7 +99,7 @@ public class SecurityUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String encryptSHA(String data) {
+	public static final String encryptSHA(String data) {
 		try {
 			return encryptBASE64(SHACoder.encodeSHA256(data.getBytes(CHARSET)));
 		} catch (Exception e) {
@@ -114,7 +114,7 @@ public class SecurityUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String encryptHMAC(String data) {
+	public static final String encryptHMAC(String data) {
 		return encryptHMAC(data, ENCRYPT_KEY);
 	}
 
@@ -124,7 +124,7 @@ public class SecurityUtil {
 	 * @param cryptData 加密数据
 	 * @return 解密后的数据
 	 */
-	public static String decryptDes(String cryptData, byte[] key) {
+	public static final String decryptDes(String cryptData, byte[] key) {
 		String decryptedData = null;
 		try {
 			// 把字符串解码为字节数组，并解密
@@ -141,7 +141,7 @@ public class SecurityUtil {
 	 * @param data 要进行加密的数据
 	 * @return 加密后的数据
 	 */
-	public static String encryptDes(String data, byte[] key) {
+	public static final String encryptDes(String data, byte[] key) {
 		String encryptedData = null;
 		try {
 			// 加密，并把字节数组编码成字符串
@@ -159,7 +159,7 @@ public class SecurityUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String encryptHMAC(String data, byte[] key) {
+	public static final String encryptHMAC(String data, byte[] key) {
 		try {
 			return encryptBASE64(HmacCoder.encodeHmacSHA512(data.getBytes(CHARSET), key));
 		} catch (Exception e) {
@@ -173,7 +173,7 @@ public class SecurityUtil {
 	 * @param data 原数据
 	 * @return
 	 */
-	public static String signRSA(String data, String privateKey) {
+	public static final String signRSA(String data, String privateKey) {
 		try {
 			return encryptBASE64(RSACoder.sign(data.getBytes(CHARSET), decryptBASE64(privateKey)));
 		} catch (Exception e) {
@@ -187,7 +187,7 @@ public class SecurityUtil {
 	 * @param data 原数据
 	 * @return
 	 */
-	public static boolean verifyRSA(String data, String publicKey, String sign) {
+	public static final boolean verifyRSA(String data, String publicKey, String sign) {
 		try {
 			return RSACoder.verify(data.getBytes(CHARSET), decryptBASE64(publicKey), decryptBASE64(sign));
 		} catch (Exception e) {
@@ -201,7 +201,7 @@ public class SecurityUtil {
 	 * @param data 数据
 	 * @return 加密后的数据
 	 */
-	public static String encryptRSAPrivate(String data, String privateKey) {
+	public static final String encryptRSAPrivate(String data, String privateKey) {
 		try {
 			return encryptBASE64(RSACoder.encryptByPrivateKey(data.getBytes(CHARSET), decryptBASE64(privateKey)));
 		} catch (Exception e) {
@@ -215,7 +215,7 @@ public class SecurityUtil {
 	 * @param cryptData 加密数据
 	 * @return 解密后的数据
 	 */
-	public static String decryptRSAPublic(String cryptData, String publicKey) {
+	public static final String decryptRSAPublic(String cryptData, String publicKey) {
 		try {
 			// 把字符串解码为字节数组，并解密
 			return new String(RSACoder.decryptByPublicKey(decryptBASE64(cryptData), decryptBASE64(publicKey)));

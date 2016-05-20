@@ -6,7 +6,7 @@ package org.ibase4j.core.util;
  * @author ShenHuaJie
  * @since 2011-11-08
  */
-public class RMBUtil {
+public final class RMBUtil {
 	private RMBUtil() {
 	}
 
@@ -21,7 +21,7 @@ public class RMBUtil {
 	 * @param val 传入的数据
 	 * @return String 返回的人民币大写形式字符串
 	 */
-	public static String numToRMBStr(double val) {
+	public static final String numToRMBStr(double val) {
 		String SignStr = "";
 		String TailStr = "";
 		long fraction, integer;

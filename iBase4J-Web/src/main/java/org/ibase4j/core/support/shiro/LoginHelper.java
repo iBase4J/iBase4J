@@ -8,12 +8,16 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.config.Resources;
 
-public class LoginHelper {
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:44:45
+ */
+public final class LoginHelper {
 	private LoginHelper() {
 	}
 
 	/** 用户登录 */
-	public static Boolean login(String account, String password) {
+	public static final Boolean login(String account, String password) {
 		UsernamePasswordToken token = new UsernamePasswordToken(account, password);
 		token.setRememberMe(true);
 		Subject subject = SecurityUtils.getSubject();

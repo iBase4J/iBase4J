@@ -13,15 +13,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Created by jonson.xu on 10/30/14.
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
  */
-public class Request2ModelUtil {
+public final class Request2ModelUtil {
 	private Request2ModelUtil() {
 	}
 
-	private static Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger();
 
-	public static <K> K covert(Class<K> T, HttpServletRequest request) {
+	public static final <K> K covert(Class<K> T, HttpServletRequest request) {
 		try {
 			K obj = T.newInstance();
 			// 获取类的方法集合
@@ -48,7 +49,7 @@ public class Request2ModelUtil {
 	 * @param T
 	 * @return
 	 */
-	public static Set<Method> get_methods(Class<?> T) {
+	public static final Set<Method> get_methods(Class<?> T) {
 		Method[] methods = T.getMethods();
 		Set<Method> methodSet = new HashSet<Method>();
 		for (Method method : methods) {
@@ -65,7 +66,7 @@ public class Request2ModelUtil {
 	 * @param T
 	 * @return
 	 */
-	public static Set<Method> get_declared_methods(Class<?> T) {
+	public static final Set<Method> get_declared_methods(Class<?> T) {
 		Method[] methods = T.getMethods();
 		Set<Method> methodSet = new HashSet<Method>();
 		for (Method method : methods) {
@@ -82,7 +83,7 @@ public class Request2ModelUtil {
 	 * @param T
 	 * @return
 	 */
-	public static Set<Method> get_getDeclared_methods(Class<?> T) {
+	public static final Set<Method> get_getDeclared_methods(Class<?> T) {
 		Method[] methods = T.getDeclaredMethods();
 		Set<Method> methodSet = new HashSet<Method>();
 		for (Method method : methods) {
@@ -99,7 +100,7 @@ public class Request2ModelUtil {
 	 * @param o
 	 * @param parameterMap
 	 */
-	public static void covertObj(Object o, Map<String, String[]> parameterMap) {
+	public static final void covertObj(Object o, Map<String, String[]> parameterMap) {
 		Class<?> clazz = o.getClass();
 		Iterator<Map.Entry<String, String[]>> iterator = parameterMap.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -127,7 +128,7 @@ public class Request2ModelUtil {
 	 * @param o
 	 * @param parameterMap map参数
 	 */
-	public static void covertObjWithMap(Object o, Map<String, String> parameterMap) {
+	public static final void covertObjWithMap(Object o, Map<String, String> parameterMap) {
 		Class<?> clazz = o.getClass();
 		Iterator<Map.Entry<String, String>> iterator = parameterMap.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -155,7 +156,7 @@ public class Request2ModelUtil {
 	 * @param o
 	 * @param paramObj model参数
 	 */
-	public static void covertObj(Object o, Object paramObj) {
+	public static final void covertObj(Object o, Object paramObj) {
 		Field[] fields = o.getClass().getDeclaredFields();
 		for (int i = 0; i < fields.length; i++) {
 			try {
@@ -181,7 +182,7 @@ public class Request2ModelUtil {
 	 * @param obiExtend
 	 * @return
 	 */
-	public static Object init(Object obj, Object obiExtend) {
+	public static final Object init(Object obj, Object obiExtend) {
 		Class<?> clazz = obj.getClass();
 		Set<Method> getMethods = Request2ModelUtil.get_getDeclared_methods(clazz);
 		Iterator<Method> ite = getMethods.iterator();
@@ -200,7 +201,7 @@ public class Request2ModelUtil {
 		return obiExtend;
 	}
 
-	public static Method setMethod(String fieldName, Class<?> clazz) {
+	public static final Method setMethod(String fieldName, Class<?> clazz) {
 		try {
 			Class<?>[] parameterTypes = new Class[1];
 			Field field = clazz.getDeclaredField(fieldName);
@@ -217,7 +218,7 @@ public class Request2ModelUtil {
 		return null;
 	}
 
-	public static Method getMethod(String fieldName, Class<?> clazz) {
+	public static final Method getMethod(String fieldName, Class<?> clazz) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("get");
 		sb.append(fieldName.substring(0, 1).toUpperCase());

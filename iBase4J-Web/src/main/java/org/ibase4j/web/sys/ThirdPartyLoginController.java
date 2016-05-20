@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONObject;
  * 第三方登录控制类
  * 
  * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:12:56
  */
 @Controller
 public class ThirdPartyLoginController extends BaseController {

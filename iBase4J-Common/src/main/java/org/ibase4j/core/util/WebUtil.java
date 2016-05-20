@@ -21,7 +21,7 @@ import org.springframework.web.util.WebUtils;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:19:28
  */
-public class WebUtil {
+public final class WebUtil {
 	private WebUtil() {
 	}
 
@@ -33,7 +33,7 @@ public class WebUtil {
 	 * @param defaultValue 缺省值
 	 * @return
 	 */
-	public static String getCookieValue(HttpServletRequest request, String cookieName, String defaultValue) {
+	public static final String getCookieValue(HttpServletRequest request, String cookieName, String defaultValue) {
 		Cookie cookie = WebUtils.getCookie(request, cookieName);
 		if (cookie == null) {
 			return defaultValue;
@@ -42,12 +42,12 @@ public class WebUtil {
 	}
 
 	/** 保存当前用户 */
-	public static void saveCurrentUser(Object user) {
+	public static final void saveCurrentUser(Object user) {
 		setSession(Constants.CURRENT_USER, user);
 	}
 
 	/** 获取当前用户 */
-	public static Integer getCurrentUser() {
+	public static final Integer getCurrentUser() {
 		Subject currentUser = SecurityUtils.getSubject();
 		if (null != currentUser) {
 			Session session = currentUser.getSession();
@@ -63,7 +63,7 @@ public class WebUtil {
 	 * 
 	 * @see 比如Controller,使用时直接用HttpSession.getAttribute(key)就可以取到
 	 */
-	public static void setSession(Object key, Object value) {
+	public static final void setSession(Object key, Object value) {
 		Subject currentUser = SecurityUtils.getSubject();
 		if (null != currentUser) {
 			Session session = currentUser.getSession();
@@ -74,7 +74,7 @@ public class WebUtil {
 	}
 
 	/** 移除当前用户 */
-	public static void removeCurrentUser(HttpServletRequest request) {
+	public static final void removeCurrentUser(HttpServletRequest request) {
 		request.getSession().removeAttribute(Constants.CURRENT_USER);
 	}
 
@@ -85,7 +85,7 @@ public class WebUtil {
 	 * @param request
 	 * @return
 	 */
-	public static String getApplicationResource(String key, HttpServletRequest request) {
+	public static final String getApplicationResource(String key, HttpServletRequest request) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("ApplicationResources", request.getLocale());
 		return resourceBundle.getString(key);
 	}
@@ -96,12 +96,12 @@ public class WebUtil {
 	 * @param request
 	 * @return
 	 */
-	public static Map<String, Object> getParameterMap(HttpServletRequest request) {
+	public static final Map<String, Object> getParameterMap(HttpServletRequest request) {
 		return WebUtils.getParametersStartingWith(request, null);
 	}
 
 	/** 获取客户端IP */
-	public static String getHost(HttpServletRequest request) {
+	public static final String getHost(HttpServletRequest request) {
 		String ip = request.getHeader("x-forwarded-for");
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");

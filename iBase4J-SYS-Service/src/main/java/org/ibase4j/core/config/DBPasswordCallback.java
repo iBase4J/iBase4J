@@ -7,7 +7,12 @@ import org.ibase4j.core.util.SecurityUtil;
 
 import com.alibaba.druid.util.DruidPasswordCallback;
 
-/** 数据库密码回调解密 */
+/**
+ * 数据库密码回调解密
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:18:25
+ */
 @SuppressWarnings("serial")
 public class DBPasswordCallback extends DruidPasswordCallback {
 	private static final byte[] key = { 9, -1, 0, 5, 39, 8, 6, 19 };

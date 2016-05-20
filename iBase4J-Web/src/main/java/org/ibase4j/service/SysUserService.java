@@ -16,6 +16,10 @@ import org.springframework.util.Assert;
 
 import com.github.pagehelper.PageInfo;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:47:21
+ */
 @Service
 public class SysUserService {
 	@Autowired

@@ -11,6 +11,10 @@ import org.springframework.util.Assert;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.github.pagehelper.PageInfo;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:16:07
+ */
 @Service
 public class SysDeptService {
 	@Reference

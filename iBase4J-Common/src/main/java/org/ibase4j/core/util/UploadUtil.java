@@ -19,7 +19,7 @@ import org.apache.commons.fileupload.servlet.ServletRequestContext;
  * 
  * @author ShenHuaJie
  */
-public class UploadUtil {
+public final class UploadUtil {
 	private UploadUtil() {
 	}
 
@@ -27,7 +27,7 @@ public class UploadUtil {
 	private static int fileSizeThreshold = 1024 * 1024 * 1;
 
 	/** 获取所有文本域 */
-	public static List<?> getFileItemList(HttpServletRequest request, File saveDir) throws FileUploadException {
+	public static final List<?> getFileItemList(HttpServletRequest request, File saveDir) throws FileUploadException {
 		if (!saveDir.isDirectory()) {
 			saveDir.mkdir();
 		}
@@ -44,7 +44,7 @@ public class UploadUtil {
 	}
 
 	/** 获取文本域 */
-	public static FileItem[] getFileItem(HttpServletRequest request, File saveDir, String... fieldName)
+	public static final FileItem[] getFileItem(HttpServletRequest request, File saveDir, String... fieldName)
 			throws FileUploadException {
 		if (fieldName == null || saveDir == null) {
 			return null;

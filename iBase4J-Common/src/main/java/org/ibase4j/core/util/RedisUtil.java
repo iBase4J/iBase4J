@@ -11,21 +11,21 @@ import org.ibase4j.core.support.jedis.JedisTemplate;
 import com.alibaba.fastjson.JSON;
 
 import redis.clients.jedis.BinaryClient.LIST_POSITION;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.SortingParams;
 import redis.clients.jedis.Tuple;
 
 /**
+ * Redis缓存辅助类
+ * 
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
-public class RedisUtil {
+public final class RedisUtil {
 	private RedisUtil() {
 	}
 
-	public static String get(final String key) {
+	public static final String get(final String key) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.get(key);
@@ -33,7 +33,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String set(final String key, final Integer seconds, final Object value) {
+	public static final String set(final String key, final Integer seconds, final Object value) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.setex(key, seconds, JSON.toJSONString(value));
@@ -41,7 +41,7 @@ public class RedisUtil {
 		}, true);
 	}
 
-	public static Boolean exists(final String key) {
+	public static final Boolean exists(final String key) {
 		return JedisTemplate.run(key, new Executor<Boolean>() {
 			public Boolean execute(ShardedJedis jedis) {
 				return jedis.exists(key);
@@ -49,7 +49,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long del(final String key) {
+	public static final Long del(final String key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.del(key);
@@ -57,7 +57,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String type(final String key) {
+	public static final String type(final String key) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.type(key);
@@ -70,7 +70,7 @@ public class RedisUtil {
 	 * 
 	 * @return
 	 */
-	public static Long expire(final String key, final int seconds) {
+	public static final Long expire(final String key, final int seconds) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.expire(key, seconds);
@@ -85,7 +85,7 @@ public class RedisUtil {
 	 * @param unixTime
 	 * @return
 	 */
-	public static Long expireAt(final String key, final long unixTime) {
+	public static final Long expireAt(final String key, final long unixTime) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.expireAt(key, unixTime);
@@ -93,7 +93,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long ttl(final String key) {
+	public static final Long ttl(final String key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.ttl(key);
@@ -101,7 +101,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Boolean setbit(final String key, final long offset, final boolean value) {
+	public static final Boolean setbit(final String key, final long offset, final boolean value) {
 		return JedisTemplate.run(key, new Executor<Boolean>() {
 			public Boolean execute(ShardedJedis jedis) {
 				return jedis.setbit(key, offset, value);
@@ -109,7 +109,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Boolean getbit(final String key, final long offset) {
+	public static final Boolean getbit(final String key, final long offset) {
 		return JedisTemplate.run(key, new Executor<Boolean>() {
 			public Boolean execute(ShardedJedis jedis) {
 				return jedis.getbit(key, offset);
@@ -117,7 +117,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long setrange(final String key, final long offset, final String value) {
+	public static final Long setrange(final String key, final long offset, final String value) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.setrange(key, offset, value);
@@ -125,7 +125,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String getrange(final String key, final long startOffset, final long endOffset) {
+	public static final String getrange(final String key, final long startOffset, final long endOffset) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.getrange(key, startOffset, endOffset);
@@ -133,7 +133,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String getSet(final String key, final String value) {
+	public static final String getSet(final String key, final String value) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.getSet(key, value);
@@ -141,7 +141,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long setnx(final String key, final String value) {
+	public static final Long setnx(final String key, final String value) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.setnx(key, value);
@@ -149,7 +149,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String setex(final String key, final int seconds, final String value) {
+	public static final String setex(final String key, final int seconds, final String value) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.setex(key, seconds, value);
@@ -157,7 +157,7 @@ public class RedisUtil {
 		}, true);
 	}
 
-	public static Long decrBy(final String key, final long integer) {
+	public static final Long decrBy(final String key, final long integer) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.decrBy(key, integer);
@@ -165,7 +165,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long decr(final String key) {
+	public static final Long decr(final String key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.decr(key);
@@ -173,7 +173,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long incrBy(final String key, final long integer) {
+	public static final Long incrBy(final String key, final long integer) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.incrBy(key, integer);
@@ -181,7 +181,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long incr(final String key) {
+	public static final Long incr(final String key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.incr(key);
@@ -189,7 +189,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long append(final String key, final String value) {
+	public static final Long append(final String key, final String value) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.append(key, value);
@@ -197,7 +197,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String substr(final String key, final int start, final int end) {
+	public static final String substr(final String key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.substr(key, start, end);
@@ -205,7 +205,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long hset(final String key, final String field, final String value) {
+	public static final Long hset(final String key, final String field, final String value) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.hset(key, field, value);
@@ -213,7 +213,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String hget(final String key, final String field) {
+	public static final String hget(final String key, final String field) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.hget(key, field);
@@ -221,7 +221,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long hsetnx(final String key, final String field, final String value) {
+	public static final Long hsetnx(final String key, final String field, final String value) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.hsetnx(key, field, value);
@@ -229,7 +229,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String hmset(final String key, final Map<String, String> hash) {
+	public static final String hmset(final String key, final Map<String, String> hash) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.hmset(key, hash);
@@ -237,7 +237,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static List<String> hmget(final String key, final String... fields) {
+	public static final List<String> hmget(final String key, final String... fields) {
 		return JedisTemplate.run(key, new Executor<List<String>>() {
 			public List<String> execute(ShardedJedis jedis) {
 				return jedis.hmget(key, fields);
@@ -245,7 +245,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long hincrBy(final String key, final String field, final long value) {
+	public static final Long hincrBy(final String key, final String field, final long value) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.hincrBy(key, field, value);
@@ -253,7 +253,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Boolean hexists(final String key, final String field) {
+	public static final Boolean hexists(final String key, final String field) {
 		return JedisTemplate.run(key, new Executor<Boolean>() {
 			public Boolean execute(ShardedJedis jedis) {
 				return jedis.hexists(key, field);
@@ -261,7 +261,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long hdel(final String key, final String field) {
+	public static final Long hdel(final String key, final String field) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.hdel(key, field);
@@ -269,7 +269,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long hlen(final String key) {
+	public static final Long hlen(final String key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.hlen(key);
@@ -277,7 +277,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<String> hkeys(final String key) {
+	public static final Set<String> hkeys(final String key) {
 		return JedisTemplate.run(key, new Executor<Set<String>>() {
 			public Set<String> execute(ShardedJedis jedis) {
 				return jedis.hkeys(key);
@@ -285,7 +285,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static List<String> hvals(final String key) {
+	public static final List<String> hvals(final String key) {
 		return JedisTemplate.run(key, new Executor<List<String>>() {
 			public List<String> execute(ShardedJedis jedis) {
 				return jedis.hvals(key);
@@ -293,7 +293,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Map<String, String> hgetAll(final String key) {
+	public static final Map<String, String> hgetAll(final String key) {
 		return JedisTemplate.run(key, new Executor<Map<String, String>>() {
 			public Map<String, String> execute(ShardedJedis jedis) {
 				return jedis.hgetAll(key);
@@ -301,7 +301,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long rpush(final String key, final String string) {
+	public static final Long rpush(final String key, final String string) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.rpush(key, string);
@@ -309,7 +309,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long lpush(final String key, final String string) {
+	public static final Long lpush(final String key, final String string) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.lpush(key, string);
@@ -317,7 +317,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long llen(final String key) {
+	public static final Long llen(final String key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.llen(key);
@@ -325,7 +325,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static List<String> lrange(final String key, final long start, final long end) {
+	public static final List<String> lrange(final String key, final long start, final long end) {
 		return JedisTemplate.run(key, new Executor<List<String>>() {
 			public List<String> execute(ShardedJedis jedis) {
 				return jedis.lrange(key, start, end);
@@ -333,7 +333,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String ltrim(final String key, final long start, final long end) {
+	public static final String ltrim(final String key, final long start, final long end) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.ltrim(key, start, end);
@@ -341,7 +341,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String lindex(final String key, final long index) {
+	public static final String lindex(final String key, final long index) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.lindex(key, index);
@@ -349,7 +349,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String lset(final String key, final long index, final String value) {
+	public static final String lset(final String key, final long index, final String value) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.lset(key, index, value);
@@ -357,7 +357,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long lrem(final String key, final long count, final String value) {
+	public static final Long lrem(final String key, final long count, final String value) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.lrem(key, count, value);
@@ -365,7 +365,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String lpop(final String key) {
+	public static final String lpop(final String key) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.lpop(key);
@@ -373,7 +373,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String rpop(final String key) {
+	public static final String rpop(final String key) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.rpop(key);
@@ -383,7 +383,7 @@ public class RedisUtil {
 
 	// return 1 add a not exist value ,
 	// return 0 add a exist value
-	public static Long sadd(final String key, final String member) {
+	public static final Long sadd(final String key, final String member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.sadd(key, member);
@@ -391,7 +391,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<String> smembers(final String key) {
+	public static final Set<String> smembers(final String key) {
 		return JedisTemplate.run(key, new Executor<Set<String>>() {
 			public Set<String> execute(ShardedJedis jedis) {
 				return jedis.smembers(key);
@@ -399,7 +399,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long srem(final String key, final String member) {
+	public static final Long srem(final String key, final String member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.srem(key, member);
@@ -407,7 +407,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String spop(final String key) {
+	public static final String spop(final String key) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.spop(key);
@@ -415,7 +415,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long scard(final String key) {
+	public static final Long scard(final String key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.scard(key);
@@ -423,7 +423,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Boolean sismember(final String key, final String member) {
+	public static final Boolean sismember(final String key, final String member) {
 		return JedisTemplate.run(key, new Executor<Boolean>() {
 			public Boolean execute(ShardedJedis jedis) {
 				return jedis.sismember(key, member);
@@ -431,7 +431,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String srandmember(final String key) {
+	public static final String srandmember(final String key) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.srandmember(key);
@@ -439,7 +439,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long zadd(final String key, final double score, final String member) {
+	public static final Long zadd(final String key, final double score, final String member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zadd(key, score, member);
@@ -447,7 +447,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<String> zrange(final String key, final int start, final int end) {
+	public static final Set<String> zrange(final String key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<Set<String>>() {
 			public Set<String> execute(ShardedJedis jedis) {
 				return jedis.zrange(key, start, end);
@@ -455,7 +455,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long zrem(final String key, final String member) {
+	public static final Long zrem(final String key, final String member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zrem(key, member);
@@ -463,7 +463,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Double zincrby(final String key, final double score, final String member) {
+	public static final Double zincrby(final String key, final double score, final String member) {
 		return JedisTemplate.run(key, new Executor<Double>() {
 			public Double execute(ShardedJedis jedis) {
 				return jedis.zincrby(key, score, member);
@@ -471,7 +471,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long zrank(final String key, final String member) {
+	public static final Long zrank(final String key, final String member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zrank(key, member);
@@ -479,7 +479,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long zrevrank(final String key, final String member) {
+	public static final Long zrevrank(final String key, final String member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zrevrank(key, member);
@@ -487,7 +487,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<String> zrevrange(final String key, final int start, final int end) {
+	public static final Set<String> zrevrange(final String key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<Set<String>>() {
 			public Set<String> execute(ShardedJedis jedis) {
 				return jedis.zrevrange(key, start, end);
@@ -495,7 +495,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<Tuple> zrangeWithScores(final String key, final int start, final int end) {
+	public static final Set<Tuple> zrangeWithScores(final String key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
 				return jedis.zrangeWithScores(key, start, end);
@@ -503,7 +503,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<Tuple> zrevrangeWithScores(final String key, final int start, final int end) {
+	public static final Set<Tuple> zrevrangeWithScores(final String key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
 				return jedis.zrevrangeWithScores(key, start, end);
@@ -511,7 +511,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long zcard(final String key) {
+	public static final Long zcard(final String key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zcard(key);
@@ -519,7 +519,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Double zscore(final String key, final String member) {
+	public static final Double zscore(final String key, final String member) {
 		return JedisTemplate.run(key, new Executor<Double>() {
 			public Double execute(ShardedJedis jedis) {
 				return jedis.zscore(key, member);
@@ -527,7 +527,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static List<String> sort(final String key) {
+	public static final List<String> sort(final String key) {
 		return JedisTemplate.run(key, new Executor<List<String>>() {
 			public List<String> execute(ShardedJedis jedis) {
 				return jedis.sort(key);
@@ -535,7 +535,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static List<String> sort(final String key, final SortingParams sortingParameters) {
+	public static final List<String> sort(final String key, final SortingParams sortingParameters) {
 		return JedisTemplate.run(key, new Executor<List<String>>() {
 			public List<String> execute(ShardedJedis jedis) {
 				return jedis.sort(key, sortingParameters);
@@ -543,7 +543,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long zcount(final String key, final double min, final double max) {
+	public static final Long zcount(final String key, final double min, final double max) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zcount(key, min, max);
@@ -551,7 +551,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<String> zrangeByScore(final String key, final double min, final double max) {
+	public static final Set<String> zrangeByScore(final String key, final double min, final double max) {
 		return JedisTemplate.run(key, new Executor<Set<String>>() {
 			public Set<String> execute(ShardedJedis jedis) {
 				return jedis.zrangeByScore(key, min, max);
@@ -559,7 +559,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<String> zrevrangeByScore(final String key, final double max, final double min) {
+	public static final Set<String> zrevrangeByScore(final String key, final double max, final double min) {
 		return JedisTemplate.run(key, new Executor<Set<String>>() {
 			public Set<String> execute(ShardedJedis jedis) {
 				return jedis.zrevrangeByScore(key, max, min);
@@ -567,8 +567,8 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<String> zrangeByScore(final String key, final double min, final double max, final int offset,
-			final int count) {
+	public static final Set<String> zrangeByScore(final String key, final double min, final double max,
+			final int offset, final int count) {
 		return JedisTemplate.run(key, new Executor<Set<String>>() {
 			public Set<String> execute(ShardedJedis jedis) {
 				return jedis.zrangeByScore(key, min, max, offset, count);
@@ -576,8 +576,8 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<String> zrevrangeByScore(final String key, final double max, final double min, final int offset,
-			final int count) {
+	public static final Set<String> zrevrangeByScore(final String key, final double max, final double min,
+			final int offset, final int count) {
 		return JedisTemplate.run(key, new Executor<Set<String>>() {
 			public Set<String> execute(ShardedJedis jedis) {
 				return jedis.zrevrangeByScore(key, max, min, offset, count);
@@ -585,7 +585,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<Tuple> zrangeByScoreWithScores(final String key, final double min, final double max) {
+	public static final Set<Tuple> zrangeByScoreWithScores(final String key, final double min, final double max) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
 				return jedis.zrangeByScoreWithScores(key, min, max);
@@ -593,7 +593,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<Tuple> zrevrangeByScoreWithScores(final String key, final double max, final double min) {
+	public static final Set<Tuple> zrevrangeByScoreWithScores(final String key, final double max, final double min) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
 				return jedis.zrevrangeByScoreWithScores(key, max, min);
@@ -601,7 +601,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<Tuple> zrangeByScoreWithScores(final String key, final double min, final double max,
+	public static final Set<Tuple> zrangeByScoreWithScores(final String key, final double min, final double max,
 			final int offset, final int count) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
@@ -610,7 +610,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<Tuple> zrevrangeByScoreWithScores(final String key, final double max, final double min,
+	public static final Set<Tuple> zrevrangeByScoreWithScores(final String key, final double max, final double min,
 			final int offset, final int count) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
@@ -619,7 +619,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long zremrangeByRank(final String key, final int start, final int end) {
+	public static final Long zremrangeByRank(final String key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zremrangeByRank(key, start, end);
@@ -627,7 +627,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long zremrangeByScore(final String key, final double start, final double end) {
+	public static final Long zremrangeByScore(final String key, final double start, final double end) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zremrangeByScore(key, start, end);
@@ -635,7 +635,8 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long linsert(final String key, final LIST_POSITION where, final String pivot, final String value) {
+	public static final Long linsert(final String key, final LIST_POSITION where, final String pivot,
+			final String value) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.linsert(key, where, pivot, value);
@@ -643,7 +644,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String set(final byte[] key, final byte[] value) {
+	public static final String set(final byte[] key, final byte[] value) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.set(key, value);
@@ -651,7 +652,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static byte[] get(final byte[] key) {
+	public static final byte[] get(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<byte[]>() {
 			public byte[] execute(ShardedJedis jedis) {
 				return jedis.get(key);
@@ -659,7 +660,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Boolean exists(final byte[] key) {
+	public static final Boolean exists(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<Boolean>() {
 			public Boolean execute(ShardedJedis jedis) {
 				return jedis.exists(key);
@@ -667,7 +668,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static String type(final byte[] key) {
+	public static final String type(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.type(key);
@@ -675,7 +676,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long expire(final byte[] key, final int seconds) {
+	public static final Long expire(final byte[] key, final int seconds) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.expire(key, seconds);
@@ -683,7 +684,7 @@ public class RedisUtil {
 		}, true);
 	}
 
-	public static Long expireAt(final byte[] key, final long unixTime) {
+	public static final Long expireAt(final byte[] key, final long unixTime) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.expireAt(key, unixTime);
@@ -691,7 +692,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long ttl(final byte[] key) {
+	public static final Long ttl(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.ttl(key);
@@ -699,7 +700,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Long del(final byte[] key) {
+	public static final Long del(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.del(key);
@@ -851,7 +852,7 @@ public class RedisUtil {
 		});
 	}
 
-	public static Set<byte[]> hkeys(final byte[] key) {
+	public static final Set<byte[]> hkeys(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<Set<byte[]>>() {
 			public Set<byte[]> execute(ShardedJedis jedis) {
 				return jedis.hkeys(key);
@@ -859,7 +860,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Collection<byte[]> hvals(final byte[] key) {
+	public static final Collection<byte[]> hvals(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<Collection<byte[]>>() {
 			public Collection<byte[]> execute(ShardedJedis jedis) {
 				return jedis.hvals(key);
@@ -867,7 +868,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Map<byte[], byte[]> hgetAll(final byte[] key) {
+	public static final Map<byte[], byte[]> hgetAll(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<Map<byte[], byte[]>>() {
 			public Map<byte[], byte[]> execute(ShardedJedis jedis) {
 				return jedis.hgetAll(key);
@@ -875,7 +876,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long rpush(final byte[] key, final byte[] string) {
+	public static final Long rpush(final byte[] key, final byte[] string) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.rpush(key, string);
@@ -883,7 +884,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long lpush(final byte[] key, final byte[] string) {
+	public static final Long lpush(final byte[] key, final byte[] string) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.lpush(key, string);
@@ -891,7 +892,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long llen(final byte[] key) {
+	public static final Long llen(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.llen(key);
@@ -899,7 +900,7 @@ public class RedisUtil {
 		});
 	}
 
-	public List<byte[]> lrange(final byte[] key, final int start, final int end) {
+	public static final List<byte[]> lrange(final byte[] key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<List<byte[]>>() {
 			public List<byte[]> execute(ShardedJedis jedis) {
 				return jedis.lrange(key, start, end);
@@ -907,7 +908,7 @@ public class RedisUtil {
 		});
 	}
 
-	public String ltrim(final byte[] key, final int start, final int end) {
+	public static final String ltrim(final byte[] key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.ltrim(key, start, end);
@@ -915,7 +916,7 @@ public class RedisUtil {
 		});
 	}
 
-	public byte[] lindex(final byte[] key, final int index) {
+	public static final byte[] lindex(final byte[] key, final int index) {
 		return JedisTemplate.run(key, new Executor<byte[]>() {
 			public byte[] execute(ShardedJedis jedis) {
 				return jedis.lindex(key, index);
@@ -923,7 +924,7 @@ public class RedisUtil {
 		});
 	}
 
-	public String lset(final byte[] key, final int index, final byte[] value) {
+	public static final String lset(final byte[] key, final int index, final byte[] value) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.lset(key, index, value);
@@ -931,7 +932,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long lrem(final byte[] key, final int count, final byte[] value) {
+	public static final Long lrem(final byte[] key, final int count, final byte[] value) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.lrem(key, count, value);
@@ -939,7 +940,7 @@ public class RedisUtil {
 		});
 	}
 
-	public byte[] lpop(final byte[] key) {
+	public static final byte[] lpop(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<byte[]>() {
 			public byte[] execute(ShardedJedis jedis) {
 				return jedis.lpop(key);
@@ -947,7 +948,7 @@ public class RedisUtil {
 		});
 	}
 
-	public byte[] rpop(final byte[] key) {
+	public static final byte[] rpop(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<byte[]>() {
 			public byte[] execute(ShardedJedis jedis) {
 				return jedis.rpop(key);
@@ -955,7 +956,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long sadd(final byte[] key, final byte[] member) {
+	public static final Long sadd(final byte[] key, final byte[] member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.sadd(key, member);
@@ -963,7 +964,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<byte[]> smembers(final byte[] key) {
+	public static final Set<byte[]> smembers(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<Set<byte[]>>() {
 			public Set<byte[]> execute(ShardedJedis jedis) {
 				return jedis.smembers(key);
@@ -971,7 +972,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long srem(final byte[] key, final byte[] member) {
+	public static final Long srem(final byte[] key, final byte[] member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.srem(key, member);
@@ -979,7 +980,7 @@ public class RedisUtil {
 		});
 	}
 
-	public byte[] spop(final byte[] key) {
+	public static final byte[] spop(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<byte[]>() {
 			public byte[] execute(ShardedJedis jedis) {
 				return jedis.spop(key);
@@ -987,7 +988,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long scard(final byte[] key) {
+	public static final Long scard(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.scard(key);
@@ -995,7 +996,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Boolean sismember(final byte[] key, final byte[] member) {
+	public static final Boolean sismember(final byte[] key, final byte[] member) {
 		return JedisTemplate.run(key, new Executor<Boolean>() {
 			public Boolean execute(ShardedJedis jedis) {
 				return jedis.sismember(key, member);
@@ -1003,7 +1004,7 @@ public class RedisUtil {
 		});
 	}
 
-	public byte[] srandmember(final byte[] key) {
+	public static final byte[] srandmember(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<byte[]>() {
 			public byte[] execute(ShardedJedis jedis) {
 				return jedis.srandmember(key);
@@ -1011,7 +1012,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long zadd(final byte[] key, final double score, final byte[] member) {
+	public static final Long zadd(final byte[] key, final double score, final byte[] member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zadd(key, score, member);
@@ -1019,7 +1020,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<byte[]> zrange(final byte[] key, final int start, final int end) {
+	public static final Set<byte[]> zrange(final byte[] key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<Set<byte[]>>() {
 			public Set<byte[]> execute(ShardedJedis jedis) {
 				return jedis.zrange(key, start, end);
@@ -1027,7 +1028,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long zrem(final byte[] key, final byte[] member) {
+	public static final Long zrem(final byte[] key, final byte[] member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zrem(key, member);
@@ -1035,7 +1036,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Double zincrby(final byte[] key, final double score, final byte[] member) {
+	public static final Double zincrby(final byte[] key, final double score, final byte[] member) {
 		return JedisTemplate.run(key, new Executor<Double>() {
 			public Double execute(ShardedJedis jedis) {
 				return jedis.zincrby(key, score, member);
@@ -1043,7 +1044,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long zrank(final byte[] key, final byte[] member) {
+	public static final Long zrank(final byte[] key, final byte[] member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zrank(key, member);
@@ -1051,7 +1052,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long zrevrank(final byte[] key, final byte[] member) {
+	public static final Long zrevrank(final byte[] key, final byte[] member) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zrevrank(key, member);
@@ -1059,7 +1060,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<byte[]> zrevrange(final byte[] key, final int start, final int end) {
+	public static final Set<byte[]> zrevrange(final byte[] key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<Set<byte[]>>() {
 			public Set<byte[]> execute(ShardedJedis jedis) {
 				return jedis.zrevrange(key, start, end);
@@ -1067,7 +1068,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<Tuple> zrangeWithScores(final byte[] key, final int start, final int end) {
+	public static final Set<Tuple> zrangeWithScores(final byte[] key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
 				return jedis.zrangeWithScores(key, start, end);
@@ -1075,7 +1076,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<Tuple> zrevrangeWithScores(final byte[] key, final int start, final int end) {
+	public static final Set<Tuple> zrevrangeWithScores(final byte[] key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
 				return jedis.zrevrangeWithScores(key, start, end);
@@ -1083,7 +1084,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long zcard(final byte[] key) {
+	public static final Long zcard(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zcard(key);
@@ -1091,7 +1092,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Double zscore(final byte[] key, final byte[] member) {
+	public static final Double zscore(final byte[] key, final byte[] member) {
 		return JedisTemplate.run(key, new Executor<Double>() {
 			public Double execute(ShardedJedis jedis) {
 				return jedis.zscore(key, member);
@@ -1099,7 +1100,7 @@ public class RedisUtil {
 		});
 	}
 
-	public List<byte[]> sort(final byte[] key) {
+	public static final List<byte[]> sort(final byte[] key) {
 		return JedisTemplate.run(key, new Executor<List<byte[]>>() {
 			public List<byte[]> execute(ShardedJedis jedis) {
 				return jedis.sort(key);
@@ -1107,7 +1108,7 @@ public class RedisUtil {
 		});
 	}
 
-	public List<byte[]> sort(final byte[] key, final SortingParams sortingParameters) {
+	public static final List<byte[]> sort(final byte[] key, final SortingParams sortingParameters) {
 		return JedisTemplate.run(key, new Executor<List<byte[]>>() {
 			public List<byte[]> execute(ShardedJedis jedis) {
 				return jedis.sort(key, sortingParameters);
@@ -1115,7 +1116,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long zcount(final byte[] key, final double min, final double max) {
+	public static final Long zcount(final byte[] key, final double min, final double max) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zcount(key, min, max);
@@ -1123,7 +1124,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<byte[]> zrangeByScore(final byte[] key, final double min, final double max) {
+	public static final Set<byte[]> zrangeByScore(final byte[] key, final double min, final double max) {
 		return JedisTemplate.run(key, new Executor<Set<byte[]>>() {
 			public Set<byte[]> execute(ShardedJedis jedis) {
 				return jedis.zrangeByScore(key, min, max);
@@ -1131,8 +1132,8 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<byte[]> zrangeByScore(final byte[] key, final double min, final double max, final int offset,
-			final int count) {
+	public static final Set<byte[]> zrangeByScore(final byte[] key, final double min, final double max,
+			final int offset, final int count) {
 		return JedisTemplate.run(key, new Executor<Set<byte[]>>() {
 			public Set<byte[]> execute(ShardedJedis jedis) {
 				return jedis.zrangeByScore(key, min, max, offset, count);
@@ -1140,7 +1141,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<Tuple> zrangeByScoreWithScores(final byte[] key, final double min, final double max) {
+	public static final Set<Tuple> zrangeByScoreWithScores(final byte[] key, final double min, final double max) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
 				return jedis.zrangeByScoreWithScores(key, min, max);
@@ -1148,8 +1149,8 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<Tuple> zrangeByScoreWithScores(final byte[] key, final double min, final double max, final int offset,
-			final int count) {
+	public static final Set<Tuple> zrangeByScoreWithScores(final byte[] key, final double min, final double max,
+			final int offset, final int count) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
 				return jedis.zrangeByScoreWithScores(key, min, max, offset, count);
@@ -1157,7 +1158,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<byte[]> zrevrangeByScore(final byte[] key, final double max, final double min) {
+	public static final Set<byte[]> zrevrangeByScore(final byte[] key, final double max, final double min) {
 		return JedisTemplate.run(key, new Executor<Set<byte[]>>() {
 			public Set<byte[]> execute(ShardedJedis jedis) {
 				return jedis.zrevrangeByScore(key, max, min);
@@ -1165,8 +1166,8 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<byte[]> zrevrangeByScore(final byte[] key, final double max, final double min, final int offset,
-			final int count) {
+	public static final Set<byte[]> zrevrangeByScore(final byte[] key, final double max, final double min,
+			final int offset, final int count) {
 		return JedisTemplate.run(key, new Executor<Set<byte[]>>() {
 			public Set<byte[]> execute(ShardedJedis jedis) {
 				return jedis.zrevrangeByScore(key, max, min, offset, count);
@@ -1174,7 +1175,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<Tuple> zrevrangeByScoreWithScores(final byte[] key, final double max, final double min) {
+	public static final Set<Tuple> zrevrangeByScoreWithScores(final byte[] key, final double max, final double min) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
 				return jedis.zrevrangeByScoreWithScores(key, max, min);
@@ -1182,8 +1183,8 @@ public class RedisUtil {
 		});
 	}
 
-	public Set<Tuple> zrevrangeByScoreWithScores(final byte[] key, final double max, final double min, final int offset,
-			final int count) {
+	public static final Set<Tuple> zrevrangeByScoreWithScores(final byte[] key, final double max, final double min,
+			final int offset, final int count) {
 		return JedisTemplate.run(key, new Executor<Set<Tuple>>() {
 			public Set<Tuple> execute(ShardedJedis jedis) {
 				return jedis.zrevrangeByScoreWithScores(key, max, min, offset, count);
@@ -1191,7 +1192,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long zremrangeByRank(final byte[] key, final int start, final int end) {
+	public static final Long zremrangeByRank(final byte[] key, final int start, final int end) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zremrangeByRank(key, start, end);
@@ -1199,7 +1200,7 @@ public class RedisUtil {
 		});
 	}
 
-	public Long zremrangeByScore(final byte[] key, final double start, final double end) {
+	public static final Long zremrangeByScore(final byte[] key, final double start, final double end) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.zremrangeByScore(key, start, end);
@@ -1207,7 +1208,8 @@ public class RedisUtil {
 		});
 	}
 
-	public Long linsert(final byte[] key, final LIST_POSITION where, final byte[] pivot, final byte[] value) {
+	public static final Long linsert(final byte[] key, final LIST_POSITION where, final byte[] pivot,
+			final byte[] value) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.linsert(key, where, pivot, value);
@@ -1215,58 +1217,10 @@ public class RedisUtil {
 		});
 	}
 
-	public Jedis getShard(final byte[] key) {
-		return JedisTemplate.run(key, new Executor<Jedis>() {
-			public Jedis execute(ShardedJedis jedis) {
-				return jedis.getShard(key);
-			}
-		});
-	}
-
-	public Jedis getShard(final String key) {
-		return JedisTemplate.run(key, new Executor<Jedis>() {
-			public Jedis execute(ShardedJedis jedis) {
-				return jedis.getShard(key);
-			}
-		});
-	}
-
-	public JedisShardInfo getShardInfo(final byte[] key) {
-		return JedisTemplate.run(key, new Executor<JedisShardInfo>() {
-			public JedisShardInfo execute(ShardedJedis jedis) {
-				return jedis.getShardInfo(key);
-			}
-		});
-	}
-
-	public JedisShardInfo getShardInfo(final String key) {
-		return JedisTemplate.run(key, new Executor<JedisShardInfo>() {
-			public JedisShardInfo execute(ShardedJedis jedis) {
-				return jedis.getShardInfo(key);
-			}
-		});
-	}
-
-	public String getKeyTag(final String key) {
+	public static final String getKeyTag(final String key) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.getKeyTag(key);
-			}
-		});
-	}
-
-	public Collection<JedisShardInfo> getAllShardInfo() {
-		return JedisTemplate.run("", new Executor<Collection<JedisShardInfo>>() {
-			public Collection<JedisShardInfo> execute(ShardedJedis jedis) {
-				return jedis.getAllShardInfo();
-			}
-		});
-	}
-
-	public Collection<Jedis> getAllShards() {
-		return JedisTemplate.run("", new Executor<Collection<Jedis>>() {
-			public Collection<Jedis> execute(ShardedJedis jedis) {
-				return jedis.getAllShards();
 			}
 		});
 	}

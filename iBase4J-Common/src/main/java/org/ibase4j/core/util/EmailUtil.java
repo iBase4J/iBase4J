@@ -8,7 +8,7 @@ import org.ibase4j.core.support.EmailSender;
  * @author ShenHuaJie
  * @version $Id: MailUtil.java, v 0.1 2014年12月4日 下午8:22:43 ShenHuaJie Exp $
  */
-public class EmailUtil {
+public final class EmailUtil {
 	private EmailUtil() {
 	}
 
@@ -20,7 +20,7 @@ public class EmailUtil {
 	 * @param body 内容
 	 * @return
 	 */
-	public static boolean sendMail(String sendTo, String topic, String body) {
+	public static final boolean sendMail(String sendTo, String topic, String body) {
 		return sendMail(null, sendTo, null, topic, body, null);
 	}
 
@@ -33,7 +33,7 @@ public class EmailUtil {
 	 * @param fileAffix 附件
 	 * @return
 	 */
-	public static boolean sendMail(String sendTo, String topic, String body, String[] fileAffix) {
+	public static final boolean sendMail(String sendTo, String topic, String body, String[] fileAffix) {
 		return sendMail(sendTo, null, topic, body, fileAffix);
 	}
 
@@ -46,7 +46,7 @@ public class EmailUtil {
 	 * @param body 内容
 	 * @return
 	 */
-	public static boolean sendMail(String sendTo, String copyTo, String topic, String body) {
+	public static final boolean sendMail(String sendTo, String copyTo, String topic, String body) {
 		return sendMail(null, sendTo, copyTo, topic, body, null);
 	}
 
@@ -60,7 +60,7 @@ public class EmailUtil {
 	 * @param fileAffix 附件
 	 * @return
 	 */
-	public static boolean sendMail(String sendTo, String copyTo, String topic, String body, String[] fileAffix) {
+	public static final boolean sendMail(String sendTo, String copyTo, String topic, String body, String[] fileAffix) {
 		return sendMail(null, sendTo, copyTo, topic, body, fileAffix);
 	}
 
@@ -74,7 +74,7 @@ public class EmailUtil {
 	 * @param body 内容
 	 * @return
 	 */
-	public static boolean sendMail(String from, String sendTo, String copyTo, String topic, String body) {
+	public static final boolean sendMail(String from, String sendTo, String copyTo, String topic, String body) {
 		return sendMail(from, sendTo, copyTo, topic, body, null);
 	}
 
@@ -89,7 +89,7 @@ public class EmailUtil {
 	 * @param fileAffix 附件
 	 * @return
 	 */
-	public static boolean sendMail(String from, String sendTo, String copyTo, String topic, String body,
+	public static final boolean sendMail(String from, String sendTo, String copyTo, String topic, String body,
 			String[] fileAffix) {
 		return sendMail(from, null, null, null, sendTo, copyTo, topic, body, fileAffix);
 	}
@@ -106,7 +106,7 @@ public class EmailUtil {
 	 * @param body 内容
 	 * @return
 	 */
-	public static boolean sendMail(String from, String name, String password, String key, String sendTo, String copyTo,
+	public static final boolean sendMail(String from, String name, String password, String key, String sendTo, String copyTo,
 			String topic, String body) {
 		return sendMail(null, from, name, password, key, sendTo, copyTo, topic, body, null);
 	}
@@ -124,7 +124,7 @@ public class EmailUtil {
 	 * @param fileAffix 附件
 	 * @return
 	 */
-	public static boolean sendMail(String from, String name, String password, String key, String sendTo, String copyTo,
+	public static final boolean sendMail(String from, String name, String password, String key, String sendTo, String copyTo,
 			String topic, String body, String[] fileAffix) {
 		return sendMail(null, from, name, password, key, sendTo, copyTo, topic, body, fileAffix);
 	}
@@ -141,7 +141,7 @@ public class EmailUtil {
 	 * @param topic 主题
 	 * @param body 内容
 	 */
-	public static boolean sendMail(String host, String from, String name, String password, String key, String sendTo,
+	public static final boolean sendMail(String host, String from, String name, String password, String key, String sendTo,
 			String copyTo, String topic, String body) {
 		return sendMail(host, from, name, password, key, sendTo, copyTo, topic, body, null);
 	}
@@ -159,7 +159,7 @@ public class EmailUtil {
 	 * @param body 内容
 	 * @param fileAffix 附件
 	 */
-	public static boolean sendMail(String host, String from, String name, String password, String key, String sendTo,
+	public static final boolean sendMail(String host, String from, String name, String password, String key, String sendTo,
 			String copyTo, String topic, String body, String[] fileAffix) {
 		// 初始化邮件引擎
 		EmailSender sender = new EmailSender(host);

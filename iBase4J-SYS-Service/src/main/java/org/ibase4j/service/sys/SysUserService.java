@@ -30,6 +30,7 @@ import com.github.pagehelper.PageInfo;
 
 /**
  * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
  */
 @DubboService(interfaceClass = SysUserFacade.class)
 @CacheConfig(cacheNames = "sysUser")

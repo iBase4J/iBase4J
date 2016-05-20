@@ -20,6 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
  * 定时任务管理
  * 
  * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:59
  */
 @DubboService(interfaceClass = SysScheduleJobFacade.class)
 public class SysScheduleJobService extends BaseService<ScheduleJob> implements SysScheduleJobFacade {

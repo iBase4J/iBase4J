@@ -17,6 +17,10 @@ import org.springframework.cache.annotation.Cacheable;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 @CacheConfig(cacheNames = "sysSession")
 @DubboService(interfaceClass = SysSessionFacade.class)
 public class SysSessionService extends BaseService<SysSession> implements SysSessionFacade {

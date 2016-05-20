@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 用户登录
  * 
  * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:11:21
  */
 @Controller
 public class LoginController extends BaseController {

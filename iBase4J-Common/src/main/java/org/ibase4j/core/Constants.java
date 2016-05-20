@@ -6,7 +6,7 @@ package org.ibase4j.core;
  * @author ShenHuaJie
  * @version $Id: Constants.java, v 0.1 2014-2-28 上午11:18:28 ShenHuaJie Exp $
  */
-public class Constants {
+public final class Constants {
 	/**
 	 * 异常信息统一头信息<br>
 	 * 非常遗憾的通知您,程序发生了异常

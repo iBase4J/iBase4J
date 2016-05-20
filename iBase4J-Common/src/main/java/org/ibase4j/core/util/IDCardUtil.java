@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
  * @author ShenHuaJie
  * @since 2011-11-08
  */
-public class IDCardUtil {
+public final class IDCardUtil {
 	private IDCardUtil() {
 	}
 
@@ -24,7 +24,7 @@ public class IDCardUtil {
 	 * @return String 十八位身份证号码
 	 * @throws 无效的身份证号
 	 */
-	public static String fixPersonIDCodeWithCheck(String personIDCode) throws Throwable {
+	public static final String fixPersonIDCodeWithCheck(String personIDCode) throws Throwable {
 		if (personIDCode == null || personIDCode.trim().length() != 15)
 			throw new RuntimeException("输入的身份证号不足15位，请检查");
 
@@ -41,7 +41,7 @@ public class IDCardUtil {
 	 * @return 十八位身份证号码
 	 * @throws 身份证号参数不是15位
 	 */
-	public static String fixPersonIDCodeWithoutCheck(String personIDCode) throws Throwable {
+	public static final String fixPersonIDCodeWithoutCheck(String personIDCode) throws Throwable {
 		if (personIDCode == null || personIDCode.trim().length() != 15)
 			throw new RuntimeException("输入的身份证号不足15位，请检查");
 
@@ -69,7 +69,7 @@ public class IDCardUtil {
 	 * @return 出生日期
 	 * @throws 身份证号出生日期段有误
 	 */
-	public static Timestamp getBirthdayFromPersonIDCode(String identity) throws Throwable {
+	public static final Timestamp getBirthdayFromPersonIDCode(String identity) throws Throwable {
 		String id = getFixedPersonIDCode(identity);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		try {
@@ -87,7 +87,7 @@ public class IDCardUtil {
 	 * @return String 十八位身份证号码
 	 * @throws 无效的身份证号
 	 */
-	public static String getFixedPersonIDCode(String personIDCode) throws Throwable {
+	public static final String getFixedPersonIDCode(String personIDCode) throws Throwable {
 		if (personIDCode == null)
 			throw new RuntimeException("输入的身份证号无效，请检查");
 
@@ -109,7 +109,7 @@ public class IDCardUtil {
 	 * @return 性别代码
 	 * @throws Exception 无效的身份证号码
 	 */
-	public static Sex getGenderFromPersonIDCode(String identity) throws Throwable {
+	public static final Sex getGenderFromPersonIDCode(String identity) throws Throwable {
 		String id = getFixedPersonIDCode(identity);
 		char sex = id.charAt(16);
 		return sex % 2 == 0 ? Sex.Female : Sex.Male;
@@ -121,7 +121,7 @@ public class IDCardUtil {
 	 * @param identity 18位或15位居民身份证号码
 	 * @return 是否为有效的身份证号码
 	 */
-	public static boolean isIdentity(String identity) throws Throwable {
+	public static final boolean isIdentity(String identity) throws Throwable {
 		if (identity == null)
 			return false;
 		if (identity.length() == 18 || identity.length() == 15) {

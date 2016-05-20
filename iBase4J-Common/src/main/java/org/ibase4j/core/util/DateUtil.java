@@ -11,7 +11,7 @@ import java.util.Date;
  * @author ShenHuaJie
  * @version $Id: DateUtil.java, v 0.1 2014年3月28日 上午8:58:11 ShenHuaJie Exp $
  */
-public class DateUtil {
+public final class DateUtil {
 	private DateUtil() {
 	}
 
@@ -24,7 +24,7 @@ public class DateUtil {
 	 * @param pattern
 	 * @return
 	 */
-	public static String format(Date date) {
+	public static final String format(Date date) {
 		return format(date, PATTERN);
 	}
 
@@ -35,7 +35,7 @@ public class DateUtil {
 	 * @param pattern
 	 * @return
 	 */
-	public static String format(Date date, String pattern) {
+	public static final String format(Date date, String pattern) {
 		if (date == null) {
 			return null;
 		}
@@ -50,7 +50,7 @@ public class DateUtil {
 	 * 
 	 * @return
 	 */
-	public static String getDate() {
+	public static final String getDate() {
 		return format(new Date());
 	}
 
@@ -59,7 +59,7 @@ public class DateUtil {
 	 * 
 	 * @return
 	 */
-	public static String getDateTime() {
+	public static final String getDateTime() {
 		return format(new Date(), "yyyy-MM-dd HH:mm:ss");
 	}
 
@@ -69,7 +69,7 @@ public class DateUtil {
 	 * @param pattern
 	 * @return
 	 */
-	public static String getDateTime(String pattern) {
+	public static final String getDateTime(String pattern) {
 		return format(new Date(), pattern);
 	}
 
@@ -81,7 +81,7 @@ public class DateUtil {
 	 * @param amount
 	 * @return
 	 */
-	public static Date addDate(Date date, int field, int amount) {
+	public static final Date addDate(Date date, int field, int amount) {
 		if (date == null) {
 			return null;
 		}
@@ -97,7 +97,7 @@ public class DateUtil {
 	 * @param date
 	 * @return
 	 */
-	public static Date stringToDate(String date) {
+	public static final Date stringToDate(String date) {
 		if (date == null) {
 			return null;
 		}
@@ -127,7 +127,7 @@ public class DateUtil {
 	 * @param endDate
 	 * @return
 	 */
-	public static Integer getDayBetween(Date startDate, Date endDate) {
+	public static final Integer getDayBetween(Date startDate, Date endDate) {
 		Calendar start = Calendar.getInstance();
 		start.setTime(startDate);
 		start.set(Calendar.HOUR_OF_DAY, 0);
@@ -152,7 +152,7 @@ public class DateUtil {
 	 * @param endDate
 	 * @return
 	 */
-	public static Integer getMonthBetween(Date startDate, Date endDate) {
+	public static final Integer getMonthBetween(Date startDate, Date endDate) {
 		if (startDate == null || endDate == null || !startDate.before(endDate)) {
 			return null;
 		}
@@ -176,7 +176,7 @@ public class DateUtil {
 	 * @param endDate
 	 * @return
 	 */
-	public static Integer getMonthBetweenWithDay(Date startDate, Date endDate) {
+	public static final Integer getMonthBetweenWithDay(Date startDate, Date endDate) {
 		if (startDate == null || endDate == null || !startDate.before(endDate)) {
 			return null;
 		}

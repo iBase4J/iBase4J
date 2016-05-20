@@ -8,7 +8,12 @@ import java.util.ResourceBundle;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-/** 加载配置 */
+/**
+ * 加载配置
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 @PropertySource(value = { "classpath:config/ssh.properties", "classpath:config/email.properties",
 		"claspath:config/thirdParty.properties", "claspath:i18n/messages*.properties" })
 public final class Resources {

@@ -21,6 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+/**
+ * 文件上传控制器
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:11:42
+ */
 @Controller
 public class UploadController extends BaseController {
 	private final String uploadFileDir = "/WEB-INF/upload/";

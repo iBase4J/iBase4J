@@ -12,7 +12,12 @@ import org.springframework.web.context.ContextLoader;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 
-/** 业务逻辑层基类 */
+/**
+ * 业务逻辑层基类
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 public abstract class BaseService<T> {
 
 	/** 启动分页查询 */

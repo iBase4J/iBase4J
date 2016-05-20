@@ -4,6 +4,10 @@ import java.util.Map;
 
 import com.github.pagehelper.PageInfo;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 public interface BaseFacade<K> {
 	public void update(K record);
 

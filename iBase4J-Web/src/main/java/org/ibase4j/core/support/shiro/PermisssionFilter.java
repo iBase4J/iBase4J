@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * URL权限过滤
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:44:45
  */
 public class PermisssionFilter extends PermissionsAuthorizationFilter {
 	private final Logger logger = LogManager.getLogger(this.getClass());

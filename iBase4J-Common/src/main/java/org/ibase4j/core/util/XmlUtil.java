@@ -23,7 +23,7 @@ import org.dom4j.tree.DefaultElement;
  * @since 2009-07-07
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class XmlUtil {
+public final class XmlUtil {
 	private static Log log = LogFactory.getLog(XmlUtil.class);
 
 	private XmlUtil() {

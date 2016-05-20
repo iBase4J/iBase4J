@@ -24,7 +24,11 @@ import org.ibase4j.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.PageInfo;
-
+/**
+ * 权限检查类
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:44:45
+ */
 public class Realm extends AuthorizingRealm {
 	@Autowired
 	private SysUserService sysUserService;

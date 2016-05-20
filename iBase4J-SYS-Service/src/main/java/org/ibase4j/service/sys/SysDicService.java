@@ -18,6 +18,10 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 @DubboService(interfaceClass = SysDicFacade.class)
 public class SysDicService extends BaseService<SysDic> implements SysDicFacade {
 	@Autowired
