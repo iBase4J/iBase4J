@@ -3,7 +3,7 @@ package org.ibase4j.service.mq.queue;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.TextMessage;
+import javax.jms.ObjectMessage;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +15,7 @@ public class QueueMessageListener implements MessageListener {
 
 	public void onMessage(Message message) {
 		try {
-			System.out.println("QueueMessageListener接收到消息:" + ((TextMessage) message).getText());
+			System.out.println("QueueMessageListener接收到消息:" + ((ObjectMessage) message).getObject());
 		} catch (JMSException e) {
 			logger.error(e);
 		}

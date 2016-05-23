@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.DateUtil;
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
  * 文件上传控制器
+ * 
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:11:42
  */
@@ -33,7 +36,7 @@ public class UploadController extends BaseController {
 	// 上传文件(支持批量)
 	@ResponseBody
 	@RequestMapping("/upload")
-	public ModelMap upload() {
+	public ModelMap upload(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/html;charset=utf-8");
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
@@ -84,9 +87,9 @@ public class UploadController extends BaseController {
 		}
 		if (fileNames.size() > 0) {
 			modelMap.put("imgName", fileNames);
-			return setSuccessModelMap();
+			return setSuccessModelMap(modelMap);
 		} else {
-			setModelMap(HttpCode.BAD_REQUEST);
+			setModelMap(modelMap, HttpCode.BAD_REQUEST);
 			modelMap.put("msg", "请选择要上传的文件！");
 			return modelMap;
 		}

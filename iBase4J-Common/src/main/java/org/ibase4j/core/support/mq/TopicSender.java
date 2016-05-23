@@ -1,5 +1,7 @@
 package org.ibase4j.core.support.mq;
 
+import java.io.Serializable;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
@@ -25,10 +27,10 @@ public class TopicSender {
 	 * @param queueName 队列名称
 	 * @param message 消息内容
 	 */
-	public void send(String topicName, final String message) {
+	public void send(String topicName, final Serializable message) {
 		jmsTemplate.send(topicName, new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
-				return session.createTextMessage(message);
+				return session.createObjectMessage(message);
 			}
 		});
 	}

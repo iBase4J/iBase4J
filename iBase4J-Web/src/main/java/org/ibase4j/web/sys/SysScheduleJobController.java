@@ -29,15 +29,15 @@ public class SysScheduleJobController extends BaseController {
 
 	@ResponseBody
 	@RequestMapping("/read/jobs")
-	public ModelMap list() {
+	public ModelMap list(ModelMap modelMap) {
 		List<ScheduleJob> jobs = scheduleJobService.getAllJobDetail();
-		return setSuccessModelMap(jobs);
+		return setSuccessModelMap(modelMap, jobs);
 	}
 
 	@ResponseBody
 	@RequestMapping("/run/jobs")
-	public ModelMap exec(@RequestParam(value = "id", required = false) Integer id) {
+	public ModelMap exec(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		scheduleJobService.execTask(id);
-		return setSuccessModelMap();
+		return setSuccessModelMap(modelMap);
 	}
 }

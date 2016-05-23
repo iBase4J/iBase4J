@@ -2,6 +2,8 @@ package org.ibase4j.web.sys;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.service.SysDeptService;
 import org.ibase4j.web.BaseController;
@@ -28,9 +30,9 @@ public class SysDeptController extends BaseController {
 	// 查询用户
 	@ResponseBody
 	@RequestMapping(value = "/read/list")
-	public ModelMap get() {
+	public ModelMap get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = sysDeptService.query(params);
-		return setSuccessModelMap(list);
+		return setSuccessModelMap(modelMap, list);
 	}
 }

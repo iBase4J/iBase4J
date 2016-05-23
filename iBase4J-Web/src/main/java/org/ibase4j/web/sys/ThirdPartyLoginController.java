@@ -2,6 +2,9 @@ package org.ibase4j.web.sys;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.shiro.ThirdPartyLoginHelper;
@@ -10,6 +13,7 @@ import org.ibase4j.service.SysUserService;
 import org.ibase4j.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,8 +31,9 @@ public class ThirdPartyLoginController extends BaseController {
 	private SysUserService sysUserService;
 
 	@RequestMapping("/sns")
-	public void thirdLogin(@RequestParam("t") String type) throws Exception {
-		String url = getRedirectUrl(type);
+	public void thirdLogin(HttpServletRequest request, HttpServletResponse response, @RequestParam("t") String type)
+			throws Exception {
+		String url = getRedirectUrl(request, type);
 		response.sendRedirect(url);
 	}
 
@@ -48,7 +53,7 @@ public class ThirdPartyLoginController extends BaseController {
 	}
 
 	@RequestMapping("/callback/wx")
-	public String wxCallback() {
+	public String wxCallback(HttpServletRequest request, ModelMap modelMap) {
 		String host = request.getHeader("host");
 		try {
 			String code = request.getParameter("code");
@@ -78,7 +83,7 @@ public class ThirdPartyLoginController extends BaseController {
 	}
 
 	@RequestMapping("/callback/qq")
-	public String qqCallback() {
+	public String qqCallback(HttpServletRequest request, ModelMap modelMap) {
 		String host = request.getHeader("host");
 		try {
 			String code = request.getParameter("code");
@@ -108,7 +113,7 @@ public class ThirdPartyLoginController extends BaseController {
 	}
 
 	@RequestMapping("callback/sina")
-	public String sinaCallback() {
+	public String sinaCallback(HttpServletRequest request, ModelMap modelMap) {
 		String host = request.getHeader("host");
 		try {
 			String code = request.getParameter("code");
@@ -141,7 +146,7 @@ public class ThirdPartyLoginController extends BaseController {
 		return "/sns/redirect";
 	}
 
-	private String getRedirectUrl(String type) {
+	private String getRedirectUrl(HttpServletRequest request, String type) {
 		String url = "";
 		String host = request.getHeader("host");
 		url = Resources.THIRDPARTY.getString("authorizeURL_" + type);

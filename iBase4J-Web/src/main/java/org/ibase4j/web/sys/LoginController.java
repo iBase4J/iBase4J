@@ -1,5 +1,7 @@
 package org.ibase4j.web.sys;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.HttpCode;
@@ -30,12 +32,12 @@ public class LoginController extends BaseController {
 	// 登录
 	@ResponseBody
 	@RequestMapping(value = "/login")
-	public ModelMap login(@RequestParam(value = "account", required = false) String account,
+	public ModelMap login(ModelMap modelMap, @RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
 		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
 		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
 		if (LoginHelper.login(account, sysUserService.encryptPassword(password))) {
-			return setSuccessModelMap();
+			return setSuccessModelMap(modelMap);
 		}
 		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
 	}
@@ -43,20 +45,21 @@ public class LoginController extends BaseController {
 	// 登出
 	@ResponseBody
 	@RequestMapping("/logout")
-	public ModelMap logout() {
+	public ModelMap logout(ModelMap modelMap) {
 		SecurityUtils.getSubject().logout();
-		return setSuccessModelMap();
+		return setSuccessModelMap(modelMap);
 	}
 
 	// 注册
 	@ResponseBody
 	@RequestMapping(value = "/regin")
-	public ModelMap regin(@RequestParam(value = "account", required = false) String account,
+	public ModelMap regin(HttpServletRequest request, ModelMap modelMap,
+			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
 		sysUserService.addUser(sysUser);
 		if (LoginHelper.login(account, password)) {
-			return setSuccessModelMap();
+			return setSuccessModelMap(modelMap);
 		}
 		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
 	}
@@ -64,15 +67,15 @@ public class LoginController extends BaseController {
 	// 没有登录
 	@ResponseBody
 	@RequestMapping("/unauthorized")
-	public ModelMap unauthorized() {
+	public ModelMap unauthorized(ModelMap modelMap) {
 		SecurityUtils.getSubject().logout();
-		return setModelMap(HttpCode.UNAUTHORIZED);
+		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
 	}
 
 	// 没有权限
 	@ResponseBody
 	@RequestMapping("/forbidden")
-	public ModelMap forbidden() {
-		return setModelMap(HttpCode.FORBIDDEN);
+	public ModelMap forbidden(ModelMap modelMap) {
+		return setModelMap(modelMap, HttpCode.FORBIDDEN);
 	}
 }
