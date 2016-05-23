@@ -14,7 +14,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -61,7 +60,6 @@ public class SysSessionService extends BaseService<SysSession> implements SysSes
 
 	public PageInfo<SysSession> query(Map<String, Object> params) {
 		this.startPage(params);
-		Page<Integer> ids = sessionExpandMapper.query(params);
-		return new PageInfo<SysSession>(getPage(ids));
+		return getPage(sessionExpandMapper.query(params));
 	}
 }

@@ -54,7 +54,9 @@
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 	<!-- SPRING-SESSION -->
 	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+		<description>会话有效期(秒)</description>
         <property name="maxInactiveIntervalInSeconds" value="600" />
+        <property name="redisNamespace" value="iBase4J" />
 	</bean>
 	<bean class="org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration">
 		<property name="httpSessionListeners">

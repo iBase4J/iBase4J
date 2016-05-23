@@ -16,7 +16,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -58,7 +57,6 @@ public class SysDeptService extends BaseService<SysDept> implements SysDeptFacad
 
 	public PageInfo<SysDept> query(Map<String, Object> params) {
 		this.startPage(params);
-		Page<Integer> list = syDeptExpandMapper.query(params);
-		return new PageInfo<SysDept>(getPage(list));
+		return getPage(syDeptExpandMapper.query(params));
 	}
 }

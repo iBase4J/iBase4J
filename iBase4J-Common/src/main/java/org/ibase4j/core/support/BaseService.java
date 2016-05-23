@@ -11,6 +11,7 @@ import org.springframework.web.context.ContextLoader;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 业务逻辑层基类
@@ -40,7 +41,7 @@ public abstract class BaseService<T> {
 	}
 
 	/** 根据Id查询(默认类型T) */
-	public Page<T> getPage(Page<Integer> ids) {
+	public PageInfo<T> getPage(Page<Integer> ids) {
 		Page<T> page = new Page<T>();
 		try {
 			PropertyUtils.copyProperties(page, ids);
@@ -51,11 +52,11 @@ public abstract class BaseService<T> {
 				page.add(getService().queryById(id));
 			}
 		}
-		return page;
+		return new PageInfo<T>(page);
 	}
 
 	/** 根据Id查询(cls返回类型Class) */
-	public <K> Page<K> getPage(Page<Integer> ids, Class<K> cls) {
+	public <K> PageInfo<K> getPage(Page<Integer> ids, Class<K> cls) {
 		Page<K> page = new Page<K>();
 		try {
 			PropertyUtils.copyProperties(page, ids);
@@ -78,7 +79,7 @@ public abstract class BaseService<T> {
 				}
 			}
 		}
-		return page;
+		return new PageInfo<K>(page);
 	}
 
 	/** 根据Id查询(默认类型T) */

@@ -7,6 +7,7 @@ import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.facade.sys.SysMenuFacade;
 import org.ibase4j.mybatis.generator.dao.SysMenuMapper;
 import org.ibase4j.mybatis.generator.model.SysMenu;
+import org.ibase4j.mybatis.sys.dao.SysMenuExpandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -24,6 +25,10 @@ import com.github.pagehelper.PageInfo;
 public class SysMenuService extends BaseService<SysMenu> implements SysMenuFacade {
 	@Autowired
 	private SysMenuMapper sysMenuMapper;
+	@Autowired
+	private SysMenuExpandMapper sysMenuExpandMapper;
+	@Autowired
+	private SysDicService sysDicService;
 
 	@Cacheable
 	public SysMenu queryById(Integer id) {
@@ -45,7 +50,15 @@ public class SysMenuService extends BaseService<SysMenu> implements SysMenuFacad
 	}
 
 	public PageInfo<SysMenu> query(Map<String, Object> params) {
-		return null;
+		this.startPage(params);
+		PageInfo<SysMenu> pageInfo = getPage(sysMenuExpandMapper.query(params));
+		Map<String, String> menuTypeMap = sysDicService.queryDicByDicIndexKey("MENUTYPE");
+		for (SysMenu sysMenu : pageInfo.getList()) {
+			if (sysMenu.getMenuType() != null) {
+				sysMenu.setRemark(menuTypeMap.get(sysMenu.getMenuType().toString()));
+			}
+		}
+		return pageInfo;
 	}
 
 }

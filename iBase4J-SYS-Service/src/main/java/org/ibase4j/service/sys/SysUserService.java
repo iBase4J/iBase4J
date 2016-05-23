@@ -80,8 +80,8 @@ public class SysUserService extends BaseService<SysUser> implements SysUserFacad
 		this.startPage(params);
 		Page<Integer> userIds = sysUserExpandMapper.query(params);
 		Map<String, String> userTypeMap = sysDicService.queryDicByDicIndexKey("USERTYPE");
-		Page<SysUserBean> userBeans = getPage(userIds, SysUserBean.class);
-		for (SysUserBean userBean : userBeans) {
+		PageInfo<SysUserBean> pageInfo = getPage(userIds, SysUserBean.class);
+		for (SysUserBean userBean : pageInfo.getList()) {
 			if (userBean.getUserType() != null) {
 				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType().toString()));
 			}
@@ -89,7 +89,6 @@ public class SysUserService extends BaseService<SysUser> implements SysUserFacad
 				userBean.setDeptName(deptService.queryById(userBean.getDeptId()).getDeptName());
 			}
 		}
-		PageInfo<SysUserBean> pageInfo = new PageInfo<SysUserBean>(userBeans);
 		return pageInfo;
 	}
 
