@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
-		<version>0.1.0</version>
+		<version>${version}</version>
 	</parent>
 	
 	<properties>
