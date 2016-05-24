@@ -1,6 +1,6 @@
 package org.ibase4j.service.sys;
 
-import org.ibase4j.facade.sys.SysPermissionFacade;
+import org.ibase4j.provider.sys.SysPermissionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysPermissionService {
 	@Autowired
-	private SysPermissionFacade sysPermissionFacade;
+	private SysPermissionProvider sysPermissionFacade;
 
 	public boolean doCheckPermissionByUserId(Integer userId, String url) {
 		return sysPermissionFacade.doCheckPermissionByUserId(userId, url);

@@ -7,9 +7,9 @@ import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.SecurityUtil;
-import org.ibase4j.facade.sys.SysUserFacade;
 import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.mybatis.sys.model.SysUserBean;
+import org.ibase4j.provider.sys.SysUserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -23,7 +23,7 @@ import com.github.pagehelper.PageInfo;
 @Service
 public class SysUserService {
 	@Autowired
-	private SysUserFacade sysUserFacade;
+	private SysUserProvider sysUserFacade;
 
 	/** 修改用户信息 */
 	public void updateUserInfo(SysUser sysUser) {

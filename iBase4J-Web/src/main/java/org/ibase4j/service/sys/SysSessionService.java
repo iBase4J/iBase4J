@@ -3,8 +3,8 @@ package org.ibase4j.service.sys;
 import java.util.Map;
 
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.facade.sys.SysSessionFacade;
 import org.ibase4j.mybatis.generator.model.SysSession;
+import org.ibase4j.provider.sys.SysSessionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import com.github.pagehelper.PageInfo;
 @Service
 public class SysSessionService {
 	@Autowired
-	private SysSessionFacade sysSessionFacade;
+	private SysSessionProvider sysSessionFacade;
 	@Autowired
 	private RedisOperationsSessionRepository sessionRepository;
 

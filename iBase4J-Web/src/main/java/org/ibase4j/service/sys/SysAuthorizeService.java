@@ -2,8 +2,8 @@ package org.ibase4j.service.sys;
 
 import java.util.List;
 
-import org.ibase4j.facade.sys.SysAuthorizeFacade;
 import org.ibase4j.mybatis.sys.model.SysMenuBean;
+import org.ibase4j.provider.sys.SysAuthorizeProvider;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -15,7 +15,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 @Service
 public class SysAuthorizeService {
 	@Reference
-	private SysAuthorizeFacade authorizeFacade;
+	private SysAuthorizeProvider authorizeFacade;
 
 	public List<SysMenuBean> queryAuthorizeByUserId(Integer id) {
 		return authorizeFacade.queryAuthorizeByUserId(id);

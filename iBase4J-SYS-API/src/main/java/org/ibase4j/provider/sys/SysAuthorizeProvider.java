@@ -1,0 +1,19 @@
+package org.ibase4j.provider.sys;
+
+import java.util.List;
+
+import org.ibase4j.mybatis.generator.model.SysRoleMenu;
+import org.ibase4j.mybatis.generator.model.SysUserMenu;
+import org.ibase4j.mybatis.generator.model.SysUserRole;
+import org.ibase4j.mybatis.sys.model.SysMenuBean;
+
+public interface SysAuthorizeProvider {
+
+	public void updateUserMenu(List<SysUserMenu> sysUserMenus);
+
+	public void updateUserRole(List<SysUserRole> sysUserRoles);
+
+	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus);
+
+	public List<SysMenuBean> queryAuthorizeByUserId(Integer userId);
+}

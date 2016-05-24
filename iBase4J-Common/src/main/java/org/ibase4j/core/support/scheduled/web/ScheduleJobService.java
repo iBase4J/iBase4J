@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.scheduled.ScheduleJob;
-import org.ibase4j.core.support.scheduled.service.ScheduleJobFacade;
+import org.ibase4j.core.support.scheduled.service.ScheduleJobProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -18,7 +18,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 @Service
 public class ScheduleJobService {
 	@Reference
-	private ScheduleJobFacade sysScheduleJobFacade;
+	private ScheduleJobProvider sysScheduleJobFacade;
 
 	public List<ScheduleJob> getAllJobDetail() {
 		return sysScheduleJobFacade.getAllJobDetail();
