@@ -1,9 +1,12 @@
 package org.ibase4j.core.util;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.FileItem;
@@ -13,6 +16,13 @@ import org.apache.commons.fileupload.RequestContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.ibase4j.core.support.fasetdfs.FastDFSFile;
+import org.ibase4j.core.support.fasetdfs.FileManager;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
  * 上传辅助类 与Spring.multipartResolver冲突
@@ -23,8 +33,12 @@ public final class UploadUtil {
 	private UploadUtil() {
 	}
 
+	private static final Logger logger = LogManager.getLogger();
+
 	/** 上传文件缓存大小限制 */
 	private static int fileSizeThreshold = 1024 * 1024 * 1;
+	/** 上传文件临时目录 */
+	private static final String uploadFileDir = "/WEB-INF/upload/";
 
 	/** 获取所有文本域 */
 	public static final List<?> getFileItemList(HttpServletRequest request, File saveDir) throws FileUploadException {
@@ -63,5 +77,65 @@ public final class UploadUtil {
 			}
 		}
 		return fileItems;
+	}
+
+	/** 上传文件处理(支持批量) */
+	public static List<String> uploadFile(HttpServletRequest request) {
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		List<String> fileNames = InstanceUtil.newArrayList();
+		if (multipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+			Iterator<String> iterator = multiRequest.getFileNames();
+			String pathDir = request.getSession().getServletContext().getRealPath(uploadFileDir + DateUtil.getDate());
+			File dirFile = new File(pathDir);
+			if (!dirFile.isDirectory()) {
+				dirFile.mkdir();
+			}
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+				MultipartFile multipartFile = multiRequest.getFile(key);
+				if (multipartFile != null) {
+					String name = multipartFile.getOriginalFilename();
+					if (name.indexOf(".") == -1 && "blob".equals(name)) {
+						name = name + ".png";
+					}
+					String uuid = UUID.randomUUID().toString();
+					String postFix = name.substring(name.lastIndexOf(".")).toLowerCase();
+					String fileName = uuid + postFix;
+					String filePath = pathDir + File.separator + fileName;
+					File file = new File(filePath);
+					file.setWritable(true, false);
+					try {
+						multipartFile.transferTo(file);
+						fileNames.add(fileName);
+					} catch (Exception e) {
+						logger.error(name + "保存失败", e);
+					}
+					try { // 缩放
+						BufferedImage bufferedImg = ImageIO.read(file);
+						int orgwidth = bufferedImg.getWidth();// 原始宽度
+						ImageUtil.scaleWidth(file, 100);
+						if (orgwidth > 300) {
+							ImageUtil.scaleWidth(file, 300);
+						}
+						if (orgwidth > 500) {
+							ImageUtil.scaleWidth(file, 500);
+						}
+					} catch (Exception e) {
+					}
+				}
+			}
+		}
+		return fileNames;
+	}
+
+	/** 移动文件到fastDFS */
+	public static String remove2DFS(String filePath) {
+		if (filePath != null) {
+			FastDFSFile fastDFSFile = new FastDFSFile(filePath);
+			return FileManager.upload(fastDFSFile);
+		}
+		return null;
 	}
 }
