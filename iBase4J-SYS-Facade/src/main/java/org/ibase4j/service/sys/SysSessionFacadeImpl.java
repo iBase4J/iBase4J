@@ -31,9 +31,9 @@ public class SysSessionFacadeImpl extends BaseFacadeImpl<SysSession> implements 
 	@CachePut
 	public SysSession update(SysSession record) {
 		if (record.getId() == null) {
-			SysSession session = sessionExpandMapper.queryBySessionId(record.getSessionId());
-			if (session != null) {
-				record.setId(session.getId());
+			Integer id = sessionExpandMapper.queryBySessionId(record.getSessionId());
+			if (id != null) {
+				record.setId(id);
 				sessionMapper.updateByPrimaryKey(record);
 			} else {
 				sessionMapper.insert(record);
