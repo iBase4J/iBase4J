@@ -9,7 +9,7 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:19:19
  */
 public interface BaseFacade<K> {
-	public void update(K record);
+	public K update(K record);
 
 	public void delete(Integer id);
 

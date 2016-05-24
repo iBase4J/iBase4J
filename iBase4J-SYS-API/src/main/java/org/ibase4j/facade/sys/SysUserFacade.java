@@ -6,9 +6,9 @@ package org.ibase4j.facade.sys;
 import java.util.Map;
 
 import org.ibase4j.core.support.dubbo.BaseFacade;
+import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.mybatis.sys.model.SysUserBean;
-import org.ibase4j.mybatis.sys.model.ThirdPartyUser;
 
 import com.github.pagehelper.PageInfo;
 

@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.service.SysPermissionService;
+import org.ibase4j.service.sys.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

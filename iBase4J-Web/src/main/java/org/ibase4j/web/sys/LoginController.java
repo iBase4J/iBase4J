@@ -4,12 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.BaseController;
 import org.ibase4j.core.support.HttpCode;
-import org.ibase4j.core.support.shiro.LoginHelper;
+import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.mybatis.generator.model.SysUser;
-import org.ibase4j.service.SysUserService;
-import org.ibase4j.web.BaseController;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

@@ -10,11 +10,11 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.ibase4j.core.support.BaseController;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.DateUtil;
 import org.ibase4j.core.util.ImageUtil;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.web.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;

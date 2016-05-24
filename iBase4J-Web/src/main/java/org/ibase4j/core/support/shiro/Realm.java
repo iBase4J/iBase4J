@@ -19,8 +19,8 @@ import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.mybatis.generator.model.SysSession;
 import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.mybatis.sys.model.SysUserBean;
-import org.ibase4j.service.SysSessionService;
-import org.ibase4j.service.SysUserService;
+import org.ibase4j.service.sys.SysSessionService;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.PageInfo;

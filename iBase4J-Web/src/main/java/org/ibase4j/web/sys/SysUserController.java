@@ -8,13 +8,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.ibase4j.core.support.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.mybatis.sys.model.SysMenuBean;
-import org.ibase4j.service.SysAuthorizeService;
-import org.ibase4j.service.SysUserService;
-import org.ibase4j.web.BaseController;
+import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

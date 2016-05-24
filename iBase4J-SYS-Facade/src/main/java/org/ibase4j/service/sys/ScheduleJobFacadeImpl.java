@@ -1,0 +1,77 @@
+package org.ibase4j.service.sys;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.ibase4j.core.support.dubbo.BaseFacadeImpl;
+import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
+import org.ibase4j.core.support.scheduled.ScheduleJob;
+import org.ibase4j.core.support.scheduled.service.ScheduleJobFacade;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.config.CronTask;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
+import org.springframework.scheduling.support.ScheduledMethodRunnable;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
+
+/**
+ * 定时任务管理
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:59
+ */
+@DubboService(interfaceClass = ScheduleJobFacade.class)
+public class ScheduleJobFacadeImpl extends BaseFacadeImpl<ScheduleJob> implements ScheduleJobFacade {
+	private Logger logger = LogManager.getLogger();
+
+	// 获取任务工厂
+	private ScheduledTaskRegistrar geTaskRegistrar() {
+		WebApplicationContext app = ContextLoader.getCurrentWebApplicationContext();
+		return app.getBean(ScheduledTaskRegistrar.class);
+	}
+
+	// 获取所有任务
+	@Cacheable
+	public List<ScheduleJob> getAllJobDetail() {
+		List<ScheduleJob> result = new LinkedList<ScheduleJob>();
+		try {
+			ScheduledTaskRegistrar registrar = geTaskRegistrar();
+			List<CronTask> cronTasks = registrar.getCronTaskList();
+			for (CronTask cronTask : cronTasks) {
+				ScheduledMethodRunnable runnable = (ScheduledMethodRunnable) cronTask.getRunnable();
+				ScheduleJob job = new ScheduleJob();
+				job.setJobId(String.valueOf(cronTask.hashCode()));
+				job.setJobName(runnable.getMethod().getName());
+				job.setJobGroup(runnable.getTarget().getClass().getSimpleName());
+				job.setCronExpression(cronTask.getExpression());
+				result.add(job);
+			}
+		} catch (Exception e) {
+			logger.error("Try to load All JobDetail cause error : " + e.getMessage(), e);
+		}
+		return result;
+	}
+
+	// 执行任务
+	public boolean execTask(int id) {
+		try {
+			ScheduledTaskRegistrar registrar = geTaskRegistrar();
+			List<CronTask> cronTasks = registrar.getCronTaskList();
+			for (CronTask cronTask : cronTasks) {
+				if (cronTask.hashCode() == id) {
+					cronTask.getRunnable().run();
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			logger.error("Try to exec Task cause error : " + e.getMessage(), e);
+		}
+		return false;
+	}
+
+	public ScheduleJob queryById(Integer id) {
+		return null;
+	}
+}
