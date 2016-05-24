@@ -15,10 +15,10 @@ import com.alibaba.dubbo.config.annotation.Reference;
 @Service
 public class SysAuthorizeService {
 	@Reference
-	private SysAuthorizeProvider authorizeFacade;
+	private SysAuthorizeProvider authorizeProvider;
 
 	public List<SysMenuBean> queryAuthorizeByUserId(Integer id) {
-		return authorizeFacade.queryAuthorizeByUserId(id);
+		return authorizeProvider.queryAuthorizeByUserId(id);
 	}
 
 }

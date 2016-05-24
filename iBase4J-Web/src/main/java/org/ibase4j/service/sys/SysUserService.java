@@ -23,25 +23,25 @@ import com.github.pagehelper.PageInfo;
 @Service
 public class SysUserService {
 	@Autowired
-	private SysUserProvider sysUserFacade;
+	private SysUserProvider sysUserProvider;
 
 	/** 修改用户信息 */
 	public void updateUserInfo(SysUser sysUser) {
 		Assert.notNull(sysUser.getId(), Resources.getMessage("USER_ID_IS_NULL"));
 		Assert.notNull(sysUser.getAccount(), Resources.getMessage("ACCOUNT_IS_NULL"));
-		SysUser user = sysUserFacade.queryById(sysUser.getId());
+		SysUser user = sysUserProvider.queryById(sysUser.getId());
 		Assert.notNull(user, String.format(Resources.getMessage("USER_IS_NULL"), sysUser.getId()));
 		sysUser.setPassword(user.getPassword());
-		sysUserFacade.update(sysUser);
+		sysUserProvider.update(sysUser);
 	}
 
 	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
-		return sysUserFacade.queryBeans(params);
+		return sysUserProvider.queryBeans(params);
 	}
 
 	public SysUser queryById(Integer id) {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
-		SysUser sysUser = sysUserFacade.queryById(id);
+		SysUser sysUser = sysUserProvider.queryById(id);
 		sysUser.setPassword(null);
 		return sysUser;
 	}
@@ -49,26 +49,26 @@ public class SysUserService {
 	public void updatePassword(Integer id, String password) {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
-		SysUser sysUser = sysUserFacade.queryById(id);
+		SysUser sysUser = sysUserProvider.queryById(id);
 		Assert.notNull(sysUser, String.format(Resources.getMessage("USER_IS_NULL"), id));
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
-		sysUserFacade.update(sysUser);
+		sysUserProvider.update(sysUser);
 	}
 
 	public String encryptPassword(String password) {
-		return sysUserFacade.encryptPassword(password);
+		return sysUserProvider.encryptPassword(password);
 	}
 
 	public void addUser(SysUser sysUser) {
 		Assert.notNull(sysUser.getAccount(), Resources.getMessage("ACCOUNT_IS_NULL"));
 		Assert.notNull(sysUser.getPassword(), Resources.getMessage("PASSWORD_IS_NULL"));
-		sysUser.setPassword(sysUserFacade.encryptPassword(sysUser.getPassword()));
-		sysUserFacade.update(sysUser);
+		sysUser.setPassword(sysUserProvider.encryptPassword(sysUser.getPassword()));
+		sysUserProvider.update(sysUser);
 	}
 
 	public void thirdPartyLogin(ThirdPartyUser thirdUser) {
 		// 查询是否已经绑定过
-		String userId = sysUserFacade.queryUserIdByThirdParty(thirdUser.getOpenid(), thirdUser.getProvider());
+		String userId = sysUserProvider.queryUserIdByThirdParty(thirdUser.getOpenid(), thirdUser.getProvider());
 		if (StringUtils.isBlank(userId)) {
 			SysUser sysUser = insertThirdPartyUser(thirdUser);
 			LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
@@ -76,6 +76,6 @@ public class SysUserService {
 	}
 
 	public SysUser insertThirdPartyUser(ThirdPartyUser thirdUser) {
-		return sysUserFacade.insertThirdPartyUser(thirdUser);
+		return sysUserProvider.insertThirdPartyUser(thirdUser);
 	}
 }

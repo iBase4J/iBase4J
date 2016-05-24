@@ -18,29 +18,29 @@ import com.github.pagehelper.PageInfo;
 @Service
 public class SysMenuService {
 	@Reference
-	private SysMenuProvider sysMenuFacade;
+	private SysMenuProvider sysMenuProvider;
 
 	public void update(SysMenu record) {
 		Assert.notNull(record.getId(), Resources.getMessage("ID_IS_NULL"));
-		sysMenuFacade.update(record);
+		sysMenuProvider.update(record);
 	}
 
 	public void add(SysMenu record) {
 		Assert.notNull(record.getMenuName(), Resources.getMessage("NAME_IS_NULL"));
-		sysMenuFacade.update(record);
+		sysMenuProvider.update(record);
 	}
 
 	public void delete(Integer id) {
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
-		sysMenuFacade.delete(id);
+		sysMenuProvider.delete(id);
 	}
 
 	public PageInfo<SysMenu> query(Map<String, Object> params) {
-		return sysMenuFacade.query(params);
+		return sysMenuProvider.query(params);
 	}
 
 	public SysMenu queryById(Integer id) {
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
-		return sysMenuFacade.queryById(id);
+		return sysMenuProvider.queryById(id);
 	}
 }

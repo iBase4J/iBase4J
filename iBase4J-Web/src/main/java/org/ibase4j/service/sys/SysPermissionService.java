@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysPermissionService {
 	@Autowired
-	private SysPermissionProvider sysPermissionFacade;
+	private SysPermissionProvider sysPermissionProvider;
 
 	public boolean doCheckPermissionByUserId(Integer userId, String url) {
-		return sysPermissionFacade.doCheckPermissionByUserId(userId, url);
+		return sysPermissionProvider.doCheckPermissionByUserId(userId, url);
 	}
 }

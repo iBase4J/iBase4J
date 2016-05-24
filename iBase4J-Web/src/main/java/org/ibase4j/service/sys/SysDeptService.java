@@ -18,29 +18,29 @@ import com.github.pagehelper.PageInfo;
 @Service
 public class SysDeptService {
 	@Reference
-	private SysDeptProvider sysDeptFacade;
+	private SysDeptProvider sysDeptProvider;
 
 	public void update(SysDept record) {
 		Assert.notNull(record.getId(), Resources.getMessage("ID_IS_NULL"));
-		sysDeptFacade.update(record);
+		sysDeptProvider.update(record);
 	}
 
 	public void add(SysDept record) {
 		Assert.notNull(record.getDeptName(), Resources.getMessage("NAME_IS_NULL"));
-		sysDeptFacade.update(record);
+		sysDeptProvider.update(record);
 	}
 
 	public void delete(Integer id) {
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
-		sysDeptFacade.delete(id);
+		sysDeptProvider.delete(id);
 	}
 
 	public PageInfo<SysDept> query(Map<String, Object> params) {
-		return sysDeptFacade.query(params);
+		return sysDeptProvider.query(params);
 	}
 
 	public SysDept queryById(Integer id) {
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
-		return sysDeptFacade.queryById(id);
+		return sysDeptProvider.queryById(id);
 	}
 }
