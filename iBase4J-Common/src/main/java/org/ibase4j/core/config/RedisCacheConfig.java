@@ -5,6 +5,7 @@ package org.ibase4j.core.config;
 
 import java.lang.reflect.Method;
 
+import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.support.exception.BusinessException;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -15,8 +16,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.alibaba.fastjson.JSON;
 
 /**
  * Redis缓存配置
@@ -65,8 +64,8 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 					sb.append(o.getClass().getName());
 				}
 				if (objects != null) {
+					sb.append(":");
 					if (objects.length == 1) {
-						sb.append(":");
 						if (objects[0] instanceof Integer || objects[0] instanceof String) {
 							sb.append(objects[0]);
 						} else {
@@ -77,7 +76,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 							}
 						}
 					} else {
-						sb.append(JSON.toJSONString(objects));
+						sb.append(StringUtils.join(objects, ","));
 					}
 				}
 				return sb.toString();

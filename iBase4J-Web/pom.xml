@@ -5,28 +5,56 @@
 	<packaging>war</packaging>
 	<name>iBase4J-Web</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
 		<version>${version}</version>
 	</parent>
-	
+
 	<properties>
 		<server.port>8088</server.port>
 	</properties>
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>org.ibase4j</groupId>
+			<artifactId>iBase4J-Common</artifactId>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
 			<artifactId>iBase4J-SYS-API</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session</artifactId>
 			<version>${spring-session.version}</version>
+		</dependency>
+		<!-- shiro -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.2.4</version>
 		</dependency>
 		<!-- excel -->
 		<dependency>
@@ -67,7 +95,7 @@
 			<version>2.5.1</version>
 		</dependency>
 	</dependencies>
-	
+
 	<profiles>
 		<profile>
 			<id>build</id>
