@@ -11,6 +11,7 @@
                         http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
 	<context:component-scan base-package="org.ibase4j.web" />
+	<mvc:annotation-driven />
 	<!-- 拦截器 -->
 	<mvc:interceptors>
 		<bean class="org.ibase4j.core.interceptor.MaliciousRequestInterceptor">
@@ -24,7 +25,6 @@
 	<mvc:view-resolvers>
 	    <mvc:jsp cache-views="false" prefix="/WEB-INF/jsp/" suffix=".jsp" />  
 	</mvc:view-resolvers>
-	<mvc:annotation-driven/>
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<description>注解controller方法适配器</description>
 		<property name="messageConverters">
