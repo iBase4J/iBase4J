@@ -1,18 +1,14 @@
->####说明：启动项目前请安装activemq、Redis和ZooKeeper，并启动服务，您可以在附件中下载。系统中均使用默认配置。
+>####说明：项目依赖activemq、Redis和ZooKeeper服务。
 
-```
-eclipse使用maven命令: 
-    mybatis-generator:generate生成mybatis文件；
-    clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
-```
 ```
 * 启动文件iBase4J/pom.xml里<module>iBase4J-SYS-Service</module>与<module>iBase4J-Web</module>，只有在前面的会执行；
 * 所以在启动完service后，请把service注释掉，再启动一次(web)。
+* maven启动命令：clean:clean package -P build tomcat7:run-war-only
 * 两个项目都启动后，使用nginx代理UI：修改配置里的UI目录后启动。
 ```
 
 系统主要功能如下：
-=====
+======
 1、数据库
 ======
 
@@ -26,7 +22,7 @@ eclipse使用maven命令:
 3、MVC
 ======
 
-    基于spring mvc注解。Exception统一管理。
+    基于spring mvc注解,Rest风格Controller。Exception统一管理。
     基于session的国际化提示信息，职责链模式的本地语言拦截器,Shiro登录、URL权限管理。
     QQ、微信、新浪微博第三方登录。
 

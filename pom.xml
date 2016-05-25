@@ -10,7 +10,8 @@
 	<modules>
 		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-API</module>
-		<!-- 请分别启动两个服务 -->
+		<!-- 请分别启动两个服务,命令： -->
+		<!-- clean:clean package -P build tomcat7:run-war-only -->
 		<!-- 1.启动Service -->
 		<module>iBase4J-SYS-Service</module>
 		<!-- 2.启动web后端 -->
