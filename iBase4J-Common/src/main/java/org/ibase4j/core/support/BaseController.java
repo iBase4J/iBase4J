@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.exception.BusinessException;
 import org.ibase4j.core.util.WebUtil;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -57,7 +56,7 @@ public abstract class BaseController {
 		modelMap.put("httpCode", code.value());
 		modelMap.put("msg", code.msg());
 		modelMap.put("timestamp", System.currentTimeMillis());
-		return ResponseEntity.status(HttpStatus.valueOf(code.value())).body(modelMap);
+		return ResponseEntity.ok(modelMap);
 	}
 
 	/** 异常处理 */

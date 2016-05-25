@@ -31,7 +31,7 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <!-- 缓存 -->
     <bean id="keySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer" />
-	<bean id="valueSerializer" class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
+	<bean id="valueSerializer" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
 		<property name="connectionFactory" ref="jedisConnectionFactory" />
 		<property name="keySerializer" ref="keySerializer" />
