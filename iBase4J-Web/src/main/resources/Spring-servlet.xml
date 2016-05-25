@@ -4,11 +4,11 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+                        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
                         http://www.springframework.org/schema/context  
-                        http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+                        http://www.springframework.org/schema/context/spring-context-4.2.xsd  
                         http://www.springframework.org/schema/mvc  
-                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
 	<context:component-scan base-package="org.ibase4j.web" />
 	<!-- 拦截器 -->
@@ -21,17 +21,11 @@
 			</property>
 		</bean>
 	</mvc:interceptors>
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<description>视图模式配置</description>
-		<property name="prefix" value="/WEB-INF/jsp/" />
-		<property name="suffix" value=".jsp" />
-	</bean>
-	<!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	<mvc:view-resolvers>
+	    <mvc:jsp cache-views="false" prefix="/WEB-INF/jsp/" suffix=".jsp" />  
+	</mvc:view-resolvers>
+	<mvc:annotation-driven/>
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<description>注解controller方法适配器</description>
 		<property name="messageConverters">
 			<list><!--JSON转换器 -->
@@ -41,8 +35,7 @@
 			</list>
 		</property>
 	</bean>
-	<bean
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<description>配置文件上传</description>
 		<property name="defaultEncoding" value="utf-8" />
 		<!-- 文件大小最大值 -->

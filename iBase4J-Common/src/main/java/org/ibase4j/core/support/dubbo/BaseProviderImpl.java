@@ -1,5 +1,6 @@
 package org.ibase4j.core.support.dubbo;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ import com.github.pagehelper.PageInfo;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-public abstract class BaseProviderImpl<T> {
+public abstract class BaseProviderImpl<T extends Serializable> {
 
 	/** 启动分页查询 */
 	protected void startPage(Map<String, Object> params) {

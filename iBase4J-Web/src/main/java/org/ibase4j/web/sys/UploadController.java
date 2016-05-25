@@ -8,10 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.ibase4j.core.support.BaseController;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.UploadUtil;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 文件上传控制器
@@ -19,13 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:11:42
  */
-@Controller
+@RestController
 public class UploadController extends BaseController {
 
 	// 上传文件(支持批量)
-	@ResponseBody
 	@RequestMapping("/upload")
-	public ModelMap upload(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+	public Object upload(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/html;charset=utf-8");
 		List<String> fileNames = UploadUtil.uploadFile(request);

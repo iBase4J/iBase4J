@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.exception.BusinessException;
 import org.ibase4j.core.util.WebUtil;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,7 +25,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:47:58
  */
-public class BaseController {
+public abstract class BaseController {
 	protected final Logger logger = LogManager.getLogger(this.getClass());
 
 	/** 获取当前用户Id */
@@ -32,22 +34,22 @@ public class BaseController {
 	}
 
 	/** 设置成功响应代码 */
-	protected ModelMap setSuccessModelMap(ModelMap modelMap) {
+	protected ResponseEntity<ModelMap> setSuccessModelMap(ModelMap modelMap) {
 		return setSuccessModelMap(modelMap, null);
 	}
 
 	/** 设置成功响应代码 */
-	protected ModelMap setSuccessModelMap(ModelMap modelMap, Object data) {
+	protected ResponseEntity<ModelMap> setSuccessModelMap(ModelMap modelMap, Object data) {
 		return setModelMap(modelMap, HttpCode.OK, data);
 	}
 
 	/** 设置响应代码 */
-	protected ModelMap setModelMap(ModelMap modelMap, HttpCode code) {
+	protected ResponseEntity<ModelMap> setModelMap(ModelMap modelMap, HttpCode code) {
 		return setModelMap(modelMap, code, null);
 	}
 
 	/** 设置响应代码 */
-	protected ModelMap setModelMap(ModelMap modelMap, HttpCode code, Object data) {
+	protected ResponseEntity<ModelMap> setModelMap(ModelMap modelMap, HttpCode code, Object data) {
 		modelMap.remove("void");
 		if (data != null) {
 			modelMap.put("data", data);
@@ -55,7 +57,7 @@ public class BaseController {
 		modelMap.put("httpCode", code.value());
 		modelMap.put("msg", code.msg());
 		modelMap.put("timestamp", System.currentTimeMillis());
-		return modelMap;
+		return ResponseEntity.status(HttpStatus.valueOf(code.value())).body(modelMap);
 	}
 
 	/** 异常处理 */

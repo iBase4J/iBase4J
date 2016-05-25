@@ -11,12 +11,11 @@ import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 用户登录
@@ -24,15 +23,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:11:21
  */
-@Controller
+@RestController
 public class LoginController extends BaseController {
 	@Autowired
 	private SysUserService sysUserService;
 
 	// 登录
-	@ResponseBody
 	@RequestMapping(value = "/login")
-	public ModelMap login(ModelMap modelMap, @RequestParam(value = "account", required = false) String account,
+	public Object login(ModelMap modelMap, @RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
 		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
 		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
@@ -43,17 +41,15 @@ public class LoginController extends BaseController {
 	}
 
 	// 登出
-	@ResponseBody
 	@RequestMapping("/logout")
-	public ModelMap logout(ModelMap modelMap) {
+	public Object logout(ModelMap modelMap) {
 		SecurityUtils.getSubject().logout();
 		return setSuccessModelMap(modelMap);
 	}
 
 	// 注册
-	@ResponseBody
 	@RequestMapping(value = "/regin")
-	public ModelMap regin(HttpServletRequest request, ModelMap modelMap,
+	public Object regin(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
@@ -65,17 +61,15 @@ public class LoginController extends BaseController {
 	}
 
 	// 没有登录
-	@ResponseBody
 	@RequestMapping("/unauthorized")
-	public ModelMap unauthorized(ModelMap modelMap) {
+	public Object unauthorized(ModelMap modelMap) {
 		SecurityUtils.getSubject().logout();
 		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
 	}
 
 	// 没有权限
-	@ResponseBody
 	@RequestMapping("/forbidden")
-	public ModelMap forbidden(ModelMap modelMap) {
+	public Object forbidden(ModelMap modelMap) {
 		return setModelMap(modelMap, HttpCode.FORBIDDEN);
 	}
 }
