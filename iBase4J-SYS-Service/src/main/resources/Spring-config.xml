@@ -29,5 +29,7 @@
 	<!-- 引入SPRING配置文件 -->
 	<import resource="spring/dubbo.xml" />
 	<import resource="spring/redis.xml"/>
+	<import resource="spring/dataSource.xml"/>
+	<import resource="spring/mybatis.xml"/>
 	<import resource="spring/*.xml"/>
 </beans>
