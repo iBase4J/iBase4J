@@ -1,5 +1,7 @@
 package org.ibase4j.service.sys;
 
+import org.ibase4j.core.support.BaseService;
+import org.ibase4j.mybatis.generator.model.SysPermission;
 import org.ibase4j.provider.sys.SysPermissionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,11 +11,13 @@ import org.springframework.stereotype.Service;
  * @version 2016年5月20日 下午3:16:13
  */
 @Service
-public class SysPermissionService {
+public class SysPermissionService extends BaseService<SysPermissionProvider, SysPermission> {
 	@Autowired
-	private SysPermissionProvider sysPermissionProvider;
+	public void setProvider(SysPermissionProvider provider) {
+		this.provider = provider;
+	}
 
 	public boolean doCheckPermissionByUserId(Integer userId, String url) {
-		return sysPermissionProvider.doCheckPermissionByUserId(userId, url);
+		return provider.doCheckPermissionByUserId(userId, url);
 	}
 }

@@ -53,7 +53,10 @@ public class LoginController extends BaseController {
 			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
-		sysUserService.addUser(sysUser);
+		Assert.notNull(sysUser.getAccount(), Resources.getMessage("ACCOUNT_IS_NULL"));
+		Assert.notNull(sysUser.getPassword(), Resources.getMessage("PASSWORD_IS_NULL"));
+		sysUser.setPassword(sysUserService.encryptPassword(sysUser.getPassword()));
+		sysUserService.add(sysUser);
 		if (LoginHelper.login(account, password)) {
 			return setSuccessModelMap(modelMap);
 		}

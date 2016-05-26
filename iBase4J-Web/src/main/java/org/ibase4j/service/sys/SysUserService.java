@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.BaseService;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.SecurityUtil;
@@ -21,27 +22,29 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:47:21
  */
 @Service
-public class SysUserService {
+public class SysUserService extends BaseService<SysUserProvider, SysUser> {
 	@Autowired
-	private SysUserProvider sysUserProvider;
+	public void setProvider(SysUserProvider provider) {
+		this.provider = provider;
+	}
 
 	/** 修改用户信息 */
 	public void updateUserInfo(SysUser sysUser) {
 		Assert.notNull(sysUser.getId(), Resources.getMessage("USER_ID_IS_NULL"));
 		Assert.notNull(sysUser.getAccount(), Resources.getMessage("ACCOUNT_IS_NULL"));
-		SysUser user = sysUserProvider.queryById(sysUser.getId());
+		SysUser user = provider.queryById(sysUser.getId());
 		Assert.notNull(user, String.format(Resources.getMessage("USER_IS_NULL"), sysUser.getId()));
 		sysUser.setPassword(user.getPassword());
-		sysUserProvider.update(sysUser);
+		provider.update(sysUser);
 	}
 
 	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
-		return sysUserProvider.queryBeans(params);
+		return provider.queryBeans(params);
 	}
 
 	public SysUser queryById(Integer id) {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
-		SysUser sysUser = sysUserProvider.queryById(id);
+		SysUser sysUser = provider.queryById(id);
 		if (sysUser != null) {
 			sysUser.setPassword(null);
 		}
@@ -51,26 +54,19 @@ public class SysUserService {
 	public void updatePassword(Integer id, String password) {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
-		SysUser sysUser = sysUserProvider.queryById(id);
+		SysUser sysUser = provider.queryById(id);
 		Assert.notNull(sysUser, String.format(Resources.getMessage("USER_IS_NULL"), id));
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
-		sysUserProvider.update(sysUser);
+		provider.update(sysUser);
 	}
 
 	public String encryptPassword(String password) {
-		return sysUserProvider.encryptPassword(password);
-	}
-
-	public void addUser(SysUser sysUser) {
-		Assert.notNull(sysUser.getAccount(), Resources.getMessage("ACCOUNT_IS_NULL"));
-		Assert.notNull(sysUser.getPassword(), Resources.getMessage("PASSWORD_IS_NULL"));
-		sysUser.setPassword(sysUserProvider.encryptPassword(sysUser.getPassword()));
-		sysUserProvider.update(sysUser);
+		return provider.encryptPassword(password);
 	}
 
 	public void thirdPartyLogin(ThirdPartyUser thirdUser) {
 		// 查询是否已经绑定过
-		String userId = sysUserProvider.queryUserIdByThirdParty(thirdUser.getOpenid(), thirdUser.getProvider());
+		String userId = provider.queryUserIdByThirdParty(thirdUser.getOpenid(), thirdUser.getProvider());
 		if (StringUtils.isBlank(userId)) {
 			SysUser sysUser = insertThirdPartyUser(thirdUser);
 			LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
@@ -78,6 +74,6 @@ public class SysUserService {
 	}
 
 	public SysUser insertThirdPartyUser(ThirdPartyUser thirdUser) {
-		return sysUserProvider.insertThirdPartyUser(thirdUser);
+		return provider.insertThirdPartyUser(thirdUser);
 	}
 }
