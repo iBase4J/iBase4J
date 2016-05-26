@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -23,6 +25,7 @@ import org.ibase4j.service.sys.SysSessionService;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 /**
  * 权限检查类
@@ -30,6 +33,7 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:44:45
  */
 public class Realm extends AuthorizingRealm {
+	private final Logger logger = LogManager.getLogger();
 	@Autowired
 	private SysUserService sysUserService;
 	@Autowired
@@ -60,6 +64,7 @@ public class Realm extends AuthorizingRealm {
 					user.getUserName());
 			return authcInfo;
 		} else {
+			logger.warn("PASSWORD IS WRONG: " + JSON.toJSONString(params));
 			return null;
 		}
 	}

@@ -42,7 +42,9 @@ public class SysUserService {
 	public SysUser queryById(Integer id) {
 		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		SysUser sysUser = sysUserProvider.queryById(id);
-		sysUser.setPassword(null);
+		if (sysUser != null) {
+			sysUser.setPassword(null);
+		}
 		return sysUser;
 	}
 
