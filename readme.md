@@ -1,9 +1,8 @@
 >####说明：项目依赖activemq、Redis和ZooKeeper服务。
 
 ```
-* 启动文件iBase4J/pom.xml里<module>iBase4J-SYS-Service</module>与<module>iBase4J-Web</module>，只有在前面的会执行；
-* 所以在启动完service后，请把service注释掉，再启动一次(web)。
-* maven启动命令：clean:clean package -P build tomcat7:run-war-only
+* maven启动SYS-Service命令：clean:clean package -P build tomcat7:run-war-only -f pom-sys-server.xml
+* maven启动Web命令：clean:clean package -P build tomcat7:run-war-only -f pom-web-server.xml
 * 两个项目都启动后，使用nginx代理UI：修改配置里的UI目录后启动。
 ```
 
