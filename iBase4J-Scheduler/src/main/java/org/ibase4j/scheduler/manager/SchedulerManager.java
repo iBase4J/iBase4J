@@ -2,53 +2,34 @@ package org.ibase4j.scheduler.manager;
 
 import java.util.List;
 
-import org.ibase4j.mybatis.scheduler.model.TaskSchedulerBean;
-import org.ibase4j.scheduler.trigger.TriggerLoader;
+import org.ibase4j.core.support.scheduled.TaskScheduler;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
 
 /**
  * 调度器管理
- * @author liujianchu
- *
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月27日 下午5:02:54
  */
 public interface SchedulerManager {
-    public List<TriggerLoader> getTriggerLoaders();
 
-    public void addTrigger(Trigger trigger);
+	public List<TaskScheduler> getAllJobDetail();
 
-    public void removeTrigger(Trigger trigger);
+	public JobDetail getJobDetailByTriggerName(Trigger trigger);
 
-    public void updateTrigger(Trigger trigger);
+	/** 获取运行中任务 */
+	public List<TaskScheduler> getRuningJobDetail();
 
-    public void addTriggers(List<Trigger> triggers);
+	/** 暂停任务 */
+	public boolean stopJob(TaskScheduler scheduleJob);
 
-    public void addJobDetail(JobDetail jobDetail);
+	/** 恢复任务 */
+	public boolean resumeJob(TaskScheduler scheduleJob);
 
-    public void removeJobDetail(JobDetail jobDetail);
+	/** 运行任务 */
+	public boolean runJob(TaskScheduler scheduleJob);
 
-    public void updateJobDetail(JobDetail jobDetail);
-
-    public void addJobDetails(List<JobDetail> jobDetails);
-
-    public List<Trigger> getAllTriggers();
-
-    public List<TaskSchedulerBean> getAllJobDetail();
-
-    public JobDetail getJobDetailByTriggerName(Trigger trigger);
-
-    /** 获取运行中任务 */
-    public List<TaskSchedulerBean> getRuningJobDetail();
-
-    /** 暂停任务 */
-    public boolean stopJob(TaskSchedulerBean scheduleJob);
-
-    /** 恢复任务 */
-    public boolean resumeJob(TaskSchedulerBean scheduleJob);
-
-    /** 运行任务 */
-    public boolean runJob(TaskSchedulerBean scheduleJob);
-
-    /** 刷新调度(新增任务为暂停状态) */
-    public boolean refreshScheduler();
+	/** 刷新调度(新增任务为暂停状态) */
+	public boolean refreshScheduler();
 }

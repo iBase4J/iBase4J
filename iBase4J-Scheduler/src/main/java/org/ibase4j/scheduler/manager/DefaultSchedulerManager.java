@@ -9,8 +9,8 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ibase4j.core.support.scheduled.TaskScheduler;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.mybatis.scheduler.model.TaskSchedulerBean;
 import org.ibase4j.scheduler.trigger.TriggerLoader;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
@@ -20,7 +20,6 @@ import org.quartz.JobListener;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
-import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -225,32 +224,15 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		this.jobListeners = jobListeners;
 	}
 
-	@Override
-	public List<Trigger> getAllTriggers() {
-		List<Trigger> result = new LinkedList<Trigger>();
-		try {
-			GroupMatcher<TriggerKey> matcher = GroupMatcher.triggerGroupContains("");
-			Set<TriggerKey> triggerKeys = this.scheduler.getTriggerKeys(matcher);
-
-			for (TriggerKey triggerKey : triggerKeys) {
-				result.add(this.scheduler.getTrigger(triggerKey));
-			}
-		} catch (Exception e) {
-			logger.error("Try to load All triggers cause error : " + e.getMessage(), e);
-		}
-		return result;
-	}
-
-	@Override
-	public List<TaskSchedulerBean> getAllJobDetail() {
-		List<TaskSchedulerBean> result = new LinkedList<TaskSchedulerBean>();
+	public List<TaskScheduler> getAllJobDetail() {
+		List<TaskScheduler> result = new LinkedList<TaskScheduler>();
 		try {
 			GroupMatcher<JobKey> matcher = GroupMatcher.jobGroupContains("");
 			Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
 			for (JobKey jobKey : jobKeys) {
 				List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
 				for (Trigger trigger : triggers) {
-					TaskSchedulerBean job = new TaskSchedulerBean();
+					TaskScheduler job = new TaskScheduler();
 					job.setTaskName(jobKey.getName());
 					job.setTaskGroup(jobKey.getGroup());
 					Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
@@ -269,7 +251,6 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		return result;
 	}
 
-	@Override
 	public JobDetail getJobDetailByTriggerName(Trigger trigger) {
 		try {
 			return this.scheduler.getJobDetail(trigger.getJobKey());
@@ -280,13 +261,13 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 	}
 
 	// 获取运行中任务
-	public List<TaskSchedulerBean> getRuningJobDetail() {
-		List<TaskSchedulerBean> jobList = null;
+	public List<TaskScheduler> getRuningJobDetail() {
+		List<TaskScheduler> jobList = null;
 		try {
 			List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
-			jobList = new ArrayList<TaskSchedulerBean>(executingJobs.size());
+			jobList = new ArrayList<TaskScheduler>(executingJobs.size());
 			for (JobExecutionContext executingJob : executingJobs) {
-				TaskSchedulerBean job = new TaskSchedulerBean();
+				TaskScheduler job = new TaskScheduler();
 				JobDetail jobDetail = executingJob.getJobDetail();
 				JobKey jobKey = jobDetail.getKey();
 				Trigger trigger = executingJob.getTrigger();
@@ -307,7 +288,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		return jobList;
 	}
 
-	public boolean stopJob(TaskSchedulerBean scheduleJob) {
+	public boolean stopJob(TaskScheduler scheduleJob) {
 		try {
 			JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
 			scheduler.pauseJob(jobKey);
@@ -318,7 +299,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		return false;
 	}
 
-	public boolean resumeJob(TaskSchedulerBean scheduleJob) {
+	public boolean resumeJob(TaskScheduler scheduleJob) {
 		try {
 			JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
 			scheduler.resumeJob(jobKey);
@@ -329,7 +310,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		return false;
 	}
 
-	public boolean runJob(TaskSchedulerBean scheduleJob) {
+	public boolean runJob(TaskScheduler scheduleJob) {
 		try {
 			JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
 			scheduler.triggerJob(jobKey);
@@ -349,9 +330,9 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 							+ "] , trigger loaders size ：" + this.triggerLoaders.size());
 				}
 				// 获取原始调度状态
-				List<TaskSchedulerBean> scheduleJobs = getAllJobDetail();
+				List<TaskScheduler> scheduleJobs = getAllJobDetail();
 				Map<String, String> stateMap = InstanceUtil.newHashMap();
-				for (TaskSchedulerBean scheduleJob : scheduleJobs) {
+				for (TaskScheduler scheduleJob : scheduleJobs) {
 					stateMap.put(scheduleJob.getTaskGroup() + "." + scheduleJob.getTaskName(), scheduleJob.getStatus());
 				}
 				// 清空调度
