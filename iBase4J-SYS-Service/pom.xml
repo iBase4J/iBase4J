@@ -5,17 +5,17 @@
 	<name>${project.artifactId}</name>
 	<url>http://maven.apache.org</url>
 	<packaging>war</packaging>
-	
+
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
 		<version>${version}</version>
 	</parent>
-	
+
 	<properties>
 		<server.port>8087</server.port>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
@@ -94,96 +94,12 @@
 			<version>${aspectj.version}</version>
 		</dependency>
 	</dependencies>
-	
-	<profiles>
-		<profile>
-			<id>build</id>
-			<build>
-				<finalName>${project.name}</finalName>
-				<resources>
-					<resource>
-						<directory>src/main/java</directory>
-						<includes>
-							<include>**/*.properties</include>
-							<include>**/*.xml</include>
-						</includes>
-						<filtering>true</filtering>
-					</resource>
-					<resource>
-						<directory>src/main/resources</directory>
-					</resource>
-				</resources>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.tomcat.maven</groupId>
-							<artifactId>tomcat7-maven-plugin</artifactId>
-							<version>2.2</version>
-							<executions>
-								<execution>
-									<id>run-war-only</id>
-									<phase>pre-integration-test</phase>
-									<goals>
-										<goal>run-war-only</goal>
-									</goals>
-								</execution>
-							</executions>
-							<configuration>
-								<warDirectory>target/${project.name}</warDirectory>
-								<path>/</path>
-								<contextReloadable>true</contextReloadable>
-								<uriEncoding>UTF-8</uriEncoding>
-								<port>${server.port}</port>
-								<systemProperties>
-									<webapps>
-										<webapp>
-											<groupId>${project.name}</groupId>
-											<artifactId>${project.name}</artifactId>
-											<version>${project.version}</version>
-											<type>${project.packaging}</type>
-											<asWebapp>true</asWebapp>
-											<contextPath>/</contextPath>
-										</webapp>
-									</webapps>
-								</systemProperties>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-	</profiles>
+
 	<!-- 生成model -->
 	<!-- mybatis-generator:generate -->
 	<build>
 		<pluginManagement>
 			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.3</version>
-					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
-						<encoding>UTF-8</encoding>
-						<testIncludes>
-							<testInclude>none</testInclude>
-						</testIncludes>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jdeps-plugin</artifactId>
-					<version>3.0.0</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>jdkinternals</goal>
-								<goal>test-jdkinternals</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
 				<plugin>
 					<groupId>org.mybatis.generator</groupId>
 					<artifactId>mybatis-generator-maven-plugin</artifactId>

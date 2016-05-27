@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ibase4j</groupId>
 	<artifactId>iBase4J</artifactId>
@@ -10,15 +10,17 @@
 	<modules>
 		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-API</module>
-		<!-- 请分别启动两个服务,命令： -->
-		<!-- clean:clean package -P build tomcat7:run-war-only -->
-		<!-- 1.启动Service -->
 		<module>iBase4J-SYS-Service</module>
-		<!-- 2.启动web后端 -->
 		<module>iBase4J-Web</module>
+		<!-- 请分别启动两个服务,命令： -->
+		<!-- clean:clean package -P build tomcat7:run-war-only -f pom-sys-server.xml -->
+		<!-- 1.启动Service -->
+		<!-- clean:clean package -P build tomcat7:run-war-only -f pom-web-server.xml -->
+		<!-- 2.启动web后端 -->
 		<!-- 3.Nginx代理UI -->
 		<!-- 4.浏览器访问 -->
-	</modules>
+    <module>iBase4J-Scheduler</module>
+  </modules>
 
 	<!-- clean:clean package -P build tomcat7:run-war-only -->
 	<!-- mybatis-generator:generate -->
