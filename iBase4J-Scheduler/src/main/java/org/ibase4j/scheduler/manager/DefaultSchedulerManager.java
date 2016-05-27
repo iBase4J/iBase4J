@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.support.scheduled.TaskScheduler;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.scheduler.trigger.TriggerLoader;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -38,76 +37,59 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 
 	private List<JobListener> jobListeners;
 
-	public void addTrigger(Trigger trigger) {
+	public void setScheduler(Scheduler scheduler) {
+		this.scheduler = scheduler;
+	}
+
+	public void setTriggerLoaders(List<TriggerLoader> triggerLoaders) {
+		this.triggerLoaders = triggerLoaders;
+	}
+
+	public void setJobListeners(List<JobListener> jobListeners) {
+		this.jobListeners = jobListeners;
+	}
+
+	private void addTrigger(Trigger trigger) {
 		try {
-			Trigger oldTrigger = getScheduler().getTrigger(trigger.getKey());
+			Trigger oldTrigger = scheduler.getTrigger(trigger.getKey());
 			if (oldTrigger == null) {
 				if (logger.isInfoEnabled()) {
 					logger.info("Try to add trigger : " + trigger);
 				}
-				getScheduler().scheduleJob(trigger);
+				scheduler.scheduleJob(trigger);
 				if (trigger.getJobDataMap().getInt("enable") != 1) {
-					getScheduler().pauseTrigger(trigger.getKey());
+					scheduler.pauseTrigger(trigger.getKey());
 				}
 			} else {
 				updateTrigger(trigger);
 			}
 		} catch (SchedulerException e) {
-			logger.error("Try to add trigger : " + trigger + "  cause error : " + e.getMessage(), e);
-		}
-
-	}
-
-	public void removeTrigger(Trigger trigger) {
-		try {
-			// 1.暂停触发器
-			getScheduler().pauseTrigger(trigger.getKey());
-			//
-			getScheduler().unscheduleJob(trigger.getKey());
-			getScheduler().deleteJob(trigger.getJobKey());
-		} catch (Exception e) {
-			logger.error("Try to remove trigger : " + trigger + ", cause error : " + e.getMessage(), e);
+			logger.error("Try to add trigger : " + trigger + "  cause error : ", e);
 		}
 	}
 
-	public void updateTrigger(Trigger trigger) {
+	private void updateTrigger(Trigger trigger) {
 		Trigger oldTrigger = null;
 		try {
-			oldTrigger = getScheduler().getTrigger(trigger.getKey());
+			oldTrigger = scheduler.getTrigger(trigger.getKey());
 			if (oldTrigger != null) {
 				if (logger.isInfoEnabled()) {
 					logger.info("Try to update trigger : " + trigger);
 				}
-				getScheduler().rescheduleJob(trigger.getKey(), trigger);
+				scheduler.rescheduleJob(trigger.getKey(), trigger);
 				if (!trigger.getJobDataMap().getBoolean("enable")) {
-					getScheduler().pauseTrigger(trigger.getKey());
+					scheduler.pauseTrigger(trigger.getKey());
 				}
 			} else {
 				logger.warn("Can't update trigger : " + trigger);
 			}
 		} catch (SchedulerException e) {
 			logger.error("Try to update trigger : " + trigger + ", the old trigger is : "
-					+ (oldTrigger == null ? "null" : oldTrigger.toString()) + " cause error : " + e.getMessage(), e);
+					+ (oldTrigger == null ? "null" : oldTrigger.toString()) + " cause error : ", e);
 		}
 	}
 
-	public void addTriggers(List<Trigger> triggers) {
-		if (triggers != null && triggers.size() > 0) {
-			for (Trigger trigger : triggers) {
-				addTrigger(trigger);
-			}
-		}
-	}
-
-	public Scheduler getScheduler() {
-		return scheduler;
-	}
-
-	public void setScheduler(Scheduler scheduler) {
-		this.scheduler = scheduler;
-	}
-
-	public void addJobDetail(JobDetail jobDetail) {
+	private void addJobDetail(JobDetail jobDetail) {
 		JobDetail oldJobDetail = null;
 		try {
 			oldJobDetail = this.scheduler.getJobDetail(jobDetail.getKey());
@@ -121,23 +103,14 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 			}
 		} catch (Exception e) {
 			logger.error("Try to add jobDetail : " + jobDetail + ", the old jobDetail is : "
-					+ (oldJobDetail == null ? "null" : oldJobDetail.toString()) + " cause error : " + e.getMessage(),
-					e);
+					+ (oldJobDetail == null ? "null" : oldJobDetail.toString()) + " cause error : ", e);
 		}
 	}
 
-	public void removeJobDetail(JobDetail jobDetail) {
-		try {
-			getScheduler().deleteJob(jobDetail.getKey());
-		} catch (Exception e) {
-			logger.error("Try to remove jobDetail : " + jobDetail + ", cause error : " + e.getMessage(), e);
-		}
-	}
-
-	public void updateJobDetail(JobDetail jobDetail) {
+	private void updateJobDetail(JobDetail jobDetail) {
 		JobDetail oldJobDetail = null;
 		try {
-			oldJobDetail = getScheduler().getJobDetail(jobDetail.getKey());
+			oldJobDetail = scheduler.getJobDetail(jobDetail.getKey());
 			if (oldJobDetail != null) {
 				if (logger.isInfoEnabled()) {
 					logger.info("Try to update oldJobDetail : " + oldJobDetail);
@@ -148,29 +121,15 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 			}
 		} catch (SchedulerException e) {
 			logger.error("Try to update JobDetail : " + jobDetail + ", the old JobDetail is : "
-					+ (oldJobDetail == null ? "null" : oldJobDetail.toString()) + " cause error : " + e.getMessage(),
-					e);
-		}
-	}
-
-	public void addJobDetails(List<JobDetail> jobDetails) {
-		if (jobDetails != null && jobDetails.size() > 0) {
-			if (logger.isInfoEnabled()) {
-				logger.info("Batch add JobDetails , it's size ：" + jobDetails.size());
-			}
-			for (JobDetail jobDetail : jobDetails) {
-				addJobDetail(jobDetail);
-			}
-		} else {
-			logger.warn("No JobDetails for add.");
+					+ (oldJobDetail == null ? "null" : oldJobDetail.toString()) + " cause error : ", e);
 		}
 	}
 
 	public void afterPropertiesSet() throws Exception {
 		if (this.jobListeners != null && this.jobListeners.size() > 0) {
 			if (logger.isInfoEnabled()) {
-				logger.info("Initing task scheduler[" + this.getScheduler().getSchedulerName()
-						+ "] , add listener size ：" + this.jobListeners.size());
+				logger.info("Initing task scheduler[" + this.scheduler.getSchedulerName() + "] , add listener size ："
+						+ this.jobListeners.size());
 			}
 			for (JobListener listener : this.jobListeners) {
 				if (logger.isInfoEnabled()) {
@@ -183,8 +142,8 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		// 根据配置的初始化装载
 		if (this.triggerLoaders != null && this.triggerLoaders.size() > 0) {
 			if (logger.isInfoEnabled()) {
-				logger.info("Initing task scheduler[" + this.getScheduler().getSchedulerName()
-						+ "] , trigger loaders size ：" + this.triggerLoaders.size());
+				logger.info("Initing task scheduler[" + this.scheduler.getSchedulerName() + "] , trigger loaders size ："
+						+ this.triggerLoaders.size());
 			}
 			for (TriggerLoader loader : this.triggerLoaders) {
 				if (logger.isInfoEnabled()) {
@@ -206,22 +165,6 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		} else {
 			logger.warn("No TriggerLoader for initing.");
 		}
-	}
-
-	public List<TriggerLoader> getTriggerLoaders() {
-		return triggerLoaders;
-	}
-
-	public void setTriggerLoaders(List<TriggerLoader> triggerLoaders) {
-		this.triggerLoaders = triggerLoaders;
-	}
-
-	public List<JobListener> getJobListeners() {
-		return jobListeners;
-	}
-
-	public void setJobListeners(List<JobListener> jobListeners) {
-		this.jobListeners = jobListeners;
 	}
 
 	public List<TaskScheduler> getAllJobDetail() {
@@ -246,7 +189,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 				}
 			}
 		} catch (Exception e) {
-			logger.error("Try to load All JobDetail cause error : " + e.getMessage(), e);
+			logger.error("Try to load All JobDetail cause error : ", e);
 		}
 		return result;
 	}
@@ -283,7 +226,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 				jobList.add(job);
 			}
 		} catch (Exception e) {
-			logger.error("Try to load running JobDetail cause error : " + e.getMessage(), e);
+			logger.error("Try to load running JobDetail cause error : ", e);
 		}
 		return jobList;
 	}
@@ -294,7 +237,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 			scheduler.pauseJob(jobKey);
 			return true;
 		} catch (Exception e) {
-			logger.error("Try to stop Job cause error : " + e.getMessage(), e);
+			logger.error("Try to stop Job cause error : ", e);
 		}
 		return false;
 	}
@@ -305,7 +248,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 			scheduler.resumeJob(jobKey);
 			return true;
 		} catch (Exception e) {
-			logger.error("Try to resume Job cause error : " + e.getMessage(), e);
+			logger.error("Try to resume Job cause error : ", e);
 		}
 		return false;
 	}
@@ -316,7 +259,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 			scheduler.triggerJob(jobKey);
 			return true;
 		} catch (Exception e) {
-			logger.error("Try to resume Job cause error : " + e.getMessage(), e);
+			logger.error("Try to resume Job cause error : ", e);
 		}
 		return false;
 	}
@@ -326,7 +269,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 			// 根据配置的初始化装载
 			if (this.triggerLoaders != null && this.triggerLoaders.size() > 0) {
 				if (logger.isInfoEnabled()) {
-					logger.info("Initing task scheduler[" + this.getScheduler().getSchedulerName()
+					logger.info("Initing task scheduler[" + this.scheduler.getSchedulerName()
 							+ "] , trigger loaders size ：" + this.triggerLoaders.size());
 				}
 				// 获取原始调度状态
@@ -366,7 +309,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 			}
 			return true;
 		} catch (Exception e) {
-			logger.error("Try to refresh scheduler cause error : " + e.getMessage(), e);
+			logger.error("Try to refresh scheduler cause error : ", e);
 		}
 		return false;
 	}

@@ -1,4 +1,4 @@
-package org.ibase4j.scheduler.trigger;
+package org.ibase4j.scheduler.manager;
 
 import java.util.List;
 import java.util.Map;
