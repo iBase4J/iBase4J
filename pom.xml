@@ -11,6 +11,7 @@
 	<modules>
 		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-API</module>
+		<module>iBase4J-Scheduler-API</module>
 		<module>iBase4J-SYS-Service</module>
 		<module>iBase4J-Web</module>
 		<!-- 请分别启动两个服务,命令： -->

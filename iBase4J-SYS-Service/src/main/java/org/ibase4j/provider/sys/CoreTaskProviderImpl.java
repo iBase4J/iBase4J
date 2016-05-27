@@ -1,20 +1,21 @@
-package org.ibase4j.service.task;
+package org.ibase4j.provider.sys;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.config.Resources;
-import org.springframework.stereotype.Component;
+import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
+import org.ibase4j.scheduler.provider.sys.CoreTaskProvider;
 
 /**
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-@Component("coreTask")
-public class CoreTask {
+@DubboService
+public class CoreTaskProviderImpl implements CoreTaskProvider {
 	private final Logger logger = LogManager.getLogger();
 
 	/** 定时清除国际化信息 */
-	public void run() {
+	public void flushMessage() {
 		Resources.flushMessage();
 		logger.info("Messages flushed!");
 	}
