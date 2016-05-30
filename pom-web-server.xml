@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
-		<version>0.3.0</version>
+		<version>0.5.0</version>
 		<relativePath>./</relativePath>
 	</parent>
 	<artifactId>iBase4J-Web-Server</artifactId>
