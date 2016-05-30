@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.ibase4j.core.support.dubbo.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.core.support.scheduled.TaskScheduler;
-import org.ibase4j.core.support.scheduled.provider.ScheduleProvider;
+import org.ibase4j.core.support.scheduler.TaskScheduler;
+import org.ibase4j.core.support.scheduler.provider.SchedulerProvider;
 import org.ibase4j.scheduler.manager.SchedulerManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,8 +16,8 @@ import org.springframework.cache.annotation.Cacheable;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:59
  */
-@DubboService(interfaceClass = ScheduleProvider.class)
-public class ScheduleProviderImpl extends BaseProviderImpl<TaskScheduler> implements ScheduleProvider {
+@DubboService(interfaceClass = SchedulerProvider.class)
+public class SchedulerProviderImpl extends BaseProviderImpl<TaskScheduler> implements SchedulerProvider {
 	@Autowired
 	private SchedulerManager schedulerManager;
 

@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.scheduled;
+package org.ibase4j.core.support.scheduler;
 
 import java.io.Serializable;
 
