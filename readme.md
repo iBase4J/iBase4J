@@ -4,7 +4,7 @@
 * maven启动SYS-Scheduler命令：clean:clean package -P build tomcat7:run-war-only -f pom-scheduler-server.xml
 * maven启动SYS-Service命令：clean:clean package -P build tomcat7:run-war-only -f pom-sys-server.xml
 * maven启动Web命令：clean:clean package -P build tomcat7:run-war-only -f pom-web-server.xml
-* 两个项目都启动后，使用nginx代理UI：修改配置里的UI目录后启动。
+* 服务启动后，使用nginx代理UI：修改配置里的UI目录后启动。
 ```
 
 系统主要功能如下：
