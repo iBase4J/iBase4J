@@ -81,5 +81,11 @@ UI效果图
 ![捐赠](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/contribute.png "捐赠")
 
 ```
-* 建议：如果您是java新手，可以先看一下拆分前的版本，地址：http://git.oschina.net/iBase4J/iBase4J/tree/V-%E6%8B%86%E5%88%86%E5%89%8D/
+* 建议：如果您是java新手，可以先看一下拆分前的版本，地址：[iBase4J-old][]
 ```
+
+## License
+The iBase4J is released under version 2.0 of the [Apache License][].
+
+[iBase4J-old]: http://git.oschina.net/iBase4J/iBase4J/tree/V-%E6%8B%86%E5%88%86%E5%89%8D
+[Apache License]: http://www.apache.org/licenses/LICENSE-2.0
