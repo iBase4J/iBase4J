@@ -54,7 +54,7 @@
 9、项目构建
 ===========
 
-    maven构建项目，mybatis generator生成mybatis映射文件。 
+    maven构建项目，mybatis generator生成mybatis映射文件和Model。 
 
 10、其它
 ===========
