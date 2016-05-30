@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ibase4j</groupId>
 	<artifactId>iBase4J</artifactId>
-	<version>${version}</version>
+	<version>0.5.0</version>
 	<name>iBase4J</name>
 	<packaging>pom</packaging>
 	<url>http://maven.apache.org</url>
@@ -21,7 +21,6 @@
 	<!-- mybatis-generator:generate -->
 
 	<properties>
-		<version>0.5.0</version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
 		<spring.version>4.2.6.RELEASE</spring.version>
