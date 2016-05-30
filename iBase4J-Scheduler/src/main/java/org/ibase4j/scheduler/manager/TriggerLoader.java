@@ -49,12 +49,12 @@ public class TriggerLoader {
 			jobDataMap.put("id", taskScheduler.getId());
 			jobDataMap.put("enable", taskScheduler.getTaskEnable() == 1);
 			JobDetail jobDetail = JobBuilder.newJob(jobClass)
-					.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupType())
+					.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupName())
 					.withDescription(taskScheduler.getTaskDesc()).storeDurably(true).usingJobData(jobDataMap).build();
 
 			Trigger trigger = TriggerBuilder.newTrigger()
 					.withSchedule(CronScheduleBuilder.cronSchedule(taskScheduler.getTaskCron()))
-					.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupType())
+					.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupName())
 					.withDescription(taskScheduler.getTaskDesc()).forJob(jobDetail).usingJobData(jobDataMap).build();
 
 			resultMap.put(trigger, jobDetail);

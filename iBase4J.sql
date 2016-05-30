@@ -386,7 +386,7 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.task_fire_log 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.task_fire_log 的数据：~3 rows (大约)
 /*!40000 ALTER TABLE `task_fire_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `task_fire_log` ENABLE KEYS */;
 
@@ -394,17 +394,17 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
 -- 导出  表 ibase4j.task_group 结构
 CREATE TABLE IF NOT EXISTS `task_group` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
-  `group_type` varchar(50) NOT NULL,
   `group_name` varchar(50) NOT NULL,
+  `group_desc` varchar(50) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `operator` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`),
-  UNIQUE KEY `group_type` (`group_type`)
+  UNIQUE KEY `group_name` (`group_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  ibase4j.task_group 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `task_group` DISABLE KEYS */;
-INSERT INTO `task_group` (`id_`, `group_type`, `group_name`, `create_time`, `operator`) VALUES
+INSERT INTO `task_group` (`id_`, `group_name`, `group_desc`, `create_time`, `operator`) VALUES
 	(1, 'sys.CoreTaskProvider', '系统管理', '2016-05-27 14:56:51', NULL);
 /*!40000 ALTER TABLE `task_group` ENABLE KEYS */;
 
@@ -413,8 +413,8 @@ INSERT INTO `task_group` (`id_`, `group_type`, `group_name`, `create_time`, `ope
 CREATE TABLE IF NOT EXISTS `task_scheduler` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `group_id` int(20) NOT NULL,
-  `task_type` varchar(50) NOT NULL,
   `task_name` varchar(50) NOT NULL,
+  `task_type` varchar(50) NOT NULL,
   `task_desc` varchar(50) DEFAULT NULL,
   `task_cron` varchar(50) NOT NULL,
   `task_fire_time` timestamp NULL DEFAULT NULL,
@@ -423,13 +423,13 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `operator` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`),
-  UNIQUE KEY `group_id_task_type` (`group_id`,`task_type`,`task_name`)
+  UNIQUE KEY `group_id_task_name` (`group_id`,`task_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  ibase4j.task_scheduler 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `task_scheduler` DISABLE KEYS */;
-INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_type`, `task_name`, `task_desc`, `task_cron`, `task_fire_time`, `task_next_fire_time`, `task_enable`, `create_time`, `operator`) VALUES
-	(1, 1, 'dubbo', 'flushMessage', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-05-27 17:30:00', '2016-05-27 18:00:00', 1, '2016-05-27 14:57:40', NULL);
+INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `task_fire_time`, `task_next_fire_time`, `task_enable`, `create_time`, `operator`) VALUES
+	(1, 1, 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-05-30 09:00:00', '2016-05-30 09:30:00', 1, '2016-05-27 14:57:40', NULL);
 /*!40000 ALTER TABLE `task_scheduler` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
