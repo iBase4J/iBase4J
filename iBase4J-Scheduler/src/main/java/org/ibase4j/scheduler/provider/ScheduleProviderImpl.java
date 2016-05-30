@@ -5,7 +5,7 @@ import java.util.List;
 import org.ibase4j.core.support.dubbo.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.support.scheduled.TaskScheduler;
-import org.ibase4j.core.support.scheduled.service.ScheduleProvider;
+import org.ibase4j.core.support.scheduled.provider.ScheduleProvider;
 import org.ibase4j.scheduler.manager.SchedulerManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;

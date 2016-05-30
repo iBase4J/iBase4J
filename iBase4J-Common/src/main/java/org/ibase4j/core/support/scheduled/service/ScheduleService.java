@@ -1,14 +1,13 @@
-package org.ibase4j.core.support.scheduled.web;
+package org.ibase4j.core.support.scheduled.service;
 
 import java.util.List;
 
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.scheduled.TaskScheduler;
-import org.ibase4j.core.support.scheduled.service.ScheduleProvider;
+import org.ibase4j.core.support.scheduled.provider.ScheduleProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
-import com.alibaba.dubbo.config.annotation.Reference;
 
 /**
  * @author ShenHuaJie
@@ -16,7 +15,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
  */
 @Service
 public class ScheduleService {
-	@Reference
+	@Autowired
 	private ScheduleProvider scheduleFacade;
 
 	public List<TaskScheduler> getAllJobDetail() {

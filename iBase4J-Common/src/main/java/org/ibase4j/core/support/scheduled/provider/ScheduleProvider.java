@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ibase4j.core.support.scheduled.service;
+package org.ibase4j.core.support.scheduled.provider;
 
 import java.util.List;
 
