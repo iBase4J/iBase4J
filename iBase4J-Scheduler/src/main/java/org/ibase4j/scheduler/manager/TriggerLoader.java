@@ -47,7 +47,7 @@ public class TriggerLoader {
 			TaskGroup taskGroup = schedulerService.getGroupById(taskScheduler.getGroupId());
 			JobDataMap jobDataMap = new JobDataMap();
 			jobDataMap.put("id", taskScheduler.getId());
-			jobDataMap.put("enable", taskScheduler.getTaskEnable());
+			jobDataMap.put("enable", taskScheduler.getTaskEnable() == 1);
 			JobDetail jobDetail = JobBuilder.newJob(jobClass)
 					.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupType())
 					.withDescription(taskScheduler.getTaskDesc()).storeDurably(true).usingJobData(jobDataMap).build();

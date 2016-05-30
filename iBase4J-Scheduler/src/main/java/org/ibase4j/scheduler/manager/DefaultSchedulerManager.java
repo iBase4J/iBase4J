@@ -57,7 +57,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 					logger.info("Try to add trigger : " + trigger);
 				}
 				scheduler.scheduleJob(trigger);
-				if (trigger.getJobDataMap().getInt("enable") != 1) {
+				if (!trigger.getJobDataMap().getBoolean("enable")) {
 					scheduler.pauseTrigger(trigger.getKey());
 				}
 			} else {
