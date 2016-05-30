@@ -79,3 +79,7 @@ UI效果图
 ![主页](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/index.png "主页")
 
 ![捐赠](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/contribute.png "捐赠")
+
+```
+* 建议：如果您是java新手，可以先看一下拆分前的版本，地址：http://git.oschina.net/iBase4J/iBase4J/tree/V-%E6%8B%86%E5%88%86%E5%89%8D/
+```
