@@ -5,9 +5,10 @@ import java.util.List;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.scheduler.TaskScheduler;
 import org.ibase4j.core.support.scheduler.provider.SchedulerProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import com.alibaba.dubbo.config.annotation.Reference;
 
 /**
  * @author ShenHuaJie
@@ -15,7 +16,7 @@ import org.springframework.util.Assert;
  */
 @Service
 public class SchedulerService {
-	@Autowired
+	@Reference// 依赖调度服务
 	private SchedulerProvider schedulerProvider;
 
 	public List<TaskScheduler> getAllJobDetail() {
