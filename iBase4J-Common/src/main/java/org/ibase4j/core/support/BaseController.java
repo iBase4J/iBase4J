@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.exception.BusinessException;
+import org.ibase4j.core.support.exception.LoginException;
 import org.ibase4j.core.util.WebUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
@@ -70,6 +71,13 @@ public abstract class BaseController {
 				modelMap.put("msg", ex.getMessage());
 			} else {
 				setModelMap(modelMap, HttpCode.BAD_REQUEST);
+			}
+		} else if (ex instanceof LoginException) {
+			if (StringUtils.isNotBlank(ex.getMessage())) {
+				modelMap.put("httpCode", HttpCode.LOGIN_FAIL.value());
+				modelMap.put("msg", ex.getMessage());
+			} else {
+				setModelMap(modelMap, HttpCode.LOGIN_FAIL);
 			}
 		} else if (ex instanceof BusinessException) {
 			if (StringUtils.isNotBlank(ex.getMessage())) {

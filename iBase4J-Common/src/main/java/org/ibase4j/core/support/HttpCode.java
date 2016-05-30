@@ -11,6 +11,10 @@ import org.ibase4j.core.config.Resources;
 public enum HttpCode {
 	/** 200请求成功 */
 	OK(200),
+	/** 207频繁操作 */
+	MULTI_STATUS(207),
+	/** 303登录失败 */
+	LOGIN_FAIL(303),
 	/** 400请求参数出错 */
 	BAD_REQUEST(400),
 	/** 401没有登录 */

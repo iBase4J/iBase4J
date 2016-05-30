@@ -35,7 +35,7 @@ public class MaliciousRequestInterceptor extends BaseInterceptor {
 				}
 				session.setAttribute(Constants.MALICIOUS_REQUEST_TIMES, maliciousRequestTimes);
 				if (maliciousRequestTimes > maxMaliciousTimes) {
-					response.setStatus(HttpCode.CONFLICT.value());
+					response.setStatus(HttpCode.MULTI_STATUS.value());
 					logger.warn("To intercept a malicious request : {}", url);
 					return false;
 				}

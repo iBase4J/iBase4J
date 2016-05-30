@@ -6,6 +6,7 @@ import org.apache.shiro.SecurityUtils;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.BaseController;
 import org.ibase4j.core.support.HttpCode;
+import org.ibase4j.core.support.exception.LoginException;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.mybatis.generator.model.SysUser;
@@ -37,7 +38,7 @@ public class LoginController extends BaseController {
 		if (LoginHelper.login(account, sysUserService.encryptPassword(password))) {
 			return setSuccessModelMap(modelMap);
 		}
-		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
+		throw new LoginException(Resources.getMessage("LOGIN_FAIL"));
 	}
 
 	// 登出

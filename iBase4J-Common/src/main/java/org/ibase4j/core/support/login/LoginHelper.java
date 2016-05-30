@@ -7,6 +7,7 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.exception.LoginException;
 
 /**
  * @author ShenHuaJie
@@ -25,13 +26,13 @@ public final class LoginHelper {
 			subject.login(token);
 			return subject.isAuthenticated();
 		} catch (LockedAccountException e) {
-			throw new IllegalArgumentException(Resources.getMessage("ACCOUNT_LOCKED", token.getPrincipal()));
+			throw new LoginException(Resources.getMessage("ACCOUNT_LOCKED", token.getPrincipal()));
 		} catch (DisabledAccountException e) {
-			throw new IllegalArgumentException(Resources.getMessage("ACCOUNT_DISABLED", token.getPrincipal()));
+			throw new LoginException(Resources.getMessage("ACCOUNT_DISABLED", token.getPrincipal()));
 		} catch (ExpiredCredentialsException e) {
-			throw new IllegalArgumentException(Resources.getMessage("ACCOUNT_EXPIRED", token.getPrincipal()));
+			throw new LoginException(Resources.getMessage("ACCOUNT_EXPIRED", token.getPrincipal()));
 		} catch (Exception e) {
-			throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"), e);
+			throw new LoginException(Resources.getMessage("LOGIN_FAIL"), e);
 		}
 	}
 }
