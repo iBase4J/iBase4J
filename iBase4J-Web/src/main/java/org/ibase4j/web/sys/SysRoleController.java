@@ -17,7 +17,7 @@ import com.github.pagehelper.PageInfo;
 /**
  * 角色管理
  * 
- * @author xsit
+ * @author ShenHuaJie
  * @version 2016年5月20日 下午3:15:43
  */
 @RestController
