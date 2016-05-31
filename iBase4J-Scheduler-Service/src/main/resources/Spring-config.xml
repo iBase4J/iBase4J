@@ -24,7 +24,6 @@
 	<!-- 扫描注解 -->
 	<context:component-scan base-package="org.ibase4j">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-		<context:exclude-filter type="regex" expression="org.ibase4j.core.*.web.*" />
 	</context:component-scan>
 	<!-- 引入SPRING配置文件 -->
 	<import resource="spring/mq.xml"/>

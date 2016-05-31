@@ -38,7 +38,7 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 
 	@SuppressWarnings("unchecked")
 	private BaseProviderImpl<T> getService() {
-		return ContextLoader.getCurrentWebApplicationContext().getBean(this.getClass());
+		return ContextLoader.getCurrentWebApplicationContext().getBean(getClass());
 	}
 
 	/** 根据Id查询(默认类型T) */
