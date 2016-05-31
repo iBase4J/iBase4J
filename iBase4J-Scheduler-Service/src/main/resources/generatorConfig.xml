@@ -17,7 +17,7 @@
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
-        <javaModelGenerator targetPackage="org.ibase4j.mybatis.generator.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="org.ibase4j.mybatis.generator.model" targetProject="../iBase4J-Scheduler-API/src/main/java">
             <property name="constructorBased" value="false"/>
             <property name="useActualColumnNames" value="true" />
             <property name="enableSubPackages" value="false"/>

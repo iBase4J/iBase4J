@@ -50,8 +50,9 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 		}
 		if (ids != null) {
 			page.clear();
+			BaseProviderImpl<T> provider = getService();
 			for (Integer id : ids) {
-				page.add(getService().queryById(id));
+				page.add(provider.queryById(id));
 			}
 		}
 		return new PageInfo<T>(page);
@@ -66,8 +67,9 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 		}
 		if (ids != null) {
 			page.clear();
+			BaseProviderImpl<T> provider = getService();
 			for (Integer id : ids) {
-				T t = getService().queryById(id);
+				T t = provider.queryById(id);
 				K k = null;
 				try {
 					k = cls.newInstance();

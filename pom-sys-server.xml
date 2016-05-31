@@ -15,7 +15,7 @@
 	<modules>
 		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-API</module>
-		<module>iBase4J-Scheduler-API</module>
+		<module>iBase4J-Scheduled-SYS-API</module>
 		<module>iBase4J-SYS-Service</module>
 	</modules>
 	<!-- clean:clean package -P build tomcat7:run-war-only -f pom-sys-server.xml -->

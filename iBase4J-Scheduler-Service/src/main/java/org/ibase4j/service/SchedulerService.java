@@ -34,6 +34,20 @@ public class SchedulerService {
 		return taskSchedulerMapper.selectByPrimaryKey(id);
 	}
 
+	@Cacheable("taskFireLog")
+	public TaskFireLog getFireLogById(Integer id) {
+		return logMapper.selectByPrimaryKey(id);
+	}
+
+	@CachePut("taskGroup")
+	public void updateGroup(TaskGroup record) {
+		if (record.getId() == null) {
+			taskGroupMapper.insert(record);
+		} else {
+			taskGroupMapper.updateByPrimaryKey(record);
+		}
+	}
+
 	@CachePut("taskScheduler")
 	public void updateScheduler(TaskScheduler record) {
 		if (record.getId() == null) {

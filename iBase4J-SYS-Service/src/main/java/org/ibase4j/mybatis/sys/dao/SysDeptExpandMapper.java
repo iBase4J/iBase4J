@@ -1,11 +1,7 @@
 package org.ibase4j.mybatis.sys.dao;
 
-import java.util.Map;
+import org.ibase4j.core.support.BaseMapper;
 
-import com.github.pagehelper.Page;
-
-public interface SysDeptExpandMapper {
-
-	Page<Integer> query(Map<String, Object> params);
+public interface SysDeptExpandMapper extends BaseMapper {
 
 }

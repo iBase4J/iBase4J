@@ -3,18 +3,13 @@
  */
 package org.ibase4j.mybatis.sys.dao;
 
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Param;
-
-import com.github.pagehelper.Page;
+import org.ibase4j.core.support.BaseMapper;
 
 /**
  * @author ShenHuaJie
  */
-public interface SysUserExpandMapper {
-
-	Page<Integer> query(Map<String, Object> params);
+public interface SysUserExpandMapper extends BaseMapper {
 
 	String queryUserIdByThirdParty(@Param("provider") String provider, @Param("openId") String openId);
 }

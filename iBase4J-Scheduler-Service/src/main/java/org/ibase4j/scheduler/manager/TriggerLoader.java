@@ -40,7 +40,7 @@ public class TriggerLoader {
 	public Map<Trigger, JobDetail> loadTriggers() {
 		Map<String, Object> params = InstanceUtil.newHashMap();
 		params.put("taskType", taskType);
-		List<Integer> taskSchedulerIds = expandMapper.query(params);
+		List<Integer> taskSchedulerIds = expandMapper.queryScheduler(params);
 		Map<Trigger, JobDetail> resultMap = InstanceUtil.newHashMap();
 		for (Integer id : taskSchedulerIds) {
 			TaskScheduler taskScheduler = schedulerService.getSchedulerById(id);

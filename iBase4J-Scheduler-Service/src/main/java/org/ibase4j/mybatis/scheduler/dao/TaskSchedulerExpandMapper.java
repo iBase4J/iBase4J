@@ -1,10 +1,14 @@
 package org.ibase4j.mybatis.scheduler.dao;
 
-import java.util.List;
 import java.util.Map;
 
-public interface TaskSchedulerExpandMapper {
+import com.github.pagehelper.Page;
 
-	List<Integer> query(Map<String, Object> params);
+public interface TaskSchedulerExpandMapper {
+	Page<Integer> queryGroup(Map<String, Object> params);
+
+	Page<Integer> queryScheduler(Map<String, Object> params);
+
+	Page<Integer> queryLog(Map<String, Object> params);
 
 }

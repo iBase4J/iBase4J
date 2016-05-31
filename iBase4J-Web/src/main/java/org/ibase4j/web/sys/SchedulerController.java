@@ -6,7 +6,7 @@ package org.ibase4j.web.sys;
 import java.util.List;
 
 import org.ibase4j.core.support.BaseController;
-import org.ibase4j.core.support.scheduler.TaskScheduler;
+import org.ibase4j.scheduler.TaskScheduled;
 import org.ibase4j.service.sys.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -28,7 +28,7 @@ public class SchedulerController extends BaseController {
 
 	@RequestMapping("/read/tasks")
 	public Object list(ModelMap modelMap) {
-		List<TaskScheduler> jobs = schedulerService.getAllJobDetail();
+		List<TaskScheduled> jobs = schedulerService.getAllJobDetail();
 		return setSuccessModelMap(modelMap, jobs);
 	}
 

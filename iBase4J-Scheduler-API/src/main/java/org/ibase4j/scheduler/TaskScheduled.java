@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.scheduler;
+package org.ibase4j.scheduler;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @version $Id: ScheduleJob.java, v 0.1 2015-1-19 下午7:35:44 ShenHuaJie Exp $
  */
 @SuppressWarnings("serial")
-public class TaskScheduler implements Serializable {
+public class TaskScheduled implements Serializable {
 
 	/** 任务id */
 	private String id;

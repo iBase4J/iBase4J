@@ -3,8 +3,8 @@ package org.ibase4j.service.sys;
 import java.util.List;
 
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.support.scheduler.TaskScheduler;
-import org.ibase4j.core.support.scheduler.provider.SchedulerProvider;
+import org.ibase4j.scheduler.TaskScheduled;
+import org.ibase4j.scheduler.provider.SchedulerProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -19,7 +19,7 @@ public class SchedulerService {
 	@Reference// 依赖调度服务
 	private SchedulerProvider schedulerProvider;
 
-	public List<TaskScheduler> getAllJobDetail() {
+	public List<TaskScheduled> getAllJobDetail() {
 		return schedulerProvider.getAllTaskDetail();
 	}
 

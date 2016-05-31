@@ -9,8 +9,8 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.support.scheduler.TaskScheduler;
 import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.scheduler.TaskScheduled;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -167,15 +167,15 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		}
 	}
 
-	public List<TaskScheduler> getAllJobDetail() {
-		List<TaskScheduler> result = new LinkedList<TaskScheduler>();
+	public List<TaskScheduled> getAllJobDetail() {
+		List<TaskScheduled> result = new LinkedList<TaskScheduled>();
 		try {
 			GroupMatcher<JobKey> matcher = GroupMatcher.jobGroupContains("");
 			Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
 			for (JobKey jobKey : jobKeys) {
 				List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
 				for (Trigger trigger : triggers) {
-					TaskScheduler job = new TaskScheduler();
+					TaskScheduled job = new TaskScheduled();
 					job.setTaskName(jobKey.getName());
 					job.setTaskGroup(jobKey.getGroup());
 					Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
@@ -204,13 +204,13 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 	}
 
 	// 获取运行中任务
-	public List<TaskScheduler> getRuningJobDetail() {
-		List<TaskScheduler> jobList = null;
+	public List<TaskScheduled> getRuningJobDetail() {
+		List<TaskScheduled> jobList = null;
 		try {
 			List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
-			jobList = new ArrayList<TaskScheduler>(executingJobs.size());
+			jobList = new ArrayList<TaskScheduled>(executingJobs.size());
 			for (JobExecutionContext executingJob : executingJobs) {
-				TaskScheduler job = new TaskScheduler();
+				TaskScheduled job = new TaskScheduled();
 				JobDetail jobDetail = executingJob.getJobDetail();
 				JobKey jobKey = jobDetail.getKey();
 				Trigger trigger = executingJob.getTrigger();
@@ -231,7 +231,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		return jobList;
 	}
 
-	public boolean stopJob(TaskScheduler scheduleJob) {
+	public boolean stopJob(TaskScheduled scheduleJob) {
 		try {
 			JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
 			scheduler.pauseJob(jobKey);
@@ -242,7 +242,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		return false;
 	}
 
-	public boolean resumeJob(TaskScheduler scheduleJob) {
+	public boolean resumeJob(TaskScheduled scheduleJob) {
 		try {
 			JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
 			scheduler.resumeJob(jobKey);
@@ -253,7 +253,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		return false;
 	}
 
-	public boolean runJob(TaskScheduler scheduleJob) {
+	public boolean runJob(TaskScheduled scheduleJob) {
 		try {
 			JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
 			scheduler.triggerJob(jobKey);
@@ -273,9 +273,9 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 							+ "] , trigger loaders size ：" + this.triggerLoaders.size());
 				}
 				// 获取原始调度状态
-				List<TaskScheduler> scheduleJobs = getAllJobDetail();
+				List<TaskScheduled> scheduleJobs = getAllJobDetail();
 				Map<String, String> stateMap = InstanceUtil.newHashMap();
-				for (TaskScheduler scheduleJob : scheduleJobs) {
+				for (TaskScheduled scheduleJob : scheduleJobs) {
 					stateMap.put(scheduleJob.getTaskGroup() + "." + scheduleJob.getTaskName(), scheduleJob.getStatus());
 				}
 				// 清空调度
