@@ -26,7 +26,7 @@ public class SysDeptController extends BaseController {
 	@Autowired
 	private SysDeptService sysDeptService;
 
-	// 查询用户
+	// 查询部门
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
