@@ -16,7 +16,7 @@
 		<module>iBase4J-Scheduler-Service</module>
 		<module>iBase4J-Web</module>
 	</modules>
-	
+
 	<!-- clean:clean package -P build tomcat7:run-war-only -->
 	<!-- mybatis-generator:generate -->
 
@@ -397,4 +397,16 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<developers>
+		<developer>
+			<name>ShenHuaJie</name>
+			<id>HuaJie.Shen</id>
+			<email>taoyixuelang@163.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
 </project>
