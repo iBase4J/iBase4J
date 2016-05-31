@@ -35,12 +35,6 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 				String nameSpace = "iBase4J:";
 				StringBuilder sb = new StringBuilder(nameSpace);
 				CacheConfig cacheConfig = o.getClass().getAnnotation(CacheConfig.class);
-				if (cacheConfig != null) {
-					String[] cacheNames = cacheConfig.cacheNames();
-					if (cacheNames != null && cacheNames.length > 0) {
-						sb.append(cacheNames[0]);
-					}
-				}
 				Cacheable cacheable = method.getAnnotation(Cacheable.class);
 				CachePut cachePut = method.getAnnotation(CachePut.class);
 				CacheEvict cacheEvict = method.getAnnotation(CacheEvict.class);
@@ -56,6 +50,11 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 					}
 				} else if (cacheEvict != null) {
 					String[] cacheNames = cacheEvict.value();
+					if (cacheNames != null && cacheNames.length > 0) {
+						sb.append(cacheNames[0]);
+					}
+				} else if (cacheConfig != null) {
+					String[] cacheNames = cacheConfig.cacheNames();
 					if (cacheNames != null && cacheNames.length > 0) {
 						sb.append(cacheNames[0]);
 					}
