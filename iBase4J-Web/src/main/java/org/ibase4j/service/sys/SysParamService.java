@@ -15,6 +15,6 @@ import com.alibaba.dubbo.config.annotation.Reference;
 public class SysParamService extends BaseService<SysParamProvider, SysParam> {
 	@Reference
 	public void setProvider(SysParamProvider provider) {
-		super.setProvider(provider);
+		this.provider = provider;
 	}
 }

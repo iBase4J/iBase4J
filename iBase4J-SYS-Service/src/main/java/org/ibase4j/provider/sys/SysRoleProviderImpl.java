@@ -18,8 +18,8 @@ import com.github.pagehelper.PageInfo;
  * @author ShenHuaJie
  * @version 2016年5月31日 上午11:01:33
  */
-@DubboService
 @CacheConfig(cacheNames = "sysRole")
+@DubboService(interfaceClass = SysRoleProvider.class)
 public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements SysRoleProvider {
 	@Autowired
 	private SysRoleMapper sysRoleMapper;

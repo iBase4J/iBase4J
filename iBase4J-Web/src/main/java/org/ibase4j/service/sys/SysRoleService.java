@@ -15,6 +15,6 @@ import com.alibaba.dubbo.config.annotation.Reference;
 public class SysRoleService extends BaseService<SysRoleProvider, SysRole> {
 	@Reference
 	public void setProvider(SysRoleProvider provider) {
-		super.setProvider(provider);
+		this.provider = provider;
 	}
 }
