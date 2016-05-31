@@ -11,10 +11,6 @@ import com.github.pagehelper.PageInfo;
 public abstract class BaseService<P extends BaseProvider<T>, T> {
 	protected P provider;
 
-	public void setProvider(P provider) {
-		this.provider = provider;
-	}
-
 	public void update(T record) {
 		Object id = null;
 		try {
