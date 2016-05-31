@@ -15,6 +15,6 @@ import com.alibaba.dubbo.config.annotation.Reference;
 public class SysDeptService extends BaseService<SysDeptProvider, SysDept> {
 	@Reference
 	public void setProvider(SysDeptProvider provider) {
-		this.provider = provider;
+		super.setProvider(provider);
 	}
 }
