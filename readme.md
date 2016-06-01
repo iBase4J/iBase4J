@@ -1,3 +1,5 @@
+[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+
 >####说明：项目依赖activemq、Redis和ZooKeeper服务。
 
 ```
@@ -66,13 +68,13 @@
 
 ![QQ](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1464169485871.png "QQ")
 
-maven启动配置图
----
+[UI地址](http://git.oschina.net/iBase4J/iBase4J-UI)
+
+## maven启动配置图
+
 ![配置](http://git.oschina.net/iBase4J/iBase4J/raw/9caa79d7beb3f528bcaa66feec472315024d82ee/maven-config.png "maven配置")
 
-UI效果图
-[http://git.oschina.net/iBase4J/iBase4J-UI](http://git.oschina.net/iBase4J/iBase4J-UI)
-
+## UI效果图
 
 ![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/login.png "登录")
 
@@ -83,7 +85,8 @@ UI效果图
 * 建议：如果您是java新手，可以先看一下拆分前的版本，地址：[iBase4J-old][].
 
 ## License
-The iBase4J is released under version 2.0 of the [Apache License][].
+iBase4J is released under version 2.0 of the [Apache License][].
+
 
 [iBase4J-old]: http://git.oschina.net/iBase4J/iBase4J/tree/V-%E6%8B%86%E5%88%86%E5%89%8D
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
