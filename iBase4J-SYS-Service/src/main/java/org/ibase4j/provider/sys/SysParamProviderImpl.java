@@ -6,6 +6,7 @@ import org.ibase4j.core.support.dubbo.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.mybatis.generator.dao.SysParamMapper;
 import org.ibase4j.mybatis.generator.model.SysParam;
+import org.ibase4j.mybatis.sys.dao.SysParamExpandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -23,6 +24,8 @@ import com.github.pagehelper.PageInfo;
 public class SysParamProviderImpl extends BaseProviderImpl<SysParam> implements SysParamProvider {
 	@Autowired
 	private SysParamMapper sysParamMapper;
+	@Autowired
+	private SysParamExpandMapper sysParamExpandMapper;
 
 	@CachePut
 	public SysParam update(SysParam record) {
@@ -40,7 +43,8 @@ public class SysParamProviderImpl extends BaseProviderImpl<SysParam> implements 
 	}
 
 	public PageInfo<SysParam> query(Map<String, Object> params) {
-		return null;
+		startPage(params);
+		return getPage(sysParamExpandMapper.query(params));
 	}
 
 	@Cacheable

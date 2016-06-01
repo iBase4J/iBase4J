@@ -6,6 +6,7 @@ import org.ibase4j.core.support.dubbo.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.mybatis.generator.dao.SysRoleMapper;
 import org.ibase4j.mybatis.generator.model.SysRole;
+import org.ibase4j.mybatis.sys.dao.SysRoleExpandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -23,6 +24,8 @@ import com.github.pagehelper.PageInfo;
 public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements SysRoleProvider {
 	@Autowired
 	private SysRoleMapper sysRoleMapper;
+	@Autowired
+	private SysRoleExpandMapper sysRoleExpandMapper;
 
 	@CachePut
 	public SysRole update(SysRole record) {
@@ -40,7 +43,8 @@ public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements Sy
 	}
 
 	public PageInfo<SysRole> query(Map<String, Object> params) {
-		return null;
+		startPage(params);
+		return getPage(sysRoleExpandMapper.query(params));
 	}
 
 	@Cacheable

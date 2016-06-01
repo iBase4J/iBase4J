@@ -10,6 +10,8 @@ import org.ibase4j.mybatis.sys.dao.SysPermissionExpandMapper;
 import org.ibase4j.provider.sys.SysPermissionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 import com.github.pagehelper.PageInfo;
@@ -20,8 +22,8 @@ import com.github.pagehelper.PageInfo;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:49
  */
-@DubboService(interfaceClass = SysPermissionProvider.class)
 @CacheConfig(cacheNames = "sysPermission")
+@DubboService(interfaceClass = SysPermissionProvider.class)
 public class SysPermissionProviderImpl extends BaseProviderImpl<SysPermission> implements SysPermissionProvider {
 	@Autowired
 	private SysPermissionMapper sysPermissionMapper;
@@ -38,6 +40,7 @@ public class SysPermissionProviderImpl extends BaseProviderImpl<SysPermission> i
 		return sysPermissionMapper.selectByPrimaryKey(id);
 	}
 
+	@CachePut
 	public SysPermission update(SysPermission record) {
 		if (record.getId() == null) {
 			sysPermissionMapper.insert(record);
@@ -47,11 +50,13 @@ public class SysPermissionProviderImpl extends BaseProviderImpl<SysPermission> i
 		return record;
 	}
 
+	@CacheEvict
 	public void delete(Integer id) {
 		sysPermissionMapper.deleteByPrimaryKey(id);
 	}
 
 	public PageInfo<SysPermission> query(Map<String, Object> params) {
-		return null;
+		startPage(params);
+		return getPage(sysPermissionExpandMapper.query(params));
 	}
 }
