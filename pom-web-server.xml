@@ -9,7 +9,7 @@
 		<relativePath>./</relativePath>
 	</parent>
 	<artifactId>iBase4J-Web-Server</artifactId>
-	<name>iBase4J</name>
+	<name>${project.artifactId}</name>
 	<packaging>pom</packaging>
 	<url>http://maven.apache.org</url>
 	<modules>
