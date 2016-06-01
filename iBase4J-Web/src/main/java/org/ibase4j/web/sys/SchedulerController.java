@@ -1,58 +1,43 @@
-/**
- * 
- */
 package org.ibase4j.web.sys;
 
-import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.ibase4j.core.support.BaseController;
-import org.ibase4j.scheduler.TaskScheduled;
+import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.service.sys.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.pagehelper.PageInfo;
+
 /**
- * 定时任务管理
+ * 调度管理
  * 
  * @author ShenHuaJie
- * @version 2016年4月2日 下午4:20:10
+ * @version 2016年6月1日 下午3:14:24
  */
 @RestController
-@RequestMapping("/schedule")
+@RequestMapping("/task")
 public class SchedulerController extends BaseController {
 	@Autowired
 	private SchedulerService schedulerService;
 
-	@RequestMapping("/read/tasks")
-	public Object list(ModelMap modelMap) {
-		List<TaskScheduled> jobs = schedulerService.getAllJobDetail();
-		return setSuccessModelMap(modelMap, jobs);
+	@RequestMapping("/read/group")
+	public Object getGroup(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = WebUtil.getParameterMap(request);
+		PageInfo<?> list = schedulerService.queryGroup(params);
+		return setSuccessModelMap(modelMap, list);
 	}
 
-	// 执行
-	@RequestMapping("/run/task")
-	public Object exec(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
-			@RequestParam(value = "taskName", required = false) String taskName) {
-		schedulerService.execTask(taskGroup, taskName);
-		return setSuccessModelMap(modelMap);
+	@RequestMapping("/read/scheduler")
+	public Object getScheduler(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = WebUtil.getParameterMap(request);
+		PageInfo<?> list = schedulerService.queryScheduler(params);
+		return setSuccessModelMap(modelMap, list);
 	}
 
-	// 启动
-	@RequestMapping("/open/task")
-	public Object open(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
-			@RequestParam(value = "taskName", required = false) String taskName) {
-		schedulerService.openTask(taskGroup, taskName);
-		return setSuccessModelMap(modelMap);
-	}
-
-	// 暂停
-	@RequestMapping("/close/task")
-	public Object close(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
-			@RequestParam(value = "taskName", required = false) String taskName) {
-		schedulerService.closeTask(taskGroup, taskName);
-		return setSuccessModelMap(modelMap);
-	}
 }
