@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ibase4j</groupId>
 	<artifactId>iBase4J</artifactId>
@@ -9,13 +10,13 @@
 	<url>http://maven.apache.org</url>
 	<modules>
 		<module>iBase4J-Common</module>
-		<module>iBase4J-SYS-API</module>
-		<module>iBase4J-SYS-Service</module>
 		<module>iBase4J-Scheduler-API</module>
 		<module>iBase4J-Scheduler-Service</module>
-    	<module>iBase4J-Scheduled-SYS-API</module>
+		<module>iBase4J-Scheduled-SYS-API</module>
+		<module>iBase4J-SYS-API</module>
+		<module>iBase4J-SYS-Service</module>
 		<module>iBase4J-Web</module>
-  </modules>
+	</modules>
 
 	<!-- clean:clean package -P build tomcat7:run-war-only -->
 	<!-- mybatis-generator:generate -->
@@ -35,14 +36,23 @@
 		<slf4j.version>1.7.9</slf4j.version>
 		<log4j.version>2.1</log4j.version>
 		<!-- -->
-		<fastjson.version>1.2.8</fastjson.version>
 		<druid.version>1.0.18</druid.version>
 		<dubbo.version>2.5.3</dubbo.version>
+		<fastjson.version>1.2.8</fastjson.version>
+		<!-- -->
+		<poi.version>3.9</poi.version>
+		<jxl.version>2.6.12</jxl.version>
+		<xfire.version>1.2.6</xfire.version>
+		<jsch.version>0.1.53</jsch.version>
 		<jedis.version>2.8.1</jedis.version>
 		<shiro.version>1.2.4</shiro.version>
-		<activemq.version>5.7.0</activemq.version>
+		<quartz.version>2.2.3</quartz.version>
 		<aspectj.version>1.8.9</aspectj.version>
-		<poi.version>3.14</poi.version>
+		<pinyin4j.version>2.5.1</pinyin4j.version>
+		<activemq.version>5.7.0</activemq.version>
+		<jsqlparser.version>0.9.5</jsqlparser.version>
+		<pagehelper.version>4.1.5</pagehelper.version>
+		<thumbnailator.version>0.4.8</thumbnailator.version>
 	</properties>
 
 	<dependencies>
@@ -102,12 +112,12 @@
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
-			<version>4.1.3</version>
+			<version>${pagehelper.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.jsqlparser</groupId>
 			<artifactId>jsqlparser</artifactId>
-			<version>0.9.5</version>
+			<version>${jsqlparser.version}</version>
 		</dependency>
 		<!-- spring核心包 -->
 		<dependency>
@@ -244,32 +254,6 @@
 			<version>${activemq.version}</version>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>people.apache.snapshots</id>
-			<url>http://repository.apache.org/content/groups/snapshots-group/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>apache.snapshots</id>
-			<name>Apache Snapshots</name>
-			<url>http://repository.apache.org/content/groups/snapshots-group/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<profiles>
 		<profile>

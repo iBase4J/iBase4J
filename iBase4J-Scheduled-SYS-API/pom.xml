@@ -1,26 +1,14 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.ibase4j</groupId>
-    <artifactId>iBase4J</artifactId>
-    <version>0.5.0</version>
-  </parent>
-  <groupId>org.ibase4j</groupId>
-  <artifactId>iBase4J-Scheduled-SYS-API</artifactId>
-  <version>0.5.0</version>
-  <name>iBase4J-Scheduled-SYS-API</name>
-  <url>http://maven.apache.org</url>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.ibase4j</groupId>
+		<artifactId>iBase4J</artifactId>
+		<version>0.5.0</version>
+	</parent>
+	<artifactId>iBase4J-Scheduled-SYS-API</artifactId>
+	<name>${project.artifactId}</name>
+	<url>http://maven.apache.org</url>
 </project>
