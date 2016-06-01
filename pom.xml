@@ -13,10 +13,8 @@
 		<module>iBase4J-SYS-Service</module>
 		<module>iBase4J-Scheduler-API</module>
 		<module>iBase4J-Scheduler-Service</module>
+    	<module>iBase4J-Scheduled-SYS-API</module>
 		<module>iBase4J-Web</module>
-    <module>iBase4J-Scheduled</module>
-    <module>iBase4J-Scheduled-API</module>
-    <module>iBase4J-Scheduled-SYS-API</module>
   </modules>
 
 	<!-- clean:clean package -P build tomcat7:run-war-only -->
