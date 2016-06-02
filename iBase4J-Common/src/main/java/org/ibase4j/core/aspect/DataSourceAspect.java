@@ -18,7 +18,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @Aspect
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class DataSourceAspect {
-	private final Logger Logger = LogManager.getLogger();
+	private final Logger logger = LogManager.getLogger();
 
 	@Pointcut("execution(* org.ibase4j.mybatis.*.dao.*.*(..))")
 	public void aspect() {
@@ -31,17 +31,19 @@ public class DataSourceAspect {
 	public void before(JoinPoint point) {
 		String className = point.getTarget().getClass().getName();
 		String method = point.getSignature().getName();
-		Logger.info(className + "." + method + "(" + StringUtils.join(point.getArgs(), ",") + ")");
+		logger.info(className + "." + method + "(" + StringUtils.join(point.getArgs(), ",") + ")");
 		try {
-			for (String key : ChooseDataSource.METHODTYPE.keySet()) {
+			L: for (String key : ChooseDataSource.METHODTYPE.keySet()) {
 				for (String type : ChooseDataSource.METHODTYPE.get(key)) {
 					if (method.startsWith(type)) {
 						HandleDataSource.putDataSource(key);
+						break L;
 					}
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
+			HandleDataSource.putDataSource("write");
 		}
 	}
 }
