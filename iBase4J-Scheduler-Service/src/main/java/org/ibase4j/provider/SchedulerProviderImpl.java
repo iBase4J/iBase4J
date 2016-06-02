@@ -87,11 +87,8 @@ public class SchedulerProviderImpl extends BaseProviderImpl<TaskScheduler> imple
 
 	public PageInfo<TaskGroup> queryGroup(Map<String, Object> params) {
 		Page<Integer> ids = expandMapper.queryGroup(params);
-		Page<TaskGroup> page = new Page<TaskGroup>();
-		try {
-			PropertyUtils.copyProperties(page, ids);
-		} catch (Exception e) {
-		}
+		Page<TaskGroup> page = new Page<TaskGroup>(ids.getPageNum(), ids.getPageSize());
+		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
 			for (Integer id : ids) {
@@ -103,11 +100,8 @@ public class SchedulerProviderImpl extends BaseProviderImpl<TaskScheduler> imple
 
 	public PageInfo<TaskSchedulerBean> queryScheduler(Map<String, Object> params) {
 		Page<Integer> ids = expandMapper.queryScheduler(params);
-		Page<TaskSchedulerBean> page = new Page<TaskSchedulerBean>();
-		try {
-			PropertyUtils.copyProperties(page, ids);
-		} catch (Exception e) {
-		}
+		Page<TaskSchedulerBean> page = new Page<TaskSchedulerBean>(ids.getPageNum(), ids.getPageSize());
+		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
 			for (Integer id : ids) {
@@ -128,11 +122,8 @@ public class SchedulerProviderImpl extends BaseProviderImpl<TaskScheduler> imple
 
 	public PageInfo<TaskFireLog> queryLog(Map<String, Object> params) {
 		Page<Integer> ids = expandMapper.queryLog(params);
-		Page<TaskFireLog> page = new Page<TaskFireLog>();
-		try {
-			PropertyUtils.copyProperties(page, ids);
-		} catch (Exception e) {
-		}
+		Page<TaskFireLog> page = new Page<TaskFireLog>(ids.getPageNum(), ids.getPageSize());
+		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
 			for (Integer id : ids) {

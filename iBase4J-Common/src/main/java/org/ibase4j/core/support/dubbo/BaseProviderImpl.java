@@ -43,11 +43,8 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 
 	/** 根据Id查询(默认类型T) */
 	public PageInfo<T> getPage(Page<Integer> ids) {
-		Page<T> page = new Page<T>();
-		try {
-			PropertyUtils.copyProperties(page, ids);
-		} catch (Exception e) {
-		}
+		Page<T> page = new Page<T>(ids.getPageNum(), ids.getPageSize());
+		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
 			BaseProviderImpl<T> provider = getService();
@@ -60,11 +57,8 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 
 	/** 根据Id查询(cls返回类型Class) */
 	public <K> PageInfo<K> getPage(Page<Integer> ids, Class<K> cls) {
-		Page<K> page = new Page<K>();
-		try {
-			PropertyUtils.copyProperties(page, ids);
-		} catch (Exception e) {
-		}
+		Page<K> page = new Page<K>(ids.getPageNum(), ids.getPageSize());
+		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
 			BaseProviderImpl<T> provider = getService();
