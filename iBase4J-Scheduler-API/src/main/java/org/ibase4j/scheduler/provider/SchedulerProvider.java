@@ -9,6 +9,7 @@ import java.util.Map;
 import org.ibase4j.mybatis.generator.model.TaskFireLog;
 import org.ibase4j.mybatis.generator.model.TaskGroup;
 import org.ibase4j.mybatis.generator.model.TaskScheduler;
+import org.ibase4j.mybatis.scheduler.model.TaskSchedulerBean;
 import org.ibase4j.scheduler.TaskScheduled;
 
 import com.github.pagehelper.PageInfo;
@@ -40,7 +41,7 @@ public interface SchedulerProvider {
 
 	public void updateScheduler(TaskScheduler record);
 
-	public PageInfo<TaskScheduler> queryScheduler(Map<String, Object> params);
+	public PageInfo<TaskSchedulerBean> queryScheduler(Map<String, Object> params);
 
 	public TaskFireLog getFireLogById(Integer id);
 

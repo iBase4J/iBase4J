@@ -26,14 +26,14 @@ public class SchedulerController extends BaseController {
 	@Autowired
 	private SchedulerService schedulerService;
 
-	@RequestMapping("/read/group")
+	@RequestMapping("/read/groups")
 	public Object getGroup(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = schedulerService.queryGroup(params);
 		return setSuccessModelMap(modelMap, list);
 	}
 
-	@RequestMapping("/read/scheduler")
+	@RequestMapping("/read/schedulers")
 	public Object getScheduler(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = schedulerService.queryScheduler(params);

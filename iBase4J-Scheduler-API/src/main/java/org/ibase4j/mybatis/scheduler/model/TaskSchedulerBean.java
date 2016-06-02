@@ -13,23 +13,13 @@ import org.ibase4j.mybatis.generator.model.TaskScheduler;
 @SuppressWarnings("serial")
 public class TaskSchedulerBean extends TaskScheduler implements Serializable {
 
-	private String taskGroup;
-	private String status;
+	private String groupName;
 
-	public String getTaskGroup() {
-		return taskGroup;
+	public String getGroupName() {
+		return groupName;
 	}
 
-	public void setTaskGroup(String taskGroup) {
-		this.taskGroup = taskGroup;
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 }

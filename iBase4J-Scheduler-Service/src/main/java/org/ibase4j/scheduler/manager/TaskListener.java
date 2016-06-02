@@ -57,7 +57,7 @@ public class TaskListener implements JobListener {
 			logger.error("Save TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
 		}
 		TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
-		taskScheduler.setTaskFireTime(context.getFireTime());
+		taskScheduler.setTaskPreviousFireTime(context.getFireTime());
 		taskScheduler.setTaskNextFireTime(context.getNextFireTime());
 		schedulerService.updateScheduler(taskScheduler);
 	}

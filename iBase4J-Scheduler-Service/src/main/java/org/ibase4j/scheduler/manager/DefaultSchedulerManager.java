@@ -185,6 +185,9 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 						String cronExpression = cronTrigger.getCronExpression();
 						job.setTaskCron(cronExpression);
 					}
+					job.setPreviousFireTime(trigger.getPreviousFireTime());
+					job.setNextFireTime(trigger.getNextFireTime());
+					job.setDesc(trigger.getJobDataMap().getString("desc"));
 					result.add(job);
 				}
 			}
@@ -223,6 +226,9 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 					String cronExpression = cronTrigger.getCronExpression();
 					job.setTaskCron(cronExpression);
 				}
+				job.setPreviousFireTime(trigger.getPreviousFireTime());
+				job.setNextFireTime(trigger.getNextFireTime());
+				job.setDesc(trigger.getJobDataMap().getString("desc"));
 				jobList.add(job);
 			}
 		} catch (Exception e) {

@@ -3,7 +3,6 @@
  */
 package org.ibase4j.web.sys;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +33,7 @@ public class ScheduledController extends BaseController {
 
 	@RequestMapping("/read/tasks")
 	public Object list(ModelMap modelMap) {
-		List<TaskScheduled> jobs = schedulerService.getAllJobDetail();
+		PageInfo<TaskScheduled> jobs = schedulerService.getAllJobDetail();
 		return setSuccessModelMap(modelMap, jobs);
 	}
 

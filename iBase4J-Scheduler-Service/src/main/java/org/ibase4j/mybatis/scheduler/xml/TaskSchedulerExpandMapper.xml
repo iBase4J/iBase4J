@@ -15,7 +15,7 @@
 		</if>
 	</select>
 	<select id="queryLog" parameterType="java.util.Map" resultType="java.lang.Integer">
-		select id_ from task_scheduler where 1=1
+		select id_ from task_fire_log where 1=1
 		<if test="keyword != null">
 			and (group_name like CONCAT('%',#{keyword},'%') or task_name like CONCAT('%',#{keyword},'%'))
 		</if>

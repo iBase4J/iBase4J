@@ -1,12 +1,11 @@
 package org.ibase4j.service.sys;
 
-import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.mybatis.generator.model.TaskFireLog;
 import org.ibase4j.mybatis.generator.model.TaskGroup;
-import org.ibase4j.mybatis.generator.model.TaskScheduler;
+import org.ibase4j.mybatis.scheduler.model.TaskSchedulerBean;
 import org.ibase4j.scheduler.TaskScheduled;
 import org.ibase4j.scheduler.provider.SchedulerProvider;
 import org.springframework.stereotype.Service;
@@ -24,8 +23,12 @@ public class SchedulerService {
 	@Reference // 依赖调度服务
 	private SchedulerProvider schedulerProvider;
 
-	public List<TaskScheduled> getAllJobDetail() {
-		return schedulerProvider.getAllTaskDetail();
+	public PageInfo<TaskScheduled> getAllJobDetail() {
+		PageInfo<TaskScheduled> pageInfo = new PageInfo<TaskScheduled>();
+		pageInfo.setList(schedulerProvider.getAllTaskDetail());
+		pageInfo.setPages(1);
+		pageInfo.setSize(pageInfo.getList().size());
+		return pageInfo;
 	}
 
 	public boolean execTask(String taskGroup, String taskName) {
@@ -50,7 +53,7 @@ public class SchedulerService {
 		return schedulerProvider.queryGroup(params);
 	}
 
-	public PageInfo<TaskScheduler> queryScheduler(Map<String, Object> params) {
+	public PageInfo<TaskSchedulerBean> queryScheduler(Map<String, Object> params) {
 		return schedulerProvider.queryScheduler(params);
 	}
 

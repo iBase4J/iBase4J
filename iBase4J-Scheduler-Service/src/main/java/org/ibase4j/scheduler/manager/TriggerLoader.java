@@ -47,7 +47,8 @@ public class TriggerLoader {
 			TaskGroup taskGroup = schedulerService.getGroupById(taskScheduler.getGroupId());
 			JobDataMap jobDataMap = new JobDataMap();
 			jobDataMap.put("id", taskScheduler.getId());
-			jobDataMap.put("enable", taskScheduler.getTaskEnable() == 1);
+			jobDataMap.put("enable", taskScheduler.getEnable() == 1);
+			jobDataMap.put("desc", taskGroup.getGroupDesc() + ":" + taskScheduler.getTaskDesc());
 			JobDetail jobDetail = JobBuilder.newJob(jobClass)
 					.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupName())
 					.withDescription(taskScheduler.getTaskDesc()).storeDurably(true).usingJobData(jobDataMap).build();
@@ -55,7 +56,7 @@ public class TriggerLoader {
 			Trigger trigger = TriggerBuilder.newTrigger()
 					.withSchedule(CronScheduleBuilder.cronSchedule(taskScheduler.getTaskCron()))
 					.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupName())
-					.withDescription(taskScheduler.getTaskDesc()).forJob(jobDetail).usingJobData(jobDataMap).build();
+					.withDescription(taskGroup.getGroupDesc()).forJob(jobDetail).usingJobData(jobDataMap).build();
 
 			resultMap.put(trigger, jobDetail);
 		}

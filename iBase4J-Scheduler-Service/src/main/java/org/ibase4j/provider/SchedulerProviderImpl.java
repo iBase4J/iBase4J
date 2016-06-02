@@ -10,6 +10,7 @@ import org.ibase4j.mybatis.generator.model.TaskFireLog;
 import org.ibase4j.mybatis.generator.model.TaskGroup;
 import org.ibase4j.mybatis.generator.model.TaskScheduler;
 import org.ibase4j.mybatis.scheduler.dao.TaskSchedulerExpandMapper;
+import org.ibase4j.mybatis.scheduler.model.TaskSchedulerBean;
 import org.ibase4j.scheduler.TaskScheduled;
 import org.ibase4j.scheduler.manager.SchedulerManager;
 import org.ibase4j.scheduler.provider.SchedulerProvider;
@@ -100,9 +101,9 @@ public class SchedulerProviderImpl extends BaseProviderImpl<TaskScheduler> imple
 		return new PageInfo<TaskGroup>(page);
 	}
 
-	public PageInfo<TaskScheduler> queryScheduler(Map<String, Object> params) {
-		Page<Integer> ids = expandMapper.queryGroup(params);
-		Page<TaskScheduler> page = new Page<TaskScheduler>();
+	public PageInfo<TaskSchedulerBean> queryScheduler(Map<String, Object> params) {
+		Page<Integer> ids = expandMapper.queryScheduler(params);
+		Page<TaskSchedulerBean> page = new Page<TaskSchedulerBean>();
 		try {
 			PropertyUtils.copyProperties(page, ids);
 		} catch (Exception e) {
@@ -110,14 +111,23 @@ public class SchedulerProviderImpl extends BaseProviderImpl<TaskScheduler> imple
 		if (ids != null) {
 			page.clear();
 			for (Integer id : ids) {
-				page.add(schedulerService.getSchedulerById(id));
+				TaskScheduler taskScheduler = schedulerService.getSchedulerById(id);
+				TaskSchedulerBean bean = new TaskSchedulerBean();
+				try {
+					PropertyUtils.copyProperties(bean, taskScheduler);
+				} catch (Exception e) {
+				}
+				TaskGroup taskGroup = schedulerService.getGroupById(bean.getGroupId());
+				bean.setGroupName(taskGroup.getGroupName());
+				bean.setTaskDesc(taskGroup.getGroupDesc() + ":" + bean.getTaskDesc());
+				page.add(bean);
 			}
 		}
-		return new PageInfo<TaskScheduler>(page);
+		return new PageInfo<TaskSchedulerBean>(page);
 	}
 
 	public PageInfo<TaskFireLog> queryLog(Map<String, Object> params) {
-		Page<Integer> ids = expandMapper.queryGroup(params);
+		Page<Integer> ids = expandMapper.queryLog(params);
 		Page<TaskFireLog> page = new Page<TaskFireLog>();
 		try {
 			PropertyUtils.copyProperties(page, ids);
