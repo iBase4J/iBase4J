@@ -6,6 +6,7 @@ package org.ibase4j.core.config;
 import java.lang.reflect.Method;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.exception.BusinessException;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -32,8 +33,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 		return new KeyGenerator() {
 			/** 重写生成key方法 */
 			public Object generate(Object o, Method method, Object... objects) {
-				String nameSpace = "iBase4J:";
-				StringBuilder sb = new StringBuilder(nameSpace);
+				StringBuilder sb = new StringBuilder(Constants.CACHE_NAMESPACE);
 				CacheConfig cacheConfig = o.getClass().getAnnotation(CacheConfig.class);
 				Cacheable cacheable = method.getAnnotation(Cacheable.class);
 				CachePut cachePut = method.getAnnotation(CachePut.class);
@@ -54,13 +54,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 						sb.append(cacheNames[0]);
 					}
 				}
-				if (cacheConfig != null && sb.toString().equals(nameSpace)) {
+				if (cacheConfig != null && sb.toString().equals(Constants.CACHE_NAMESPACE)) {
 					String[] cacheNames = cacheConfig.cacheNames();
 					if (cacheNames != null && cacheNames.length > 0) {
 						sb.append(cacheNames[0]);
 					}
 				}
-				if (sb.toString().equals(nameSpace)) {
+				if (sb.toString().equals(Constants.CACHE_NAMESPACE)) {
 					sb.append(o.getClass().getName());
 				}
 				if (objects != null) {

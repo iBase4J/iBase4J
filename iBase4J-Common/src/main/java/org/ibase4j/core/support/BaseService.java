@@ -2,6 +2,7 @@ package org.ibase4j.core.support;
 
 import java.util.Map;
 
+import org.ibase4j.core.Constants;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.dubbo.BaseProvider;
 import org.ibase4j.core.support.spring.data.redis.ObjectRedisSerializer;
@@ -38,7 +39,7 @@ public abstract class BaseService<P extends BaseProvider<T>, T> {
 	@SuppressWarnings("unchecked")
 	public T queryById(Integer id) {
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
-		StringBuilder sb = new StringBuilder("iBase4J:");
+		StringBuilder sb = new StringBuilder(Constants.CACHE_NAMESPACE);
 		String className = this.getClass().getSimpleName();
 		sb.append(className.substring(0, 1).toLowerCase()).append(className.substring(1, className.length() - 7));
 		sb.append(":").append(id);

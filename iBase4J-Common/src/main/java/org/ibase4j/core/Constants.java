@@ -6,7 +6,7 @@ package org.ibase4j.core;
  * @author ShenHuaJie
  * @version $Id: Constants.java, v 0.1 2014-2-28 上午11:18:28 ShenHuaJie Exp $
  */
-public final class Constants {
+public interface Constants {
 	/**
 	 * 异常信息统一头信息<br>
 	 * 非常遗憾的通知您,程序发生了异常
@@ -28,5 +28,6 @@ public final class Constants {
 	public static final String PREREQUEST_TIME = "PREREQUEST_TIME";
 	/** 非法请求次数 */
 	public static final String MALICIOUS_REQUEST_TIMES = "MALICIOUS_REQUEST_TIMES";
-
+	/** 缓存命名空间 */
+	public static final String CACHE_NAMESPACE = "iBase4J:";
 }
