@@ -12,6 +12,7 @@ import org.ibase4j.mybatis.generator.model.SysUser;
 import org.ibase4j.mybatis.sys.model.SysUserBean;
 import org.ibase4j.provider.sys.SysUserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -29,26 +30,20 @@ public class SysUserService extends BaseService<SysUserProvider, SysUser> {
 	}
 
 	/** 修改用户信息 */
+	@CachePut
 	public void updateUserInfo(SysUser sysUser) {
 		Assert.notNull(sysUser.getId(), Resources.getMessage("USER_ID_IS_NULL"));
 		Assert.notNull(sysUser.getAccount(), Resources.getMessage("ACCOUNT_IS_NULL"));
-		SysUser user = provider.queryById(sysUser.getId());
+		SysUser user = this.queryById(sysUser.getId());
 		Assert.notNull(user, String.format(Resources.getMessage("USER_IS_NULL"), sysUser.getId()));
-		sysUser.setPassword(user.getPassword());
+		if (StringUtils.isBlank(sysUser.getPassword())) {
+			sysUser.setPassword(user.getPassword());
+		}
 		provider.update(sysUser);
 	}
 
 	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
 		return provider.queryBeans(params);
-	}
-
-	public SysUser queryById(Integer id) {
-		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
-		SysUser sysUser = provider.queryById(id);
-		if (sysUser != null) {
-			sysUser.setPassword(null);
-		}
-		return sysUser;
 	}
 
 	public void updatePassword(Integer id, String password) {

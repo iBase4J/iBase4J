@@ -53,7 +53,8 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 					if (cacheNames != null && cacheNames.length > 0) {
 						sb.append(cacheNames[0]);
 					}
-				} else if (cacheConfig != null) {
+				}
+				if (cacheConfig != null && sb.toString().equals(nameSpace)) {
 					String[] cacheNames = cacheConfig.cacheNames();
 					if (cacheNames != null && cacheNames.length > 0) {
 						sb.append(cacheNames[0]);

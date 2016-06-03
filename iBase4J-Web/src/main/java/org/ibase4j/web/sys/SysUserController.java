@@ -68,6 +68,9 @@ public class SysUserController extends BaseController {
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysUser sysUser = sysUserService.queryById(id);
+		if (sysUser != null) {
+			sysUser.setPassword(null);
+		}
 		return setSuccessModelMap(modelMap, sysUser);
 	}
 
@@ -76,6 +79,9 @@ public class SysUserController extends BaseController {
 	public Object current(ModelMap modelMap) {
 		Integer id = getCurrUser();
 		SysUser sysUser = sysUserService.queryById(id);
+		if (sysUser != null) {
+			sysUser.setPassword(null);
+		}
 		List<SysMenuBean> menus = authorizeService.queryAuthorizeByUserId(id);
 		modelMap.put("user", sysUser);
 		modelMap.put("menus", menus);
