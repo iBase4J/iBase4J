@@ -25,10 +25,11 @@ import org.ibase4j.service.sys.SysSessionService;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
+
 /**
  * 权限检查类
+ * 
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:44:45
  */
@@ -50,21 +51,24 @@ public class Realm extends AuthorizingRealm {
 		params.put("countSql", 0);
 		params.put("usable", 1);
 		params.put("account", token.getUsername());
-		StringBuilder sb = new StringBuilder(100);
-		for (int i = 0; i < token.getPassword().length; i++) {
-			sb.append(token.getPassword()[i]);
-		}
-		params.put("password", sb.toString());
 		PageInfo<SysUserBean> pageInfo = sysUserService.queryBeans(params);
 		if (pageInfo.getSize() == 1) {
 			SysUser user = pageInfo.getList().get(0);
-			WebUtil.saveCurrentUser(user.getId());
-			saveSession(user.getAccount());
-			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
-					user.getUserName());
-			return authcInfo;
+			StringBuilder sb = new StringBuilder(100);
+			for (int i = 0; i < token.getPassword().length; i++) {
+				sb.append(token.getPassword()[i]);
+			}
+			if (user.getPassword().equals(sb.toString())) {
+				WebUtil.saveCurrentUser(user.getId());
+				saveSession(user.getAccount());
+				AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(),
+						user.getPassword(), user.getUserName());
+				return authcInfo;
+			}
+			logger.warn("USER [{}] PASSWORD IS WRONG: {}", token.getUsername(), sb.toString());
+			return null;
 		} else {
-			logger.warn("PASSWORD IS WRONG: " + JSON.toJSONString(params));
+			logger.warn("No user: {}", token.getUsername());
 			return null;
 		}
 	}

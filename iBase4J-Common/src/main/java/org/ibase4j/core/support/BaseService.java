@@ -19,7 +19,7 @@ import com.github.pagehelper.PageInfo;
 public abstract class BaseService<P extends BaseProvider<T>, T> {
 	protected P provider;
 	@Autowired
-	private ObjectRedisSerializer valueSerializer;
+	protected ObjectRedisSerializer valueSerializer;
 
 	/** 修改 */
 	public void update(T record) {
