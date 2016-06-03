@@ -12,11 +12,16 @@ import org.springframework.util.Assert;
 
 import com.github.pagehelper.PageInfo;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:47:58
+ */
 public abstract class BaseService<P extends BaseProvider<T>, T> {
 	protected P provider;
 	@Autowired
 	private ObjectRedisSerializer valueSerializer;
 
+	/** 修改 */
 	public void update(T record) {
 		Object id = null;
 		try {
@@ -27,15 +32,18 @@ public abstract class BaseService<P extends BaseProvider<T>, T> {
 		provider.update(record);
 	}
 
+	/** 新增 */
 	public void add(T record) {
 		provider.update(record);
 	}
 
+	/** 删除 */
 	public void delete(Integer id) {
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
 		provider.delete(id);
 	}
 
+	/** 根据Id查询 */
 	@SuppressWarnings("unchecked")
 	public T queryById(Integer id) {
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
@@ -50,6 +58,7 @@ public abstract class BaseService<P extends BaseProvider<T>, T> {
 		return provider.queryById(id);
 	}
 
+	/** 条件查询 */
 	public PageInfo<T> query(Map<String, Object> params) {
 		return provider.query(params);
 	}
