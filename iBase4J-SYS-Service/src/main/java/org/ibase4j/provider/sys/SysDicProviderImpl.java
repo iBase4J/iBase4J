@@ -11,12 +11,15 @@ import org.ibase4j.mybatis.generator.dao.SysDicMapper;
 import org.ibase4j.mybatis.generator.model.SysDic;
 import org.ibase4j.mybatis.generator.model.SysDicIndex;
 import org.ibase4j.mybatis.sys.dao.SysDicExpandMapper;
-import org.ibase4j.provider.sys.SysDicProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.ContextLoader;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 
 /**
  * @author ShenHuaJie
@@ -67,10 +70,6 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 		return dicMapper.selectByPrimaryKey(id);
 	}
 
-	public void query() {
-		dicExpandMapper.queryDicByDicIndexKey(null);
-	}
-
 	@CacheEvict(value = "sysDics", allEntries = true)
 	public void clearCache() {
 	}
@@ -102,5 +101,25 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 
 	public SysDic queryById(Integer id) {
 		return queryDicById(id);
+	}
+
+	public PageInfo<SysDicIndex> queryDicIndex(Map<String, Object> params) {
+		startPage(params);
+		Page<Integer> ids = dicExpandMapper.queryDicIndex(params);
+		Page<SysDicIndex> page = new Page<SysDicIndex>(ids.getPageNum(), ids.getPageSize());
+		page.setTotal(ids.getTotal());
+		if (ids != null) {
+			page.clear();
+			SysDicProvider provider = ContextLoader.getCurrentWebApplicationContext().getBean(getClass());
+			for (Integer id : ids) {
+				page.add(provider.queryDicIndexById(id));
+			}
+		}
+		return new PageInfo<SysDicIndex>(page);
+	}
+
+	public PageInfo<SysDic> queryDic(Map<String, Object> params) {
+		startPage(params);
+		return getPage(dicExpandMapper.queryDic(params));
 	}
 }

@@ -1,9 +1,13 @@
 package org.ibase4j.mybatis.sys.dao;
 
-import java.util.List;
+import java.util.Map;
+
+import com.github.pagehelper.Page;
 
 public interface SysDicExpandMapper {
 
-	List<Integer> queryDicByDicIndexKey(String key);
+	Page<Integer> queryDicIndex(Map<String, Object> params);
+
+	Page<Integer> queryDic(Map<String, Object> params);
 
 }
