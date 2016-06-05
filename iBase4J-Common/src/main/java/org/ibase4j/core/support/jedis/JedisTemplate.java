@@ -2,6 +2,7 @@ package org.ibase4j.core.support.jedis;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -16,6 +17,7 @@ public class JedisTemplate {
 	private static final Logger logger = LogManager.getLogger();
 
 	private static ShardedJedisPool shardedJedisPool = null;
+	@Value("${redis.expiration}")
 	private static Integer EXPIRE = 60 * 60 * 1; // 1小时
 
 	// 获取线程

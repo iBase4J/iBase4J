@@ -39,6 +39,6 @@
 	</bean>
 	<bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
 		<constructor-arg index="0" ref="redisTemplate" />
-		<property name="defaultExpiration" value="${redis.timeout}" />
+		<property name="defaultExpiration" value="${redis.expiration}" />
 	</bean>
 </beans>

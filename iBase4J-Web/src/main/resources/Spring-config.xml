@@ -17,6 +17,8 @@
 		<property name="properties">
 			<props>
 				<prop key="dubbo.application.name">iBase4J-Web</prop>
+				<!-- Web端常用数据缓存时间(秒) -->
+				<prop key="redis.expiration">1800</prop>
 			</props>
 		</property>
 	</bean>
