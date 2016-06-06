@@ -13,6 +13,9 @@
 		</if>
 	</select>
 	<select id="queryBySessionId" resultType="java.lang.Integer">
-		select id_ from sys_session where session_id = #{keyword}
+		select id_ from sys_session where session_id = #{sessionId}
+	</select>
+	<select id="querySessionIdByAccount" resultType="java.lang.String">
+		select session_id from sys_session where account_ = #{account}
 	</select>
 </mapper>

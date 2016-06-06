@@ -3,6 +3,8 @@
  */
 package org.ibase4j.provider.sys;
 
+import java.util.List;
+
 import org.ibase4j.core.support.dubbo.BaseProvider;
 import org.ibase4j.mybatis.generator.model.SysSession;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,4 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface SysSessionProvider extends BaseProvider<SysSession> {
 	@Transactional
 	public void deleteBySessionId(final String sessionId);
+
+	public List<String> querySessionIdByAccount(String account);
 }

@@ -75,6 +75,8 @@ public class Realm extends AuthorizingRealm {
 
 	/** 保存session */
 	private void saveSession(String account) {
+		// 踢出用户
+		sysSessionService.deleteByAccount(account);
 		SysSession record = new SysSession();
 		record.setAccount(account);
 		Subject currentUser = SecurityUtils.getSubject();

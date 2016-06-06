@@ -1,5 +1,6 @@
 package org.ibase4j.provider.sys;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.support.dubbo.BaseProviderImpl;
@@ -62,5 +63,9 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
 	public PageInfo<SysSession> query(Map<String, Object> params) {
 		this.startPage(params);
 		return getPage(sessionExpandMapper.query(params));
+	}
+
+	public List<String> querySessionIdByAccount(String account) {
+		return sessionExpandMapper.querySessionIdByAccount(account);
 	}
 }

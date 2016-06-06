@@ -5,11 +5,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ibase4j.core.support.BaseController;
+import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
+import org.ibase4j.mybatis.generator.model.SysDept;
 import org.ibase4j.service.sys.SysDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
@@ -32,5 +35,21 @@ public class SysDeptController extends BaseController {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = sysDeptService.query(params);
 		return setSuccessModelMap(modelMap, list);
+	}
+
+	// 新增部门
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public Object add(HttpServletRequest request, ModelMap modelMap) {
+		SysDept record = Request2ModelUtil.covert(SysDept.class, request);
+		sysDeptService.add(record);
+		return setSuccessModelMap(modelMap);
+	}
+
+	// 修改部门
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public Object update(HttpServletRequest request, ModelMap modelMap) {
+		SysDept record = Request2ModelUtil.covert(SysDept.class, request);
+		sysDeptService.update(record);
+		return setSuccessModelMap(modelMap);
 	}
 }

@@ -40,9 +40,7 @@ public class SysUserController extends BaseController {
 
 	// 修改用户信息
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public Object update(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) Integer id,
-			@RequestParam(value = "account", required = false) String account) {
+	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
 		sysUserService.updateUserInfo(sysUser);
 		return setSuccessModelMap(modelMap);

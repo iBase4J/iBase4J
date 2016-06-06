@@ -1,5 +1,6 @@
 package org.ibase4j.service.sys;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.config.Resources;
@@ -14,6 +15,7 @@ import com.github.pagehelper.PageInfo;
 
 /**
  * 会话管理
+ * 
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:08:32
  */
@@ -26,6 +28,19 @@ public class SysSessionService {
 
 	public PageInfo<?> query(Map<String, Object> params) {
 		return sysSessionProvider.query(params);
+	}
+
+	/** 删除会话 */
+	public void deleteByAccount(String account) {
+		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
+		List<String> sessionIds = sysSessionProvider.querySessionIdByAccount(account);
+		if (sessionIds != null) {
+			for (String sessionId : sessionIds) {
+				sessionRepository.delete(sessionId);
+				sessionRepository.cleanupExpiredSessions();
+				sysSessionProvider.deleteBySessionId(sessionId);
+			}
+		}
 	}
 
 	/** 删除会话 */
