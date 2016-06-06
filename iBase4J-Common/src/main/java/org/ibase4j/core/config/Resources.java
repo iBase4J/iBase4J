@@ -15,7 +15,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
  * @version 2016年5月20日 下午3:19:19
  */
 @PropertySource(value = { "classpath:config/ssh.properties", "classpath:config/email.properties",
-		"claspath:config/thirdParty.properties", "claspath:i18n/messages*.properties" })
+		"classpath:config/thirdParty.properties", "classpath:i18n/messages*.properties" })
 public final class Resources {
 	/** SSH服务器配置 */
 	public static final ResourceBundle SSH = ResourceBundle.getBundle("config/ssh");
