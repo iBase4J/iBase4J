@@ -1,7 +1,9 @@
 package org.ibase4j.scheduler.task;
 
 import org.ibase4j.core.support.dubbo.ReferenceUtil;
+import org.ibase4j.scheduler.Constants;
 import org.quartz.Job;
+import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobKey;
@@ -18,6 +20,10 @@ public class DubboTask implements Job {
 	private String provider = "org.ibase4j.scheduler.provider.";
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
+		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
+		if (Constants.ERROR_STATS.equals(jobDataMap.get("taskStatus"))) {
+			return;
+		}
 		ApplicationContext applicationContext = null;
 		JobKey jobKey = context.getJobDetail().getKey();
 		try {

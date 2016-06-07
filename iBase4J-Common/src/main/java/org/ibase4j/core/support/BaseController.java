@@ -5,12 +5,11 @@ package org.ibase4j.core.support;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.support.exception.BusinessException;
-import org.ibase4j.core.support.exception.LoginException;
+import org.ibase4j.core.support.exception.IllegalParameterException;
+import org.ibase4j.core.support.exception.SysException;
 import org.ibase4j.core.util.WebUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
@@ -65,27 +64,10 @@ public abstract class BaseController {
 	public void exceptionHandler(HttpServletResponse response, Exception ex) throws Exception {
 		logger.error(Constants.Exception_Head, ex);
 		ModelMap modelMap = new ModelMap();
-		if (ex instanceof IllegalArgumentException) {
-			if (StringUtils.isNotBlank(ex.getMessage())) {
-				modelMap.put("httpCode", HttpCode.BAD_REQUEST.value());
-				modelMap.put("msg", ex.getMessage());
-			} else {
-				setModelMap(modelMap, HttpCode.BAD_REQUEST);
-			}
-		} else if (ex instanceof LoginException) {
-			if (StringUtils.isNotBlank(ex.getMessage())) {
-				modelMap.put("httpCode", HttpCode.LOGIN_FAIL.value());
-				modelMap.put("msg", ex.getMessage());
-			} else {
-				setModelMap(modelMap, HttpCode.LOGIN_FAIL);
-			}
-		} else if (ex instanceof BusinessException) {
-			if (StringUtils.isNotBlank(ex.getMessage())) {
-				modelMap.put("httpCode", HttpCode.CONFLICT.value());
-				modelMap.put("msg", ex.getMessage());
-			} else {
-				setModelMap(modelMap, HttpCode.CONFLICT);
-			}
+		if (ex instanceof SysException) {
+			((SysException) ex).handler(modelMap);
+		} else if (ex instanceof IllegalArgumentException) {
+			new IllegalParameterException(ex.getMessage()).handler(modelMap);
 		} else {
 			setModelMap(modelMap, HttpCode.INTERNAL_SERVER_ERROR);
 		}

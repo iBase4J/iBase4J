@@ -50,6 +50,6 @@
 			</value>
 		</property>
 	</bean>
-	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+	<!-- Shiro生命周期处理器 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 </beans>

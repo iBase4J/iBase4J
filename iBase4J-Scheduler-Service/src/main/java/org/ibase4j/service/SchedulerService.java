@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author ShenHuaJie
@@ -39,6 +40,7 @@ public class SchedulerService {
 		return logMapper.selectByPrimaryKey(id);
 	}
 
+	@Transactional
 	@CachePut("taskGroup")
 	public void updateGroup(TaskGroup record) {
 		if (record.getId() == null) {
@@ -48,6 +50,7 @@ public class SchedulerService {
 		}
 	}
 
+	@Transactional
 	@CachePut("taskScheduler")
 	public void updateScheduler(TaskScheduler record) {
 		if (record.getId() == null) {
@@ -57,6 +60,7 @@ public class SchedulerService {
 		}
 	}
 
+	@Transactional
 	@CachePut("taskFireLog")
 	public void updateLog(TaskFireLog record) {
 		if (record.getId() == null) {

@@ -44,26 +44,29 @@ public class TaskListener implements JobListener {
 		if (logger.isInfoEnabled()) {
 			logger.info("Listened job : " + groupName + "." + jobName + " prepared to start.");
 		}
-		Timestamp start = new Timestamp(System.currentTimeMillis());
 		TaskFireLog log = new TaskFireLog();
-		log.setStartTime(start);
+		log.setStartTime(context.getFireTime());
 		log.setGroupName(groupName);
 		log.setTaskName(jobName);
 		log.setStatus(Constants.INIT_STATS);
 		try {
 			schedulerService.updateLog(log);
 			jobDataMap.put(Constants.JOB_LOG, log);
+			TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
+			taskScheduler.setTaskPreviousFireTime(context.getFireTime());
+			taskScheduler.setTaskNextFireTime(context.getNextFireTime());
+			schedulerService.updateScheduler(taskScheduler);
 		} catch (Exception e) {
+			jobDataMap.put("taskStatus", Constants.ERROR_STATS);
 			logger.error("Save TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
 		}
-		TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
-		taskScheduler.setTaskPreviousFireTime(context.getFireTime());
-		taskScheduler.setTaskNextFireTime(context.getNextFireTime());
-		schedulerService.updateScheduler(taskScheduler);
 	}
 
 	public void jobWasExecuted(JobExecutionContext context, JobExecutionException exp) {
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
+		if (Constants.ERROR_STATS.equals(jobDataMap.get("taskStatus"))) {
+			return;
+		}
 		String groupName = context.getJobDetail().getKey().getGroup();
 		String jobName = context.getJobDetail().getKey().getName();
 		if (logger.isInfoEnabled()) {

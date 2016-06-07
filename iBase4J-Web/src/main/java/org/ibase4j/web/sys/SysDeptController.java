@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
@@ -50,6 +51,14 @@ public class SysDeptController extends BaseController {
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysDept record = Request2ModelUtil.covert(SysDept.class, request);
 		sysDeptService.update(record);
+		return setSuccessModelMap(modelMap);
+	}
+
+	// 删除部门
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public Object delete(HttpServletRequest request, ModelMap modelMap,
+			@RequestParam(value = "id", required = false) Integer id) {
+		sysDeptService.delete(id);
 		return setSuccessModelMap(modelMap);
 	}
 }
