@@ -27,7 +27,7 @@ public class TriggerLoader {
 	@Autowired
 	private SchedulerService schedulerService;
 	@Autowired
-	private TaskSchedulerExpandMapper expandMapper;
+	private TaskSchedulerExpandMapper taskSchedulerExpandMapper;
 
 	private String taskType; // 作业类型
 	private Class<? extends Job> jobClass; // 执行作业的类
@@ -40,7 +40,7 @@ public class TriggerLoader {
 	public Map<Trigger, JobDetail> loadTriggers() {
 		Map<String, Object> params = InstanceUtil.newHashMap();
 		params.put("taskType", taskType);
-		List<Integer> taskSchedulerIds = expandMapper.queryScheduler(params);
+		List<Integer> taskSchedulerIds = taskSchedulerExpandMapper.queryScheduler(params);
 		Map<Trigger, JobDetail> resultMap = InstanceUtil.newHashMap();
 		for (Integer id : taskSchedulerIds) {
 			TaskScheduler taskScheduler = schedulerService.getSchedulerById(id);
