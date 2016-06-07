@@ -3,7 +3,10 @@ package org.ibase4j.core.support.exception;
 import org.ibase4j.core.support.HttpCode;
 
 @SuppressWarnings("serial")
-public class LoginException extends SysException {
+public class LoginException extends BaseException {
+	public LoginException() {
+	}
+
 	public LoginException(String message) {
 		super(message);
 	}

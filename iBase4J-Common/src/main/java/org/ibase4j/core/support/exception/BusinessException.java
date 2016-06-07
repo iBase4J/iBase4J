@@ -7,7 +7,7 @@ import org.ibase4j.core.support.HttpCode;
  * @version 2016年5月20日 下午3:19:19
  */
 @SuppressWarnings("serial")
-public class BusinessException extends SysException {
+public class BusinessException extends BaseException {
 	public BusinessException() {
 	}
 
