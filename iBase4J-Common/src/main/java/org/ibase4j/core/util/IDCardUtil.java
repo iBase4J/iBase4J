@@ -41,7 +41,7 @@ public final class IDCardUtil {
 	 * @return 十八位身份证号码
 	 * @throws 身份证号参数不是15位
 	 */
-	public static final String fixPersonIDCodeWithoutCheck(String personIDCode) throws Throwable {
+	public static final String fixPersonIDCodeWithoutCheck(String personIDCode) {
 		if (personIDCode == null || personIDCode.trim().length() != 15)
 			throw new RuntimeException("输入的身份证号不足15位，请检查");
 
@@ -121,7 +121,7 @@ public final class IDCardUtil {
 	 * @param identity 18位或15位居民身份证号码
 	 * @return 是否为有效的身份证号码
 	 */
-	public static final boolean isIdentity(String identity) throws Throwable {
+	public static final boolean isIdentity(String identity) {
 		if (identity == null)
 			return false;
 		if (identity.length() == 18 || identity.length() == 15) {
