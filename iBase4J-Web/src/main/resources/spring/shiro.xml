@@ -13,10 +13,9 @@
 	<dubbo:reference id="sysSessionProvider" interface="org.ibase4j.provider.sys.SysSessionProvider" />
 	<dubbo:reference id="sysPermissionProvider" interface="org.ibase4j.provider.sys.SysPermissionProvider" />
 	<!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
+	<bean id="realm" class="org.ibase4j.core.support.shiro.Realm" />
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-		<property name="realm">
-			<bean class="org.ibase4j.core.support.shiro.Realm" />
-		</property>
+		<property name="realm" ref="realm" />
 	</bean>
 	<bean id="permisssionFilter" class="org.ibase4j.core.support.shiro.PermisssionFilter" />  
 	<!-- Web应用中,Shiro可控制的Web请求必须经过Shiro主过滤器的拦截,Shiro对基于Spring的Web应用提供了完美的支持 -->

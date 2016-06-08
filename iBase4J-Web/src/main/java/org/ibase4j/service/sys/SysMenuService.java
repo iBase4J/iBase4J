@@ -1,11 +1,10 @@
 package org.ibase4j.service.sys;
 
 import org.ibase4j.core.support.BaseService;
+import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.mybatis.generator.model.SysMenu;
 import org.ibase4j.provider.sys.SysMenuProvider;
 import org.springframework.stereotype.Service;
-
-import com.alibaba.dubbo.config.annotation.Reference;
 
 /**
  * @author ShenHuaJie
@@ -13,7 +12,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
  */
 @Service
 public class SysMenuService extends BaseService<SysMenuProvider, SysMenu> {
-	@Reference
+	@DubboReference
 	public void setProvider(SysMenuProvider provider) {
 		this.provider = provider;
 	}

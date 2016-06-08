@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
@@ -32,8 +33,6 @@ import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.ServiceConfig;
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.config.spring.ReferenceBean;
 
 /**
  * @author ShenHuaJie
@@ -49,7 +48,7 @@ public class AnnotationBean extends AbstractConfig
 
 	private final Set<ServiceConfig<?>> serviceConfigs = new ConcurrentHashSet<ServiceConfig<?>>();
 
-	private final ConcurrentMap<String, ReferenceBean<?>> referenceConfigs = new ConcurrentHashMap<String, ReferenceBean<?>>();
+	private final ConcurrentMap<String, DubboReferenceBean<?>> referenceConfigs = new ConcurrentHashMap<String, DubboReferenceBean<?>>();
 
 	public String getPackage() {
 		return annotationPackage;
@@ -197,7 +196,7 @@ public class AnnotationBean extends AbstractConfig
 			if (name.length() > 3 && name.startsWith("set") && method.getParameterTypes().length == 1
 					&& Modifier.isPublic(method.getModifiers()) && !Modifier.isStatic(method.getModifiers())) {
 				try {
-					Reference reference = method.getAnnotation(Reference.class);
+					DubboReference reference = method.getAnnotation(DubboReference.class);
 					if (reference != null) {
 						Object value = refer(reference, method.getParameterTypes()[0]);
 						if (value != null) {
@@ -216,7 +215,7 @@ public class AnnotationBean extends AbstractConfig
 				if (!field.isAccessible()) {
 					field.setAccessible(true);
 				}
-				Reference reference = field.getAnnotation(Reference.class);
+				DubboReference reference = field.getAnnotation(DubboReference.class);
 				if (reference != null) {
 					Object value = refer(reference, field.getType());
 					if (value != null) {
@@ -231,7 +230,7 @@ public class AnnotationBean extends AbstractConfig
 		return bean;
 	}
 
-	private Object refer(Reference reference, Class<?> referenceClass) { // method.getParameterTypes()[0]
+	private Object refer(DubboReference reference, Class<?> referenceClass) { // method.getParameterTypes()[0]
 		String interfaceName;
 		if (!"".equals(reference.interfaceName())) {
 			interfaceName = reference.interfaceName();
@@ -245,9 +244,9 @@ public class AnnotationBean extends AbstractConfig
 							+ referenceClass.getName() + " is not a interface.");
 		}
 		String key = reference.group() + "/" + interfaceName + ":" + reference.version();
-		ReferenceBean<?> referenceConfig = referenceConfigs.get(key);
+		DubboReferenceBean<?> referenceConfig = referenceConfigs.get(key);
 		if (referenceConfig == null) {
-			referenceConfig = new ReferenceBean<Object>(reference);
+			referenceConfig = new DubboReferenceBean<Object>(reference);
 			if (void.class.equals(reference.interfaceClass()) && "".equals(reference.interfaceName())
 					&& referenceClass.isInterface()) {
 				referenceConfig.setInterface(referenceClass);
