@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-//@Component
+@Component
 public class QueueSender {
-	//@Autowired
-	//@Qualifier("jmsQueueTemplate")
+	@Autowired
+	@Qualifier("jmsQueueTemplate")
 	private JmsTemplate jmsTemplate;
 
 	/**
