@@ -49,6 +49,49 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		this.jobListeners = jobListeners;
 	}
 
+	// 调度初始化入口
+	public void afterPropertiesSet() throws Exception {
+		if (this.jobListeners != null && this.jobListeners.size() > 0) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Initing task scheduler[" + this.scheduler.getSchedulerName() + "] , add listener size ："
+						+ this.jobListeners.size());
+			}
+			for (JobListener listener : this.jobListeners) {
+				if (logger.isInfoEnabled()) {
+					logger.info("Add JobListener : " + listener.getName());
+				}
+				this.scheduler.getListenerManager().addJobListener(listener);
+			}
+		}
+
+		// 根据配置的初始化装载
+		if (this.triggerLoaders != null && this.triggerLoaders.size() > 0) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Initing task scheduler[" + this.scheduler.getSchedulerName() + "] , trigger loaders size ："
+						+ this.triggerLoaders.size());
+			}
+			for (TriggerLoader loader : this.triggerLoaders) {
+				if (logger.isInfoEnabled()) {
+					logger.info("Initing triggerLoader[" + loader.getClass().getName() + "].");
+				}
+				Map<Trigger, JobDetail> loadResultMap = loader.loadTriggers();
+				if (loadResultMap != null) {
+					for (Entry<Trigger, JobDetail> entry : loadResultMap.entrySet()) {
+						this.addJobDetail(entry.getValue());
+						this.addTrigger(entry.getKey());
+					}
+					if (logger.isInfoEnabled()) {
+						logger.info("Initing triggerLoader[" + loader.getClass().getName() + "] end .");
+					}
+				} else {
+					logger.warn("No triggers loaded by triggerLoader[" + loader.getClass().getName() + "].");
+				}
+			}
+		} else {
+			logger.warn("No TriggerLoader for initing.");
+		}
+	}
+
 	private void addTrigger(Trigger trigger) {
 		try {
 			Trigger oldTrigger = scheduler.getTrigger(trigger.getKey());
@@ -125,48 +168,6 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		}
 	}
 
-	public void afterPropertiesSet() throws Exception {
-		if (this.jobListeners != null && this.jobListeners.size() > 0) {
-			if (logger.isInfoEnabled()) {
-				logger.info("Initing task scheduler[" + this.scheduler.getSchedulerName() + "] , add listener size ："
-						+ this.jobListeners.size());
-			}
-			for (JobListener listener : this.jobListeners) {
-				if (logger.isInfoEnabled()) {
-					logger.info("Add JobListener : " + listener.getName());
-				}
-				this.scheduler.getListenerManager().addJobListener(listener);
-			}
-		}
-
-		// 根据配置的初始化装载
-		if (this.triggerLoaders != null && this.triggerLoaders.size() > 0) {
-			if (logger.isInfoEnabled()) {
-				logger.info("Initing task scheduler[" + this.scheduler.getSchedulerName() + "] , trigger loaders size ："
-						+ this.triggerLoaders.size());
-			}
-			for (TriggerLoader loader : this.triggerLoaders) {
-				if (logger.isInfoEnabled()) {
-					logger.info("Initing triggerLoader[" + loader.getClass().getName() + "].");
-				}
-				Map<Trigger, JobDetail> loadResultMap = loader.loadTriggers();
-				if (loadResultMap != null) {
-					for (Entry<Trigger, JobDetail> entry : loadResultMap.entrySet()) {
-						this.addJobDetail(entry.getValue());
-						this.addTrigger(entry.getKey());
-					}
-					if (logger.isInfoEnabled()) {
-						logger.info("Initing triggerLoader[" + loader.getClass().getName() + "] end .");
-					}
-				} else {
-					logger.warn("No triggers loaded by triggerLoader[" + loader.getClass().getName() + "].");
-				}
-			}
-		} else {
-			logger.warn("No TriggerLoader for initing.");
-		}
-	}
-
 	public List<TaskScheduled> getAllJobDetail() {
 		List<TaskScheduled> result = new LinkedList<TaskScheduled>();
 		try {
@@ -237,6 +238,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		return jobList;
 	}
 
+	// 暂停任务
 	public boolean stopJob(TaskScheduled scheduleJob) {
 		try {
 			JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
@@ -248,6 +250,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		return false;
 	}
 
+	// 启动任务
 	public boolean resumeJob(TaskScheduled scheduleJob) {
 		try {
 			JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
@@ -259,6 +262,7 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		return false;
 	}
 
+	// 执行任务
 	public boolean runJob(TaskScheduled scheduleJob) {
 		try {
 			JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());

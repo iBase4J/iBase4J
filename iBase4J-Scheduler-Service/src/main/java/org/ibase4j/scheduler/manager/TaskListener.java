@@ -36,6 +36,7 @@ public class TaskListener implements JobListener {
 
 	}
 
+	// 任务开始前
 	public void jobToBeExecuted(JobExecutionContext context) {
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
 		JobKey jobKey = context.getJobDetail().getKey();
@@ -44,6 +45,7 @@ public class TaskListener implements JobListener {
 		if (logger.isInfoEnabled()) {
 			logger.info("Listened job : " + groupName + "." + jobName + " prepared to start.");
 		}
+		// 保存日志
 		TaskFireLog log = new TaskFireLog();
 		log.setStartTime(context.getFireTime());
 		log.setGroupName(groupName);
@@ -52,6 +54,7 @@ public class TaskListener implements JobListener {
 		try {
 			schedulerService.updateLog(log);
 			jobDataMap.put(Constants.JOB_LOG, log);
+			// 更新任务执行时间
 			TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
 			taskScheduler.setTaskPreviousFireTime(context.getFireTime());
 			taskScheduler.setTaskNextFireTime(context.getNextFireTime());
@@ -62,6 +65,7 @@ public class TaskListener implements JobListener {
 		}
 	}
 
+	// 任务结束后
 	public void jobWasExecuted(JobExecutionContext context, JobExecutionException exp) {
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
 		if (Constants.ERROR_STATS.equals(jobDataMap.get("taskStatus"))) {
@@ -72,6 +76,7 @@ public class TaskListener implements JobListener {
 		if (logger.isInfoEnabled()) {
 			logger.info("Listened job : " + groupName + "." + jobName + " executed.");
 		}
+		// 更新任务执行状态
 		TaskFireLog log = (TaskFireLog) jobDataMap.get(Constants.JOB_LOG);
 		Timestamp end = new Timestamp(System.currentTimeMillis());
 		log.setEndTime(end);
