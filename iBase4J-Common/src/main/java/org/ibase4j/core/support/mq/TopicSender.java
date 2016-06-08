@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-@Component
+//@Component
 public class TopicSender {
-	@Autowired
-	@Qualifier("jmsTopicTemplate")
+	//@Autowired
+	//@Qualifier("jmsTopicTemplate")
 	private JmsTemplate jmsTemplate;
 
 	/**
