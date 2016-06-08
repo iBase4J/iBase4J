@@ -34,12 +34,12 @@ public class SftpClient {
 	public SftpClient init() {
 		try {
 			Properties config = new Properties();
-			String host = Resources.SSH.getString("host");
-			int port = Integer.valueOf(Resources.SSH.getString("port"));
-			String userName = Resources.SSH.getString("user.name");
-			String password = Resources.SSH.getString("user.password");
-			int timeout = Integer.valueOf(Resources.SSH.getString("timeout"));
-			int aliveMax = Integer.valueOf(Resources.SSH.getString("aliveMax"));
+			String host = Resources.SFTP.getString("host");
+			int port = Integer.valueOf(Resources.SFTP.getString("port"));
+			String userName = Resources.SFTP.getString("user.name");
+			String password = Resources.SFTP.getString("user.password");
+			int timeout = Integer.valueOf(Resources.SFTP.getString("timeout"));
+			int aliveMax = Integer.valueOf(Resources.SFTP.getString("aliveMax"));
 			JSch jsch = new JSch(); // 创建JSch对象
 			session = jsch.getSession(userName, host, port); // 根据用户名，主机ip，端口获取一个Session对象
 			if (password != null) {

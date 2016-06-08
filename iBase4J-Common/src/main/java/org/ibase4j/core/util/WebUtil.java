@@ -102,7 +102,7 @@ public final class WebUtil {
 
 	/** 获取客户端IP */
 	public static final String getHost(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
+		String ip = request.getHeader("X-Forwarded-For");
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
 		}

@@ -14,11 +14,11 @@ import org.springframework.context.i18n.LocaleContextHolder;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-@PropertySource(value = { "classpath:config/ssh.properties", "classpath:config/email.properties",
+@PropertySource(value = { "classpath:config/sftp.properties", "classpath:config/email.properties",
 		"classpath:config/thirdParty.properties", "classpath:i18n/messages*.properties" })
 public final class Resources {
 	/** SSH服务器配置 */
-	public static final ResourceBundle SSH = ResourceBundle.getBundle("config/ssh");
+	public static final ResourceBundle SFTP = ResourceBundle.getBundle("config/sftp");
 	/** 邮箱服务器配置 */
 	public static final ResourceBundle EMAIL = ResourceBundle.getBundle("config/email");
 	/** 第三方登录配置 */
