@@ -1,4 +1,4 @@
-##iBas4J项目简介
+## iBas4J项目简介
 
 ```
 iBase4J是基于Java的开源框架搭建的分布式系统架构。 
@@ -9,7 +9,7 @@ iBase4J是基于Java的开源框架搭建的分布式系统架构。
 系统管理模块进行多系统部署，注册到同一个Zookeeper集群服务注册中心，实现分布式部署。
 ```
 
-##主要功能
+## 主要功能
      1. 数据库：Druid数据库连接池，监控数据库访问性能，统计SQL的执行性能。 数据库密码加密。
      2. 持久层：mybatis持久化，aop切换数据库实现读写分离，PageHelper分页。Transtraction注解事务。
      3. MVC： 基于spring mvc注解,Rest风格Controller。Exception统一管理。
@@ -23,7 +23,7 @@ iBase4J是基于Java的开源框架搭建的分布式系统架构。
     11. 项目构建：maven构建项目，mybatis generator生成mybatis映射文件和Model。 
     12. 工具类：上传下载excel，汉字转拼音，身份证号码验证，数字转大写人民币，FTP/SFTP/fastdafs上传下载，发送邮件，redis缓存，加密等等。
 
-##技术选型
+## 技术选型
     ● 核心框架：Spring Framework 4.2.6
     ● 安全框架：Apache Shiro 1.2
     ● 任务调度：Spring + Quartz
@@ -34,7 +34,7 @@ iBase4J是基于Java的开源框架搭建的分布式系统架构。
     ● 日志管理：SLF4J、Log4j2
     ● 前端框架：Angular JS + Bootstrap + Jquary
 
-##启动说明
+## 启动说明
     * 项目依赖activemq、Redis和ZooKeeper服务。
     * maven启动SYS-Scheduler命令：clean:clean package -P build tomcat7:run-war-only -f pom-scheduler-server.xml
     * maven启动SYS-Service命令：clean:clean package -P build tomcat7:run-war-only -f pom-sys-server.xml
@@ -46,20 +46,12 @@ iBase4J is released under version 2.0 of the [Apache License][].
 
 [UI地址](http://git.oschina.net/iBase4J/iBase4J-UI)
 
-加QQ群交流技术问题，下载项目文档和一键启动依赖服务工具。
-![QQ](http://pub.idqqimg.com/wpa/images/group.png "QQ")
+##![QQ](http://pub.idqqimg.com/wpa/images/group.png "QQ")交流技术问题，下载项目文档和一键启动依赖服务工具。
 [538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
-
-![QQ](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1464169485871.png "QQ")
-
-## maven启动配置图
-
-![配置](http://git.oschina.net/iBase4J/iBase4J/raw/9caa79d7beb3f528bcaa66feec472315024d82ee/maven-config.png "maven配置")
+![QQ群](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1464169485871.png "QQ群")
 
 ## UI效果图
-
 ![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/login.png "登录")
-
 ![主页](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/index.png "主页")
 
 ![捐赠](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/contribute.png "捐赠")
