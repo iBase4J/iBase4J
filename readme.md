@@ -40,6 +40,11 @@ iBase4J是基于Java的开源框架搭建的分布式系统架构。
     * maven启动SYS-Service命令：clean:clean package -P build tomcat7:run-war-only -f pom-sys-server.xml
     * maven启动Web命令：clean:clean package -P build tomcat7:run-war-only -f pom-web-server.xml
     * 服务启动后，使用nginx代理UI：修改配置里的UI目录后启动。
+    
+## License
+```
+iBase4J is released under version 2.0 of the [Apache License][].
+```
 
 [UI地址](http://git.oschina.net/iBase4J/iBase4J-UI)
 
@@ -67,5 +72,6 @@ iBase4J是基于Java的开源框架搭建的分布式系统架构。
 iBase4J is released under version 2.0 of the [Apache License][].
 
 
+[Apache License]: http://www.apache.org/licenses/LICENSE-2.0
 [iBase4J-old]: http://git.oschina.net/iBase4J/iBase4J/tree/V-%E6%8B%86%E5%88%86%E5%89%8D
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
