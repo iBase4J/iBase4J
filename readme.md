@@ -42,9 +42,7 @@ iBase4J是基于Java的开源框架搭建的分布式系统架构。
     * 服务启动后，使用nginx代理UI：修改配置里的UI目录后启动。
     
 ## License
-```
 iBase4J is released under version 2.0 of the [Apache License][].
-```
 
 [UI地址](http://git.oschina.net/iBase4J/iBase4J-UI)
 
