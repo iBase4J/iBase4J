@@ -46,7 +46,7 @@ iBase4J is released under version 2.0 of the [Apache License][].
 Can take a look at the no split version，URL：[iBase4J-old][].
 
 ## Join the QQ group [538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
-Communication technology issues, download the project document and a key start dependency service tools。
+Communication technology issues, download the project document and a key to start the dependency service tools。
 
 ![QQ群](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1464169485871.png "QQ群")
 
