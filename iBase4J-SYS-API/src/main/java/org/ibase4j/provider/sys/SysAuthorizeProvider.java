@@ -2,10 +2,10 @@ package org.ibase4j.provider.sys;
 
 import java.util.List;
 
-import org.ibase4j.mybatis.generator.model.SysRoleMenu;
-import org.ibase4j.mybatis.generator.model.SysUserMenu;
-import org.ibase4j.mybatis.generator.model.SysUserRole;
-import org.ibase4j.mybatis.sys.model.SysMenuBean;
+import org.ibase4j.model.generator.SysRoleMenu;
+import org.ibase4j.model.generator.SysUserMenu;
+import org.ibase4j.model.generator.SysUserRole;
+import org.ibase4j.model.sys.SysMenuBean;
 
 public interface SysAuthorizeProvider {
 

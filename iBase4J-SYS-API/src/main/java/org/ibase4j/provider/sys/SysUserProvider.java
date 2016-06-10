@@ -7,8 +7,8 @@ import java.util.Map;
 
 import org.ibase4j.core.support.dubbo.BaseProvider;
 import org.ibase4j.core.support.login.ThirdPartyUser;
-import org.ibase4j.mybatis.generator.model.SysUser;
-import org.ibase4j.mybatis.sys.model.SysUserBean;
+import org.ibase4j.model.generator.SysUser;
+import org.ibase4j.model.sys.SysUserBean;
 
 import com.github.pagehelper.PageInfo;
 

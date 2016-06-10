@@ -9,7 +9,7 @@ import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.support.exception.LoginException;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.util.Request2ModelUtil;
-import org.ibase4j.mybatis.generator.model.SysUser;
+import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;

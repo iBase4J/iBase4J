@@ -10,7 +10,7 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.scheduler.TaskScheduled;
+import org.ibase4j.model.scheduler.TaskScheduled;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;

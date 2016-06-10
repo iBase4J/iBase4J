@@ -2,7 +2,7 @@ package org.ibase4j.service.sys;
 
 import java.util.List;
 
-import org.ibase4j.mybatis.sys.model.SysMenuBean;
+import org.ibase4j.model.sys.SysMenuBean;
 import org.ibase4j.provider.sys.SysAuthorizeProvider;
 import org.springframework.stereotype.Service;
 

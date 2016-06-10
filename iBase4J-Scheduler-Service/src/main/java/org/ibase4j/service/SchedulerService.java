@@ -1,11 +1,11 @@
 package org.ibase4j.service;
 
-import org.ibase4j.mybatis.generator.dao.TaskFireLogMapper;
-import org.ibase4j.mybatis.generator.dao.TaskGroupMapper;
-import org.ibase4j.mybatis.generator.dao.TaskSchedulerMapper;
-import org.ibase4j.mybatis.generator.model.TaskFireLog;
-import org.ibase4j.mybatis.generator.model.TaskGroup;
-import org.ibase4j.mybatis.generator.model.TaskScheduler;
+import org.ibase4j.dao.generator.TaskFireLogMapper;
+import org.ibase4j.dao.generator.TaskGroupMapper;
+import org.ibase4j.dao.generator.TaskSchedulerMapper;
+import org.ibase4j.model.generator.TaskFireLog;
+import org.ibase4j.model.generator.TaskGroup;
+import org.ibase4j.model.generator.TaskScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

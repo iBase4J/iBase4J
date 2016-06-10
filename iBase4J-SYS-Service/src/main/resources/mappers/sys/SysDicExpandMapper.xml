@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ibase4j.dao.sys.SysDicExpandMapper">
+	<select id="queryDicIndex" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select id_ from sys_dic_index where 1=1
+		<if test="keyword != null">
+		and key_ like CONCAT('%',#{keyword},'%'))
+		</if>
+	</select>
+	<select id="queryDic" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select id_ from sys_dic where 1=1
+		<if test="key != null">
+		and exists (select 1 from sys_dic_index where sys_dic.index_id=sys_dic_index.id_
+		and sys_dic_index.key_=#{key})
+		</if>
+	</select>
+</mapper>

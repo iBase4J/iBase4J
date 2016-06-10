@@ -2,8 +2,8 @@ package org.ibase4j.provider.sys;
 
 import java.util.Map;
 
-import org.ibase4j.mybatis.generator.model.SysDic;
-import org.ibase4j.mybatis.generator.model.SysDicIndex;
+import org.ibase4j.model.generator.SysDic;
+import org.ibase4j.model.generator.SysDicIndex;
 
 import com.github.pagehelper.PageInfo;
 

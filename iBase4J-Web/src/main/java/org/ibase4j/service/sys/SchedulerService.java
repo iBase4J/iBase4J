@@ -3,11 +3,11 @@ package org.ibase4j.service.sys;
 import java.util.Map;
 
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.mybatis.generator.model.TaskFireLog;
-import org.ibase4j.mybatis.generator.model.TaskGroup;
-import org.ibase4j.mybatis.scheduler.model.TaskSchedulerBean;
-import org.ibase4j.scheduler.TaskScheduled;
-import org.ibase4j.scheduler.provider.SchedulerProvider;
+import org.ibase4j.model.generator.TaskFireLog;
+import org.ibase4j.model.generator.TaskGroup;
+import org.ibase4j.model.scheduler.TaskScheduled;
+import org.ibase4j.model.scheduler.TaskSchedulerBean;
+import org.ibase4j.provider.scheduler.SchedulerProvider;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 

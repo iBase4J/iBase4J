@@ -4,9 +4,9 @@ import java.util.Map;
 
 import org.ibase4j.core.support.dubbo.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.mybatis.generator.dao.SysRoleMapper;
-import org.ibase4j.mybatis.generator.model.SysRole;
-import org.ibase4j.mybatis.sys.dao.SysRoleExpandMapper;
+import org.ibase4j.dao.generator.SysRoleMapper;
+import org.ibase4j.dao.sys.SysRoleExpandMapper;
+import org.ibase4j.model.generator.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;

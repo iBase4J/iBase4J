@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.mybatis.generator.model.TaskGroup;
-import org.ibase4j.mybatis.generator.model.TaskScheduler;
-import org.ibase4j.mybatis.scheduler.dao.TaskSchedulerExpandMapper;
+import org.ibase4j.dao.scheduler.TaskSchedulerExpandMapper;
+import org.ibase4j.model.generator.TaskGroup;
+import org.ibase4j.model.generator.TaskScheduler;
 import org.ibase4j.service.SchedulerService;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.Job;

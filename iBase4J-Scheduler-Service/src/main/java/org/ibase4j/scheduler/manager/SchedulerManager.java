@@ -2,7 +2,7 @@ package org.ibase4j.scheduler.manager;
 
 import java.util.List;
 
-import org.ibase4j.scheduler.TaskScheduled;
+import org.ibase4j.model.scheduler.TaskScheduled;
 import org.quartz.JobDetail;
 import org.quartz.Trigger;
 

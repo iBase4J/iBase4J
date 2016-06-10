@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.mybatis.generator.model.TaskFireLog;
-import org.ibase4j.mybatis.generator.model.TaskScheduler;
+import org.ibase4j.model.generator.TaskFireLog;
+import org.ibase4j.model.generator.TaskScheduler;
 import org.ibase4j.scheduler.Constants;
 import org.ibase4j.service.SchedulerService;
 import org.quartz.JobDataMap;

@@ -4,10 +4,9 @@ import java.util.Map;
 
 import org.ibase4j.core.support.dubbo.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.mybatis.generator.dao.SysPermissionMapper;
-import org.ibase4j.mybatis.generator.model.SysPermission;
-import org.ibase4j.mybatis.sys.dao.SysPermissionExpandMapper;
-import org.ibase4j.provider.sys.SysPermissionProvider;
+import org.ibase4j.dao.generator.SysPermissionMapper;
+import org.ibase4j.dao.sys.SysPermissionExpandMapper;
+import org.ibase4j.model.generator.SysPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;

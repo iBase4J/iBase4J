@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.mybatis.generator.model.SysSession;
+import org.ibase4j.model.generator.SysSession;
 import org.ibase4j.provider.sys.SysSessionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;

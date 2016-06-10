@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.ibase4j.core.support.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.mybatis.generator.model.SysDept;
+import org.ibase4j.model.generator.SysDept;
 import org.ibase4j.service.sys.SysDeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;

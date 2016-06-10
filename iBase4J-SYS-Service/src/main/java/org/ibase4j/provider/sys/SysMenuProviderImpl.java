@@ -4,10 +4,9 @@ import java.util.Map;
 
 import org.ibase4j.core.support.dubbo.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.mybatis.generator.dao.SysMenuMapper;
-import org.ibase4j.mybatis.generator.model.SysMenu;
-import org.ibase4j.mybatis.sys.dao.SysMenuExpandMapper;
-import org.ibase4j.provider.sys.SysMenuProvider;
+import org.ibase4j.dao.generator.SysMenuMapper;
+import org.ibase4j.dao.sys.SysMenuExpandMapper;
+import org.ibase4j.model.generator.SysMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;

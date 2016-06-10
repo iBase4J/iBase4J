@@ -3,7 +3,7 @@ package org.ibase4j.service.sys;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.BaseService;
 import org.ibase4j.core.util.RedisUtil;
-import org.ibase4j.mybatis.generator.model.SysPermission;
+import org.ibase4j.model.generator.SysPermission;
 import org.ibase4j.provider.sys.SysPermissionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
