@@ -1,6 +1,6 @@
 ## iBas4J项目简介
 
-- iBase4J是基于Java的开源框架搭建的分布式系统架构。 
+- iBase4J是Java语言的分布式系统架构。 使用Spring整合开源框架。
 - 使用Maven对项目进行模块化管理，提高项目的易开发性、扩展性。
 - 系统包括两个模块：系统管理模块、调度管理模块、Web展示模块。
 - 其中系统管理模块包括：系统权限组件、数据权限组件、数据字典组件、核心工具组件。
@@ -22,7 +22,7 @@
  12. 工具类：上传下载excel，汉字转拼音，身份证号码验证，数字转大写人民币，FTP/SFTP/fastdafs上传下载，发送邮件，redis缓存，加密等等。
 
 ## 技术选型
-    ● 核心框架：Spring Framework 4.2.6
+    ● 核心框架：Spring Framework 4.2.6 + Dubbo 2.5.3
     ● 安全框架：Apache Shiro 1.2
     ● 任务调度：Spring + Quartz
     ● 持久层框架：MyBatis 3.4
