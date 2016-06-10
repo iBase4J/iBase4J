@@ -42,6 +42,10 @@
 ## License
 iBase4J is released under version 2.0 of the [Apache License][].
 
+```
+@ 建议：如果您是java新手，可以先看一下拆分前的版本，地址：[iBase4J-old][].
+```
+
 ## 加入QQ群[538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)交流技术问题，下载项目文档和一键启动依赖服务工具。
 
 ![QQ群](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1464169485871.png "QQ群")
@@ -51,8 +55,6 @@ iBase4J is released under version 2.0 of the [Apache License][].
 ![主页](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/index.png "主页")
 
 ![捐赠](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/contribute.png "捐赠")
-
-* 建议：如果您是java新手，可以先看一下拆分前的版本，地址：[iBase4J-old][].
 
 ## License
 iBase4J is released under version 2.0 of the [Apache License][].
