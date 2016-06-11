@@ -39,14 +39,14 @@
     * maven启动Web命令：clean:clean package -P build tomcat7:run-war-only -f pom-web-server.xml
     * 服务启动后，使用nginx代理UI：修改配置里的UI目录后启动。
     
-## License
-iBase4J is released under version 2.0 of the [Apache License][].
+## 版权声明
+iBase4J使用 [Apache License 2.0][] 协议.
 
-## Advise
-Can take a look at the no split version，URL：[iBase4J-old][].
+## 建议
+可以先看一下拆分前的版本，地址：[iBase4J-old][].
 
-## Join the QQ group [538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
-Communication technology issues, download the project document and a key to start the dependency service tools。
+## 加入QQ群[538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
+交流技术问题，下载项目文档和一键启动依赖服务工具。
 
 ![QQ群](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1464169485871.png "QQ群")
 
@@ -60,6 +60,6 @@ Communication technology issues, download the project document and a key to star
 iBase4J is released under version 2.0 of the [Apache License][].
 
 
-[Apache License]: http://www.apache.org/licenses/LICENSE-2.0
+[Apache License 2.0]: http://www.apache.org/licenses/LICENSE-2.0
 [iBase4J-old]: http://git.oschina.net/iBase4J/iBase4J/tree/NoSplit
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
