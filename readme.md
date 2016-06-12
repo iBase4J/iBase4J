@@ -50,7 +50,11 @@ iBase4J使用 [Apache License 2.0][] 协议.
 
 ![QQ群](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1464169485871.png "QQ群")
 
-## [UI](http://git.oschina.net/iBase4J/iBase4J-UI) 效果图
+## UI地址
+[iBase4J-UI](http://git.oschina.net/iBase4J/iBase4J-UI)
+
+## UI效果图
+
 ![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/login.png "登录")
 ![主页](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/index.png "主页")
 
