@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.ibase4j.core.support.dubbo.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
+import org.ibase4j.core.support.exception.BusinessException;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.dao.generator.SysDicIndexMapper;
 import org.ibase4j.dao.generator.SysDicMapper;
@@ -121,5 +122,15 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 	public PageInfo<SysDic> queryDic(Map<String, Object> params) {
 		startPage(params);
 		return getPage(dicExpandMapper.queryDic(params));
+	}
+
+	public void deleteDicIndex(Integer id) {
+		Map<String, Object> params = InstanceUtil.newHashMap();
+		params.put("index_id", id);
+		List<Integer> ids = dicExpandMapper.queryDic(params);
+		if (ids.size() > 0) {
+			throw new BusinessException();
+		}
+		dicIndexMapper.deleteByPrimaryKey(id);
 	}
 }

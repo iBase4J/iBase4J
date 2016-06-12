@@ -38,6 +38,13 @@ public class SysDeptController extends BaseController {
 		return setSuccessModelMap(modelMap, list);
 	}
 
+	// 详细信息
+	@RequestMapping(value = "/read/detail")
+	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
+		SysDept record = sysDeptService.queryById(id);
+		return setSuccessModelMap(modelMap, record);
+	}
+
 	// 新增部门
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
