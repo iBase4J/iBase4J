@@ -4,10 +4,10 @@
 package org.ibase4j.core.config;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.support.exception.BusinessException;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -17,6 +17,8 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  * Redis缓存配置
@@ -66,13 +68,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 				if (objects != null) {
 					sb.append(":");
 					if (objects.length == 1) {
-						if (objects[0] instanceof Integer || objects[0] instanceof String) {
-							sb.append(objects[0]);
-						} else {
-							try {
-								sb.append(objects[0].getClass().getMethod("getId").invoke(objects[0]));
-							} catch (Exception e) {
-								throw new BusinessException("Not support.");
+						try {
+							sb.append(objects[0].getClass().getMethod("getId").invoke(objects[0]));
+						} catch (Exception e) {
+							if (objects[0] instanceof Map && ((Map<?, ?>) objects[0]).get("id") != null) {
+								sb.append(((Map<?, ?>) objects[0]).get("id"));
+							} else {
+								sb.append(JSON.toJSON(objects[0]));
 							}
 						}
 					} else {

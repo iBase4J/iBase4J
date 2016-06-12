@@ -42,31 +42,34 @@ public class SchedulerService {
 
 	@Transactional
 	@CachePut("taskGroup")
-	public void updateGroup(TaskGroup record) {
+	public TaskGroup updateGroup(TaskGroup record) {
 		if (record.getId() == null) {
 			taskGroupMapper.insert(record);
 		} else {
 			taskGroupMapper.updateByPrimaryKey(record);
 		}
+		return record;
 	}
 
 	@Transactional
 	@CachePut("taskScheduler")
-	public void updateScheduler(TaskScheduler record) {
+	public TaskScheduler updateScheduler(TaskScheduler record) {
 		if (record.getId() == null) {
 			taskSchedulerMapper.insert(record);
 		} else {
 			taskSchedulerMapper.updateByPrimaryKey(record);
 		}
+		return record;
 	}
 
 	@Transactional
 	@CachePut("taskFireLog")
-	public void updateLog(TaskFireLog record) {
+	public TaskFireLog updateLog(TaskFireLog record) {
 		if (record.getId() == null) {
 			logMapper.insert(record);
 		} else {
 			logMapper.updateByPrimaryKey(record);
 		}
+		return record;
 	}
 }
