@@ -68,13 +68,18 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 				if (objects != null) {
 					sb.append(":");
 					if (objects.length == 1) {
-						try {
-							sb.append(objects[0].getClass().getMethod("getId").invoke(objects[0]));
-						} catch (Exception e) {
-							if (objects[0] instanceof Map && ((Map<?, ?>) objects[0]).get("id") != null) {
-								sb.append(((Map<?, ?>) objects[0]).get("id"));
-							} else {
-								sb.append(JSON.toJSON(objects[0]));
+						if (objects[0] instanceof Number || objects[0] instanceof String
+								|| objects[0] instanceof Boolean) {
+							sb.append(objects[0]);
+						} else {
+							try {
+								sb.append(objects[0].getClass().getMethod("getId").invoke(objects[0]));
+							} catch (Exception e) {
+								if (objects[0] instanceof Map && ((Map<?, ?>) objects[0]).get("id") != null) {
+									sb.append(((Map<?, ?>) objects[0]).get("id"));
+								} else {
+									sb.append(JSON.toJSON(objects[0]));
+								}
 							}
 						}
 					} else {
