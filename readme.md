@@ -34,7 +34,6 @@
 
 ## 启动说明
     * 项目依赖activemq、Redis和ZooKeeper服务。
-    * eclipse启动方法：Run > Debug Configurations... > Maven Build > 右键 > New > 选择项目 > Goals:填写maven命令
     * 启动SYS-Scheduler命令：clean:clean package -P build tomcat7:run-war-only -f pom-scheduler-server.xml
     * 启动SYS-Service命令：clean:clean package -P build tomcat7:run-war-only -f pom-sys-server.xml
     * 启动Web命令：clean:clean package -P build tomcat7:run-war-only -f pom-web-server.xml
