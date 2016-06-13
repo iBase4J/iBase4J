@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UploadController extends BaseController {
 
 	// 上传文件(支持批量)
-	@RequestMapping("/upload")
-	public Object upload(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+	@RequestMapping("/upload/image")
+	public Object uploadImage(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/html;charset=utf-8");
-		List<String> fileNames = UploadUtil.uploadFile(request);
+		List<String> fileNames = UploadUtil.uploadImage(request);
 		if (fileNames.size() > 0) {
 			modelMap.put("imgName", fileNames);
 			return setSuccessModelMap(modelMap);

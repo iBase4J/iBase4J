@@ -80,7 +80,7 @@ public final class UploadUtil {
 	}
 
 	/** 上传文件处理(支持批量) */
-	public static List<String> uploadFile(HttpServletRequest request) {
+	public static List<String> uploadImage(HttpServletRequest request) {
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
 				request.getSession().getServletContext());
 		List<String> fileNames = InstanceUtil.newArrayList();
