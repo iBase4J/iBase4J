@@ -6,7 +6,6 @@ package org.ibase4j.provider.sys;
 import java.util.Date;
 import java.util.Map;
 
-import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.dubbo.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.support.login.ThirdPartyUser;
@@ -19,10 +18,8 @@ import org.ibase4j.model.generator.SysUserThirdparty;
 import org.ibase4j.model.sys.SysUserBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
@@ -45,35 +42,13 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements Sy
 	@Autowired
 	private SysDeptProviderImpl deptService;
 
-	@CachePut
-	@Transactional
-	public SysUser update(SysUser record) {
-		if (record.getId() == null) {
-			record.setUsable(1);
-			record.setCreateTime(new Date());
-			sysUserMapper.insert(record);
-		} else {
-			sysUserMapper.updateByPrimaryKey(record);
-		}
-		return record;
-	}
-
-	@CachePut
-	@Transactional
-	public void delete(Integer id) {
-		SysUser record = queryById(id);
-		Assert.notNull(record, String.format(Resources.getMessage("USER_IS_NULL"), id));
-		record.setUsable(0);
-		update(record);
-	}
-
-	@Cacheable
-	public SysUser queryById(Integer id) {
-		return sysUserMapper.selectByPrimaryKey(id);
+	protected Object getMapper() {
+		return sysUserMapper;
 	}
 
 	public PageInfo<SysUser> query(Map<String, Object> params) {
-		return null;
+		this.startPage(params);
+		return getPage(sysUserExpandMapper.query(params));
 	}
 
 	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {

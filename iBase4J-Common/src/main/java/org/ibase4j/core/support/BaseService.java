@@ -7,6 +7,7 @@ import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.dubbo.BaseProvider;
 import org.ibase4j.core.support.spring.data.redis.ObjectRedisSerializer;
 import org.ibase4j.core.util.RedisUtil;
+import org.ibase4j.core.util.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
@@ -26,6 +27,7 @@ public abstract class BaseService<P extends BaseProvider<T>, T> {
 		Object id = null;
 		try {
 			id = record.getClass().getDeclaredMethod("getId").invoke(record);
+			record.getClass().getDeclaredMethod("setCreateBy", Integer.class).invoke(record, WebUtil.getCurrentUser());
 		} catch (Exception e) {
 		}
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
@@ -34,13 +36,17 @@ public abstract class BaseService<P extends BaseProvider<T>, T> {
 
 	/** 新增 */
 	public void add(T record) {
+		try {
+			record.getClass().getDeclaredMethod("setUpdateBy", Integer.class).invoke(record, WebUtil.getCurrentUser());
+		} catch (Exception e) {
+		}
 		provider.update(record);
 	}
 
 	/** 删除 */
 	public void delete(Integer id) {
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
-		provider.delete(id);
+		provider.delete(id, WebUtil.getCurrentUser());
 	}
 
 	/** 根据Id查询 */

@@ -9,9 +9,6 @@ import org.ibase4j.dao.sys.SysMenuExpandMapper;
 import org.ibase4j.model.generator.SysMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 
 import com.github.pagehelper.PageInfo;
 
@@ -29,24 +26,8 @@ public class SysMenuProviderImpl extends BaseProviderImpl<SysMenu> implements Sy
 	@Autowired
 	private SysDicProviderImpl sysDicService;
 
-	@Cacheable
-	public SysMenu queryById(Integer id) {
-		return sysMenuMapper.selectByPrimaryKey(id);
-	}
-
-	@CachePut
-	public SysMenu update(SysMenu record) {
-		if (record.getId() == null) {
-			sysMenuMapper.insert(record);
-		} else {
-			sysMenuMapper.updateByPrimaryKey(record);
-		}
-		return record;
-	}
-
-	@CacheEvict
-	public void delete(Integer id) {
-		sysMenuMapper.deleteByPrimaryKey(id);
+	protected Object getMapper() {
+		return sysMenuMapper;
 	}
 
 	public PageInfo<SysMenu> query(Map<String, Object> params) {

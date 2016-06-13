@@ -35,6 +35,11 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 	@Autowired
 	private SysDicExpandMapper dicExpandMapper;
 
+	@Override
+	protected Object getMapper() {
+		return dicMapper;
+	}
+
 	@Transactional
 	@CachePut(value = "sysDicIndex")
 	public void updateDicIndex(SysDicIndex record) {
@@ -98,10 +103,6 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 	@Cacheable(value = "sysDicMap")
 	public Map<String, String> queryDicByDicIndexKey(String key) {
 		return queryAllDic().get(key);
-	}
-
-	public SysDic queryById(Integer id) {
-		return queryDicById(id);
 	}
 
 	public PageInfo<SysDicIndex> queryDicIndex(Map<String, Object> params) {

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.ibase4j.core.support.dubbo.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.dao.scheduler.TaskSchedulerExpandMapper;
 import org.ibase4j.model.generator.TaskFireLog;
@@ -27,7 +26,7 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:19:59
  */
 @DubboService(interfaceClass = SchedulerProvider.class)
-public class SchedulerProviderImpl extends BaseProviderImpl<TaskScheduler> implements SchedulerProvider {
+public class SchedulerProviderImpl implements SchedulerProvider {
 	@Autowired
 	private SchedulerManager schedulerManager;
 	@Autowired

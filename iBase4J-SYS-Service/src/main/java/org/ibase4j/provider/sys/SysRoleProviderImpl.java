@@ -9,9 +9,6 @@ import org.ibase4j.dao.sys.SysRoleExpandMapper;
 import org.ibase4j.model.generator.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 
 import com.github.pagehelper.PageInfo;
 
@@ -27,29 +24,12 @@ public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements Sy
 	@Autowired
 	private SysRoleExpandMapper sysRoleExpandMapper;
 
-	@CachePut
-	public SysRole update(SysRole record) {
-		if (record.getId() == null) {
-			sysRoleMapper.insert(record);
-		} else {
-			sysRoleMapper.updateByPrimaryKey(record);
-		}
-		return record;
-	}
-
-	@CacheEvict
-	public void delete(Integer id) {
-		sysRoleMapper.deleteByPrimaryKey(id);
+	protected Object getMapper() {
+		return sysRoleMapper;
 	}
 
 	public PageInfo<SysRole> query(Map<String, Object> params) {
 		startPage(params);
 		return getPage(sysRoleExpandMapper.query(params));
 	}
-
-	@Cacheable
-	public SysRole queryById(Integer id) {
-		return sysRoleMapper.selectByPrimaryKey(id);
-	}
-
 }

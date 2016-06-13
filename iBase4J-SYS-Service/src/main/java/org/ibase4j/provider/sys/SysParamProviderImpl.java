@@ -9,9 +9,6 @@ import org.ibase4j.dao.sys.SysParamExpandMapper;
 import org.ibase4j.model.generator.SysParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 
 import com.github.pagehelper.PageInfo;
 
@@ -27,29 +24,12 @@ public class SysParamProviderImpl extends BaseProviderImpl<SysParam> implements 
 	@Autowired
 	private SysParamExpandMapper sysParamExpandMapper;
 
-	@CachePut
-	public SysParam update(SysParam record) {
-		if (record.getId() == null) {
-			sysParamMapper.insert(record);
-		} else {
-			sysParamMapper.updateByPrimaryKey(record);
-		}
-		return record;
-	}
-
-	@CacheEvict
-	public void delete(Integer id) {
-		sysParamMapper.deleteByPrimaryKey(id);
+	protected Object getMapper() {
+		return sysParamMapper;
 	}
 
 	public PageInfo<SysParam> query(Map<String, Object> params) {
 		startPage(params);
 		return getPage(sysParamExpandMapper.query(params));
 	}
-
-	@Cacheable
-	public SysParam queryById(Integer id) {
-		return sysParamMapper.selectByPrimaryKey(id);
-	}
-
 }

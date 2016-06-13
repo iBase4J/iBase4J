@@ -3,7 +3,7 @@
 <mapper namespace="org.ibase4j.dao.sys.SysUserExpandMapper">
 	<select id="query" parameterType="java.util.Map" resultType="java.lang.Integer">
 		select id_ from sys_user where 1=1
-		<if test="usable != null">and usable_=#{usable}</if>
+		<if test="enable != null">and enable_=#{enable}</if>
 		<if test="account != null">and account_=#{account}</if>
 		<if test="password != null">and password_=#{password}</if>
 		<if test="keyword != null">

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 
 import com.github.pagehelper.PageInfo;
 
@@ -27,6 +26,10 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
 	private SysSessionMapper sessionMapper;
 	@Autowired
 	private SysSessionExpandMapper sessionExpandMapper;
+
+	protected Object getMapper() {
+		return sessionMapper;
+	}
 
 	@CachePut
 	public SysSession update(SysSession record) {
@@ -45,18 +48,13 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
 	}
 
 	@CacheEvict
-	public void delete(Integer id) {
+	public void delete(final Integer id) {
 		sessionMapper.deleteByPrimaryKey(id);
 	}
 
 	// 系统触发,由系统自动管理缓存
 	public void deleteBySessionId(final String sessionId) {
 		sessionExpandMapper.deleteBySessionId(sessionId);
-	}
-
-	@Cacheable
-	public SysSession queryById(Integer id) {
-		return sessionMapper.selectByPrimaryKey(id);
 	}
 
 	public PageInfo<SysSession> query(Map<String, Object> params) {

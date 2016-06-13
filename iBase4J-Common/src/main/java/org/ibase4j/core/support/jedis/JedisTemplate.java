@@ -1,8 +1,10 @@
 package org.ibase4j.core.support.jedis;
 
+import java.util.ResourceBundle;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -13,12 +15,14 @@ import redis.clients.jedis.ShardedJedisPool;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
+@PropertySource("classpath:config/redis.properties")
 public class JedisTemplate {
 	private static final Logger logger = LogManager.getLogger();
 
 	private static ShardedJedisPool shardedJedisPool = null;
-	@Value("${redis.expiration}")
-	private static Integer EXPIRE = 60 * 60 * 1; // 1小时
+
+	private static Integer EXPIRE = Integer
+			.valueOf(ResourceBundle.getBundle("config/redis").getString("redis.expiration")); // 1小时
 
 	// 获取线程
 	private static ShardedJedis getJedis() {

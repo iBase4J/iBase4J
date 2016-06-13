@@ -16,6 +16,7 @@ import org.ibase4j.model.generator.SysUserMenu;
 import org.ibase4j.model.generator.SysUserRole;
 import org.ibase4j.model.sys.SysMenuBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
+@CacheConfig(cacheNames = "sysMenu")
 @DubboService(interfaceClass = SysAuthorizeProvider.class)
 public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implements SysAuthorizeProvider {
 	@Autowired
@@ -36,6 +38,10 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	private SysAuthorizeMapper sysAuthorizeMapper;
 	@Autowired
 	private SysMenuProviderImpl sysMenuService;
+
+	protected Object getMapper() {
+		return sysMenuService;
+	}
 
 	@Transactional
 	@CacheEvict(value = "getAuthorize", allEntries = true)
@@ -67,7 +73,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	@Cacheable(value = "getAuthorize")
 	public List<SysMenuBean> queryAuthorizeByUserId(Integer userId) {
 		List<Integer> menuIds = sysAuthorizeMapper.getAuthorize(userId);
-		List<SysMenuBean> menus = getList(menuIds, SysMenuBean.class);
+		List<SysMenuBean> menus = sysMenuService.getList(menuIds, SysMenuBean.class);
 		Map<Integer, List<SysMenuBean>> map = InstanceUtil.newHashMap();
 		for (SysMenuBean sysMenuBean : menus) {
 			if (map.get(sysMenuBean.getParentId()) == null) {
@@ -95,9 +101,5 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 			}
 		}
 		return menus;
-	}
-
-	public SysMenu queryById(Integer id) {
-		return sysMenuService.queryById(id);
 	}
 }

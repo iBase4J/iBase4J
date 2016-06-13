@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -201,6 +202,15 @@ public final class InstanceUtil {
 	 */
 	public static final <E> ArrayList<E> newArrayList() {
 		return new ArrayList<E>();
+	}
+
+	/**
+	 * Constructs an empty ArrayList.
+	 */
+	public static final <E> ArrayList<E> newArrayList(@SuppressWarnings("unchecked") E... e) {
+		ArrayList<E> list = new ArrayList<E>();
+		Collections.addAll(list, e);
+		return list;
 	}
 
 	/**

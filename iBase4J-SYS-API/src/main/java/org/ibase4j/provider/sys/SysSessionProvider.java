@@ -18,4 +18,6 @@ public interface SysSessionProvider extends BaseProvider<SysSession> {
 	public void deleteBySessionId(final String sessionId);
 
 	public List<String> querySessionIdByAccount(String account);
+
+	public void delete(Integer id);
 }

@@ -9,6 +9,7 @@ import org.ibase4j.core.support.BaseService;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.SecurityUtil;
+import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.model.sys.SysUserBean;
 import org.ibase4j.provider.sys.SysUserProvider;
@@ -40,6 +41,7 @@ public class SysUserService extends BaseService<SysUserProvider, SysUser> {
 		if (StringUtils.isBlank(sysUser.getPassword())) {
 			sysUser.setPassword(user.getPassword());
 		}
+		sysUser.setUpdateBy(WebUtil.getCurrentUser());
 		provider.update(sysUser);
 	}
 
@@ -53,6 +55,7 @@ public class SysUserService extends BaseService<SysUserProvider, SysUser> {
 		SysUser sysUser = provider.queryById(id);
 		Assert.notNull(sysUser, String.format(Resources.getMessage("USER_IS_NULL"), id));
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
+		sysUser.setUpdateBy(WebUtil.getCurrentUser());
 		provider.update(sysUser);
 	}
 

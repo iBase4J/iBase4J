@@ -20,7 +20,6 @@ import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysSession;
 import org.ibase4j.model.generator.SysUser;
-import org.ibase4j.model.sys.SysUserBean;
 import org.ibase4j.service.sys.SysSessionService;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +48,9 @@ public class Realm extends AuthorizingRealm {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("countSql", 0);
-		params.put("usable", 1);
+		params.put("enable", 1);
 		params.put("account", token.getUsername());
-		PageInfo<SysUserBean> pageInfo = sysUserService.queryBeans(params);
+		PageInfo<SysUser> pageInfo = sysUserService.query(params);
 		if (pageInfo.getSize() == 1) {
 			SysUser user = pageInfo.getList().get(0);
 			StringBuilder sb = new StringBuilder(100);
@@ -61,8 +60,8 @@ public class Realm extends AuthorizingRealm {
 			if (user.getPassword().equals(sb.toString())) {
 				WebUtil.saveCurrentUser(user.getId());
 				saveSession(user.getAccount());
-				AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(),
-						user.getPassword(), user.getUserName());
+				AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
+						user.getUserName());
 				return authcInfo;
 			}
 			logger.warn("USER [{}] PASSWORD IS WRONG: {}", token.getUsername(), sb.toString());

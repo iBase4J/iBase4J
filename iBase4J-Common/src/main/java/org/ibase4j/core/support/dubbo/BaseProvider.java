@@ -15,7 +15,7 @@ public interface BaseProvider<K> {
 	public K update(K record);
 
 	@Transactional
-	public void delete(Integer id);
+	public void delete(Integer id, Integer userId);
 
 	public K queryById(Integer id);
 

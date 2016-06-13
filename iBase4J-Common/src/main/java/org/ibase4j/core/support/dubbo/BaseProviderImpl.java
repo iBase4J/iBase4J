@@ -1,13 +1,19 @@
 package org.ibase4j.core.support.dubbo;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.ibase4j.core.support.spring.data.redis.ObjectRedisSerializer;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
-import org.springframework.cache.annotation.Cacheable;
+import org.ibase4j.core.util.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.ContextLoader;
 
 import com.github.pagehelper.Page;
@@ -21,6 +27,13 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:19:19
  */
 public abstract class BaseProviderImpl<T extends Serializable> {
+
+	@Autowired
+	private KeyGenerator keyGenerator;
+	@Autowired
+	private StringRedisSerializer keySerializer;
+	@Autowired
+	private ObjectRedisSerializer valueSerializer;
 
 	/** 启动分页查询 */
 	protected void startPage(Map<String, Object> params) {
@@ -115,6 +128,55 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 		return list;
 	}
 
-	@Cacheable
-	public abstract T queryById(Integer id);
+	@Transactional
+	public void delete(Integer id, Integer userId) {
+		try {
+			T t = queryById(id);
+			t.getClass().getMethod("setEnable", Integer.class).invoke(t, 0);
+			t.getClass().getMethod("setUpdateTime", Date.class).invoke(t, new Date());
+			t.getClass().getMethod("setUpdateBy", Integer.class).invoke(t, userId);
+			getMapper().getClass().getMethod("updateByPrimaryKey", t.getClass()).invoke(getMapper(), t);
+			String key = keyGenerator.generate(getClass(), getClass().getMethod("delete", Integer.class), id)
+					.toString();
+			RedisUtil.set(keySerializer.serialize(key), valueSerializer.serialize(t));
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+
+	@Transactional
+	public T update(T record) {
+		try {
+			record.getClass().getMethod("setEnable", Integer.class).invoke(record, 1);
+			if (record.getClass().getMethod("getId").invoke(record) != null) {
+				record.getClass().getMethod("setUpdateTime", Date.class).invoke(record, new Date());
+				getMapper().getClass().getMethod("updateByPrimaryKey", record.getClass()).invoke(getMapper(), record);
+			} else {
+				record.getClass().getMethod("setCreateTime", Date.class).invoke(record, new Date());
+				getMapper().getClass().getMethod("insert", record.getClass()).invoke(getMapper(), record);
+			}
+			String key = keyGenerator.generate(getClass(), getClass().getMethod("update", record.getClass()), record)
+					.toString();
+			RedisUtil.set(keySerializer.serialize(key), valueSerializer.serialize(record));
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+		return record;
+	}
+
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public T queryById(Integer id) {
+		try {
+			T t = (T) getMapper().getClass().getMethod("selectByPrimaryKey", Integer.class).invoke(getMapper(), id);
+			String key = keyGenerator.generate(getClass(), getClass().getMethod("queryById", Integer.class), t)
+					.toString();
+			RedisUtil.set(keySerializer.serialize(key), valueSerializer.serialize(t));
+			return t;
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+
+	protected abstract Object getMapper();
 }
