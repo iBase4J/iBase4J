@@ -38,7 +38,7 @@
     * 启动SYS-Scheduler命令：clean:clean package -P build tomcat7:run-war-only -f pom-scheduler-server.xml
     * 启动SYS-Service命令：clean:clean package -P build tomcat7:run-war-only -f pom-sys-server.xml
     * 启动Web命令：clean:clean package -P build tomcat7:run-war-only -f pom-web-server.xml
-    * 服务启动后，使用nginx代理UI：修改配置里的UI目录后启动。
+    * 使用nginx代理UI：修改配置里的UI目录后重启nginx。
     
 ## 版权声明
 iBase4J使用 [Apache License 2.0][] 协议.
