@@ -168,9 +168,13 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 	@SuppressWarnings("unchecked")
 	public T queryById(Integer id) {
 		try {
-			T t = (T) getMapper().getClass().getMethod("selectByPrimaryKey", Integer.class).invoke(getMapper(), id);
-			String key = keyGenerator.generate(getClass(), getClass().getMethod("queryById", Integer.class), t)
+			String key = keyGenerator.generate(getClass(), getClass().getMethod("queryById", Integer.class), id)
 					.toString();
+			byte[] value = RedisUtil.get(keySerializer.serialize(key), true);
+			if (value != null) {
+				return (T) valueSerializer.deserialize(value);
+			}
+			T t = (T) getMapper().getClass().getMethod("selectByPrimaryKey", Integer.class).invoke(getMapper(), id);
 			RedisUtil.set(keySerializer.serialize(key), valueSerializer.serialize(t));
 			return t;
 		} catch (Exception e) {

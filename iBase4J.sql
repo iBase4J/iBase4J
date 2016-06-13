@@ -11,11 +11,13 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- 导出 ibase4j 的数据库结构
+DROP DATABASE IF EXISTS `ibase4j`;
 CREATE DATABASE IF NOT EXISTS `ibase4j` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ibase4j`;
 
 
 -- 导出  表 ibase4j.sys_catalog 结构
+DROP TABLE IF EXISTS `sys_catalog`;
 CREATE TABLE IF NOT EXISTS `sys_catalog` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '流水号',
   `cascade_id` varchar(255) NOT NULL COMMENT '节点语义ID',
@@ -56,6 +58,7 @@ INSERT INTO `sys_catalog` (`id_`, `cascade_id`, `root_key`, `root_name`, `name_`
 
 
 -- 导出  表 ibase4j.sys_dept 结构
+DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE IF NOT EXISTS `sys_dept` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '部门编号',
   `dept_name` varchar(50) DEFAULT NULL COMMENT '部门名称',
@@ -79,6 +82,7 @@ INSERT INTO `sys_dept` (`id_`, `dept_name`, `parent_id`, `enable_`, `sort_no`, `
 
 
 -- 导出  表 ibase4j.sys_dic 结构
+DROP TABLE IF EXISTS `sys_dic`;
 CREATE TABLE IF NOT EXISTS `sys_dic` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `index_id` int(20) DEFAULT NULL,
@@ -130,6 +134,7 @@ INSERT INTO `sys_dic` (`id_`, `index_id`, `code_`, `code_text`, `enable_`, `sort
 
 
 -- 导出  表 ibase4j.sys_dic_index 结构
+DROP TABLE IF EXISTS `sys_dic_index`;
 CREATE TABLE IF NOT EXISTS `sys_dic_index` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `catalog_id` int(20) NOT NULL DEFAULT '0',
@@ -163,6 +168,7 @@ INSERT INTO `sys_dic_index` (`id_`, `catalog_id`, `key_`, `name_`, `remark_`, `e
 
 
 -- 导出  表 ibase4j.sys_menu 结构
+DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE IF NOT EXISTS `sys_menu` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
   `menu_name` varchar(50) DEFAULT NULL COMMENT '菜单名称',
@@ -204,6 +210,7 @@ INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`
 
 
 -- 导出  表 ibase4j.sys_param 结构
+DROP TABLE IF EXISTS `sys_param`;
 CREATE TABLE IF NOT EXISTS `sys_param` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '参数编号',
   `param_key` varchar(50) DEFAULT NULL COMMENT '参数键名',
@@ -224,6 +231,7 @@ CREATE TABLE IF NOT EXISTS `sys_param` (
 
 
 -- 导出  表 ibase4j.sys_permission 结构
+DROP TABLE IF EXISTS `sys_permission`;
 CREATE TABLE IF NOT EXISTS `sys_permission` (
   `id_` int(11) NOT NULL AUTO_INCREMENT,
   `permission_url` varchar(50) DEFAULT NULL,
@@ -265,6 +273,7 @@ INSERT INTO `sys_permission` (`id_`, `permission_url`, `permission_name`, `enabl
 
 
 -- 导出  表 ibase4j.sys_role 结构
+DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE IF NOT EXISTS `sys_role` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '角色编号',
   `role_name` varchar(50) DEFAULT NULL COMMENT '角色名称',
@@ -287,6 +296,7 @@ INSERT INTO `sys_role` (`id_`, `role_name`, `dept_id`, `role_type`, `enable_`, `
 
 
 -- 导出  表 ibase4j.sys_role_menu 结构
+DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE IF NOT EXISTS `sys_role_menu` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `role_id` int(20) DEFAULT NULL,
@@ -318,6 +328,7 @@ INSERT INTO `sys_role_menu` (`id_`, `role_id`, `menu_id`, `operate_time`, `opera
 
 
 -- 导出  表 ibase4j.sys_role_permission 结构
+DROP TABLE IF EXISTS `sys_role_permission`;
 CREATE TABLE IF NOT EXISTS `sys_role_permission` (
   `id_` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) DEFAULT NULL,
@@ -354,6 +365,7 @@ INSERT INTO `sys_role_permission` (`id_`, `role_id`, `permission_id`) VALUES
 
 
 -- 导出  表 ibase4j.sys_session 结构
+DROP TABLE IF EXISTS `sys_session`;
 CREATE TABLE IF NOT EXISTS `sys_session` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `session_id` varchar(50) DEFAULT NULL,
@@ -371,6 +383,7 @@ INSERT INTO `sys_session` (`id_`, `session_id`, `account_`, `ip_`, `start_time`)
 
 
 -- 导出  表 ibase4j.sys_user 结构
+DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE IF NOT EXISTS `sys_user` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `account_` varchar(20) DEFAULT NULL COMMENT '登陆帐户',
@@ -400,6 +413,7 @@ INSERT INTO `sys_user` (`id_`, `account_`, `password_`, `phone_`, `sex_`, `user_
 
 
 -- 导出  表 ibase4j.sys_user_menu 结构
+DROP TABLE IF EXISTS `sys_user_menu`;
 CREATE TABLE IF NOT EXISTS `sys_user_menu` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(20) DEFAULT NULL,
@@ -416,6 +430,7 @@ CREATE TABLE IF NOT EXISTS `sys_user_menu` (
 
 
 -- 导出  表 ibase4j.sys_user_permission 结构
+DROP TABLE IF EXISTS `sys_user_permission`;
 CREATE TABLE IF NOT EXISTS `sys_user_permission` (
   `id_` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
@@ -430,6 +445,7 @@ CREATE TABLE IF NOT EXISTS `sys_user_permission` (
 
 
 -- 导出  表 ibase4j.sys_user_role 结构
+DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE IF NOT EXISTS `sys_user_role` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(20) DEFAULT NULL,
@@ -440,7 +456,7 @@ CREATE TABLE IF NOT EXISTS `sys_user_role` (
   UNIQUE KEY `user_id_role_id` (`user_id`,`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户授权表';
 
--- 正在导出表  ibase4j.sys_user_role 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_user_role 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_user_role` DISABLE KEYS */;
 INSERT INTO `sys_user_role` (`id_`, `user_id`, `role_id`, `operate_time`, `operator_id`) VALUES
 	(1, 1, 1, '2016-05-10 08:45:51', 1);
@@ -448,6 +464,7 @@ INSERT INTO `sys_user_role` (`id_`, `user_id`, `role_id`, `operate_time`, `opera
 
 
 -- 导出  表 ibase4j.sys_user_thirdparty 结构
+DROP TABLE IF EXISTS `sys_user_thirdparty`;
 CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `user_id` int(20) NOT NULL,
@@ -464,6 +481,7 @@ CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
 
 
 -- 导出  表 ibase4j.task_fire_log 结构
+DROP TABLE IF EXISTS `task_fire_log`;
 CREATE TABLE IF NOT EXISTS `task_fire_log` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `group_name` varchar(50) NOT NULL,
@@ -476,12 +494,13 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   UNIQUE KEY `group_name_task_name_start_time` (`group_name`,`task_name`,`start_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.task_fire_log 的数据：~12 rows (大约)
+-- 正在导出表  ibase4j.task_fire_log 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `task_fire_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `task_fire_log` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.task_group 结构
+DROP TABLE IF EXISTS `task_group`;
 CREATE TABLE IF NOT EXISTS `task_group` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `group_name` varchar(50) NOT NULL,
@@ -503,6 +522,7 @@ INSERT INTO `task_group` (`id_`, `group_name`, `group_desc`, `enable_`, `create_
 
 
 -- 导出  表 ibase4j.task_scheduler 结构
+DROP TABLE IF EXISTS `task_scheduler`;
 CREATE TABLE IF NOT EXISTS `task_scheduler` (
   `id_` int(20) NOT NULL AUTO_INCREMENT,
   `group_id` int(20) NOT NULL,
