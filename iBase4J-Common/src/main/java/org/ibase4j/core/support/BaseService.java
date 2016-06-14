@@ -27,7 +27,7 @@ public abstract class BaseService<P extends BaseProvider<T>, T> {
 		Object id = null;
 		try {
 			id = record.getClass().getDeclaredMethod("getId").invoke(record);
-			record.getClass().getDeclaredMethod("setCreateBy", Integer.class).invoke(record, WebUtil.getCurrentUser());
+			record.getClass().getDeclaredMethod("setUpdateBy", Integer.class).invoke(record, WebUtil.getCurrentUser());
 		} catch (Exception e) {
 		}
 		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
@@ -37,6 +37,7 @@ public abstract class BaseService<P extends BaseProvider<T>, T> {
 	/** 新增 */
 	public void add(T record) {
 		try {
+			record.getClass().getDeclaredMethod("setCreateBy", Integer.class).invoke(record, WebUtil.getCurrentUser());
 			record.getClass().getDeclaredMethod("setUpdateBy", Integer.class).invoke(record, WebUtil.getCurrentUser());
 		} catch (Exception e) {
 		}

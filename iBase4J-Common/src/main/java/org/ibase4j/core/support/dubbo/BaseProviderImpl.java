@@ -136,8 +136,7 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 			t.getClass().getMethod("setUpdateTime", Date.class).invoke(t, new Date());
 			t.getClass().getMethod("setUpdateBy", Integer.class).invoke(t, userId);
 			getMapper().getClass().getMethod("updateByPrimaryKey", t.getClass()).invoke(getMapper(), t);
-			String key = keyGenerator.generate(this, getClass().getMethod("delete", Integer.class), id)
-					.toString();
+			String key = keyGenerator.generate(this, getClass().getMethods()[0], id).toString();
 			RedisUtil.set(keySerializer.serialize(key), valueSerializer.serialize(t));
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
@@ -155,8 +154,7 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 				record.getClass().getMethod("setCreateTime", Date.class).invoke(record, new Date());
 				getMapper().getClass().getMethod("insert", record.getClass()).invoke(getMapper(), record);
 			}
-			String key = keyGenerator.generate(this, getClass().getMethod("update", record.getClass()), record)
-					.toString();
+			String key = keyGenerator.generate(this, getClass().getMethods()[0], record).toString();
 			RedisUtil.set(keySerializer.serialize(key), valueSerializer.serialize(record));
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
@@ -168,8 +166,7 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 	@SuppressWarnings("unchecked")
 	public T queryById(Integer id) {
 		try {
-			String key = keyGenerator.generate(this, getClass().getMethod("queryById", Integer.class), id)
-					.toString();
+			String key = keyGenerator.generate(this, getClass().getMethods()[0], id).toString();
 			byte[] value = RedisUtil.get(keySerializer.serialize(key), true);
 			if (value != null) {
 				return (T) valueSerializer.deserialize(value);
