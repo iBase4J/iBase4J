@@ -114,5 +114,6 @@ public class TaskListener implements JobListener {
 				queueSender.send("iBase4J.emailSender", email);
 			}
 		});
+		executorService.shutdown();
 	}
 }
