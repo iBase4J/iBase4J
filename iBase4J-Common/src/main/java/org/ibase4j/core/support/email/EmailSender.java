@@ -75,13 +75,11 @@ public final class EmailSender {
 	 */
 	public boolean createMimeMessage() {
 		try {
-			logger.info(Resources.getMessage("EMAIL.PRE_TALK"));
 			session = Session.getDefaultInstance(props, null); // 获得邮件会话对象
 		} catch (Exception e) {
 			logger.error(Resources.getMessage("EMAIL.ERROR_TALK"), e.getLocalizedMessage());
 			return false;
 		}
-		logger.info(Resources.getMessage("EMAIL.PRE_MIME"));
 		try {
 			mimeMsg = new MimeMessage(session); // 创建MIME邮件对象
 			mp = new MimeMultipart();
