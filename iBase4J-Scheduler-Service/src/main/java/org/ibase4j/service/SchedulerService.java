@@ -2,7 +2,6 @@ package org.ibase4j.service;
 
 import java.util.Date;
 
-import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.dao.generator.TaskFireLogMapper;
 import org.ibase4j.dao.generator.TaskGroupMapper;
 import org.ibase4j.dao.generator.TaskSchedulerMapper;
@@ -48,11 +47,9 @@ public class SchedulerService {
 	public TaskGroup updateGroup(TaskGroup record) {
 		record.setEnable(1);
 		if (record.getId() == null) {
-			record.setCreateBy(WebUtil.getCurrentUser());
 			record.setCreateTime(new Date());
 			taskGroupMapper.insert(record);
 		} else {
-			record.setUpdateBy(WebUtil.getCurrentUser());
 			record.setUpdateTime(new Date());
 			taskGroupMapper.updateByPrimaryKey(record);
 		}
@@ -64,11 +61,9 @@ public class SchedulerService {
 	public TaskScheduler updateScheduler(TaskScheduler record) {
 		record.setEnable(1);
 		if (record.getId() == null) {
-			record.setCreateBy(WebUtil.getCurrentUser());
 			record.setCreateTime(new Date());
 			taskSchedulerMapper.insert(record);
 		} else {
-			record.setUpdateBy(WebUtil.getCurrentUser());
 			record.setUpdateTime(new Date());
 			taskSchedulerMapper.updateByPrimaryKey(record);
 		}
@@ -80,7 +75,6 @@ public class SchedulerService {
 	public TaskScheduler deleteScheduler(Integer id) {
 		TaskScheduler record = getSchedulerById(id);
 		record.setEnable(0);
-		record.setUpdateBy(WebUtil.getCurrentUser());
 		record.setUpdateTime(new Date());
 		taskSchedulerMapper.updateByPrimaryKey(record);
 		return record;
