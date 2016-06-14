@@ -1,9 +1,14 @@
 package org.ibase4j.scheduler.manager;
 
 import java.sql.Timestamp;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ibase4j.core.support.email.Email;
+import org.ibase4j.core.support.mq.QueueSender;
 import org.ibase4j.model.generator.TaskFireLog;
 import org.ibase4j.model.generator.TaskScheduler;
 import org.ibase4j.scheduler.Constants;
@@ -27,6 +32,8 @@ public class TaskListener implements JobListener {
 	private Logger logger = LogManager.getLogger(this.getClass());
 	@Autowired
 	private SchedulerService schedulerService;
+	@Autowired
+	private QueueSender queueSender;
 
 	public String getName() {
 		return "taskListener";
@@ -83,6 +90,11 @@ public class TaskListener implements JobListener {
 		if (exp != null) {
 			log.setStatus(Constants.ERROR_STATS);
 			log.setFireInfo(exp.getMessage());
+			String contactEmail = jobDataMap.getString("contactEmail");
+			if (StringUtils.isNotBlank(contactEmail)) {
+				String topic = String.format("调度[%s.%s]发生异常", groupName, jobName);
+				sendEmail(new Email(contactEmail, topic, exp.getMessage()));
+			}
 		} else {
 			if (log.getStatus().equals(Constants.INIT_STATS)) {
 				log.setStatus(Constants.SUCCESS_STATS);
@@ -93,5 +105,14 @@ public class TaskListener implements JobListener {
 		} catch (Exception e) {
 			logger.error("Update TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
 		}
+	}
+
+	private void sendEmail(final Email email) {
+		ExecutorService executorService = Executors.newFixedThreadPool(1);
+		executorService.submit(new Runnable() {
+			public void run() {
+				queueSender.send("iBase4J.emailSender", email);
+			}
+		});
 	}
 }

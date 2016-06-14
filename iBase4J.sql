@@ -373,12 +373,12 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   `ip_` varchar(50) DEFAULT NULL,
   `start_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='会话管理';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='会话管理';
 
 -- 正在导出表  ibase4j.sys_session 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
 INSERT INTO `sys_session` (`id_`, `session_id`, `account_`, `ip_`, `start_time`) VALUES
-	(11, '435e7ecf-205e-47c9-b1fd-c66909882377', 'admin', '192.168.1.18', '2016-06-13 16:27:01');
+	(13, '881374c3-557a-4290-b241-9685e58d44f2', 'admin', '192.168.1.18', '2016-06-13 18:54:02');
 /*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
 
@@ -532,6 +532,7 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
   `task_cron` varchar(50) NOT NULL,
   `task_previous_fire_time` timestamp NULL DEFAULT NULL,
   `task_next_fire_time` timestamp NULL DEFAULT NULL,
+  `contact_email` varchar(500) DEFAULT NULL COMMENT '多个邮箱用,分割',
   `enable_` int(1) DEFAULT '1',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `create_by` int(20) DEFAULT NULL,
@@ -543,8 +544,8 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
 
 -- 正在导出表  ibase4j.task_scheduler 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `task_scheduler` DISABLE KEYS */;
-INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `task_previous_fire_time`, `task_next_fire_time`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, 1, 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-06-12 19:00:00', '2016-06-12 19:30:00', 1, '2016-06-13 14:05:30', NULL, '2016-06-13 14:05:30', NULL);
+INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `task_previous_fire_time`, `task_next_fire_time`, `contact_email`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
+	(1, 1, 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-06-12 19:00:00', '2016-06-12 19:30:00', 'iBase4J@126.com', 1, '2016-06-13 14:05:30', NULL, '2016-06-14 10:57:27', NULL);
 /*!40000 ALTER TABLE `task_scheduler` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
