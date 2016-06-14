@@ -74,6 +74,7 @@ public class TaskListener implements JobListener {
 
 	// 任务结束后
 	public void jobWasExecuted(JobExecutionContext context, JobExecutionException exp) {
+		Timestamp end = new Timestamp(System.currentTimeMillis());
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
 		if (Constants.ERROR_STATS.equals(jobDataMap.get("taskStatus"))) {
 			return;
@@ -85,22 +86,21 @@ public class TaskListener implements JobListener {
 		}
 		// 更新任务执行状态
 		TaskFireLog log = (TaskFireLog) jobDataMap.get(Constants.JOB_LOG);
-		Timestamp end = new Timestamp(System.currentTimeMillis());
-		log.setEndTime(end);
 		if (exp != null) {
-			log.setStatus(Constants.ERROR_STATS);
-			log.setFireInfo(exp.getMessage());
 			String contactEmail = jobDataMap.getString("contactEmail");
 			if (StringUtils.isNotBlank(contactEmail)) {
 				String topic = String.format("调度[%s.%s]发生异常", groupName, jobName);
 				sendEmail(new Email(contactEmail, topic, exp.getMessage()));
 			}
+			log.setStatus(Constants.ERROR_STATS);
+			log.setFireInfo(exp.getMessage());
 		} else {
 			if (log.getStatus().equals(Constants.INIT_STATS)) {
 				log.setStatus(Constants.SUCCESS_STATS);
 			}
 		}
 		try {
+			log.setEndTime(end);
 			schedulerService.updateLog(log);
 		} catch (Exception e) {
 			logger.error("Update TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);

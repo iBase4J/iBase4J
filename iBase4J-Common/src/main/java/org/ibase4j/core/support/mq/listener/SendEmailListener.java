@@ -1,4 +1,4 @@
-package org.ibase4j.service.mq.queue;
+package org.ibase4j.core.support.mq.listener;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -9,7 +9,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.support.email.Email;
 import org.ibase4j.core.util.EmailUtil;
-import org.springframework.stereotype.Service;
 
 /**
  * 发送邮件队列
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
  * @author ShenHuaJie
  * @version 2016年6月14日 上午11:00:53
  */
-@Service
 public class SendEmailListener implements MessageListener {
 	private final Logger logger = LogManager.getLogger();
 
