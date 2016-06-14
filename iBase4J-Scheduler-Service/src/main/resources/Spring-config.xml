@@ -32,4 +32,5 @@
 	<import resource="spring/dataSource.xml"/>
 	<import resource="spring/mybatis.xml"/>
 	<import resource="spring/scheduler.xml"/>
+	<import resource="spring/*.xml"/>
 </beans>
