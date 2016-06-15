@@ -24,7 +24,7 @@ public final class DateUtil {
 	 * @param pattern
 	 * @return
 	 */
-	public static final String format(Date date) {
+	public static final String format(Object date) {
 		return format(date, PATTERN);
 	}
 
@@ -35,7 +35,7 @@ public final class DateUtil {
 	 * @param pattern
 	 * @return
 	 */
-	public static final String format(Date date, String pattern) {
+	public static final String format(Object date, String pattern) {
 		if (date == null) {
 			return null;
 		}

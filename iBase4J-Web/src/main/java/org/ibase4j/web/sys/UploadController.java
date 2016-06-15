@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ibase4j.core.support.BaseController;
+import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.UploadUtil;
 import org.springframework.ui.ModelMap;

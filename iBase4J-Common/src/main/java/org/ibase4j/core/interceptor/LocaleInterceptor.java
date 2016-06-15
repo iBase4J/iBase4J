@@ -20,8 +20,6 @@ public class LocaleInterceptor extends BaseInterceptor {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		String url = request.getServletPath();
-		logger.info(url);
 		HttpSession session = request.getSession();
 		// 设置客户端语言
 		Locale locale = (Locale) session.getAttribute("LOCALE");
@@ -36,6 +34,6 @@ public class LocaleInterceptor extends BaseInterceptor {
 		}
 		session.setAttribute("HOST", WebUtil.getHost(request));
 		LocaleContextHolder.setLocale(locale);
-		return nextInterceptor(request, response, handler);
+		return super.preHandle(request, response, handler);
 	}
 }

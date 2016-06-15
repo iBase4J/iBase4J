@@ -3,8 +3,8 @@ package org.ibase4j.web.sys;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
+import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.support.BaseController;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.support.exception.LoginException;
 import org.ibase4j.core.support.login.LoginHelper;

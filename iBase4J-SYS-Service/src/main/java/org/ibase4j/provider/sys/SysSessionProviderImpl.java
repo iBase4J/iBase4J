@@ -3,7 +3,7 @@ package org.ibase4j.provider.sys;
 import java.util.List;
 import java.util.Map;
 
-import org.ibase4j.core.support.dubbo.BaseProviderImpl;
+import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.dao.generator.SysSessionMapper;
 import org.ibase4j.dao.sys.SysSessionExpandMapper;

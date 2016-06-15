@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.dubbo;
+package org.ibase4j.core.base;
 
 import java.util.Map;
 

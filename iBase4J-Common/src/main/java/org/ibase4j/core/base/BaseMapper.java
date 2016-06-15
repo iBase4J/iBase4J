@@ -1,4 +1,4 @@
-package org.ibase4j.core.support;
+package org.ibase4j.core.base;
 
 import java.util.Map;
 

@@ -1,6 +1,6 @@
 package org.ibase4j.service.sys;
 
-import org.ibase4j.core.support.BaseService;
+import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.generator.SysRole;
 import org.ibase4j.provider.sys.SysRoleProvider;

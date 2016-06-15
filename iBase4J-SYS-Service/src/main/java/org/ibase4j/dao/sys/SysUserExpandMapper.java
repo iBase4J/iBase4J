@@ -4,7 +4,7 @@
 package org.ibase4j.dao.sys;
 
 import org.apache.ibatis.annotations.Param;
-import org.ibase4j.core.support.BaseMapper;
+import org.ibase4j.core.base.BaseMapper;
 
 /**
  * @author ShenHuaJie

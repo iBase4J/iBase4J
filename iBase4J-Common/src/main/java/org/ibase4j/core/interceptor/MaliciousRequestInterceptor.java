@@ -45,7 +45,7 @@ public class MaliciousRequestInterceptor extends BaseInterceptor {
 		}
 		session.setAttribute(Constants.PREREQUEST, url);
 		session.setAttribute(Constants.PREREQUEST_TIME, System.currentTimeMillis());
-		return nextInterceptor(request, response, handler);
+		return super.preHandle(request, response, handler);
 	}
 
 	public void setAllRequest(Boolean allRequest) {

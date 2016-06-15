@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.ibase4j.core.support.BaseController;
+import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysRole;

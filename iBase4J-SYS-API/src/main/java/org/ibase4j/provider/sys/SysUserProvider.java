@@ -5,7 +5,7 @@ package org.ibase4j.provider.sys;
 
 import java.util.Map;
 
-import org.ibase4j.core.support.dubbo.BaseProvider;
+import org.ibase4j.core.base.BaseProvider;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.model.sys.SysUserBean;

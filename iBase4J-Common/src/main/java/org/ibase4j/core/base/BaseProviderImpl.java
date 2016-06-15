@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.dubbo;
+package org.ibase4j.core.base;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.ibase4j.core.support.spring.data.redis.ObjectRedisSerializer;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.interceptor.KeyGenerator;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.ContextLoader;
 
@@ -31,9 +30,9 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 	@Autowired
 	private KeyGenerator keyGenerator;
 	@Autowired
-	private StringRedisSerializer keySerializer;
+	private RedisSerializer<String> keySerializer;
 	@Autowired
-	private ObjectRedisSerializer valueSerializer;
+	private RedisSerializer<Object> valueSerializer;
 
 	/** 启动分页查询 */
 	protected void startPage(Map<String, Object> params) {

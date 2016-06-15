@@ -3,9 +3,9 @@ package org.ibase4j.service.sys;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.support.BaseService;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.SecurityUtil;

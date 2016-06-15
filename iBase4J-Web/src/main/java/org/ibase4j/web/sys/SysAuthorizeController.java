@@ -1,6 +1,6 @@
 package org.ibase4j.web.sys;
 
-import org.ibase4j.core.support.BaseController;
+import org.ibase4j.core.base.BaseController;
 import org.springframework.web.bind.annotation.RestController;
 
 /**

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ibase4j.core.support;
+package org.ibase4j.core.base;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.exception.IllegalParameterException;
+import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.support.exception.BaseException;
 import org.ibase4j.core.util.WebUtil;
 import org.springframework.http.ResponseEntity;

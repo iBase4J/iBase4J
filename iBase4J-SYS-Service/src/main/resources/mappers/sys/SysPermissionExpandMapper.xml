@@ -7,6 +7,9 @@
 		<if test="keyword != null">
 			and (permission_name like CONCAT('%',#{keyword},'%') or permission_url like CONCAT('%',#{keyword},'%') )
 		</if>
+		<if test="permission_url != null">
+			and permission_url=#{permission_url}
+		</if>
 	</select>
 	<select id="getPermissionByUserId" resultType="java.lang.Integer">
 		select count(1) from sys_permission p

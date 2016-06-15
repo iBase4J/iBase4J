@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.support.BaseController;
 import org.ibase4j.core.support.login.ThirdPartyLoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.service.sys.SysUserService;

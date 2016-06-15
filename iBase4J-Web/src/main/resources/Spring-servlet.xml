@@ -18,14 +18,17 @@
 			<property name="minRequestIntervalTime" value="1000" />
 			<property name="maxMaliciousTimes" value="0" />
 			<property name="nextInterceptor">
-				<bean class="org.ibase4j.core.interceptor.LocaleInterceptor" />
+				<array>
+					<bean class="org.ibase4j.core.interceptor.LocaleInterceptor" />
+					<bean class="org.ibase4j.core.interceptor.EventInterceptor" />
+				</array>
 			</property>
 		</bean>
 	</mvc:interceptors>
 	<mvc:view-resolvers>
 	    <mvc:jsp cache-views="false" prefix="/WEB-INF/jsp/" suffix=".jsp" />  
 	</mvc:view-resolvers>
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<description>注解controller方法适配器</description>
 		<property name="messageConverters">
 			<list><!--JSON转换器 -->

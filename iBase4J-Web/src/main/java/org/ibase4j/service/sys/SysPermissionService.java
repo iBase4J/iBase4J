@@ -1,6 +1,6 @@
 package org.ibase4j.service.sys;
 
-import org.ibase4j.core.support.BaseService;
+import org.ibase4j.core.base.BaseService;
 import org.ibase4j.model.generator.SysPermission;
 import org.ibase4j.provider.sys.SysPermissionProvider;
 import org.springframework.beans.factory.annotation.Autowired;

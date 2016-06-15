@@ -1,14 +1,15 @@
-package org.ibase4j.core.support;
+package org.ibase4j.core.base;
 
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.support.dubbo.BaseProvider;
-import org.ibase4j.core.support.spring.data.redis.ObjectRedisSerializer;
 import org.ibase4j.core.util.RedisUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.util.Assert;
 
 import com.github.pagehelper.PageInfo;
@@ -18,9 +19,10 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:47:58
  */
 public abstract class BaseService<P extends BaseProvider<T>, T> {
+	protected Logger logger = LogManager.getLogger();
 	protected P provider;
 	@Autowired
-	protected ObjectRedisSerializer valueSerializer;
+	protected RedisSerializer<Object> valueSerializer;
 
 	/** 修改 */
 	public void update(T record) {
