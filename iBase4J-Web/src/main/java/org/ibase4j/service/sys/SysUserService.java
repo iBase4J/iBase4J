@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseService;
-import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.Assert;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
@@ -33,11 +32,11 @@ public class SysUserService extends BaseService<SysUserProvider, SysUser> {
 	/** 修改用户信息 */
 	@CachePut
 	public void updateUserInfo(SysUser sysUser) {
-		Assert.notNull(sysUser.getId(), Resources.getMessage("USER_ID_IS_NULL"));
-		Assert.isNotBlank(sysUser.getAccount(), Resources.getMessage("ACCOUNT_IS_NULL"));
-		Assert.length(sysUser.getAccount(), 3, 15, Resources.getMessage("ACCOUNT_LENGTH", 3, 15));
+		Assert.notNull(sysUser.getId(), "USER_ID");
+		Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
+		Assert.length(sysUser.getAccount(), 3, 15, "ACCOUNT");
 		SysUser user = this.queryById(sysUser.getId());
-		Assert.notNull(user, String.format(Resources.getMessage("USER_IS_NULL"), sysUser.getId()));
+		Assert.notNull(user, "USER", sysUser.getId());
 		if (StringUtils.isBlank(sysUser.getPassword())) {
 			sysUser.setPassword(user.getPassword());
 		}
@@ -50,10 +49,10 @@ public class SysUserService extends BaseService<SysUserProvider, SysUser> {
 	}
 
 	public void updatePassword(Integer id, String password) {
-		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
-		Assert.isNotBlank(password, Resources.getMessage("PASSWORD_IS_NULL"));
+		Assert.notNull(id, "USER_ID");
+		Assert.isNotBlank(password, "PASSWORD");
 		SysUser sysUser = provider.queryById(id);
-		Assert.notNull(sysUser, String.format(Resources.getMessage("USER_IS_NULL"), id));
+		Assert.notNull(sysUser, "USER", id);
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
 		sysUser.setUpdateBy(WebUtil.getCurrentUser());
 		provider.update(sysUser);

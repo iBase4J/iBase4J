@@ -5,7 +5,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.util.RedisUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public abstract class BaseService<P extends BaseProvider<T>, T> {
 			record.getClass().getDeclaredMethod("setUpdateBy", Integer.class).invoke(record, WebUtil.getCurrentUser());
 		} catch (Exception e) {
 		}
-		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
+		Assert.notNull(id, "ID");
 		provider.update(record);
 	}
 
@@ -48,14 +47,14 @@ public abstract class BaseService<P extends BaseProvider<T>, T> {
 
 	/** 删除 */
 	public void delete(Integer id) {
-		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
+		Assert.notNull(id, "ID");
 		provider.delete(id, WebUtil.getCurrentUser());
 	}
 
 	/** 根据Id查询 */
 	@SuppressWarnings("unchecked")
 	public T queryById(Integer id) {
-		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
+		Assert.notNull(id, "ID");
 		StringBuilder sb = new StringBuilder(Constants.CACHE_NAMESPACE);
 		String className = this.getClass().getSimpleName();
 		sb.append(className.substring(0, 1).toLowerCase()).append(className.substring(1, className.length() - 7));

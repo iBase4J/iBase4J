@@ -3,13 +3,12 @@ package org.ibase4j.service.sys;
 import java.util.List;
 import java.util.Map;
 
-import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.Assert;
 import org.ibase4j.model.generator.SysSession;
 import org.ibase4j.provider.sys.SysSessionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import com.github.pagehelper.PageInfo;
 
@@ -32,7 +31,7 @@ public class SysSessionService {
 
 	/** 删除会话 */
 	public void deleteByAccount(String account) {
-		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
+		Assert.notNull(account, "ACCOUNT");
 		List<String> sessionIds = sysSessionProvider.querySessionIdByAccount(account);
 		if (sessionIds != null) {
 			for (String sessionId : sessionIds) {
@@ -45,7 +44,7 @@ public class SysSessionService {
 
 	/** 删除会话 */
 	public void delete(Integer id) {
-		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
+		Assert.notNull(id, "ID");
 		SysSession sysSession = sysSessionProvider.queryById(id);
 		if (sysSession != null) {
 			sessionRepository.delete(sysSession.getSessionId());

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.SecurityUtils;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.Assert;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.support.exception.LoginException;
 import org.ibase4j.core.support.login.LoginHelper;
@@ -13,7 +14,6 @@ import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +33,8 @@ public class LoginController extends BaseController {
 	@RequestMapping(value = "/login")
 	public Object login(ModelMap modelMap, @RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
-		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
-		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
+		Assert.notNull(account, "ACCOUNT");
+		Assert.notNull(password, "PASSWORD");
 		if (LoginHelper.login(account, sysUserService.encryptPassword(password))) {
 			return setSuccessModelMap(modelMap);
 		}
@@ -54,8 +54,8 @@ public class LoginController extends BaseController {
 			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
-		Assert.notNull(sysUser.getAccount(), Resources.getMessage("ACCOUNT_IS_NULL"));
-		Assert.notNull(sysUser.getPassword(), Resources.getMessage("PASSWORD_IS_NULL"));
+		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
+		Assert.notNull(sysUser.getPassword(), "PASSWORD");
 		sysUser.setPassword(sysUserService.encryptPassword(sysUser.getPassword()));
 		sysUserService.add(sysUser);
 		if (LoginHelper.login(account, password)) {
