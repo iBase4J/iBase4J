@@ -22,7 +22,7 @@ public class JedisTemplate {
 	private static ShardedJedisPool shardedJedisPool = null;
 
 	private static Integer EXPIRE = Integer
-			.valueOf(ResourceBundle.getBundle("config/redis").getString("redis.expiration")); // 1小时
+			.valueOf(ResourceBundle.getBundle("config/redis").getString("redis.expiration"));
 
 	// 获取线程
 	private static ShardedJedis getJedis() {
@@ -37,15 +37,19 @@ public class JedisTemplate {
 		return shardedJedisPool.getResource();
 	}
 
-	public static <K> K run(String key, Executor<K> executor, boolean... expired) {
+	public static <K> K run(String key, Executor<K> executor, Integer... expire) {
 		ShardedJedis jedis = getJedis();
 		if (jedis == null) {
 			return null;
 		}
 		try {
 			K result = executor.execute(jedis);
-			if (jedis.exists(key) && expired == null) {
-				jedis.expire(key, EXPIRE);
+			if (jedis.exists(key)) {
+				if (expire == null || expire.length == 0) {
+					jedis.expire(key, EXPIRE);
+				} else if (expire.length == 1) {
+					jedis.expire(key, expire[0]);
+				}
 			}
 			return result;
 		} catch (Exception e) {
@@ -58,15 +62,19 @@ public class JedisTemplate {
 		return null;
 	}
 
-	public static <K> K run(byte[] key, Executor<K> executor, boolean... expired) {
+	public static <K> K run(byte[] key, Executor<K> executor, Integer... expire) {
 		ShardedJedis jedis = getJedis();
 		if (jedis == null) {
 			return null;
 		}
 		try {
 			K result = executor.execute(jedis);
-			if (jedis.exists(key) && expired == null) {
-				jedis.expire(key, EXPIRE);
+			if (jedis.exists(key)) {
+				if (expire == null || expire.length == 0) {
+					jedis.expire(key, EXPIRE);
+				} else if (expire.length == 1) {
+					jedis.expire(key, expire[0]);
+				}
 			}
 			return result;
 		} catch (Exception e) {

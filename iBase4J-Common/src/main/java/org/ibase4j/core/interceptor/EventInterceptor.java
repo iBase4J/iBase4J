@@ -38,8 +38,8 @@ public class EventInterceptor extends BaseInterceptor {
 		if (logger.isDebugEnabled()) {
 			long beginTime = startTimeThreadLocal.get();// 得到线程绑定的局部变量（开始时间）
 			long endTime = System.currentTimeMillis(); // 2、结束时间
-			logger.debug("计时结束：{}; 耗时：{}s; URI: {}; 最大内存: {}m; 已分配内存: {}m; 已分配内存中的剩余空间: {}m; 最大可用内存: {}m.",
-					DateUtil.format(endTime, "hh:mm:ss.SSS"), (endTime - beginTime) / 1000.00, request.getServletPath(),
+			logger.debug("计时结束: {}; URI: {}; 耗时: {}s; 最大内存: {}m; 已分配内存: {}m; 已分配内存中的剩余空间: {}m; 最大可用内存: {}m.",
+					DateUtil.format(endTime, "hh:mm:ss.SSS"), request.getServletPath(), (endTime - beginTime) / 1000.00,
 					Runtime.getRuntime().maxMemory() / 1024 / 1024, Runtime.getRuntime().totalMemory() / 1024 / 1024,
 					Runtime.getRuntime().freeMemory() / 1024 / 1024, (Runtime.getRuntime().maxMemory()
 							- Runtime.getRuntime().totalMemory() + Runtime.getRuntime().freeMemory()) / 1024 / 1024);

@@ -166,7 +166,7 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 	public T queryById(Integer id) {
 		try {
 			String key = keyGenerator.generate(this, getClass().getMethods()[0], id).toString();
-			byte[] value = RedisUtil.get(keySerializer.serialize(key), true);
+			byte[] value = RedisUtil.get(keySerializer.serialize(key));
 			if (value != null) {
 				return (T) valueSerializer.deserialize(value);
 			}
