@@ -2,6 +2,7 @@ package org.ibase4j.provider.sys;
 
 import java.util.Map;
 
+import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.dao.generator.SysDeptMapper;
@@ -24,7 +25,8 @@ public class SysDeptProviderImpl extends BaseProviderImpl<SysDept> implements Sy
 	@Autowired
 	private SysDeptExpandMapper syDeptExpandMapper;
 
-	protected Object getMapper() {
+	@SuppressWarnings("unchecked")
+	protected BaseMapper<SysDept> getMapper() {
 		return sysDeptMapper;
 	}
 

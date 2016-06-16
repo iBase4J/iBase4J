@@ -1,6 +1,5 @@
 package org.ibase4j.core.base;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +24,7 @@ import com.github.pagehelper.PageInfo;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-public abstract class BaseProviderImpl<T extends Serializable> {
-
+public abstract class BaseProviderImpl<T extends BaseModel> {
 	@Autowired
 	private KeyGenerator keyGenerator;
 	@Autowired
@@ -127,16 +125,36 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 		return list;
 	}
 
+	/** 获取缓存key */
+	private byte[] getCacheKey(Integer id) {
+		String key = keyGenerator.generate(this, getClass().getMethods()[0], id).toString();
+		return keySerializer.serialize(key);
+	}
+
+	/** 更新缓存 */
+	private void setCache(byte[] key, T record) {
+		RedisUtil.set(key, valueSerializer.serialize(record));
+	}
+
+	/** 获取缓存 */
+	@SuppressWarnings("unchecked")
+	private T getCache(byte[] key) {
+		byte[] value = RedisUtil.get(key);
+		if (value != null) {
+			return (T) valueSerializer.deserialize(value);
+		}
+		return null;
+	}
+
 	@Transactional
 	public void delete(Integer id, Integer userId) {
 		try {
-			T t = queryById(id);
-			t.getClass().getMethod("setEnable", Integer.class).invoke(t, 0);
-			t.getClass().getMethod("setUpdateTime", Date.class).invoke(t, new Date());
-			t.getClass().getMethod("setUpdateBy", Integer.class).invoke(t, userId);
-			getMapper().getClass().getMethod("updateByPrimaryKey", t.getClass()).invoke(getMapper(), t);
-			String key = keyGenerator.generate(this, getClass().getMethods()[0], id).toString();
-			RedisUtil.set(keySerializer.serialize(key), valueSerializer.serialize(t));
+			T record = queryById(id);
+			record.setEnable(0);
+			record.setUpdateTime(new Date());
+			record.setUpdateBy(userId);
+			getMapper().updateByPrimaryKey(record);
+			setCache(getCacheKey(id), record);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
@@ -145,16 +163,15 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 	@Transactional
 	public T update(T record) {
 		try {
-			record.getClass().getMethod("setEnable", Integer.class).invoke(record, 1);
-			if (record.getClass().getMethod("getId").invoke(record) != null) {
-				record.getClass().getMethod("setUpdateTime", Date.class).invoke(record, new Date());
-				getMapper().getClass().getMethod("updateByPrimaryKey", record.getClass()).invoke(getMapper(), record);
+			record.setEnable(0);
+			record.setUpdateTime(new Date());
+			if (record.getId() == null) {
+				record.setCreateTime(new Date());
+				getMapper().insert(record);
 			} else {
-				record.getClass().getMethod("setCreateTime", Date.class).invoke(record, new Date());
-				getMapper().getClass().getMethod("insert", record.getClass()).invoke(getMapper(), record);
+				getMapper().updateByPrimaryKey(record);
 			}
-			String key = keyGenerator.generate(this, getClass().getMethods()[0], record).toString();
-			RedisUtil.set(keySerializer.serialize(key), valueSerializer.serialize(record));
+			setCache(getCacheKey(record.getId()), record);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
@@ -162,21 +179,19 @@ public abstract class BaseProviderImpl<T extends Serializable> {
 	}
 
 	@Transactional
-	@SuppressWarnings("unchecked")
 	public T queryById(Integer id) {
 		try {
-			String key = keyGenerator.generate(this, getClass().getMethods()[0], id).toString();
-			byte[] value = RedisUtil.get(keySerializer.serialize(key));
-			if (value != null) {
-				return (T) valueSerializer.deserialize(value);
+			byte[] key = getCacheKey(id);
+			T record = getCache(key);
+			if (record == null) {
+				record = getMapper().selectByPrimaryKey(id);
+				setCache(key, record);
 			}
-			T t = (T) getMapper().getClass().getMethod("selectByPrimaryKey", Integer.class).invoke(getMapper(), id);
-			RedisUtil.set(keySerializer.serialize(key), valueSerializer.serialize(t));
-			return t;
+			return record;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
-	protected abstract Object getMapper();
+	protected abstract BaseMapper<T> getMapper();
 }

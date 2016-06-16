@@ -6,6 +6,7 @@ package org.ibase4j.provider.sys;
 import java.util.Date;
 import java.util.Map;
 
+import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.support.login.ThirdPartyUser;
@@ -42,7 +43,8 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements Sy
 	@Autowired
 	private SysDeptProviderImpl deptService;
 
-	protected Object getMapper() {
+	@SuppressWarnings("unchecked")
+	protected BaseMapper<SysUser> getMapper() {
 		return sysUserMapper;
 	}
 

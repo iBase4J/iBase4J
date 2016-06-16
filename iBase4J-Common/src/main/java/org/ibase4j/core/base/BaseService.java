@@ -17,31 +17,25 @@ import com.github.pagehelper.PageInfo;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:47:58
  */
-public abstract class BaseService<P extends BaseProvider<T>, T> {
+public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel> {
 	protected Logger logger = LogManager.getLogger();
 	protected P provider;
+	@Autowired
+	private RedisSerializer<String> keySerializer;
 	@Autowired
 	protected RedisSerializer<Object> valueSerializer;
 
 	/** 修改 */
 	public void update(T record) {
-		Object id = null;
-		try {
-			id = record.getClass().getDeclaredMethod("getId").invoke(record);
-			record.getClass().getDeclaredMethod("setUpdateBy", Integer.class).invoke(record, WebUtil.getCurrentUser());
-		} catch (Exception e) {
-		}
-		Assert.notNull(id, "ID");
+		record.setUpdateBy(WebUtil.getCurrentUser());
+		Assert.notNull(record.getId(), "ID");
 		provider.update(record);
 	}
 
 	/** 新增 */
 	public void add(T record) {
-		try {
-			record.getClass().getDeclaredMethod("setCreateBy", Integer.class).invoke(record, WebUtil.getCurrentUser());
-			record.getClass().getDeclaredMethod("setUpdateBy", Integer.class).invoke(record, WebUtil.getCurrentUser());
-		} catch (Exception e) {
-		}
+		record.setCreateBy(WebUtil.getCurrentUser());
+		record.setUpdateBy(WebUtil.getCurrentUser());
 		provider.update(record);
 	}
 
@@ -56,10 +50,10 @@ public abstract class BaseService<P extends BaseProvider<T>, T> {
 	public T queryById(Integer id) {
 		Assert.notNull(id, "ID");
 		StringBuilder sb = new StringBuilder(Constants.CACHE_NAMESPACE);
-		String className = this.getClass().getSimpleName();
-		sb.append(className.substring(0, 1).toLowerCase()).append(className.substring(1, className.length() - 7));
+		String className = this.getClass().getSimpleName().replace("Service", "");
+		sb.append(className.substring(0, 1).toLowerCase()).append(className.substring(1));
 		sb.append(":").append(id);
-		byte[] value = RedisUtil.get(sb.toString().getBytes());
+		byte[] value = RedisUtil.get(keySerializer.serialize(sb.toString()));
 		if (value != null) {
 			return (T) valueSerializer.deserialize(value);
 		}

@@ -2,6 +2,7 @@ package org.ibase4j.provider.sys;
 
 import java.util.Map;
 
+import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.dao.generator.SysRoleMapper;
@@ -24,7 +25,8 @@ public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements Sy
 	@Autowired
 	private SysRoleExpandMapper sysRoleExpandMapper;
 
-	protected Object getMapper() {
+	@SuppressWarnings("unchecked")
+	protected BaseMapper<SysRole> getMapper() {
 		return sysRoleMapper;
 	}
 

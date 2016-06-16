@@ -2,9 +2,9 @@ package org.ibase4j.dao.sys;
 
 import java.util.List;
 
-import org.ibase4j.core.base.BaseMapper;
+import org.ibase4j.core.base.BaseExpandMapper;
 
-public interface SysSessionExpandMapper extends BaseMapper {
+public interface SysSessionExpandMapper extends BaseExpandMapper {
 
 	void deleteBySessionId(String sessionId);
 

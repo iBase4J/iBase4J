@@ -10,14 +10,14 @@ import com.github.pagehelper.PageInfo;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-public interface BaseProvider<K> {
+public interface BaseProvider<T extends BaseModel> {
 	@Transactional
-	public K update(K record);
+	public T update(T record);
 
 	@Transactional
 	public void delete(Integer id, Integer userId);
 
-	public K queryById(Integer id);
+	public T queryById(Integer id);
 
-	public PageInfo<K> query(Map<String, Object> params);
+	public PageInfo<T> query(Map<String, Object> params);
 }

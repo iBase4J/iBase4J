@@ -4,12 +4,12 @@
 package org.ibase4j.dao.sys;
 
 import org.apache.ibatis.annotations.Param;
-import org.ibase4j.core.base.BaseMapper;
+import org.ibase4j.core.base.BaseExpandMapper;
 
 /**
  * @author ShenHuaJie
  */
-public interface SysUserExpandMapper extends BaseMapper {
+public interface SysUserExpandMapper extends BaseExpandMapper {
 
 	String queryUserIdByThirdParty(@Param("provider") String provider, @Param("openId") String openId);
 }

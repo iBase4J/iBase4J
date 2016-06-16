@@ -3,6 +3,7 @@ package org.ibase4j.provider.sys;
 import java.util.List;
 import java.util.Map;
 
+import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.support.exception.BusinessException;
@@ -35,8 +36,8 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 	@Autowired
 	private SysDicExpandMapper dicExpandMapper;
 
-	@Override
-	protected Object getMapper() {
+	@SuppressWarnings("unchecked")
+	protected BaseMapper<SysDic> getMapper() {
 		return dicMapper;
 	}
 

@@ -23,6 +23,7 @@
             <property name="enableSubPackages" value="false"/>
             <property name="immutable" value="false"/>
             <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="org.ibase4j.core.base.BaseModel"/>
         </javaModelGenerator>
         <sqlMapGenerator targetPackage="mappers.generator" targetProject="src/main/resources">
             <property name="enableSubPackages" value="false"/>
@@ -30,7 +31,7 @@
         <javaClientGenerator targetPackage="org.ibase4j.dao.generator" targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value=""/>
             <property name="methodNameCalculator" value=""/>
-            <property name="rootInterface" value=""/>
+            <property name="rootInterface" value="org.ibase4j.core.base.BaseMapper"/>
         </javaClientGenerator>
         <table tableName="sys_%">
             <generatedKey column="id_" sqlStatement="JDBC" />

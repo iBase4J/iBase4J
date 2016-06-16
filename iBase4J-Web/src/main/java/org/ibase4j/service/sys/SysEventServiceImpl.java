@@ -41,7 +41,7 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 			record.setUserAgent(request.getHeader("user-agent"));
 			record.setParammeters(JSON.toJSONString(request.getParameterMap()));
 			record.setStatus(response.getStatus());
-			record.setException(ExceptionUtil.getStackTraceAsString(ex));
+			record.setRemark(ExceptionUtil.getStackTraceAsString(ex));
 			record.setCreateBy(WebUtil.getCurrentUser());
 
 			ExecutorService executorService = Executors.newFixedThreadPool(1);

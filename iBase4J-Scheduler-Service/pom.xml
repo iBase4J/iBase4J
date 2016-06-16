@@ -8,7 +8,7 @@
 		<version>0.5.0</version>
 	</parent>
 	<artifactId>iBase4J-Scheduler-Service</artifactId>
-	<name>${project.artifactId}</name>
+	<name>iBase4J-Scheduler-Service</name>
 	<url>http://maven.apache.org</url>
 	<packaging>war</packaging>
 
