@@ -6,7 +6,7 @@
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8mb4 */; 
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
@@ -183,9 +183,9 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `create_by` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.sys_event 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_event 的数据：~53 rows (大约)
 /*!40000 ALTER TABLE `sys_event` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_event` ENABLE KEYS */;
 
@@ -400,12 +400,12 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   `ip_` varchar(50) DEFAULT NULL,
   `start_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='会话管理';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='会话管理';
 
 -- 正在导出表  ibase4j.sys_session 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
 INSERT INTO `sys_session` (`id_`, `session_id`, `account_`, `ip_`, `start_time`) VALUES
-	(20, '5ddb4154-2fdb-4690-b7da-1f98ecb2fc31', 'admin', '192.168.1.6', '2016-06-15 09:12:46');
+	(23, 'f60cf9aa-60b9-4277-836d-be751bc56404', 'admin', '192.168.1.6', '2016-06-16 10:31:49');
 /*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
 
@@ -519,21 +519,10 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   `fire_info` text,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `group_name_task_name_start_time` (`group_name`,`task_name`,`start_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.task_fire_log 的数据：~10 rows (大约)
+-- 正在导出表  ibase4j.task_fire_log 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `task_fire_log` DISABLE KEYS */;
-INSERT INTO `task_fire_log` (`id_`, `group_name`, `task_name`, `start_time`, `end_time`, `status`, `fire_info`) VALUES
-	(1, 'sys.CoreTaskProvider', 'flushMessage', '2016-06-14 11:30:00', NULL, 'I', NULL),
-	(2, 'sys.CoreTaskProvider', 'flushMessage', '2016-06-14 12:00:00', '2016-06-14 12:00:00', 'E', 'java.lang.reflect.InvocationTargetException'),
-	(3, 'sys.CoreTaskProvider', 'flushMessage', '2016-06-14 12:30:00', '2016-06-14 12:30:00', 'E', 'java.lang.reflect.InvocationTargetException'),
-	(4, 'sys.CoreTaskProvider', 'flushMessage', '2016-06-14 13:30:00', '2016-06-14 13:30:01', 'S', NULL),
-	(5, 'sys.CoreTaskProvider', 'flushMessage', '2016-06-14 14:00:00', '2016-06-14 14:00:00', 'S', NULL),
-	(6, 'sys.CoreTaskProvider', 'flushMessage', '2016-06-14 14:30:00', '2016-06-14 14:30:00', 'S', NULL),
-	(7, 'sys.CoreTaskProvider', 'flushMessage', '2016-06-15 08:30:00', '2016-06-15 08:30:00', 'S', NULL),
-	(8, 'sys.CoreTaskProvider', 'flushMessage', '2016-06-15 09:00:00', '2016-06-15 09:00:00', 'S', NULL),
-	(9, 'sys.CoreTaskProvider', 'flushMessage', '2016-06-15 09:30:00', '2016-06-15 09:30:00', 'S', NULL),
-	(10, 'sys.CoreTaskProvider', 'flushMessage', '2016-06-15 10:00:00', '2016-06-15 10:00:00', 'S', NULL);
 /*!40000 ALTER TABLE `task_fire_log` ENABLE KEYS */;
 
 
@@ -555,7 +544,7 @@ CREATE TABLE IF NOT EXISTS `task_group` (
 -- 正在导出表  ibase4j.task_group 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `task_group` DISABLE KEYS */;
 INSERT INTO `task_group` (`id_`, `group_name`, `group_desc`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, 'sys.CoreTaskProvider', '系统管理', 1, '2016-05-27 14:56:51', 1, '2016-06-13 14:05:11', 1);
+	(1, 'CoreTaskProvider', '系统管理', 1, '2016-05-27 14:56:51', 1, '2016-06-16 10:18:58', 1);
 /*!40000 ALTER TABLE `task_group` ENABLE KEYS */;
 
 
@@ -583,7 +572,7 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
 -- 正在导出表  ibase4j.task_scheduler 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `task_scheduler` DISABLE KEYS */;
 INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `task_previous_fire_time`, `task_next_fire_time`, `contact_email`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, 1, 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-06-15 10:00:00', '2016-06-15 10:30:00', 'iBase4J@126.com', 1, '2016-06-13 14:05:30', NULL, '2016-06-15 10:00:00', NULL);
+	(1, 1, 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-06-16 10:30:00', '2016-06-16 11:00:00', 'iBase4J@126.com', 1, '2016-06-13 14:05:30', NULL, '2016-06-16 10:30:00', NULL);
 /*!40000 ALTER TABLE `task_scheduler` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

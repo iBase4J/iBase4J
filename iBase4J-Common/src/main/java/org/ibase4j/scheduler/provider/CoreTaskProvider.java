@@ -1,4 +1,4 @@
-package org.ibase4j.scheduler.provider.sys;
+package org.ibase4j.scheduler.provider;
 
 public interface CoreTaskProvider {
 	void flushMessage();

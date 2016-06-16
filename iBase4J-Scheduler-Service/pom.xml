@@ -41,7 +41,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Scheduled-SYS-API</artifactId>
+			<artifactId>iBase4J-SYS-Scheduler-API</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
