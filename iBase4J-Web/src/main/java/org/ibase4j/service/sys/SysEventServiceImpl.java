@@ -62,8 +62,8 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 						long total = Runtime.getRuntime().totalMemory() / 1024 / 1024;
 						long max = Runtime.getRuntime().maxMemory() / 1024 / 1024;
 						long free = Runtime.getRuntime().freeMemory() / 1024 / 1024;
-						logger.debug(message, DateUtil.format(startTime, "hh:mm:ss.SSS"),
-								DateUtil.format(endTime, "hh:mm:ss.SSS"), (endTime - startTime) / 1000.00,
+						logger.debug(message, DateUtil.format(startTime, "HH:mm:ss.SSS"),
+								DateUtil.format(endTime, "HH:mm:ss.SSS"), (endTime - startTime) / 1000.00,
 								record.getRequestUri(), max, total, free, max - total + free);
 					}
 				} catch (Exception e) {
