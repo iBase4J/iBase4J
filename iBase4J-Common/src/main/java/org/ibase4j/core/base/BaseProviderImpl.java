@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.ibase4j.core.Constants;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.RedisUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.interceptor.KeyGenerator;
-import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.ContextLoader;
 
@@ -19,18 +18,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 /**
- * 业务逻辑层基类
+ * 业务逻辑层基类<br/>
+ * 继承基类后必须配置CacheConfig(cacheNames="")
  * 
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
 public abstract class BaseProviderImpl<T extends BaseModel> {
-	@Autowired
-	private KeyGenerator keyGenerator;
-	@Autowired
-	private RedisSerializer<String> keySerializer;
-	@Autowired
-	private RedisSerializer<Object> valueSerializer;
 
 	/** 启动分页查询 */
 	protected void startPage(Map<String, Object> params) {
@@ -125,27 +119,6 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 		return list;
 	}
 
-	/** 获取缓存key */
-	private byte[] getCacheKey(Integer id) {
-		String key = keyGenerator.generate(this, getClass().getMethods()[0], id).toString();
-		return keySerializer.serialize(key);
-	}
-
-	/** 更新缓存 */
-	private void setCache(byte[] key, T record) {
-		RedisUtil.set(key, valueSerializer.serialize(record));
-	}
-
-	/** 获取缓存 */
-	@SuppressWarnings("unchecked")
-	private T getCache(byte[] key) {
-		byte[] value = RedisUtil.get(key);
-		if (value != null) {
-			return (T) valueSerializer.deserialize(value);
-		}
-		return null;
-	}
-
 	@Transactional
 	public void delete(Integer id, Integer userId) {
 		try {
@@ -154,7 +127,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 			record.setUpdateTime(new Date());
 			record.setUpdateBy(userId);
 			getMapper().updateByPrimaryKey(record);
-			setCache(getCacheKey(id), record);
+			RedisUtil.set(getCacheKey(id), record);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
@@ -171,7 +144,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 			} else {
 				getMapper().updateByPrimaryKey(record);
 			}
-			setCache(getCacheKey(record.getId()), record);
+			RedisUtil.set(getCacheKey(record.getId()), record);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
@@ -179,18 +152,31 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 	}
 
 	@Transactional
+	@SuppressWarnings("unchecked")
 	public T queryById(Integer id) {
 		try {
-			byte[] key = getCacheKey(id);
-			T record = getCache(key);
+			String key = getCacheKey(id);
+			T record = (T) RedisUtil.get(key);
 			if (record == null) {
 				record = getMapper().selectByPrimaryKey(id);
-				setCache(key, record);
+				RedisUtil.set(key, record);
 			}
 			return record;
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
+	}
+
+	/** 获取缓存键值 */
+	private String getCacheKey(Object id) {
+		String cacheName = null;
+		CacheConfig cacheConfig = getClass().getAnnotation(CacheConfig.class);
+		if (cacheConfig == null || cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
+			cacheName = getClass().getName();
+		} else {
+			cacheName = cacheConfig.cacheNames()[0];
+		}
+		return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
 	}
 
 	protected abstract BaseMapper<T> getMapper();

@@ -1,14 +1,14 @@
 package org.ibase4j.core.base;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.util.RedisUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
 
 import com.github.pagehelper.PageInfo;
@@ -21,9 +21,7 @@ public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel
 	protected Logger logger = LogManager.getLogger();
 	protected P provider;
 	@Autowired
-	private RedisSerializer<String> keySerializer;
-	@Autowired
-	protected RedisSerializer<Object> valueSerializer;
+	private RedisTemplate<Serializable, Serializable> redisTemplate;
 
 	/** 修改 */
 	public void update(T record) {
@@ -53,11 +51,11 @@ public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel
 		String className = this.getClass().getSimpleName().replace("Service", "");
 		sb.append(className.substring(0, 1).toLowerCase()).append(className.substring(1));
 		sb.append(":").append(id);
-		byte[] value = RedisUtil.get(keySerializer.serialize(sb.toString()));
-		if (value != null) {
-			return (T) valueSerializer.deserialize(value);
+		T record = (T) redisTemplate.opsForValue().get(sb.toString());
+		if (record == null) {
+			record = provider.queryById(id);
 		}
-		return provider.queryById(id);
+		return record;
 	}
 
 	/** 条件查询 */
