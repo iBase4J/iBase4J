@@ -46,8 +46,8 @@ public class TaskListener implements JobListener {
 	}
 
 	// 任务开始前
-	public void jobToBeExecuted(JobExecutionContext context) {
-		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
+	public void jobToBeExecuted(final JobExecutionContext context) {
+		final JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
 		JobKey jobKey = context.getJobDetail().getKey();
 		String groupName = jobKey.getGroup();
 		String jobName = jobKey.getName();
@@ -55,23 +55,27 @@ public class TaskListener implements JobListener {
 			logger.info("Listened job : " + groupName + "." + jobName + " prepared to start.");
 		}
 		// 保存日志
-		TaskFireLog log = new TaskFireLog();
+		final TaskFireLog log = new TaskFireLog();
 		log.setStartTime(context.getFireTime());
 		log.setGroupName(groupName);
 		log.setTaskName(jobName);
 		log.setStatus(Constants.INIT_STATS);
-		try {
-			schedulerService.updateLog(log);
-			jobDataMap.put(Constants.JOB_LOG, log);
-			// 更新任务执行时间
-			TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
-			taskScheduler.setTaskPreviousFireTime(context.getFireTime());
-			taskScheduler.setTaskNextFireTime(context.getNextFireTime());
-			schedulerService.updateScheduler(taskScheduler);
-		} catch (Exception e) {
-			jobDataMap.put("taskStatus", Constants.ERROR_STATS);
-			logger.error("Save TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
-		}
+		executorService.submit(new Runnable() {
+			public void run() {
+				try {
+					schedulerService.updateLog(log);
+					jobDataMap.put(Constants.JOB_LOG, log);
+					// 更新任务执行时间
+					TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
+					taskScheduler.setTaskPreviousFireTime(context.getFireTime());
+					taskScheduler.setTaskNextFireTime(context.getNextFireTime());
+					schedulerService.updateScheduler(taskScheduler);
+				} catch (Exception e) {
+					jobDataMap.put("taskStatus", Constants.ERROR_STATS);
+					logger.error("Save TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
+				}
+			}
+		});
 	}
 
 	// 任务结束后
@@ -87,7 +91,8 @@ public class TaskListener implements JobListener {
 			logger.info("Listened job : " + groupName + "." + jobName + " executed.");
 		}
 		// 更新任务执行状态
-		TaskFireLog log = (TaskFireLog) jobDataMap.get(Constants.JOB_LOG);
+		final TaskFireLog log = (TaskFireLog) jobDataMap.get(Constants.JOB_LOG);
+		log.setEndTime(end);
 		if (exp != null) {
 			String contactEmail = jobDataMap.getString("contactEmail");
 			if (StringUtils.isNotBlank(contactEmail)) {
@@ -101,12 +106,15 @@ public class TaskListener implements JobListener {
 				log.setStatus(Constants.SUCCESS_STATS);
 			}
 		}
-		try {
-			log.setEndTime(end);
-			schedulerService.updateLog(log);
-		} catch (Exception e) {
-			logger.error("Update TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
-		}
+		executorService.submit(new Runnable() {
+			public void run() {
+				try {
+					schedulerService.updateLog(log);
+				} catch (Exception e) {
+					logger.error("Update TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
+				}
+			}
+		});
 	}
 
 	private void sendEmail(final Email email) {
