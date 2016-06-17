@@ -34,6 +34,8 @@ public class TaskListener implements JobListener {
 	private SchedulerService schedulerService;
 	@Autowired
 	private QueueSender queueSender;
+	// 发送邮件线程池
+	private ExecutorService executorService = Executors.newCachedThreadPool();
 
 	public String getName() {
 		return "taskListener";
@@ -108,12 +110,10 @@ public class TaskListener implements JobListener {
 	}
 
 	private void sendEmail(final Email email) {
-		ExecutorService executorService = Executors.newFixedThreadPool(1);
 		executorService.submit(new Runnable() {
 			public void run() {
 				queueSender.send("iBase4J.emailSender", email);
 			}
 		});
-		executorService.shutdown();
 	}
 }

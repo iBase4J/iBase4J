@@ -32,6 +32,7 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 
 	@Autowired
 	private SysPermissionService sysPermissionService;
+	private ExecutorService executorService = Executors.newCachedThreadPool();
 
 	public void saveEvent(final HttpServletRequest request, final HttpServletResponse response, final Exception ex,
 			final Long startTime, final Long endTime) {
@@ -44,7 +45,6 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 		record.setCreateBy(WebUtil.getCurrentUser());
 		record.setStatus(response.getStatus());
 
-		ExecutorService executorService = Executors.newFixedThreadPool(1);
 		executorService.submit(new Runnable() {
 			public void run() {
 				try { // 保存操作
@@ -71,6 +71,5 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 				}
 			}
 		});
-		executorService.shutdown();
 	}
 }
