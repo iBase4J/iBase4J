@@ -60,11 +60,11 @@ public class TaskListener implements JobListener {
 		log.setGroupName(groupName);
 		log.setTaskName(jobName);
 		log.setStatus(Constants.INIT_STATS);
+		schedulerService.updateLog(log);
+		jobDataMap.put(Constants.JOB_LOG, log);
 		executorService.submit(new Runnable() {
 			public void run() {
 				try {
-					schedulerService.updateLog(log);
-					jobDataMap.put(Constants.JOB_LOG, log);
 					// 更新任务执行时间
 					TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
 					taskScheduler.setTaskPreviousFireTime(context.getFireTime());

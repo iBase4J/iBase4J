@@ -24,7 +24,8 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 
 @Service
-public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent> implements SysEventService {
+public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
+		implements SysEventService {
 	@DubboReference
 	public void setProvider(SysEventProvider provider) {
 		this.provider = provider;
@@ -34,8 +35,8 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 	private SysPermissionService sysPermissionService;
 	private ExecutorService executorService = Executors.newCachedThreadPool();
 
-	public void saveEvent(final HttpServletRequest request, final HttpServletResponse response, final Exception ex,
-			final Long startTime, final Long endTime) {
+	public void saveEvent(final HttpServletRequest request, final HttpServletResponse response,
+			final Exception ex, final Long startTime, final Long endTime) {
 		final SysEvent record = new SysEvent();
 		record.setMethod(request.getMethod());
 		record.setRequestUri(request.getServletPath());
@@ -58,13 +59,15 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 					add(record);
 					// 内存信息
 					if (logger.isDebugEnabled()) {
-						String message = "开始时间: {}; 结束时间: {}; 耗时: {}s; URI: {}; 最大内存: {}M; 已分配内存: {}M; 已分配内存中的剩余空间: {}M; 最大可用内存: {}M.";
-						long total = Runtime.getRuntime().totalMemory() / 1024 / 1024;
-						long max = Runtime.getRuntime().maxMemory() / 1024 / 1024;
-						long free = Runtime.getRuntime().freeMemory() / 1024 / 1024;
+						String message = "开始时间: {}; 结束时间: {}; 耗时: {}s; URI: {}; ";
+						// 最大内存: {}M; 已分配内存: {}M; 已分配内存中的剩余空间: {}M; 最大可用内存: {}M.
+						// long total = Runtime.getRuntime().totalMemory() / 1024 / 1024;
+						// long max = Runtime.getRuntime().maxMemory() / 1024 / 1024;
+						// long free = Runtime.getRuntime().freeMemory() / 1024 / 1024;
+						// , max, total, free, max - total + free
 						logger.debug(message, DateUtil.format(startTime, "HH:mm:ss.SSS"),
-								DateUtil.format(endTime, "HH:mm:ss.SSS"), (endTime - startTime) / 1000.00,
-								record.getRequestUri(), max, total, free, max - total + free);
+								DateUtil.format(endTime, "HH:mm:ss.SSS"),
+								(endTime - startTime) / 1000.00, record.getRequestUri());
 					}
 				} catch (Exception e) {
 					logger.error("Save event log cause error :", e);

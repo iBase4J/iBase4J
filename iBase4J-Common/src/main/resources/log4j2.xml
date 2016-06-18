@@ -60,14 +60,14 @@
 		<logger name="org.springframework" level="INFO" />
 		<logger name="org.apache.zookeeper" level="WARN" />
 		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
-		<logger name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false">  
+		<AsyncLogger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
 			<appender-ref ref="Console" />
             <appender-ref ref="ProductLog" />
-        </logger>
-		<root level="DEBUG">
+        </AsyncLogger >
+		<asyncRoot  level="DEBUG">
 			<appender-ref ref="Console" />
 			<appender-ref ref="RollingFile" />
 			<appender-ref ref="RollingFileError" />
-		</root>
+		</asyncRoot >
 	</loggers>
 </configuration>
