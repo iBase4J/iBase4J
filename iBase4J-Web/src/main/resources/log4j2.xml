@@ -54,11 +54,11 @@
 	<loggers>
 		<logger name="org.slf4j" level="INFO" />
 		<logger name="com.atomikos" level="WARN" />
-		<logger name="com.alibaba.dubbo" level="INFO" />
+		<logger name="org.apache.shiro" level="INFO" />
+		<logger name="com.alibaba.dubbo" level="WARN" />
 		<logger name="org.apache.activemq" level="INFO" />
 		<logger name="org.springframework" level="INFO" />
 		<logger name="org.apache.zookeeper" level="WARN" />
-		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
 		<logger name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false">  
 			<appender-ref ref="Console" />
             <appender-ref ref="ProductLog" />

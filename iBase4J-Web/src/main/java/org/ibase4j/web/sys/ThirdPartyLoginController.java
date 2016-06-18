@@ -1,5 +1,6 @@
 package org.ibase4j.web.sys;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,10 +32,14 @@ public class ThirdPartyLoginController extends BaseController {
 	private SysUserService sysUserService;
 
 	@RequestMapping("/sns")
-	public void thirdLogin(HttpServletRequest request, HttpServletResponse response, @RequestParam("t") String type)
-			throws Exception {
+	public void thirdLogin(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("t") String type) {
 		String url = getRedirectUrl(request, type);
-		response.sendRedirect(url);
+		try {
+			response.sendRedirect(url);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@RequestMapping("/sns_success")
@@ -63,7 +68,8 @@ public class ThirdPartyLoginController extends BaseController {
 				String openId = map.get("openId");
 				if (StringUtils.isNotBlank(openId)) {// 如果openID存在
 					// 获取第三方用户信息存放到session中
-					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getWxUserinfo(map.get("access_token"), openId);
+					ThirdPartyUser thirdUser = ThirdPartyLoginHelper
+							.getWxUserinfo(map.get("access_token"), openId);
 					thirdUser.setProvider("WX");
 					sysUserService.thirdPartyLogin(thirdUser);
 					// 跳转到登录成功界面
@@ -93,7 +99,8 @@ public class ThirdPartyLoginController extends BaseController {
 				String openId = map.get("openId");
 				if (StringUtils.isNotBlank(openId)) {// 如果openID存在
 					// 获取第三方用户信息存放到session中
-					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getQQUserinfo(map.get("access_token"), openId);
+					ThirdPartyUser thirdUser = ThirdPartyLoginHelper
+							.getQQUserinfo(map.get("access_token"), openId);
 					thirdUser.setProvider("QQ");
 					sysUserService.thirdPartyLogin(thirdUser);
 					// 跳转到登录成功界面
@@ -123,8 +130,8 @@ public class ThirdPartyLoginController extends BaseController {
 				String uid = json.getString("uid");
 				if (StringUtils.isNotBlank(uid)) {// 如果uid存在
 					// 获取第三方用户信息存放到session中
-					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getSinaUserinfo(json.getString("access_token"),
-							uid);
+					ThirdPartyUser thirdUser = ThirdPartyLoginHelper
+							.getSinaUserinfo(json.getString("access_token"), uid);
 					thirdUser.setProvider("SINA");
 					sysUserService.thirdPartyLogin(thirdUser);
 					// 跳转到登录成功界面
@@ -151,12 +158,15 @@ public class ThirdPartyLoginController extends BaseController {
 		String host = request.getHeader("host");
 		url = Resources.THIRDPARTY.getString("authorizeURL_" + type);
 		if ("wx".equals(type)) {
-			url = url + "?appid=" + Resources.THIRDPARTY.getString("app_id_" + type) + "&redirect_uri=http://" + host
-					+ Resources.THIRDPARTY.getString("redirect_url_" + type) + "&response_type=code&scope="
-					+ Resources.THIRDPARTY.getString("scope_" + type) + "&state=fhmj";
+			url = url + "?appid=" + Resources.THIRDPARTY.getString("app_id_" + type)
+					+ "&redirect_uri=http://" + host
+					+ Resources.THIRDPARTY.getString("redirect_url_" + type)
+					+ "&response_type=code&scope=" + Resources.THIRDPARTY.getString("scope_" + type)
+					+ "&state=fhmj";
 		} else {
-			url = url + "?client_id=" + Resources.THIRDPARTY.getString("app_id_" + type) + "&response_type=code&scope="
-					+ Resources.THIRDPARTY.getString("scope_" + type) + "&redirect_uri=http://" + host
+			url = url + "?client_id=" + Resources.THIRDPARTY.getString("app_id_" + type)
+					+ "&response_type=code&scope=" + Resources.THIRDPARTY.getString("scope_" + type)
+					+ "&redirect_uri=http://" + host
 					+ Resources.THIRDPARTY.getString("redirect_url_" + type);
 		}
 		return url;
