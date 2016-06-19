@@ -120,6 +120,11 @@
 			<artifactId>jsqlparser</artifactId>
 			<version>${jsqlparser.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-core</artifactId>
+			<version>1.3.2</version>
+		</dependency>
 		<!-- spring核心包 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
