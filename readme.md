@@ -19,7 +19,7 @@
  9. 日志：log4j2打印日志，业务日志和调试日志分开打印。同时基于时间和文件大小分割日志文件。
  10. QQ、微信、新浪微博第三方登录。
  11. 项目构建：maven构建项目，mybatis generator生成mybatis映射文件和Model。 
- 12. 工具类：上传下载excel，汉字转拼音，身份证号码验证，数字转大写人民币，FTP/SFTP/fastdafs上传下载，发送邮件，redis缓存，加密等等。
+ 12. 工具类：excel导入导出，汉字转拼音，身份证号码验证，数字转大写人民币，FTP/SFTP/fastDFS上传下载，发送邮件，redis缓存，加密等等。
 
 ## 技术选型
     ● 核心框架：Spring Framework 4.2.6 + Dubbo 2.5.3
