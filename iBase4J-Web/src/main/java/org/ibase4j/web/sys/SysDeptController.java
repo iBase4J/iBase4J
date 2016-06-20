@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
@@ -31,6 +32,7 @@ public class SysDeptController extends BaseController {
 	private SysDeptService sysDeptService;
 
 	// 查询部门
+	@RequiresPermissions("sys:dept:read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -39,6 +41,7 @@ public class SysDeptController extends BaseController {
 	}
 
 	// 详细信息
+	@RequiresPermissions("sys:dept:read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysDept record = sysDeptService.queryById(id);
@@ -46,6 +49,7 @@ public class SysDeptController extends BaseController {
 	}
 
 	// 新增部门
+	@RequiresPermissions("sys:dept:update")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
 		SysDept record = Request2ModelUtil.covert(SysDept.class, request);
@@ -54,6 +58,7 @@ public class SysDeptController extends BaseController {
 	}
 
 	// 修改部门
+	@RequiresPermissions("sys:dept:update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysDept record = Request2ModelUtil.covert(SysDept.class, request);
@@ -62,6 +67,7 @@ public class SysDeptController extends BaseController {
 	}
 
 	// 删除部门
+	@RequiresPermissions("sys:dept:update")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {

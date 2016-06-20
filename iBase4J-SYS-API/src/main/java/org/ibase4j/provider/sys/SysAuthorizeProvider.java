@@ -16,4 +16,6 @@ public interface SysAuthorizeProvider {
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus);
 
 	public List<SysMenuBean> queryAuthorizeByUserId(Integer userId);
+
+	public List<String> queryPermissionByUserId(Integer userId);
 }

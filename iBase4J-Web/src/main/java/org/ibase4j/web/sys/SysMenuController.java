@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
@@ -31,6 +32,7 @@ public class SysMenuController extends BaseController {
 	private SysMenuService sysMenuService;
 
 	// 查询菜单
+	@RequiresPermissions("sys:menu:read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -39,6 +41,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	// 详细信息
+	@RequiresPermissions("sys:menu:read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysMenu record = sysMenuService.queryById(id);
@@ -46,6 +49,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	// 新增菜单
+	@RequiresPermissions("sys:menu:updae")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
 		SysMenu record = Request2ModelUtil.covert(SysMenu.class, request);
@@ -54,6 +58,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	// 修改菜单
+	@RequiresPermissions("sys:menu:updae")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysMenu record = Request2ModelUtil.covert(SysMenu.class, request);
@@ -62,6 +67,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	// 删除菜单
+	@RequiresPermissions("sys:menu:updae")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {

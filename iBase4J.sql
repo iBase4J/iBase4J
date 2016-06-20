@@ -16,6 +16,193 @@ CREATE DATABASE IF NOT EXISTS `ibase4j` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ibase4j`;
 
 
+-- 导出  表 ibase4j.qrtz_cron_triggers 结构
+DROP TABLE IF EXISTS `qrtz_cron_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_cron_triggers` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_NAME` varchar(200) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `CRON_EXPRESSION` varchar(200) NOT NULL,
+  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  ibase4j.qrtz_cron_triggers 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `qrtz_cron_triggers` DISABLE KEYS */;
+INSERT INTO `qrtz_cron_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`, `CRON_EXPRESSION`, `TIME_ZONE_ID`) VALUES
+	('iBase4J-Scheduler', 'flushMessage', 'CoreTaskProvider', '0 0/30 * * * ?', 'Asia/Shanghai');
+/*!40000 ALTER TABLE `qrtz_cron_triggers` ENABLE KEYS */;
+
+
+-- 导出  表 ibase4j.qrtz_fired_triggers 结构
+DROP TABLE IF EXISTS `qrtz_fired_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_fired_triggers` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `ENTRY_ID` varchar(95) NOT NULL,
+  `TRIGGER_NAME` varchar(200) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `INSTANCE_NAME` varchar(200) NOT NULL,
+  `FIRED_TIME` bigint(13) NOT NULL,
+  `SCHED_TIME` bigint(13) NOT NULL,
+  `PRIORITY` int(11) NOT NULL,
+  `STATE` varchar(16) NOT NULL,
+  `JOB_NAME` varchar(200) DEFAULT NULL,
+  `JOB_GROUP` varchar(200) DEFAULT NULL,
+  `IS_NONCONCURRENT` varchar(1) DEFAULT NULL,
+  `REQUESTS_RECOVERY` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  ibase4j.qrtz_fired_triggers 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `qrtz_fired_triggers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_fired_triggers` ENABLE KEYS */;
+
+
+-- 导出  表 ibase4j.qrtz_job_details 结构
+DROP TABLE IF EXISTS `qrtz_job_details`;
+CREATE TABLE IF NOT EXISTS `qrtz_job_details` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `JOB_NAME` varchar(200) NOT NULL,
+  `JOB_GROUP` varchar(200) NOT NULL,
+  `DESCRIPTION` varchar(250) DEFAULT NULL,
+  `JOB_CLASS_NAME` varchar(250) NOT NULL,
+  `IS_DURABLE` varchar(1) NOT NULL,
+  `IS_NONCONCURRENT` varchar(1) NOT NULL,
+  `IS_UPDATE_DATA` varchar(1) NOT NULL,
+  `REQUESTS_RECOVERY` varchar(1) NOT NULL,
+  `JOB_DATA` blob,
+  PRIMARY KEY (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  ibase4j.qrtz_job_details 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `qrtz_job_details` DISABLE KEYS */;
+INSERT INTO `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`, `DESCRIPTION`, `JOB_CLASS_NAME`, `IS_DURABLE`, `IS_NONCONCURRENT`, `IS_UPDATE_DATA`, `REQUESTS_RECOVERY`, `JOB_DATA`) VALUES
+	('iBase4J-Scheduler', 'flushMessage', 'CoreTaskProvider', '清理缓存国际化信息', 'org.ibase4j.scheduler.task.DubboTask', '1', '0', '0', '0', _binary 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61703FE8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D6170133F3F760A3F00025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC13F603F000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000474000C636F6E74616374456D61696C74000F6942617365344A403132362E636F6D740006656E61626C65737200116A6176612E6C616E672E426F6F6C65616E3F7280D59CFAEE0200015A000576616C75657870017400026964737200116A6176612E6C616E672E496E746567657212E2A0A4F781873802000149000576616C7565787200106A6176612E6C616E672E4E756D62657286AC3F0B94E03F000078700000000174000464657363740028E7B3BBE7BB9FE7AEA1E790863AE6B885E79086E7BC93E5AD98E59BBDE99985E58C96E4BFA1E681AF7800);
+/*!40000 ALTER TABLE `qrtz_job_details` ENABLE KEYS */;
+
+
+-- 导出  表 ibase4j.qrtz_locks 结构
+DROP TABLE IF EXISTS `qrtz_locks`;
+CREATE TABLE IF NOT EXISTS `qrtz_locks` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `LOCK_NAME` varchar(40) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  ibase4j.qrtz_locks 的数据：~2 rows (大约)
+/*!40000 ALTER TABLE `qrtz_locks` DISABLE KEYS */;
+INSERT INTO `qrtz_locks` (`SCHED_NAME`, `LOCK_NAME`) VALUES
+	('iBase4J-Scheduler', 'STATE_ACCESS'),
+	('iBase4J-Scheduler', 'TRIGGER_ACCESS');
+/*!40000 ALTER TABLE `qrtz_locks` ENABLE KEYS */;
+
+
+-- 导出  表 ibase4j.qrtz_paused_trigger_grps 结构
+DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
+CREATE TABLE IF NOT EXISTS `qrtz_paused_trigger_grps` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  ibase4j.qrtz_paused_trigger_grps 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `qrtz_paused_trigger_grps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_paused_trigger_grps` ENABLE KEYS */;
+
+
+-- 导出  表 ibase4j.qrtz_scheduler_state 结构
+DROP TABLE IF EXISTS `qrtz_scheduler_state`;
+CREATE TABLE IF NOT EXISTS `qrtz_scheduler_state` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `INSTANCE_NAME` varchar(200) NOT NULL,
+  `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
+  `CHECKIN_INTERVAL` bigint(13) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  ibase4j.qrtz_scheduler_state 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `qrtz_scheduler_state` DISABLE KEYS */;
+INSERT INTO `qrtz_scheduler_state` (`SCHED_NAME`, `INSTANCE_NAME`, `LAST_CHECKIN_TIME`, `CHECKIN_INTERVAL`) VALUES
+	('iBase4J-Scheduler', 'xsit-PC1466414467879', 1466415549618, 7500);
+/*!40000 ALTER TABLE `qrtz_scheduler_state` ENABLE KEYS */;
+
+
+-- 导出  表 ibase4j.qrtz_simple_triggers 结构
+DROP TABLE IF EXISTS `qrtz_simple_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_simple_triggers` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_NAME` varchar(200) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `REPEAT_COUNT` bigint(7) NOT NULL,
+  `REPEAT_INTERVAL` bigint(12) NOT NULL,
+  `TIMES_TRIGGERED` bigint(10) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  ibase4j.qrtz_simple_triggers 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `qrtz_simple_triggers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_simple_triggers` ENABLE KEYS */;
+
+
+-- 导出  表 ibase4j.qrtz_simprop_triggers 结构
+DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_simprop_triggers` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_NAME` varchar(200) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `STR_PROP_1` varchar(512) DEFAULT NULL,
+  `STR_PROP_2` varchar(512) DEFAULT NULL,
+  `STR_PROP_3` varchar(512) DEFAULT NULL,
+  `INT_PROP_1` int(11) DEFAULT NULL,
+  `INT_PROP_2` int(11) DEFAULT NULL,
+  `LONG_PROP_1` bigint(20) DEFAULT NULL,
+  `LONG_PROP_2` bigint(20) DEFAULT NULL,
+  `DEC_PROP_1` decimal(13,4) DEFAULT NULL,
+  `DEC_PROP_2` decimal(13,4) DEFAULT NULL,
+  `BOOL_PROP_1` varchar(1) DEFAULT NULL,
+  `BOOL_PROP_2` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  ibase4j.qrtz_simprop_triggers 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `qrtz_simprop_triggers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `qrtz_simprop_triggers` ENABLE KEYS */;
+
+
+-- 导出  表 ibase4j.qrtz_triggers 结构
+DROP TABLE IF EXISTS `qrtz_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_triggers` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_NAME` varchar(200) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `JOB_NAME` varchar(200) NOT NULL,
+  `JOB_GROUP` varchar(200) NOT NULL,
+  `DESCRIPTION` varchar(250) DEFAULT NULL,
+  `NEXT_FIRE_TIME` bigint(13) DEFAULT NULL,
+  `PREV_FIRE_TIME` bigint(13) DEFAULT NULL,
+  `PRIORITY` int(11) DEFAULT NULL,
+  `TRIGGER_STATE` varchar(16) NOT NULL,
+  `TRIGGER_TYPE` varchar(8) NOT NULL,
+  `START_TIME` bigint(13) NOT NULL,
+  `END_TIME` bigint(13) DEFAULT NULL,
+  `CALENDAR_NAME` varchar(200) DEFAULT NULL,
+  `MISFIRE_INSTR` smallint(2) DEFAULT NULL,
+  `JOB_DATA` blob,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  KEY `SCHED_NAME` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
+  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  ibase4j.qrtz_triggers 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `qrtz_triggers` DISABLE KEYS */;
+INSERT INTO `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`, `JOB_NAME`, `JOB_GROUP`, `DESCRIPTION`, `NEXT_FIRE_TIME`, `PREV_FIRE_TIME`, `PRIORITY`, `TRIGGER_STATE`, `TRIGGER_TYPE`, `START_TIME`, `END_TIME`, `CALENDAR_NAME`, `MISFIRE_INSTR`, `JOB_DATA`) VALUES
+	('iBase4J-Scheduler', 'flushMessage', 'CoreTaskProvider', 'flushMessage', 'CoreTaskProvider', '系统管理', 1466416800000, 1466415000000, 5, 'WAITING', 'CRON', 1466414468000, 0, NULL, 0, _binary 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61703FE8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D6170133F3F760A3F00025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC13F603F000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000474000C636F6E74616374456D61696C74000F6942617365344A403132362E636F6D740006656E61626C65737200116A6176612E6C616E672E426F6F6C65616E3F7280D59CFAEE0200015A000576616C75657870017400026964737200116A6176612E6C616E672E496E746567657212E2A0A4F781873802000149000576616C7565787200106A6176612E6C616E672E4E756D62657286AC3F0B94E03F000078700000000174000464657363740028E7B3BBE7BB9FE7AEA1E790863AE6B885E79086E7BC93E5AD98E59BBDE99985E58C96E4BFA1E681AF7800);
+/*!40000 ALTER TABLE `qrtz_triggers` ENABLE KEYS */;
+
+
 -- 导出  表 ibase4j.sys_catalog 结构
 DROP TABLE IF EXISTS `sys_catalog`;
 CREATE TABLE IF NOT EXISTS `sys_catalog` (
@@ -99,9 +286,9 @@ CREATE TABLE IF NOT EXISTS `sys_dic` (
   `update_by` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `field_id_code` (`index_id`,`code_`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.sys_dic 的数据：~27 rows (大约)
+-- 正在导出表  ibase4j.sys_dic 的数据：~28 rows (大约)
 /*!40000 ALTER TABLE `sys_dic` DISABLE KEYS */;
 INSERT INTO `sys_dic` (`id_`, `index_id`, `code_`, `code_text`, `sort_no`, `editable_`, `enable_`, `remark_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
 	(1, 1, '0', '未知', 1, 0, 1, '1', NULL, NULL, NULL, NULL),
@@ -130,7 +317,8 @@ INSERT INTO `sys_dic` (`id_`, `index_id`, `code_`, `code_text`, `sort_no`, `edit
 	(24, 11, 'add', '新增', 1, 0, 1, NULL, NULL, NULL, NULL, NULL),
 	(25, 11, 'read', '查询', 2, 0, 1, NULL, NULL, NULL, NULL, NULL),
 	(26, 11, 'update', '修改', 3, 0, 1, NULL, NULL, NULL, NULL, NULL),
-	(27, 11, 'delete', '删除', 4, 0, 1, NULL, NULL, NULL, NULL, NULL);
+	(27, 11, 'delete', '删除', 4, 0, 1, NULL, NULL, NULL, NULL, NULL),
+	(28, 8, '0', '操作', 1, 0, 1, '1', NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `sys_dic` ENABLE KEYS */;
 
 
@@ -186,7 +374,7 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_by` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- 正在导出表  ibase4j.sys_event 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_event` DISABLE KEYS */;
@@ -198,7 +386,7 @@ DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE IF NOT EXISTS `sys_menu` (
   `id_` int(20) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
   `menu_name` varchar(50) DEFAULT NULL COMMENT '菜单名称',
-  `menu_type` int(1) DEFAULT '0' COMMENT '菜单类型(1:系统菜单;0:业务菜单)',
+  `menu_type` int(1) DEFAULT '2' COMMENT '菜单类型(0:CURD;1:系统菜单;2:业务菜单;)',
   `parent_id` int(20) DEFAULT NULL COMMENT '上级菜单编号',
   `iconcls_` varchar(50) DEFAULT NULL COMMENT '节点图标CSS类名',
   `request_` varchar(100) DEFAULT NULL COMMENT '请求地址',
@@ -213,25 +401,47 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_by` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='菜单';
 
--- 正在导出表  ibase4j.sys_menu 的数据：~14 rows (大约)
+-- 正在导出表  ibase4j.sys_menu 的数据：~36 rows (大约)
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
 INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`, `request_`, `expand_`, `sort_no`, `leaf_`, `state_`, `remark_`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
 	(1, '系统管理', 1, 0, 'glyphicon glyphicon-cog', '#', 0, 1, 0, '**.sys.**', NULL, 1, NULL, NULL, NULL, NULL),
 	(2, '用户管理', 1, 1, 'glyphicon glyphicon-user', 'main.sys.user.list', 0, 1, 1, '**.sys.user.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(3, '部门管理', 1, 1, 'glyphicon glyphicon-flag', 'main.sys.dept.list', 0, 2, 1, '**.sys.dept.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(4, '菜单管理', 1, 1, 'glyphicon glyphicon-list-alt', 'main.sys.menu.list', 0, 3, 1, '**.sys.menu.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(5, '角色管理', 1, 1, 'glyphicon glyphicon-tags', 'main.sys.role.list', 0, 4, 1, '**.sys.role.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(6, '链接管理', 1, 1, 'glyphicon glyphicon-link', 'main.sys.permission.list', 0, 5, 1, '**.sys.permission.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(7, '会话管理', 1, 1, 'glyphicon glyphicon-earphone', 'main.sys.session.list', 0, 6, 1, '**.sys.session.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(8, '字典管理', 1, 1, 'glyphicon glyphicon-book', 'main.sys.dic.list', 0, 7, 1, '**.sys.dic.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(9, '参数管理', 1, 1, 'glyphicon glyphicon-wrench', 'main.sys.param.list', 0, 8, 1, '**.sys.param.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(10, '调度管理', 1, 0, 'glyphicon glyphicon-fire', '#', 0, 2, 0, '**.task.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(11, '任务组管理', 1, 10, 'glyphicon glyphicon-equalizer', 'main.task.group.list', 0, 1, 1, '**.task.group.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(12, '任务管理', 1, 10, 'glyphicon glyphicon-bookmark', 'main.task.scheduler.list', 0, 2, 1, '**.task.scheduler.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(13, '调度管理', 1, 10, 'glyphicon glyphicon-random', 'main.task.scheduled.list', 0, 3, 1, '**.task.scheduled.**', NULL, 1, NULL, NULL, NULL, NULL),
-	(14, '调度日志', 1, 10, 'glyphicon glyphicon-duplicate', 'main.task.log.list', 0, 4, 1, '**.task.log.**', NULL, 1, NULL, NULL, NULL, NULL);
+	(3, '查看', 0, 2, NULL, NULL, 0, 1, 1, 'sys:user:read', NULL, 1, '2016-06-20 09:12:16', NULL, '2016-06-20 11:20:07', NULL),
+	(4, '修改', 0, 2, NULL, NULL, 0, 2, 1, 'sys:user:update', NULL, 1, '2016-06-20 09:13:55', NULL, '2016-06-20 12:37:41', NULL),
+	(5, '部门管理', 1, 1, 'glyphicon glyphicon-flag', 'main.sys.dept.list', 0, 2, 1, '**.sys.dept.**', NULL, 1, NULL, NULL, '2016-06-20 12:38:48', NULL),
+	(6, '查看', 0, 5, NULL, NULL, 0, 1, 1, 'sys:dept:read', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 12:38:49', NULL),
+	(7, '修改', 0, 5, NULL, NULL, 0, 2, 1, 'sys:dept:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 12:38:53', NULL),
+	(8, '菜单管理', 1, 1, 'glyphicon glyphicon-list-alt', 'main.sys.menu.list', 0, 3, 1, '**.sys.menu.**', NULL, 1, NULL, NULL, '2016-06-20 12:38:55', NULL),
+	(9, '查看', 0, 8, NULL, NULL, 0, 1, 1, 'sys:menu:read', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 12:38:59', NULL),
+	(10, '修改', 0, 8, NULL, NULL, 0, 2, 1, 'sys:menu:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 12:39:01', NULL),
+	(11, '角色管理', 1, 1, 'glyphicon glyphicon-tags', 'main.sys.role.list', 0, 4, 1, '**.sys.role.**', NULL, 1, NULL, NULL, '2016-06-20 12:39:03', NULL),
+	(12, '查看', 0, 11, NULL, NULL, 0, 1, 1, 'sys:role:read', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 12:39:05', NULL),
+	(13, '修改', 0, 11, NULL, NULL, 0, 2, 1, 'sys:role:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 12:39:07', NULL),
+	(14, '会话管理', 1, 1, 'glyphicon glyphicon-earphone', 'main.sys.session.list', 0, 6, 1, '**.sys.session.**', NULL, 1, NULL, NULL, '2016-06-20 12:39:09', NULL),
+	(15, '查看', 0, 14, NULL, NULL, 0, 2, 1, 'sys:session:read', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 12:39:11', NULL),
+	(16, '修改', 0, 14, NULL, NULL, 0, 2, 1, 'sys:session:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 12:39:13', NULL),
+	(17, '字典管理', 1, 1, 'glyphicon glyphicon-book', 'main.sys.dic.list', 0, 7, 1, '**.sys.dic.**', NULL, 1, NULL, NULL, '2016-06-20 12:39:16', NULL),
+	(18, '查看', 0, 17, NULL, NULL, 0, 1, 1, 'sys:dic:read', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 12:39:19', NULL),
+	(19, '修改', 0, 17, NULL, NULL, 0, 2, 1, 'sys:dic:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 12:39:21', NULL),
+	(20, '参数管理', 1, 1, 'glyphicon glyphicon-wrench', 'main.sys.param.list', 0, 8, 1, '**.sys.param.**', NULL, 1, NULL, NULL, '2016-06-20 12:39:24', NULL),
+	(21, '查看', 0, 20, NULL, NULL, 0, 1, 1, 'sys:param:read', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 12:39:25', NULL),
+	(22, '修改', 0, 20, NULL, NULL, 0, 2, 1, 'sys:param:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 12:39:26', NULL),
+	(23, '调度管理', 1, 0, 'glyphicon glyphicon-fire', '#', 0, 2, 0, '**.task.**', NULL, 1, NULL, NULL, '2016-06-20 12:39:28', NULL),
+	(24, '任务组管理', 1, 23, 'glyphicon glyphicon-equalizer', 'main.task.group.list', 0, 1, 1, '**.task.group.**', NULL, 1, NULL, NULL, '2016-06-20 14:13:12', NULL),
+	(25, '查看', 0, 24, NULL, NULL, 0, 1, 1, 'task:group:read', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 12:39:32', NULL),
+	(26, '修改', 0, 24, NULL, NULL, 0, 2, 1, 'task:group:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 12:39:35', NULL),
+	(27, '任务管理', 1, 23, 'glyphicon glyphicon-bookmark', 'main.task.scheduler.list', 0, 2, 1, '**.task.scheduler.**', NULL, 1, NULL, NULL, '2016-06-20 14:13:20', NULL),
+	(28, '查看', 0, 27, NULL, NULL, 0, 1, 1, 'task:scheduler:read', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 12:39:42', NULL),
+	(29, '修改', 0, 27, NULL, NULL, 0, 2, 1, 'task:scheduler:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 12:39:44', NULL),
+	(30, '调度管理', 1, 23, 'glyphicon glyphicon-random', 'main.task.scheduled.list', 0, 3, 1, '**.task.scheduled.**', NULL, 1, NULL, NULL, '2016-06-20 14:13:24', NULL),
+	(31, '查看', 0, 30, NULL, NULL, 0, 1, 1, 'task:scheduled:read', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 17:13:35', NULL),
+	(32, '启动', 0, 30, NULL, NULL, 0, 1, 1, 'task:scheduled:open', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 17:14:04', NULL),
+	(33, '暂停', 0, 30, NULL, NULL, 0, 2, 1, 'task:scheduled:close', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 17:14:08', NULL),
+	(34, '执行', 0, 30, NULL, NULL, 0, 3, 1, 'task:scheduled:run', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 17:13:30', NULL),
+	(35, '调度日志', 1, 23, 'glyphicon glyphicon-duplicate', 'main.task.log.list', 0, 4, 1, '**.task.log.**', NULL, 1, NULL, NULL, '2016-06-20 17:13:27', NULL),
+	(36, '查看', 0, 35, NULL, NULL, 0, 1, 1, 'task:scheduled:log', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 17:13:35', NULL);
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 
 
@@ -254,51 +464,6 @@ CREATE TABLE IF NOT EXISTS `sys_param` (
 -- 正在导出表  ibase4j.sys_param 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_param` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_param` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.sys_permission 结构
-DROP TABLE IF EXISTS `sys_permission`;
-CREATE TABLE IF NOT EXISTS `sys_permission` (
-  `id_` int(11) NOT NULL AUTO_INCREMENT,
-  `permission_url` varchar(50) DEFAULT NULL,
-  `permission_name` varchar(50) DEFAULT NULL,
-  `enable_` int(1) DEFAULT '1',
-  `remark_` varchar(200) DEFAULT '1',
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `create_by` int(20) DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `update_by` int(20) DEFAULT NULL,
-  PRIMARY KEY (`id_`),
-  UNIQUE KEY `permit_url` (`permission_url`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='权限';
-
--- 正在导出表  ibase4j.sys_permission 的数据：~23 rows (大约)
-/*!40000 ALTER TABLE `sys_permission` DISABLE KEYS */;
-INSERT INTO `sys_permission` (`id_`, `permission_url`, `permission_name`, `enable_`, `remark_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, '/user/read/current', '获取当前用户', 1, '1', NULL, NULL, NULL, NULL),
-	(2, '/user/update', '修改用户信息', 1, '1', NULL, NULL, NULL, NULL),
-	(3, '/user/update/password', '修改用户密码', 1, '1', NULL, NULL, NULL, NULL),
-	(4, '/user/read/list', '获取用户列表', 1, '1', NULL, NULL, NULL, NULL),
-	(5, '/user/read/detail', '获取用户详情', 1, '1', NULL, NULL, NULL, NULL),
-	(6, '/session/read/list', '获取会话列表', 1, '1', NULL, NULL, NULL, NULL),
-	(7, '/session/delete', '删除会话', 1, '1', NULL, NULL, NULL, NULL),
-	(8, '/dept/read/list', '获取部门列表', 1, '1', NULL, NULL, NULL, NULL),
-	(9, '/menu/read/list', '获取菜单列表', 1, '1', NULL, NULL, NULL, NULL),
-	(10, '/role/read/list', '获取角色列表', 1, '1', NULL, NULL, NULL, NULL),
-	(11, '/permission/read/list', '获取链接列表', 1, '1', NULL, NULL, NULL, NULL),
-	(12, '/task/read/groups', '获取任务组列表', 1, '1', NULL, NULL, NULL, NULL),
-	(13, '/task/read/schedulers', '获取任务列表', 1, '1', NULL, NULL, NULL, NULL),
-	(14, '/scheduled/read/tasks', '获取调度列表', 1, '1', NULL, NULL, NULL, NULL),
-	(15, '/scheduled/read/log', '获取调度日志列表', 1, '1', NULL, NULL, NULL, NULL),
-	(16, '/scheduled/run/task', '执行任务', 1, '1', NULL, NULL, NULL, NULL),
-	(17, '/scheduled/open/task', '打开任务', 1, '1', NULL, NULL, NULL, NULL),
-	(18, '/scheduled/close/task', '关闭任务', 1, '1', NULL, NULL, NULL, NULL),
-	(19, '/param/read/list', '获取参数列表', 1, '1', NULL, NULL, NULL, NULL),
-	(20, '/dicIndex/read/list', '获取字典列表', 1, '1', NULL, NULL, NULL, NULL),
-	(21, '/dic/read/list', '获取字典列表', 1, '1', NULL, NULL, NULL, NULL),
-	(22, '/dept/read/detail', '部门详情', 1, '1', NULL, NULL, NULL, NULL),
-	(23, '/dept/add', '部门新增', 1, '1', NULL, NULL, NULL, NULL);
-/*!40000 ALTER TABLE `sys_permission` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_role 结构
@@ -340,69 +505,23 @@ CREATE TABLE IF NOT EXISTS `sys_role_menu` (
   UNIQUE KEY `role_id_menu_id` (`role_id`,`menu_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='角色授权表';
 
--- 正在导出表  ibase4j.sys_role_menu 的数据：~14 rows (大约)
+-- 正在导出表  ibase4j.sys_role_menu 的数据：~13 rows (大约)
 /*!40000 ALTER TABLE `sys_role_menu` DISABLE KEYS */;
 INSERT INTO `sys_role_menu` (`id_`, `role_id`, `menu_id`, `enable_`, `remark_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
 	(1, 1, 1, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
 	(2, 1, 2, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(3, 1, 3, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(4, 1, 4, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(5, 1, 5, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(6, 1, 6, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(7, 1, 7, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(8, 1, 8, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(9, 1, 9, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(10, 1, 10, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(11, 1, 11, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(12, 1, 12, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(13, 1, 13, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL),
-	(14, 1, 14, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-16 15:59:10', NULL);
+	(3, 1, 5, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 14:19:45', NULL),
+	(4, 1, 8, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 14:19:44', NULL),
+	(5, 1, 11, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 14:19:42', NULL),
+	(6, 1, 14, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 14:19:40', NULL),
+	(7, 1, 17, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 14:19:38', NULL),
+	(8, 1, 20, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 14:19:35', NULL),
+	(9, 1, 23, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 14:19:33', NULL),
+	(10, 1, 24, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 14:19:31', NULL),
+	(11, 1, 27, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 14:19:28', NULL),
+	(12, 1, 30, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 14:19:25', NULL),
+	(13, 1, 35, NULL, NULL, '2016-06-16 15:59:10', NULL, '2016-06-20 17:28:40', NULL);
 /*!40000 ALTER TABLE `sys_role_menu` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.sys_role_permission 结构
-DROP TABLE IF EXISTS `sys_role_permission`;
-CREATE TABLE IF NOT EXISTS `sys_role_permission` (
-  `id_` int(11) NOT NULL AUTO_INCREMENT,
-  `role_id` int(11) DEFAULT NULL,
-  `permission_id` int(11) DEFAULT NULL,
-  `enable_` int(1) DEFAULT NULL,
-  `remark_` varchar(5000) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `create_by` int(20) DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `update_by` int(20) DEFAULT NULL,
-  PRIMARY KEY (`id_`),
-  UNIQUE KEY `permit_id_permit_type` (`permission_id`,`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='角色操作权限';
-
--- 正在导出表  ibase4j.sys_role_permission 的数据：~23 rows (大约)
-/*!40000 ALTER TABLE `sys_role_permission` DISABLE KEYS */;
-INSERT INTO `sys_role_permission` (`id_`, `role_id`, `permission_id`, `enable_`, `remark_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, 1, 1, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(2, 1, 2, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(3, 1, 3, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(4, 1, 4, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(5, 1, 5, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(6, 1, 6, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(7, 1, 7, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(8, 1, 8, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(9, 1, 9, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(10, 1, 10, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(11, 1, 11, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(12, 1, 12, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(13, 1, 13, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(14, 1, 14, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(15, 1, 15, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(16, 1, 16, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(17, 1, 17, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(18, 1, 18, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(19, 1, 19, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(20, 1, 20, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(21, 1, 21, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(22, 1, 22, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL),
-	(23, 1, 23, NULL, NULL, '2016-06-16 15:59:14', NULL, '2016-06-16 15:59:14', NULL);
-/*!40000 ALTER TABLE `sys_role_permission` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_session 结构
@@ -420,12 +539,12 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_by` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会话管理';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='会话管理';
 
--- 正在导出表  ibase4j.sys_session 的数据：~2 rows (大约)
+-- 正在导出表  ibase4j.sys_session 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
 INSERT INTO `sys_session` (`id_`, `session_id`, `account_`, `ip_`, `start_time`, `enable_`, `remark_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, '68f1d872-51c4-4242-bad6-9099eb8ebd5b', 'admin', '192.168.1.6', '2016-06-16 17:35:22', NULL, NULL, NULL, NULL, NULL, NULL);
+	(11, '81987bb9-d04f-427b-a884-8b6a57a18173', 'test', '192.168.1.6', '2016-06-20 17:37:50', NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
 
@@ -479,27 +598,6 @@ CREATE TABLE IF NOT EXISTS `sys_user_menu` (
 -- 正在导出表  ibase4j.sys_user_menu 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_user_menu` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_user_menu` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.sys_user_permission 结构
-DROP TABLE IF EXISTS `sys_user_permission`;
-CREATE TABLE IF NOT EXISTS `sys_user_permission` (
-  `id_` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `permission_id` int(11) DEFAULT NULL,
-  `enable_` int(1) DEFAULT NULL,
-  `remark_` varchar(5000) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `create_by` int(20) DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `update_by` int(20) DEFAULT NULL,
-  PRIMARY KEY (`id_`),
-  UNIQUE KEY `permit_id_permit_type` (`permission_id`,`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户操作权限';
-
--- 正在导出表  ibase4j.sys_user_permission 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `sys_user_permission` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sys_user_permission` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_user_role 结构
@@ -561,7 +659,7 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   UNIQUE KEY `group_name_task_name_start_time` (`group_name`,`task_name`,`start_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.task_fire_log 的数据：~1 rows (大约)
+-- 正在导出表  ibase4j.task_fire_log 的数据：~19 rows (大约)
 /*!40000 ALTER TABLE `task_fire_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `task_fire_log` ENABLE KEYS */;
 
@@ -612,7 +710,7 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
 -- 正在导出表  ibase4j.task_scheduler 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `task_scheduler` DISABLE KEYS */;
 INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `task_previous_fire_time`, `task_next_fire_time`, `contact_email`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, 1, 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-06-16 16:30:00', '2016-06-16 17:00:00', 'iBase4J@126.com', 1, '2016-06-13 14:05:30', NULL, '2016-06-16 16:30:00', NULL);
+	(1, 1, 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-06-20 17:30:00', '2016-06-20 18:00:00', 'iBase4J@126.com', 1, '2016-06-13 14:05:30', NULL, '2016-06-20 17:30:00', NULL);
 /*!40000 ALTER TABLE `task_scheduler` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

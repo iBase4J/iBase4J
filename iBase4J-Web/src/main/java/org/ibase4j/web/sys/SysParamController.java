@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
@@ -31,6 +32,7 @@ public class SysParamController extends BaseController {
 	private SysParamService sysParamService;
 
 	@RequestMapping(value = "/read/list")
+	@RequiresPermissions("sys:param:read")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = sysParamService.query(params);
@@ -38,6 +40,7 @@ public class SysParamController extends BaseController {
 	}
 
 	// 详细信息
+	@RequiresPermissions("sys:param:read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysParam record = sysParamService.queryById(id);
@@ -45,6 +48,7 @@ public class SysParamController extends BaseController {
 	}
 
 	// 新增
+	@RequiresPermissions("sys:param:update")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
 		SysParam record = Request2ModelUtil.covert(SysParam.class, request);
@@ -53,6 +57,7 @@ public class SysParamController extends BaseController {
 	}
 
 	// 修改
+	@RequiresPermissions("sys:param:update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysParam record = Request2ModelUtil.covert(SysParam.class, request);
@@ -61,6 +66,7 @@ public class SysParamController extends BaseController {
 	}
 
 	// 删除
+	@RequiresPermissions("sys:param:update")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {

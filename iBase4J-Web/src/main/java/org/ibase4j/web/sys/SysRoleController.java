@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
@@ -30,6 +31,7 @@ public class SysRoleController extends BaseController {
 	@Autowired
 	private SysRoleService sysRoleService;
 
+	@RequiresPermissions("sys:role:read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -38,6 +40,7 @@ public class SysRoleController extends BaseController {
 	}
 
 	// 详细信息
+	@RequiresPermissions("sys:role:read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysRole record = sysRoleService.queryById(id);
@@ -45,6 +48,7 @@ public class SysRoleController extends BaseController {
 	}
 
 	// 新增
+	@RequiresPermissions("sys:role:update")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
 		SysRole record = Request2ModelUtil.covert(SysRole.class, request);
@@ -53,6 +57,7 @@ public class SysRoleController extends BaseController {
 	}
 
 	// 修改
+	@RequiresPermissions("sys:role:update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysRole record = Request2ModelUtil.covert(SysRole.class, request);
@@ -61,6 +66,7 @@ public class SysRoleController extends BaseController {
 	}
 
 	// 删除
+	@RequiresPermissions("sys:role:update")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {

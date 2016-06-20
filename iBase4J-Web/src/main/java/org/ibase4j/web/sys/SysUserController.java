@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
@@ -39,6 +40,7 @@ public class SysUserController extends BaseController {
 	private SysAuthorizeService authorizeService;
 
 	// 修改用户信息
+	@RequiresPermissions("sys:user:update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
@@ -55,6 +57,7 @@ public class SysUserController extends BaseController {
 	}
 
 	// 查询用户
+	@RequiresPermissions("sys:user:read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -63,6 +66,7 @@ public class SysUserController extends BaseController {
 	}
 
 	// 用户详细信息
+	@RequiresPermissions("sys:user:read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysUser sysUser = sysUserService.queryById(id);

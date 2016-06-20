@@ -4,9 +4,8 @@ import java.util.List;
 
 import org.ibase4j.model.sys.SysMenuBean;
 import org.ibase4j.provider.sys.SysAuthorizeProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.alibaba.dubbo.config.annotation.Reference;
 
 /**
  * @author ShenHuaJie
@@ -14,11 +13,15 @@ import com.alibaba.dubbo.config.annotation.Reference;
  */
 @Service
 public class SysAuthorizeService {
-	@Reference
-	private SysAuthorizeProvider authorizeProvider;
+	@Autowired
+	private SysAuthorizeProvider sysAuthorizeProvider;
 
 	public List<SysMenuBean> queryAuthorizeByUserId(Integer id) {
-		return authorizeProvider.queryAuthorizeByUserId(id);
+		return sysAuthorizeProvider.queryAuthorizeByUserId(id);
+	}
+
+	public List<String> queryPermissionByUserId(Integer userId) {
+		return sysAuthorizeProvider.queryPermissionByUserId(userId);
 	}
 
 }

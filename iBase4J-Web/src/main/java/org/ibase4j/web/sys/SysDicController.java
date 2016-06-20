@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
@@ -31,6 +32,7 @@ public class SysDicController extends BaseController {
 	private SysDicService sysDicService;
 
 	// 查询字典
+	@RequiresPermissions("sys:dic:read")
 	@RequestMapping(value = "dicIndex/read/list")
 	public Object getDicIndex(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -39,6 +41,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 详细信息
+	@RequiresPermissions("sys:dic:read")
 	@RequestMapping(value = "dicIndex/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysDicIndex record = sysDicService.queryDicIndexById(id);
@@ -46,6 +49,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 新增字典
+	@RequiresPermissions("sys:dic:update")
 	@RequestMapping(value = "dicIndex/add", method = RequestMethod.POST)
 	public Object addDicIndex(HttpServletRequest request, ModelMap modelMap) {
 		SysDicIndex record = Request2ModelUtil.covert(SysDicIndex.class, request);
@@ -54,6 +58,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 修改字典
+	@RequiresPermissions("sys:dic:update")
 	@RequestMapping(value = "dicIndex/update", method = RequestMethod.POST)
 	public Object updateDicIndex(HttpServletRequest request, ModelMap modelMap) {
 		SysDicIndex record = Request2ModelUtil.covert(SysDicIndex.class, request);
@@ -85,6 +90,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 新增字典
+	@RequiresPermissions("sys:dic:update")
 	@RequestMapping(value = "dic/add", method = RequestMethod.POST)
 	public Object addDic(HttpServletRequest request, ModelMap modelMap) {
 		SysDic record = Request2ModelUtil.covert(SysDic.class, request);
@@ -93,6 +99,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 修改字典
+	@RequiresPermissions("sys:dic:update")
 	@RequestMapping(value = "dic/update", method = RequestMethod.POST)
 	public Object updateDic(HttpServletRequest request, ModelMap modelMap) {
 		SysDic record = Request2ModelUtil.covert(SysDic.class, request);
@@ -101,6 +108,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 删除字典
+	@RequiresPermissions("sys:dic:update")
 	@RequestMapping(value = "dic/delete", method = RequestMethod.POST)
 	public Object deleteDic(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {

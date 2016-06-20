@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.scheduler.TaskScheduled;
@@ -32,6 +33,7 @@ public class ScheduledController extends BaseController {
 	private SchedulerService schedulerService;
 
 	@RequestMapping("/read/tasks")
+	@RequiresPermissions("task:scheduled:read")
 	public Object list(ModelMap modelMap) {
 		PageInfo<TaskScheduled> jobs = schedulerService.getAllJobDetail();
 		return setSuccessModelMap(modelMap, jobs);
@@ -39,6 +41,7 @@ public class ScheduledController extends BaseController {
 
 	// 执行
 	@RequestMapping("/run/task")
+	@RequiresPermissions("task:scheduled:run")
 	public Object exec(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
 			@RequestParam(value = "taskName", required = false) String taskName) {
 		schedulerService.execTask(taskGroup, taskName);
@@ -47,6 +50,7 @@ public class ScheduledController extends BaseController {
 
 	// 启动
 	@RequestMapping("/open/task")
+	@RequiresPermissions("task:scheduled:open")
 	public Object open(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
 			@RequestParam(value = "taskName", required = false) String taskName) {
 		schedulerService.openTask(taskGroup, taskName);
@@ -55,6 +59,7 @@ public class ScheduledController extends BaseController {
 
 	// 暂停
 	@RequestMapping("/close/task")
+	@RequiresPermissions("task:scheduled:close")
 	public Object close(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
 			@RequestParam(value = "taskName", required = false) String taskName) {
 		schedulerService.closeTask(taskGroup, taskName);
@@ -63,6 +68,7 @@ public class ScheduledController extends BaseController {
 
 	// 执行记录
 	@RequestMapping("/read/log")
+	@RequiresPermissions("task:scheduled:log")
 	public Object getFireLog(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = schedulerService.queryLog(params);

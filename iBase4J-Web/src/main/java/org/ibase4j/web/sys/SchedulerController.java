@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.service.sys.SchedulerService;
@@ -27,6 +28,7 @@ public class SchedulerController extends BaseController {
 	private SchedulerService schedulerService;
 
 	@RequestMapping("/read/groups")
+	@RequiresPermissions("task:group:read")
 	public Object getGroup(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = schedulerService.queryGroup(params);
@@ -34,6 +36,7 @@ public class SchedulerController extends BaseController {
 	}
 
 	@RequestMapping("/read/schedulers")
+	@RequiresPermissions("task:scheduler:read")
 	public Object getScheduler(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = schedulerService.queryScheduler(params);

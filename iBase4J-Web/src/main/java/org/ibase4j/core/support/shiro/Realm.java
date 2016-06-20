@@ -1,6 +1,7 @@
 package org.ibase4j.core.support.shiro;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -20,6 +22,7 @@ import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysSession;
 import org.ibase4j.model.generator.SysUser;
+import org.ibase4j.service.sys.SysAuthorizeService;
 import org.ibase4j.service.sys.SysSessionService;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +41,30 @@ public class Realm extends AuthorizingRealm {
 	private SysUserService sysUserService;
 	@Autowired
 	private SysSessionService sysSessionService;
+	@Autowired
+	private SysAuthorizeService sysAuthorizeService;
 
+	// 权限
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		return null;
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		Integer userId = WebUtil.getCurrentUser();
+		SysUser sysUser = sysUserService.queryById(userId);
+		if (sysUser.getUserType() != 1) {
+			userId = null;
+		}
+		List<String> list = sysAuthorizeService.queryPermissionByUserId(userId);
+		for (String permission : list) {
+			if (StringUtils.isNotBlank(permission)) {
+				// 添加基于Permission的权限信息
+				info.addStringPermission(permission);
+			}
+		}
+		// 添加用户权限
+		info.addStringPermission("user");
+		return info;
 	}
 
+	// 登录验证
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
 			throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;

@@ -12,10 +12,21 @@
 	</delete>
 	<select id="getAuthorize" resultType="java.lang.Integer">
 		select menu.id_ from sys_menu menu
-		where exists (select 1 from sys_user_menu um where
+		where menu_type != 0 and exists (select 1 from sys_user_menu um where
 		um.user_id=#{userId} and um.menu_id=menu.id_)
 		or exists (select 1
 		from sys_user_role ur join sys_role_menu rm on ur.role_id=rm.role_id
 		where ur.user_id=#{userId} and rm.menu_id=menu.id_)
+	</select>
+	<select id="queryPermissionByUserId" resultType="java.lang.String">
+		select menu.state_ from sys_menu menu
+		where menu_type = 0
+		<if test="userId != null">
+		 and exists (select 1 from sys_user_menu um where
+		um.user_id=#{userId} and um.menu_id=menu.id_)
+		or exists (select 1
+		from sys_user_role ur join sys_role_menu rm on ur.role_id=rm.role_id
+		where ur.user_id=#{userId} and rm.menu_id=menu.id_)
+		</if>
 	</select>
 </mapper>

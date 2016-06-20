@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.SysEventService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
@@ -15,13 +16,10 @@ import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysEvent;
-import org.ibase4j.model.generator.SysPermission;
 import org.ibase4j.provider.sys.SysEventProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageInfo;
 
 @Service
 public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
@@ -30,9 +28,6 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 	public void setProvider(SysEventProvider provider) {
 		this.provider = provider;
 	}
-
-	@Autowired
-	private SysPermissionService sysPermissionService;
 	private ExecutorService executorService = Executors.newCachedThreadPool();
 
 	public void saveEvent(final HttpServletRequest request, final HttpServletResponse response,
@@ -45,17 +40,19 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 		record.setParammeters(JSON.toJSONString(request.getParameterMap()));
 		record.setCreateBy(WebUtil.getCurrentUser());
 		record.setStatus(response.getStatus());
+		final String msg = (String) request.getAttribute("msg");
 
 		executorService.submit(new Runnable() {
 			public void run() {
 				try { // 保存操作
-					record.setRemark(ExceptionUtil.getStackTraceAsString(ex));
+					if (StringUtils.isNotBlank(msg)) {
+						record.setRemark(msg);
+					} else {
+						record.setRemark(ExceptionUtil.getStackTraceAsString(ex));
+					}
 					Map<String, Object> params = InstanceUtil.newHashMap();
 					params.put("permission_url", record.getRequestUri());
-					PageInfo<SysPermission> pageInfo = sysPermissionService.query(params);
-					if (pageInfo.getSize() > 0) {
-						record.setTitle(pageInfo.getList().get(0).getPermissionName());
-					}
+					
 					add(record);
 					// 内存信息
 					if (logger.isDebugEnabled()) {

@@ -4,7 +4,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseService;
+import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.Assert;
+import org.ibase4j.core.support.exception.BusinessException;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.SecurityUtil;
@@ -53,6 +55,13 @@ public class SysUserService extends BaseService<SysUserProvider, SysUser> {
 		Assert.isNotBlank(password, "PASSWORD");
 		SysUser sysUser = provider.queryById(id);
 		Assert.notNull(sysUser, "USER", id);
+		Integer userId = WebUtil.getCurrentUser();
+		if (!id.equals(userId)) {
+			SysUser user = provider.queryById(userId);
+			if (user.getUserType() == 1) {
+				throw new BusinessException(Resources.getMessage("HTTPCODE_403"));
+			}
+		}
 		sysUser.setPassword(SecurityUtil.encryptSHA(password));
 		sysUser.setUpdateBy(WebUtil.getCurrentUser());
 		provider.update(sysUser);

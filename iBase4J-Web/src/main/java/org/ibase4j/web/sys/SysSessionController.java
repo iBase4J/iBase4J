@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.listener.SessionListener;
 import org.ibase4j.core.util.WebUtil;
@@ -30,6 +31,7 @@ public class SysSessionController extends BaseController {
 	private SysSessionService sysSessionService;
 
 	// 查询会话
+	@RequiresPermissions("sys:session:read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -40,6 +42,7 @@ public class SysSessionController extends BaseController {
 	}
 
 	// 删除会话
+	@RequiresPermissions("sys:session:update")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object update(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		sysSessionService.delete(id);

@@ -107,4 +107,9 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 		}
 		return menus;
 	}
+
+	@Cacheable("sysPermission")
+	public List<String> queryPermissionByUserId(Integer userId) {
+		return sysAuthorizeMapper.queryPermissionByUserId(userId);
+	}
 }

@@ -3,14 +3,16 @@
  */
 package org.ibase4j.core.base;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.support.exception.IllegalParameterException;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.support.exception.BaseException;
+import org.ibase4j.core.support.exception.IllegalParameterException;
 import org.ibase4j.core.util.WebUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
@@ -62,16 +64,20 @@ public abstract class BaseController {
 
 	/** 异常处理 */
 	@ExceptionHandler(RuntimeException.class)
-	public void exceptionHandler(HttpServletResponse response, Exception ex) throws Exception {
+	public void exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception ex)
+			throws Exception {
 		logger.error(Constants.Exception_Head, ex);
 		ModelMap modelMap = new ModelMap();
 		if (ex instanceof BaseException) {
 			((BaseException) ex).handler(modelMap);
 		} else if (ex instanceof IllegalArgumentException) {
 			new IllegalParameterException(ex.getMessage()).handler(modelMap);
+		} else if (ex instanceof UnauthorizedException) {
+			setModelMap(modelMap, HttpCode.FORBIDDEN);
 		} else {
 			setModelMap(modelMap, HttpCode.INTERNAL_SERVER_ERROR);
 		}
+		request.setAttribute("msg", modelMap.get("msg"));
 		response.setContentType("application/json;charset=UTF-8");
 		byte[] bytes = JSON.toJSONBytes(modelMap, SerializerFeature.DisableCircularReferenceDetect);
 		response.getOutputStream().write(bytes);
