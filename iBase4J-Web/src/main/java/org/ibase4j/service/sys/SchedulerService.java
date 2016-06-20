@@ -33,7 +33,7 @@ public class SchedulerService {
 	public boolean execTask(String taskGroup, String taskName) {
 		Assert.notNull(taskGroup, "TASKGROUP");
 		Assert.notNull(taskName, "TASKNAME");
-		return schedulerProvider.execTask(taskName, taskGroup);
+		return schedulerProvider.execTask(taskGroup, taskName);
 	}
 
 	public boolean openTask(String taskGroup, String taskName) {
