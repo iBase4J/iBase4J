@@ -16,7 +16,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.support.exception.FtpException;
+import org.ibase4j.core.exception.FtpException;
 
 /**
  * FTP上传下载

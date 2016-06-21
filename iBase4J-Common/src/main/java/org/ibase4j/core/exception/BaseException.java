@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ibase4j.core.support.exception;
+package org.ibase4j.core.exception;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.support.HttpCode;

@@ -5,7 +5,7 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.support.exception.FtpException;
+import org.ibase4j.core.exception.FtpException;
 
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;

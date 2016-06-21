@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
+import org.ibase4j.core.exception.BusinessException;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.core.support.exception.BusinessException;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.dao.generator.SysDicIndexMapper;
 import org.ibase4j.dao.generator.SysDicMapper;

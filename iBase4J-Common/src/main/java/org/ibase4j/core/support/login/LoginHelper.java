@@ -7,7 +7,7 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.support.exception.LoginException;
+import org.ibase4j.core.exception.LoginException;
 
 /**
  * @author ShenHuaJie
