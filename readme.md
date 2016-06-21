@@ -57,6 +57,7 @@ iBase4J使用 [Apache License 2.0][] 协议.
 
 ![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/login.png "登录")
 ![主页](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/index.png "主页")
+![接口](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/swagger.png "接口")
 
 ![捐赠](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/contribute.png "捐赠")
 
