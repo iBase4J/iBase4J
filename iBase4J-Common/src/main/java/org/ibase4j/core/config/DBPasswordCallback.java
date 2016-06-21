@@ -27,6 +27,8 @@ public class DBPasswordCallback extends DruidPasswordCallback {
 			} catch (Exception e) {
 				setPassword(pwd.toCharArray());
 			}
+		} else {
+			setPassword("".toCharArray());
 		}
 	}
 
