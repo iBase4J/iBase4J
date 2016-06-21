@@ -1,7 +1,6 @@
 package org.ibase4j.core.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -17,9 +16,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @version 2016年6月21日 上午9:50:58
  */
 @Configuration
-@EnableWebMvc // NOTE: Only needed in a non-springboot application
-@EnableSwagger2 // Enable swagger 2.0 spec
-@ComponentScan("org.ibase4j.web")
+@EnableWebMvc
+@EnableSwagger2
 public class SwaggerConfig {
 
 	@Bean
@@ -30,7 +28,7 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder().title("iBase4J-API").description("©2016 Copyright. Powered By iBase4J.")
-				// .termsOfServiceUrl("http://www.lottery.com.cn")
+				// .termsOfServiceUrl("")
 				.contact(new Contact("iBase4J", "", "iBase4J@163.com")).license("Apache License Version 2.0")
 				.licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE").version("2.0").build();
 	}
