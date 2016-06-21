@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * 字典管理
  * 
@@ -27,11 +30,14 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:14:34
  */
 @RestController
+@Api(value = "字典管理", description = "字典管理")
+@RequestMapping(method = RequestMethod.POST)
 public class SysDicController extends BaseController {
 	@Autowired
 	private SysDicService sysDicService;
 
 	// 查询字典
+	@ApiOperation(value = "查询字典")
 	@RequiresPermissions("sys:dic:read")
 	@RequestMapping(value = "dicIndex/read/list")
 	public Object getDicIndex(HttpServletRequest request, ModelMap modelMap) {
@@ -41,6 +47,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 详细信息
+	@ApiOperation(value = "字典详情")
 	@RequiresPermissions("sys:dic:read")
 	@RequestMapping(value = "dicIndex/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
@@ -49,6 +56,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 新增字典
+	@ApiOperation(value = "添加字典")
 	@RequiresPermissions("sys:dic:update")
 	@RequestMapping(value = "dicIndex/add", method = RequestMethod.POST)
 	public Object addDicIndex(HttpServletRequest request, ModelMap modelMap) {
@@ -58,6 +66,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 修改字典
+	@ApiOperation(value = "修改字典")
 	@RequiresPermissions("sys:dic:update")
 	@RequestMapping(value = "dicIndex/update", method = RequestMethod.POST)
 	public Object updateDicIndex(HttpServletRequest request, ModelMap modelMap) {
@@ -67,6 +76,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 删除字典
+	@ApiOperation(value = "删除字典")
 	@RequestMapping(value = "dicIndex/delete", method = RequestMethod.POST)
 	public Object deleteDicIndex(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {
@@ -75,6 +85,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 查询字典
+	@ApiOperation(value = "查询字典项")
 	@RequestMapping(value = "dic/read/list")
 	public Object getDic(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -83,6 +94,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 详细信息
+	@ApiOperation(value = "字典项详情")
 	@RequestMapping(value = "dic/read/detail")
 	public Object dicDetail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysDic record = sysDicService.queryDicById(id);
@@ -90,6 +102,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 新增字典
+	@ApiOperation(value = "添加字典项")
 	@RequiresPermissions("sys:dic:update")
 	@RequestMapping(value = "dic/add", method = RequestMethod.POST)
 	public Object addDic(HttpServletRequest request, ModelMap modelMap) {
@@ -99,6 +112,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 修改字典
+	@ApiOperation(value = "修改字典项")
 	@RequiresPermissions("sys:dic:update")
 	@RequestMapping(value = "dic/update", method = RequestMethod.POST)
 	public Object updateDic(HttpServletRequest request, ModelMap modelMap) {
@@ -108,6 +122,7 @@ public class SysDicController extends BaseController {
 	}
 
 	// 删除字典
+	@ApiOperation(value = "删除字典项")
 	@RequiresPermissions("sys:dic:update")
 	@RequestMapping(value = "dic/delete", method = RequestMethod.POST)
 	public Object deleteDic(HttpServletRequest request, ModelMap modelMap,

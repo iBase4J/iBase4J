@@ -15,8 +15,13 @@ import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * 用户登录
@@ -25,14 +30,17 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 2016年5月20日 下午3:11:21
  */
 @RestController
+@Api(value = "登录接口", description = "登录接口")
 public class LoginController extends BaseController {
 	@Autowired
 	private SysUserService sysUserService;
 
 	// 登录
-	@RequestMapping(value = "/login")
-	public Object login(ModelMap modelMap, @RequestParam(value = "account", required = false) String account,
-			@RequestParam(value = "password", required = false) String password) {
+	@ApiOperation(value = "用户登录")
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public Object login(ModelMap modelMap,
+			@ApiParam(required = true, value = "登录帐号") @RequestParam(value = "account", required = false) String account,
+			@ApiParam(required = true, value = "登录密码") @RequestParam(value = "password", required = false) String password) {
 		Assert.notNull(account, "ACCOUNT");
 		Assert.notNull(password, "PASSWORD");
 		if (LoginHelper.login(account, sysUserService.encryptPassword(password))) {
@@ -42,14 +50,16 @@ public class LoginController extends BaseController {
 	}
 
 	// 登出
-	@RequestMapping("/logout")
+	@ApiOperation(value = "用户登出")
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public Object logout(ModelMap modelMap) {
 		SecurityUtils.getSubject().logout();
 		return setSuccessModelMap(modelMap);
 	}
 
 	// 注册
-	@RequestMapping(value = "/regin")
+	@ApiOperation(value = "用户注册")
+	@RequestMapping(value = "/regin", method = RequestMethod.POST)
 	public Object regin(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
@@ -65,14 +75,16 @@ public class LoginController extends BaseController {
 	}
 
 	// 没有登录
-	@RequestMapping("/unauthorized")
+	@ApiOperation(value = "没有登录")
+	@RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
 	public Object unauthorized(ModelMap modelMap) {
 		SecurityUtils.getSubject().logout();
 		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
 	}
 
 	// 没有权限
-	@RequestMapping("/forbidden")
+	@ApiOperation(value = "没有权限")
+	@RequestMapping(value = "/forbidden", method = RequestMethod.GET)
 	public Object forbidden(ModelMap modelMap) {
 		return setModelMap(modelMap, HttpCode.FORBIDDEN);
 	}

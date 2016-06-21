@@ -13,7 +13,7 @@
 	<dubbo:reference id="sysSessionProvider" interface="org.ibase4j.provider.sys.SysSessionProvider" check="false" />
 	<dubbo:reference id="sysAuthorizeProvider" interface="org.ibase4j.provider.sys.SysAuthorizeProvider" check="false" />
 	<!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
-	<bean id="realm" class="org.ibase4j.core.support.shiro.Realm" />
+	<bean id="realm" class="org.ibase4j.core.shiro.Realm" />
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="realm" />
 	</bean>
@@ -38,7 +38,12 @@
 				/unauthorized=anon
 				/forbidden=anon
 				/sns*=anon
+				/*/api-docs=anon
 				/callback*=anon
+				/swagger*=anon
+				/configuration/*=anon
+				/*/configuration/*=anon
+				/webjars/**=anon
 				/**=authc,user
 			</value>
 		</property>

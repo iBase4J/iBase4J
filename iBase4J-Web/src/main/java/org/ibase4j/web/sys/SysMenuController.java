@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * 菜单管理
  * 
@@ -26,12 +29,14 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:14:54
  */
 @RestController
-@RequestMapping("menu")
+@Api(value = "菜单管理", description = "菜单管理")
+@RequestMapping(value = "menu", method = RequestMethod.POST)
 public class SysMenuController extends BaseController {
 	@Autowired
 	private SysMenuService sysMenuService;
 
 	// 查询菜单
+	@ApiOperation(value = "查询菜单")
 	@RequiresPermissions("sys:menu:read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
@@ -41,6 +46,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	// 详细信息
+	@ApiOperation(value = "菜单详情")
 	@RequiresPermissions("sys:menu:read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
@@ -49,6 +55,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	// 新增菜单
+	@ApiOperation(value = "添加菜单")
 	@RequiresPermissions("sys:menu:updae")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
@@ -58,6 +65,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	// 修改菜单
+	@ApiOperation(value = "修改菜单")
 	@RequiresPermissions("sys:menu:updae")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
@@ -67,6 +75,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	// 删除菜单
+	@ApiOperation(value = "删除菜单")
 	@RequiresPermissions("sys:menu:updae")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,

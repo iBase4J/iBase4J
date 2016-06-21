@@ -105,5 +105,16 @@
 			<artifactId>pinyin4j</artifactId>
 			<version>${pinyin4j.version}</version>
 		</dependency>
+		<!-- swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.5.0</version>
+		</dependency>
 	</dependencies>
 </project>

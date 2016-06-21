@@ -10,7 +10,11 @@ import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.UploadUtil;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 文件上传控制器
@@ -19,10 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 2016年5月20日 下午3:11:42
  */
 @RestController
+@Api(value = "文件上传接口", description = "文件上传接口")
+@RequestMapping(value = "/upload", method = RequestMethod.POST)
 public class UploadController extends BaseController {
 
 	// 上传文件(支持批量)
-	@RequestMapping("/upload/image")
+	@RequestMapping("/image")
+	@ApiOperation(value = "上传图片")
 	public Object uploadImage(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/html;charset=utf-8");

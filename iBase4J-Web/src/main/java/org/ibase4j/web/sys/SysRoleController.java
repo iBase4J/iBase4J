@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * 角色管理
  * 
@@ -26,11 +29,13 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:15:43
  */
 @RestController
-@RequestMapping("role")
+@Api(value = "角色管理", description = "角色管理")
+@RequestMapping(value = "role", method = RequestMethod.POST)
 public class SysRoleController extends BaseController {
 	@Autowired
 	private SysRoleService sysRoleService;
 
+	@ApiOperation(value = "查询角色")
 	@RequiresPermissions("sys:role:read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
@@ -40,6 +45,7 @@ public class SysRoleController extends BaseController {
 	}
 
 	// 详细信息
+	@ApiOperation(value = "角色详情")
 	@RequiresPermissions("sys:role:read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
@@ -48,6 +54,7 @@ public class SysRoleController extends BaseController {
 	}
 
 	// 新增
+	@ApiOperation(value = "添加角色")
 	@RequiresPermissions("sys:role:update")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
@@ -57,6 +64,7 @@ public class SysRoleController extends BaseController {
 	}
 
 	// 修改
+	@ApiOperation(value = "修改角色")
 	@RequiresPermissions("sys:role:update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
@@ -66,6 +74,7 @@ public class SysRoleController extends BaseController {
 	}
 
 	// 删除
+	@ApiOperation(value = "删除角色")
 	@RequiresPermissions("sys:role:update")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,

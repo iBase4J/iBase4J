@@ -32,7 +32,7 @@ public final class RedisUtil {
 			synchronized (RedisUtil.class) {
 				if (redisTemplate == null) {
 					WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
-					redisTemplate = wac.getBean(RedisTemplate.class);
+					redisTemplate = (RedisTemplate<Serializable, Serializable>) wac.getBean("redisTemplate");
 				}
 			}
 		}
@@ -45,7 +45,7 @@ public final class RedisUtil {
 	}
 
 	public static final void set(final String key, final Serializable value) {
-		getRedis().opsForValue().set(key, value);
+		getRedis().boundValueOps(key).set(value);
 		expire(key, EXPIRE);
 	}
 

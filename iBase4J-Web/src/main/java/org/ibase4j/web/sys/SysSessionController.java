@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * 用户会话管理
  * 
@@ -25,12 +28,14 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:13:06
  */
 @RestController
-@RequestMapping("/session")
+@Api(value = "会话管理", description = "会话管理")
+@RequestMapping(value = "/session", method = RequestMethod.POST)
 public class SysSessionController extends BaseController {
 	@Autowired
 	private SysSessionService sysSessionService;
 
 	// 查询会话
+	@ApiOperation(value = "查询会话")
 	@RequiresPermissions("sys:session:read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
@@ -42,6 +47,7 @@ public class SysSessionController extends BaseController {
 	}
 
 	// 删除会话
+	@ApiOperation(value = "删除会话")
 	@RequiresPermissions("sys:session:update")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object update(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {

@@ -14,16 +14,24 @@
 	<mvc:annotation-driven />
 	<!-- 拦截器 -->
 	<mvc:interceptors>
-		<bean class="org.ibase4j.core.interceptor.MaliciousRequestInterceptor">
-			<property name="minRequestIntervalTime" value="1000" />
-			<property name="maxMaliciousTimes" value="0" />
-			<property name="nextInterceptor">
-				<array>
-					<bean class="org.ibase4j.core.interceptor.LocaleInterceptor" />
-					<bean class="org.ibase4j.core.interceptor.EventInterceptor" />
-				</array>
-			</property>
-		</bean>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/*.ico" />
+			<mvc:exclude-mapping path="/*/api-docs" />
+			<mvc:exclude-mapping path="/swagger**" />
+			<mvc:exclude-mapping path="/webjars/**" />
+			<mvc:exclude-mapping path="/configuration/**" />
+			<bean class="org.ibase4j.core.interceptor.MaliciousRequestInterceptor">
+				<property name="minRequestIntervalTime" value="1000" />
+				<property name="maxMaliciousTimes" value="0" />
+				<property name="nextInterceptor">
+					<array>
+						<bean class="org.ibase4j.core.interceptor.LocaleInterceptor" />
+						<bean class="org.ibase4j.core.interceptor.EventInterceptor" />
+					</array>
+				</property>
+			</bean>
+		</mvc:interceptor>
 	</mvc:interceptors>
 	<!-- AOP式方法级权限检查  -->
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
@@ -57,4 +65,6 @@
 	</bean>
 	<!-- 资源重定向(仅作为后台使用不提供静态资源) -->
 	<mvc:resources mapping="upload/**" location="/WEB-INF/upload/" cache-period="300" />
+	<mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+	<mvc:resources mapping="webjars/**" location="classpath:/META-INF/resources/webjars/"/>
 </beans>

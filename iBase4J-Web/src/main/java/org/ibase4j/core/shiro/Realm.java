@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.shiro;
+package org.ibase4j.core.shiro;
 
 import java.util.HashMap;
 import java.util.List;

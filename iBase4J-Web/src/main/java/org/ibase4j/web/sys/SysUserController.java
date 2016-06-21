@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * 用户管理控制器
  * 
@@ -32,7 +35,8 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:12:12
  */
 @RestController
-@RequestMapping("/user")
+@Api(value = "用户管理", description = "用户管理")
+@RequestMapping(value = "/user", method = RequestMethod.POST)
 public class SysUserController extends BaseController {
 	@Autowired
 	private SysUserService sysUserService;
@@ -40,8 +44,9 @@ public class SysUserController extends BaseController {
 	private SysAuthorizeService authorizeService;
 
 	// 修改用户信息
+	@ApiOperation(value = "修改用户信息")
 	@RequiresPermissions("sys:user:update")
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/update")
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
 		sysUserService.updateUserInfo(sysUser);
@@ -49,7 +54,8 @@ public class SysUserController extends BaseController {
 	}
 
 	// 修改密码
-	@RequestMapping(value = "/update/password", method = RequestMethod.POST)
+	@ApiOperation(value = "修改密码")
+	@RequestMapping(value = "/update/password")
 	public Object updatePassword(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id,
 			@RequestParam(value = "password", required = false) String password) {
 		sysUserService.updatePassword(id, password);
@@ -57,6 +63,7 @@ public class SysUserController extends BaseController {
 	}
 
 	// 查询用户
+	@ApiOperation(value = "查询用户")
 	@RequiresPermissions("sys:user:read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
@@ -66,6 +73,7 @@ public class SysUserController extends BaseController {
 	}
 
 	// 用户详细信息
+	@ApiOperation(value = "用户详细信息")
 	@RequiresPermissions("sys:user:read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
@@ -77,6 +85,7 @@ public class SysUserController extends BaseController {
 	}
 
 	// 当前用户
+	@ApiOperation(value = "当前用户信息")
 	@RequestMapping(value = "/read/current")
 	public Object current(ModelMap modelMap) {
 		Integer id = getCurrUser();

@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * 部门管理控制类
  * 
@@ -26,12 +29,14 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:13:31
  */
 @RestController
-@RequestMapping("dept")
+@Api(value = "部门管理", description = "部门管理")
+@RequestMapping(value = "dept", method = RequestMethod.POST)
 public class SysDeptController extends BaseController {
 	@Autowired
 	private SysDeptService sysDeptService;
 
 	// 查询部门
+	@ApiOperation(value = "查询部门")
 	@RequiresPermissions("sys:dept:read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
@@ -41,6 +46,7 @@ public class SysDeptController extends BaseController {
 	}
 
 	// 详细信息
+	@ApiOperation(value = "部门详情")
 	@RequiresPermissions("sys:dept:read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
@@ -49,6 +55,7 @@ public class SysDeptController extends BaseController {
 	}
 
 	// 新增部门
+	@ApiOperation(value = "添加部门")
 	@RequiresPermissions("sys:dept:update")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
@@ -67,6 +74,7 @@ public class SysDeptController extends BaseController {
 	}
 
 	// 删除部门
+	@ApiOperation(value = "删除部门")
 	@RequiresPermissions("sys:dept:update")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,

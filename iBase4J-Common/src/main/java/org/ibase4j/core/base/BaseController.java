@@ -63,7 +63,7 @@ public abstract class BaseController {
 	}
 
 	/** 异常处理 */
-	@ExceptionHandler(RuntimeException.class)
+	@ExceptionHandler(Exception.class)
 	public void exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception ex)
 			throws Exception {
 		logger.error(Constants.Exception_Head, ex);
