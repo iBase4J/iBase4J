@@ -62,26 +62,12 @@ public class TaskListener implements JobListener {
 		log.setStatus(Constants.INIT_STATS);
 		schedulerService.updateLog(log);
 		jobDataMap.put(Constants.JOB_LOG, log);
-		executorService.submit(new Runnable() {
-			public void run() {
-				try {
-					// 更新任务执行时间
-					TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
-					taskScheduler.setTaskPreviousFireTime(context.getFireTime());
-					taskScheduler.setTaskNextFireTime(context.getNextFireTime());
-					schedulerService.updateScheduler(taskScheduler);
-				} catch (Exception e) {
-					jobDataMap.put("taskStatus", Constants.ERROR_STATS);
-					logger.error("Save TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
-				}
-			}
-		});
 	}
 
 	// 任务结束后
-	public void jobWasExecuted(JobExecutionContext context, JobExecutionException exp) {
+	public void jobWasExecuted(final JobExecutionContext context, JobExecutionException exp) {
 		Timestamp end = new Timestamp(System.currentTimeMillis());
-		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
+		final JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
 		if (Constants.ERROR_STATS.equals(jobDataMap.get("taskStatus"))) {
 			return;
 		}
@@ -113,6 +99,11 @@ public class TaskListener implements JobListener {
 				} catch (Exception e) {
 					logger.error("Update TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
 				}
+				// 更新任务执行时间
+				TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
+				taskScheduler.setTaskPreviousFireTime(context.getFireTime());
+				taskScheduler.setTaskNextFireTime(context.getNextFireTime());
+				schedulerService.updateScheduler(taskScheduler);
 			}
 		});
 	}

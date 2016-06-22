@@ -36,6 +36,7 @@ public class DataSourceAspect {
 			L: for (String key : ChooseDataSource.METHODTYPE.keySet()) {
 				for (String type : ChooseDataSource.METHODTYPE.get(key)) {
 					if (method.startsWith(type)) {
+						logger.info(key);
 						HandleDataSource.putDataSource(key);
 						break L;
 					}
