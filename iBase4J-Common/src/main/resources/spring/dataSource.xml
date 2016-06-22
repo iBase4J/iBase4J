@@ -8,8 +8,9 @@
 	<bean id="dbPasswordCallback" class="org.ibase4j.core.config.DBPasswordCallback">
 		<description>数据库连接回调密码解密</description>
 	</bean>
-	<bean id="statFilter" class="com.alibaba.druid.filter.stat.StatFilter" lazy-init="true">
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter" lazy-init="true">
 		<description>状态过滤器</description>
+		<property name="slowSqlMillis" value="3000" />
 		<property name="logSlowSql" value="true" />
 		<property name="mergeSql" value="true" />
 	</bean>
@@ -32,7 +33,7 @@
 		<property name="defaultReadOnly" value="true" />
 		<property name="proxyFilters">
 			<list>
-				<ref bean="statFilter" />
+				<ref bean="stat-filter" />
 			</list>
 		</property>
 		<property name="filters" value="${druid.filters}" />
@@ -61,7 +62,7 @@
 		<property name="maxWait" value="${maxWait}" />
 		<property name="proxyFilters">
 			<list>
-				<ref bean="statFilter" />
+				<ref bean="stat-filter" />
 			</list>
 		</property>
 		<property name="filters" value="${druid.filters}" />
