@@ -2,10 +2,8 @@ package org.ibase4j.provider.sys;
 
 import java.util.Map;
 
-import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.dao.generator.SysRoleMapper;
 import org.ibase4j.dao.sys.SysRoleExpandMapper;
 import org.ibase4j.model.generator.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +19,7 @@ import com.github.pagehelper.PageInfo;
 @DubboService(interfaceClass = SysRoleProvider.class)
 public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements SysRoleProvider {
 	@Autowired
-	private SysRoleMapper sysRoleMapper;
-	@Autowired
 	private SysRoleExpandMapper sysRoleExpandMapper;
-
-	@SuppressWarnings("unchecked")
-	protected BaseMapper<SysRole> getMapper() {
-		return sysRoleMapper;
-	}
 
 	public PageInfo<SysRole> query(Map<String, Object> params) {
 		startPage(params);

@@ -9,6 +9,7 @@ import org.ibase4j.core.Constants;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.ContextLoader;
@@ -25,6 +26,8 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年5月20日 下午3:19:19
  */
 public abstract class BaseProviderImpl<T extends BaseModel> {
+	@Autowired
+	BaseMapper<T> mapper;
 
 	/** 启动分页查询 */
 	protected void startPage(Map<String, Object> params) {
@@ -126,7 +129,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 			record.setEnable(0);
 			record.setUpdateTime(new Date());
 			record.setUpdateBy(userId);
-			getMapper().updateByPrimaryKey(record);
+			mapper.updateByPrimaryKey(record);
 			RedisUtil.set(getCacheKey(id), record);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
@@ -140,9 +143,9 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 			record.setUpdateTime(new Date());
 			if (record.getId() == null) {
 				record.setCreateTime(new Date());
-				getMapper().insert(record);
+				mapper.insert(record);
 			} else {
-				getMapper().updateByPrimaryKey(record);
+				mapper.updateByPrimaryKey(record);
 			}
 			RedisUtil.set(getCacheKey(record.getId()), record);
 		} catch (Exception e) {
@@ -158,7 +161,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 			String key = getCacheKey(id);
 			T record = (T) RedisUtil.get(key);
 			if (record == null) {
-				record = getMapper().selectByPrimaryKey(id);
+				record = mapper.selectByPrimaryKey(id);
 				RedisUtil.set(key, record);
 			}
 			return record;
@@ -178,6 +181,4 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 		}
 		return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
 	}
-
-	protected abstract BaseMapper<T> getMapper();
 }

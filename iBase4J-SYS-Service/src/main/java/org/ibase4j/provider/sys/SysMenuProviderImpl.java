@@ -2,10 +2,8 @@ package org.ibase4j.provider.sys;
 
 import java.util.Map;
 
-import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.dao.generator.SysMenuMapper;
 import org.ibase4j.dao.sys.SysMenuExpandMapper;
 import org.ibase4j.model.generator.SysMenu;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +19,9 @@ import com.github.pagehelper.PageInfo;
 @DubboService(interfaceClass = SysMenuProvider.class)
 public class SysMenuProviderImpl extends BaseProviderImpl<SysMenu> implements SysMenuProvider {
 	@Autowired
-	private SysMenuMapper sysMenuMapper;
-	@Autowired
 	private SysMenuExpandMapper sysMenuExpandMapper;
 	@Autowired
 	private SysDicProviderImpl sysDicService;
-
-	@SuppressWarnings("unchecked")
-	protected BaseMapper<SysMenu> getMapper() {
-		return sysMenuMapper;
-	}
 
 	public PageInfo<SysMenu> query(Map<String, Object> params) {
 		this.startPage(params);

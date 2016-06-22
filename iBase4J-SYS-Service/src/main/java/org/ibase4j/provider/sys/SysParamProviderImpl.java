@@ -2,10 +2,8 @@ package org.ibase4j.provider.sys;
 
 import java.util.Map;
 
-import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.dao.generator.SysParamMapper;
 import org.ibase4j.dao.sys.SysParamExpandMapper;
 import org.ibase4j.model.generator.SysParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +19,7 @@ import com.github.pagehelper.PageInfo;
 @DubboService(interfaceClass = SysParamProvider.class)
 public class SysParamProviderImpl extends BaseProviderImpl<SysParam> implements SysParamProvider {
 	@Autowired
-	private SysParamMapper sysParamMapper;
-	@Autowired
 	private SysParamExpandMapper sysParamExpandMapper;
-
-	@SuppressWarnings("unchecked")
-	protected BaseMapper<SysParam> getMapper() {
-		return sysParamMapper;
-	}
 
 	public PageInfo<SysParam> query(Map<String, Object> params) {
 		startPage(params);

@@ -2,10 +2,8 @@ package org.ibase4j.provider.sys;
 
 import java.util.Map;
 
-import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.dao.generator.SysDeptMapper;
 import org.ibase4j.dao.sys.SysDeptExpandMapper;
 import org.ibase4j.model.generator.SysDept;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +19,7 @@ import com.github.pagehelper.PageInfo;
 @DubboService(interfaceClass = SysDeptProvider.class)
 public class SysDeptProviderImpl extends BaseProviderImpl<SysDept> implements SysDeptProvider {
 	@Autowired
-	private SysDeptMapper sysDeptMapper;
-	@Autowired
 	private SysDeptExpandMapper syDeptExpandMapper;
-
-	@SuppressWarnings("unchecked")
-	protected BaseMapper<SysDept> getMapper() {
-		return sysDeptMapper;
-	}
 
 	public PageInfo<SysDept> query(Map<String, Object> params) {
 		this.startPage(params);

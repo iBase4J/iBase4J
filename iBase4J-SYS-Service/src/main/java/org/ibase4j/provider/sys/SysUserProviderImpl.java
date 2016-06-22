@@ -6,12 +6,10 @@ package org.ibase4j.provider.sys;
 import java.util.Date;
 import java.util.Map;
 
-import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.SecurityUtil;
-import org.ibase4j.dao.generator.SysUserMapper;
 import org.ibase4j.dao.generator.SysUserThirdpartyMapper;
 import org.ibase4j.dao.sys.SysUserExpandMapper;
 import org.ibase4j.model.generator.SysUser;
@@ -33,8 +31,6 @@ import com.github.pagehelper.PageInfo;
 @CacheConfig(cacheNames = "sysUser")
 public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements SysUserProvider {
 	@Autowired
-	private SysUserMapper sysUserMapper;
-	@Autowired
 	private SysUserExpandMapper sysUserExpandMapper;
 	@Autowired
 	private SysUserThirdpartyMapper thirdpartyMapper;
@@ -42,11 +38,6 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements Sy
 	private SysDicProviderImpl sysDicService;
 	@Autowired
 	private SysDeptProviderImpl deptService;
-
-	@SuppressWarnings("unchecked")
-	protected BaseMapper<SysUser> getMapper() {
-		return sysUserMapper;
-	}
 
 	public PageInfo<SysUser> query(Map<String, Object> params) {
 		this.startPage(params);

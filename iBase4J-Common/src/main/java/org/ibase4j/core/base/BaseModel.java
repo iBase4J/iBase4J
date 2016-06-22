@@ -4,33 +4,54 @@ import java.io.Serializable;
 import java.util.Date;
 
 @SuppressWarnings("serial")
-public abstract class BaseModel implements Serializable {
+public class BaseModel implements Serializable {
 
-	public abstract Integer getId();
+	public Integer getId() {
+		return null;
+	}
 
-	public abstract void setId(Integer id);
+	public void setId(Integer id) {
+	}
 
-	public abstract Integer getEnable();
+	public Integer getEnable() {
+		return null;
+	}
 
-	public abstract void setEnable(Integer enable);
+	public void setEnable(Integer enable) {
+	}
 
-	public abstract String getRemark();
+	public String getRemark() {
+		return null;
+	}
 
-	public abstract void setRemark(String remark);
+	public void setRemark(String remark) {
+	}
 
-	public abstract Date getCreateTime();
+	public Date getCreateTime() {
+		return null;
+	}
 
-	public abstract void setCreateTime(Date createTime);
+	public void setCreateTime(Date createTime) {
+	}
 
-	public abstract Integer getCreateBy();
+	public Integer getCreateBy() {
+		return null;
+	}
 
-	public abstract void setCreateBy(Integer createBy);
+	public void setCreateBy(Integer createBy) {
+	}
 
-	public abstract Date getUpdateTime();
+	public Date getUpdateTime() {
+		return null;
+	}
 
-	public abstract void setUpdateTime(Date updateTime);
+	public void setUpdateTime(Date updateTime) {
+	}
 
-	public abstract Integer getUpdateBy();
+	public Integer getUpdateBy() {
+		return null;
+	}
 
-	public abstract void setUpdateBy(Integer updateBy);
+	public void setUpdateBy(Integer updateBy) {
+	}
 }

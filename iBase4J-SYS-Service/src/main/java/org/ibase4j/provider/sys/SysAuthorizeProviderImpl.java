@@ -3,11 +3,9 @@ package org.ibase4j.provider.sys;
 import java.util.List;
 import java.util.Map;
 
-import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.dao.generator.SysMenuMapper;
 import org.ibase4j.dao.generator.SysRoleMenuMapper;
 import org.ibase4j.dao.generator.SysUserMenuMapper;
 import org.ibase4j.dao.generator.SysUserRoleMapper;
@@ -40,13 +38,6 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	private SysAuthorizeMapper sysAuthorizeMapper;
 	@Autowired
 	private SysMenuProviderImpl sysMenuService;
-	@Autowired
-	private SysMenuMapper sysMenuMapper;
-
-	@SuppressWarnings({ "unchecked" })
-	protected BaseMapper<SysMenu> getMapper() {
-		return sysMenuMapper;
-	}
 
 	@Transactional
 	@CacheEvict(value = "getAuthorize", allEntries = true)
