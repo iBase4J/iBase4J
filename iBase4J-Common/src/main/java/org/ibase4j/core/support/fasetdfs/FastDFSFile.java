@@ -36,6 +36,7 @@ public class FastDFSFile implements FileManagerConfig {
 			MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap(is);
 			this.mime = mimetypesFileTypeMap.getContentType(filename);
 		} catch (Exception e) {
+			throw new RuntimeException(e);
 		} finally {
 			if (fileInputStream != null) {
 				try {

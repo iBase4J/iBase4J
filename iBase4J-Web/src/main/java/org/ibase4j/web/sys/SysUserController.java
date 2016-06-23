@@ -8,9 +8,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
+import org.ibase4j.core.util.UploadUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.model.sys.SysMenuBean;
@@ -49,6 +51,10 @@ public class SysUserController extends BaseController {
 	@RequestMapping(value = "/update")
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
+		if (StringUtils.isNotBlank(sysUser.getAvatar())) {
+			String avatar = UploadUtil.remove2DFS(UploadUtil.getUploadDir(request) + sysUser.getAvatar());
+			sysUser.setAvatar(avatar);
+		}
 		sysUserService.updateUserInfo(sysUser);
 		return setSuccessModelMap(modelMap);
 	}

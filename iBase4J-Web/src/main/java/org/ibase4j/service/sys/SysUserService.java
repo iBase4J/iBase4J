@@ -18,6 +18,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.StringUtil;
 
 /**
  * @author ShenHuaJie
@@ -40,6 +41,9 @@ public class SysUserService extends BaseService<SysUserProvider, SysUser> {
 		Assert.notNull(user, "USER", sysUser.getId());
 		if (StringUtils.isBlank(sysUser.getPassword())) {
 			sysUser.setPassword(user.getPassword());
+		}
+		if (StringUtil.isEmpty(sysUser.getAvatar())) {
+			sysUser.setAvatar(user.getAvatar());
 		}
 		sysUser.setUpdateBy(WebUtil.getCurrentUser());
 		provider.update(sysUser);

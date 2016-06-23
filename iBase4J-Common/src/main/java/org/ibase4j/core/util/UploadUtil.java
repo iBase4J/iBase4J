@@ -130,10 +130,15 @@ public final class UploadUtil {
 		return fileNames;
 	}
 
+	/** 获取上传文件临时目录 */
+	public static String getUploadDir(HttpServletRequest request) {
+		return request.getServletContext().getRealPath(uploadFileDir);
+	}
+
 	/** 移动文件到fastDFS */
-	public static String remove2DFS(String filePath) {
-		if (filePath != null) {
-			FastDFSFile fastDFSFile = new FastDFSFile(filePath);
+	public static String remove2DFS(String fileName) {
+		if (fileName != null && !"".equals(fileName.trim())) {
+			FastDFSFile fastDFSFile = new FastDFSFile(fileName);
 			return FileManager.upload(fastDFSFile);
 		}
 		return null;
