@@ -93,8 +93,12 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 	}
 
 	private void addTrigger(Trigger trigger) {
+		Trigger oldTrigger = null;
 		try {
-			Trigger oldTrigger = scheduler.getTrigger(trigger.getKey());
+			oldTrigger = scheduler.getTrigger(trigger.getKey());
+		} catch (Exception e) {
+		}
+		try {
 			if (oldTrigger == null) {
 				if (logger.isInfoEnabled()) {
 					logger.info("Try to add trigger : " + trigger);
@@ -115,6 +119,9 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		Trigger oldTrigger = null;
 		try {
 			oldTrigger = scheduler.getTrigger(trigger.getKey());
+		} catch (Exception e) {
+		}
+		try {
 			if (oldTrigger != null) {
 				if (logger.isInfoEnabled()) {
 					logger.info("Try to update trigger : " + trigger);
@@ -136,6 +143,9 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 		JobDetail oldJobDetail = null;
 		try {
 			oldJobDetail = this.scheduler.getJobDetail(jobDetail.getKey());
+		} catch (Exception e) {
+		}
+		try {
 			if (oldJobDetail == null) {
 				if (logger.isInfoEnabled()) {
 					logger.info("Try to add jobDetail : " + jobDetail);
@@ -153,7 +163,10 @@ public class DefaultSchedulerManager implements SchedulerManager, InitializingBe
 	private void updateJobDetail(JobDetail jobDetail) {
 		JobDetail oldJobDetail = null;
 		try {
-			oldJobDetail = scheduler.getJobDetail(jobDetail.getKey());
+			oldJobDetail = this.scheduler.getJobDetail(jobDetail.getKey());
+		} catch (Exception e) {
+		}
+		try {
 			if (oldJobDetail != null) {
 				if (logger.isInfoEnabled()) {
 					logger.info("Try to update oldJobDetail : " + oldJobDetail);
