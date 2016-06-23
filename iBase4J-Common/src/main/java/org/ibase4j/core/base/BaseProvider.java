@@ -19,5 +19,7 @@ public interface BaseProvider<T extends BaseModel> {
 
 	public T queryById(Integer id);
 
+	public void init();
+
 	public PageInfo<T> query(Map<String, Object> params);
 }

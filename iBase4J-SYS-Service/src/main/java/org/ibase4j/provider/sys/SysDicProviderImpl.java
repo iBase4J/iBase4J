@@ -76,7 +76,7 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 	}
 
 	@Cacheable(value = "sysDics")
-	public Map<String, Map<String, String>> queryAllDic() {
+	public Map<String, Map<String, String>> getAllDic() {
 		List<SysDicIndex> sysDicIndexs = dicIndexMapper.selectAll();
 		Map<Integer, String> dicIndexMap = InstanceUtil.newHashMap();
 		for (SysDicIndex sysDicIndex : sysDicIndexs) {
@@ -97,7 +97,7 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 
 	@Cacheable(value = "sysDicMap")
 	public Map<String, String> queryDicByDicIndexKey(String key) {
-		return queryAllDic().get(key);
+		return getProvider(SysDicProvider.class).getAllDic().get(key);
 	}
 
 	public PageInfo<SysDicIndex> queryDicIndex(Map<String, Object> params) {

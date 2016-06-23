@@ -25,7 +25,7 @@ import com.github.pagehelper.PageInfo;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-public abstract class BaseProviderImpl<T extends BaseModel> {
+public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvider<T> {
 	@Autowired
 	BaseMapper<T> mapper;
 
@@ -44,8 +44,13 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private BaseProviderImpl<T> getService() {
-		return ContextLoader.getCurrentWebApplicationContext().getBean(getClass());
+	private BaseProviderImpl<T> getProvider() {
+		return getProvider(getClass());
+	}
+
+	/** 内部方法通过实例调用，才能使用缓存 */
+	protected <K> K getProvider(Class<K> cls) {
+		return ContextLoader.getCurrentWebApplicationContext().getBean(cls);
 	}
 
 	/** 根据Id查询(默认类型T) */
@@ -54,7 +59,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
-			BaseProviderImpl<T> provider = getService();
+			BaseProviderImpl<T> provider = getProvider();
 			for (Integer id : ids) {
 				page.add(provider.queryById(id));
 			}
@@ -68,7 +73,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
-			BaseProviderImpl<T> provider = getService();
+			BaseProviderImpl<T> provider = getProvider();
 			for (Integer id : ids) {
 				T t = provider.queryById(id);
 				K k = null;
@@ -93,7 +98,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 		List<T> list = InstanceUtil.newArrayList();
 		if (ids != null) {
 			for (Integer id : ids) {
-				list.add(getService().queryById(id));
+				list.add(getProvider().queryById(id));
 			}
 		}
 		return list;
@@ -104,7 +109,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 		List<K> list = InstanceUtil.newArrayList();
 		if (ids != null) {
 			for (Integer id : ids) {
-				T t = getService().queryById(id);
+				T t = getProvider().queryById(id);
 				K k = null;
 				try {
 					k = cls.newInstance();
@@ -170,6 +175,13 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 		}
 	}
 
+	public void init() {
+		List<T> list = mapper.selectAll();
+		for (T record : list) {
+			RedisUtil.set(getCacheKey(record.getId()), record);
+		}
+	}
+
 	/** 获取缓存键值 */
 	private String getCacheKey(Object id) {
 		String cacheName = null;
@@ -180,5 +192,9 @@ public abstract class BaseProviderImpl<T extends BaseModel> {
 			cacheName = cacheConfig.cacheNames()[0];
 		}
 		return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
+	}
+
+	public PageInfo<T> query(Map<String, Object> params) {
+		return null;
 	}
 }
