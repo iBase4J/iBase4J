@@ -12,8 +12,8 @@
 	<url>http://maven.apache.org</url>
 
 	<!-- 使用不同配置文件生成不同项目的MyBatis文件 -->
-	<!-- mybatis-generator:generate -DconfigurationFile=generatorConfig-scheduler.xml -->
-	<!-- mybatis-generator:generate -DconfigurationFile=generatorConfig-sys.xml -->
+	<!-- install mybatis-generator:generate -DconfigurationFile=generatorConfig-scheduler.xml -->
+	<!-- install mybatis-generator:generate -DconfigurationFile=generatorConfig-sys.xml -->
 	
 	<build>
 		<finalName>${project.name}</finalName>
