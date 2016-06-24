@@ -17,7 +17,8 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 /**
  * 生成 Mapper 类
  * 
- * @author Johnny
+ * @author ShenHuaJie
+ * @version 2016年6月24日 下午6:47:06
  */
 public class MapperPlugin extends PluginAdapter {
 
@@ -31,7 +32,6 @@ public class MapperPlugin extends PluginAdapter {
 	public MapperPlugin() {
 	}
 
-	@Override
 	public boolean validate(List<String> warnings) {
 		daoTargetDir = properties.getProperty("targetProject");
 		boolean valid = stringHasValue(daoTargetDir);
@@ -46,7 +46,6 @@ public class MapperPlugin extends PluginAdapter {
 		return valid && valid2;
 	}
 
-	@Override
 	public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(IntrospectedTable introspectedTable) {
 		JavaFormatter javaFormatter = context.getJavaFormatter();
 		List<GeneratedJavaFile> mapperJavaFiles = new ArrayList<GeneratedJavaFile>();
@@ -61,7 +60,7 @@ public class MapperPlugin extends PluginAdapter {
 			Interface mapperInterface = new Interface(daoTargetPackage + "." + shortName + "Mapper");
 
 			mapperInterface.setVisibility(JavaVisibility.PUBLIC);
-			mapperInterface.addJavaDocLine(" /**");
+			mapperInterface.addJavaDocLine("/**");
 			mapperInterface.addJavaDocLine(" * 由MyBatis Generator工具自动生成，请不要手动修改");
 			mapperInterface.addJavaDocLine(" */");
 

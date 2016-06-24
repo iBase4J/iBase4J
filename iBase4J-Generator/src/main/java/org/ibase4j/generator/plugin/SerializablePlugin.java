@@ -8,6 +8,10 @@ import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年6月24日 下午6:42:28
+ */
 public class SerializablePlugin extends PluginAdapter {
 
 	private FullyQualifiedJavaType serializable;
