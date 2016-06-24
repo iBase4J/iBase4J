@@ -1,10 +1,14 @@
 package org.ibase4j.provider;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
+import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.dao.generator.TaskFireLogMapper;
+import org.ibase4j.dao.generator.TaskGroupMapper;
+import org.ibase4j.dao.generator.TaskSchedulerMapper;
 import org.ibase4j.dao.scheduler.TaskSchedulerExpandMapper;
 import org.ibase4j.model.generator.TaskFireLog;
 import org.ibase4j.model.generator.TaskGroup;
@@ -13,8 +17,10 @@ import org.ibase4j.model.scheduler.TaskScheduled;
 import org.ibase4j.model.scheduler.TaskSchedulerBean;
 import org.ibase4j.provider.scheduler.SchedulerProvider;
 import org.ibase4j.scheduler.manager.SchedulerManager;
-import org.ibase4j.service.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
@@ -30,9 +36,13 @@ public class SchedulerProviderImpl implements SchedulerProvider {
 	@Autowired
 	private SchedulerManager schedulerManager;
 	@Autowired
-	private SchedulerService schedulerService;
-	@Autowired
 	private TaskSchedulerExpandMapper expandMapper;
+	@Autowired
+	private TaskGroupMapper taskGroupMapper;
+	@Autowired
+	private TaskSchedulerMapper taskSchedulerMapper;
+	@Autowired
+	private TaskFireLogMapper logMapper;
 
 	// 获取所有作业
 	public List<TaskScheduled> getAllTaskDetail() {
@@ -60,28 +70,58 @@ public class SchedulerProviderImpl implements SchedulerProvider {
 		return false;
 	}
 
+	@Cacheable("taskGroup")
 	public TaskGroup getGroupById(Integer id) {
-		return schedulerService.getGroupById(id);
+		return taskGroupMapper.selectByPrimaryKey(id);
 	}
 
+	@Cacheable("taskScheduler")
 	public TaskScheduler getSchedulerById(Integer id) {
-		return schedulerService.getSchedulerById(id);
+		return taskSchedulerMapper.selectByPrimaryKey(id);
 	}
 
+	@Cacheable("taskFireLog")
 	public TaskFireLog getFireLogById(Integer id) {
-		return schedulerService.getFireLogById(id);
+		return logMapper.selectByPrimaryKey(id);
 	}
 
-	public TaskScheduler queryById(Integer id) {
-		return schedulerService.getSchedulerById(id);
+	@Transactional
+	@CachePut("taskGroup")
+	public TaskGroup updateGroup(TaskGroup record) {
+		record.setEnable(1);
+		if (record.getId() == null) {
+			record.setCreateTime(new Date());
+			taskGroupMapper.insert(record);
+		} else {
+			record.setUpdateTime(new Date());
+			taskGroupMapper.updateByPrimaryKey(record);
+		}
+		return record;
 	}
 
-	public void updateGroup(TaskGroup record) {
-		schedulerService.updateGroup(record);
+	@Transactional
+	@CachePut("taskScheduler")
+	public TaskScheduler updateScheduler(TaskScheduler record) {
+		record.setEnable(1);
+		if (record.getId() == null) {
+			record.setCreateTime(new Date());
+			taskSchedulerMapper.insert(record);
+		} else {
+			record.setUpdateTime(new Date());
+			taskSchedulerMapper.updateByPrimaryKey(record);
+		}
+		return record;
 	}
-
-	public void updateScheduler(TaskScheduler record) {
-		schedulerService.updateScheduler(record);
+	
+	@Transactional
+	@CachePut("taskFireLog")
+	public TaskFireLog updateLog(TaskFireLog record) {
+		if (record.getId() == null) {
+			logMapper.insert(record);
+		} else {
+			logMapper.updateByPrimaryKey(record);
+		}
+		return record;
 	}
 
 	public PageInfo<TaskGroup> queryGroup(Map<String, Object> params) {
@@ -91,7 +131,7 @@ public class SchedulerProviderImpl implements SchedulerProvider {
 		if (ids != null) {
 			page.clear();
 			for (Integer id : ids) {
-				page.add(schedulerService.getGroupById(id));
+				page.add(InstanceUtil.getBean(getClass()).getGroupById(id));
 			}
 		}
 		return new PageInfo<TaskGroup>(page);
@@ -104,13 +144,9 @@ public class SchedulerProviderImpl implements SchedulerProvider {
 		if (ids != null) {
 			page.clear();
 			for (Integer id : ids) {
-				TaskScheduler taskScheduler = schedulerService.getSchedulerById(id);
-				TaskSchedulerBean bean = new TaskSchedulerBean();
-				try {
-					PropertyUtils.copyProperties(bean, taskScheduler);
-				} catch (Exception e) {
-				}
-				TaskGroup taskGroup = schedulerService.getGroupById(bean.getGroupId());
+				TaskScheduler taskScheduler = InstanceUtil.getBean(getClass()).getSchedulerById(id);
+				TaskSchedulerBean bean = InstanceUtil.to(taskScheduler, TaskSchedulerBean.class);
+				TaskGroup taskGroup = InstanceUtil.getBean(getClass()).getGroupById(bean.getGroupId());
 				bean.setGroupName(taskGroup.getGroupName());
 				bean.setTaskDesc(taskGroup.getGroupDesc() + ":" + bean.getTaskDesc());
 				page.add(bean);
@@ -126,7 +162,7 @@ public class SchedulerProviderImpl implements SchedulerProvider {
 		if (ids != null) {
 			page.clear();
 			for (Integer id : ids) {
-				page.add(schedulerService.getFireLogById(id));
+				page.add(InstanceUtil.getBean(getClass()).getFireLogById(id));
 			}
 		}
 		return new PageInfo<TaskFireLog>(page);

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
@@ -12,7 +11,6 @@ import org.ibase4j.core.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.ContextLoader;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -45,12 +43,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 
 	@SuppressWarnings("unchecked")
 	private BaseProviderImpl<T> getProvider() {
-		return getProvider(getClass());
-	}
-
-	/** 内部方法通过实例调用，才能使用缓存 */
-	protected <K> K getProvider(Class<K> cls) {
-		return ContextLoader.getCurrentWebApplicationContext().getBean(cls);
+		return InstanceUtil.getBean(getClass());
 	}
 
 	/** 根据Id查询(默认类型T) */
@@ -76,18 +69,8 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			BaseProviderImpl<T> provider = getProvider();
 			for (Integer id : ids) {
 				T t = provider.queryById(id);
-				K k = null;
-				try {
-					k = cls.newInstance();
-				} catch (Exception e1) {
-				}
-				if (k != null) {
-					try {
-						PropertyUtils.copyProperties(k, t);
-					} catch (Exception e) {
-					}
-					page.add(k);
-				}
+				K k = InstanceUtil.to(t, cls);
+				page.add(k);
 			}
 		}
 		return new PageInfo<K>(page);
@@ -110,18 +93,8 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 		if (ids != null) {
 			for (Integer id : ids) {
 				T t = getProvider().queryById(id);
-				K k = null;
-				try {
-					k = cls.newInstance();
-				} catch (Exception e1) {
-				}
-				if (k != null) {
-					try {
-						PropertyUtils.copyProperties(k, t);
-					} catch (Exception e) {
-					}
-					list.add(k);
-				}
+				K k = InstanceUtil.to(t, cls);
+				list.add(k);
 			}
 		}
 		return list;

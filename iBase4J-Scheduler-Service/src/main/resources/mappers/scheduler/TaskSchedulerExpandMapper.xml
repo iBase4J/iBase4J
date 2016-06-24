@@ -10,6 +10,7 @@
 	<select id="queryScheduler" parameterType="java.util.Map" resultType="java.lang.Integer">
 		select id_ from task_scheduler where 1=1
 		<if test="usable != null">and usable=#{usable}</if>
+		<if test="taskType != null">and task_type=#{taskType}</if>
 		<if test="keyword != null">
 			and (task_type like CONCAT('%',#{keyword},'%') or task_desc like CONCAT('%',#{keyword},'%'))
 		</if>

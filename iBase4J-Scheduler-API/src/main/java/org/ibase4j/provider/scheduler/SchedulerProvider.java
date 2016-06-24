@@ -33,13 +33,15 @@ public interface SchedulerProvider {
 
 	public TaskGroup getGroupById(Integer id);
 
-	public void updateGroup(TaskGroup record);
+	public TaskGroup updateGroup(TaskGroup record);
 
 	public PageInfo<TaskGroup> queryGroup(Map<String, Object> params);
 
 	public TaskScheduler getSchedulerById(Integer id);
 
-	public void updateScheduler(TaskScheduler record);
+	public TaskScheduler updateScheduler(TaskScheduler record);
+
+	public TaskFireLog updateLog(TaskFireLog record);
 
 	public PageInfo<TaskSchedulerBean> queryScheduler(Map<String, Object> params);
 

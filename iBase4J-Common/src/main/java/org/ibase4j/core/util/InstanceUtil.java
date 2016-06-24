@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.web.context.ContextLoader;
 
 /**
  * 实例辅助类
@@ -32,6 +33,17 @@ import org.apache.commons.beanutils.PropertyUtils;
  */
 public final class InstanceUtil {
 	private InstanceUtil() {
+	}
+
+	/** 实例化并复制属性 */
+	public static final <T> T to(Object orig, Class<T> clazz) {
+		T bean = null;
+		try {
+			bean = clazz.newInstance();
+			PropertyUtils.copyProperties(bean, orig);
+		} catch (Exception e) {
+		}
+		return bean;
 	}
 
 	/**
@@ -195,6 +207,11 @@ public final class InstanceUtil {
 		} catch (Exception e) {
 			throw new InstanceException(e);
 		}
+	}
+
+	/**  */
+	public static final <K> K getBean(Class<K> cls) {
+		return ContextLoader.getCurrentWebApplicationContext().getBean(cls);
 	}
 
 	/**

@@ -7,7 +7,7 @@ import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.dao.scheduler.TaskSchedulerExpandMapper;
 import org.ibase4j.model.generator.TaskGroup;
 import org.ibase4j.model.generator.TaskScheduler;
-import org.ibase4j.service.SchedulerService;
+import org.ibase4j.provider.scheduler.SchedulerProvider;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class TriggerLoader {
 	@Autowired
-	private SchedulerService schedulerService;
+	private SchedulerProvider schedulerProvider;
 	@Autowired
 	private TaskSchedulerExpandMapper taskSchedulerExpandMapper;
 
@@ -43,8 +43,8 @@ public class TriggerLoader {
 		List<Integer> taskSchedulerIds = taskSchedulerExpandMapper.queryScheduler(params);
 		Map<Trigger, JobDetail> resultMap = InstanceUtil.newHashMap();
 		for (Integer id : taskSchedulerIds) {
-			TaskScheduler taskScheduler = schedulerService.getSchedulerById(id);
-			TaskGroup taskGroup = schedulerService.getGroupById(taskScheduler.getGroupId());
+			TaskScheduler taskScheduler = schedulerProvider.getSchedulerById(id);
+			TaskGroup taskGroup = schedulerProvider.getGroupById(taskScheduler.getGroupId());
 			JobDataMap jobDataMap = new JobDataMap();
 			jobDataMap.put("id", taskScheduler.getId());
 			jobDataMap.put("enable", taskScheduler.getEnable() == 1);

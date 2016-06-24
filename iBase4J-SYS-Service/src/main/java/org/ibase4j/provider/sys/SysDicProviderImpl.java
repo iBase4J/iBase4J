@@ -17,7 +17,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.ContextLoader;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
@@ -97,7 +96,7 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 
 	@Cacheable(value = "sysDicMap")
 	public Map<String, String> queryDicByDicIndexKey(String key) {
-		return getProvider(SysDicProvider.class).getAllDic().get(key);
+		return InstanceUtil.getBean(SysDicProvider.class).getAllDic().get(key);
 	}
 
 	public PageInfo<SysDicIndex> queryDicIndex(Map<String, Object> params) {
@@ -107,7 +106,7 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
-			SysDicProvider provider = ContextLoader.getCurrentWebApplicationContext().getBean(getClass());
+			SysDicProvider provider = InstanceUtil.getBean(getClass());
 			for (Integer id : ids) {
 				page.add(provider.queryDicIndexById(id));
 			}
