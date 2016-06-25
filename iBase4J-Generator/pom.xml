@@ -10,6 +10,7 @@
 	<artifactId>iBase4J-Generator</artifactId>
 	<name>iBase4J-Generator</name>
 	<url>http://maven.apache.org</url>
+	<packaging>jar</packaging>
 
 	<!-- 使用不同配置文件生成不同项目的MyBatis文件 -->
 	<!-- install mybatis-generator:generate -DconfigurationFile=generatorConfig-scheduler.xml -->
