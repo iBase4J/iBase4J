@@ -6,12 +6,16 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
+import org.ibase4j.model.generator.TaskGroup;
+import org.ibase4j.model.generator.TaskScheduler;
 import org.ibase4j.service.sys.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
@@ -41,6 +45,36 @@ public class SchedulerController extends BaseController {
 		return setSuccessModelMap(modelMap, list);
 	}
 
+	// 详细信息
+	@ApiOperation(value = "任务组详情")
+	@RequiresPermissions("task:group:read")
+	@RequestMapping(value = "/read/group")
+	public Object detail(ModelMap modelMap,
+			@RequestParam(value = "id", required = false) Integer id) {
+		TaskGroup record = schedulerService.queryGroupById(id);
+		return setSuccessModelMap(modelMap, record);
+	}
+
+	// 新增任务组
+	@ApiOperation(value = "添加任务组")
+	@RequiresPermissions("task:group:update")
+	@RequestMapping(value = "/add/group", method = RequestMethod.POST)
+	public Object add(HttpServletRequest request, ModelMap modelMap) {
+		TaskGroup record = Request2ModelUtil.covert(TaskGroup.class, request);
+		schedulerService.addGroup(record);
+		return setSuccessModelMap(modelMap);
+	}
+
+	// 修改任务组
+	@ApiOperation(value = "修改任务组")
+	@RequiresPermissions("task:group:update")
+	@RequestMapping(value = "/update/group", method = RequestMethod.POST)
+	public Object update(HttpServletRequest request, ModelMap modelMap) {
+		TaskGroup record = Request2ModelUtil.covert(TaskGroup.class, request);
+		schedulerService.updateGroup(record);
+		return setSuccessModelMap(modelMap);
+	}
+
 	@ApiOperation(value = "任务列表")
 	@RequestMapping("/read/schedulers")
 	@RequiresPermissions("task:scheduler:read")
@@ -50,4 +84,33 @@ public class SchedulerController extends BaseController {
 		return setSuccessModelMap(modelMap, list);
 	}
 
+	// 详细信息
+	@ApiOperation(value = "任务详情")
+	@RequiresPermissions("task:scheduler:read")
+	@RequestMapping(value = "/read/scheduler")
+	public Object detailScheduler(ModelMap modelMap,
+			@RequestParam(value = "id", required = false) Integer id) {
+		TaskScheduler record = schedulerService.querySchedulerById(id);
+		return setSuccessModelMap(modelMap, record);
+	}
+
+	// 新增任务
+	@ApiOperation(value = "添加任务")
+	@RequiresPermissions("task:scheduler:update")
+	@RequestMapping(value = "/add/scheduler", method = RequestMethod.POST)
+	public Object addScheduler(HttpServletRequest request, ModelMap modelMap) {
+		TaskScheduler record = Request2ModelUtil.covert(TaskScheduler.class, request);
+		schedulerService.addScheduler(record);
+		return setSuccessModelMap(modelMap);
+	}
+
+	// 修改任务
+	@ApiOperation(value = "修改任务")
+	@RequiresPermissions("task:scheduler:update")
+	@RequestMapping(value = "/update/scheduler", method = RequestMethod.POST)
+	public Object updateScheduler(HttpServletRequest request, ModelMap modelMap) {
+		TaskScheduler record = Request2ModelUtil.covert(TaskScheduler.class, request);
+		schedulerService.updateScheduler(record);
+		return setSuccessModelMap(modelMap);
+	}
 }
