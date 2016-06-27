@@ -3,9 +3,7 @@ package org.ibase4j.scheduler.manager;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.NativeUtil;
 import org.ibase4j.dao.scheduler.TaskSchedulerExpandMapper;
 import org.ibase4j.model.generator.TaskGroup;
 import org.ibase4j.model.generator.TaskScheduler;
@@ -42,31 +40,26 @@ public class TriggerLoader {
 	public Map<Trigger, JobDetail> loadTriggers() {
 		Map<String, Object> params = InstanceUtil.newHashMap();
 		params.put("taskType", taskType);
-		String server = NativeUtil.getDUID();
 		List<Integer> taskSchedulerIds = taskSchedulerExpandMapper.queryScheduler(params);
 		Map<Trigger, JobDetail> resultMap = InstanceUtil.newHashMap();
 		for (Integer id : taskSchedulerIds) {
 			TaskScheduler taskScheduler = schedulerProvider.getSchedulerById(id);
-			// 配置的服务器为空或为当前服务器(网卡序列号)
-			if (StringUtils.isBlank(taskScheduler.getTaskServer()) || server.equals(taskScheduler.getTaskServer())) {
-				TaskGroup taskGroup = schedulerProvider.getGroupById(taskScheduler.getGroupId());
-				JobDataMap jobDataMap = new JobDataMap();
-				jobDataMap.put("id", taskScheduler.getId());
-				jobDataMap.put("enable", taskScheduler.getEnable() == 1);
-				jobDataMap.put("contactEmail", taskScheduler.getContactEmail());
-				jobDataMap.put("desc", taskGroup.getGroupDesc() + ":" + taskScheduler.getTaskDesc());
-				JobDetail jobDetail = JobBuilder.newJob(jobClass)
-						.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupName())
-						.withDescription(taskScheduler.getTaskDesc()).storeDurably(true).usingJobData(jobDataMap)
-						.build();
+			TaskGroup taskGroup = schedulerProvider.getGroupById(taskScheduler.getGroupId());
+			JobDataMap jobDataMap = new JobDataMap();
+			jobDataMap.put("id", taskScheduler.getId());
+			jobDataMap.put("enable", taskScheduler.getEnable() == 1);
+			jobDataMap.put("contactEmail", taskScheduler.getContactEmail());
+			jobDataMap.put("desc", taskGroup.getGroupDesc() + ":" + taskScheduler.getTaskDesc());
+			JobDetail jobDetail = JobBuilder.newJob(jobClass)
+					.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupName())
+					.withDescription(taskScheduler.getTaskDesc()).storeDurably(true).usingJobData(jobDataMap).build();
 
-				Trigger trigger = TriggerBuilder.newTrigger()
-						.withSchedule(CronScheduleBuilder.cronSchedule(taskScheduler.getTaskCron()))
-						.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupName())
-						.withDescription(taskGroup.getGroupDesc()).forJob(jobDetail).usingJobData(jobDataMap).build();
+			Trigger trigger = TriggerBuilder.newTrigger()
+					.withSchedule(CronScheduleBuilder.cronSchedule(taskScheduler.getTaskCron()))
+					.withIdentity(taskScheduler.getTaskName(), taskGroup.getGroupName())
+					.withDescription(taskGroup.getGroupDesc()).forJob(jobDetail).usingJobData(jobDataMap).build();
 
-				resultMap.put(trigger, jobDetail);
-			}
+			resultMap.put(trigger, jobDetail);
 		}
 		return resultMap;
 	}
