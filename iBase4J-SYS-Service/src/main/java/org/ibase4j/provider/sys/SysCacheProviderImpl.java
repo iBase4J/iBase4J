@@ -8,9 +8,9 @@ public class SysCacheProviderImpl implements SysCacheProvider {
 
 	// 清缓存
 	public void flush() {
-		RedisUtil.delAll("sysDics");
-		RedisUtil.delAll("sysDicMap");
-		RedisUtil.delAll("getAuthorize");
-		RedisUtil.delAll("sysPermission");
+		RedisUtil.delAll("*:sysDics:*");
+		RedisUtil.delAll("*:sysDicMap:*");
+		RedisUtil.delAll("*:getAuthorize:*");
+		RedisUtil.delAll("*:sysPermission:*");
 	}
 }

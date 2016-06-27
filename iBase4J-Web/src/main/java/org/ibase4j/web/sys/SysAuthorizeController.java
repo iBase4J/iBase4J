@@ -11,6 +11,7 @@ import org.ibase4j.model.generator.SysRoleMenu;
 import org.ibase4j.model.generator.SysUserMenu;
 import org.ibase4j.model.generator.SysUserRole;
 import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,8 @@ import io.swagger.annotations.ApiOperation;
 public class SysAuthorizeController extends BaseController {
 	@Autowired
 	private SysAuthorizeService authorizeService;
+	@Autowired
+	private SysCacheService sysCacheService;
 
 	@ApiOperation(value = "修改用户菜单")
 	@RequiresPermissions("user:menu:update")
@@ -63,7 +66,7 @@ public class SysAuthorizeController extends BaseController {
 	@RequiresPermissions("sys:cache:update")
 	@RequestMapping(value = "/cache/update", method = RequestMethod.POST)
 	public Object flush(HttpServletRequest request, ModelMap modelMap) {
-		authorizeService.flushCache();
+		sysCacheService.flushCache();
 		return setSuccessModelMap(modelMap);
 	}
 }

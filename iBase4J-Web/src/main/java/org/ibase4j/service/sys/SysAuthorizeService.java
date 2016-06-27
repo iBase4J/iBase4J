@@ -2,14 +2,12 @@ package org.ibase4j.service.sys;
 
 import java.util.List;
 
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysRoleMenu;
 import org.ibase4j.model.generator.SysUserMenu;
 import org.ibase4j.model.generator.SysUserRole;
 import org.ibase4j.model.sys.SysMenuBean;
 import org.ibase4j.provider.sys.SysAuthorizeProvider;
-import org.ibase4j.provider.sys.SysCacheProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +19,6 @@ import org.springframework.stereotype.Service;
 public class SysAuthorizeService {
 	@Autowired
 	private SysAuthorizeProvider sysAuthorizeProvider;
-	@DubboReference
-	private SysCacheProvider sysCacheProvider;
 
 	public List<SysMenuBean> queryAuthorizeByUserId(Integer id) {
 		return sysAuthorizeProvider.queryAuthorizeByUserId(id);
@@ -30,10 +26,6 @@ public class SysAuthorizeService {
 
 	public List<String> queryPermissionByUserId(Integer userId) {
 		return sysAuthorizeProvider.queryPermissionByUserId(userId);
-	}
-
-	public void flushCache() {
-		sysCacheProvider.flush();
 	}
 
 	public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
