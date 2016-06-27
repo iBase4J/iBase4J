@@ -4,10 +4,10 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <context id="default" targetRuntime="MyBatis3Simple" defaultModelType="flat">
-        <plugin type="org.ibase4j.generator.plugin.SerializablePlugin"/>
+        <plugin type="org.ibase4j.core.generator.plugin.SerializablePlugin"/>
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
-        <plugin type="org.ibase4j.generator.plugin.MapperPlugin">
+        <plugin type="org.ibase4j.core.generator.plugin.MapperPlugin">
         	<property name="targetProject" value="../iBase4J-SYS-Service/src/main/java"/>
         	<property name="targetPackage" value="org.ibase4j.dao.generator"/>
         </plugin>

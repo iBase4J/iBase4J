@@ -65,6 +65,7 @@ public class SysDeptController extends BaseController {
 	}
 
 	// 修改部门
+	@ApiOperation(value = "修改部门")
 	@RequiresPermissions("sys:dept:update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {

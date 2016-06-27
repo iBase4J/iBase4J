@@ -1,4 +1,4 @@
-package org.ibase4j.generator.plugin;
+package org.ibase4j.core.generator.plugin;
 
 import java.util.List;
 import java.util.Properties;

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.ibase4j.core.support.Assert;
 import org.ibase4j.model.generator.TaskFireLog;
 import org.ibase4j.model.generator.TaskGroup;
+import org.ibase4j.model.generator.TaskScheduler;
 import org.ibase4j.model.scheduler.TaskScheduled;
 import org.ibase4j.model.scheduler.TaskSchedulerBean;
 import org.ibase4j.provider.scheduler.SchedulerProvider;
@@ -58,5 +59,53 @@ public class SchedulerService {
 
 	public PageInfo<TaskFireLog> queryLog(Map<String, Object> params) {
 		return schedulerProvider.queryLog(params);
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public TaskGroup queryGroupById(Integer id) {
+		Assert.notNull(id, "ID");
+		return schedulerProvider.getGroupById(id);
+	}
+
+	/**
+	 * @param record
+	 */
+	public void addGroup(TaskGroup record) {
+		schedulerProvider.updateGroup(record);
+	}
+
+	/**
+	 * @param record
+	 */
+	public void updateGroup(TaskGroup record) {
+		Assert.notNull(record.getId(), "ID");
+		schedulerProvider.updateGroup(record);
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public TaskScheduler querySchedulerById(Integer id) {
+		Assert.notNull(id, "ID");
+		return schedulerProvider.getSchedulerById(id);
+	}
+
+	/**
+	 * @param record
+	 */
+	public void addScheduler(TaskScheduler record) {
+		schedulerProvider.updateScheduler(record);
+	}
+
+	/**
+	 * @param record
+	 */
+	public void updateScheduler(TaskScheduler record) {
+		Assert.notNull(record.getId(), "ID");
+		schedulerProvider.updateScheduler(record);
 	}
 }
