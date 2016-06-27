@@ -16,182 +16,6 @@ CREATE DATABASE IF NOT EXISTS `ibase4j` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ibase4j`;
 
 
--- 导出  表 ibase4j.qrtz_cron_triggers 结构
-DROP TABLE IF EXISTS `qrtz_cron_triggers`;
-CREATE TABLE IF NOT EXISTS `qrtz_cron_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `CRON_EXPRESSION` varchar(200) NOT NULL,
-  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_cron_triggers 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_cron_triggers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_cron_triggers` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_fired_triggers 结构
-DROP TABLE IF EXISTS `qrtz_fired_triggers`;
-CREATE TABLE IF NOT EXISTS `qrtz_fired_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `ENTRY_ID` varchar(95) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `INSTANCE_NAME` varchar(200) NOT NULL,
-  `FIRED_TIME` bigint(13) NOT NULL,
-  `SCHED_TIME` bigint(13) NOT NULL,
-  `PRIORITY` int(11) NOT NULL,
-  `STATE` varchar(16) NOT NULL,
-  `JOB_NAME` varchar(200) DEFAULT NULL,
-  `JOB_GROUP` varchar(200) DEFAULT NULL,
-  `IS_NONCONCURRENT` varchar(1) DEFAULT NULL,
-  `REQUESTS_RECOVERY` varchar(1) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_fired_triggers 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_fired_triggers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_fired_triggers` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_job_details 结构
-DROP TABLE IF EXISTS `qrtz_job_details`;
-CREATE TABLE IF NOT EXISTS `qrtz_job_details` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `JOB_NAME` varchar(200) NOT NULL,
-  `JOB_GROUP` varchar(200) NOT NULL,
-  `DESCRIPTION` varchar(250) DEFAULT NULL,
-  `JOB_CLASS_NAME` varchar(250) NOT NULL,
-  `IS_DURABLE` varchar(1) NOT NULL,
-  `IS_NONCONCURRENT` varchar(1) NOT NULL,
-  `IS_UPDATE_DATA` varchar(1) NOT NULL,
-  `REQUESTS_RECOVERY` varchar(1) NOT NULL,
-  `JOB_DATA` blob,
-  PRIMARY KEY (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_job_details 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_job_details` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_job_details` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_locks 结构
-DROP TABLE IF EXISTS `qrtz_locks`;
-CREATE TABLE IF NOT EXISTS `qrtz_locks` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `LOCK_NAME` varchar(40) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_locks 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_locks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_locks` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_paused_trigger_grps 结构
-DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
-CREATE TABLE IF NOT EXISTS `qrtz_paused_trigger_grps` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_paused_trigger_grps 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_paused_trigger_grps` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_paused_trigger_grps` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_scheduler_state 结构
-DROP TABLE IF EXISTS `qrtz_scheduler_state`;
-CREATE TABLE IF NOT EXISTS `qrtz_scheduler_state` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `INSTANCE_NAME` varchar(200) NOT NULL,
-  `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
-  `CHECKIN_INTERVAL` bigint(13) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_scheduler_state 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_scheduler_state` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_scheduler_state` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_simple_triggers 结构
-DROP TABLE IF EXISTS `qrtz_simple_triggers`;
-CREATE TABLE IF NOT EXISTS `qrtz_simple_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `REPEAT_COUNT` bigint(7) NOT NULL,
-  `REPEAT_INTERVAL` bigint(12) NOT NULL,
-  `TIMES_TRIGGERED` bigint(10) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_simple_triggers 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_simple_triggers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_simple_triggers` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_simprop_triggers 结构
-DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
-CREATE TABLE IF NOT EXISTS `qrtz_simprop_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `STR_PROP_1` varchar(512) DEFAULT NULL,
-  `STR_PROP_2` varchar(512) DEFAULT NULL,
-  `STR_PROP_3` varchar(512) DEFAULT NULL,
-  `INT_PROP_1` int(11) DEFAULT NULL,
-  `INT_PROP_2` int(11) DEFAULT NULL,
-  `LONG_PROP_1` bigint(20) DEFAULT NULL,
-  `LONG_PROP_2` bigint(20) DEFAULT NULL,
-  `DEC_PROP_1` decimal(13,4) DEFAULT NULL,
-  `DEC_PROP_2` decimal(13,4) DEFAULT NULL,
-  `BOOL_PROP_1` varchar(1) DEFAULT NULL,
-  `BOOL_PROP_2` varchar(1) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_simprop_triggers 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_simprop_triggers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_simprop_triggers` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_triggers 结构
-DROP TABLE IF EXISTS `qrtz_triggers`;
-CREATE TABLE IF NOT EXISTS `qrtz_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `JOB_NAME` varchar(200) NOT NULL,
-  `JOB_GROUP` varchar(200) NOT NULL,
-  `DESCRIPTION` varchar(250) DEFAULT NULL,
-  `NEXT_FIRE_TIME` bigint(13) DEFAULT NULL,
-  `PREV_FIRE_TIME` bigint(13) DEFAULT NULL,
-  `PRIORITY` int(11) DEFAULT NULL,
-  `TRIGGER_STATE` varchar(16) NOT NULL,
-  `TRIGGER_TYPE` varchar(8) NOT NULL,
-  `START_TIME` bigint(13) NOT NULL,
-  `END_TIME` bigint(13) DEFAULT NULL,
-  `CALENDAR_NAME` varchar(200) DEFAULT NULL,
-  `MISFIRE_INSTR` smallint(2) DEFAULT NULL,
-  `JOB_DATA` blob,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  KEY `SCHED_NAME` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
-  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_triggers 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_triggers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_triggers` ENABLE KEYS */;
-
-
 -- 导出  表 ibase4j.sys_catalog 结构
 DROP TABLE IF EXISTS `sys_catalog`;
 CREATE TABLE IF NOT EXISTS `sys_catalog` (
@@ -357,72 +181,16 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   `user_agent` varchar(300) DEFAULT NULL,
   `status_` int(3) DEFAULT NULL,
   `enable_` int(1) DEFAULT NULL,
-  `remark_` varchar(5000) DEFAULT NULL,
+  `remark_` text,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `create_by` int(20) DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_by` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.sys_event 的数据：~55 rows (大约)
+-- 正在导出表  ibase4j.sys_event 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_event` DISABLE KEYS */;
-INSERT INTO `sys_event` (`id_`, `title_`, `request_uri`, `parammeters_`, `method_`, `client_host`, `user_agent`, `status_`, `enable_`, `remark_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(3, NULL, '/login', '{"account":["admin"],"password":["111111"]}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 17:53:47', 1, '2016-06-20 17:53:47', 1),
-	(4, NULL, '/user/read/current', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 17:53:47', 1, '2016-06-20 17:53:47', 1),
-	(5, NULL, '/user/read/list', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 17:53:47', 1, '2016-06-20 17:53:47', 1),
-	(6, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 17:53:51', 1, '2016-06-20 17:53:51', 1),
-	(7, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 17:58:27', 1, '2016-06-20 17:58:27', 1),
-	(8, NULL, '/user/read/current', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 17:58:27', 1, '2016-06-20 17:58:27', 1),
-	(9, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 17:59:04', 1, '2016-06-20 17:59:04', 1),
-	(10, NULL, '/user/read/current', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 17:59:04', 1, '2016-06-20 17:59:04', 1),
-	(11, NULL, '/scheduled/close/task', '{"taskGroup":["CoreTaskProvider"],"taskName":["flushMessage"]}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 17:59:06', 1, '2016-06-20 17:59:06', 1),
-	(12, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 17:59:08', 1, '2016-06-20 17:59:08', 1),
-	(13, NULL, '/scheduled/read/log', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:00:26', 1, '2016-06-20 18:00:26', 1),
-	(14, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:00:28', 1, '2016-06-20 18:00:28', 1),
-	(15, NULL, '/scheduled/open/task', '{"taskGroup":["CoreTaskProvider"],"taskName":["flushMessage"]}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:00:30', 1, '2016-06-20 18:00:30', 1),
-	(16, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:00:32', 1, '2016-06-20 18:00:32', 1),
-	(17, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:00:35', 1, '2016-06-20 18:00:35', 1),
-	(18, NULL, '/user/read/current', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:00:35', 1, '2016-06-20 18:00:35', 1),
-	(19, NULL, '/scheduled/close/task', '{"taskGroup":["CoreTaskProvider"],"taskName":["flushMessage"]}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:00:38', 1, '2016-06-20 18:00:38', 1),
-	(20, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:00:38', 1, '2016-06-20 18:00:38', 1),
-	(21, NULL, '/scheduled/open/task', '{"taskGroup":["CoreTaskProvider"],"taskName":["flushMessage"]}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:00:40', 1, '2016-06-20 18:00:40', 1),
-	(22, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:00:40', 1, '2016-06-20 18:00:40', 1),
-	(23, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:01:28', 1, '2016-06-20 18:01:28', 1),
-	(24, NULL, '/user/read/current', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:01:28', 1, '2016-06-20 18:01:28', 1),
-	(25, NULL, '/scheduled/run/task', '{"taskGroup":["CoreTaskProvider"],"taskName":["flushMessage"]}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:01:32', 1, '2016-06-20 18:01:32', 1),
-	(26, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:01:32', 1, '2016-06-20 18:01:32', 1),
-	(27, NULL, '/scheduled/run/task', '{"taskGroup":["CoreTaskProvider"],"taskName":["flushMessage"]}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:04:17', 1, '2016-06-20 18:04:17', 1),
-	(28, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:04:17', 1, '2016-06-20 18:04:17', 1),
-	(29, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:04:21', 1, '2016-06-20 18:04:21', 1),
-	(30, NULL, '/user/read/current', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:04:21', 1, '2016-06-20 18:04:21', 1),
-	(31, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:05:55', 1, '2016-06-20 18:05:55', 1),
-	(32, NULL, '/user/read/current', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:05:55', 1, '2016-06-20 18:05:55', 1),
-	(33, NULL, '/scheduled/run/task', '{"taskGroup":["CoreTaskProvider"],"taskName":["flushMessage"]}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:06:02', 1, '2016-06-20 18:06:02', 1),
-	(34, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.6', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-20 18:06:03', 1, '2016-06-20 18:06:03', 1),
-	(35, NULL, '/user/read/current', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-21 15:57:46', 1, '2016-06-21 15:57:46', 1),
-	(36, NULL, '/dept/read/list', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-21 15:57:46', 1, '2016-06-21 15:57:46', 1),
-	(37, NULL, '/user/read/list', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-21 16:05:10', 1, '2016-06-21 16:05:10', 1),
-	(38, NULL, '/login', '{"account":["admin"],"password":["111111"]}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 11:42:51', 1, '2016-06-22 11:42:51', 1),
-	(39, NULL, '/user/read/current', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 11:42:52', 1, '2016-06-22 11:42:52', 1),
-	(40, NULL, '/user/read/list', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 11:42:52', 1, '2016-06-22 11:42:52', 1),
-	(41, NULL, '/user/read/list', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 11:43:11', 1, '2016-06-22 11:43:11', 1),
-	(42, NULL, '/user/read/current', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 11:43:11', 1, '2016-06-22 11:43:11', 1),
-	(43, NULL, '/login', '{"account":["admin"],"password":["111111"]}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 11:47:40', 1, '2016-06-22 11:47:40', 1),
-	(44, NULL, '/unauthorized', '{}', 'GET', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 11:47:40', 1, '2016-06-22 11:47:40', 1),
-	(45, NULL, '/unauthorized', '{}', 'GET', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 11:47:40', 1, '2016-06-22 11:47:40', 1),
-	(46, NULL, '/login', '{"account":["admin"],"password":["111111"]}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:24', 1, '2016-06-22 16:52:24', 1),
-	(47, NULL, '/user/read/list', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:25', 1, '2016-06-22 16:52:25', 1),
-	(48, NULL, '/user/read/current', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:25', 1, '2016-06-22 16:52:25', 1),
-	(49, NULL, '/task/read/groups', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:28', 1, '2016-06-22 16:52:28', 1),
-	(50, NULL, '/scheduled/read/tasks', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:29', 1, '2016-06-22 16:52:29', 1),
-	(51, NULL, '/task/read/schedulers', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:32', 1, '2016-06-22 16:52:32', 1),
-	(52, NULL, '/task/read/groups', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:35', 1, '2016-06-22 16:52:35', 1),
-	(53, NULL, '/scheduled/read/log', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:40', 1, '2016-06-22 16:52:40', 1),
-	(54, NULL, '/scheduled/read/log', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:43', 1, '2016-06-22 16:52:43', 1),
-	(55, NULL, '/user/read/current', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:43', 1, '2016-06-22 16:52:43', 1),
-	(56, NULL, '/task/read/groups', '{}', 'POST', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 16:52:45', 1, '2016-06-22 16:52:45', 1),
-	(57, NULL, '/unauthorized', '{}', 'GET', '192.168.1.14', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36', 200, 0, '', '2016-06-22 17:06:43', NULL, '2016-06-22 17:06:43', NULL);
 /*!40000 ALTER TABLE `sys_event` ENABLE KEYS */;
 
 
@@ -446,9 +214,9 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_by` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='菜单';
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='菜单';
 
--- 正在导出表  ibase4j.sys_menu 的数据：~34 rows (大约)
+-- 正在导出表  ibase4j.sys_menu 的数据：~38 rows (大约)
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
 INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`, `request_`, `expand_`, `sort_no`, `leaf_`, `state_`, `remark_`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
 	(1, '系统管理', 1, 0, 'glyphicon glyphicon-cog', '#', 0, 1, 0, '**.sys.**', NULL, 1, NULL, NULL, NULL, NULL),
@@ -486,7 +254,11 @@ INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`
 	(33, '暂停', 0, 30, NULL, NULL, 0, 2, 1, 'task:scheduled:close', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 17:14:08', NULL),
 	(34, '执行', 0, 30, NULL, NULL, 0, 3, 1, 'task:scheduled:run', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-20 17:13:30', NULL),
 	(35, '调度日志', 1, 23, 'glyphicon glyphicon-duplicate', 'main.task.log.list', 0, 4, 1, '**.task.log.**', NULL, 1, NULL, NULL, '2016-06-20 17:13:27', NULL),
-	(36, '查看', 0, 35, NULL, NULL, 0, 1, 1, 'task:scheduled:log', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 17:13:35', NULL);
+	(36, '查看', 0, 35, NULL, NULL, 0, 1, 1, 'task:scheduled:log', NULL, 1, '2016-06-20 09:14:50', NULL, '2016-06-20 17:13:35', NULL),
+	(37, '清除缓存', 0, 8, NULL, NULL, 0, 3, 1, 'sys:cache:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-27 15:39:02', NULL),
+	(38, '用户权限', 0, 8, NULL, NULL, 0, 4, 1, 'user:menu:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-27 15:40:28', NULL),
+	(39, '用户角色', 0, 8, NULL, NULL, 0, 5, 1, 'user:role:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-27 15:40:42', NULL),
+	(40, '角色权限', 0, 8, NULL, NULL, 0, 6, 1, 'role:menu:update', NULL, 1, '2016-06-20 09:16:56', NULL, '2016-06-27 15:40:43', NULL);
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 
 
@@ -586,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会话管理';
 
--- 正在导出表  ibase4j.sys_session 的数据：~1 rows (大约)
+-- 正在导出表  ibase4j.sys_session 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
@@ -697,12 +469,14 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `end_time` timestamp NULL DEFAULT NULL,
   `status` varchar(1) NOT NULL DEFAULT 'I',
+  `server_host` varchar(50) DEFAULT NULL COMMENT '服务器名',
+  `server_duid` varchar(50) DEFAULT NULL COMMENT '服务器网卡序列号',
   `fire_info` text,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `group_name_task_name_start_time` (`group_name`,`task_name`,`start_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.task_fire_log 的数据：~6 rows (大约)
+-- 正在导出表  ibase4j.task_fire_log 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `task_fire_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `task_fire_log` ENABLE KEYS */;
 
@@ -738,6 +512,7 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
   `task_type` varchar(50) NOT NULL,
   `task_desc` varchar(50) DEFAULT NULL,
   `task_cron` varchar(50) NOT NULL,
+  `task_server` varchar(50) DEFAULT NULL COMMENT '注册该任务的服务器',
   `task_previous_fire_time` timestamp NULL DEFAULT NULL,
   `task_next_fire_time` timestamp NULL DEFAULT NULL,
   `contact_email` varchar(500) DEFAULT NULL COMMENT '多个邮箱用,分割',
@@ -752,8 +527,8 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
 
 -- 正在导出表  ibase4j.task_scheduler 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `task_scheduler` DISABLE KEYS */;
-INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `task_previous_fire_time`, `task_next_fire_time`, `contact_email`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, 1, 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-06-22 17:00:00', '2016-06-22 17:30:00', 'iBase4J@126.com', 1, '2016-06-13 14:05:30', NULL, '2016-06-22 17:00:00', NULL);
+INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `task_server`, `task_previous_fire_time`, `task_next_fire_time`, `contact_email`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
+	(1, 1, 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', NULL, '2016-06-22 17:00:00', '2016-06-22 17:30:00', 'iBase4J@126.com', 1, '2016-06-13 14:05:30', 1, '2016-06-27 16:50:34', 1);
 /*!40000 ALTER TABLE `task_scheduler` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

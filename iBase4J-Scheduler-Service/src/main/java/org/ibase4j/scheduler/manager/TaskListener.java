@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.support.email.Email;
 import org.ibase4j.core.support.mq.QueueSender;
+import org.ibase4j.core.util.NativeUtil;
 import org.ibase4j.model.generator.TaskFireLog;
 import org.ibase4j.model.generator.TaskScheduler;
 import org.ibase4j.provider.scheduler.SchedulerProvider;
@@ -60,6 +61,8 @@ public class TaskListener implements JobListener {
 		log.setGroupName(groupName);
 		log.setTaskName(jobName);
 		log.setStatus(Constants.INIT_STATS);
+		log.setServerHost(NativeUtil.getHostName());
+		log.setServerDuid(NativeUtil.getDUID());
 		schedulerProvider.updateLog(log);
 		jobDataMap.put(Constants.JOB_LOG, log);
 	}
