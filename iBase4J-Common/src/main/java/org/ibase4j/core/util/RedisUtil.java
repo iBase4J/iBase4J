@@ -58,6 +58,10 @@ public final class RedisUtil {
 		getRedis().delete(key);
 	}
 
+	public static final void delAll(final String pattern) {
+		getRedis().delete(getRedis().keys(pattern));
+	}
+
 	public static final String type(final String key) {
 		expire(key, EXPIRE);
 		return getRedis().type(key).getClass().getName();
@@ -101,6 +105,5 @@ public final class RedisUtil {
 		expire(key, EXPIRE);
 		return getRedis().boundValueOps(key).getAndSet(value);
 	}
-	
 	// 未完，待续...
 }

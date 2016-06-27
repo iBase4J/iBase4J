@@ -8,8 +8,6 @@ import org.ibase4j.model.generator.SysDicIndex;
 import com.github.pagehelper.PageInfo;
 
 public interface SysDicProvider {
-	public void clearCache();
-
 	public Map<String, Map<String, String>> getAllDic();
 
 	public void updateDicIndex(SysDicIndex record);

@@ -40,7 +40,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	private SysMenuProviderImpl sysMenuService;
 
 	@Transactional
-	@CacheEvict(value = "getAuthorize", allEntries = true)
+	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
 	public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
 		sysAuthorizeMapper.deleteUserMenu(sysUserMenus.get(0).getUserId());
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
@@ -49,7 +49,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	}
 
 	@Transactional
-	@CacheEvict(value = "getAuthorize", allEntries = true)
+	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
 	public void updateUserRole(List<SysUserRole> sysUserRoles) {
 		sysAuthorizeMapper.deleteUserRole(sysUserRoles.get(0).getUserId());
 		for (SysUserRole sysUserRole : sysUserRoles) {
@@ -58,7 +58,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	}
 
 	@Transactional
-	@CacheEvict(value = "getAuthorize", allEntries = true)
+	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus) {
 		sysAuthorizeMapper.deleteRoleMenu(sysRoleMenus.get(0).getRoleId());
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {

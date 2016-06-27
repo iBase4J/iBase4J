@@ -20,7 +20,6 @@ public class ServerListerner implements ServletContextListener {
 		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 		context.getBean(SysUserProvider.class).init();
 		SysDicProvider sysDicProvider = context.getBean(SysDicProvider.class);
-		sysDicProvider.clearCache();
 		sysDicProvider.getAllDic();
 		logger.info("=================================");
 		logger.info("系统[{}]启动成功!!!", contextEvent.getServletContext().getServletContextName());

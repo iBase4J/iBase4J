@@ -70,10 +70,6 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 		return dicMapper.selectByPrimaryKey(id);
 	}
 
-	@CacheEvict(value = "sysDics", allEntries = true)
-	public void clearCache() {
-	}
-
 	@Cacheable(value = "sysDics")
 	public Map<String, Map<String, String>> getAllDic() {
 		List<SysDicIndex> sysDicIndexs = dicIndexMapper.selectAll();

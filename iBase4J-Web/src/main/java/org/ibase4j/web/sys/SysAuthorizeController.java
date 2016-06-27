@@ -58,4 +58,12 @@ public class SysAuthorizeController extends BaseController {
 		authorizeService.updateRoleMenu(list);
 		return setSuccessModelMap(modelMap);
 	}
+
+	@ApiOperation(value = "清理缓存")
+	@RequiresPermissions("sys:cache:update")
+	@RequestMapping(value = "/cache/update", method = RequestMethod.POST)
+	public Object flush(HttpServletRequest request, ModelMap modelMap) {
+		authorizeService.flushCache();
+		return setSuccessModelMap(modelMap);
+	}
 }
