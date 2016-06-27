@@ -18,7 +18,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.support.fasetdfs.FastDFSFile;
+import org.ibase4j.core.support.fasetdfs.FileModel;
 import org.ibase4j.core.support.fasetdfs.FileManager;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -136,11 +136,11 @@ public final class UploadUtil {
 	}
 
 	/** 移动文件到fastDFS */
-	public static String remove2DFS(String fileName) {
-		if (fileName != null && !"".equals(fileName.trim())) {
-			FastDFSFile fastDFSFile = new FastDFSFile(fileName);
-			return FileManager.upload(fastDFSFile);
+	public static FileModel remove2DFS(String namespace, String objectId, String fileName) {
+		FileModel fastDFSFile = new FileModel(namespace, objectId, fileName);
+		if (fastDFSFile.getKey() != null) {
+			FileManager.upload(fastDFSFile);
 		}
-		return null;
+		return fastDFSFile;
 	}
 }

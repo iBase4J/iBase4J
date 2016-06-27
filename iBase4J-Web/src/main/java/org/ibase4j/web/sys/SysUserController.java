@@ -51,8 +51,9 @@ public class SysUserController extends BaseController {
 	@RequestMapping(value = "/update")
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
-		if (StringUtils.isNotBlank(sysUser.getAvatar())) {
-			String avatar = UploadUtil.remove2DFS(UploadUtil.getUploadDir(request) + sysUser.getAvatar());
+		if (StringUtils.isNotBlank(sysUser.getAvatar()) && !sysUser.getAvatar().contains("/")) {
+			String avatar = UploadUtil.remove2DFS("sysUser", "user" + sysUser.getId(),
+					UploadUtil.getUploadDir(request) + sysUser.getAvatar()).getRemotePath();
 			sysUser.setAvatar(avatar);
 		}
 		sysUserService.updateUserInfo(sysUser);

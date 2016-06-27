@@ -13,30 +13,42 @@ import org.csource.fastdfs.StorageClient;
 import org.csource.fastdfs.StorageServer;
 import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
+import org.csource.fastdht.FastDHTClient;
+import org.csource.fastdht.KeyInfo;
 
+import com.alibaba.fastjson.JSON;
+
+/**
+ * @author ShenHuaJie
+ * @version 2016年6月27日 上午9:51:06
+ */
 @SuppressWarnings("serial")
-public class FileManager implements FileManagerConfig {
+public class FileManager implements Config {
 	private static Logger logger = LogManager.getLogger();
 	private static TrackerClient trackerClient;
 	private static TrackerServer trackerServer;
 	private static StorageServer storageServer;
 	private static StorageClient storageClient;
+	private static FastDHTClient fastDHTClient;
 
 	static { // Initialize Fast DFS Client configurations
 		try {
 			String classPath = new File(FileManager.class.getResource("/").getFile()).getCanonicalPath();
-			String fdfsClientConfigFilePath = classPath + File.separator + CLIENT_CONFIG_FILE;
+			String fdfsClientConfigFilePath = classPath + File.separator + DFS_CLIENT_CONFIG_FILE;
+			String fdhtClientConfigFilePath = classPath + File.separator + DHT_CLIENT_CONFIG_FILE;
 			logger.info("Fast DFS configuration file path:" + fdfsClientConfigFilePath);
 			ClientGlobal.init(fdfsClientConfigFilePath);
+			org.csource.fastdht.ClientGlobal.init(fdhtClientConfigFilePath);
 			trackerClient = new TrackerClient();
 			trackerServer = trackerClient.getConnection();
 			storageClient = new StorageClient(trackerServer, storageServer);
+			fastDHTClient = new FastDHTClient(true);
 		} catch (Exception e) {
 			logger.error("", e);
 		}
 	}
 
-	public static String upload(FastDFSFile file) {
+	public static void upload(FileModel file) {
 		logger.info("File Name: " + file.getFilename() + ". File Length: " + file.getContent().length);
 
 		NameValuePair[] meta_list = new NameValuePair[] { new NameValuePair("mime", file.getMime()),
@@ -62,15 +74,27 @@ public class FileManager implements FileManagerConfig {
 
 		String fileAbsolutePath = PROTOCOL + trackerServer.getInetSocketAddress().getHostName() + SEPARATOR
 				+ TRACKER_NGNIX_PORT + SEPARATOR + groupName + SEPARATOR + remoteFileName;
-
+		file.setRemotePath(fileAbsolutePath);
 		logger.info("upload file successfully!!!  " + "group_name: " + groupName + ", remoteFileName:" + " "
 				+ remoteFileName);
-		return fileAbsolutePath;
+		try {
+			KeyInfo keyInfo = new KeyInfo(file.getNamespace(), file.getObjectId(), file.getKey());
+			FastDfsFile fastDfsFile = new FastDfsFile();
+			fastDfsFile.setGroupName(groupName);
+			fastDfsFile.setFileName(remoteFileName);
+			fastDfsFile.setNameValuePairs(meta_list);
+			fastDHTClient.set(keyInfo, JSON.toJSONString(fastDfsFile));
+		} catch (Exception e) {
+			logger.error("", e);
+		}
 	}
 
-	public static FileInfo getFile(String groupName, String remoteFileName) {
+	public static FileInfo getFile(String namespace, String objectId, String key) {
 		try {
-			return storageClient.get_file_info(groupName, remoteFileName);
+			KeyInfo keyInfo = new KeyInfo(namespace, objectId, key);
+			String info = fastDHTClient.get(keyInfo);
+			FastDfsFile fastDfsFile = JSON.parseObject(info, FastDfsFile.class);
+			return storageClient.get_file_info(fastDfsFile.getGroupName(), fastDfsFile.getFileName());
 		} catch (IOException e) {
 			logger.error("IO Exception: Get File from Fast DFS failed", e);
 		} catch (Exception e) {
