@@ -60,6 +60,7 @@
 		<property name="maxActive" value="${maxActive}" />
 		<property name="minIdle" value="${minIdle}" />
 		<property name="maxWait" value="${maxWait}" />
+		<property name="defaultReadOnly" value="false" />
 		<property name="proxyFilters">
 			<list>
 				<ref bean="stat-filter" />
