@@ -36,7 +36,7 @@ public class SysAuthorizeController extends BaseController {
 	private SysCacheService sysCacheService;
 
 	@ApiOperation(value = "修改用户菜单")
-	@RequiresPermissions("user:menu:update")
+	@RequiresPermissions("user.menu.update")
 	@RequestMapping(value = "/user/update/menu", method = RequestMethod.POST)
 	public Object userMenu(HttpServletRequest request, ModelMap modelMap) {
 		List<SysUserMenu> list = Request2ListUtil.covert(SysUserMenu.class, request);
@@ -45,7 +45,7 @@ public class SysAuthorizeController extends BaseController {
 	}
 
 	@ApiOperation(value = "修改用户角色")
-	@RequiresPermissions("user:role:update")
+	@RequiresPermissions("user.role.update")
 	@RequestMapping(value = "/user/update/role", method = RequestMethod.POST)
 	public Object userRole(HttpServletRequest request, ModelMap modelMap) {
 		List<SysUserRole> list = Request2ListUtil.covert(SysUserRole.class, request);
@@ -54,7 +54,7 @@ public class SysAuthorizeController extends BaseController {
 	}
 
 	@ApiOperation(value = "修改角色菜单")
-	@RequiresPermissions("role:menu:update")
+	@RequiresPermissions("role.menu.update")
 	@RequestMapping(value = "/role/update/menu", method = RequestMethod.POST)
 	public Object roleMenu(HttpServletRequest request, ModelMap modelMap) {
 		List<SysRoleMenu> list = Request2ListUtil.covert(SysRoleMenu.class, request);
@@ -63,7 +63,7 @@ public class SysAuthorizeController extends BaseController {
 	}
 
 	@ApiOperation(value = "清理缓存")
-	@RequiresPermissions("sys:cache:update")
+	@RequiresPermissions("sys.cache.update")
 	@RequestMapping(value = "/cache/update", method = RequestMethod.POST)
 	public Object flush(HttpServletRequest request, ModelMap modelMap) {
 		sysCacheService.flushCache();

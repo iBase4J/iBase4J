@@ -11,7 +11,7 @@
     <result column="account_" jdbcType="VARCHAR" property="account" />
     <result column="ip_" jdbcType="VARCHAR" property="ip" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
-    <result column="enable_" jdbcType="INTEGER" property="enable" />
+    <result column="enable_" jdbcType="BIT" property="enable" />
     <result column="remark_" jdbcType="VARCHAR" property="remark" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="create_by" jdbcType="INTEGER" property="createBy" />
@@ -36,7 +36,7 @@
       create_time, create_by, update_time, 
       update_by)
     values (#{sessionId,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
-      #{startTime,jdbcType=TIMESTAMP}, #{enable,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{enable,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=INTEGER})
   </insert>
@@ -50,7 +50,7 @@
       account_ = #{account,jdbcType=VARCHAR},
       ip_ = #{ip,jdbcType=VARCHAR},
       start_time = #{startTime,jdbcType=TIMESTAMP},
-      enable_ = #{enable,jdbcType=INTEGER},
+      enable_ = #{enable,jdbcType=BIT},
       remark_ = #{remark,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_by = #{createBy,jdbcType=INTEGER},

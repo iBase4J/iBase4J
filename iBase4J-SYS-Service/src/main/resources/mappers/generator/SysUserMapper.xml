@@ -15,8 +15,8 @@
     <result column="avatar_" jdbcType="VARCHAR" property="avatar" />
     <result column="user_type" jdbcType="INTEGER" property="userType" />
     <result column="dept_id" jdbcType="INTEGER" property="deptId" />
-    <result column="locked_" jdbcType="INTEGER" property="locked" />
-    <result column="enable_" jdbcType="INTEGER" property="enable" />
+    <result column="locked_" jdbcType="BIT" property="locked" />
+    <result column="enable_" jdbcType="BIT" property="enable" />
     <result column="remark_" jdbcType="VARCHAR" property="remark" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="create_by" jdbcType="INTEGER" property="createBy" />
@@ -44,8 +44,8 @@
       )
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{sex,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
-      #{userType,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{locked,jdbcType=INTEGER}, 
-      #{enable,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{userType,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{locked,jdbcType=BIT}, 
+      #{enable,jdbcType=BIT}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{createBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}
       )
   </insert>
@@ -63,8 +63,8 @@
       avatar_ = #{avatar,jdbcType=VARCHAR},
       user_type = #{userType,jdbcType=INTEGER},
       dept_id = #{deptId,jdbcType=INTEGER},
-      locked_ = #{locked,jdbcType=INTEGER},
-      enable_ = #{enable,jdbcType=INTEGER},
+      locked_ = #{locked,jdbcType=BIT},
+      enable_ = #{enable,jdbcType=BIT},
       remark_ = #{remark,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_by = #{createBy,jdbcType=INTEGER},

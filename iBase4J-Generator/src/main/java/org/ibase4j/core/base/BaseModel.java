@@ -6,7 +6,7 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class BaseModel implements Serializable {
 	private Integer id;
-	private Integer enable;
+	private Boolean enable;
 	private String remark;
 	private Integer createBy;
 	private Date createTime;
@@ -31,7 +31,7 @@ public class BaseModel implements Serializable {
 	/**
 	 * @return the enable
 	 */
-	public Integer getEnable() {
+	public Boolean getEnable() {
 		return enable;
 	}
 
@@ -39,7 +39,7 @@ public class BaseModel implements Serializable {
 	 * @param enable
 	 *            the enable to set
 	 */
-	public void setEnable(Integer enable) {
+	public void setEnable(Boolean enable) {
 		this.enable = enable;
 	}
 

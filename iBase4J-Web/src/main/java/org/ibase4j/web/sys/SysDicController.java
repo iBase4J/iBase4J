@@ -36,9 +36,8 @@ public class SysDicController extends BaseController {
 	@Autowired
 	private SysDicService sysDicService;
 
-	// 查询字典
 	@ApiOperation(value = "查询字典")
-	@RequiresPermissions("sys:dic:read")
+	@RequiresPermissions("sys.dic.read")
 	@RequestMapping(value = "dicIndex/read/list")
 	public Object getDicIndex(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -46,18 +45,25 @@ public class SysDicController extends BaseController {
 		return setSuccessModelMap(modelMap, list);
 	}
 
-	// 详细信息
 	@ApiOperation(value = "字典详情")
-	@RequiresPermissions("sys:dic:read")
+	@RequiresPermissions("sys.dic.read")
 	@RequestMapping(value = "dicIndex/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysDicIndex record = sysDicService.queryDicIndexById(id);
 		return setSuccessModelMap(modelMap, record);
 	}
 
-	// 新增字典
+	@ApiOperation(value = "根据关键字查询字典列表")
+	@RequiresPermissions("sys.dic.read")
+	@RequestMapping(value = "dic/read/key")
+	public Object getDicByKey(HttpServletRequest request, ModelMap modelMap,
+			@RequestParam(value = "key", required = false) String key) {
+		Map<String, String> result = sysDicService.queryDicByDicIndexKey(key);
+		return setSuccessModelMap(modelMap, result);
+	}
+
 	@ApiOperation(value = "添加字典")
-	@RequiresPermissions("sys:dic:update")
+	@RequiresPermissions("sys.dic.add")
 	@RequestMapping(value = "dicIndex/add", method = RequestMethod.POST)
 	public Object addDicIndex(HttpServletRequest request, ModelMap modelMap) {
 		SysDicIndex record = Request2ModelUtil.covert(SysDicIndex.class, request);
@@ -65,9 +71,8 @@ public class SysDicController extends BaseController {
 		return setSuccessModelMap(modelMap);
 	}
 
-	// 修改字典
 	@ApiOperation(value = "修改字典")
-	@RequiresPermissions("sys:dic:update")
+	@RequiresPermissions("sys.dic.update")
 	@RequestMapping(value = "dicIndex/update", method = RequestMethod.POST)
 	public Object updateDicIndex(HttpServletRequest request, ModelMap modelMap) {
 		SysDicIndex record = Request2ModelUtil.covert(SysDicIndex.class, request);
@@ -75,8 +80,8 @@ public class SysDicController extends BaseController {
 		return setSuccessModelMap(modelMap);
 	}
 
-	// 删除字典
 	@ApiOperation(value = "删除字典")
+	@RequiresPermissions("sys.dic.delete")
 	@RequestMapping(value = "dicIndex/delete", method = RequestMethod.POST)
 	public Object deleteDicIndex(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {
@@ -84,8 +89,8 @@ public class SysDicController extends BaseController {
 		return setSuccessModelMap(modelMap);
 	}
 
-	// 查询字典
 	@ApiOperation(value = "查询字典项")
+	@RequiresPermissions("sys.dic.read")
 	@RequestMapping(value = "dic/read/list")
 	public Object getDic(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -93,17 +98,16 @@ public class SysDicController extends BaseController {
 		return setSuccessModelMap(modelMap, list);
 	}
 
-	// 详细信息
 	@ApiOperation(value = "字典项详情")
+	@RequiresPermissions("sys.dic.read")
 	@RequestMapping(value = "dic/read/detail")
 	public Object dicDetail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysDic record = sysDicService.queryDicById(id);
 		return setSuccessModelMap(modelMap, record);
 	}
 
-	// 新增字典
 	@ApiOperation(value = "添加字典项")
-	@RequiresPermissions("sys:dic:update")
+	@RequiresPermissions("sys.dic.add")
 	@RequestMapping(value = "dic/add", method = RequestMethod.POST)
 	public Object addDic(HttpServletRequest request, ModelMap modelMap) {
 		SysDic record = Request2ModelUtil.covert(SysDic.class, request);
@@ -111,9 +115,8 @@ public class SysDicController extends BaseController {
 		return setSuccessModelMap(modelMap);
 	}
 
-	// 修改字典
 	@ApiOperation(value = "修改字典项")
-	@RequiresPermissions("sys:dic:update")
+	@RequiresPermissions("sys.dic.update")
 	@RequestMapping(value = "dic/update", method = RequestMethod.POST)
 	public Object updateDic(HttpServletRequest request, ModelMap modelMap) {
 		SysDic record = Request2ModelUtil.covert(SysDic.class, request);
@@ -121,9 +124,8 @@ public class SysDicController extends BaseController {
 		return setSuccessModelMap(modelMap);
 	}
 
-	// 删除字典
 	@ApiOperation(value = "删除字典项")
-	@RequiresPermissions("sys:dic:update")
+	@RequiresPermissions("sys.dic.delete")
 	@RequestMapping(value = "dic/delete", method = RequestMethod.POST)
 	public Object deleteDic(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {

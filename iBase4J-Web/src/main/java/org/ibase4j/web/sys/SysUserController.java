@@ -47,7 +47,7 @@ public class SysUserController extends BaseController {
 
 	// 修改用户信息
 	@ApiOperation(value = "修改用户信息")
-	@RequiresPermissions("sys:user:update")
+	@RequiresPermissions("sys.user.update")
 	@RequestMapping(value = "/update")
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
@@ -62,6 +62,7 @@ public class SysUserController extends BaseController {
 
 	// 修改密码
 	@ApiOperation(value = "修改密码")
+	@RequiresPermissions("sys.user.update")
 	@RequestMapping(value = "/update/password")
 	public Object updatePassword(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id,
 			@RequestParam(value = "password", required = false) String password) {
@@ -71,7 +72,7 @@ public class SysUserController extends BaseController {
 
 	// 查询用户
 	@ApiOperation(value = "查询用户")
-	@RequiresPermissions("sys:user:read")
+	@RequiresPermissions("sys.user.read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -81,7 +82,7 @@ public class SysUserController extends BaseController {
 
 	// 用户详细信息
 	@ApiOperation(value = "用户详细信息")
-	@RequiresPermissions("sys:user:read")
+	@RequiresPermissions("sys.user.read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysUser sysUser = sysUserService.queryById(id);

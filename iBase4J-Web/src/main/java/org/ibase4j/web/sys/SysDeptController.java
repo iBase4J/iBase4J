@@ -37,7 +37,7 @@ public class SysDeptController extends BaseController {
 
 	// 查询部门
 	@ApiOperation(value = "查询部门")
-	@RequiresPermissions("sys:dept:read")
+	@RequiresPermissions("sys.dept.read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -47,7 +47,7 @@ public class SysDeptController extends BaseController {
 
 	// 详细信息
 	@ApiOperation(value = "部门详情")
-	@RequiresPermissions("sys:dept:read")
+	@RequiresPermissions("sys.dept.read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysDept record = sysDeptService.queryById(id);
@@ -56,7 +56,7 @@ public class SysDeptController extends BaseController {
 
 	// 新增部门
 	@ApiOperation(value = "添加部门")
-	@RequiresPermissions("sys:dept:update")
+	@RequiresPermissions("sys.dept.add")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
 		SysDept record = Request2ModelUtil.covert(SysDept.class, request);
@@ -66,7 +66,7 @@ public class SysDeptController extends BaseController {
 
 	// 修改部门
 	@ApiOperation(value = "修改部门")
-	@RequiresPermissions("sys:dept:update")
+	@RequiresPermissions("sys.dept.update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysDept record = Request2ModelUtil.covert(SysDept.class, request);
@@ -76,7 +76,7 @@ public class SysDeptController extends BaseController {
 
 	// 删除部门
 	@ApiOperation(value = "删除部门")
-	@RequiresPermissions("sys:dept:update")
+	@RequiresPermissions("sys.dept.delete")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {

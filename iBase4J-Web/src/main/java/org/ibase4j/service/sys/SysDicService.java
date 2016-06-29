@@ -65,4 +65,10 @@ public class SysDicService {
 	public SysDic queryDicById(Integer id) {
 		return provider.queryDicById(id);
 	}
+
+	public Map<String, String> queryDicByDicIndexKey(String key) {
+		Assert.notNull(key, Resources.getMessage("KEY_IS_NULL"));
+		return provider.queryDicByDicIndexKey(key);
+	}
+
 }

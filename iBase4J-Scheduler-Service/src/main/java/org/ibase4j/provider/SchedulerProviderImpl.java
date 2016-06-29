@@ -88,7 +88,7 @@ public class SchedulerProviderImpl implements SchedulerProvider {
 	@Transactional
 	@CachePut("taskGroup")
 	public TaskGroup updateGroup(TaskGroup record) {
-		record.setEnable(1);
+		record.setEnable(true);
 		if (record.getId() == null) {
 			record.setCreateTime(new Date());
 			taskGroupMapper.insert(record);
@@ -102,7 +102,7 @@ public class SchedulerProviderImpl implements SchedulerProvider {
 	@Transactional
 	@CachePut("taskScheduler")
 	public TaskScheduler updateScheduler(TaskScheduler record) {
-		record.setEnable(1);
+		record.setEnable(true);
 		if (record.getId() == null) {
 			record.setCreateTime(new Date());
 			taskSchedulerMapper.insert(record);

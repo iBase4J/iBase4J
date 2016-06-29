@@ -36,7 +36,7 @@ public class SysRoleController extends BaseController {
 	private SysRoleService sysRoleService;
 
 	@ApiOperation(value = "查询角色")
-	@RequiresPermissions("sys:role:read")
+	@RequiresPermissions("sys.role.read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -46,7 +46,7 @@ public class SysRoleController extends BaseController {
 
 	// 详细信息
 	@ApiOperation(value = "角色详情")
-	@RequiresPermissions("sys:role:read")
+	@RequiresPermissions("sys.role.read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysRole record = sysRoleService.queryById(id);
@@ -55,7 +55,7 @@ public class SysRoleController extends BaseController {
 
 	// 新增
 	@ApiOperation(value = "添加角色")
-	@RequiresPermissions("sys:role:update")
+	@RequiresPermissions("sys.role.add")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
 		SysRole record = Request2ModelUtil.covert(SysRole.class, request);
@@ -65,7 +65,7 @@ public class SysRoleController extends BaseController {
 
 	// 修改
 	@ApiOperation(value = "修改角色")
-	@RequiresPermissions("sys:role:update")
+	@RequiresPermissions("sys.role.update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysRole record = Request2ModelUtil.covert(SysRole.class, request);
@@ -75,7 +75,7 @@ public class SysRoleController extends BaseController {
 
 	// 删除
 	@ApiOperation(value = "删除角色")
-	@RequiresPermissions("sys:role:update")
+	@RequiresPermissions("sys.role.delete")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {

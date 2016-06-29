@@ -81,6 +81,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 		List<SysMenuBean> result = InstanceUtil.newArrayList();
 		for (SysMenuBean sysMenuBean : menus) {
 			if (sysMenuBean.getParentId() == 0) {
+				sysMenuBean.setLeaf(0);
 				sysMenuBean.setMenuBeans(getChildMenu(map, sysMenuBean.getId()));
 				result.add(sysMenuBean);
 			}

@@ -9,7 +9,7 @@
     <id column="id_" jdbcType="INTEGER" property="id" />
     <result column="group_name" jdbcType="VARCHAR" property="groupName" />
     <result column="group_desc" jdbcType="VARCHAR" property="groupDesc" />
-    <result column="enable_" jdbcType="INTEGER" property="enable" />
+    <result column="enable_" jdbcType="BIT" property="enable" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="create_by" jdbcType="INTEGER" property="createBy" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -31,7 +31,7 @@
     insert into task_group (group_name, group_desc, enable_, 
       create_time, create_by, update_time, 
       update_by)
-    values (#{groupName,jdbcType=VARCHAR}, #{groupDesc,jdbcType=VARCHAR}, #{enable,jdbcType=INTEGER}, 
+    values (#{groupName,jdbcType=VARCHAR}, #{groupDesc,jdbcType=VARCHAR}, #{enable,jdbcType=BIT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=INTEGER})
   </insert>
@@ -43,7 +43,7 @@
     update task_group
     set group_name = #{groupName,jdbcType=VARCHAR},
       group_desc = #{groupDesc,jdbcType=VARCHAR},
-      enable_ = #{enable,jdbcType=INTEGER},
+      enable_ = #{enable,jdbcType=BIT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_by = #{createBy,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

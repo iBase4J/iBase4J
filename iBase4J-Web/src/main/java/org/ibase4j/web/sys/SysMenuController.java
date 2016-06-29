@@ -37,7 +37,7 @@ public class SysMenuController extends BaseController {
 
 	// 查询菜单
 	@ApiOperation(value = "查询菜单")
-	@RequiresPermissions("sys:menu:read")
+	@RequiresPermissions("sys.menu.read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -47,7 +47,7 @@ public class SysMenuController extends BaseController {
 
 	// 详细信息
 	@ApiOperation(value = "菜单详情")
-	@RequiresPermissions("sys:menu:read")
+	@RequiresPermissions("sys.menu.read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysMenu record = sysMenuService.queryById(id);
@@ -56,7 +56,7 @@ public class SysMenuController extends BaseController {
 
 	// 新增菜单
 	@ApiOperation(value = "添加菜单")
-	@RequiresPermissions("sys:menu:updae")
+	@RequiresPermissions("sys.menu.add")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(HttpServletRequest request, ModelMap modelMap) {
 		SysMenu record = Request2ModelUtil.covert(SysMenu.class, request);
@@ -66,7 +66,7 @@ public class SysMenuController extends BaseController {
 
 	// 修改菜单
 	@ApiOperation(value = "修改菜单")
-	@RequiresPermissions("sys:menu:updae")
+	@RequiresPermissions("sys.menu.updae")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysMenu record = Request2ModelUtil.covert(SysMenu.class, request);
@@ -76,7 +76,7 @@ public class SysMenuController extends BaseController {
 
 	// 删除菜单
 	@ApiOperation(value = "删除菜单")
-	@RequiresPermissions("sys:menu:updae")
+	@RequiresPermissions("sys.menu.delete")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Integer id) {

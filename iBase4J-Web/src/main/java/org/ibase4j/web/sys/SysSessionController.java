@@ -36,7 +36,7 @@ public class SysSessionController extends BaseController {
 
 	// 查询会话
 	@ApiOperation(value = "查询会话")
-	@RequiresPermissions("sys:session:read")
+	@RequiresPermissions("sys.session.read")
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
@@ -48,7 +48,7 @@ public class SysSessionController extends BaseController {
 
 	// 删除会话
 	@ApiOperation(value = "删除会话")
-	@RequiresPermissions("sys:session:update")
+	@RequiresPermissions("sys.session.delete")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object update(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		sysSessionService.delete(id);

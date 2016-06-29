@@ -25,4 +25,6 @@ public interface SysDicProvider {
 	public PageInfo<SysDic> queryDic(Map<String, Object> params);
 
 	public void deleteDicIndex(Integer id);
+	
+	public Map<String, String> queryDicByDicIndexKey(String key);
 }

@@ -104,7 +104,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 	public void delete(Integer id, Integer userId) {
 		try {
 			T record = queryById(id);
-			record.setEnable(0);
+			record.setEnable(false);
 			record.setUpdateTime(new Date());
 			record.setUpdateBy(userId);
 			mapper.updateByPrimaryKey(record);
@@ -117,7 +117,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 	@Transactional
 	public T update(T record) {
 		try {
-			record.setEnable(0);
+			record.setEnable(true);
 			record.setUpdateTime(new Date());
 			if (record.getId() == null) {
 				record.setCreateTime(new Date());
