@@ -14,8 +14,8 @@ import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +37,7 @@ public class LoginController extends BaseController {
 
 	// 登录
 	@ApiOperation(value = "用户登录")
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@PostMapping("/login")
 	public Object login(ModelMap modelMap,
 			@ApiParam(required = true, value = "登录帐号") @RequestParam(value = "account", required = false) String account,
 			@ApiParam(required = true, value = "登录密码") @RequestParam(value = "password", required = false) String password) {
@@ -51,7 +51,7 @@ public class LoginController extends BaseController {
 
 	// 登出
 	@ApiOperation(value = "用户登出")
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	@PostMapping("/logout")
 	public Object logout(ModelMap modelMap) {
 		SecurityUtils.getSubject().logout();
 		return setSuccessModelMap(modelMap);
@@ -59,7 +59,7 @@ public class LoginController extends BaseController {
 
 	// 注册
 	@ApiOperation(value = "用户注册")
-	@RequestMapping(value = "/regin", method = RequestMethod.POST)
+	@PostMapping("/regin")
 	public Object regin(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "account", required = false) String account,
 			@RequestParam(value = "password", required = false) String password) {
@@ -76,7 +76,7 @@ public class LoginController extends BaseController {
 
 	// 没有登录
 	@ApiOperation(value = "没有登录")
-	@RequestMapping(value = "/unauthorized", method = RequestMethod.GET)
+	@GetMapping("/unauthorized")
 	public Object unauthorized(ModelMap modelMap) {
 		SecurityUtils.getSubject().logout();
 		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
@@ -84,7 +84,7 @@ public class LoginController extends BaseController {
 
 	// 没有权限
 	@ApiOperation(value = "没有权限")
-	@RequestMapping(value = "/forbidden", method = RequestMethod.GET)
+	@GetMapping("/forbidden")
 	public Object forbidden(ModelMap modelMap) {
 		return setModelMap(modelMap, HttpCode.FORBIDDEN);
 	}

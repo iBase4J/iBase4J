@@ -25,7 +25,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
-		<spring.version>4.2.6.RELEASE</spring.version>
+		<spring.version>4.3.0.RELEASE</spring.version>
 		<spring-session.version>1.2.0.RELEASE</spring-session.version>
 		<spring-data-redis.version>1.7.2.RELEASE</spring-data-redis.version>
 		<!-- -->
@@ -150,6 +150,11 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
