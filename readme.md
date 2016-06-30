@@ -22,7 +22,7 @@
  12. 工具类：excel导入导出，汉字转拼音，身份证号码验证，数字转大写人民币，FTP/SFTP/fastDFS上传下载，发送邮件，redis缓存，加密等等。
 
 ## 技术选型
-    ● 核心框架：Spring Framework 4.2.6 + Dubbo 2.5.3
+    ● 核心框架：Spring Framework 4.3.0 + Dubbo 2.5.3
     ● 安全框架：Apache Shiro 1.2
     ● 任务调度：Spring + Quartz
     ● 持久层框架：MyBatis 3.4
