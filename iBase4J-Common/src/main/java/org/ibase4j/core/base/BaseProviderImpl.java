@@ -48,23 +48,24 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 
 	/** 根据Id查询(默认类型T) */
 	public PageInfo<T> getPage(Page<Integer> ids) {
-		Page<T> page = new Page<T>(ids.getPageNum(), ids.getPageSize());
-		page.setTotal(ids.getTotal());
 		if (ids != null) {
+			Page<T> page = new Page<T>(ids.getPageNum(), ids.getPageSize());
+			page.setTotal(ids.getTotal());
 			page.clear();
 			BaseProviderImpl<T> provider = getProvider();
 			for (Integer id : ids) {
 				page.add(provider.queryById(id));
 			}
+			return new PageInfo<T>(page);
 		}
-		return new PageInfo<T>(page);
+		return new PageInfo<T>();
 	}
 
 	/** 根据Id查询(cls返回类型Class) */
 	public <K> PageInfo<K> getPage(Page<Integer> ids, Class<K> cls) {
-		Page<K> page = new Page<K>(ids.getPageNum(), ids.getPageSize());
-		page.setTotal(ids.getTotal());
 		if (ids != null) {
+			Page<K> page = new Page<K>(ids.getPageNum(), ids.getPageSize());
+			page.setTotal(ids.getTotal());
 			page.clear();
 			BaseProviderImpl<T> provider = getProvider();
 			for (Integer id : ids) {
@@ -72,8 +73,9 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 				K k = InstanceUtil.to(t, cls);
 				page.add(k);
 			}
+			return new PageInfo<K>(page);
 		}
-		return new PageInfo<K>(page);
+		return new PageInfo<K>();
 	}
 
 	/** 根据Id查询(默认类型T) */
