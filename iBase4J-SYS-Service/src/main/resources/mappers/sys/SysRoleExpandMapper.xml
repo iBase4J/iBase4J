@@ -10,4 +10,17 @@
 			and role_name like CONCAT('%',#{keyword},'%')
 		</if>
 	</select>
+	<select id="queryPermission" resultType="java.lang.String">
+		select CONCAT(menu_name,'(', GROUP_CONCAT(code_text), ')')
+		from sys_role_menu rm
+		join sys_menu m on rm.menu_id=m.id_
+		join sys_dic d on rm.permission_=d.code_
+		join sys_dic_index di on d.index_id=di.id_ and di.key_='CRUD'
+		where 1=1
+		<if test="roleId != null">
+			and rm.role_id=#{roleId}
+		</if>
+		group by menu_name
+		order by menu_id
+	</select>
 </mapper>

@@ -40,7 +40,7 @@ public class SysRoleController extends BaseController {
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
-		PageInfo<?> list = sysRoleService.query(params);
+		PageInfo<?> list = sysRoleService.queryBean(params);
 		return setSuccessModelMap(modelMap, list);
 	}
 

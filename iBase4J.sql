@@ -367,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.sys_event 的数据：~60 rows (大约)
+-- 正在导出表  ibase4j.sys_event 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_event` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_event` ENABLE KEYS */;
 
@@ -405,15 +405,15 @@ INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`
 	(6, '会话管理', 1, 1, 'glyphicon glyphicon-earphone', 'main.sys.session.list', 0, 6, 1, 'sys.session', NULL, 1, NULL, NULL, NULL, '2016-06-28 18:07:49'),
 	(7, '字典管理', 1, 1, 'glyphicon glyphicon-book', 'main.sys.dic.list', 0, 7, 1, 'sys.dic', NULL, 1, NULL, NULL, NULL, '2016-06-28 18:07:50'),
 	(8, '参数管理', 1, 1, 'glyphicon glyphicon-wrench', 'main.sys.param.list', 0, 8, 1, 'sys.param', NULL, 1, NULL, NULL, NULL, '2016-06-28 18:07:52'),
-	(9, '调度管理', 1, 0, 'glyphicon glyphicon-fire', '#', 0, 2, 1, 'task', NULL, 1, NULL, NULL, NULL, '2016-06-29 08:19:23'),
+	(9, '调度中心', 1, 0, 'glyphicon glyphicon-fire', '#', 0, 2, 1, 'task', NULL, 1, NULL, NULL, NULL, '2016-06-30 14:23:57'),
 	(10, '任务组管理', 1, 9, 'glyphicon glyphicon-equalizer', 'main.task.group.list', 0, 1, 1, 'task.group', NULL, 1, NULL, NULL, NULL, '2016-06-28 18:08:21'),
 	(11, '任务管理', 1, 9, 'glyphicon glyphicon-bookmark', 'main.task.scheduler.list', 0, 2, 1, 'task.scheduler', NULL, 1, NULL, NULL, NULL, '2016-06-28 18:08:25'),
-	(12, '调度管理', 1, 9, 'glyphicon glyphicon-random', 'main.task.scheduled.list', 0, 3, 1, 'task.scheduled', NULL, 1, NULL, NULL, NULL, '2016-06-28 18:08:30'),
+	(12, '调度管理', 1, 9, 'glyphicon glyphicon-random', 'main.task.scheduled.list', 0, 3, 1, 'task.scheduled', NULL, 1, NULL, NULL, NULL, '2016-06-30 14:24:02'),
 	(13, '调度日志', 1, 9, 'glyphicon glyphicon-file', 'main.task.log.list', 0, 4, 1, 'task.log', NULL, 1, NULL, NULL, NULL, '2016-06-28 18:08:48'),
-	(14, '清除缓存', 1, 1, NULL, NULL, 0, 3, 0, 'sys.cache', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 08:38:41'),
-	(15, '用户权限', 1, 5, NULL, NULL, 0, 4, 0, 'user:menu', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-28 18:14:51'),
-	(16, '用户角色', 1, 5, NULL, NULL, 0, 5, 0, 'user:role', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-28 18:14:53'),
-	(17, '角色权限', 1, 5, NULL, NULL, 0, 6, 0, 'role:menu', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-28 18:14:55');
+	(14, '清除缓存', 1, 1, NULL, NULL, 0, 9, 0, 'sys.cache', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:25'),
+	(15, '用户权限', 1, 1, NULL, NULL, 0, 10, 0, 'user:menu', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:27'),
+	(16, '用户角色', 1, 1, NULL, NULL, 0, 11, 0, 'user:role', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:29'),
+	(17, '角色权限', 1, 1, NULL, NULL, 0, 12, 0, 'role:menu', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:33');
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 
 
@@ -542,9 +542,9 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `update_by` int(20) DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='会话管理';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会话管理';
 
--- 正在导出表  ibase4j.sys_session 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.sys_session 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
