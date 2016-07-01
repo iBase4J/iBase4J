@@ -39,7 +39,7 @@ public final class Resources {
 				}
 			}
 		}
-		if (params != null) {
+		if (params != null && params.length > 0) {
 			return String.format(message.getString(key), params);
 		}
 		return message.getString(key);

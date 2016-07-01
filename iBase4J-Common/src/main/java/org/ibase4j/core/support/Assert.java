@@ -20,7 +20,7 @@ import org.springframework.util.ObjectUtils;
  */
 public abstract class Assert {
 	private static String getMessage(String key, Object... args) {
-		return String.format(Resources.getMessage(key), args);
+		return Resources.getMessage(key, args);
 	}
 
 	/**  */
