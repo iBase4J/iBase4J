@@ -98,7 +98,7 @@ public class MapperPlugin extends PluginAdapter {
 						e.printStackTrace();
 					}
 				}
-			} else { // CRUD Mapper
+			} else if (!shortName.endsWith("Example")) { // CRUD Mapper
 				Interface mapperInterface = new Interface(daoTargetPackage + "." + shortName + "Mapper");
 
 				mapperInterface.setVisibility(JavaVisibility.PUBLIC);
