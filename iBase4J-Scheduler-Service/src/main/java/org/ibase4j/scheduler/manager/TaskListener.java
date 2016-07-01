@@ -12,8 +12,8 @@ import org.ibase4j.core.support.mq.QueueSender;
 import org.ibase4j.core.util.NativeUtil;
 import org.ibase4j.model.generator.TaskFireLog;
 import org.ibase4j.model.generator.TaskScheduler;
-import org.ibase4j.provider.scheduler.SchedulerProvider;
 import org.ibase4j.scheduler.Constants;
+import org.ibase4j.service.SchedulerService;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -32,10 +32,10 @@ import com.alibaba.fastjson.JSON;
 public class TaskListener implements JobListener {
 	private Logger logger = LogManager.getLogger(this.getClass());
 	@Autowired
-	private SchedulerProvider schedulerProvider;
+	private SchedulerService schedulerService;
 	@Autowired
 	private QueueSender queueSender;
-	// 发送邮件线程池
+	// 线程池
 	private ExecutorService executorService = Executors.newCachedThreadPool();
 
 	public String getName() {
@@ -63,7 +63,7 @@ public class TaskListener implements JobListener {
 		log.setStatus(Constants.INIT_STATS);
 		log.setServerHost(NativeUtil.getHostName());
 		log.setServerDuid(NativeUtil.getDUID());
-		schedulerProvider.updateLog(log);
+		schedulerService.updateLog(log);
 		jobDataMap.put(Constants.JOB_LOG, log);
 	}
 
@@ -98,15 +98,15 @@ public class TaskListener implements JobListener {
 		executorService.submit(new Runnable() {
 			public void run() {
 				try {
-					schedulerProvider.updateLog(log);
+					schedulerService.updateLog(log);
 				} catch (Exception e) {
 					logger.error("Update TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
 				}
 				// 更新任务执行时间
-				TaskScheduler taskScheduler = schedulerProvider.getSchedulerById(jobDataMap.getInt("id"));
+				TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
 				taskScheduler.setTaskPreviousFireTime(context.getFireTime());
 				taskScheduler.setTaskNextFireTime(context.getNextFireTime());
-				schedulerProvider.updateScheduler(taskScheduler);
+				schedulerService.updateScheduler(taskScheduler);
 			}
 		});
 	}
