@@ -51,7 +51,7 @@
 		<quartz.version>2.2.3</quartz.version>
 		<aspectj.version>1.8.9</aspectj.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
-		<activemq.version>5.7.0</activemq.version>
+		<activemq.version>5.13.3</activemq.version>
 		<jsqlparser.version>0.9.5</jsqlparser.version>
 		<pagehelper.version>4.1.5</pagehelper.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
@@ -267,7 +267,7 @@
 		<!-- activemq -->
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-core</artifactId>
+			<artifactId>activemq-spring</artifactId>
 			<version>${activemq.version}</version>
 		</dependency>
 	</dependencies>

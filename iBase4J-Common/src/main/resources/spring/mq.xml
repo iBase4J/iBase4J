@@ -12,10 +12,11 @@
 		class="org.springframework.jms.connection.CachingConnectionFactory">
 		<description>JMS连接工厂</description>
 		<property name="targetConnectionFactory">
-			<bean class="org.apache.activemq.ActiveMQConnectionFactory">
+			<bean class="org.apache.activemq.spring.ActiveMQConnectionFactory">
 				<property name="brokerURL" value="${mq.brokerURL}" />
 				<property name="userName" value="${mq.userName}" />
 				<property name="password" value="${mq.password}" />
+				<property name="trustAllPackages" value="true" />
 			</bean>
 		</property>
 		<property name="sessionCacheSize" value="${mq.sessionCacheSize}" />

@@ -14,7 +14,7 @@ public class ServerListerner implements ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent contextEvent) {
 		logger.info("=================================");
-		logger.info("系统[{}]启动成功!!!", contextEvent.getServletContext().getServletContextName());
+		logger.info("系统[{}]启动完成!!!", contextEvent.getServletContext().getServletContextName());
 		logger.info("=================================");
 	}
 }

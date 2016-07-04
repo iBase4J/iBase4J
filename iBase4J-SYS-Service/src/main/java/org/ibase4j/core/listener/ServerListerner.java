@@ -22,7 +22,7 @@ public class ServerListerner implements ServletContextListener {
 		SysDicProvider sysDicProvider = context.getBean(SysDicProvider.class);
 		sysDicProvider.getAllDic();
 		logger.info("=================================");
-		logger.info("系统[{}]启动成功!!!", contextEvent.getServletContext().getServletContextName());
+		logger.info("系统[{}]启动完成!!!", contextEvent.getServletContext().getServletContextName());
 		logger.info("=================================");
 	}
 }
