@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.fasetdfs;
+package org.ibase4j.core.support.fastdfs;
 
 import java.io.Serializable;
 
