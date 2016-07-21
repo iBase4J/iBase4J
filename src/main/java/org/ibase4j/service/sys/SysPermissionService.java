@@ -1,6 +1,6 @@
 package org.ibase4j.service.sys;
 
-import org.ibase4j.mybatis.sys.dao.SysPermissionExpandMapper;
+import org.ibase4j.dao.sys.SysPermissionExpandMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;

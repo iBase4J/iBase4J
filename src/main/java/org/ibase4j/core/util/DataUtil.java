@@ -18,7 +18,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author ShenHuaJie
  * @since 2011-11-08
  */
-public class DataUtil {
+public final class DataUtil {
 	private DataUtil() {
 	}
 
@@ -28,7 +28,7 @@ public class DataUtil {
 	 * @param b
 	 * @return
 	 */
-	public static String byte2hex(byte[] b) { // 一个字节数，转成16进制字符串
+	public static final String byte2hex(byte[] b) { // 一个字节数，转成16进制字符串
 		StringBuilder hs = new StringBuilder(b.length * 2);
 		String stmp = "";
 		for (int n = 0; n < b.length; n++) {
@@ -48,7 +48,7 @@ public class DataUtil {
 	 * @param b
 	 * @return
 	 */
-	public static byte[] hex2byte(String hs) {
+	public static final byte[] hex2byte(String hs) {
 		byte[] b = hs.getBytes();
 		if ((b.length % 2) != 0)
 			throw new IllegalArgumentException("长度不是偶数");
@@ -73,7 +73,7 @@ public class DataUtil {
 	 * @return 相对路径所对应的绝对路径
 	 * @throws IOException 因为本方法将查询文件系统，所以可能抛出IO异常
 	 */
-	public static String getFullPathRelateClass(String relatedPath, Class<?> cls) {
+	public static final String getFullPathRelateClass(String relatedPath, Class<?> cls) {
 		String path = null;
 		if (relatedPath == null) {
 			throw new NullPointerException();
@@ -97,7 +97,7 @@ public class DataUtil {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String getPathFromClass(Class<?> cls) {
+	public static final String getPathFromClass(Class<?> cls) {
 		String path = null;
 		if (cls == null) {
 			throw new NullPointerException();
@@ -132,7 +132,7 @@ public class DataUtil {
 	 * @param pObj 待检查对象
 	 * @return boolean 返回的布尔值
 	 */
-	public static boolean isEmpty(Object pObj) {
+	public static final boolean isEmpty(Object pObj) {
 		if (pObj == null)
 			return true;
 		if (pObj == "")
@@ -160,7 +160,7 @@ public class DataUtil {
 	 * @param pObj 待检查对象
 	 * @return boolean 返回的布尔值
 	 */
-	public static boolean isNotEmpty(Object pObj) {
+	public static final boolean isNotEmpty(Object pObj) {
 		if (pObj == null)
 			return false;
 		if (pObj == "")
@@ -187,7 +187,7 @@ public class DataUtil {
 	 * @param pStr
 	 * @return
 	 */
-	public static String replace4JsOutput(String pStr) {
+	public static final String replace4JsOutput(String pStr) {
 		pStr = pStr.replace("\r\n", "<br/>&nbsp;&nbsp;");
 		pStr = pStr.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
 		pStr = pStr.replace(" ", "&nbsp;");
@@ -200,7 +200,7 @@ public class DataUtil {
 	 * @param paramArray
 	 * @return
 	 */
-	public static String[] trim(String[] paramArray) {
+	public static final String[] trim(String[] paramArray) {
 		if (ArrayUtils.isEmpty(paramArray)) {
 			return paramArray;
 		}
@@ -249,7 +249,7 @@ public class DataUtil {
 	}
 
 	/** 初始化设置默认值 */
-	public <K> K ifNull(K k, K defaultValue) {
+	public static final <K> K ifNull(K k, K defaultValue) {
 		if (k == null) {
 			return defaultValue;
 		}

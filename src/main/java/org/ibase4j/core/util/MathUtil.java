@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.regex.Pattern;
 
-public strictfp class MathUtil {
+public final strictfp class MathUtil {
 	private MathUtil() {
 	}
 
@@ -17,7 +17,7 @@ public strictfp class MathUtil {
 	 * @param object 原始数据
 	 * @return BigDecimal
 	 */
-	public static BigDecimal bigDecimal(Object object) {
+	public static final BigDecimal bigDecimal(Object object) {
 		if (object == null) {
 			throw new NullPointerException();
 		}
@@ -37,7 +37,7 @@ public strictfp class MathUtil {
 	 * @param num2 加数
 	 * @return 两个参数的和
 	 */
-	public static Double add(Object num1, Object num2) {
+	public static final Double add(Object num1, Object num2) {
 		BigDecimal result = bigDecimal(num1).add(bigDecimal(num2));
 		return result.setScale(DEF_SCALE, BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
@@ -49,7 +49,7 @@ public strictfp class MathUtil {
 	 * @param num2 减数
 	 * @return 两个参数的差
 	 */
-	public static Double subtract(Object num1, Object num2) {
+	public static final Double subtract(Object num1, Object num2) {
 		BigDecimal result = bigDecimal(num1).subtract(bigDecimal(num2));
 		return result.setScale(DEF_SCALE, BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
@@ -61,7 +61,7 @@ public strictfp class MathUtil {
 	 * @param num2 乘数
 	 * @return 两个参数的积
 	 */
-	public static Double multiply(Object num1, Object num2) {
+	public static final Double multiply(Object num1, Object num2) {
 		BigDecimal result = bigDecimal(num1).multiply(bigDecimal(num2));
 		return result.setScale(DEF_SCALE, BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
@@ -73,7 +73,7 @@ public strictfp class MathUtil {
 	 * @param num2 除数
 	 * @return 两个参数的商
 	 */
-	public static Double divide(Object num1, Object num2) {
+	public static final Double divide(Object num1, Object num2) {
 		return divide(num1, num2, DEF_SCALE);
 	}
 
@@ -85,7 +85,7 @@ public strictfp class MathUtil {
 	 * @param scale 表示表示需要精确到小数点以后几位。
 	 * @return 两个参数的商
 	 */
-	public static Double divide(Object num1, Object num2, Integer scale) {
+	public static final Double divide(Object num1, Object num2, Integer scale) {
 		if (scale == null) {
 			scale = DEF_SCALE;
 		}
@@ -104,7 +104,7 @@ public strictfp class MathUtil {
 	 * @param scale 小数点后保留几位
 	 * @return 四舍五入后的结果
 	 */
-	public static Double round(Object num, int scale) {
+	public static final Double round(Object num, int scale) {
 		if (scale < 0) {
 			throw new IllegalArgumentException("The scale must be a positive integer or zero");
 		}
@@ -119,7 +119,7 @@ public strictfp class MathUtil {
 	 * @param end
 	 * @return
 	 */
-	public static BigDecimal getRandom(int start, int end) {
+	public static final BigDecimal getRandom(int start, int end) {
 		return new BigDecimal(start + Math.random() * end);
 	}
 
@@ -130,7 +130,7 @@ public strictfp class MathUtil {
 	 * @param pattern
 	 * @return
 	 */
-	public static String format(Object obj, String pattern) {
+	public static final String format(Object obj, String pattern) {
 		if (obj == null) {
 			return null;
 		}
@@ -142,12 +142,12 @@ public strictfp class MathUtil {
 	}
 
 	/** 是否数字 */
-	public static boolean isNumber(Object object) {
+	public static final boolean isNumber(Object object) {
 		Pattern pattern = Pattern.compile("\\d+(.\\d+)?$");
 		return pattern.matcher(object.toString()).matches();
 	}
 
-	public static void main(String[] args) {
+	public static final void main(String[] args) {
 		System.out.println(add(1.000001, 2.10));
 	}
 }

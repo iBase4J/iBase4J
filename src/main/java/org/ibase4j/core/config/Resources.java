@@ -8,12 +8,17 @@ import java.util.ResourceBundle;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-/** 加载配置 */
-@PropertySource(value = { "classpath:config/ssh.properties", "classpath:config/email.properties",
-		"claspath:config/thirdParty.properties", "claspath:i18n/messages*.properties" })
+/**
+ * 加载配置
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
+@PropertySource(value = { "classpath:config/sftp.properties", "classpath:config/email.properties",
+		"classpath:config/thirdParty.properties", "classpath:i18n/messages*.properties" })
 public final class Resources {
 	/** SSH服务器配置 */
-	public static final ResourceBundle SSH = ResourceBundle.getBundle("config/ssh");
+	public static final ResourceBundle SFTP = ResourceBundle.getBundle("config/sftp");
 	/** 邮箱服务器配置 */
 	public static final ResourceBundle EMAIL = ResourceBundle.getBundle("config/email");
 	/** 第三方登录配置 */
@@ -34,7 +39,7 @@ public final class Resources {
 				}
 			}
 		}
-		if (params != null) {
+		if (params != null && params.length > 0) {
 			return String.format(message.getString(key), params);
 		}
 		return message.getString(key);

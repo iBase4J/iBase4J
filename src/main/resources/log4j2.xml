@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="off">
 	<properties>
-		<property name="LOG_HOME">\logs</property>
+		<property name="LOG_HOME">\output\logs</property>
 		<!-- 日志备份目录 -->
 		<property name="BACKUP_HOME">backup</property>
 		<property name="SERVER_NAME">iBase4J</property>
@@ -53,19 +53,22 @@
 
 	<loggers>
 		<logger name="org.slf4j" level="INFO" />
+		<logger name="org.quartz" level="INFO" />
 		<logger name="com.atomikos" level="WARN" />
+		<logger name="org.apache.shiro" level="INFO" />
+		<logger name="com.alibaba.dubbo" level="WARN" />
+		<logger name="org.apache.activemq" level="INFO" />
 		<logger name="org.springframework" level="INFO" />
-		<logger name="org.apache.activemq" level="WARN" />
 		<logger name="org.apache.zookeeper" level="WARN" />
-		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
-		<logger name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false">  
+		<logger name="org.springframework.web" level="DEBUG" />
+		<AsyncLogger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
 			<appender-ref ref="Console" />
             <appender-ref ref="ProductLog" />
-        </logger>
-		<root level="DEBUG">
+        </AsyncLogger >
+		<asyncRoot  level="DEBUG" includeLocation="true">
 			<appender-ref ref="Console" />
 			<appender-ref ref="RollingFile" />
 			<appender-ref ref="RollingFileError" />
-		</root>
+		</asyncRoot >
 	</loggers>
 </configuration>

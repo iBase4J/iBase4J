@@ -6,7 +6,8 @@ package org.ibase4j.core.support.login;
 import java.io.Serializable;
 
 /**
- * @author chuzz
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:26:23
  */
 @SuppressWarnings("serial")
 public class ThirdPartyUser implements Serializable {

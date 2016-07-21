@@ -26,11 +26,14 @@
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.9</slf4j.version>
 		<log4j.version>2.1</log4j.version>
+		<disruptor.version>3.3.4</disruptor.version>
 		<!-- -->
 		<fastjson.version>1.2.8</fastjson.version>
 		<druid.version>1.0.18</druid.version>
 		<dubbo.version>2.5.3</dubbo.version>
 		<jedis.version>2.8.1</jedis.version>
+		<xfire.version>1.2.6</xfire.version>
+		<quartz.version>2.2.3</quartz.version>
 	</properties>
 
 	<dependencies>
@@ -112,6 +115,11 @@
 			<groupId>com.github.jsqlparser</groupId>
 			<artifactId>jsqlparser</artifactId>
 			<version>0.9.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-core</artifactId>
+			<version>1.3.2</version>
 		</dependency>
 		<!-- spring核心包 -->
 		<dependency>
@@ -268,6 +276,11 @@
 			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>com.lmax</groupId>
+			<artifactId>disruptor</artifactId>
+			<version>${disruptor.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>3.15.0-GA</version>
@@ -348,33 +361,18 @@
 			<artifactId>activemq-core</artifactId>
 			<version>5.7.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.xfire</groupId>
+			<artifactId>xfire-core</artifactId>
+			<version>${xfire.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>
 	</dependencies>
 
-	<repositories>
-		<repository>
-			<id>people.apache.snapshots</id>
-			<url>http://repository.apache.org/content/groups/snapshots-group/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>apache.snapshots</id>
-			<name>Apache Snapshots</name>
-			<url>http://repository.apache.org/content/groups/snapshots-group/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 	<profiles>
 		<profile>
 			<id>build</id>
@@ -471,17 +469,6 @@
 						<overwrite>true</overwrite>
 					</configuration>
 					<dependencies>
-						<!-- File Upload -->
-						<dependency>
-							<groupId>commons-fileupload</groupId>
-							<artifactId>commons-fileupload</artifactId>
-							<version>1.3.1</version>
-						</dependency>
-						<dependency>
-							<groupId>commons-io</groupId>
-							<artifactId>commons-io</artifactId>
-							<version>1.4</version>
-						</dependency>
 						<dependency>
 							<groupId>mysql</groupId>
 							<artifactId>mysql-connector-java</artifactId>

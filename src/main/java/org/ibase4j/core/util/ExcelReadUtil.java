@@ -21,7 +21,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  * 
  * @author ShenHuaJie
  */
-public class ExcelReadUtil {
+public final class ExcelReadUtil {
 	private ExcelReadUtil() {
 	}
 
@@ -32,7 +32,7 @@ public class ExcelReadUtil {
 	 * 
 	 * @param sheetNumber 读取工作表的下标(从1开始).可有可无,默认读取所有表单.
 	 */
-	public static List<String[]> excelToArrayList(String filePath, int... sheetNumber) throws Exception {
+	public static final List<String[]> excelToArrayList(String filePath, int... sheetNumber) throws Exception {
 		List<String[]> resultList = null;
 		InputStream is = null;
 		try {
@@ -53,7 +53,7 @@ public class ExcelReadUtil {
 	 * 
 	 * @param sheetNumber 读取工作表的下标(从1开始).可有可无,默认读取所有表单.
 	 */
-	public static List<String[]> excelToArrayList(FileItem fileItem, int... sheetNumber) throws Exception {
+	public static final List<String[]> excelToArrayList(FileItem fileItem, int... sheetNumber) throws Exception {
 		List<String[]> resultList = null;
 		InputStream is = null;
 		try {
@@ -74,7 +74,7 @@ public class ExcelReadUtil {
 	 * 
 	 * @param sheetNumber 读取工作表的下标(从1开始).可有可无,默认读取所有表单.
 	 */
-	public static List<String[]> excelToArrayList(InputStream is, int... sheetNumber) throws Exception {
+	public static final List<String[]> excelToArrayList(InputStream is, int... sheetNumber) throws Exception {
 		ArrayList<String[]> resultList = new ArrayList<String[]>();
 		Workbook wb = null;
 		try {
@@ -119,7 +119,7 @@ public class ExcelReadUtil {
 	 * @param sheetNumber 读取工作表的下标(从1开始).可有可无,默认读取所有表单.
 	 * @deprecated:读取Excel中的数据将它放入到ArrayList数组中(此为三维数组).
 	 */
-	public static ArrayList<ArrayList<Object>> readExcel(String filePath, int... sheetNumber) throws Exception {
+	public static final ArrayList<ArrayList<Object>> readExcel(String filePath, int... sheetNumber) throws Exception {
 		ArrayList<ArrayList<Object>> subdata = null;
 		InputStream is = null;
 		try {
@@ -140,7 +140,7 @@ public class ExcelReadUtil {
 	 * 
 	 * @param sheetNumber 读取工作表的下标(从1开始).可有可无,默认读取所有表单.
 	 */
-	public static ArrayList<ArrayList<Object>> readExcel(FileItem fileItem, int... sheetNumber) throws Exception {
+	public static final ArrayList<ArrayList<Object>> readExcel(FileItem fileItem, int... sheetNumber) throws Exception {
 		ArrayList<ArrayList<Object>> subdata = null;
 		InputStream is = null;
 		try {
@@ -161,7 +161,7 @@ public class ExcelReadUtil {
 	 * 
 	 * @param sheetNumber 读取工作表的下标(从1开始).可有可无,默认读取所有表单.
 	 */
-	public static ArrayList<ArrayList<Object>> readExcel(InputStream is, int... sheetNumber) throws Exception {
+	public static final ArrayList<ArrayList<Object>> readExcel(InputStream is, int... sheetNumber) throws Exception {
 		ArrayList<ArrayList<Object>> subdata = new ArrayList<ArrayList<Object>>();
 		Workbook wb = null;
 		try {

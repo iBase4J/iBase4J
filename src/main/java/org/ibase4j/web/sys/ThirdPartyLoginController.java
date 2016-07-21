@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.support.login.ThirdPartyLogin;
+import org.ibase4j.core.support.login.ThirdPartyLoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.service.sys.SysUserService;
 import org.ibase4j.web.BaseController;
@@ -58,11 +58,11 @@ public class ThirdPartyLoginController extends BaseController {
 			String code = request.getParameter("code");
 			if (StringUtils.isNotBlank(code)) {// 如果不为空
 				// 获取token和openid
-				Map<String, String> map = ThirdPartyLogin.getWxTokenAndOpenid(code, host);
+				Map<String, String> map = ThirdPartyLoginHelper.getWxTokenAndOpenid(code, host);
 				String openId = map.get("openId");
 				if (StringUtils.isNotBlank(openId)) {// 如果openID存在
 					// 获取第三方用户信息存放到session中
-					ThirdPartyUser thirdUser = ThirdPartyLogin.getWxUserinfo(map.get("access_token"), openId);
+					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getWxUserinfo(map.get("access_token"), openId);
 					// 查询是否已经绑定过
 					String provider = "WX";
 					String userId = sysUserService.queryUserIdByThirdParty(openId, provider);
@@ -93,11 +93,11 @@ public class ThirdPartyLoginController extends BaseController {
 			String code = request.getParameter("code");
 			if (StringUtils.isNotBlank(code)) {// 如果不为空
 				// 获取token和openid
-				Map<String, String> map = ThirdPartyLogin.getQQTokenAndOpenid(code, host);
+				Map<String, String> map = ThirdPartyLoginHelper.getQQTokenAndOpenid(code, host);
 				String openId = map.get("openId");
 				if (StringUtils.isNotBlank(openId)) {// 如果openID存在
 					// 获取第三方用户信息存放到session中
-					ThirdPartyUser thirdUser = ThirdPartyLogin.getQQUserinfo(map.get("access_token"), openId);
+					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getQQUserinfo(map.get("access_token"), openId);
 					// 查询是否已经绑定过
 					String provider = "QQ";
 					String userId = sysUserService.queryUserIdByThirdParty(openId, provider);
@@ -128,11 +128,11 @@ public class ThirdPartyLoginController extends BaseController {
 			String code = request.getParameter("code");
 			if (StringUtils.isNotBlank(code)) {// 如果不为空
 				// 获取token和uid
-				JSONObject json = ThirdPartyLogin.getSinaTokenAndUid(code, host);
+				JSONObject json = ThirdPartyLoginHelper.getSinaTokenAndUid(code, host);
 				String uid = json.getString("uid");
 				if (StringUtils.isNotBlank(uid)) {// 如果uid存在
 					// 获取第三方用户信息存放到session中
-					ThirdPartyUser thirdUser = ThirdPartyLogin.getSinaUserinfo(json.getString("access_token"), uid);
+					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getSinaUserinfo(json.getString("access_token"), uid);
 					String provider = "SINA";
 					// 查询是否已经绑定过
 					String userId = sysUserService.queryUserIdByThirdParty(uid, provider);

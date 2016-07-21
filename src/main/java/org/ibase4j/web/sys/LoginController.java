@@ -8,7 +8,7 @@ import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.mybatis.generator.model.SysUser;
+import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.service.sys.SysUserService;
 import org.ibase4j.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;

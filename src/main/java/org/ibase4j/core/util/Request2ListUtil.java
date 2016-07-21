@@ -10,13 +10,14 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by jonson.xu on 10/30/14.
+ * @author ShenHueJie
+ * @version 2016年5月20日 下午3:28:02
  */
-public class Request2ListUtil {
+public final class Request2ListUtil {
 	private Request2ListUtil() {
 	}
 
-	private static Integer paramSize(Set<Method> methodSet, Map<String, String[]> stringMap) {
+	private static final Integer paramSize(Set<Method> methodSet, Map<String, String[]> stringMap) {
 		Integer size = 0;
 		for (Method method : methodSet) {
 			String key = method.getName().substring(3, 4).toLowerCase() + method.getName().substring(4);
@@ -30,7 +31,7 @@ public class Request2ListUtil {
 		return size;
 	}
 
-	public static <K> List<K> covert(Class<K> T, HttpServletRequest request) {
+	public static final <K> List<K> covert(Class<K> T, HttpServletRequest request) {
 		try {
 
 			List<K> objectList = new LinkedList<K>();
@@ -66,7 +67,7 @@ public class Request2ListUtil {
 	 * @param T
 	 * @return
 	 */
-	private static <T> Set<Method> get_declared_methods(Class<T> T) {
+	private static final <T> Set<Method> get_declared_methods(Class<T> T) {
 		Method[] methods = T.getDeclaredMethods();
 		Set<Method> methodSet = new HashSet<Method>();
 		for (Method method : methods) {

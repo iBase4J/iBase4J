@@ -5,12 +5,16 @@ import org.ibase4j.core.config.Resources;
 /**
  * Ajax 请求时的自定义查询状态码，主要参考Http状态码，但并不完全对应
  * 
- * @author
- * @date 2016-03-28
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
  */
 public enum HttpCode {
 	/** 200请求成功 */
 	OK(200),
+	/** 207频繁操作 */
+	MULTI_STATUS(207),
+	/** 303登录失败 */
+	LOGIN_FAIL(303),
 	/** 400请求参数出错 */
 	BAD_REQUEST(400),
 	/** 401没有登录 */

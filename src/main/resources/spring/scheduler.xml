@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:c="http://www.springframework.org/schema/c" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="schedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<description>定时任务调度器工厂</description>
+		<property name="schedulerName" value="iBase4J-Scheduler" />
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+		<property name="configLocation" value="classpath:config/quartz.properties" />
+	</bean>
+
+	<bean id="schedulerManager" class="org.ibase4j.core.support.scheduler.manager.DefaultSchedulerManager">
+		<property name="scheduler" ref="schedulerFactoryBean" />
+		<property name="triggerLoaders">
+			<list>
+				<!--加载器类型 -->
+				<bean class="org.ibase4j.core.support.scheduler.manager.TriggerLoader"
+					c:taskType="dubbo" c:jobClass="org.ibase4j.core.support.scheduler.task.InvokeTask" />
+			</list>
+		</property>
+		<property name="jobListeners">
+			<list>
+				<!--日志监控类型 -->
+				<bean class="org.ibase4j.core.support.scheduler.manager.TaskListener" />
+			</list>
+		</property>
+	</bean>
+</beans>

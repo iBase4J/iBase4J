@@ -10,8 +10,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import org.ibase4j.core.exception.DataParseException;
 import org.ibase4j.core.support.DataType;
-import org.ibase4j.core.support.exception.DataParseException;
 
 /**
  * 类型转换辅助工具类
@@ -19,7 +19,7 @@ import org.ibase4j.core.support.exception.DataParseException;
  * @author ShenHuaJie
  * @since 2011-11-08
  */
-public class TypeParseUtil {
+public final class TypeParseUtil {
 	private TypeParseUtil() {
 	}
 
@@ -32,7 +32,7 @@ public class TypeParseUtil {
 	 * @return Object
 	 * @throws DataParseException
 	 */
-	public static Object convert(Object value, Class<?> type, String format) {
+	public static final Object convert(Object value, Class<?> type, String format) {
 		return convert(value, type.getName(), format);
 	}
 
@@ -48,7 +48,7 @@ public class TypeParseUtil {
 	 * @return Object
 	 * @throws DataParseException
 	 */
-	public static Object convert(Object value, String type, String format) {
+	public static final Object convert(Object value, String type, String format) {
 		Locale locale = Locale.getDefault();
 		if (value == null) {
 			return null;
@@ -419,22 +419,22 @@ public class TypeParseUtil {
 	}
 
 	/** 转换为布尔值 */
-	public static Boolean convertToBoolean(Object obj) {
+	public static final Boolean convertToBoolean(Object obj) {
 		return (Boolean) convert(obj, "Boolean", null);
 	}
 
 	/** 转换为整型 */
-	public static Integer convertToInteger(Object obj) {
+	public static final Integer convertToInteger(Object obj) {
 		return (Integer) convert(obj, "Integer", null);
 	}
 
 	/** 转换为字符串 */
-	public static String convertToString(Object obj) {
+	public static final String convertToString(Object obj) {
 		return (String) convert(obj, "String", null);
 	}
 
 	/** 转换为字符串 */
-	public static String convertToString(Object obj, String defaultValue) {
+	public static final String convertToString(Object obj, String defaultValue) {
 		Object s = convert(obj, "String", null);
 		if (s != null) {
 			return (String) s;
@@ -444,37 +444,37 @@ public class TypeParseUtil {
 	}
 
 	/** 转换为长整型 */
-	public static Long convertToLong(Object obj) {
+	public static final Long convertToLong(Object obj) {
 		return (Long) convert(obj, "Long", null);
 	}
 
 	/** 转换为双精度型 */
-	public static Double convertToDouble(Object obj) {
+	public static final Double convertToDouble(Object obj) {
 		return (Double) convert(obj, "Double", null);
 	}
 
 	/** 转换为浮点型 */
-	public static Double convertToFloat(Object obj) {
+	public static final Double convertToFloat(Object obj) {
 		return (Double) convert(obj, "Float", null);
 	}
 
 	/** 转换为数值型 */
-	public static BigDecimal convertToBigDecimal(Object obj, int scale) {
+	public static final BigDecimal convertToBigDecimal(Object obj, int scale) {
 		return ((BigDecimal) convert(obj, "BigDecimal", null)).setScale(scale, 5);
 	}
 
 	/** 转换为日期型 */
-	public static java.util.Date convertToDate(Object obj, String format) {
+	public static final java.util.Date convertToDate(Object obj, String format) {
 		return (java.util.Date) convert(obj, "Date", format);
 	}
 
 	/** 转换为日期型 */
-	public static Date convertToSqlDate(Object obj, String format) {
+	public static final Date convertToSqlDate(Object obj, String format) {
 		return (Date) convert(obj, "java.sql.Date", format);
 	}
 
 	/** 转换为日期型 */
-	public static Timestamp convertToTimestamp(Object obj, String format) {
+	public static final Timestamp convertToTimestamp(Object obj, String format) {
 		return (Timestamp) convert(obj, "Timestamp", format);
 	}
 }

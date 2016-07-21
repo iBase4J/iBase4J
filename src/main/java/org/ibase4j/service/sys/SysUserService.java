@@ -15,11 +15,11 @@ import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.mybatis.generator.dao.SysUserMapper;
-import org.ibase4j.mybatis.generator.dao.SysUserThirdpartyMapper;
-import org.ibase4j.mybatis.generator.model.SysUser;
-import org.ibase4j.mybatis.generator.model.SysUserThirdparty;
-import org.ibase4j.mybatis.sys.dao.SysUserExpandMapper;
+import org.ibase4j.dao.generator.SysUserMapper;
+import org.ibase4j.dao.generator.SysUserThirdpartyMapper;
+import org.ibase4j.dao.sys.SysUserExpandMapper;
+import org.ibase4j.model.generator.SysUser;
+import org.ibase4j.model.generator.SysUserThirdparty;
 import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -38,7 +38,7 @@ import com.github.pagehelper.PageInfo;
  */
 @Service
 @CacheConfig(cacheNames = "sysUser")
-public class SysUserService extends BaseService {
+public class SysUserService extends BaseService<SysUser> {
 	@Autowired
 	private SysUserMapper sysUserMapper;
 	@Autowired
@@ -50,7 +50,7 @@ public class SysUserService extends BaseService {
 	@Transactional
 	public void update(SysUser record) {
 		if (record.getId() == null) {
-			record.setUsable(1);
+			record.setEnable(true);
 			record.setCreateTime(new Date());
 			sysUserMapper.insert(record);
 		} else {
@@ -63,7 +63,7 @@ public class SysUserService extends BaseService {
 	public void delete(Integer id) {
 		SysUser record = queryById(id);
 		Assert.notNull(record, String.format(Resources.getMessage("USER_IS_NULL"), id));
-		record.setUsable(0);
+		record.setEnable(false);
 		update(record);
 	}
 
@@ -75,8 +75,8 @@ public class SysUserService extends BaseService {
 	@Cacheable
 	public PageInfo<SysUser> query(Map<String, Object> params) {
 		this.startPage(params);
-		Page<SysUser> list = sysUserExpandMapper.query(params);
-		return new PageInfo<SysUser>(list);
+		Page<Integer> ids = sysUserExpandMapper.query(params);
+		return new PageInfo<SysUser>(getList(ids));
 	}
 
 	/** 用户登录 */

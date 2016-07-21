@@ -15,7 +15,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  * 
  * @author ShenHuJie
  */
-public class PinyinUtil {
+public final class PinyinUtil {
 	private PinyinUtil() {
 	}
 
@@ -27,7 +27,7 @@ public class PinyinUtil {
 	 * @param src
 	 * @return String
 	 */
-	public static String getPinYin(String src) {
+	public static final String getPinYin(String src) {
 		char[] t1 = null;
 		t1 = src.toCharArray();
 		String[] t2 = new String[t1.length];
@@ -61,7 +61,7 @@ public class PinyinUtil {
 	 * @param src
 	 * @return String
 	 */
-	public static String getCamelPinYin(String src) {
+	public static final String getCamelPinYin(String src) {
 		char[] t1 = null;
 		t1 = src.toCharArray();
 		String[] t2 = new String[t1.length];
@@ -97,7 +97,7 @@ public class PinyinUtil {
 	 * @param str
 	 * @return String
 	 */
-	public static String getPinYinHeadChar(String str) {
+	public static final String getPinYinHeadChar(String str) {
 		String convert = "";
 		for (int j = 0; j < str.length(); j++) {
 			char word = str.charAt(j);
@@ -118,7 +118,7 @@ public class PinyinUtil {
 	 * @param str
 	 * @return String
 	 */
-	public static String getPinYinHeadUperChar(String str) {
+	public static final String getPinYinHeadUperChar(String str) {
 		return getPinYinHeadChar(str).toUpperCase();
 	}
 

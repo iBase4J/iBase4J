@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -22,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.web.context.ContextLoader;
 
 /**
  * 实例辅助类
@@ -29,121 +31,19 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @author ShenHuaJie
  * @since 2012-07-18
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
-public class InstanceUtil {
+public final class InstanceUtil {
 	private InstanceUtil() {
 	}
 
-	/**
-	 * JavaBean之间对象属性值拷贝
-	 * 
-	 * @param pFromObj Bean源对象
-	 * @param pToObj Bean目标对象
-	 */
-	public static void copyProperties(Object pFromObj, Object pToObj) {
-		copyProperties(pFromObj, pToObj, true);
-	}
-
-	/**
-	 * JavaBean之间对象属性值拷贝
-	 * 
-	 * @param pFromObj Bean源对象
-	 * @param pToObj Bean目标对象
-	 */
-	public static void copyProperties(Object pFromObj, Object pToObj, boolean isNotNull) {
-		if (pFromObj != null && pToObj != null) {
-			if (pFromObj instanceof Map && pToObj instanceof Map) {
-				((Map) pToObj).putAll((Map) pFromObj);
-			} else if (isNotNull) {
-				if (pToObj instanceof Map) {
-					try {
-						BeanUtils.populate(pToObj, (Map) pFromObj);
-					} catch (Exception e) {
-						throw new InstanceException(e);
-					}
-				} else {
-					Class<?> tc = pToObj.getClass();
-					Field[] fields = tc.getDeclaredFields();
-					Object value = null;
-					for (int i = 0; i < fields.length; i++) {
-						if (pFromObj instanceof Map) {
-							value = ((Map<?, ?>) pFromObj).get(fields[i].getName());
-						} else {
-							try {
-								value = PropertyUtils.getProperty(pFromObj, fields[i].getName());
-							} catch (Exception e) {
-								throw new InstanceException(e);
-							}
-						}
-						if (value != null) {
-							try {
-								value = TypeParseUtil.convert(value, fields[i].getType(), null);
-								PropertyUtils.setProperty(pToObj, fields[i].getName(), value);
-							} catch (Exception e) {
-								throw new InstanceException(e);
-							}
-						}
-					}
-				}
-			} else {
-				try {
-					PropertyUtils.copyProperties(pToObj, pFromObj);
-				} catch (Exception e) {
-					throw new InstanceException(e);
-				}
-			}
+	/** 实例化并复制属性 */
+	public static final <T> T to(Object orig, Class<T> clazz) {
+		T bean = null;
+		try {
+			bean = clazz.newInstance();
+			PropertyUtils.copyProperties(bean, orig);
+		} catch (Exception e) {
 		}
-	}
-
-	/**
-	 * JavaBean之间对象属性值拷贝;
-	 * 
-	 * @param pFromObj Bean源对象
-	 * @param pToObj Bean目标对象
-	 */
-	public static void copyProperties(String prefix, String suffix, Object pFromObj, Object pToObj) {
-		if (pFromObj != null && pToObj != null) {
-			if (pToObj instanceof Map) {
-				try {
-					BeanUtils.populate(pToObj, (Map) pFromObj);
-				} catch (Exception e) {
-					throw new InstanceException(e);
-				}
-			} else {
-				Class<?> tc = pToObj.getClass();
-				Field[] fields = tc.getDeclaredFields();
-				Object value = null;
-				String key = null;
-				for (int i = 0; i < fields.length; i++) {
-					if (prefix != null) {
-						key = prefix + fields[i].getName();
-					} else {
-						key = fields[i].getName();
-					}
-					if (suffix != null) {
-						key += suffix;
-					}
-					if (pFromObj instanceof Map<?, ?>) {
-						value = ((Map<?, ?>) pFromObj).get(key);
-					} else {
-						try {
-							value = PropertyUtils.getProperty(pFromObj, key);
-						} catch (Exception e) {
-							throw new InstanceException(e);
-						}
-					}
-					if (value != null && !"".equals(value)) {
-						try {
-							value = TypeParseUtil.convert(value, fields[i].getType(), null);
-							PropertyUtils.setProperty(pToObj, fields[i].getName(), value);
-						} catch (Exception e) {
-							System.out.println(value);
-							throw new InstanceException(e);
-						}
-					}
-				}
-			}
-		}
+		return bean;
 	}
 
 	/**
@@ -156,7 +56,7 @@ public class InstanceUtil {
 	 * @param clazz the name of the class to instantiate
 	 * @return the requested Class object
 	 */
-	public static Class<?> getClass(String clazz) {
+	public static final Class<?> getClass(String clazz) {
 		/**
 		 * Use the Thread context classloader if possible
 		 */
@@ -182,7 +82,7 @@ public class InstanceUtil {
 	 * @param list 实体Map集合
 	 * @return
 	 */
-	public static <E> List<E> getInstanceList(Class<E> cls, List<?> list) {
+	public static final <E> List<E> getInstanceList(Class<E> cls, List<?> list) {
 		List<E> resultList = newArrayList();
 		E object = null;
 		for (Iterator<?> iterator = list.iterator(); iterator.hasNext();) {
@@ -200,7 +100,7 @@ public class InstanceUtil {
 	 * @param list 数据查询结果集
 	 * @return
 	 */
-	public static <E> List<E> getInstanceList(Class<E> cls, ResultSet rs) {
+	public static final <E> List<E> getInstanceList(Class<E> cls, ResultSet rs) {
 		List<E> resultList = newArrayList();
 		try {
 			E object = cls.newInstance();
@@ -226,7 +126,7 @@ public class InstanceUtil {
 	 * @param list 实体属性Map
 	 * @return
 	 */
-	public static <E> E newInstance(Class<E> cls, Map<String, ?> map) {
+	public static final <E> E newInstance(Class<E> cls, Map<String, ?> map) {
 		E object = null;
 		try {
 			object = cls.newInstance();
@@ -247,7 +147,7 @@ public class InstanceUtil {
 	 * @param clazz the name of the class to instantiate
 	 * @return an instance of the specified class
 	 */
-	public static Object newInstance(String clazz) {
+	public static final Object newInstance(String clazz) {
 		try {
 			return getClass(clazz).newInstance();
 		} catch (Exception e) {
@@ -255,7 +155,7 @@ public class InstanceUtil {
 		}
 	}
 
-	public static <K> K newInstance(Class<K> cls, Object... args) {
+	public static final <K> K newInstance(Class<K> cls, Object... args) {
 		try {
 			Class<?>[] argsClass = null;
 			if (args != null) {
@@ -278,7 +178,7 @@ public class InstanceUtil {
 	 * @param args 构造函数的参数
 	 * @return 新建的实例
 	 */
-	public static Object newInstance(String className, Object... args) {
+	public static final Object newInstance(String className, Object... args) {
 		try {
 			Class<?> newoneClass = Class.forName(className);
 			return newInstance(newoneClass, args);
@@ -295,7 +195,7 @@ public class InstanceUtil {
 	 * @param args 参数
 	 * @return 方法返回值
 	 */
-	public static Object invokeMethod(Object owner, String methodName, Object[] args) {
+	public static final Object invokeMethod(Object owner, String methodName, Object[] args) {
 		Class<?> ownerClass = owner.getClass();
 		Class<?>[] argsClass = new Class[args.length];
 		for (int i = 0, j = args.length; i < j; i++) {
@@ -309,87 +209,101 @@ public class InstanceUtil {
 		}
 	}
 
+	/**  */
+	public static final <K> K getBean(Class<K> cls) {
+		return ContextLoader.getCurrentWebApplicationContext().getBean(cls);
+	}
+
 	/**
 	 * Constructs an empty ArrayList.
 	 */
-	public static <E> ArrayList<E> newArrayList() {
+	public static final <E> ArrayList<E> newArrayList() {
 		return new ArrayList<E>();
+	}
+
+	/**
+	 * Constructs an empty ArrayList.
+	 */
+	public static final <E> ArrayList<E> newArrayList(@SuppressWarnings("unchecked") E... e) {
+		ArrayList<E> list = new ArrayList<E>();
+		Collections.addAll(list, e);
+		return list;
 	}
 
 	/**
 	 * Constructs an empty HashMap.
 	 */
-	public static <k, v> HashMap<k, v> newHashMap() {
+	public static final <k, v> HashMap<k, v> newHashMap() {
 		return new HashMap<k, v>();
 	}
 
 	/**
 	 * Constructs an empty HashSet.
 	 */
-	public static <E> HashSet<E> newHashSet() {
+	public static final <E> HashSet<E> newHashSet() {
 		return new HashSet<E>();
 	}
 
 	/**
 	 * Constructs an empty Hashtable.
 	 */
-	public static <k, v> Hashtable<k, v> newHashtable() {
+	public static final <k, v> Hashtable<k, v> newHashtable() {
 		return new Hashtable<k, v>();
 	}
 
 	/**
 	 * Constructs an empty LinkedHashMap.
 	 */
-	public static <k, v> LinkedHashMap<k, v> newLinkedHashMap() {
+	public static final <k, v> LinkedHashMap<k, v> newLinkedHashMap() {
 		return new LinkedHashMap<k, v>();
 	}
 
 	/**
 	 * Constructs an empty LinkedHashSet.
 	 */
-	public static <E> LinkedHashSet<E> newLinkedHashSet() {
+	public static final <E> LinkedHashSet<E> newLinkedHashSet() {
 		return new LinkedHashSet<E>();
 	}
 
 	/**
 	 * Constructs an empty LinkedList.
 	 */
-	public static <E> LinkedList<E> newLinkedList() {
+	public static final <E> LinkedList<E> newLinkedList() {
 		return new LinkedList<E>();
 	}
 
 	/**
 	 * Constructs an empty TreeMap.
 	 */
-	public static <k, v> TreeMap<k, v> newTreeMap() {
+	public static final <k, v> TreeMap<k, v> newTreeMap() {
 		return new TreeMap<k, v>();
 	}
 
 	/**
 	 * Constructs an empty TreeSet.
 	 */
-	public static <E> TreeSet<E> newTreeSet() {
+	public static final <E> TreeSet<E> newTreeSet() {
 		return new TreeSet<E>();
 	}
 
 	/**
 	 * Constructs an empty Vector.
 	 */
-	public static <E> Vector<E> newVector() {
+	public static final <E> Vector<E> newVector() {
 		return new Vector<E>();
 	}
 
 	/**
 	 * Constructs an empty WeakHashMap.
 	 */
-	public static <k, v> WeakHashMap<k, v> newWeakHashMap() {
+	public static final <k, v> WeakHashMap<k, v> newWeakHashMap() {
 		return new WeakHashMap<k, v>();
 	}
 
 	/**
 	 * Constructs an empty HashMap.
 	 */
-	public static <k, v> Map<k, v> newHashMap(k key, v value) {
+	public static final <k, v> Map<k, v> newHashMap(k key, v value) {
 		Map<k, v> map = newHashMap();
 		map.put(key, value);
 		return map;
@@ -398,7 +312,7 @@ public class InstanceUtil {
 	/**
 	 * Constructs an empty ConcurrentHashMap.
 	 */
-	public static <k, v> ConcurrentHashMap<k, v> newConcurrentHashMap() {
+	public static final <k, v> ConcurrentHashMap<k, v> newConcurrentHashMap() {
 		return new ConcurrentHashMap<k, v>();
 	}
 }

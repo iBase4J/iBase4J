@@ -13,8 +13,9 @@ import java.io.ObjectOutputStream;
  * @version $Id: SerializableUtil.java, v 0.1 2014-6-10 下午1:30:39 ShenHuaJie Exp
  *          $
  */
-public class SerializeUtil {
-	private SerializeUtil(){}
+public final class SerializeUtil {
+	private SerializeUtil() {
+	}
 
 	/**
 	 * 序列化
@@ -22,7 +23,7 @@ public class SerializeUtil {
 	 * @param object
 	 * @return
 	 */
-	public static byte[] toBytes(Object object) {
+	public static final byte[] toBytes(Object object) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = null;
 		try {
@@ -46,7 +47,7 @@ public class SerializeUtil {
 	 * @param bytes
 	 * @return
 	 */
-	public static Object toObject(byte[] bytes) {
+	public static final Object toObject(byte[] bytes) {
 		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 		ObjectInputStream ois = null;
 		try {

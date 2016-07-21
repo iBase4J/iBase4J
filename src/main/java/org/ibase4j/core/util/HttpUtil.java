@@ -9,13 +9,13 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class HttpUtil {
+public final class HttpUtil {
 	private static final Logger logger = LogManager.getLogger();
 
 	private HttpUtil() {
 	}
 
-	public static String httpClientPost(String url) {
+	public static final String httpClientPost(String url) {
 		String result = "";
 		HttpClient client = new HttpClient();
 		GetMethod getMethod = new GetMethod(url);
@@ -30,7 +30,7 @@ public class HttpUtil {
 		return result;
 	}
 
-	public static String httpClientPost(String url, ArrayList<NameValuePair> list) {
+	public static final String httpClientPost(String url, ArrayList<NameValuePair> list) {
 		String result = "";
 		HttpClient client = new HttpClient();
 		PostMethod postMethod = new PostMethod(url);

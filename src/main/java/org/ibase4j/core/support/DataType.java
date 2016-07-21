@@ -1,5 +1,9 @@
 package org.ibase4j.core.support;
 
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 public interface DataType {
 	static final String STRING = "java.lang.String";
 	static final String BOOLEAN = "java.lang.Boolean";
