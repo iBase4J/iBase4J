@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="off">
 	<properties>
-		<property name="LOG_HOME">\logs</property>
+		<property name="LOG_HOME">\output\logs</property>
 		<!-- 日志备份目录 -->
 		<property name="BACKUP_HOME">backup</property>
 		<property name="SERVER_NAME">iBase4J-Scheduler</property>
