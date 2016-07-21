@@ -411,9 +411,9 @@ INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`
 	(12, '调度管理', 1, 9, 'glyphicon glyphicon-random', 'main.task.scheduled.list', 0, 3, 1, 'task.scheduled', NULL, 1, NULL, NULL, NULL, '2016-06-30 14:24:02'),
 	(13, '调度日志', 1, 9, 'glyphicon glyphicon-file', 'main.task.log.list', 0, 4, 1, 'task.log', NULL, 1, NULL, NULL, NULL, '2016-06-28 18:08:48'),
 	(14, '清除缓存', 1, 1, NULL, NULL, 0, 9, 0, 'sys.cache', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:25'),
-	(15, '用户权限', 1, 1, NULL, NULL, 0, 10, 0, 'user:menu', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:27'),
-	(16, '用户角色', 1, 1, NULL, NULL, 0, 11, 0, 'user:role', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:29'),
-	(17, '角色权限', 1, 1, NULL, NULL, 0, 12, 0, 'role:menu', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:33');
+	(15, '用户权限', 1, 1, NULL, NULL, 0, 10, 0, 'user.menu', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:27'),
+	(16, '用户角色', 1, 1, NULL, NULL, 0, 11, 0, 'user.role', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:29'),
+	(17, '角色权限', 1, 1, NULL, NULL, 0, 12, 0, 'role.menu', NULL, 1, NULL, '2016-06-20 09:16:56', NULL, '2016-06-29 09:39:33');
 /*!40000 ALTER TABLE `sys_menu` ENABLE KEYS */;
 
 
