@@ -8,7 +8,6 @@ import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.Assert;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
-import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.model.sys.SysUserBean;
@@ -26,64 +25,67 @@ import com.github.pagehelper.StringUtil;
  */
 @Service
 public class SysUserService extends BaseService<SysUserProvider, SysUser> {
-	@Autowired
-	public void setProvider(SysUserProvider provider) {
-		this.provider = provider;
-	}
+    @Autowired
+    public void setProvider(SysUserProvider provider) {
+        this.provider = provider;
+    }
 
-	/** 修改用户信息 */
-	@CachePut
-	public void updateUserInfo(SysUser sysUser) {
-		Assert.notNull(sysUser.getId(), "USER_ID");
-		Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
-		Assert.length(sysUser.getAccount(), 3, 15, "ACCOUNT");
-		SysUser user = this.queryById(sysUser.getId());
-		Assert.notNull(user, "USER", sysUser.getId());
-		if (StringUtils.isBlank(sysUser.getPassword())) {
-			sysUser.setPassword(user.getPassword());
-		}
-		if (StringUtil.isEmpty(sysUser.getAvatar())) {
-			sysUser.setAvatar(user.getAvatar());
-		}
-		sysUser.setUpdateBy(WebUtil.getCurrentUser());
-		provider.update(sysUser);
-	}
+    /** 修改用户信息 */
+    @CachePut
+    public void updateUserInfo(SysUser sysUser) {
+        Assert.notNull(sysUser.getId(), "USER_ID");
+        Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
+        Assert.length(sysUser.getAccount(), 3, 15, "ACCOUNT");
+        SysUser user = this.queryById(sysUser.getId());
+        Assert.notNull(user, "USER", sysUser.getId());
+        if (StringUtils.isBlank(sysUser.getPassword())) {
+            sysUser.setPassword(user.getPassword());
+        }
+        if (StringUtil.isEmpty(sysUser.getAvatar())) {
+            sysUser.setAvatar(user.getAvatar());
+        }
+        sysUser.setUpdateBy(WebUtil.getCurrentUser());
+        provider.update(sysUser);
+    }
 
-	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
-		return provider.queryBeans(params);
-	}
+    public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
+        return provider.queryBeans(params);
+    }
 
-	public void updatePassword(Integer id, String password) {
-		Assert.notNull(id, "USER_ID");
-		Assert.isNotBlank(password, "PASSWORD");
-		SysUser sysUser = provider.queryById(id);
-		Assert.notNull(sysUser, "USER", id);
-		Integer userId = WebUtil.getCurrentUser();
-		if (!id.equals(userId)) {
-			SysUser user = provider.queryById(userId);
-			if (user.getUserType() == 1) {
-				throw new UnauthorizedException();
-			}
-		}
-		sysUser.setPassword(SecurityUtil.encryptSHA(password));
-		sysUser.setUpdateBy(WebUtil.getCurrentUser());
-		provider.update(sysUser);
-	}
+    public void updatePassword(Integer id, String password) {
+        Assert.notNull(id, "USER_ID");
+        Assert.isNotBlank(password, "PASSWORD");
+        SysUser sysUser = provider.queryById(id);
+        Assert.notNull(sysUser, "USER", id);
+        Integer userId = WebUtil.getCurrentUser();
+        if (!id.equals(userId)) {
+            SysUser user = provider.queryById(userId);
+            if (user.getUserType() == 1) {
+                throw new UnauthorizedException();
+            }
+        }
+        sysUser.setPassword(encryptPassword(password));
+        sysUser.setUpdateBy(WebUtil.getCurrentUser());
+        provider.update(sysUser);
+    }
 
-	public String encryptPassword(String password) {
-		return provider.encryptPassword(password);
-	}
+    public String encryptPassword(String password) {
+        return provider.encryptPassword(password);
+    }
 
-	public void thirdPartyLogin(ThirdPartyUser thirdUser) {
-		// 查询是否已经绑定过
-		String userId = provider.queryUserIdByThirdParty(thirdUser.getOpenid(), thirdUser.getProvider());
-		if (StringUtils.isBlank(userId)) {
-			SysUser sysUser = insertThirdPartyUser(thirdUser);
-			LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
-		}
-	}
+    public void thirdPartyLogin(ThirdPartyUser thirdUser) {
+        SysUser sysUser = null;
+        // 查询是否已经绑定过
+        Integer userId = provider.queryUserIdByThirdParty(thirdUser.getOpenid(), thirdUser.getProvider());
+        if (userId == null) {
+            sysUser = insertThirdPartyUser(thirdUser);
+        } else {
+            sysUser = queryById(userId);
+        }
+        LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
+    }
 
-	public SysUser insertThirdPartyUser(ThirdPartyUser thirdUser) {
-		return provider.insertThirdPartyUser(thirdUser);
-	}
+    public SysUser insertThirdPartyUser(ThirdPartyUser thirdUser) {
+        return provider.insertThirdPartyUser(thirdUser);
+    }
 }

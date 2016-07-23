@@ -23,7 +23,7 @@ public class SchedulerService {
 	@Reference // 依赖调度服务
 	private SchedulerProvider schedulerProvider;
 
-	public PageInfo<TaskScheduled> getAllJobDetail() {
+	public PageInfo<TaskScheduled> getAllTaskDetail() {
 		PageInfo<TaskScheduled> pageInfo = new PageInfo<TaskScheduled>();
 		pageInfo.setList(schedulerProvider.getAllTaskDetail());
 		pageInfo.setPages(1);

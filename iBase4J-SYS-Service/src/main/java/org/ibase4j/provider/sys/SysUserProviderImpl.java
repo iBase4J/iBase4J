@@ -62,7 +62,7 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements Sy
 
 	/** 查询第三方帐号用户Id */
 	@Cacheable
-	public String queryUserIdByThirdParty(String openId, String provider) {
+	public Integer queryUserIdByThirdParty(String openId, String provider) {
 		return sysUserExpandMapper.queryUserIdByThirdParty(provider, openId);
 	}
 

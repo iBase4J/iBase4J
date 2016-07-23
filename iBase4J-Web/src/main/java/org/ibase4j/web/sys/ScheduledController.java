@@ -41,7 +41,7 @@ public class ScheduledController extends BaseController {
 	@ApiOperation(value = "调度列表")
 	@RequiresPermissions("task.scheduled.read")
 	public Object list(ModelMap modelMap) {
-		PageInfo<TaskScheduled> jobs = schedulerService.getAllJobDetail();
+		PageInfo<TaskScheduled> jobs = schedulerService.getAllTaskDetail();
 		return setSuccessModelMap(modelMap, jobs);
 	}
 
