@@ -8,31 +8,37 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.ibase4j.core.config.Resources;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
-import org.ibase4j.core.util.SecurityUtil;
+import org.ibase4j.core.util.UploadUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.model.sys.SysMenuBean;
 import org.ibase4j.service.sys.SysAuthorizeService;
 import org.ibase4j.service.sys.SysUserService;
-import org.ibase4j.web.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /**
+ * 用户管理控制器
+ * 
  * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:12:12
  */
-@Controller
-@RequestMapping("/user")
+@RestController
+@Api(value = "用户管理", description = "用户管理")
+@RequestMapping(value = "/user", method = RequestMethod.POST)
 public class SysUserController extends BaseController {
 	@Autowired
 	private SysUserService sysUserService;
@@ -40,64 +46,61 @@ public class SysUserController extends BaseController {
 	private SysAuthorizeService authorizeService;
 
 	// 修改用户信息
-	@ResponseBody
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ModelMap update(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) Integer id,
-			@RequestParam(value = "account", required = false) String account) {
-		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
-		Assert.notNull(account, Resources.getMessage("ACCOUNT_IS_NULL"));
+	@ApiOperation(value = "修改用户信息")
+	@RequiresPermissions("sys.user.update")
+	@RequestMapping(value = "/update")
+	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
-		SysUser user = sysUserService.queryById(sysUser.getId());
-		Assert.notNull(user, String.format(Resources.getMessage("USER_IS_NULL"), id));
-		sysUser.setPassword(user.getPassword());
-		sysUserService.update(sysUser);
+		if (StringUtils.isNotBlank(sysUser.getAvatar()) && !sysUser.getAvatar().contains("/")) {
+			String avatar = UploadUtil.remove2DFS("sysUser", "user" + sysUser.getId(),
+					UploadUtil.getUploadDir(request) + sysUser.getAvatar()).getRemotePath();
+			sysUser.setAvatar(avatar);
+		}
+		sysUserService.updateUserInfo(sysUser);
 		return setSuccessModelMap(modelMap);
 	}
 
 	// 修改密码
-	@ResponseBody
-	@RequestMapping(value = "/update/password", method = RequestMethod.POST)
-	public ModelMap updatePassword(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) Integer id,
+	@ApiOperation(value = "修改密码")
+	@RequiresPermissions("sys.user.update")
+	@RequestMapping(value = "/update/password")
+	public Object updatePassword(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id,
 			@RequestParam(value = "password", required = false) String password) {
-		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
-		Assert.notNull(password, Resources.getMessage("PASSWORD_IS_NULL"));
-		SysUser sysUser = sysUserService.queryById(id);
-		Assert.notNull(sysUser, String.format(Resources.getMessage("USER_IS_NULL"), id));
-		sysUser.setPassword(SecurityUtil.encryptSHA(password));
-		sysUserService.update(sysUser);
+		sysUserService.updatePassword(id, password);
 		return setSuccessModelMap(modelMap);
 	}
 
 	// 查询用户
-	@ResponseBody
+	@ApiOperation(value = "查询用户")
+	@RequiresPermissions("sys.user.read")
 	@RequestMapping(value = "/read/list")
-	public ModelMap get(ModelMap modelMap, HttpServletRequest request) {
+	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		PageInfo<?> list = sysUserService.query(params);
 		return setSuccessModelMap(modelMap, list);
 	}
 
 	// 用户详细信息
-	@ResponseBody
+	@ApiOperation(value = "用户详细信息")
+	@RequiresPermissions("sys.user.read")
 	@RequestMapping(value = "/read/detail")
-	public ModelMap detail(ModelMap modelMap, HttpServletRequest request,
-			@RequestParam(value = "id", required = false) Integer id) {
-		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
+	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
 		SysUser sysUser = sysUserService.queryById(id);
-		sysUser.setPassword(null);
+		if (sysUser != null) {
+			sysUser.setPassword(null);
+		}
 		return setSuccessModelMap(modelMap, sysUser);
 	}
 
 	// 当前用户
-	@ResponseBody
+	@ApiOperation(value = "当前用户信息")
 	@RequestMapping(value = "/read/current")
-	public ModelMap current(ModelMap modelMap, HttpServletRequest request) {
+	public Object current(ModelMap modelMap) {
 		Integer id = getCurrUser();
-		Assert.notNull(id, Resources.getMessage("USER_ID_IS_NULL"));
 		SysUser sysUser = sysUserService.queryById(id);
-		sysUser.setPassword(null);
+		if (sysUser != null) {
+			sysUser.setPassword(null);
+		}
 		List<SysMenuBean> menus = authorizeService.getAuthorize(id);
 		modelMap.put("user", sysUser);
 		modelMap.put("menus", menus);

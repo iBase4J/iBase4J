@@ -2,13 +2,11 @@ package org.ibase4j.service.sys;
 
 import java.util.Map;
 
-import org.ibase4j.dao.generator.SysMenuMapper;
+import org.ibase4j.core.base.BaseService;
 import org.ibase4j.dao.sys.SysMenuExpandMapper;
 import org.ibase4j.model.generator.SysMenu;
-import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
@@ -20,8 +18,6 @@ import com.github.pagehelper.PageInfo;
 @CacheConfig(cacheNames = "sysMenu")
 @Service
 public class SysMenuService extends BaseService<SysMenu> {
-    @Autowired
-    private SysMenuMapper sysMenuMapper;
 	@Autowired
 	private SysMenuExpandMapper sysMenuExpandMapper;
 	@Autowired
@@ -38,11 +34,5 @@ public class SysMenuService extends BaseService<SysMenu> {
 		}
 		return pageInfo;
 	}
-
-    @Override
-    @Cacheable
-    protected SysMenu queryById(Integer id) {
-        return sysMenuMapper.selectByPrimaryKey(id);
-    }
 
 }

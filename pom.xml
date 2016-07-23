@@ -15,7 +15,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
-		<spring.version>4.2.5.RELEASE</spring.version>
+		<spring.version>4.3.0.RELEASE</spring.version>
 		<spring-session.version>1.2.0.RC2</spring-session.version>
 		<spring-data-redis.version>1.7.1.RELEASE</spring-data-redis.version>
 		<!-- -->
@@ -371,6 +371,17 @@
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>${quartz.version}</version>
+		</dependency>
+		<!-- swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.5.0</version>
 		</dependency>
 	</dependencies>
 

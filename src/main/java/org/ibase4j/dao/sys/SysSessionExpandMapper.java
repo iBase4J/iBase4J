@@ -2,7 +2,7 @@ package org.ibase4j.dao.sys;
 
 import java.util.List;
 
-import org.ibase4j.dao.BaseExpandMapper;
+import org.ibase4j.core.base.BaseExpandMapper;
 
 
 public interface SysSessionExpandMapper extends BaseExpandMapper {

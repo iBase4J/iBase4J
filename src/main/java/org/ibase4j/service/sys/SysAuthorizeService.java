@@ -20,46 +20,46 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SysAuthorizeService {
-	@Autowired
-	private SysUserMenuMapper sysUserMenuMapper;
-	@Autowired
-	private SysUserRoleMapper sysUserRoleMapper;
-	@Autowired
-	private SysRoleMenuMapper sysRoleMenuMapper;
-	@Autowired
-	private SysAuthorizeMapper sysAuthorizeMapper;
+    @Autowired
+    private SysUserMenuMapper sysUserMenuMapper;
+    @Autowired
+    private SysUserRoleMapper sysUserRoleMapper;
+    @Autowired
+    private SysRoleMenuMapper sysRoleMenuMapper;
+    @Autowired
+    private SysAuthorizeMapper sysAuthorizeMapper;
     @Autowired
     private SysMenuService sysMenuService;
 
-	@Transactional
-	@CacheEvict("getAuthorize")
-	public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
-		sysAuthorizeMapper.deleteUserMenu(sysUserMenus.get(0).getUserId());
-		for (SysUserMenu sysUserMenu : sysUserMenus) {
-			sysUserMenuMapper.insert(sysUserMenu);
-		}
-	}
+    @Transactional
+    @CacheEvict("getAuthorize")
+    public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
+        sysAuthorizeMapper.deleteUserMenu(sysUserMenus.get(0).getUserId());
+        for (SysUserMenu sysUserMenu : sysUserMenus) {
+            sysUserMenuMapper.insert(sysUserMenu);
+        }
+    }
 
-	@Transactional
-	@CacheEvict("getAuthorize")
-	public void updateUserRole(List<SysUserRole> sysUserRoles) {
-		sysAuthorizeMapper.deleteUserRole(sysUserRoles.get(0).getUserId());
-		for (SysUserRole sysUserRole : sysUserRoles) {
-			sysUserRoleMapper.insert(sysUserRole);
-		}
-	}
+    @Transactional
+    @CacheEvict("getAuthorize")
+    public void updateUserRole(List<SysUserRole> sysUserRoles) {
+        sysAuthorizeMapper.deleteUserRole(sysUserRoles.get(0).getUserId());
+        for (SysUserRole sysUserRole : sysUserRoles) {
+            sysUserRoleMapper.insert(sysUserRole);
+        }
+    }
 
-	@Transactional
-	@CacheEvict("getAuthorize")
-	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus) {
-		sysAuthorizeMapper.deleteRoleMenu(sysRoleMenus.get(0).getRoleId());
-		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
-			sysRoleMenuMapper.insert(sysRoleMenu);
-		}
-	}
+    @Transactional
+    @CacheEvict("getAuthorize")
+    public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus) {
+        sysAuthorizeMapper.deleteRoleMenu(sysRoleMenus.get(0).getRoleId());
+        for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
+            sysRoleMenuMapper.insert(sysRoleMenu);
+        }
+    }
 
-	@Cacheable("getAuthorize")
-	public List<SysMenuBean> getAuthorize(Integer userId) {
+    @Cacheable("getAuthorize")
+    public List<SysMenuBean> getAuthorize(Integer userId) {
         List<Integer> menuIds = sysAuthorizeMapper.getAuthorize(userId);
         List<SysMenuBean> menus = sysMenuService.getList(menuIds, SysMenuBean.class);
         Map<Integer, List<SysMenuBean>> map = InstanceUtil.newHashMap();
@@ -78,17 +78,22 @@ public class SysAuthorizeService {
                 result.add(sysMenuBean);
             }
         }
-		return result;
-	}
+        return result;
+    }
 
-	// 递归获取子菜单
-	private List<SysMenuBean> getChildMenu(Map<Integer, List<SysMenuBean>> map, Integer id) {
-	    List<SysMenuBean> menus = map.get(id);
+    // 递归获取子菜单
+    private List<SysMenuBean> getChildMenu(Map<Integer, List<SysMenuBean>> map, Integer id) {
+        List<SysMenuBean> menus = map.get(id);
         if (menus != null) {
             for (SysMenuBean sysMenuBean : menus) {
                 sysMenuBean.setMenuBeans(getChildMenu(map, sysMenuBean.getId()));
             }
         }
-		return menus;
-	}
+        return menus;
+    }
+
+    @Cacheable("sysPermission")
+    public List<String> queryPermissionByUserId(Integer userId) {
+        return sysAuthorizeMapper.queryPermissionByUserId(userId);
+    }
 }

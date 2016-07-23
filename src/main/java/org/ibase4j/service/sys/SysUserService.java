@@ -6,32 +6,25 @@ package org.ibase4j.service.sys;
 import java.util.Date;
 import java.util.Map;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.ExpiredCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
-import org.ibase4j.core.config.Resources;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.UnauthorizedException;
+import org.ibase4j.core.base.BaseService;
+import org.ibase4j.core.support.Assert;
+import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.dao.generator.SysUserMapper;
 import org.ibase4j.dao.generator.SysUserThirdpartyMapper;
 import org.ibase4j.dao.sys.SysUserExpandMapper;
 import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.model.generator.SysUserThirdparty;
-import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.StringUtil;
 
 /**
  * @author ShenHuaJie
@@ -39,89 +32,96 @@ import com.github.pagehelper.PageInfo;
 @Service
 @CacheConfig(cacheNames = "sysUser")
 public class SysUserService extends BaseService<SysUser> {
-	@Autowired
-	private SysUserMapper sysUserMapper;
-	@Autowired
-	private SysUserExpandMapper sysUserExpandMapper;
-	@Autowired
-	private SysUserThirdpartyMapper thirdpartyMapper;
+    @Autowired
+    private SysUserExpandMapper sysUserExpandMapper;
+    @Autowired
+    private SysUserThirdpartyMapper thirdpartyMapper;
 
-	@CachePut
-	@Transactional
-	public void update(SysUser record) {
-		if (record.getId() == null) {
-			record.setEnable(true);
-			record.setCreateTime(new Date());
-			sysUserMapper.insert(record);
-		} else {
-			sysUserMapper.updateByPrimaryKey(record);
-		}
-	}
+    @Cacheable
+    public PageInfo<SysUser> query(Map<String, Object> params) {
+        this.startPage(params);
+        Page<Integer> ids = sysUserExpandMapper.query(params);
+        return new PageInfo<SysUser>(getList(ids));
+    }
 
-	@CacheEvict
-	@Transactional
-	public void delete(Integer id) {
-		SysUser record = queryById(id);
-		Assert.notNull(record, String.format(Resources.getMessage("USER_IS_NULL"), id));
-		record.setEnable(false);
-		update(record);
-	}
+    /** 查询第三方帐号用户Id */
+    public Integer queryUserIdByThirdParty(String openId, String provider) {
+        return sysUserExpandMapper.queryUserIdByThirdParty(provider, openId);
+    }
 
-	@Cacheable
-	public SysUser queryById(Integer id) {
-		return sysUserMapper.selectByPrimaryKey(id);
-	}
+    /** 保存第三方帐号 
+     * @return */
+    public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
+        SysUser sysUser = new SysUser();
+        sysUser.setSex(0);
+        sysUser.setUserType(1);
+        sysUser.setPassword(WebUtil.encryptPassword("123456"));
+        sysUser.setUserName(thirdPartyUser.getUserName());
+        sysUser.setAvatar(thirdPartyUser.getAvatarUrl());
+        // 初始化第三方信息
+        SysUserThirdparty thirdparty = new SysUserThirdparty();
+        thirdparty.setProvider(thirdPartyUser.getProvider());
+        thirdparty.setOpenId(thirdPartyUser.getOpenid());
+        thirdparty.setCreateTime(new Date());
 
-	@Cacheable
-	public PageInfo<SysUser> query(Map<String, Object> params) {
-		this.startPage(params);
-		Page<Integer> ids = sysUserExpandMapper.query(params);
-		return new PageInfo<SysUser>(getList(ids));
-	}
+        this.update(sysUser);
+        sysUser.setAccount(thirdparty.getProvider() + sysUser.getId());
+        this.update(sysUser);
+        thirdparty.setUserId(sysUser.getId());
+        thirdpartyMapper.insert(thirdparty);
+        return sysUser;
+    }
 
-	/** 用户登录 */
-	public Boolean login(String account, String password) {
-		UsernamePasswordToken token = new UsernamePasswordToken(account, password);
-		token.setRememberMe(true);
-		Subject subject = SecurityUtils.getSubject();
-		try {
-			subject.login(token);
-			return subject.isAuthenticated();
-		} catch (LockedAccountException e) {
-			throw new IllegalArgumentException(Resources.getMessage("ACCOUNT_LOCKED", token.getPrincipal()));
-		} catch (DisabledAccountException e) {
-			throw new IllegalArgumentException(Resources.getMessage("ACCOUNT_DISABLED", token.getPrincipal()));
-		} catch (ExpiredCredentialsException e) {
-			throw new IllegalArgumentException(Resources.getMessage("ACCOUNT_EXPIRED", token.getPrincipal()));
-		} catch (Exception e) {
-			throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"), e);
-		}
-	}
+    /**
+     * @param thirdUser
+     */
+    public void thirdPartyLogin(ThirdPartyUser thirdUser) {
+        SysUser sysUser = null;
+        // 查询是否已经绑定过
+        Integer userId = queryUserIdByThirdParty(thirdUser.getOpenid(), thirdUser.getProvider());
+        if (userId == null) {
+            sysUser = insertThirdPartyUser(thirdUser);
+        } else {
+            sysUser = queryById(userId);
+        }
+        LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
+    }
 
-	/** 查询第三方帐号用户Id */
-	public String queryUserIdByThirdParty(String openId, String provider) {
-		return sysUserExpandMapper.queryUserIdByThirdParty(provider, openId);
-	}
+    /**
+     * @param sysUser
+     */
+    public void updateUserInfo(SysUser sysUser) {
+        Assert.notNull(sysUser.getId(), "USER_ID");
+        Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
+        Assert.length(sysUser.getAccount(), 3, 15, "ACCOUNT");
+        SysUser user = this.queryById(sysUser.getId());
+        Assert.notNull(user, "USER", sysUser.getId());
+        if (StringUtils.isBlank(sysUser.getPassword())) {
+            sysUser.setPassword(user.getPassword());
+        }
+        if (StringUtil.isEmpty(sysUser.getAvatar())) {
+            sysUser.setAvatar(user.getAvatar());
+        }
+        update(sysUser);
+    }
 
-	/** 保存第三方帐号 */
-	public void insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
-		SysUser sysUser = new SysUser();
-		sysUser.setSex(0);
-		sysUser.setUserType(1);
-		sysUser.setPassword(WebUtil.encryptPassword("123456"));
-		sysUser.setUserName(thirdPartyUser.getUserName());
-		sysUser.setAvatar(thirdPartyUser.getAvatarUrl());
-		this.update(sysUser);
-		sysUser.setAccount(thirdPartyUser.getProvider() + sysUser.getId());
-		this.update(sysUser);
-
-		SysUserThirdparty thirdparty = new SysUserThirdparty();
-		thirdparty.setUserId(sysUser.getId());
-		thirdparty.setProvider(thirdPartyUser.getProvider());
-		thirdparty.setOpenId(thirdPartyUser.getOpenid());
-		thirdparty.setCreateTime(new Date());
-		thirdpartyMapper.insert(thirdparty);
-
-		this.login(sysUser.getAccount(), sysUser.getPassword());
-	}
+    /**
+     * @param id
+     * @param password
+     */
+    public void updatePassword(Integer id, String password) {
+        Assert.notNull(id, "USER_ID");
+        Assert.isNotBlank(password, "PASSWORD");
+        SysUser sysUser = queryById(id);
+        Assert.notNull(sysUser, "USER", id);
+        Integer userId = WebUtil.getCurrentUser();
+        if (!id.equals(userId)) {
+            SysUser user = queryById(userId);
+            if (user.getUserType() == 1) {
+                throw new UnauthorizedException();
+            }
+        }
+        sysUser.setPassword(WebUtil.encryptPassword(password));
+        update(sysUser);
+    }
 }

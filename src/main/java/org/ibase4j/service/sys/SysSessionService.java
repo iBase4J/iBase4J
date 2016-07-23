@@ -1,20 +1,18 @@
 package org.ibase4j.service.sys;
 
+import java.util.List;
 import java.util.Map;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.DefaultSessionKey;
-import org.apache.shiro.session.mgt.SessionKey;
+import org.ibase4j.core.base.BaseService;
+import org.ibase4j.core.support.Assert;
 import org.ibase4j.dao.generator.SysSessionMapper;
 import org.ibase4j.dao.sys.SysSessionExpandMapper;
 import org.ibase4j.model.generator.SysSession;
-import org.ibase4j.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.Page;
@@ -27,9 +25,40 @@ public class SysSessionService extends BaseService<SysSession> {
     private SysSessionMapper sessionMapper;
     @Autowired
     private SysSessionExpandMapper sessionExpandMapper;
+    @Autowired
+    private RedisOperationsSessionRepository sessionRepository;
 
-    @CachePut
-    public void update(SysSession record) {
+    /** 删除会话 */
+    public void deleteByAccount(String account) {
+        Assert.notNull(account, "ACCOUNT");
+        List<String> sessionIds = sessionExpandMapper.querySessionIdByAccount(account);
+        if (sessionIds != null) {
+            for (String sessionId : sessionIds) {
+                sessionRepository.delete(sessionId);
+                sessionRepository.cleanupExpiredSessions();
+                sessionExpandMapper.deleteBySessionId(sessionId);
+            }
+        }
+    }
+
+    /** 删除会话 */
+    public void delete(Integer id) {
+        Assert.notNull(id, "ID");
+        SysSession sysSession = sessionMapper.selectByPrimaryKey(id);
+        if (sysSession != null) {
+            sessionRepository.delete(sysSession.getSessionId());
+            sessionRepository.cleanupExpiredSessions();
+            sessionMapper.deleteByPrimaryKey(id);
+        }
+    }
+
+    @CacheEvict
+    public void deleteBySessionId(final String sessionId) {
+        sessionExpandMapper.deleteBySessionId(sessionId);
+    }
+
+    /** 更新会话 */
+    public SysSession update(SysSession record) {
         if (record.getId() == null) {
             Integer id = sessionExpandMapper.queryBySessionId(record.getSessionId());
             if (id != null) {
@@ -41,24 +70,7 @@ public class SysSessionService extends BaseService<SysSession> {
         } else {
             sessionMapper.updateByPrimaryKey(record);
         }
-    }
-
-    @CacheEvict
-    public void delete(Integer id) {
-        SysSession sysSession = sessionMapper.selectByPrimaryKey(id);
-        if (sysSession != null) {
-            SessionKey sessionKey = new DefaultSessionKey(sysSession.getSessionId());
-            Session session = SecurityUtils.getSecurityManager().getSession(sessionKey);
-            if (session != null) {
-                session.stop();
-            }
-        }
-        sessionMapper.deleteByPrimaryKey(id);
-    }
-
-    @CacheEvict
-    public void deleteBySessionId(final String sessionId) {
-        sessionExpandMapper.deleteBySessionId(sessionId);
+        return record;
     }
 
     @Cacheable
@@ -66,11 +78,5 @@ public class SysSessionService extends BaseService<SysSession> {
         this.startPage(params);
         Page<Integer> ids = sessionExpandMapper.query(params);
         return new PageInfo<SysSession>(getList(ids));
-    }
-
-    @Override
-    @Cacheable
-    protected SysSession queryById(Integer id) {
-        return sessionMapper.selectByPrimaryKey(id);
     }
 }

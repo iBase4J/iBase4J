@@ -1,4 +1,4 @@
-package org.ibase4j.dao;
+package org.ibase4j.core.base;
 
 import java.util.Map;
 

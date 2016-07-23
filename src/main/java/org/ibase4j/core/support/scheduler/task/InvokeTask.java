@@ -16,7 +16,7 @@ import org.springframework.context.ApplicationContext;
  */
 public class InvokeTask implements Job {
 	// 作业接口包名
-	private String provider = "org.ibase4j.scheduler.provider.";
+	private String basePackage = "org.ibase4j.service.task";
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
@@ -27,7 +27,7 @@ public class InvokeTask implements Job {
 		JobKey jobKey = context.getJobDetail().getKey();
 		try {
 			applicationContext = (ApplicationContext) context.getScheduler().getContext().get("applicationContext");
-			Object refer = applicationContext.getBean(provider + jobKey.getGroup());
+			Object refer = applicationContext.getBean(basePackage + jobKey.getGroup());
 			refer.getClass().getDeclaredMethod(jobKey.getName()).invoke(refer);
 		} catch (Exception e) {
 			throw new JobExecutionException(e);
