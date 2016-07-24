@@ -16,7 +16,7 @@ import org.springframework.context.ApplicationContext;
  */
 public class InvokeTask implements Job {
 	// 作业接口包名
-	private String basePackage = "org.ibase4j.service.task";
+	private String basePackage = "org.ibase4j.service.task.";
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
