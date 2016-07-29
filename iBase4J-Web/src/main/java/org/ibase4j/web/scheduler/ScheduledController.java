@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ibase4j.web.sys;
+package org.ibase4j.web.scheduler;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.scheduler.TaskScheduled;
-import org.ibase4j.service.sys.SchedulerService;
+import org.ibase4j.service.scheduler.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;

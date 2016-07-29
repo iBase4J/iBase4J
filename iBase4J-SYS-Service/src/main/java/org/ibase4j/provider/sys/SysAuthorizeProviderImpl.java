@@ -37,7 +37,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	@Autowired
 	private SysAuthorizeMapper sysAuthorizeMapper;
 	@Autowired
-	private SysMenuProviderImpl sysMenuService;
+	private SysMenuProvider sysMenuProvider;
 
 	@Transactional
 	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
@@ -69,7 +69,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	@Cacheable(value = "getAuthorize")
 	public List<SysMenuBean> queryAuthorizeByUserId(Integer userId) {
 		List<Integer> menuIds = sysAuthorizeMapper.getAuthorize(userId);
-		List<SysMenuBean> menus = sysMenuService.getList(menuIds, SysMenuBean.class);
+		List<SysMenuBean> menus = sysMenuProvider.getList(menuIds, SysMenuBean.class);
 		Map<Integer, List<SysMenuBean>> map = InstanceUtil.newHashMap();
 		for (SysMenuBean sysMenuBean : menus) {
 			if (map.get(sysMenuBean.getParentId()) == null) {

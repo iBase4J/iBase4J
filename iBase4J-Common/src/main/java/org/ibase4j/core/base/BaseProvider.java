@@ -1,9 +1,11 @@
 package org.ibase4j.core.base;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -22,4 +24,8 @@ public interface BaseProvider<T extends BaseModel> {
 	public void init();
 
 	public PageInfo<T> query(Map<String, Object> params);
+	
+    public <K> PageInfo<K> getPage(Page<Integer> ids, Class<K> cls);
+
+    public <K> List<K> getList(List<Integer> ids, Class<K> cls);
 }

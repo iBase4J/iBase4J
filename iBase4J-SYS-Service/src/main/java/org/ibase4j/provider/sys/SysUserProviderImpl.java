@@ -35,9 +35,9 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements Sy
 	@Autowired
 	private SysUserThirdpartyMapper thirdpartyMapper;
 	@Autowired
-	private SysDicProviderImpl sysDicService;
+	private SysDicProvider sysDicProvider;
 	@Autowired
-	private SysDeptProviderImpl deptService;
+	private SysDeptProvider sysDeptProvider;
 
 	public PageInfo<SysUser> query(Map<String, Object> params) {
 		this.startPage(params);
@@ -47,14 +47,14 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements Sy
 	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
 		this.startPage(params);
 		Page<Integer> userIds = sysUserExpandMapper.query(params);
-		Map<String, String> userTypeMap = sysDicService.queryDicByDicIndexKey("USERTYPE");
+		Map<String, String> userTypeMap = sysDicProvider.queryDicByDicIndexKey("USERTYPE");
 		PageInfo<SysUserBean> pageInfo = getPage(userIds, SysUserBean.class);
 		for (SysUserBean userBean : pageInfo.getList()) {
 			if (userBean.getUserType() != null) {
 				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType().toString()));
 			}
 			if (userBean.getDeptId() != null) {
-				userBean.setDeptName(deptService.queryById(userBean.getDeptId()).getDeptName());
+				userBean.setDeptName(sysDeptProvider.queryById(userBean.getDeptId()).getDeptName());
 			}
 		}
 		return pageInfo;

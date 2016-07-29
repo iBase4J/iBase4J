@@ -21,12 +21,12 @@ public class SysMenuProviderImpl extends BaseProviderImpl<SysMenu> implements Sy
 	@Autowired
 	private SysMenuExpandMapper sysMenuExpandMapper;
 	@Autowired
-	private SysDicProviderImpl sysDicService;
+	private SysDicProvider sysDicProvider;
 
 	public PageInfo<SysMenu> query(Map<String, Object> params) {
 		this.startPage(params);
 		PageInfo<SysMenu> pageInfo = getPage(sysMenuExpandMapper.query(params));
-		Map<String, String> menuTypeMap = sysDicService.queryDicByDicIndexKey("MENUTYPE");
+		Map<String, String> menuTypeMap = sysDicProvider.queryDicByDicIndexKey("MENUTYPE");
 		for (SysMenu sysMenu : pageInfo.getList()) {
 			if (sysMenu.getMenuType() != null) {
 				sysMenu.setRemark(menuTypeMap.get(sysMenu.getMenuType().toString()));
