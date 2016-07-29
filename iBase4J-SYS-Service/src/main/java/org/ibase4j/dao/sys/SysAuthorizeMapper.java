@@ -6,14 +6,14 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SysAuthorizeMapper {
 
-	void deleteUserMenu(Integer userId);
+	void deleteUserMenu(String userId);
 
-	void deleteUserRole(Integer userId);
+	void deleteUserRole(String userId);
 
-	void deleteRoleMenu(Integer roleId);
+	void deleteRoleMenu(String roleId);
 
-	List<Integer> getAuthorize(Integer userId);
+	List<String> getAuthorize(String userId);
 
-	List<String> queryPermissionByUserId(@Param("userId") Integer userId);
+	List<String> queryPermissionByUserId(@Param("userId") String userId);
 
 }

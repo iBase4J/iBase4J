@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xsd:schema xmlns="http://code.alibabatech.com/schema/dubbo"
+<xsd:schema xmlns="http://code.alibabatech.com/schema/idubbo"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:tool="http://www.springframework.org/schema/tool"
-	targetNamespace="http://code.alibabatech.com/schema/dubbo">
+	targetNamespace="http://code.alibabatech.com/schema/idubbo">
 	
 	<xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
 	<xsd:import namespace="http://www.springframework.org/schema/beans"/>

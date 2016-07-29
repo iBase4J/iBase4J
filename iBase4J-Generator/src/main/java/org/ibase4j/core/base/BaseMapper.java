@@ -9,9 +9,9 @@ import java.util.List;
 public interface BaseMapper<T extends BaseModel> {
 	List<T> selectAll();
 
-	int deleteByPrimaryKey(Integer id);
+	int deleteByPrimaryKey(String id);
 
-	T selectByPrimaryKey(Integer id);
+	T selectByPrimaryKey(String id);
 
 	int insert(T record);
 

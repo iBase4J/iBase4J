@@ -67,10 +67,10 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	}
 
 	@Cacheable(value = "getAuthorize")
-	public List<SysMenuBean> queryAuthorizeByUserId(Integer userId) {
-		List<Integer> menuIds = sysAuthorizeMapper.getAuthorize(userId);
+	public List<SysMenuBean> queryAuthorizeByUserId(String userId) {
+		List<String> menuIds = sysAuthorizeMapper.getAuthorize(userId);
 		List<SysMenuBean> menus = sysMenuProvider.getList(menuIds, SysMenuBean.class);
-		Map<Integer, List<SysMenuBean>> map = InstanceUtil.newHashMap();
+		Map<String, List<SysMenuBean>> map = InstanceUtil.newHashMap();
 		for (SysMenuBean sysMenuBean : menus) {
 			if (map.get(sysMenuBean.getParentId()) == null) {
 				List<SysMenuBean> menuBeans = InstanceUtil.newArrayList();
@@ -80,7 +80,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 		}
 		List<SysMenuBean> result = InstanceUtil.newArrayList();
 		for (SysMenuBean sysMenuBean : menus) {
-			if (sysMenuBean.getParentId() == 0) {
+			if ("0".equals(sysMenuBean.getParentId())) {
 				sysMenuBean.setLeaf(0);
 				sysMenuBean.setMenuBeans(getChildMenu(map, sysMenuBean.getId()));
 				result.add(sysMenuBean);
@@ -90,7 +90,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	}
 
 	// 递归获取子菜单
-	private List<SysMenuBean> getChildMenu(Map<Integer, List<SysMenuBean>> map, Integer id) {
+	private List<SysMenuBean> getChildMenu(Map<String, List<SysMenuBean>> map, String id) {
 		List<SysMenuBean> menus = map.get(id);
 		if (menus != null) {
 			for (SysMenuBean sysMenuBean : menus) {
@@ -101,7 +101,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	}
 
 	@Cacheable("sysPermission")
-	public List<String> queryPermissionByUserId(Integer userId) {
+	public List<String> queryPermissionByUserId(String userId) {
 		return sysAuthorizeMapper.queryPermissionByUserId(userId);
 	}
 }

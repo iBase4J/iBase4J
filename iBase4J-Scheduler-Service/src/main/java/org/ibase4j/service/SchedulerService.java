@@ -37,17 +37,17 @@ public class SchedulerService {
 	private TaskFireLogMapper logMapper;
 
 	@Cacheable("taskGroup")
-	public TaskGroup getGroupById(Integer id) {
+	public TaskGroup getGroupById(String id) {
 		return taskGroupMapper.selectByPrimaryKey(id);
 	}
 
 	@Cacheable("taskScheduler")
-	public TaskScheduler getSchedulerById(Integer id) {
+	public TaskScheduler getSchedulerById(String id) {
 		return taskSchedulerMapper.selectByPrimaryKey(id);
 	}
 
 	@Cacheable("taskFireLog")
-	public TaskFireLog getFireLogById(Integer id) {
+	public TaskFireLog getFireLogById(String id) {
 		return logMapper.selectByPrimaryKey(id);
 	}
 
@@ -91,12 +91,12 @@ public class SchedulerService {
 	}
 
 	public PageInfo<TaskGroup> queryGroup(Map<String, Object> params) {
-		Page<Integer> ids = expandMapper.queryGroup(params);
+		Page<String> ids = expandMapper.queryGroup(params);
 		Page<TaskGroup> page = new Page<TaskGroup>(ids.getPageNum(), ids.getPageSize());
 		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
-			for (Integer id : ids) {
+			for (String id : ids) {
 				page.add(InstanceUtil.getBean(getClass()).getGroupById(id));
 			}
 		}
@@ -104,12 +104,12 @@ public class SchedulerService {
 	}
 
 	public PageInfo<TaskSchedulerBean> queryScheduler(Map<String, Object> params) {
-		Page<Integer> ids = expandMapper.queryScheduler(params);
+		Page<String> ids = expandMapper.queryScheduler(params);
 		Page<TaskSchedulerBean> page = new Page<TaskSchedulerBean>(ids.getPageNum(), ids.getPageSize());
 		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
-			for (Integer id : ids) {
+			for (String id : ids) {
 				TaskScheduler taskScheduler = InstanceUtil.getBean(getClass()).getSchedulerById(id);
 				TaskSchedulerBean bean = InstanceUtil.to(taskScheduler, TaskSchedulerBean.class);
 				TaskGroup taskGroup = InstanceUtil.getBean(getClass()).getGroupById(bean.getGroupId());
@@ -122,12 +122,12 @@ public class SchedulerService {
 	}
 
 	public PageInfo<TaskFireLog> queryLog(Map<String, Object> params) {
-		Page<Integer> ids = expandMapper.queryLog(params);
+		Page<String> ids = expandMapper.queryLog(params);
 		Page<TaskFireLog> page = new Page<TaskFireLog>(ids.getPageNum(), ids.getPageSize());
 		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
-			for (Integer id : ids) {
+			for (String id : ids) {
 				page.add(InstanceUtil.getBean(getClass()).getFireLogById(id));
 			}
 		}

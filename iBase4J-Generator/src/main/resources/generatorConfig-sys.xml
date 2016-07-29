@@ -38,7 +38,6 @@
             <property name="rootInterface" value="org.ibase4j.core.base.BaseMapper"/>
         </javaClientGenerator>
         <table tableName="sys_%">
-            <generatedKey column="id_" sqlStatement="JDBC" />
         </table>
     </context>
 </generatorConfiguration>

@@ -4,18 +4,18 @@ import java.util.Map;
 
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.Assert;
+import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysDic;
 import org.ibase4j.model.generator.SysDicIndex;
 import org.ibase4j.provider.sys.SysDicProvider;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.github.pagehelper.PageInfo;
 
 @Service
 public class SysDicService {
-	@Reference
+    @DubboReference
 	private SysDicProvider provider;
 
 	public PageInfo<SysDicIndex> queryDicIndex(Map<String, Object> params) {
@@ -32,13 +32,13 @@ public class SysDicService {
 	}
 
 	public void updateDicIndex(SysDicIndex record) {
-		Assert.notNull(record.getId(), Resources.getMessage("ID_IS_NULL"));
+		Assert.isNotBlank(record.getId(), Resources.getMessage("ID_IS_NULL"));
 		record.setUpdateBy(WebUtil.getCurrentUser());
 		provider.updateDicIndex(record);
 	}
 
-	public void deleteDicIndex(Integer id) {
-		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
+	public void deleteDicIndex(String id) {
+		Assert.isNotBlank(id, Resources.getMessage("ID_IS_NULL"));
 		provider.deleteDicIndex(id);
 	}
 
@@ -48,21 +48,21 @@ public class SysDicService {
 	}
 
 	public void updateDic(SysDic record) {
-		Assert.notNull(record.getId(), Resources.getMessage("ID_IS_NULL"));
+		Assert.isNotBlank(record.getId(), Resources.getMessage("ID_IS_NULL"));
 		record.setUpdateBy(WebUtil.getCurrentUser());
 		provider.updateDic(record);
 	}
 
-	public void deleteDic(Integer id) {
-		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
+	public void deleteDic(String id) {
+		Assert.isNotBlank(id, Resources.getMessage("ID_IS_NULL"));
 		provider.deleteDic(id);
 	}
 
-	public SysDicIndex queryDicIndexById(Integer id) {
+	public SysDicIndex queryDicIndexById(String id) {
 		return provider.queryDicIndexById(id);
 	}
 
-	public SysDic queryDicById(Integer id) {
+	public SysDic queryDicById(String id) {
 		return provider.queryDicById(id);
 	}
 

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" 
+	xmlns:idubbo="http://code.alibabatech.com/schema/idubbo" 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.0.xsd
-		http://code.alibabatech.com/schema/dubbo
-		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+		http://code.alibabatech.com/schema/idubbo
+		http://code.alibabatech.com/schema/idubbo/idubbo.xsd">
 	<!-- 拦截器使用对象,使用Spring注入 -->
-	<dubbo:reference id="sysUserProvider"  interface="org.ibase4j.provider.sys.SysUserProvider" check="false" />
-	<dubbo:reference id="sysSessionProvider" interface="org.ibase4j.provider.sys.SysSessionProvider" check="false" />
-	<dubbo:reference id="sysAuthorizeProvider" interface="org.ibase4j.provider.sys.SysAuthorizeProvider" check="false" />
+	<idubbo:reference id="sysUserProvider"  interface="org.ibase4j.provider.sys.SysUserProvider" check="false" />
+	<idubbo:reference id="sysSessionProvider" interface="org.ibase4j.provider.sys.SysSessionProvider" check="false" />
+	<idubbo:reference id="sysAuthorizeProvider" interface="org.ibase4j.provider.sys.SysAuthorizeProvider" check="false" />
 	<!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
 	<bean id="realm" class="org.ibase4j.core.shiro.Realm" />
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">

@@ -103,7 +103,7 @@ public class TaskListener implements JobListener {
 					logger.error("Update TaskRunLog cause error. The log object is : " + JSON.toJSONString(log), e);
 				}
 				// 更新任务执行时间
-				TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getInt("id"));
+				TaskScheduler taskScheduler = schedulerService.getSchedulerById(jobDataMap.getString("id"));
 				taskScheduler.setTaskPreviousFireTime(context.getFireTime());
 				taskScheduler.setTaskNextFireTime(context.getNextFireTime());
 				schedulerService.updateScheduler(taskScheduler);

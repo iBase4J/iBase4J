@@ -8,7 +8,7 @@ public interface SysSessionExpandMapper extends BaseExpandMapper {
 
 	void deleteBySessionId(String sessionId);
 
-	Integer queryBySessionId(String sessionId);
+	String queryBySessionId(String sessionId);
 
 	List<String> querySessionIdByAccount(String account);
 

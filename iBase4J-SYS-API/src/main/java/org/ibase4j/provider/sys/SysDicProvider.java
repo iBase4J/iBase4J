@@ -14,17 +14,17 @@ public interface SysDicProvider {
 
 	public void updateDic(SysDic record);
 
-	public void deleteDic(Integer id);
+	public void deleteDic(String id);
 
-	public SysDicIndex queryDicIndexById(Integer id);
+	public SysDicIndex queryDicIndexById(String id);
 
-	public SysDic queryDicById(Integer id);
+	public SysDic queryDicById(String id);
 
 	public PageInfo<SysDicIndex> queryDicIndex(Map<String, Object> params);
 
 	public PageInfo<SysDic> queryDic(Map<String, Object> params);
 
-	public void deleteDicIndex(Integer id);
+	public void deleteDicIndex(String id);
 	
 	public Map<String, String> queryDicByDicIndexKey(String key);
 }

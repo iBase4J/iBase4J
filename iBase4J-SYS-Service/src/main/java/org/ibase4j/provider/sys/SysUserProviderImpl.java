@@ -46,7 +46,7 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements Sy
 
 	public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
 		this.startPage(params);
-		Page<Integer> userIds = sysUserExpandMapper.query(params);
+		Page<String> userIds = sysUserExpandMapper.query(params);
 		Map<String, String> userTypeMap = sysDicProvider.queryDicByDicIndexKey("USERTYPE");
 		PageInfo<SysUserBean> pageInfo = getPage(userIds, SysUserBean.class);
 		for (SysUserBean userBean : pageInfo.getList()) {
@@ -62,7 +62,7 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements Sy
 
 	/** 查询第三方帐号用户Id */
 	@Cacheable
-	public Integer queryUserIdByThirdParty(String openId, String provider) {
+	public String queryUserIdByThirdParty(String openId, String provider) {
 		return sysUserExpandMapper.queryUserIdByThirdParty(provider, openId);
 	}
 

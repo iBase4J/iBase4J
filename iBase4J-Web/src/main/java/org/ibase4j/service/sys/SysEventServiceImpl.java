@@ -33,13 +33,15 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 	public void saveEvent(final HttpServletRequest request, final HttpServletResponse response,
 			final Exception ex, final Long startTime, final Long endTime) {
 		final SysEvent record = new SysEvent();
+        String uid = WebUtil.getCurrentUser();
 		record.setMethod(request.getMethod());
 		record.setRequestUri(request.getServletPath());
 		record.setClientHost(WebUtil.getHost(request));
 		record.setUserAgent(request.getHeader("user-agent"));
 		record.setParammeters(JSON.toJSONString(request.getParameterMap()));
-		record.setCreateBy(WebUtil.getCurrentUser());
 		record.setStatus(response.getStatus());
+        record.setCreateBy(uid);
+        record.setUpdateBy(uid);
 		final String msg = (String) request.getAttribute("msg");
 
 		executorService.submit(new Runnable() {

@@ -31,7 +31,7 @@ public class SysSessionService {
 
 	/** 删除会话 */
 	public void deleteByAccount(String account) {
-		Assert.notNull(account, "ACCOUNT");
+		Assert.isNotBlank(account, "ACCOUNT");
 		List<String> sessionIds = sysSessionProvider.querySessionIdByAccount(account);
 		if (sessionIds != null) {
 			for (String sessionId : sessionIds) {
@@ -43,8 +43,8 @@ public class SysSessionService {
 	}
 
 	/** 删除会话 */
-	public void delete(Integer id) {
-		Assert.notNull(id, "ID");
+	public void delete(String id) {
+		Assert.isNotBlank(id, "ID");
 		SysSession sysSession = sysSessionProvider.queryById(id);
 		if (sysSession != null) {
 			sessionRepository.delete(sysSession.getSessionId());

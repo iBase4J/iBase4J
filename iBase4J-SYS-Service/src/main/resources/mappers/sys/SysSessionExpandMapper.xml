@@ -5,7 +5,7 @@
 		delete from
 		sys_session where session_id=#{sessionId}
 	</delete>
-	<select id="query" parameterType="java.util.Map" resultType="java.lang.Integer">
+	<select id="query" parameterType="java.util.Map" resultType="java.lang.String">
 		select id_ from sys_session where 1=1
 		<if test="keyword != null">
 			and (account_ like CONCAT('%',#{keyword},'%') or session_id like CONCAT('%',#{keyword},'%')

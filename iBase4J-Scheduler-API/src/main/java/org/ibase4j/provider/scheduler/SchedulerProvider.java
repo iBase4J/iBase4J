@@ -31,13 +31,13 @@ public interface SchedulerProvider {
 	/** 启停 */
 	public boolean openCloseTask(String taskGroup, String taskName, String status);
 
-	public TaskGroup getGroupById(Integer id);
+	public TaskGroup getGroupById(String id);
 
 	public TaskGroup updateGroup(TaskGroup record);
 
 	public PageInfo<TaskGroup> queryGroup(Map<String, Object> params);
 
-	public TaskScheduler getSchedulerById(Integer id);
+	public TaskScheduler getSchedulerById(String id);
 
 	public TaskScheduler updateScheduler(TaskScheduler record);
 
@@ -45,7 +45,7 @@ public interface SchedulerProvider {
 
 	public PageInfo<TaskSchedulerBean> queryScheduler(Map<String, Object> params);
 
-	public TaskFireLog getFireLogById(Integer id);
+	public TaskFireLog getFireLogById(String id);
 
 	public PageInfo<TaskFireLog> queryLog(Map<String, Object> params);
 }

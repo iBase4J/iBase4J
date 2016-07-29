@@ -5,18 +5,18 @@ import java.util.Date;
 
 @SuppressWarnings("serial")
 public class BaseModel implements Serializable {
-	private Integer id;
+	private String id;
 	private Boolean enable;
 	private String remark;
-	private Integer createBy;
+	private String createBy;
 	private Date createTime;
-	private Integer updateBy;
+	private String updateBy;
 	private Date updateTime;
 
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -24,7 +24,7 @@ public class BaseModel implements Serializable {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -61,7 +61,7 @@ public class BaseModel implements Serializable {
 	/**
 	 * @return the createBy
 	 */
-	public Integer getCreateBy() {
+	public String getCreateBy() {
 		return createBy;
 	}
 
@@ -69,7 +69,7 @@ public class BaseModel implements Serializable {
 	 * @param createBy
 	 *            the createBy to set
 	 */
-	public void setCreateBy(Integer createBy) {
+	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
 
@@ -91,7 +91,7 @@ public class BaseModel implements Serializable {
 	/**
 	 * @return the updateBy
 	 */
-	public Integer getUpdateBy() {
+	public String getUpdateBy() {
 		return updateBy;
 	}
 
@@ -99,7 +99,7 @@ public class BaseModel implements Serializable {
 	 * @param updateBy
 	 *            the updateBy to set
 	 */
-	public void setUpdateBy(Integer updateBy) {
+	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
 

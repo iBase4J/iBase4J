@@ -47,12 +47,12 @@ public final class WebUtil {
 	}
 
 	/** 获取当前用户 */
-	public static final Integer getCurrentUser() {
+	public static final String getCurrentUser() {
 		Subject currentUser = SecurityUtils.getSubject();
 		if (null != currentUser) {
 			Session session = currentUser.getSession();
 			if (null != session) {
-				return (Integer) session.getAttribute(Constants.CURRENT_USER);
+				return (String) session.getAttribute(Constants.CURRENT_USER);
 			}
 		}
 		return null;

@@ -48,7 +48,7 @@ public class SysDicController extends BaseController {
 	@ApiOperation(value = "字典详情")
 	@RequiresPermissions("sys.dic.read")
 	@RequestMapping(value = "dicIndex/read/detail")
-	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
+	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
 		SysDicIndex record = sysDicService.queryDicIndexById(id);
 		return setSuccessModelMap(modelMap, record);
 	}
@@ -84,7 +84,7 @@ public class SysDicController extends BaseController {
 	@RequiresPermissions("sys.dic.delete")
 	@RequestMapping(value = "dicIndex/delete", method = RequestMethod.POST)
 	public Object deleteDicIndex(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) Integer id) {
+			@RequestParam(value = "id", required = false) String id) {
 		sysDicService.deleteDicIndex(id);
 		return setSuccessModelMap(modelMap);
 	}
@@ -101,7 +101,7 @@ public class SysDicController extends BaseController {
 	@ApiOperation(value = "字典项详情")
 	@RequiresPermissions("sys.dic.read")
 	@RequestMapping(value = "dic/read/detail")
-	public Object dicDetail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
+	public Object dicDetail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
 		SysDic record = sysDicService.queryDicById(id);
 		return setSuccessModelMap(modelMap, record);
 	}
@@ -128,7 +128,7 @@ public class SysDicController extends BaseController {
 	@RequiresPermissions("sys.dic.delete")
 	@RequestMapping(value = "dic/delete", method = RequestMethod.POST)
 	public Object deleteDic(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) Integer id) {
+			@RequestParam(value = "id", required = false) String id) {
 		sysDicService.deleteDic(id);
 		return setSuccessModelMap(modelMap);
 	}

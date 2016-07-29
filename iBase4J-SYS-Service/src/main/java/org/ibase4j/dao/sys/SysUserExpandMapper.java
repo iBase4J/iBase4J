@@ -11,5 +11,5 @@ import org.ibase4j.core.base.BaseExpandMapper;
  */
 public interface SysUserExpandMapper extends BaseExpandMapper {
 
-	Integer queryUserIdByThirdParty(@Param("provider") String provider, @Param("openId") String openId);
+    String queryUserIdByThirdParty(@Param("provider") String provider, @Param("openId") String openId);
 }

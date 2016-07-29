@@ -1,1 +1,1 @@
-http\://code.alibabatech.com/schema/dubbo=org.ibase4j.core.support.dubbo.spring.schema.DubboNamespaceHandler
+http\://code.alibabatech.com/schema/idubbo=org.ibase4j.core.support.dubbo.spring.schema.DubboNamespaceHandler

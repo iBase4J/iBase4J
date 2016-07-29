@@ -56,24 +56,24 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 
 	@Transactional
 	@CacheEvict(value = "sysDic")
-	public void deleteDic(Integer id) {
+	public void deleteDic(String id) {
 		dicMapper.deleteByPrimaryKey(id);
 	}
 
 	@Cacheable(value = "sysDicIndex")
-	public SysDicIndex queryDicIndexById(Integer id) {
+	public SysDicIndex queryDicIndexById(String id) {
 		return dicIndexMapper.selectByPrimaryKey(id);
 	}
 
 	@Cacheable(value = "sysDic")
-	public SysDic queryDicById(Integer id) {
+	public SysDic queryDicById(String id) {
 		return dicMapper.selectByPrimaryKey(id);
 	}
 
 	@Cacheable(value = "sysDics")
 	public Map<String, Map<String, String>> getAllDic() {
 		List<SysDicIndex> sysDicIndexs = dicIndexMapper.selectAll();
-		Map<Integer, String> dicIndexMap = InstanceUtil.newHashMap();
+		Map<String, String> dicIndexMap = InstanceUtil.newHashMap();
 		for (SysDicIndex sysDicIndex : sysDicIndexs) {
 			dicIndexMap.put(sysDicIndex.getId(), sysDicIndex.getKey());
 		}
@@ -97,13 +97,13 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 
 	public PageInfo<SysDicIndex> queryDicIndex(Map<String, Object> params) {
 		startPage(params);
-		Page<Integer> ids = dicExpandMapper.queryDicIndex(params);
+		Page<String> ids = dicExpandMapper.queryDicIndex(params);
 		Page<SysDicIndex> page = new Page<SysDicIndex>(ids.getPageNum(), ids.getPageSize());
 		page.setTotal(ids.getTotal());
 		if (ids != null) {
 			page.clear();
 			SysDicProvider provider = InstanceUtil.getBean(getClass());
-			for (Integer id : ids) {
+			for (String id : ids) {
 				page.add(provider.queryDicIndexById(id));
 			}
 		}
@@ -115,10 +115,10 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 		return getPage(dicExpandMapper.queryDic(params));
 	}
 
-	public void deleteDicIndex(Integer id) {
+	public void deleteDicIndex(String id) {
 		Map<String, Object> params = InstanceUtil.newHashMap();
 		params.put("index_id", id);
-		List<Integer> ids = dicExpandMapper.queryDic(params);
+		List<String> ids = dicExpandMapper.queryDic(params);
 		if (ids.size() > 0) {
 			throw new BusinessException();
 		}
