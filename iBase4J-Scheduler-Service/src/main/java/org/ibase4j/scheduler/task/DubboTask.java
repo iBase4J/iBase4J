@@ -17,7 +17,7 @@ import org.springframework.context.ApplicationContext;
  */
 public class DubboTask implements Job {
 	// 作业接口包名
-	private String provider = "org.ibase4j.scheduler.provider.";
+	private String provider = "org.ibase4j.provider.scheduler.";
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
