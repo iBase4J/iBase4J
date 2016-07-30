@@ -9,10 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.support.email.Email;
 import org.ibase4j.core.support.mq.QueueSender;
-import org.ibase4j.core.util.DateUtil;
-import org.ibase4j.core.util.DateUtil.DATE_PATTERN;
 import org.ibase4j.core.util.NativeUtil;
-import org.ibase4j.core.util.RedisUtil;
 import org.ibase4j.model.generator.TaskFireLog;
 import org.ibase4j.model.generator.TaskScheduler;
 import org.ibase4j.scheduler.Constants;
@@ -60,9 +57,6 @@ public class TaskListener implements JobListener {
 		}
 		// 保存日志
 		final TaskFireLog log = new TaskFireLog();
-		String redisKey = "REDIS_TBL_TaskFireLog";
-        String id = DateUtil.getDateTime(DATE_PATTERN.YYYYMMDDHHMMSSSSS) + RedisUtil.incr(redisKey);
-		log.setId(id);
 		log.setStartTime(context.getFireTime());
 		log.setGroupName(groupName);
 		log.setTaskName(jobName);
