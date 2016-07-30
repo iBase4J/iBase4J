@@ -16,7 +16,6 @@
 		<module>iBase4J-Common</module>
 		<module>iBase4J-Generator</module>
 		<module>iBase4J-Scheduler-API</module>
-		<module>iBase4J-SYS-Scheduler-API</module>
 		<module>iBase4J-Scheduler-Service</module>
 	</modules>
 	<!-- clean:clean package -P build tomcat7:run-war-only -f pom-scheduler-server.xml -->
