@@ -82,6 +82,7 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements Sy
 		sysUser.setAvatar(thirdPartyUser.getAvatarUrl());
 		// 初始化第三方信息
 		SysUserThirdparty thirdparty = new SysUserThirdparty();
+        thirdparty.setId(createId("SysUserThirdparty"));
 		thirdparty.setProvider(thirdPartyUser.getProvider());
 		thirdparty.setOpenId(thirdPartyUser.getOpenid());
 		thirdparty.setCreateTime(new Date());

@@ -3,10 +3,9 @@ package org.ibase4j.service;
 import java.util.Date;
 import java.util.Map;
 
-import org.ibase4j.core.util.DateUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.RedisUtil;
-import org.ibase4j.core.util.DateUtil.DATE_PATTERN;
 import org.ibase4j.dao.generator.TaskFireLogMapper;
 import org.ibase4j.dao.generator.TaskGroupMapper;
 import org.ibase4j.dao.generator.TaskSchedulerMapper;
@@ -29,7 +28,7 @@ import com.github.pagehelper.PageInfo;
  * @version 2016年7月1日 上午11:34:59
  */
 @Service
-public class SchedulerService {
+public class SchedulerService extends BaseProviderImpl<TaskGroup> {
     @Autowired
     private TaskSchedulerExpandMapper expandMapper;
     @Autowired
@@ -58,10 +57,8 @@ public class SchedulerService {
     @CachePut("taskGroup")
     public TaskGroup updateGroup(TaskGroup record) {
         record.setEnable(true);
-        if (record.getId() == null) {
-            String redisKey = "REDIS_TBL_" + record.getClass().getSimpleName();
-            String id = DateUtil.getDateTime(DATE_PATTERN.YYYYMMDDHHMMSSSSS) + RedisUtil.incr(redisKey);
-            record.setId(id);
+        if (StringUtils.isBlank(record.getId())) {
+            record.setId(createId("TaskGroup"));
             record.setCreateTime(new Date());
             taskGroupMapper.insert(record);
         } else {
@@ -75,10 +72,8 @@ public class SchedulerService {
     @CachePut("taskScheduler")
     public TaskScheduler updateScheduler(TaskScheduler record) {
         record.setEnable(true);
-        if (record.getId() == null) {
-            String redisKey = "REDIS_TBL_" + record.getClass().getSimpleName();
-            String id = DateUtil.getDateTime(DATE_PATTERN.YYYYMMDDHHMMSSSSS) + RedisUtil.incr(redisKey);
-            record.setId(id);
+        if (StringUtils.isBlank(record.getId())) {
+            record.setId(createId("TaskScheduler"));
             record.setCreateTime(new Date());
             taskSchedulerMapper.insert(record);
         } else {
@@ -91,10 +86,8 @@ public class SchedulerService {
     @Transactional
     @CachePut("taskFireLog")
     public TaskFireLog updateLog(TaskFireLog record) {
-        if (record.getId() == null) {
-            String redisKey = "REDIS_TBL_" + record.getClass().getSimpleName();
-            String id = DateUtil.getDateTime(DATE_PATTERN.YYYYMMDDHHMMSSSSS) + RedisUtil.incr(redisKey);
-            record.setId(id);
+        if (StringUtils.isBlank(record.getId())) {
+            record.setId(createId("TaskFireLog"));
             logMapper.insert(record);
         } else {
             logMapper.updateByPrimaryKey(record);

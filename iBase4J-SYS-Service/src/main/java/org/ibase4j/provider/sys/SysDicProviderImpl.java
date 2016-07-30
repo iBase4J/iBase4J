@@ -1,8 +1,10 @@
 package org.ibase4j.provider.sys;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.exception.BusinessException;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
@@ -37,7 +39,10 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 	@Transactional
 	@CachePut(value = "sysDicIndex")
 	public void updateDicIndex(SysDicIndex record) {
-		if (record.getId() == null) {
+	    record.setUpdateTime(new Date());
+	    if (StringUtils.isBlank(record.getId())) {
+		    record.setId(createId("SysDicIndex"));
+            record.setCreateTime(new Date());
 			dicIndexMapper.insert(record);
 		} else {
 			dicIndexMapper.updateByPrimaryKey(record);
@@ -47,7 +52,10 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements SysD
 	@Transactional
 	@CachePut(value = "sysDic")
 	public void updateDic(SysDic record) {
-		if (record.getId() == null) {
+        record.setUpdateTime(new Date());
+	    if (StringUtils.isBlank(record.getId())) {
+            record.setId(createId("SysDic"));
+            record.setCreateTime(new Date());
 			dicMapper.insert(record);
 		} else {
 			dicMapper.updateByPrimaryKey(record);

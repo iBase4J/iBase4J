@@ -650,7 +650,7 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   `group_name` varchar(50) NOT NULL,
   `task_name` varchar(50) NOT NULL,
   `start_time` datetime NOT NULL,
-  `end_time` datetime NOT NULL,
+  `end_time` datetime DEFAULT NULL,
   `status` varchar(1) NOT NULL DEFAULT 'I',
   `server_host` varchar(50) DEFAULT NULL COMMENT '服务器名',
   `server_duid` varchar(50) DEFAULT NULL COMMENT '服务器网卡序列号',

@@ -7,9 +7,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.core.util.DateUtil;
-import org.ibase4j.core.util.RedisUtil;
-import org.ibase4j.core.util.DateUtil.DATE_PATTERN;
 import org.ibase4j.dao.generator.SysSessionMapper;
 import org.ibase4j.dao.sys.SysSessionExpandMapper;
 import org.ibase4j.model.generator.SysSession;
@@ -42,9 +39,7 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
                 record.setId(id);
                 sessionMapper.updateByPrimaryKey(record);
             } else {
-                String redisKey = "REDIS_TBL_" + record.getClass().getSimpleName();
-                id = DateUtil.getDateTime(DATE_PATTERN.YYYYMMDDHHMMSSSSS) + RedisUtil.incr(redisKey);
-                record.setId(id);
+                record.setId(createId("SysSession"));
                 record.setCreateBy(record.getAccount());
                 record.setCreateTime(new Date());
                 sessionMapper.insert(record);

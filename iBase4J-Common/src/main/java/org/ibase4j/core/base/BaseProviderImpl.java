@@ -49,6 +49,13 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         return InstanceUtil.getBean(getClass());
     }
 
+    /** 生成主键策略 */
+    public String createId(String key) {
+        String redisKey = "REDIS_TBL_" + key;
+        String dateTime = DateUtil.getDateTime(DATE_PATTERN.YYYYMMDDHHMMSSSSS);
+        return dateTime + RedisUtil.incr(redisKey);
+    }
+
     /** 根据Id查询(默认类型T) */
     public PageInfo<T> getPage(Page<String> ids) {
         if (ids != null) {
@@ -125,9 +132,8 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
             record.setEnable(true);
             record.setUpdateTime(new Date());
             if (StringUtils.isBlank(record.getId())) {
-                String redisKey = "REDIS_TBL_" + record.getClass().getSimpleName();
-                String id = DateUtil.getDateTime(DATE_PATTERN.YYYYMMDDHHMMSSSSS) + RedisUtil.incr(redisKey);
-                record.setId(id);
+                String key = record.getClass().getSimpleName();
+                record.setId(createId(key));
                 record.setCreateTime(new Date());
                 mapper.insert(record);
             } else {
