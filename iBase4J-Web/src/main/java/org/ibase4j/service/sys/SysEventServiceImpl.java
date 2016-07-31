@@ -38,7 +38,7 @@ public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
 		record.setRequestUri(request.getServletPath());
 		record.setClientHost(WebUtil.getHost(request));
 		record.setUserAgent(request.getHeader("user-agent"));
-		record.setParammeters(JSON.toJSONString(request.getParameterMap()));
+		record.setParameters(JSON.toJSONString(request.getParameterMap()));
 		record.setStatus(response.getStatus());
         record.setCreateBy(uid);
         record.setUpdateBy(uid);

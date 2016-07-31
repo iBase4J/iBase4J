@@ -353,7 +353,7 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   `id_` varchar(64) NOT NULL,
   `title_` varchar(50) DEFAULT NULL,
   `request_uri` varchar(50) DEFAULT NULL,
-  `parammeters_` varchar(500) DEFAULT NULL,
+  `parameters_` varchar(500) DEFAULT NULL,
   `method_` varchar(20) DEFAULT NULL,
   `client_host` varchar(50) DEFAULT NULL,
   `user_agent` varchar(300) DEFAULT NULL,
