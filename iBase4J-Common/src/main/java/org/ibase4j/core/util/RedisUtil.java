@@ -2,10 +2,8 @@ package org.ibase4j.core.util;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
@@ -19,14 +17,12 @@ import org.springframework.web.context.WebApplicationContext;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
-@PropertySource("classpath:config/redis.properties")
 public final class RedisUtil {
     private RedisUtil() {
     }
 
     private static RedisTemplate<Serializable, Serializable> redisTemplate = null;
-    private static Integer EXPIRE = Integer
-        .valueOf(ResourceBundle.getBundle("config/redis").getString("redis.expiration"));
+    private static Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
 
     // 获取连接
     @SuppressWarnings("unchecked")

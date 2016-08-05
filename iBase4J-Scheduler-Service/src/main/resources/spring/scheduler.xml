@@ -11,6 +11,7 @@
 		<property name="schedulerName" value="iBase4J-Scheduler" />
 		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
 		<property name="configLocation" value="classpath:config/quartz.properties" />
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 
 	<bean id="schedulerManager" class="org.ibase4j.scheduler.manager.DefaultSchedulerManager">

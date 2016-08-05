@@ -9,15 +9,15 @@
 	<bean class="org.ibase4j.core.util.PropertiesUtil">
 		<property name="locations">
 			<list>
-				<value>classpath:config/mq.properties</value>
-				<value>classpath:config/jdbc.properties</value>
-				<value>classpath:config/redis.properties</value>
-				<value>classpath:config/dubbo.properties</value>
+				<value>${scheduler.jdbc.config.path}</value>
+				<value>${system.config.path}</value>
 			</list>
 		</property>
 		<property name="properties">
 			<props>
+				<!-- dubbo个性化配置(服务名,端口) -->
 				<prop key="dubbo.application.name">iBase4J-Scheduler</prop>
+				<prop key="dubbo.protocol.port">20810</prop>
 			</props>
 		</property>
 	</bean>

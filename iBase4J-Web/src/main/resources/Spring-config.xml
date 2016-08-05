@@ -9,14 +9,14 @@
 	<bean class="org.ibase4j.core.util.PropertiesUtil">
 		<property name="locations">
 			<list>
-				<value>classpath:config/mq.properties</value>
-				<value>classpath:config/redis.properties</value>
-				<value>classpath:config/dubbo.properties</value>
+				<value>${system.config.path}</value>
 			</list>
 		</property>
 		<property name="properties">
 			<props>
+				<!-- dubbo个性化配置(服务名,端口) -->
 				<prop key="dubbo.application.name">iBase4J-Web</prop>
+				<prop key="dubbo.protocol.port">20830</prop>
 				<!-- Web端常用数据缓存时间(秒) -->
 				<prop key="redis.expiration">1800</prop>
 			</props>

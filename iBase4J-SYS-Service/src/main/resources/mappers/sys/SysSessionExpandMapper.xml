@@ -12,7 +12,7 @@
 			or ip_ like CONCAT('%',#{keyword},'%'))
 		</if>
 	</select>
-	<select id="queryBySessionId" resultType="java.lang.Integer">
+	<select id="queryBySessionId" resultType="java.lang.String">
 		select id_ from sys_session where session_id = #{sessionId}
 	</select>
 	<select id="querySessionIdByAccount" resultType="java.lang.String">

@@ -20,6 +20,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.util.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +59,7 @@ public final class EmailSender {
 	 */
 	public void setSmtpHost(String hostName) {
 		if (hostName == null || hostName.trim().equals("")) {
-			hostName = Resources.EMAIL.getString("smtp.host");
+			hostName = PropertiesUtil.getString("email.smtp.host");
 		}
 		logger.info(Resources.getMessage("EMAIL.SET_HOST"), hostName);
 		if (props == null)
@@ -97,7 +98,7 @@ public final class EmailSender {
 		if (props == null)
 			props = System.getProperties();
 		if (userkey == null || userkey.trim().equals("")) {
-			userkey = Resources.EMAIL.getString("authorisation.code");
+			userkey = PropertiesUtil.getString("email.authorisation.code");
 		}
 		if (userkey == null || userkey.trim().equals("")) {
 			props.put("mail.smtp.auth", "false");
@@ -114,10 +115,10 @@ public final class EmailSender {
 	 */
 	public void setNamePass(String name, String pass, String key) {
 		if (name == null || name.trim().equals("")) {
-			name = Resources.EMAIL.getString("user.name");
+			name = PropertiesUtil.getString("email.user.name");
 		}
 		if (pass == null || pass.trim().equals("")) {
-			pass = Resources.EMAIL.getString("user.password");
+			pass = PropertiesUtil.getString("email.user.password");
 		}
 		username = name;
 		password = pass;
@@ -188,7 +189,7 @@ public final class EmailSender {
 	 */
 	public boolean setFrom(String from) {
 		if (from == null || from.trim().equals("")) {
-			from = Resources.EMAIL.getString("send.from");
+			from = PropertiesUtil.getString("email.send.from");
 		}
 		try {
 			String[] f = from.split(",");

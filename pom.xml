@@ -22,6 +22,11 @@
 	<!-- mybatis-generator:generate -->
 
 	<properties>
+		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
+		<scheduler.jdbc.config.path>classpath:config/jdbc.properties</scheduler.jdbc.config.path>
+		<sys.jdbc.config.path>classpath:config/jdbc.properties</sys.jdbc.config.path>
+		<system.config.path>classpath:config/system.properties</system.config.path>
+		<!--  -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
 		<spring.version>4.3.0.RELEASE</spring.version>
@@ -274,6 +279,14 @@
 
 	<profiles>
 		<profile>
+			<id>product</id>
+			<properties>
+				<scheduler.jdbc.config.path>file:/home/config/iBase4J/jdbc-scheduler.properties</scheduler.jdbc.config.path>
+				<sys.jdbc.config.path>file:/home/config/iBase4J/jdbc-sys.properties</sys.jdbc.config.path>
+				<system.config.path>file:/home/config/iBase4J/system.properties</system.config.path>
+			</properties>
+		</profile>
+		<profile>
 			<id>build</id>
 			<build>
 				<finalName>${project.name}</finalName>
@@ -335,15 +348,11 @@
 		<finalName>${project.name}</finalName>
 		<resources>
 			<resource>
-				<directory>src/main/java</directory>
+				<directory>src/main/resources</directory>
 				<includes>
-					<include>**/*.properties</include>
-					<include>**/*.xml</include>
+					<include>*</include>
 				</includes>
 				<filtering>true</filtering>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
 		<pluginManagement>
