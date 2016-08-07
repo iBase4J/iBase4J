@@ -13,6 +13,10 @@
 	<!-- mybatis-generator:generate -->
 
 	<properties>
+		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
+		<jdbc.config.path>classpath:config/jdbc.properties</jdbc.config.path>
+		<system.config.path>classpath:config/system.properties</system.config.path>
+		<!--  -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
 		<spring.version>4.3.0.RELEASE</spring.version>
@@ -325,7 +329,7 @@
 			<version>2.5.1</version>
 		</dependency>
 		<!-- Dubbo -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
 			<version>${dubbo.version}</version>
@@ -355,13 +359,13 @@
 			<groupId>io.netty</groupId>
 			<artifactId>netty</artifactId>
 			<version>3.7.0.Final</version>
-		</dependency>
+		</dependency> -->
 		<!-- activemq -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-core</artifactId>
 			<version>5.7.0</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.codehaus.xfire</groupId>
 			<artifactId>xfire-core</artifactId>
@@ -386,6 +390,13 @@
 	</dependencies>
 
 	<profiles>
+		<profile>
+			<id>product</id>
+			<properties>
+				<jdbc.config.path>file:/home/config/iBase4J/jdbc-sys.properties</jdbc.config.path>
+				<system.config.path>file:/home/config/iBase4J/system.properties</system.config.path>
+			</properties>
+		</profile>
 		<profile>
 			<id>build</id>
 			<build>
@@ -444,6 +455,16 @@
 		</profile>
 	</profiles>
 	<build>
+		<finalName>${project.name}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>*</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<pluginManagement>
 			<plugins>
 				<plugin>

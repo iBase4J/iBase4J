@@ -8,7 +8,7 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 import java.util.HashMap;
 
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.mybatis.generator.model.SysUser;
+import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.service.sys.SysUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

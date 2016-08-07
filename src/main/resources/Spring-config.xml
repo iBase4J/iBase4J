@@ -6,13 +6,11 @@
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
     <!-- 引入属性配置文件 -->
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean class="org.ibase4j.core.util.PropertiesUtil">
 		<property name="locations">
 			<list>
-				<value>classpath:config/mq.properties</value>
-				<value>classpath:config/jdbc.properties</value>
-				<value>classpath:config/redis.properties</value>
-				<value>classpath:config/dubbo.properties</value>
+				<value>${jdbc.config.path}</value>
+				<value>${system.config.path}</value>
 			</list>
 		</property>
 	</bean>

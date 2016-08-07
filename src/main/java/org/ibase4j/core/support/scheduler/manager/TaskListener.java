@@ -8,8 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.support.email.Email;
-import org.ibase4j.core.support.mq.QueueSender;
 import org.ibase4j.core.support.scheduler.Constants;
+import org.ibase4j.core.util.EmailUtil;
 import org.ibase4j.core.util.NativeUtil;
 import org.ibase4j.model.generator.TaskFireLog;
 import org.ibase4j.model.generator.TaskScheduler;
@@ -33,8 +33,6 @@ public class TaskListener implements JobListener {
 	private Logger logger = LogManager.getLogger(this.getClass());
 	@Autowired
 	private SchedulerService schedulerService;
-	@Autowired
-	private QueueSender queueSender;
 	// 线程池
 	private ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -114,7 +112,7 @@ public class TaskListener implements JobListener {
 	private void sendEmail(final Email email) {
 		executorService.submit(new Runnable() {
 			public void run() {
-				queueSender.send("iBase4J.emailSender", email);
+				EmailUtil.sendEmail(email);
 			}
 		});
 	}
