@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ibase4j.provider.sys;
+package org.ibase4j.provider;
 
 import java.util.Date;
 import java.util.Map;
@@ -15,6 +15,9 @@ import org.ibase4j.dao.sys.SysUserExpandMapper;
 import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.model.generator.SysUserThirdparty;
 import org.ibase4j.model.sys.SysUserBean;
+import org.ibase4j.provider.SysDeptProvider;
+import org.ibase4j.provider.SysDicProvider;
+import org.ibase4j.provider.SysUserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;

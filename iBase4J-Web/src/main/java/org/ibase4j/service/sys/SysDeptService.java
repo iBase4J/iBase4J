@@ -3,7 +3,7 @@ package org.ibase4j.service.sys;
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.generator.SysDept;
-import org.ibase4j.provider.sys.SysDeptProvider;
+import org.ibase4j.provider.SysDeptProvider;
 import org.springframework.stereotype.Service;
 
 /**

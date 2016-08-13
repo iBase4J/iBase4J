@@ -16,7 +16,7 @@ import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysEvent;
-import org.ibase4j.provider.sys.SysEventProvider;
+import org.ibase4j.provider.SysEventProvider;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;

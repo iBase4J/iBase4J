@@ -7,7 +7,7 @@ import org.ibase4j.model.generator.SysRoleMenu;
 import org.ibase4j.model.generator.SysUserMenu;
 import org.ibase4j.model.generator.SysUserRole;
 import org.ibase4j.model.sys.SysMenuBean;
-import org.ibase4j.provider.sys.SysAuthorizeProvider;
+import org.ibase4j.provider.SysAuthorizeProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package org.ibase4j.provider.sys;
+package org.ibase4j.provider;
 
 import java.util.Date;
 import java.util.List;
@@ -10,10 +10,12 @@ import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.dao.generator.SysSessionMapper;
 import org.ibase4j.dao.sys.SysSessionExpandMapper;
 import org.ibase4j.model.generator.SysSession;
+import org.ibase4j.provider.SysSessionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageInfo;
 
@@ -30,6 +32,7 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
     private SysSessionExpandMapper sessionExpandMapper;
 
     @CachePut
+    @Transactional
     public SysSession update(SysSession record) {
         if (record.getId() == null) {
             record.setUpdateBy(record.getAccount());

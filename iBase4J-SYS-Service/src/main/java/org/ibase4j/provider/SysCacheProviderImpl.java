@@ -1,7 +1,8 @@
-package org.ibase4j.provider.sys;
+package org.ibase4j.provider;
 
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.RedisUtil;
+import org.ibase4j.provider.SysCacheProvider;
 
 @DubboService(interfaceClass = SysCacheProvider.class)
 public class SysCacheProviderImpl implements SysCacheProvider {

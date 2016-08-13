@@ -11,7 +11,7 @@ import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysUser;
 import org.ibase4j.model.sys.SysUserBean;
-import org.ibase4j.provider.sys.SysUserProvider;
+import org.ibase4j.provider.SysUserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;

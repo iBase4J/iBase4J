@@ -8,7 +8,7 @@ import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.generator.SysDic;
 import org.ibase4j.model.generator.SysDicIndex;
-import org.ibase4j.provider.sys.SysDicProvider;
+import org.ibase4j.provider.SysDicProvider;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;

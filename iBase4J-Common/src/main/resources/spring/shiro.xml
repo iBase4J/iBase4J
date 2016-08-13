@@ -9,9 +9,9 @@
 		http://code.alibabatech.com/schema/idubbo
 		http://code.alibabatech.com/schema/idubbo/idubbo.xsd">
 	<!-- 拦截器使用对象,使用Spring注入 -->
-	<idubbo:reference id="sysUserProvider"  interface="org.ibase4j.provider.sys.SysUserProvider" check="false" />
-	<idubbo:reference id="sysSessionProvider" interface="org.ibase4j.provider.sys.SysSessionProvider" check="false" />
-	<idubbo:reference id="sysAuthorizeProvider" interface="org.ibase4j.provider.sys.SysAuthorizeProvider" check="false" />
+	<idubbo:reference id="sysUserProvider"  interface="org.ibase4j.provider.SysUserProvider" check="false" />
+	<idubbo:reference id="sysSessionProvider" interface="org.ibase4j.provider.SysSessionProvider" check="false" />
+	<idubbo:reference id="sysAuthorizeProvider" interface="org.ibase4j.provider.SysAuthorizeProvider" check="false" />
 	<!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
 	<bean id="realm" class="org.ibase4j.core.shiro.Realm" />
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">

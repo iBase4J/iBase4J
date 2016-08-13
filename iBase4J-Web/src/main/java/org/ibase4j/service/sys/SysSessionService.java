@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.ibase4j.core.support.Assert;
 import org.ibase4j.model.generator.SysSession;
-import org.ibase4j.provider.sys.SysSessionProvider;
+import org.ibase4j.provider.SysSessionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.stereotype.Service;

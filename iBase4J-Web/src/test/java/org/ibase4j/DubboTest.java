@@ -1,7 +1,7 @@
 package org.ibase4j;
 
 import org.ibase4j.model.generator.SysUser;
-import org.ibase4j.provider.sys.SysUserProvider;
+import org.ibase4j.provider.SysUserProvider;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

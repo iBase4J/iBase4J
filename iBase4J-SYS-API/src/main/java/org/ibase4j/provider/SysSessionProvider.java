@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ibase4j.provider.sys;
+package org.ibase4j.provider;
 
 import java.util.List;
 

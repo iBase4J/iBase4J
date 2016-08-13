@@ -98,7 +98,7 @@
 		</property>
 	</bean>
 	<!-- 切面 -->
-	<!-- <bean class="org.ibase4j.core.aspect.DataSourceAspect" /> -->
+	<bean class="org.ibase4j.core.aspect.DataSourceAspect" />
 	<!--  -->
 	<bean class="org.springframework.jdbc.core.JdbcTemplate">
 		<constructor-arg ref="dataSource" />

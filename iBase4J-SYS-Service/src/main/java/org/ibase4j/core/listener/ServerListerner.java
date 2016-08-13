@@ -5,8 +5,8 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.provider.sys.SysDicProvider;
-import org.ibase4j.provider.sys.SysUserProvider;
+import org.ibase4j.provider.SysDicProvider;
+import org.ibase4j.provider.SysUserProvider;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 

@@ -1,4 +1,4 @@
-package org.ibase4j.provider.sys;
+package org.ibase4j.provider;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +9,7 @@ import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.dao.sys.SysRoleExpandMapper;
 import org.ibase4j.model.generator.SysRole;
 import org.ibase4j.model.sys.SysRoleBean;
+import org.ibase4j.provider.SysRoleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 

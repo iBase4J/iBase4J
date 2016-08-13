@@ -1,4 +1,4 @@
-package org.ibase4j.provider.sys;
+package org.ibase4j.provider;
 
 import java.util.Date;
 import java.util.List;
@@ -14,6 +14,7 @@ import org.ibase4j.dao.generator.SysDicMapper;
 import org.ibase4j.dao.sys.SysDicExpandMapper;
 import org.ibase4j.model.generator.SysDic;
 import org.ibase4j.model.generator.SysDicIndex;
+import org.ibase4j.provider.SysDicProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;

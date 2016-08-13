@@ -5,7 +5,7 @@ import java.util.Map;
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.generator.SysRole;
-import org.ibase4j.provider.sys.SysRoleProvider;
+import org.ibase4j.provider.SysRoleProvider;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
