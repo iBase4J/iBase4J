@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="default" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <plugin type="org.ibase4j.core.generator.plugin.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <plugin type="org.ibase4j.core.generator.plugin.MapperPlugin">
+        	<property name="targetProject" value="../iBase4J-Biz-Service/src/main/java"/>
+        	<property name="targetPackage" value="org.ibase4j.dao.generator"/>
+        </plugin>
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/iBase4J?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull"
+                        userId="root" password="buzhidao">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <javaModelGenerator targetPackage="org.ibase4j.model.generator" targetProject="../iBase4J-Biz-API/src/main/java">
+            <property name="constructorBased" value="false"/>
+            <property name="useActualColumnNames" value="true" />
+            <property name="enableSubPackages" value="false"/>
+            <property name="immutable" value="false"/>
+            <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="org.ibase4j.core.base.BaseModel"/>
+        </javaModelGenerator>
+        <sqlMapGenerator targetPackage="mappers.generator" targetProject="../iBase4J-Biz-Service/src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <javaClientGenerator targetPackage="org.ibase4j.dao.generator" targetProject="../iBase4J-Biz-Service/src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value=""/>
+            <property name="methodNameCalculator" value=""/>
+            <property name="rootInterface" value="org.ibase4j.core.base.BaseMapper"/>
+        </javaClientGenerator>
+        <table tableName="sys_%">
+        </table>
+    </context>
+</generatorConfiguration>

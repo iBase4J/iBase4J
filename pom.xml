@@ -16,6 +16,9 @@
 		<module>iBase4J-SYS-API</module>
 		<module>iBase4J-SYS-Service</module>
 		<module>iBase4J-Web</module>
+		<module>iBase4J-Biz-API</module>
+		<module>iBase4J-Biz-Service</module>
+		<module>iBase4J-Biz-Web</module>
 	</modules>
 
 	<!-- clean:clean package -P build tomcat7:run-war-only -->
