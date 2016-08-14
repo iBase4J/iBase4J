@@ -22,28 +22,35 @@ import com.github.pagehelper.PageInfo;
 @CacheConfig(cacheNames = "sysRole")
 @DubboService(interfaceClass = SysRoleProvider.class)
 public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements SysRoleProvider {
-	@Autowired
-	private SysRoleExpandMapper sysRoleExpandMapper;
+    @Autowired
+    private SysRoleExpandMapper sysRoleExpandMapper;
 
-	public PageInfo<SysRole> query(Map<String, Object> params) {
-		startPage(params);
-		return getPage(sysRoleExpandMapper.query(params));
-	}
+    public PageInfo<SysRole> query(Map<String, Object> params) {
+        startPage(params);
+        return getPage(sysRoleExpandMapper.query(params));
+    }
 
-	public PageInfo<SysRoleBean> queryBean(Map<String, Object> params) {
-		startPage(params);
-		PageInfo<SysRoleBean> pageInfo = getPage(sysRoleExpandMapper.query(params), SysRoleBean.class);
-		// 权限信息
-		for (SysRoleBean bean : pageInfo.getList()) {
-			List<String> permissions = sysRoleExpandMapper.queryPermission(bean.getId());
-			for (String permission : permissions) {
-				if (StringUtils.isBlank(bean.getPermission())) {
-					bean.setPermission(permission);
-				} else {
-					bean.setPermission(bean.getPermission() + ";" + permission);
-				}
-			}
-		}
-		return pageInfo;
-	}
+    public PageInfo<SysRoleBean> queryBean(Map<String, Object> params) {
+        startPage(params);
+        PageInfo<SysRoleBean> pageInfo = getPage(sysRoleExpandMapper.query(params), SysRoleBean.class);
+        // 权限信息
+        for (SysRoleBean bean : pageInfo.getList()) {
+            List<String> permissions = sysRoleExpandMapper.queryPermission(bean.getId());
+            for (String permission : permissions) {
+                if (StringUtils.isBlank(bean.getPermission())) {
+                    bean.setPermission(permission);
+                } else {
+                    bean.setPermission(bean.getPermission() + ";" + permission);
+                }
+            }
+        }
+        return pageInfo;
+    }
+
+    /* (non-Javadoc)
+     * @see org.ibase4j.provider.SysRoleProvider#getPermissions(java.lang.String) */
+    @Override
+    public List<String> getPermissions(String id) {
+        return sysRoleExpandMapper.getPermissions(id);
+    }
 }

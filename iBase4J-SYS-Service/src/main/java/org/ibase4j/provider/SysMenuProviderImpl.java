@@ -1,5 +1,6 @@
 package org.ibase4j.provider;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.base.BaseProviderImpl;
@@ -20,21 +21,28 @@ import com.github.pagehelper.PageInfo;
 @CacheConfig(cacheNames = "sysMenu")
 @DubboService(interfaceClass = SysMenuProvider.class)
 public class SysMenuProviderImpl extends BaseProviderImpl<SysMenu> implements SysMenuProvider {
-	@Autowired
-	private SysMenuExpandMapper sysMenuExpandMapper;
-	@Autowired
-	private SysDicProvider sysDicProvider;
+    @Autowired
+    private SysMenuExpandMapper sysMenuExpandMapper;
+    @Autowired
+    private SysDicProvider sysDicProvider;
 
-	public PageInfo<SysMenu> query(Map<String, Object> params) {
-		this.startPage(params);
-		PageInfo<SysMenu> pageInfo = getPage(sysMenuExpandMapper.query(params));
-		Map<String, String> menuTypeMap = sysDicProvider.queryDicByDicIndexKey("MENUTYPE");
-		for (SysMenu sysMenu : pageInfo.getList()) {
-			if (sysMenu.getMenuType() != null) {
-				sysMenu.setRemark(menuTypeMap.get(sysMenu.getMenuType().toString()));
-			}
-		}
-		return pageInfo;
-	}
+    public PageInfo<SysMenu> query(Map<String, Object> params) {
+        this.startPage(params);
+        PageInfo<SysMenu> pageInfo = getPage(sysMenuExpandMapper.query(params));
+        Map<String, String> menuTypeMap = sysDicProvider.queryDicByDicIndexKey("MENUTYPE");
+        for (SysMenu sysMenu : pageInfo.getList()) {
+            if (sysMenu.getMenuType() != null) {
+                sysMenu.setRemark(menuTypeMap.get(sysMenu.getMenuType().toString()));
+            }
+        }
+        return pageInfo;
+    }
+
+    /* (non-Javadoc)
+     * @see org.ibase4j.provider.SysMenuProvider#getPermissions() */
+    @Override
+    public List<Map<String, String>> getPermissions() {
+        return sysMenuExpandMapper.getPermissions();
+    }
 
 }

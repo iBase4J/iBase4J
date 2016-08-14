@@ -9,13 +9,13 @@ import org.ibase4j.model.sys.SysMenuBean;
 
 public interface SysAuthorizeProvider {
 
-	public void updateUserMenu(List<SysUserMenu> sysUserMenus);
+    public void updateUserMenu(List<SysUserMenu> sysUserMenus);
 
-	public void updateUserRole(List<SysUserRole> sysUserRoles);
+    public void updateUserRole(List<SysUserRole> sysUserRoles);
 
-	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus);
+    public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus);
 
-	public List<SysMenuBean> queryAuthorizeByUserId(String userId);
+    public List<SysMenuBean> queryAuthorizeByUserId(String userId);
 
-	public List<String> queryPermissionByUserId(String userId);
+    public List<String> queryPermissionByUserId(String userId);
 }
