@@ -1,5 +1,6 @@
 package org.ibase4j.service.sys;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.base.BaseService;
@@ -16,12 +17,16 @@ import com.github.pagehelper.PageInfo;
  */
 @Service
 public class SysRoleService extends BaseService<SysRoleProvider, SysRole> {
-	@DubboReference
-	public void setProvider(SysRoleProvider provider) {
-		this.provider = provider;
-	}
+    @DubboReference
+    public void setProvider(SysRoleProvider provider) {
+        this.provider = provider;
+    }
 
-	public PageInfo<?> queryBean(Map<String, Object> params) {
-		return provider.queryBean(params);
-	}
+    public PageInfo<?> queryBean(Map<String, Object> params) {
+        return provider.queryBean(params);
+    }
+
+    public List<String> getPermissions(String id) {
+        return provider.getPermissions(id);
+    }
 }

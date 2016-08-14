@@ -1,5 +1,6 @@
 package org.ibase4j.web.sys;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,54 +33,63 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "角色管理", description = "角色管理")
 @RequestMapping(value = "role", method = RequestMethod.POST)
 public class SysRoleController extends BaseController {
-	@Autowired
-	private SysRoleService sysRoleService;
+    @Autowired
+    private SysRoleService sysRoleService;
 
-	@ApiOperation(value = "查询角色")
-	@RequiresPermissions("sys.role.read")
-	@RequestMapping(value = "/read/list")
-	public Object get(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = WebUtil.getParameterMap(request);
-		PageInfo<?> list = sysRoleService.queryBean(params);
-		return setSuccessModelMap(modelMap, list);
-	}
+    @ApiOperation(value = "查询角色")
+    @RequiresPermissions("sys.role.read")
+    @RequestMapping(value = "/read/list")
+    public Object get(HttpServletRequest request, ModelMap modelMap) {
+        Map<String, Object> params = WebUtil.getParameterMap(request);
+        PageInfo<?> list = sysRoleService.queryBean(params);
+        return setSuccessModelMap(modelMap, list);
+    }
 
-	// 详细信息
-	@ApiOperation(value = "角色详情")
-	@RequiresPermissions("sys.role.read")
-	@RequestMapping(value = "/read/detail")
-	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
-		SysRole record = sysRoleService.queryById(id);
-		return setSuccessModelMap(modelMap, record);
-	}
+    // 详细信息
+    @ApiOperation(value = "角色详情")
+    @RequiresPermissions("sys.role.read")
+    @RequestMapping(value = "/read/detail")
+    public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
+        SysRole record = sysRoleService.queryById(id);
+        return setSuccessModelMap(modelMap, record);
+    }
 
-	// 新增
-	@ApiOperation(value = "添加角色")
-	@RequiresPermissions("sys.role.add")
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public Object add(HttpServletRequest request, ModelMap modelMap) {
-		SysRole record = Request2ModelUtil.covert(SysRole.class, request);
-		sysRoleService.add(record);
-		return setSuccessModelMap(modelMap);
-	}
+    // 新增
+    @ApiOperation(value = "添加角色")
+    @RequiresPermissions("sys.role.add")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public Object add(HttpServletRequest request, ModelMap modelMap) {
+        SysRole record = Request2ModelUtil.covert(SysRole.class, request);
+        sysRoleService.add(record);
+        return setSuccessModelMap(modelMap);
+    }
 
-	// 修改
-	@ApiOperation(value = "修改角色")
-	@RequiresPermissions("sys.role.update")
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public Object update(HttpServletRequest request, ModelMap modelMap) {
-		SysRole record = Request2ModelUtil.covert(SysRole.class, request);
-		sysRoleService.update(record);
-		return setSuccessModelMap(modelMap);
-	}
+    // 修改
+    @ApiOperation(value = "修改角色")
+    @RequiresPermissions("sys.role.update")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Object update(HttpServletRequest request, ModelMap modelMap) {
+        SysRole record = Request2ModelUtil.covert(SysRole.class, request);
+        sysRoleService.update(record);
+        return setSuccessModelMap(modelMap);
+    }
 
-	// 删除
-	@ApiOperation(value = "删除角色")
-	@RequiresPermissions("sys.role.delete")
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public Object delete(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) String id) {
-		sysRoleService.delete(id);
-		return setSuccessModelMap(modelMap);
-	}
+    // 删除
+    @ApiOperation(value = "删除角色")
+    @RequiresPermissions("sys.role.delete")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public Object delete(HttpServletRequest request, ModelMap modelMap,
+        @RequestParam(value = "id", required = false) String id) {
+        sysRoleService.delete(id);
+        return setSuccessModelMap(modelMap);
+    }
+
+    @ApiOperation(value = "获取角色权限")
+    @RequiresPermissions("sys.role.read")
+    @RequestMapping(value = "/read/permission", method = RequestMethod.POST)
+    public Object getPermission(HttpServletRequest request, ModelMap modelMap,
+        @RequestParam(value = "id", required = false) String id) {
+        List<String> permissions = sysRoleService.getPermissions(id);
+        return setSuccessModelMap(modelMap, permissions);
+    }
 }

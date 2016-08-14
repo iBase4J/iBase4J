@@ -1,5 +1,8 @@
 package org.ibase4j.service.sys;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.generator.SysMenu;
@@ -12,8 +15,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysMenuService extends BaseService<SysMenuProvider, SysMenu> {
-	@DubboReference
-	public void setProvider(SysMenuProvider provider) {
-		this.provider = provider;
-	}
+    @DubboReference
+    public void setProvider(SysMenuProvider provider) {
+        this.provider = provider;
+    }
+
+    public List<Map<String, String>> getPermissions() {
+        return provider.getPermissions();
+    }
 }
