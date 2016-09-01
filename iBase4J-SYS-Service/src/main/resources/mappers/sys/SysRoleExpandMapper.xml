@@ -27,7 +27,7 @@
 			</if>
 		</where>
 		group by menu_name
-		order by menu_id
+		-- order by menu_id
 	</select>
 	<select id="getPermissions" resultType="java.lang.String">
 		select CONCAT(menu_id, permission_)
