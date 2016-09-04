@@ -682,7 +682,7 @@ CREATE TABLE IF NOT EXISTS `task_group` (
 -- 正在导出表  ibase4j.task_group 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `task_group` DISABLE KEYS */;
 INSERT INTO `task_group` (`id_`, `group_name`, `group_desc`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, 'CoreTaskProvider', '系统管理', 1, '2016-05-27 14:56:51', 1, '2016-06-16 10:18:58', 1);
+	(1, 'coreTaskProvider', '系统管理', 1, '2016-05-27 14:56:51', 1, '2016-06-16 10:18:58', 1);
 /*!40000 ALTER TABLE `task_group` ENABLE KEYS */;
 
 
