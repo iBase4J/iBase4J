@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
  * @version 2016年5月27日 下午4:30:46
  */
 public class InvokeTask implements Job {
+	private Logger logger = LogManager.getLogger(this.getClass());
 	// 作业接口包名
 	private String basePackage = "org.ibase4j.service.task.";
 
@@ -27,7 +28,8 @@ public class InvokeTask implements Job {
 		JobKey jobKey = context.getJobDetail().getKey();
 		try {
 			applicationContext = (ApplicationContext) context.getScheduler().getContext().get("applicationContext");
-			Object refer = applicationContext.getBean(basePackage + jobKey.getGroup());
+			logger.info("获取批处理的bean" + jobKey.getGroup());
+			Object refer = applicationContext.getBean(jobKey.getGroup());
 			refer.getClass().getDeclaredMethod(jobKey.getName()).invoke(refer);
 		} catch (Exception e) {
 			throw new JobExecutionException(e);
