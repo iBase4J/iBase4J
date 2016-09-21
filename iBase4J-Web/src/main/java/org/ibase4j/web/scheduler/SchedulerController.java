@@ -8,8 +8,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.generator.TaskGroup;
-import org.ibase4j.model.generator.TaskScheduler;
+import org.ibase4j.model.scheduler.TaskGroup;
+import org.ibase4j.model.scheduler.TaskScheduler;
 import org.ibase4j.service.scheduler.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,7 +41,7 @@ public class SchedulerController extends BaseController {
 	@RequiresPermissions("task.group.read")
 	public Object getGroup(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
-		PageInfo<?> list = schedulerService.queryGroup(params);
+		Page<?> list = schedulerService.queryGroup(params);
 		return setSuccessModelMap(modelMap, list);
 	}
 
@@ -80,7 +80,7 @@ public class SchedulerController extends BaseController {
 	@RequiresPermissions("task.scheduler.read")
 	public Object getScheduler(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
-		PageInfo<?> list = schedulerService.queryScheduler(params);
+		Page<?> list = schedulerService.queryScheduler(params);
 		return setSuccessModelMap(modelMap, list);
 	}
 

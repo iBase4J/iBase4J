@@ -15,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * 业务逻辑层基类<br/>
@@ -28,20 +26,25 @@ import com.github.pagehelper.PageInfo;
  */
 public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvider<T> {
     @Autowired
-    BaseMapper<T> mapper;
+    protected BaseMapper<T> mapper;
 
-    /** 启动分页查询 */
-    protected void startPage(Map<String, Object> params) {
-        if (DataUtil.isEmpty(params.get("pageNum"))) {
-            params.put("pageNum", 1);
+    /** 分页查询  */
+    protected Page<String> getPage(Map<String, Object> params) {
+        Integer current = 1;
+        Integer size = 10;
+        String orderBy = "";
+        if (DataUtil.isNotEmpty(params.get("pageNum"))) {
+            current = Integer.valueOf((String)params.get("pageNum"));
         }
-        if (DataUtil.isEmpty(params.get("pageSize"))) {
-            params.put("pageSize", 10);
+        if (DataUtil.isNotEmpty(params.get("pageSize"))) {
+            size = Integer.valueOf((String)params.get("pageSize"));
         }
-        if (DataUtil.isEmpty(params.get("orderBy"))) {
-            params.put("orderBy", "id_ desc");
+        if (DataUtil.isNotEmpty(params.get("orderBy"))) {
+            orderBy = (String)params.get("orderBy");
         }
-        PageHelper.startPage(params);
+        Page<String> page = new Page<String>(current, size, orderBy);
+        page.setAsc(false);
+        return page;
     }
 
     @SuppressWarnings("unchecked")
@@ -57,35 +60,37 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
     }
 
     /** 根据Id查询(默认类型T) */
-    public PageInfo<T> getPage(Page<String> ids) {
+    public Page<T> getPage(Page<String> ids) {
         if (ids != null) {
-            Page<T> page = new Page<T>(ids.getPageNum(), ids.getPageSize());
+            Page<T> page = new Page<T>(ids.getCurrent(), ids.getSize());
             page.setTotal(ids.getTotal());
-            page.clear();
             BaseProviderImpl<T> provider = getProvider();
-            for (String id : ids) {
-                page.add(provider.queryById(id));
+            List<T> records = InstanceUtil.newArrayList();
+            for (String id : ids.getRecords()) {
+                records.add(provider.queryById(id));
             }
-            return new PageInfo<T>(page);
+            page.setRecords(records);
+            return page;
         }
-        return new PageInfo<T>();
+        return new Page<T>();
     }
 
     /** 根据Id查询(cls返回类型Class) */
-    public <K> PageInfo<K> getPage(Page<String> ids, Class<K> cls) {
+    public <K> Page<K> getPage(Page<String> ids, Class<K> cls) {
         if (ids != null) {
-            Page<K> page = new Page<K>(ids.getPageNum(), ids.getPageSize());
+            Page<K> page = new Page<K>(ids.getCurrent(), ids.getSize());
             page.setTotal(ids.getTotal());
-            page.clear();
             BaseProviderImpl<T> provider = getProvider();
-            for (String id : ids) {
+            List<K> records = InstanceUtil.newArrayList();
+            for (String id : ids.getRecords()) {
                 T t = provider.queryById(id);
                 K k = InstanceUtil.to(t, cls);
-                page.add(k);
+                records.add(k);
             }
-            return new PageInfo<K>(page);
+            page.setRecords(records);
+            return page;
         }
-        return new PageInfo<K>();
+        return new Page<K>();
     }
 
     /** 根据Id查询(默认类型T) */
@@ -119,7 +124,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
             record.setEnable(false);
             record.setUpdateTime(new Date());
             record.setUpdateBy(userId);
-            mapper.updateByPrimaryKey(record);
+            mapper.updateById(record);
             RedisUtil.set(getCacheKey(id), record);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
@@ -137,7 +142,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
                 record.setCreateTime(new Date());
                 mapper.insert(record);
             } else {
-                mapper.updateByPrimaryKey(record);
+                mapper.updateById(record);
             }
             RedisUtil.set(getCacheKey(record.getId()), record);
         } catch (Exception e) {
@@ -153,7 +158,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
             String key = getCacheKey(id);
             T record = (T)RedisUtil.get(key);
             if (record == null) {
-                record = mapper.selectByPrimaryKey(id);
+                record = mapper.selectById(id);
                 RedisUtil.set(key, record);
             }
             return record;
@@ -162,15 +167,8 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         }
     }
 
-    public void init() {
-        List<T> list = mapper.selectAll();
-        for (T record : list) {
-            RedisUtil.set(getCacheKey(record.getId()), record);
-        }
-    }
-
     /** 获取缓存键值 */
-    private String getCacheKey(Object id) {
+    protected String getCacheKey(Object id) {
         String cacheName = null;
         CacheConfig cacheConfig = getClass().getAnnotation(CacheConfig.class);
         if (cacheConfig == null || cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
@@ -181,7 +179,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
     }
 
-    public PageInfo<T> query(Map<String, Object> params) {
+    public Page<T> query(Map<String, Object> params) {
         return null;
     }
 }

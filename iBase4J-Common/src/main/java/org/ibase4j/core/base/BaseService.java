@@ -12,7 +12,8 @@ import org.ibase4j.core.util.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
+
 
 /**
  * @author ShenHuaJie
@@ -67,7 +68,7 @@ public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel
     }
 
     /** 条件查询 */
-    public PageInfo<T> query(Map<String, Object> params) {
+    public Page<T> query(Map<String, Object> params) {
         return provider.query(params);
     }
 }

@@ -3,11 +3,11 @@ package org.ibase4j.service.sys;
 import java.util.List;
 
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.generator.SysRoleMenu;
-import org.ibase4j.model.generator.SysUserMenu;
-import org.ibase4j.model.generator.SysUserRole;
-import org.ibase4j.model.sys.SysMenuBean;
-import org.ibase4j.provider.SysAuthorizeProvider;
+import org.ibase4j.model.sys.SysRoleMenu;
+import org.ibase4j.model.sys.SysUserMenu;
+import org.ibase4j.model.sys.SysUserRole;
+import org.ibase4j.model.sys.ext.SysMenuBean;
+import org.ibase4j.provider.sys.ISysAuthorizeProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysAuthorizeService {
 	@Autowired
-	private SysAuthorizeProvider sysAuthorizeProvider;
+	private ISysAuthorizeProvider sysAuthorizeProvider;
 
 	public List<SysMenuBean> queryAuthorizeByUserId(String id) {
 		return sysAuthorizeProvider.queryAuthorizeByUserId(id);

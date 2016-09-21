@@ -9,14 +9,13 @@
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
-		<version>0.5.0</version>
+		<version>1.0.0</version>
 		<relativePath>./</relativePath>
 	</parent>
 	<modules>
 		<module>iBase4J-Common</module>
-		<module>iBase4J-Generator</module>
 		<module>iBase4J-Scheduler-API</module>
 		<module>iBase4J-Scheduler-Service</module>
 	</modules>
-	<!-- clean:clean package -P build tomcat7:run-war-only -f pom-scheduler-server.xml -->
+	<!-- clean package -P build tomcat7:run-war-only -f pom-scheduler-server.xml -->
 </project>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.dao.sys.SysRoleMenuMapper">
+	<select id="queryPermission" resultType="java.lang.String">
+		select CONCAT(menu_name,'(', GROUP_CONCAT(code_text), ')')
+		from
+		sys_role_menu rm
+		join sys_menu m on rm.menu_id=m.id_
+		join sys_dic d on rm.permission_=d.code_
+		join sys_dic_index di on d.index_id=di.id_ and
+		di.key_='CRUD'
+		<where>
+			<if test="roleId != null">
+				rm.role_id=#{roleId}
+			</if>
+		</where>
+		group by menu_name
+		order by menu_id
+	</select>
+	<select id="getPermissions" resultType="java.lang.String">
+		select CONCAT(menu_id, permission_)
+		from sys_role_menu
+		<where>
+			<if test="roleId != null">
+				role_id=#{roleId}
+			</if>
+		</where>
+		order by menu_id
+	</select>
+</mapper>

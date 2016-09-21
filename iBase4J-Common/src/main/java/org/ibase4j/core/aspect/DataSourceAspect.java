@@ -21,7 +21,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class DataSourceAspect {
 	private final Logger logger = LogManager.getLogger();
 
-	@Pointcut("execution(* org.ibase4j.*.*Provider*.*(..))")
+	@Pointcut("execution(* org.ibase4j.provider..*.*(..))")
 	public void aspect() {
 	}
 

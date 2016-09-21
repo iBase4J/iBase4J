@@ -72,9 +72,6 @@
 		<servlet-name>SpringMVC</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
 	<session-config>
 		<session-timeout>10</session-timeout>
 	</session-config>

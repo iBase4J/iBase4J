@@ -3,7 +3,7 @@ package org.ibase4j.provider;
 import java.util.List;
 
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
-import org.ibase4j.model.scheduler.TaskScheduled;
+import org.ibase4j.model.scheduler.ext.TaskScheduled;
 import org.ibase4j.provider.scheduler.SchedulerProvider;
 import org.ibase4j.scheduler.manager.SchedulerManager;
 import org.ibase4j.service.SchedulerService;

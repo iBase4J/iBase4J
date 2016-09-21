@@ -8,7 +8,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.generator.SysParam;
+import org.ibase4j.model.sys.SysParam;
 import org.ibase4j.service.sys.SysParamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,7 +40,7 @@ public class SysParamController extends BaseController {
 	@RequiresPermissions("sys.param.read")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
-		PageInfo<?> list = sysParamService.query(params);
+		Page<?> list = sysParamService.query(params);
 		return setSuccessModelMap(modelMap, list);
 	}
 
