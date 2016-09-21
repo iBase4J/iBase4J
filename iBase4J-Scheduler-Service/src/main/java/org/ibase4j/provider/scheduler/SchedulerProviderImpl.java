@@ -1,4 +1,4 @@
-package org.ibase4j.provider;
+package org.ibase4j.provider.scheduler;
 
 import java.util.List;
 

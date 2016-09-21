@@ -1,4 +1,4 @@
-package org.ibase4j.provider.sys.impl;
+package org.ibase4j.provider.sys;
 
 import java.util.Collections;
 import java.util.Date;
