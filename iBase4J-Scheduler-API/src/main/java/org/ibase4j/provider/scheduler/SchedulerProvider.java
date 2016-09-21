@@ -6,13 +6,13 @@ package org.ibase4j.provider.scheduler;
 import java.util.List;
 import java.util.Map;
 
-import org.ibase4j.model.generator.TaskFireLog;
-import org.ibase4j.model.generator.TaskGroup;
-import org.ibase4j.model.generator.TaskScheduler;
-import org.ibase4j.model.scheduler.TaskScheduled;
-import org.ibase4j.model.scheduler.TaskSchedulerBean;
+import org.ibase4j.model.scheduler.TaskFireLog;
+import org.ibase4j.model.scheduler.TaskGroup;
+import org.ibase4j.model.scheduler.TaskScheduler;
+import org.ibase4j.model.scheduler.ext.TaskScheduled;
+import org.ibase4j.model.scheduler.ext.TaskSchedulerBean;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * 定时任务管理
@@ -22,30 +22,30 @@ import com.github.pagehelper.PageInfo;
  */
 public interface SchedulerProvider {
 
-	/** 获取所有任务 */
-	public List<TaskScheduled> getAllTaskDetail();
+    /** 获取所有任务 */
+    public List<TaskScheduled> getAllTaskDetail();
 
-	/** 执行任务 */
-	public boolean execTask(String taskGroup, String taskName);
+    /** 执行任务 */
+    public boolean execTask(String taskGroup, String taskName);
 
-	/** 启停 */
-	public boolean openCloseTask(String taskGroup, String taskName, String status);
+    /** 启停 */
+    public boolean openCloseTask(String taskGroup, String taskName, String status);
 
-	public TaskGroup getGroupById(String id);
+    public TaskGroup getGroupById(String id);
 
-	public TaskGroup updateGroup(TaskGroup record);
+    public TaskGroup updateGroup(TaskGroup record);
 
-	public PageInfo<TaskGroup> queryGroup(Map<String, Object> params);
+    public Page<TaskGroup> queryGroup(Map<String, Object> params);
 
-	public TaskScheduler getSchedulerById(String id);
+    public TaskScheduler getSchedulerById(String id);
 
-	public TaskScheduler updateScheduler(TaskScheduler record);
+    public TaskScheduler updateScheduler(TaskScheduler record);
 
-	public TaskFireLog updateLog(TaskFireLog record);
+    public TaskFireLog updateLog(TaskFireLog record);
 
-	public PageInfo<TaskSchedulerBean> queryScheduler(Map<String, Object> params);
+    public Page<TaskSchedulerBean> queryScheduler(Map<String, Object> params);
 
-	public TaskFireLog getFireLogById(String id);
+    public TaskFireLog getFireLogById(String id);
 
-	public PageInfo<TaskFireLog> queryLog(Map<String, Object> params);
+    public Page<TaskFireLog> queryLog(Map<String, Object> params);
 }

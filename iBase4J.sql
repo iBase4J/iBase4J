@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `qrtz_job_details` (
   PRIMARY KEY (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.qrtz_job_details 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.qrtz_job_details 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `qrtz_job_details` DISABLE KEYS */;
 /*!40000 ALTER TABLE `qrtz_job_details` ENABLE KEYS */;
 
@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `qrtz_triggers` (
   CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.qrtz_triggers 的数据：~0 rows (大约)
+-- 正在导出表  ibase4j.qrtz_triggers 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `qrtz_triggers` DISABLE KEYS */;
 /*!40000 ALTER TABLE `qrtz_triggers` ENABLE KEYS */;
 
@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `sys_dic` (
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `field_id_code` (`index_id`,`code_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典明细表';
 
 -- 正在导出表  ibase4j.sys_dic 的数据：~30 rows (大约)
 /*!40000 ALTER TABLE `sys_dic` DISABLE KEYS */;
@@ -328,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `sys_dic_index` (
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `code` (`key_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='代码表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典索引表';
 
 -- 正在导出表  ibase4j.sys_dic_index 的数据：~11 rows (大约)
 /*!40000 ALTER TABLE `sys_dic_index` DISABLE KEYS */;
@@ -367,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.sys_event 的数据：~17 rows (大约)
+-- 正在导出表  ibase4j.sys_event 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_event` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_event` ENABLE KEYS */;
 
@@ -546,6 +546,8 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
 
 -- 正在导出表  ibase4j.sys_session 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
+INSERT INTO `sys_session` (`id_`, `session_id`, `account_`, `ip_`, `start_time`, `enable_`, `remark_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
+	('2016092111523154537', '8d9fe435-e8f2-4129-bab9-72694aa5be1f', 'admin', '192.168.94.134', '2016-09-21 11:52:32', NULL, NULL, '2016-09-21 11:52:32', 'admin', '2016-09-21 11:52:32', 'admin');
 /*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
 
@@ -651,7 +653,7 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   `task_name` varchar(50) NOT NULL,
   `start_time` datetime NOT NULL,
   `end_time` datetime DEFAULT NULL,
-  `status` varchar(1) NOT NULL DEFAULT 'I',
+  `status_` varchar(1) NOT NULL DEFAULT 'I',
   `server_host` varchar(50) DEFAULT NULL COMMENT '服务器名',
   `server_duid` varchar(50) DEFAULT NULL COMMENT '服务器网卡序列号',
   `fire_info` text,
@@ -670,6 +672,7 @@ CREATE TABLE IF NOT EXISTS `task_group` (
   `id_` varchar(64) NOT NULL,
   `group_name` varchar(50) NOT NULL,
   `group_desc` varchar(50) NOT NULL,
+  `remark_` varchar(5000) NOT NULL,
   `enable_` tinyint(1) DEFAULT '1',
   `create_time` datetime NOT NULL,
   `create_by` varchar(64) NOT NULL,
@@ -681,8 +684,8 @@ CREATE TABLE IF NOT EXISTS `task_group` (
 
 -- 正在导出表  ibase4j.task_group 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `task_group` DISABLE KEYS */;
-INSERT INTO `task_group` (`id_`, `group_name`, `group_desc`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	('1', 'CoreTaskProvider', '系统管理', 1, '2016-05-27 14:56:51', '1', '2016-06-16 10:18:58', '1');
+INSERT INTO `task_group` (`id_`, `group_name`, `group_desc`, `remark_`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
+	('1', 'CoreTaskProvider', '系统管理', '', 1, '2016-05-27 14:56:51', '1', '2016-06-16 10:18:58', '1');
 /*!40000 ALTER TABLE `task_group` ENABLE KEYS */;
 
 
@@ -698,6 +701,7 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
   `task_previous_fire_time` datetime NOT NULL,
   `task_next_fire_time` datetime NOT NULL,
   `contact_email` varchar(500) DEFAULT NULL COMMENT '多个邮箱用,分割',
+  `remark_` varchar(5000) DEFAULT NULL,
   `enable_` tinyint(1) DEFAULT '1',
   `create_by` varchar(64) NOT NULL,
   `create_time` datetime NOT NULL,
@@ -709,8 +713,8 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
 
 -- 正在导出表  ibase4j.task_scheduler 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `task_scheduler` DISABLE KEYS */;
-INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `task_previous_fire_time`, `task_next_fire_time`, `contact_email`, `enable_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
-	('1', '1', 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-06-28 10:30:00', '2016-06-28 11:00:00', 'iBase4J@126.com', 1, '1', '2016-06-13 14:05:30', '1', '2016-06-28 10:30:00');
+INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `task_previous_fire_time`, `task_next_fire_time`, `contact_email`, `remark_`, `enable_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
+	('1', '1', 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-09-21 11:30:00', '2016-09-21 12:00:00', 'iBase4J@126.com', NULL, 1, '1', '2016-06-13 14:05:30', '1', '2016-09-21 11:30:00');
 /*!40000 ALTER TABLE `task_scheduler` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.dao.scheduler.TaskSchedulerExpandMapper;
-import org.ibase4j.model.generator.TaskGroup;
-import org.ibase4j.model.generator.TaskScheduler;
+import org.ibase4j.dao.scheduler.TaskSchedulerMapper;
+import org.ibase4j.model.scheduler.TaskGroup;
+import org.ibase4j.model.scheduler.TaskScheduler;
 import org.ibase4j.service.SchedulerService;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.Job;
@@ -27,7 +27,7 @@ public class TriggerLoader {
 	@Autowired
 	private SchedulerService schedulerService;
 	@Autowired
-	private TaskSchedulerExpandMapper taskSchedulerExpandMapper;
+	private TaskSchedulerMapper taskSchedulerMapper;
 
 	private String taskType; // 作业类型
 	private Class<? extends Job> jobClass; // 执行作业的类
@@ -40,7 +40,7 @@ public class TriggerLoader {
 	public Map<Trigger, JobDetail> loadTriggers() {
 		Map<String, Object> params = InstanceUtil.newHashMap();
 		params.put("taskType", taskType);
-		List<String> taskSchedulerIds = taskSchedulerExpandMapper.queryScheduler(params);
+		List<String> taskSchedulerIds = taskSchedulerMapper.selectIdByMap(params);
 		Map<Trigger, JobDetail> resultMap = InstanceUtil.newHashMap();
 		for (String id : taskSchedulerIds) {
 			TaskScheduler taskScheduler = schedulerService.getSchedulerById(id);

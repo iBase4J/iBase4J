@@ -9,9 +9,8 @@
 	</settings>
 	<plugins>
 		<!-- 分页查询插件 -->
-		<plugin interceptor="com.github.pagehelper.PageHelper">
-			<property name="dialect" value="mysql" />
-			<property name="reasonable" value="true" />
+		<plugin interceptor="com.baomidou.mybatisplus.plugins.PaginationInterceptor">
+			<property name="dialectType" value="mysql" />
 		</plugin>
 	</plugins>
 </configuration>

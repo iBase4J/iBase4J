@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
-		<version>0.5.0</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>iBase4J-Scheduler-Service</artifactId>
 	<name>iBase4J-Scheduler-Service</name>
@@ -30,17 +30,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Generator</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.ibase4j</groupId>
 			<artifactId>iBase4J-Scheduler-API</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
@@ -55,17 +44,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
-		</dependency>
-		<!-- mybatis -->
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>${mybatis.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>${mybatis-spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>

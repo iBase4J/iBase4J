@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
-		<version>0.5.0</version>
+		<version>1.0.0</version>
 		<relativePath>./</relativePath>
 	</parent>
 	<artifactId>iBase4J-Biz-Web-Server</artifactId>
@@ -14,11 +14,10 @@
 	<url>http://maven.apache.org</url>
 	<modules>
 		<module>iBase4J-Common</module>
-		<module>iBase4J-Generator</module>
 		<module>iBase4J-SYS-API</module>
 		<module>iBase4J-Scheduler-API</module>
 		<module>iBase4J-Biz-API</module>
 		<module>iBase4J-Web</module>
 	</modules>
-	<!-- clean:clean package -P build tomcat7:run-war-only -f pom-biz-web-server.xml -->
+	<!-- clean package -P build tomcat7:run-war-only -f pom-biz-web-server.xml -->
 </project>

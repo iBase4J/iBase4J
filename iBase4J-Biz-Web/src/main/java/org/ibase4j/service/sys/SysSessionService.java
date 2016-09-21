@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.support.Assert;
-import org.ibase4j.model.generator.SysSession;
-import org.ibase4j.provider.SysSessionProvider;
+import org.ibase4j.model.sys.SysSession;
+import org.ibase4j.provider.sys.ISysSessionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * 会话管理
@@ -21,11 +21,11 @@ import com.github.pagehelper.PageInfo;
 @Service
 public class SysSessionService {
 	@Autowired
-	private SysSessionProvider sysSessionProvider;
+	private ISysSessionProvider sysSessionProvider;
 	@Autowired
 	private RedisOperationsSessionRepository sessionRepository;
 
-	public PageInfo<?> query(Map<String, Object> params) {
+	public Page<?> query(Map<String, Object> params) {
 		return sysSessionProvider.query(params);
 	}
 

@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
+
 
 /**
  * @author ShenHuaJie
@@ -21,11 +21,9 @@ public interface BaseProvider<T extends BaseModel> {
 
 	public T queryById(String id);
 
-	public void init();
-
-	public PageInfo<T> query(Map<String, Object> params);
+	public Page<T> query(Map<String, Object> params);
 	
-    public <K> PageInfo<K> getPage(Page<String> ids, Class<K> cls);
+    public <K> Page<K> getPage(Page<String> ids, Class<K> cls);
 
     public <K> List<K> getList(List<String> ids, Class<K> cls);
 }

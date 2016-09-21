@@ -14,8 +14,8 @@ import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.UploadUtil;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.generator.SysUser;
-import org.ibase4j.model.sys.SysMenuBean;
+import org.ibase4j.model.sys.SysUser;
+import org.ibase4j.model.sys.ext.SysMenuBean;
 import org.ibase4j.service.sys.SysAuthorizeService;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -76,7 +76,7 @@ public class SysUserController extends BaseController {
 	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
-		PageInfo<?> list = sysUserService.queryBeans(params);
+		Page<?> list = sysUserService.queryBeans(params);
 		return setSuccessModelMap(modelMap, list);
 	}
 

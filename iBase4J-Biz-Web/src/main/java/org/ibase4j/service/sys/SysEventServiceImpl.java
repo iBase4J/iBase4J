@@ -15,17 +15,17 @@ import org.ibase4j.core.util.DateUtil;
 import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.generator.SysEvent;
-import org.ibase4j.provider.SysEventProvider;
+import org.ibase4j.model.sys.SysEvent;
+import org.ibase4j.provider.sys.ISysEventProvider;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 
 @Service
-public class SysEventServiceImpl extends BaseService<SysEventProvider, SysEvent>
+public class SysEventServiceImpl extends BaseService<ISysEventProvider, SysEvent>
 		implements SysEventService {
 	@DubboReference
-	public void setProvider(SysEventProvider provider) {
+	public void setProvider(ISysEventProvider provider) {
 		this.provider = provider;
 	}
 	private ExecutorService executorService = Executors.newCachedThreadPool();

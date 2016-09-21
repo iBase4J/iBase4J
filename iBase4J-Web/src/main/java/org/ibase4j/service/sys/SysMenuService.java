@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
-import org.ibase4j.model.generator.SysMenu;
-import org.ibase4j.provider.SysMenuProvider;
+import org.ibase4j.model.sys.SysMenu;
+import org.ibase4j.provider.sys.ISysMenuProvider;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
  * @version 2016年5月20日 下午3:16:07
  */
 @Service
-public class SysMenuService extends BaseService<SysMenuProvider, SysMenu> {
+public class SysMenuService extends BaseService<ISysMenuProvider, SysMenu> {
     @DubboReference
-    public void setProvider(SysMenuProvider provider) {
+    public void setProvider(ISysMenuProvider provider) {
         this.provider = provider;
     }
 

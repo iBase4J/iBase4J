@@ -2,8 +2,8 @@ package org.ibase4j.service.sys;
 
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
-import org.ibase4j.model.generator.SysParam;
-import org.ibase4j.provider.SysParamProvider;
+import org.ibase4j.model.sys.SysParam;
+import org.ibase4j.provider.sys.ISysParamProvider;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
  * @version 2016年5月31日 上午11:09:40
  */
 @Service
-public class SysParamService extends BaseService<SysParamProvider, SysParam> {
+public class SysParamService extends BaseService<ISysParamProvider, SysParam> {
 	@DubboReference
-	public void setProvider(SysParamProvider provider) {
+	public void setProvider(ISysParamProvider provider) {
 		this.provider = provider;
 	}
 }

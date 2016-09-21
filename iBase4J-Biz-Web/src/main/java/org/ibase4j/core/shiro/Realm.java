@@ -20,14 +20,14 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.generator.SysSession;
-import org.ibase4j.model.generator.SysUser;
+import org.ibase4j.model.sys.SysSession;
+import org.ibase4j.model.sys.SysUser;
 import org.ibase4j.service.sys.SysAuthorizeService;
 import org.ibase4j.service.sys.SysSessionService;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * 权限检查类
@@ -72,9 +72,9 @@ public class Realm extends AuthorizingRealm {
 		params.put("countSql", 0);
 		params.put("enable", 1);
 		params.put("account", token.getUsername());
-		PageInfo<SysUser> pageInfo = sysUserService.query(params);
+		Page<SysUser> pageInfo = sysUserService.query(params);
 		if (pageInfo.getSize() == 1) {
-			SysUser user = pageInfo.getList().get(0);
+			SysUser user = pageInfo.getRecords().get(0);
 			StringBuilder sb = new StringBuilder(100);
 			for (int i = 0; i < token.getPassword().length; i++) {
 				sb.append(token.getPassword()[i]);

@@ -9,29 +9,26 @@ import org.ibase4j.core.support.Assert;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.generator.SysUser;
-import org.ibase4j.model.sys.SysUserBean;
-import org.ibase4j.provider.SysUserProvider;
+import org.ibase4j.model.sys.SysUser;
+import org.ibase4j.model.sys.ext.SysUserBean;
+import org.ibase4j.provider.sys.ISysUserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageInfo;
-import com.github.pagehelper.StringUtil;
+import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:47:21
  */
 @Service
-public class SysUserService extends BaseService<SysUserProvider, SysUser> {
+public class SysUserService extends BaseService<ISysUserProvider, SysUser> {
     @Autowired
-    public void setProvider(SysUserProvider provider) {
+    public void setProvider(ISysUserProvider provider) {
         this.provider = provider;
     }
 
     /** 修改用户信息 */
-    @CachePut
     public void updateUserInfo(SysUser sysUser) {
         Assert.isNotBlank(sysUser.getId(), "USER_ID");
         Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
@@ -41,17 +38,18 @@ public class SysUserService extends BaseService<SysUserProvider, SysUser> {
         if (StringUtils.isBlank(sysUser.getPassword())) {
             sysUser.setPassword(user.getPassword());
         }
-        if (StringUtil.isEmpty(sysUser.getAvatar())) {
+        if (StringUtils.isEmpty(sysUser.getAvatar())) {
             sysUser.setAvatar(user.getAvatar());
         }
         sysUser.setUpdateBy(WebUtil.getCurrentUser());
         provider.update(sysUser);
     }
 
-    public PageInfo<SysUserBean> queryBeans(Map<String, Object> params) {
+    public Page<SysUserBean> queryBeans(Map<String, Object> params) {
         return provider.queryBeans(params);
     }
 
+    /** 修改密码 */
     public void updatePassword(String id, String password) {
         Assert.isNotBlank(id, "USER_ID");
         Assert.isNotBlank(password, "PASSWORD");
