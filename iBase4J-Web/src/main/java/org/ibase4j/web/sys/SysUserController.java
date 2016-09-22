@@ -40,70 +40,71 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "用户管理", description = "用户管理")
 @RequestMapping(value = "/user", method = RequestMethod.POST)
 public class SysUserController extends BaseController {
-	@Autowired
-	private SysUserService sysUserService;
-	@Autowired
-	private SysAuthorizeService authorizeService;
+    @Autowired
+    private SysUserService sysUserService;
+    @Autowired
+    private SysAuthorizeService authorizeService;
 
-	// 修改用户信息
-	@ApiOperation(value = "修改用户信息")
-	@RequiresPermissions("sys.user.update")
-	@RequestMapping(value = "/update")
-	public Object update(HttpServletRequest request, ModelMap modelMap) {
-		SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
-		if (StringUtils.isNotBlank(sysUser.getAvatar()) && !sysUser.getAvatar().contains("/")) {
-			String avatar = UploadUtil.remove2DFS("sysUser", "user" + sysUser.getId(),
-					UploadUtil.getUploadDir(request) + sysUser.getAvatar()).getRemotePath();
-			sysUser.setAvatar(avatar);
-		}
-		sysUserService.updateUserInfo(sysUser);
-		return setSuccessModelMap(modelMap);
-	}
+    // 修改用户信息
+    @ApiOperation(value = "修改用户信息")
+    @RequiresPermissions("sys.user.update")
+    @RequestMapping(value = "/update")
+    public Object update(HttpServletRequest request, ModelMap modelMap) {
+        SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
+        if (StringUtils.isNotBlank(sysUser.getAvatar()) && !sysUser.getAvatar().contains("/")) {
+            String filePath = UploadUtil.getUploadDir(request) + sysUser.getAvatar();
+            //String avatar = UploadUtil.remove2DFS("sysUser", "user" + sysUser.getId(), filePath).getRemotePath();
+            String avatar = UploadUtil.remove2Sftp(filePath, "user" + sysUser.getId());
+            sysUser.setAvatar(avatar);
+        }
+        sysUserService.updateUserInfo(sysUser);
+        return setSuccessModelMap(modelMap);
+    }
 
-	// 修改密码
-	@ApiOperation(value = "修改密码")
-	@RequiresPermissions("sys.user.update")
-	@RequestMapping(value = "/update/password")
-	public Object updatePassword(ModelMap modelMap, @RequestParam(value = "id", required = false) String id,
-			@RequestParam(value = "password", required = false) String password) {
-		sysUserService.updatePassword(id, password);
-		return setSuccessModelMap(modelMap);
-	}
+    // 修改密码
+    @ApiOperation(value = "修改密码")
+    @RequiresPermissions("sys.user.update")
+    @RequestMapping(value = "/update/password")
+    public Object updatePassword(ModelMap modelMap, @RequestParam(value = "id", required = false) String id,
+        @RequestParam(value = "password", required = false) String password) {
+        sysUserService.updatePassword(id, password);
+        return setSuccessModelMap(modelMap);
+    }
 
-	// 查询用户
-	@ApiOperation(value = "查询用户")
-	@RequiresPermissions("sys.user.read")
-	@RequestMapping(value = "/read/list")
-	public Object get(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = WebUtil.getParameterMap(request);
-		Page<?> list = sysUserService.queryBeans(params);
-		return setSuccessModelMap(modelMap, list);
-	}
+    // 查询用户
+    @ApiOperation(value = "查询用户")
+    @RequiresPermissions("sys.user.read")
+    @RequestMapping(value = "/read/list")
+    public Object get(HttpServletRequest request, ModelMap modelMap) {
+        Map<String, Object> params = WebUtil.getParameterMap(request);
+        Page<?> list = sysUserService.queryBeans(params);
+        return setSuccessModelMap(modelMap, list);
+    }
 
-	// 用户详细信息
-	@ApiOperation(value = "用户详细信息")
-	@RequiresPermissions("sys.user.read")
-	@RequestMapping(value = "/read/detail")
-	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
-		SysUser sysUser = sysUserService.queryById(id);
-		if (sysUser != null) {
-			sysUser.setPassword(null);
-		}
-		return setSuccessModelMap(modelMap, sysUser);
-	}
+    // 用户详细信息
+    @ApiOperation(value = "用户详细信息")
+    @RequiresPermissions("sys.user.read")
+    @RequestMapping(value = "/read/detail")
+    public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
+        SysUser sysUser = sysUserService.queryById(id);
+        if (sysUser != null) {
+            sysUser.setPassword(null);
+        }
+        return setSuccessModelMap(modelMap, sysUser);
+    }
 
-	// 当前用户
-	@ApiOperation(value = "当前用户信息")
-	@RequestMapping(value = "/read/current")
-	public Object current(ModelMap modelMap) {
-	    String id = getCurrUser();
-		SysUser sysUser = sysUserService.queryById(id);
-		if (sysUser != null) {
-			sysUser.setPassword(null);
-		}
-		List<SysMenuBean> menus = authorizeService.queryAuthorizeByUserId(id);
-		modelMap.put("user", sysUser);
-		modelMap.put("menus", menus);
-		return setSuccessModelMap(modelMap);
-	}
+    // 当前用户
+    @ApiOperation(value = "当前用户信息")
+    @RequestMapping(value = "/read/current")
+    public Object current(ModelMap modelMap) {
+        String id = getCurrUser();
+        SysUser sysUser = sysUserService.queryById(id);
+        if (sysUser != null) {
+            sysUser.setPassword(null);
+        }
+        List<SysMenuBean> menus = authorizeService.queryAuthorizeByUserId(id);
+        modelMap.put("user", sysUser);
+        modelMap.put("menus", menus);
+        return setSuccessModelMap(modelMap);
+    }
 }

@@ -33,7 +33,7 @@ public class SysEventServiceImpl extends BaseService<ISysEventProvider, SysEvent
     public void saveEvent(final HttpServletRequest request, final HttpServletResponse response, final Exception ex,
         final Long startTime, final Long endTime) {
         String path = request.getServletPath();
-        if (!path.contains("/read/")) {
+        if (!path.contains("/read/") && !path.contains("/upload/imageData")) {
             final SysEvent record = new SysEvent();
             String uid = WebUtil.getCurrentUser();
             record.setMethod(request.getMethod());
