@@ -91,7 +91,7 @@ public final class UploadUtil {
             String pathDir = request.getSession().getServletContext().getRealPath(uploadFileDir + DateUtil.getDate());
             File dirFile = new File(pathDir);
             if (!dirFile.isDirectory()) {
-                dirFile.mkdir();
+                dirFile.mkdirs();
             }
             while (iterator.hasNext()) {
                 String key = iterator.next();
