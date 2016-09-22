@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
@@ -52,5 +53,34 @@ public final class PropertiesUtil extends PropertyPlaceholderConfigurer {
      */
     public static int getInt(String key) {
         return Integer.parseInt(ctxPropertiesMap.get(key));
+    }
+
+    /**
+     * 根据key获取值
+     * 
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    public static int getInt(String key, int defaultValue) {
+        String value = ctxPropertiesMap.get(key);
+        if (StringUtils.isBlank(value)) {
+            return defaultValue;
+        }
+        return Integer.parseInt(value);
+    }
+
+    /**
+     * 根据key获取值
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    public static boolean getBoolean(String key, boolean defaultValue) {
+        String value = ctxPropertiesMap.get(key);
+        if (StringUtils.isBlank(value)) {
+            return defaultValue;
+        }
+        return new Boolean(value);
     }
 }
