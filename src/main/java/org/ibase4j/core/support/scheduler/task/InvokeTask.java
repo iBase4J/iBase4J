@@ -1,5 +1,7 @@
 package org.ibase4j.core.support.scheduler.task;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.support.scheduler.Constants;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
@@ -16,8 +18,6 @@ import org.springframework.context.ApplicationContext;
  */
 public class InvokeTask implements Job {
 	private Logger logger = LogManager.getLogger(this.getClass());
-	// 作业接口包名
-	private String basePackage = "org.ibase4j.service.task.";
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
