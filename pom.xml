@@ -325,6 +325,11 @@
 								<contextReloadable>true</contextReloadable>
 								<uriEncoding>UTF-8</uriEncoding>
 								<port>${server.port}</port>
+								<url>http://localhost:8080/manager</url>
+			                    <server>tomcat</server>
+			                    <username>admin</username>
+			                    <password>admin</password>
+			                    <contextReloadable>true</contextReloadable>
 								<systemProperties>
 									<webapps>
 										<webapp>
