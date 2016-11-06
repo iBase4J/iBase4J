@@ -8,8 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.util.JedisUtil;
-import org.ibase4j.service.sys.SysSessionService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 会话监听器
@@ -19,9 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class SessionListener implements HttpSessionListener {
 	private Logger logger = LogManager.getLogger(SessionListener.class);
-
-	@Autowired
-	private SysSessionService sessionService;
 
 	/*
 	 * (non-Javadoc)
@@ -50,7 +45,6 @@ public class SessionListener implements HttpSessionListener {
 			logger.info("销毁了一个Session连接:[" + session.getId() + "]");
 		}
 		session.removeAttribute(Constants.CURRENT_USER);
-		sessionService.deleteBySessionId(session.getId());
 		setAllUserNumber(-1);
 	}
 

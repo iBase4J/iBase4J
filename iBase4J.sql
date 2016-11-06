@@ -714,7 +714,7 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
 -- 正在导出表  ibase4j.task_scheduler 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `task_scheduler` DISABLE KEYS */;
 INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `task_previous_fire_time`, `task_next_fire_time`, `contact_email`, `remark_`, `enable_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
-	('1', '1', 'flushMessage', 'dubbo', '清理缓存国际化信息', '0 0/30 * * * ?', '2016-09-21 11:30:00', '2016-09-21 12:00:00', 'iBase4J@126.com', NULL, 1, '1', '2016-06-13 14:05:30', '1', '2016-09-21 11:30:00');
+	('1', '1', 'cleanExpiredSessions', 'dubbo', '清理无效session', '0 * * * * ?', '2016-09-21 11:30:00', '2016-09-21 12:00:00', 'iBase4J@126.com', NULL, 1, '1', '2016-06-13 14:05:30', '1', '2016-09-21 11:30:00');
 /*!40000 ALTER TABLE `task_scheduler` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

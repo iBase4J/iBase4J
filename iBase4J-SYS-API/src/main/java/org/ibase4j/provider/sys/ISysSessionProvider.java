@@ -20,4 +20,6 @@ public interface ISysSessionProvider extends BaseProvider<SysSession> {
 	public List<String> querySessionIdByAccount(String account);
 
 	public void delete(String id);
+	
+	public void cleanExpiredSessions();
 }

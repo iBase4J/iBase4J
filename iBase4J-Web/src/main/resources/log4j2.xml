@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="off">
+<configuration status="off" monitorInterval="1800">
 	<properties>
 		<property name="LOG_HOME">\output\logs</property>
 		<!-- 日志备份目录 -->
@@ -9,9 +9,9 @@
 		<property name="OUTPUT_LOG_LEVEL">DEBUG</property><!-- 日志输出级别 -->
 	</properties>
 	<appenders>
-		<Console name="Console" target="SYSTEM_OUT">
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
 			<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
-			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%file] - %msg%n" />
+			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{1}:%L] - %msg%n" />
 		</Console>
 		<RollingFile name="RollingFile"
 			fileName="${LOG_HOME}/dev_${SERVER_NAME}.log"
@@ -64,10 +64,10 @@
 			<appender-ref ref="Console" />
             <appender-ref ref="ProductLog" />
         </AsyncLogger >
-		<asyncRoot  level="DEBUG">
+		<Root  level="DEBUG">
 			<appender-ref ref="Console" />
 			<appender-ref ref="RollingFile" />
 			<appender-ref ref="RollingFileError" />
-		</asyncRoot >
+		</Root >
 	</loggers>
 </configuration>

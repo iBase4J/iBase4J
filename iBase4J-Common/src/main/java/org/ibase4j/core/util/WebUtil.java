@@ -9,7 +9,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.Constants;
@@ -24,6 +27,7 @@ import org.springframework.web.util.WebUtils;
 public final class WebUtil {
 	private WebUtil() {
 	}
+    private static Logger logger = LogManager.getLogger();
 
 	/**
 	 * 获取指定Cookie的值
@@ -50,10 +54,14 @@ public final class WebUtil {
 	public static final String getCurrentUser() {
 		Subject currentUser = SecurityUtils.getSubject();
 		if (null != currentUser) {
-			Session session = currentUser.getSession();
-			if (null != session) {
-				return (String) session.getAttribute(Constants.CURRENT_USER);
-			}
+			try {
+                Session session = currentUser.getSession();
+                if (null != session) {
+                	return (String) session.getAttribute(Constants.CURRENT_USER);
+                }
+            } catch (InvalidSessionException e) {
+                logger.error(e);
+            }
 		}
 		return null;
 	}
