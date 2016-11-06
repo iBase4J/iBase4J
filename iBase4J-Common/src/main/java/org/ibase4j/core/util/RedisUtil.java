@@ -2,6 +2,7 @@ package org.ibase4j.core.util;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.dao.DataAccessException;
@@ -38,9 +39,24 @@ public final class RedisUtil {
         return redisTemplate;
     }
 
-    public static final Serializable get(final String key) {
+    public static final Serializable get(final Serializable key) {
         expire(key, EXPIRE);
-        return getRedis().opsForValue().get(key);
+        return getRedis().boundValueOps(key).get();
+    }
+
+    public static final Set<Serializable> getAll(final String pattern) {
+        Set<Serializable> values = InstanceUtil.newHashSet();
+        Set<Serializable> keys = getRedis().keys(pattern);
+        for (Serializable key : keys) {
+            expire(key.toString(), EXPIRE);
+            values.add(getRedis().opsForValue().get(key));
+        }
+        return values;
+    }
+
+    public static final void set(final Serializable key, final Serializable value, int seconds) {
+        getRedis().boundValueOps(key).set(value);
+        expire(key, seconds);
     }
 
     public static final void set(final String key, final Serializable value) {
@@ -71,7 +87,7 @@ public final class RedisUtil {
      * 
      * @return
      */
-    public static final Boolean expire(final String key, final int seconds) {
+    public static final Boolean expire(final Serializable key, final int seconds) {
         return getRedis().expire(key, seconds, TimeUnit.SECONDS);
     }
 
@@ -82,34 +98,34 @@ public final class RedisUtil {
      * @param unixTime
      * @return
      */
-    public static final Boolean expireAt(final String key, final long unixTime) {
+    public static final Boolean expireAt(final Serializable key, final long unixTime) {
         return getRedis().expireAt(key, new Date(unixTime));
     }
 
-    public static final Long ttl(final String key) {
+    public static final Long ttl(final Serializable key) {
         return getRedis().getExpire(key, TimeUnit.SECONDS);
     }
 
-    public static final void setrange(final String key, final long offset, final String value) {
+    public static final void setrange(final Serializable key, final long offset, final String value) {
         expire(key, EXPIRE);
         getRedis().boundValueOps(key).set(value, offset);
     }
 
-    public static final String getrange(final String key, final long startOffset, final long endOffset) {
+    public static final String getrange(final Serializable key, final long startOffset, final long endOffset) {
         expire(key, EXPIRE);
         return getRedis().boundValueOps(key).get(startOffset, endOffset);
     }
 
-    public static final Serializable getSet(final String key, final String value) {
+    public static final Serializable getSet(final Serializable key, final String value) {
         expire(key, EXPIRE);
         return getRedis().boundValueOps(key).getAndSet(value);
     }
 
     /** 递增 */
-    public static Long incr(final String redisKey) {
+    public static Long incr(final Serializable redisKey) {
         return getRedis().execute(new RedisCallback<Long>() {
             public Long doInRedis(RedisConnection connection) throws DataAccessException {
-                return connection.incr(redisKey.getBytes());
+                return connection.incr(SerializeUtil.serialize(redisKey));
             }
         });
     }

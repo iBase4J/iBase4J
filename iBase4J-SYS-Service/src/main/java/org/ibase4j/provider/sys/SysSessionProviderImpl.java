@@ -5,11 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.RowBounds;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
+import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.core.util.JedisUtil;
+import org.ibase4j.core.util.PropertiesUtil;
 import org.ibase4j.dao.sys.SysSessionMapper;
 import org.ibase4j.model.sys.SysSession;
-import org.ibase4j.provider.sys.ISysSessionProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -68,5 +71,18 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
 
     public List<String> querySessionIdByAccount(String account) {
         return sessionMapper.querySessionIdByAccount(account);
+    }
+
+    // 
+    public void cleanExpiredSessions() {
+        String key = "spring:session:" + PropertiesUtil.getString("session.redis.namespace") + ":sessions:expires:";
+        Map<String, Object> columnMap = InstanceUtil.newHashMap();
+        List<String> ids = mapper.selectIdByMap(new RowBounds(), columnMap);
+        List<SysSession> sessions = getList(ids);
+        for (SysSession sysSession : sessions) {
+            if (!JedisUtil.exists(key + sysSession.getSessionId())) {
+                mapper.deleteById(sysSession.getId());
+            }
+        }
     }
 }

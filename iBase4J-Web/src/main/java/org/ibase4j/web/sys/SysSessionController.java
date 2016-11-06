@@ -51,7 +51,7 @@ public class SysSessionController extends BaseController {
 	@RequiresPermissions("sys.session.delete")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object update(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
-		sysSessionService.delete(id);
+		sysSessionService.deleteBySessionId(id);
 		return setSuccessModelMap(modelMap);
 	}
 }
