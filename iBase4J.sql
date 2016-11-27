@@ -493,9 +493,9 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   `enable_` tinyint(1) DEFAULT NULL,
   `remark_` varchar(5000) DEFAULT NULL,
   `create_time` datetime NOT NULL,
-  `create_by` BIGINT(32) DEFAULT NULL,
+  `create_by` BIGINT(32) NULL DEFAULT NULL,
   `update_time` datetime NOT NULL,
-  `update_by` BIGINT(32) DEFAULT NULL,
+  `update_by` BIGINT(32) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会话管理';
 
