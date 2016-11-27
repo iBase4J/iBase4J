@@ -35,7 +35,7 @@
 			</list>
 		</property>
 	</bean>
-	<!--  -->
+	<!-- 调度管理 -->
 	<bean id="scheduleProvider" class="org.ibase4j.core.support.scheduler.provider.SchedulerProviderImpl" />
 	<idubbo:service interface="org.ibase4j.core.provider.scheduler.SchedulerProvider" ref="scheduleProvider" />
 </beans>
