@@ -33,4 +33,11 @@
 		<property name="receiveTimeout" value="${mq.receiveTimeout}" />
 		<property name="pubSubDomain" value="true" />
 	</bean>
+	<!-- 定义Queue监听器 -->
+	<bean id="sendEmailListener" class="org.ibase4j.core.support.mq.listener.SendEmailListener" />
+	<jms:listener-container destination-type="queue"
+		container-type="default" connection-factory="connectionFactory"
+		acknowledge="auto"><!-- 可写多个监听器 -->
+		<jms:listener destination="iBase4J.emailSender" ref="sendEmailListener" />
+	</jms:listener-container>
 </beans>

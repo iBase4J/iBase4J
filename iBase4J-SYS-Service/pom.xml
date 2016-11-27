@@ -54,6 +54,12 @@
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
 		</dependency>
+		<!--  -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
