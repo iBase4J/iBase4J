@@ -55,7 +55,7 @@
 			</list>
 		</property>
 	</bean>
-	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<description>配置文件上传</description>
 		<property name="defaultEncoding" value="utf-8" />
 		<!-- 文件大小最大值 -->
