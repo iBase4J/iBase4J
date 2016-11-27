@@ -3,6 +3,7 @@ package org.ibase4j.service.scheduler;
 import java.util.List;
 import java.util.Map;
 
+import org.ibase4j.core.provider.scheduler.SchedulerProvider;
 import org.ibase4j.core.support.Assert;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.scheduler.TaskFireLog;
@@ -10,7 +11,6 @@ import org.ibase4j.model.scheduler.TaskGroup;
 import org.ibase4j.model.scheduler.TaskScheduler;
 import org.ibase4j.model.scheduler.ext.TaskScheduled;
 import org.ibase4j.model.scheduler.ext.TaskSchedulerBean;
-import org.ibase4j.provider.scheduler.SchedulerProvider;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -48,6 +48,12 @@ public class SchedulerService {
         Assert.notNull(taskGroup, "TASKGROUP");
         Assert.notNull(taskName, "TASKNAME");
         return schedulerProvider.openCloseTask(taskGroup, taskName, "stop");
+    }
+
+    public boolean delTask(String taskGroup, String taskName) {
+        Assert.notNull(taskGroup, "TASKGROUP");
+        Assert.notNull(taskName, "TASKNAME");
+        return schedulerProvider.delTask(taskGroup, taskName);
     }
 
     public Page<TaskGroup> queryGroup(Map<String, Object> params) {
