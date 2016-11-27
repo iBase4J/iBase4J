@@ -16,7 +16,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations" value="classpath:mappers/**/*.xml" />
+		<property name="mapperLocations" value="classpath*:mappers/**/*.xml" />
 		<property name="typeAliasesPackage" value="org.ibase4j.model.*" />
 		<property name="dbColumnUnderline" value="true" />
 	</bean>
