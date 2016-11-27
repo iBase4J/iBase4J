@@ -25,7 +25,7 @@ public class SysUser extends BaseModel {
     @TableField("avatar_")
 	private String avatar;
 	private Integer userType;
-	private String deptId;
+	private Long deptId;
     @TableField("locked_")
 	private Integer locked;
 
@@ -85,11 +85,11 @@ public class SysUser extends BaseModel {
 		return this.userType;
 	}
 
-	public void setDeptId(String deptId) {
+	public void setDeptId(Long deptId) {
 		this.deptId = deptId;
 	}
 
-	public String getDeptId() {
+	public Long getDeptId() {
 		return this.deptId;
 	}
 

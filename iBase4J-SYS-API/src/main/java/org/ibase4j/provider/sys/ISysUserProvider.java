@@ -21,7 +21,7 @@ public interface ISysUserProvider extends BaseProvider<SysUser> {
     public String encryptPassword(String password);
 
     /** 查询第三方帐号用户Id */
-    public String queryUserIdByThirdParty(String openId, String provider);
+    public Long queryUserIdByThirdParty(String openId, String provider);
 
     /** 保存第三方帐号 */
     public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser);

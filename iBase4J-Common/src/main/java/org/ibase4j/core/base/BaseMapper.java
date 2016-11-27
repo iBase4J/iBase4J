@@ -18,5 +18,5 @@ import org.apache.ibatis.session.RowBounds;
  */
 public interface BaseMapper<T extends BaseModel> extends com.baomidou.mybatisplus.mapper.BaseMapper<T> {
 
-    List<String> selectIdByMap(RowBounds rowBounds, @Param("cm") Map<String, Object> params);
+    List<Long> selectIdByMap(RowBounds rowBounds, @Param("cm") Map<String, Object> params);
 }

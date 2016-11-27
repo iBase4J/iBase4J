@@ -26,13 +26,13 @@ public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements IS
     private SysRoleMenuMapper sysRoleMenuMapper;
 
     public Page<SysRole> query(Map<String, Object> params) {
-        Page<String> page = this.getPage(params);
+        Page<Long> page = this.getPage(params);
         page.setRecords(mapper.selectIdByMap(page, params));
         return getPage(page);
     }
 
     public Page<SysRoleBean> queryBean(Map<String, Object> params) {
-        Page<String> idPage = this.getPage(params);
+        Page<Long> idPage = this.getPage(params);
         idPage.setRecords(mapper.selectIdByMap(idPage, params));
         Page<SysRoleBean> pageInfo = getPage(idPage, SysRoleBean.class);
         // 权限信息
@@ -52,7 +52,7 @@ public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements IS
     /* (non-Javadoc)
      * @see org.ibase4j.provider.SysRoleProvider#getPermissions(java.lang.String) */
     @Override
-    public List<String> getPermissions(String id) {
+    public List<String> getPermissions(Long id) {
         return sysRoleMenuMapper.getPermissions(id);
     }
 }

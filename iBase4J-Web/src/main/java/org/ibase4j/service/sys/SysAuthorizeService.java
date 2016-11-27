@@ -20,16 +20,16 @@ public class SysAuthorizeService {
 	@Autowired
 	private ISysAuthorizeProvider sysAuthorizeProvider;
 
-	public List<SysMenuBean> queryAuthorizeByUserId(String id) {
+	public List<SysMenuBean> queryAuthorizeByUserId(Long id) {
 		return sysAuthorizeProvider.queryAuthorizeByUserId(id);
 	}
 
-	public List<String> queryPermissionByUserId(String userId) {
+	public List<String> queryPermissionByUserId(Long userId) {
 		return sysAuthorizeProvider.queryPermissionByUserId(userId);
 	}
 
 	public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
-	    String userId = WebUtil.getCurrentUser();
+	    Long userId = WebUtil.getCurrentUser();
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
 			sysUserMenu.setCreateBy(userId);
 			sysUserMenu.setUpdateBy(userId);
@@ -38,7 +38,7 @@ public class SysAuthorizeService {
 	}
 
 	public void updateUserRole(List<SysUserRole> sysUserRoles) {
-	    String userId = WebUtil.getCurrentUser();
+	    Long userId = WebUtil.getCurrentUser();
 		for (SysUserRole sysUserRole : sysUserRoles) {
 			sysUserRole.setCreateBy(userId);
 			sysUserRole.setUpdateBy(userId);
@@ -47,7 +47,7 @@ public class SysAuthorizeService {
 	}
 
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus) {
-	    String userId = WebUtil.getCurrentUser();
+	    Long userId = WebUtil.getCurrentUser();
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
 			sysRoleMenu.setCreateBy(userId);
 			sysRoleMenu.setUpdateBy(userId);

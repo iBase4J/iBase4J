@@ -9,5 +9,5 @@ import org.ibase4j.model.scheduler.TaskScheduler;
 
 public interface TaskSchedulerMapper extends BaseMapper<TaskScheduler> {
 
-    List<String> selectIdByMap(@Param("cm") Map<String, Object> params);
+    List<Long> selectIdByMap(@Param("cm") Map<String, Object> params);
 }

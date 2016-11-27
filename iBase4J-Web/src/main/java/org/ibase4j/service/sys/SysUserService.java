@@ -30,7 +30,7 @@ public class SysUserService extends BaseService<ISysUserProvider, SysUser> {
 
     /** 修改用户信息 */
     public void updateUserInfo(SysUser sysUser) {
-        Assert.isNotBlank(sysUser.getId(), "USER_ID");
+        Assert.notNull(sysUser.getId(), "USER_ID");
         Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
         Assert.length(sysUser.getAccount(), 3, 15, "ACCOUNT");
         SysUser user = this.queryById(sysUser.getId());
@@ -50,12 +50,12 @@ public class SysUserService extends BaseService<ISysUserProvider, SysUser> {
     }
 
     /** 修改密码 */
-    public void updatePassword(String id, String password) {
-        Assert.isNotBlank(id, "USER_ID");
+    public void updatePassword(Long id, String password) {
+        Assert.notNull(id, "USER_ID");
         Assert.isNotBlank(password, "PASSWORD");
         SysUser sysUser = provider.queryById(id);
         Assert.notNull(sysUser, "USER", id);
-        String userId = WebUtil.getCurrentUser();
+        Long userId = WebUtil.getCurrentUser();
         if (!id.equals(userId)) {
             SysUser user = provider.queryById(userId);
             if (user.getUserType() == 1) {
@@ -74,7 +74,7 @@ public class SysUserService extends BaseService<ISysUserProvider, SysUser> {
     public void thirdPartyLogin(ThirdPartyUser thirdUser) {
         SysUser sysUser = null;
         // 查询是否已经绑定过
-        String userId = provider.queryUserIdByThirdParty(thirdUser.getOpenid(), thirdUser.getProvider());
+        Long userId = provider.queryUserIdByThirdParty(thirdUser.getOpenid(), thirdUser.getProvider());
         if (userId == null) {
             sysUser = insertThirdPartyUser(thirdUser);
         } else {

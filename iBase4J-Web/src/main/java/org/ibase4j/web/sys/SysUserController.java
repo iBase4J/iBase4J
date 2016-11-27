@@ -65,7 +65,7 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "修改密码")
     @RequiresPermissions("sys.user.update")
     @RequestMapping(value = "/update/password")
-    public Object updatePassword(ModelMap modelMap, @RequestParam(value = "id", required = false) String id,
+    public Object updatePassword(ModelMap modelMap, @RequestParam(value = "id", required = false) Long id,
         @RequestParam(value = "password", required = false) String password) {
         sysUserService.updatePassword(id, password);
         return setSuccessModelMap(modelMap);
@@ -85,7 +85,7 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "用户详细信息")
     @RequiresPermissions("sys.user.read")
     @RequestMapping(value = "/read/detail")
-    public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
+    public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Long id) {
         SysUser sysUser = sysUserService.queryById(id);
         if (sysUser != null) {
             sysUser.setPassword(null);
@@ -97,7 +97,7 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "当前用户信息")
     @RequestMapping(value = "/read/current")
     public Object current(ModelMap modelMap) {
-        String id = getCurrUser();
+        Long id = getCurrUser();
         SysUser sysUser = sysUserService.queryById(id);
         if (sysUser != null) {
             sysUser.setPassword(null);

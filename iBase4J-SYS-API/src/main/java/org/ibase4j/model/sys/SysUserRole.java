@@ -7,35 +7,35 @@ import com.baomidou.mybatisplus.annotations.TableName;
 @TableName("sys_user_role")
 @SuppressWarnings("serial")
 public class SysUserRole extends BaseModel {
-    private String userId;
-    private String roleId;
+    private Long userId;
+    private Long roleId;
 
     /**
      * @return the value of sys_user_role.user_id
      */
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
     /**
      * @param userId the value for sys_user_role.user_id
      */
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     /**
      * @return the value of sys_user_role.role_id
      */
-    public String getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
     /**
      * @param roleId the value for sys_user_role.role_id
      */
-    public void setRoleId(String roleId) {
-        this.roleId = roleId == null ? null : roleId.trim();
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     /**

@@ -50,7 +50,7 @@ public class SchedulerController extends BaseController {
 	@RequiresPermissions("task.group.read")
 	@RequestMapping(value = "/read/group")
 	public Object detail(ModelMap modelMap,
-			@RequestParam(value = "id", required = false) String id) {
+			@RequestParam(value = "id", required = false) Long id) {
 		TaskGroup record = schedulerService.queryGroupById(id);
 		return setSuccessModelMap(modelMap, record);
 	}
@@ -89,7 +89,7 @@ public class SchedulerController extends BaseController {
 	@RequiresPermissions("task.scheduler.read")
 	@RequestMapping(value = "/read/scheduler")
 	public Object detailScheduler(ModelMap modelMap,
-			@RequestParam(value = "id", required = false) String id) {
+			@RequestParam(value = "id", required = false) Long id) {
 		TaskScheduler record = schedulerService.querySchedulerById(id);
 		return setSuccessModelMap(modelMap, record);
 	}

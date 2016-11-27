@@ -32,13 +32,13 @@ public class SysDicService {
     }
 
     public void updateDicIndex(SysDicIndex record) {
-        Assert.isNotBlank(record.getId(), Resources.getMessage("ID_IS_NULL"));
+        Assert.notNull(record.getId(), Resources.getMessage("ID_IS_NULL"));
         record.setUpdateBy(WebUtil.getCurrentUser());
         provider.updateDicIndex(record);
     }
 
-    public void deleteDicIndex(String id) {
-        Assert.isNotBlank(id, Resources.getMessage("ID_IS_NULL"));
+    public void deleteDicIndex(Long id) {
+        Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
         provider.deleteDicIndex(id);
     }
 
@@ -48,21 +48,21 @@ public class SysDicService {
     }
 
     public void updateDic(SysDic record) {
-        Assert.isNotBlank(record.getId(), Resources.getMessage("ID_IS_NULL"));
+        Assert.notNull(record.getId(), Resources.getMessage("ID_IS_NULL"));
         record.setUpdateBy(WebUtil.getCurrentUser());
         provider.updateDic(record);
     }
 
-    public void deleteDic(String id) {
-        Assert.isNotBlank(id, Resources.getMessage("ID_IS_NULL"));
+    public void deleteDic(Long id) {
+        Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
         provider.deleteDic(id);
     }
 
-    public SysDicIndex queryDicIndexById(String id) {
+    public SysDicIndex queryDicIndexById(Long id) {
         return provider.queryDicIndexById(id);
     }
 
-    public SysDic queryDicById(String id) {
+    public SysDic queryDicById(Long id) {
         return provider.queryDicById(id);
     }
 

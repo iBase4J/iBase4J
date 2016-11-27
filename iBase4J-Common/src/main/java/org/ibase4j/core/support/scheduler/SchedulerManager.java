@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.scheduler.manager;
+package org.ibase4j.core.support.scheduler;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,7 +28,7 @@ import org.springframework.beans.factory.InitializingBean;
  * @author ShenHuaJie
  * @version 2016年5月27日 上午10:28:26
  */
-public class SchedulerManagerImpl implements SchedulerManager, InitializingBean {
+public class SchedulerManager implements InitializingBean {
     private Logger logger = LogManager.getLogger(this.getClass());
 
     private Scheduler scheduler;

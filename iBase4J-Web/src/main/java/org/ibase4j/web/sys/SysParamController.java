@@ -48,7 +48,7 @@ public class SysParamController extends BaseController {
 	@ApiOperation(value = "系统参数详情")
 	@RequiresPermissions("sys.param.read")
 	@RequestMapping(value = "/read/detail")
-	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
+	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Long id) {
 		SysParam record = sysParamService.queryById(id);
 		return setSuccessModelMap(modelMap, record);
 	}
@@ -78,7 +78,7 @@ public class SysParamController extends BaseController {
 	@RequiresPermissions("sys.param.delete")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) String id) {
+			@RequestParam(value = "id", required = false) Long id) {
 		sysParamService.delete(id);
 		return setSuccessModelMap(modelMap);
 	}

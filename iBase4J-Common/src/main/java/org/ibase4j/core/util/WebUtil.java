@@ -51,13 +51,13 @@ public final class WebUtil {
 	}
 
 	/** 获取当前用户 */
-	public static final String getCurrentUser() {
+	public static final Long getCurrentUser() {
 		Subject currentUser = SecurityUtils.getSubject();
 		if (null != currentUser) {
 			try {
                 Session session = currentUser.getSession();
                 if (null != session) {
-                	return (String) session.getAttribute(Constants.CURRENT_USER);
+                	return (Long) session.getAttribute(Constants.CURRENT_USER);
                 }
             } catch (InvalidSessionException e) {
                 logger.error(e);

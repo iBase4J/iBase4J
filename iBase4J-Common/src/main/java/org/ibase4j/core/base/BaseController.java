@@ -31,7 +31,7 @@ public abstract class BaseController {
 	protected final Logger logger = LogManager.getLogger(this.getClass());
 
 	/** 获取当前用户Id */
-	protected String getCurrUser() {
+	protected Long getCurrUser() {
 		return WebUtil.getCurrentUser();
 	}
 

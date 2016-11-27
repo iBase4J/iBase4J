@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.ibase4j.core.provider.scheduler;
+package org.ibase4j.provider.scheduler;
 
 import java.util.List;
 import java.util.Map;
@@ -34,13 +34,13 @@ public interface SchedulerProvider {
     /** 删除作业 */
     public boolean delTask(String taskGroup, String taskName);
 
-    public TaskGroup getGroupById(String id);
+    public TaskGroup getGroupById(Long id);
 
     public TaskGroup updateGroup(TaskGroup record);
 
     public Page<TaskGroup> queryGroup(Map<String, Object> params);
 
-    public TaskScheduler getSchedulerById(String id);
+    public TaskScheduler getSchedulerById(Long id);
 
     public TaskScheduler updateScheduler(TaskScheduler record);
 
@@ -48,7 +48,7 @@ public interface SchedulerProvider {
 
     public Page<TaskSchedulerBean> queryScheduler(Map<String, Object> params);
 
-    public TaskFireLog getFireLogById(String id);
+    public TaskFireLog getFireLogById(Long id);
 
     public Page<TaskFireLog> queryLog(Map<String, Object> params);
 }

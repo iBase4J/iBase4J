@@ -4,11 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.util.DataUtil;
-import org.ibase4j.core.util.DateUtil;
-import org.ibase4j.core.util.DateUtil.DATE_PATTERN;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +24,12 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @version 2016年5月20日 下午3:19:19
  */
 public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvider<T> {
+    protected Logger logger = LogManager.getLogger(getClass());
     @Autowired
     protected BaseMapper<T> mapper;
 
     /** 分页查询  */
-    protected Page<String> getPage(Map<String, Object> params) {
+    protected Page<Long> getPage(Map<String, Object> params) {
         Integer current = 1;
         Integer size = 10;
         String orderBy = "";
@@ -42,7 +42,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         if (DataUtil.isNotEmpty(params.get("orderBy"))) {
             orderBy = (String)params.get("orderBy");
         }
-        Page<String> page = new Page<String>(current, size, orderBy);
+        Page<Long> page = new Page<Long>(current, size, orderBy);
         page.setAsc(false);
         return page;
     }
@@ -52,21 +52,14 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         return InstanceUtil.getBean(getClass());
     }
 
-    /** 生成主键策略 */
-    public String createId(String key) {
-        String redisKey = "REDIS_TBL_" + key;
-        String dateTime = DateUtil.getDateTime(DATE_PATTERN.YYYYMMDDHHMMSSSSS);
-        return dateTime + RedisUtil.incr(redisKey);
-    }
-
     /** 根据Id查询(默认类型T) */
-    public Page<T> getPage(Page<String> ids) {
+    public Page<T> getPage(Page<Long> ids) {
         if (ids != null) {
             Page<T> page = new Page<T>(ids.getCurrent(), ids.getSize());
             page.setTotal(ids.getTotal());
             BaseProviderImpl<T> provider = getProvider();
             List<T> records = InstanceUtil.newArrayList();
-            for (String id : ids.getRecords()) {
+            for (Long id : ids.getRecords()) {
                 records.add(provider.queryById(id));
             }
             page.setRecords(records);
@@ -76,13 +69,13 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
     }
 
     /** 根据Id查询(cls返回类型Class) */
-    public <K> Page<K> getPage(Page<String> ids, Class<K> cls) {
+    public <K> Page<K> getPage(Page<Long> ids, Class<K> cls) {
         if (ids != null) {
             Page<K> page = new Page<K>(ids.getCurrent(), ids.getSize());
             page.setTotal(ids.getTotal());
             BaseProviderImpl<T> provider = getProvider();
             List<K> records = InstanceUtil.newArrayList();
-            for (String id : ids.getRecords()) {
+            for (Long id : ids.getRecords()) {
                 T t = provider.queryById(id);
                 K k = InstanceUtil.to(t, cls);
                 records.add(k);
@@ -94,10 +87,10 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
     }
 
     /** 根据Id查询(默认类型T) */
-    public List<T> getList(List<String> ids) {
+    public List<T> getList(List<Long> ids) {
         List<T> list = InstanceUtil.newArrayList();
         if (ids != null) {
-            for (String id : ids) {
+            for (Long id : ids) {
                 list.add(getProvider().queryById(id));
             }
         }
@@ -105,10 +98,10 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
     }
 
     /** 根据Id查询(cls返回类型Class) */
-    public <K> List<K> getList(List<String> ids, Class<K> cls) {
+    public <K> List<K> getList(List<Long> ids, Class<K> cls) {
         List<K> list = InstanceUtil.newArrayList();
         if (ids != null) {
-            for (String id : ids) {
+            for (Long id : ids) {
                 T t = getProvider().queryById(id);
                 K k = InstanceUtil.to(t, cls);
                 list.add(k);
@@ -118,7 +111,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
     }
 
     @Transactional
-    public void delete(String id, String userId) {
+    public void delete(Long id, Long userId) {
         try {
             T record = queryById(id);
             record.setEnable(false);
@@ -136,9 +129,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         try {
             record.setEnable(true);
             record.setUpdateTime(new Date());
-            if (StringUtils.isBlank(record.getId())) {
-                String key = record.getClass().getSimpleName();
-                record.setId(createId(key));
+            if (record.getId() == null) {
                 record.setCreateTime(new Date());
                 mapper.insert(record);
             } else {
@@ -153,7 +144,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 
     @Transactional
     @SuppressWarnings("unchecked")
-    public T queryById(String id) {
+    public T queryById(Long id) {
         try {
             String key = getCacheKey(id);
             T record = (T)RedisUtil.get(key);

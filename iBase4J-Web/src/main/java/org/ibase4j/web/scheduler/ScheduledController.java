@@ -49,8 +49,8 @@ public class ScheduledController extends BaseController {
     @RequestMapping("/run/task")
     @ApiOperation(value = "立即执行调度")
     @RequiresPermissions("task.scheduled.run")
-    public Object exec(ModelMap modelMap, @RequestParam(value = "taskGroup", required = true) String taskGroup,
-        @RequestParam(value = "taskName", required = true) String taskName) {
+    public Object exec(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
+        @RequestParam(value = "taskName", required = false) String taskName) {
         schedulerService.execTask(taskGroup, taskName);
         return setSuccessModelMap(modelMap);
     }
@@ -59,8 +59,8 @@ public class ScheduledController extends BaseController {
     @RequestMapping("/open/task")
     @ApiOperation(value = "启动调度")
     @RequiresPermissions("task.scheduled.open")
-    public Object open(ModelMap modelMap, @RequestParam(value = "taskGroup", required = true) String taskGroup,
-        @RequestParam(value = "taskName", required = true) String taskName) {
+    public Object open(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
+        @RequestParam(value = "taskName", required = false) String taskName) {
         schedulerService.openTask(taskGroup, taskName);
         return setSuccessModelMap(modelMap);
     }
@@ -69,8 +69,8 @@ public class ScheduledController extends BaseController {
     @RequestMapping("/close/task")
     @ApiOperation(value = "暂停调度")
     @RequiresPermissions("task.scheduled.close")
-    public Object close(ModelMap modelMap, @RequestParam(value = "taskGroup", required = true) String taskGroup,
-        @RequestParam(value = "taskName", required = true) String taskName) {
+    public Object close(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
+        @RequestParam(value = "taskName", required = false) String taskName) {
         schedulerService.closeTask(taskGroup, taskName);
         return setSuccessModelMap(modelMap);
     }
@@ -79,8 +79,8 @@ public class ScheduledController extends BaseController {
     @RequestMapping("/del/task")
     @ApiOperation(value = "暂停调度")
     @RequiresPermissions("task.scheduled.close")
-    public Object delete(ModelMap modelMap, @RequestParam(value = "taskGroup", required = true) String taskGroup,
-        @RequestParam(value = "taskName", required = true) String taskName) {
+    public Object delete(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
+        @RequestParam(value = "taskName", required = false) String taskName) {
         schedulerService.delTask(taskGroup, taskName);
         return setSuccessModelMap(modelMap);
     }

@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 @TableName("sys_user_thirdparty")
 @SuppressWarnings("serial")
 public class SysUserThirdparty extends BaseModel {
-    private String userId;
+    private Long userId;
 
     @TableField("provider_")
     private String provider;
@@ -18,15 +18,15 @@ public class SysUserThirdparty extends BaseModel {
     /**
      * @return the value of sys_user_thirdparty.user_id
      */
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
     /**
      * @param userId the value for sys_user_thirdparty.user_id
      */
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     /**

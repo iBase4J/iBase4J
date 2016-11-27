@@ -35,7 +35,7 @@ public class SysEventServiceImpl extends BaseService<ISysEventProvider, SysEvent
         String path = request.getServletPath();
         if (!path.contains("/read/")) {
             final SysEvent record = new SysEvent();
-            String uid = WebUtil.getCurrentUser();
+            Long uid = WebUtil.getCurrentUser();
             record.setMethod(request.getMethod());
             record.setRequestUri(request.getServletPath());
             record.setClientHost(WebUtil.getHost(request));

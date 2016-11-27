@@ -8,37 +8,37 @@ import com.baomidou.mybatisplus.annotations.TableName;
 @TableName("sys_role_menu")
 @SuppressWarnings("serial")
 public class SysRoleMenu extends BaseModel {
-    private String roleId;
-    private String menuId;
+    private Long roleId;
+    private Long menuId;
     @TableField("permission_")
     private String permission;
 
     /**
      * @return the value of sys_role_menu.role_id
      */
-    public String getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
     /**
      * @param roleId the value for sys_role_menu.role_id
      */
-    public void setRoleId(String roleId) {
-        this.roleId = roleId == null ? null : roleId.trim();
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     /**
      * @return the value of sys_role_menu.menu_id
      */
-    public String getMenuId() {
+    public Long getMenuId() {
         return menuId;
     }
 
     /**
      * @param menuId the value for sys_role_menu.menu_id
      */
-    public void setMenuId(String menuId) {
-        this.menuId = menuId == null ? null : menuId.trim();
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
     }
 
     /**
