@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.annotations.TableName;
 @TableName("sys_user_menu")
 @SuppressWarnings("serial")
 public class SysUserMenu extends BaseModel {
-    private String userId;
-    private String menuId;
+    private Long userId;
+    private Long menuId;
 
     @TableField("permission_")
     private String permission;
@@ -17,29 +17,29 @@ public class SysUserMenu extends BaseModel {
     /**
      * @return the value of sys_user_menu.user_id
      */
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
     /**
      * @param userId the value for sys_user_menu.user_id
      */
-    public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     /**
      * @return the value of sys_user_menu.menu_id
      */
-    public String getMenuId() {
+    public Long getMenuId() {
         return menuId;
     }
 
     /**
      * @param menuId the value for sys_user_menu.menu_id
      */
-    public void setMenuId(String menuId) {
-        this.menuId = menuId == null ? null : menuId.trim();
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
     }
 
     /**

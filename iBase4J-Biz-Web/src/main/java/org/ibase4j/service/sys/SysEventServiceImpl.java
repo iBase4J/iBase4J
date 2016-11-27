@@ -33,7 +33,7 @@ public class SysEventServiceImpl extends BaseService<ISysEventProvider, SysEvent
 	public void saveEvent(final HttpServletRequest request, final HttpServletResponse response,
 			final Exception ex, final Long startTime, final Long endTime) {
 		final SysEvent record = new SysEvent();
-        String uid = WebUtil.getCurrentUser();
+        Long uid = WebUtil.getCurrentUser();
 		record.setMethod(request.getMethod());
 		record.setRequestUri(request.getServletPath());
 		record.setClientHost(WebUtil.getHost(request));

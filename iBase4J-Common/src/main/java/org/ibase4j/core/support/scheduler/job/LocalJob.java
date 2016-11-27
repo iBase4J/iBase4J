@@ -2,7 +2,7 @@ package org.ibase4j.core.support.scheduler.job;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.support.scheduler.Constants;
+import org.ibase4j.core.Constants.JOBSTATE;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -22,7 +22,7 @@ public class LocalJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         long start = System.currentTimeMillis();
         JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
-        if (Constants.ERROR_STATS.equals(jobDataMap.get("taskStatus"))) {
+        if (JOBSTATE.ERROR_STATS.equals(jobDataMap.get("taskStatus"))) {
             return;
         }
         JobKey jobKey = context.getJobDetail().getKey();

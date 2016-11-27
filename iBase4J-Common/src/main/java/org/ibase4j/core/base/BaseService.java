@@ -3,7 +3,6 @@ package org.ibase4j.core.base;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import com.baomidou.mybatisplus.plugins.Page;
-
 
 /**
  * @author ShenHuaJie
@@ -28,34 +26,34 @@ public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel
     /** 修改 */
     public void update(T record) {
         record.setUpdateBy(WebUtil.getCurrentUser());
-        Assert.isNotBlank(record.getId(), "ID");
+        Assert.notNull(record.getId(), "ID");
         provider.update(record);
     }
 
     /** 新增 */
     public void add(T record) {
-        String uid = WebUtil.getCurrentUser();
-        if (StringUtils.isBlank(record.getCreateBy())) {
-            record.setCreateBy(uid == null ? "" : uid);
+        Long uid = WebUtil.getCurrentUser();
+        if (record.getCreateBy() == null) {
+            record.setCreateBy(uid == null ? 1 : uid);
         }
-        if (StringUtils.isBlank(record.getUpdateBy())) {
-            record.setUpdateBy(uid == null ? "" : uid);
-        } else if (StringUtils.isNotBlank(uid)) {
+        if (record.getUpdateBy() == null) {
+            record.setUpdateBy(uid == null ? 1 : uid);
+        } else if (uid != null) {
             record.setUpdateBy(uid);
         }
         provider.update(record);
     }
 
     /** 删除 */
-    public void delete(String id) {
-        Assert.isNotBlank(id, "ID");
+    public void delete(Long id) {
+        Assert.notNull(id, "ID");
         provider.delete(id, WebUtil.getCurrentUser());
     }
 
     /** 根据Id查询 */
     @SuppressWarnings("unchecked")
-    public T queryById(String id) {
-        Assert.isNotBlank(id, "ID");
+    public T queryById(Long id) {
+        Assert.notNull(id, "ID");
         StringBuilder sb = new StringBuilder(Constants.CACHE_NAMESPACE);
         String className = this.getClass().getSimpleName().replace("Service", "");
         sb.append(className.substring(0, 1).toLowerCase()).append(className.substring(1));

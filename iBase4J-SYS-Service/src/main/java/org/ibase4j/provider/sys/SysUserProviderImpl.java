@@ -43,13 +43,13 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
     private SysUserMapper sysUserMapper;
 
     public Page<SysUser> query(Map<String, Object> params) {
-        Page<String> page = this.getPage(params);
+        Page<Long> page = this.getPage(params);
         page.setRecords(mapper.selectIdByMap(page, params));
         return getPage(page);
     }
 
     public Page<SysUserBean> queryBeans(Map<String, Object> params) {
-        Page<String> idPage = this.getPage(params);
+        Page<Long> idPage = this.getPage(params);
         idPage.setRecords(mapper.selectIdByMap(idPage, params));
         Map<String, String> userTypeMap = sysDicProvider.queryDicByDicIndexKey("USERTYPE");
         Page<SysUserBean> pageInfo = getPage(idPage, SysUserBean.class);
@@ -66,7 +66,7 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
 
     /** 查询第三方帐号用户Id */
     @Cacheable
-    public String queryUserIdByThirdParty(String openId, String provider) {
+    public Long queryUserIdByThirdParty(String openId, String provider) {
         return thirdpartyMapper.queryUserIdByThirdParty(provider, openId);
     }
 
@@ -86,7 +86,6 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
         sysUser.setAvatar(thirdPartyUser.getAvatarUrl());
         // 初始化第三方信息
         SysUserThirdparty thirdparty = new SysUserThirdparty();
-        thirdparty.setId(createId("SysUserThirdparty"));
         thirdparty.setProvider(thirdPartyUser.getProvider());
         thirdparty.setOpenId(thirdPartyUser.getOpenid());
         thirdparty.setCreateTime(new Date());
@@ -100,8 +99,8 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
     }
 
     public void init() {
-        List<String> list = sysUserMapper.selectIdByMap(Collections.<String, Object>emptyMap());
-        for (String id : list) {
+        List<Long> list = sysUserMapper.selectIdByMap(Collections.<String, Object>emptyMap());
+        for (Long id : list) {
             RedisUtil.set(getCacheKey(id), mapper.selectById(id));
         }
     }

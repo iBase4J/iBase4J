@@ -17,13 +17,13 @@ public interface BaseProvider<T extends BaseModel> {
 	public T update(T record);
 
 	@Transactional
-	public void delete(String id, String userId);
+	public void delete(Long id, Long userId);
 
-	public T queryById(String id);
+	public T queryById(Long id);
 
 	public Page<T> query(Map<String, Object> params);
 	
-    public <K> Page<K> getPage(Page<String> ids, Class<K> cls);
+    public <K> Page<K> getPage(Page<Long> ids, Class<K> cls);
 
-    public <K> List<K> getList(List<String> ids, Class<K> cls);
+    public <K> List<K> getList(List<Long> ids, Class<K> cls);
 }

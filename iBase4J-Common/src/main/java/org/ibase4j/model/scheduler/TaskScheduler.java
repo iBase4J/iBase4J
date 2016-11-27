@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 @TableName("task_scheduler")
 @SuppressWarnings("serial")
 public class TaskScheduler extends BaseModel {
-    private String groupId;
+    private Long groupId;
     private String taskName;
     private String taskType;
     private String taskDesc;
@@ -17,15 +17,15 @@ public class TaskScheduler extends BaseModel {
     /**
      * @return the value of task_scheduler.group_id
      */
-    public String getGroupId() {
+    public Long getGroupId() {
         return groupId;
     }
 
     /**
      * @param groupId the value for task_scheduler.group_id
      */
-    public void setGroupId(String groupId) {
-        this.groupId = groupId == null ? null : groupId.trim();
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
     /**

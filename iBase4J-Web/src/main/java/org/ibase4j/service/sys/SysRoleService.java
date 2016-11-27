@@ -26,7 +26,7 @@ public class SysRoleService extends BaseService<ISysRoleProvider, SysRole> {
         return provider.queryBean(params);
     }
 
-    public List<String> getPermissions(String id) {
+    public List<String> getPermissions(Long id) {
         return provider.getPermissions(id);
     }
 }

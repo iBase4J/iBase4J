@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.ibase4j.dao.sys.SysUserMapper">
 	<!-- 查询列表-->
-	<select id="selectIdByMap" resultType="java.lang.String">
+	<select id="selectIdByMap" resultType="java.lang.Long">
 		SELECT id_ FROM sys_user
 		<where>
 			<if test="cm.account != null and cm.account != ''">

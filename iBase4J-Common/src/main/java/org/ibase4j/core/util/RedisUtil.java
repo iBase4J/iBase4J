@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
@@ -65,7 +62,6 @@ public final class RedisUtil {
     }
 
     public static final Boolean exists(final String key) {
-        expire(key, EXPIRE);
         return getRedis().hasKey(key);
     }
 
@@ -120,14 +116,6 @@ public final class RedisUtil {
         expire(key, EXPIRE);
         return getRedis().boundValueOps(key).getAndSet(value);
     }
-
-    /** 递增 */
-    public static Long incr(final Serializable redisKey) {
-        return getRedis().execute(new RedisCallback<Long>() {
-            public Long doInRedis(RedisConnection connection) throws DataAccessException {
-                return connection.incr(SerializeUtil.serialize(redisKey));
-            }
-        });
-    }
+    
     // 未完，待续...
 }

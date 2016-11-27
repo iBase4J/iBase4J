@@ -47,7 +47,7 @@ public class Realm extends AuthorizingRealm {
 	// 权限
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		String userId = WebUtil.getCurrentUser();
+		Long userId = WebUtil.getCurrentUser();
 		SysUser sysUser = sysUserService.queryById(userId);
 		if (sysUser.getUserType() != 1) {
 			userId = null;

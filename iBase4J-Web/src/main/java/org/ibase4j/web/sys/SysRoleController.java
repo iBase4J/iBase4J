@@ -49,7 +49,7 @@ public class SysRoleController extends BaseController {
     @ApiOperation(value = "角色详情")
     @RequiresPermissions("sys.role.read")
     @RequestMapping(value = "/read/detail")
-    public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
+    public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Long id) {
         SysRole record = sysRoleService.queryById(id);
         return setSuccessModelMap(modelMap, record);
     }
@@ -79,7 +79,7 @@ public class SysRoleController extends BaseController {
     @RequiresPermissions("sys.role.delete")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Object delete(HttpServletRequest request, ModelMap modelMap,
-        @RequestParam(value = "id", required = false) String id) {
+        @RequestParam(value = "id", required = false) Long id) {
         sysRoleService.delete(id);
         return setSuccessModelMap(modelMap);
     }
@@ -88,7 +88,7 @@ public class SysRoleController extends BaseController {
     @RequiresPermissions("sys.role.read")
     @RequestMapping(value = "/read/permission", method = RequestMethod.POST)
     public Object getPermission(HttpServletRequest request, ModelMap modelMap,
-        @RequestParam(value = "id", required = false) String id) {
+        @RequestParam(value = "id", required = false) Long id) {
         List<String> permissions = sysRoleService.getPermissions(id);
         return setSuccessModelMap(modelMap, permissions);
     }

@@ -2,7 +2,6 @@ package org.ibase4j.web.sys;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.config.Resources;
@@ -58,8 +57,8 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "用户登出")
     @PostMapping("/logout")
     public Object logout(ModelMap modelMap) {
-        String id = WebUtil.getCurrentUser();
-        if (StringUtils.isNotBlank(id)) {
+        Long id = WebUtil.getCurrentUser();
+        if (id != null) {
             sysSessionService.delete(id);
         }
         SecurityUtils.getSubject().logout();

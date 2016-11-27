@@ -10,24 +10,6 @@ DROP DATABASE IF EXISTS `ibase4j`;
 CREATE DATABASE IF NOT EXISTS `ibase4j` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ibase4j`;
 
-
--- 导出  表 ibase4j.qrtz_cron_triggers 结构
-DROP TABLE IF EXISTS `qrtz_cron_triggers`;
-CREATE TABLE IF NOT EXISTS `qrtz_cron_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `CRON_EXPRESSION` varchar(200) NOT NULL,
-  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_cron_triggers 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_cron_triggers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_cron_triggers` ENABLE KEYS */;
-
-
 -- 导出  表 ibase4j.qrtz_fired_triggers 结构
 DROP TABLE IF EXISTS `qrtz_fired_triggers`;
 CREATE TABLE IF NOT EXISTS `qrtz_fired_triggers` (
@@ -47,10 +29,6 @@ CREATE TABLE IF NOT EXISTS `qrtz_fired_triggers` (
   PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.qrtz_fired_triggers 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_fired_triggers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_fired_triggers` ENABLE KEYS */;
-
 
 -- 导出  表 ibase4j.qrtz_job_details 结构
 DROP TABLE IF EXISTS `qrtz_job_details`;
@@ -67,96 +45,6 @@ CREATE TABLE IF NOT EXISTS `qrtz_job_details` (
   `JOB_DATA` blob,
   PRIMARY KEY (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_job_details 的数据：~1 rows (大约)
-/*!40000 ALTER TABLE `qrtz_job_details` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_job_details` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_locks 结构
-DROP TABLE IF EXISTS `qrtz_locks`;
-CREATE TABLE IF NOT EXISTS `qrtz_locks` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `LOCK_NAME` varchar(40) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_locks 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_locks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_locks` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_paused_trigger_grps 结构
-DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
-CREATE TABLE IF NOT EXISTS `qrtz_paused_trigger_grps` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_paused_trigger_grps 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_paused_trigger_grps` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_paused_trigger_grps` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_scheduler_state 结构
-DROP TABLE IF EXISTS `qrtz_scheduler_state`;
-CREATE TABLE IF NOT EXISTS `qrtz_scheduler_state` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `INSTANCE_NAME` varchar(200) NOT NULL,
-  `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
-  `CHECKIN_INTERVAL` bigint(13) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_scheduler_state 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_scheduler_state` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_scheduler_state` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_simple_triggers 结构
-DROP TABLE IF EXISTS `qrtz_simple_triggers`;
-CREATE TABLE IF NOT EXISTS `qrtz_simple_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `REPEAT_COUNT` bigint(7) NOT NULL,
-  `REPEAT_INTERVAL` bigint(12) NOT NULL,
-  `TIMES_TRIGGERED` bigint(10) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_simple_triggers 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_simple_triggers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_simple_triggers` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.qrtz_simprop_triggers 结构
-DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
-CREATE TABLE IF NOT EXISTS `qrtz_simprop_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `STR_PROP_1` varchar(512) DEFAULT NULL,
-  `STR_PROP_2` varchar(512) DEFAULT NULL,
-  `STR_PROP_3` varchar(512) DEFAULT NULL,
-  `INT_PROP_1` int(11) DEFAULT NULL,
-  `INT_PROP_2` int(11) DEFAULT NULL,
-  `LONG_PROP_1` bigint(20) DEFAULT NULL,
-  `LONG_PROP_2` bigint(20) DEFAULT NULL,
-  `DEC_PROP_1` decimal(13,4) DEFAULT NULL,
-  `DEC_PROP_2` decimal(13,4) DEFAULT NULL,
-  `BOOL_PROP_1` varchar(1) DEFAULT NULL,
-  `BOOL_PROP_2` varchar(1) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.qrtz_simprop_triggers 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `qrtz_simprop_triggers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_simprop_triggers` ENABLE KEYS */;
-
 
 -- 导出  表 ibase4j.qrtz_triggers 结构
 DROP TABLE IF EXISTS `qrtz_triggers`;
@@ -182,30 +70,102 @@ CREATE TABLE IF NOT EXISTS `qrtz_triggers` (
   CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.qrtz_triggers 的数据：~1 rows (大约)
-/*!40000 ALTER TABLE `qrtz_triggers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `qrtz_triggers` ENABLE KEYS */;
+-- 导出  表 ibase4j.qrtz_locks 结构
+DROP TABLE IF EXISTS `qrtz_locks`;
+CREATE TABLE IF NOT EXISTS `qrtz_locks` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `LOCK_NAME` varchar(40) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`LOCK_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- 导出  表 ibase4j.qrtz_paused_trigger_grps 结构
+DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
+CREATE TABLE IF NOT EXISTS `qrtz_paused_trigger_grps` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- 导出  表 ibase4j.qrtz_scheduler_state 结构
+DROP TABLE IF EXISTS `qrtz_scheduler_state`;
+CREATE TABLE IF NOT EXISTS `qrtz_scheduler_state` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `INSTANCE_NAME` varchar(200) NOT NULL,
+  `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
+  `CHECKIN_INTERVAL` bigint(13) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`INSTANCE_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- 导出  表 ibase4j.qrtz_simple_triggers 结构
+DROP TABLE IF EXISTS `qrtz_simple_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_simple_triggers` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_NAME` varchar(200) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `REPEAT_COUNT` bigint(7) NOT NULL,
+  `REPEAT_INTERVAL` bigint(12) NOT NULL,
+  `TIMES_TRIGGERED` bigint(10) NOT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- 导出  表 ibase4j.qrtz_simprop_triggers 结构
+DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_simprop_triggers` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_NAME` varchar(200) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `STR_PROP_1` varchar(512) DEFAULT NULL,
+  `STR_PROP_2` varchar(512) DEFAULT NULL,
+  `STR_PROP_3` varchar(512) DEFAULT NULL,
+  `INT_PROP_1` int(11) DEFAULT NULL,
+  `INT_PROP_2` int(11) DEFAULT NULL,
+  `LONG_PROP_1` bigint(20) DEFAULT NULL,
+  `LONG_PROP_2` bigint(20) DEFAULT NULL,
+  `DEC_PROP_1` decimal(13,4) DEFAULT NULL,
+  `DEC_PROP_2` decimal(13,4) DEFAULT NULL,
+  `BOOL_PROP_1` varchar(1) DEFAULT NULL,
+  `BOOL_PROP_2` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 导出  表 ibase4j.qrtz_cron_triggers 结构
+DROP TABLE IF EXISTS `qrtz_cron_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_cron_triggers` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_NAME` varchar(200) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `CRON_EXPRESSION` varchar(200) NOT NULL,
+  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- 导出  表 ibase4j.sys_catalog 结构
 DROP TABLE IF EXISTS `sys_catalog`;
 CREATE TABLE IF NOT EXISTS `sys_catalog` (
-  `id_` varchar(64) NOT NULL COMMENT '流水号',
+  `id_` BIGINT(32) NOT NULL COMMENT '流水号',
   `cascade_id` varchar(255) NOT NULL COMMENT '节点语义ID',
   `root_key` varchar(255) NOT NULL COMMENT '科目标识键',
   `root_name` varchar(255) NOT NULL COMMENT '科目名称',
   `name_` varchar(255) NOT NULL COMMENT '分类名称',
   `hotkey_` varchar(255) DEFAULT NULL COMMENT '热键',
-  `parent_id` varchar(64) NOT NULL COMMENT '父节点流水号',
+  `parent_id` BIGINT(32) NOT NULL COMMENT '父节点流水号',
   `is_leaf_` varchar(255) NOT NULL DEFAULT '1' COMMENT '是否叶子节点',
   `is_auto_expand` varchar(255) NOT NULL DEFAULT '0' COMMENT '是否自动展开',
   `icon_name` varchar(255) DEFAULT NULL COMMENT '图标文件名称',
   `sort_no` int(10) DEFAULT NULL COMMENT '排序号',
   `enable_` tinyint(1) DEFAULT '1',
   `remark_` varchar(5000) DEFAULT '1',
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `sys_catalog_ukey` (`cascade_id`) USING BTREE
@@ -232,16 +192,16 @@ INSERT INTO `sys_catalog` (`id_`, `cascade_id`, `root_key`, `root_name`, `name_`
 -- 导出  表 ibase4j.sys_dept 结构
 DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE IF NOT EXISTS `sys_dept` (
-  `id_` varchar(64) NOT NULL COMMENT '部门编号',
+  `id_` BIGINT(32) NOT NULL COMMENT '部门编号',
   `dept_name` varchar(50) DEFAULT NULL COMMENT '部门名称',
-  `parent_id` varchar(64) DEFAULT NULL COMMENT '上级部门编号',
+  `parent_id` BIGINT(32) DEFAULT NULL COMMENT '上级部门编号',
   `sort_no` int(3) DEFAULT NULL COMMENT '排序号',
   `leaf_` int(1) DEFAULT NULL COMMENT '叶子节点(0:树枝节点;1:叶子节点)',
   `enable_` tinyint(1) DEFAULT NULL COMMENT '启用状态',
   `remark_` varchar(100) DEFAULT NULL COMMENT '备注',
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门';
@@ -256,17 +216,17 @@ INSERT INTO `sys_dept` (`id_`, `dept_name`, `parent_id`, `sort_no`, `leaf_`, `en
 -- 导出  表 ibase4j.sys_dic 结构
 DROP TABLE IF EXISTS `sys_dic`;
 CREATE TABLE IF NOT EXISTS `sys_dic` (
-  `id_` varchar(64) NOT NULL,
-  `index_id` varchar(64) DEFAULT NULL,
+  `id_` BIGINT(32) NOT NULL,
+  `index_id` BIGINT(32) DEFAULT NULL,
   `code_` varchar(50) DEFAULT NULL,
   `code_text` varchar(100) DEFAULT NULL,
   `sort_no` int(2) DEFAULT NULL,
   `editable_` tinyint(1) NOT NULL DEFAULT '1',
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
   `remark_` varchar(500) DEFAULT NULL,
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `field_id_code` (`index_id`,`code_`)
@@ -311,15 +271,15 @@ INSERT INTO `sys_dic` (`id_`, `index_id`, `code_`, `code_text`, `sort_no`, `edit
 -- 导出  表 ibase4j.sys_dic_index 结构
 DROP TABLE IF EXISTS `sys_dic_index`;
 CREATE TABLE IF NOT EXISTS `sys_dic_index` (
-  `id_` varchar(64) NOT NULL,
-  `catalog_id` varchar(64) NOT NULL DEFAULT '0',
+  `id_` BIGINT(32) NOT NULL,
+  `catalog_id` BIGINT(32) NOT NULL DEFAULT '0',
   `key_` varchar(50) DEFAULT NULL,
   `name_` varchar(200) DEFAULT NULL,
   `enable_` tinyint(1) DEFAULT '1',
   `remark_` varchar(1000) DEFAULT NULL,
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `code` (`key_`)
@@ -345,7 +305,7 @@ INSERT INTO `sys_dic_index` (`id_`, `catalog_id`, `key_`, `name_`, `enable_`, `r
 -- 导出  表 ibase4j.sys_event 结构
 DROP TABLE IF EXISTS `sys_event`;
 CREATE TABLE IF NOT EXISTS `sys_event` (
-  `id_` varchar(64) NOT NULL,
+  `id_` BIGINT(32) NOT NULL,
   `title_` varchar(50) DEFAULT NULL,
   `request_uri` varchar(50) DEFAULT NULL,
   `parameters_` varchar(500) DEFAULT NULL,
@@ -355,9 +315,9 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   `status_` int(3) DEFAULT NULL,
   `enable_` tinyint(1) DEFAULT NULL,
   `remark_` text,
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -370,10 +330,10 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
 -- 导出  表 ibase4j.sys_menu 结构
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE IF NOT EXISTS `sys_menu` (
-  `id_` varchar(64) NOT NULL COMMENT '菜单编号',
+  `id_` BIGINT(32) NOT NULL COMMENT '菜单编号',
   `menu_name` varchar(50) DEFAULT NULL COMMENT '菜单名称',
   `menu_type` tinyint(1) DEFAULT '2' COMMENT '菜单类型(0:CURD;1:系统菜单;2:业务菜单;)',
-  `parent_id` varchar(64) DEFAULT NULL COMMENT '上级菜单编号',
+  `parent_id` BIGINT(32) DEFAULT NULL COMMENT '上级菜单编号',
   `iconcls_` varchar(50) DEFAULT NULL COMMENT '节点图标CSS类名',
   `request_` varchar(100) DEFAULT NULL COMMENT '请求地址',
   `expand_` tinyint(1) NOT NULL DEFAULT '0' COMMENT '展开状态(1:展开;0:收缩)',
@@ -382,9 +342,9 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   `permission_` varchar(50) DEFAULT NULL COMMENT '权限标识',
   `remark_` varchar(100) DEFAULT NULL COMMENT '备注',
   `enable_` tinyint(1) DEFAULT '1',
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单';
@@ -415,15 +375,15 @@ INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`
 -- 导出  表 ibase4j.sys_param 结构
 DROP TABLE IF EXISTS `sys_param`;
 CREATE TABLE IF NOT EXISTS `sys_param` (
-  `id_` varchar(64) NOT NULL COMMENT '参数编号',
+  `id_` BIGINT(32) NOT NULL COMMENT '参数编号',
   `param_key` varchar(50) DEFAULT NULL COMMENT '参数键名',
   `param_value` varchar(100) DEFAULT NULL COMMENT '参数键值',
-  `catalog_id` varchar(64) DEFAULT NULL,
+  `catalog_id` BIGINT(32) DEFAULT NULL,
   `remark_` varchar(100) DEFAULT NULL COMMENT '备注',
   `enable_` tinyint(1) DEFAULT '1',
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全局参数表';
@@ -436,15 +396,15 @@ CREATE TABLE IF NOT EXISTS `sys_param` (
 -- 导出  表 ibase4j.sys_role 结构
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE IF NOT EXISTS `sys_role` (
-  `id_` varchar(64) NOT NULL COMMENT '角色编号',
+  `id_` BIGINT(32) NOT NULL COMMENT '角色编号',
   `role_name` varchar(50) DEFAULT NULL COMMENT '角色名称',
-  `dept_id` varchar(64) DEFAULT NULL COMMENT '所属部门编号',
+  `dept_id` BIGINT(32) DEFAULT NULL COMMENT '所属部门编号',
   `role_type` int(1) NOT NULL DEFAULT '1' COMMENT '角色类型(1:业务角色;2:管理角色 ;3:系统内置角色)',
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
   `remark_` varchar(100) DEFAULT NULL COMMENT '备注',
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色信息表';
@@ -459,14 +419,14 @@ INSERT INTO `sys_role` (`id_`, `role_name`, `dept_id`, `role_type`, `enable_`, `
 -- 导出  表 ibase4j.sys_role_menu 结构
 DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE IF NOT EXISTS `sys_role_menu` (
-  `role_id` varchar(64) NOT NULL,
-  `menu_id` varchar(64) NOT NULL,
+  `role_id` BIGINT(32) NOT NULL,
+  `menu_id` BIGINT(32) NOT NULL,
   `permission_` varchar(50) NOT NULL COMMENT '权限标识',
   `enable_` tinyint(1) DEFAULT '1',
   `remark_` varchar(5000) DEFAULT NULL,
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`role_id`,`menu_id`,`permission_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色授权表';
@@ -525,7 +485,7 @@ INSERT INTO `sys_role_menu` (`role_id`, `menu_id`, `permission_`, `enable_`, `re
 -- 导出  表 ibase4j.sys_session 结构
 DROP TABLE IF EXISTS `sys_session`;
 CREATE TABLE IF NOT EXISTS `sys_session` (
-  `id_` varchar(64) NOT NULL,
+  `id_` BIGINT(32) NOT NULL,
   `session_id` varchar(50) DEFAULT NULL,
   `account_` varchar(50) DEFAULT NULL,
   `ip_` varchar(50) DEFAULT NULL,
@@ -533,23 +493,17 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   `enable_` tinyint(1) DEFAULT NULL,
   `remark_` varchar(5000) DEFAULT NULL,
   `create_time` datetime NOT NULL,
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) DEFAULT NULL,
   `update_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会话管理';
-
--- 正在导出表  ibase4j.sys_session 的数据：~1 rows (大约)
-/*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
-INSERT INTO `sys_session` (`id_`, `session_id`, `account_`, `ip_`, `start_time`, `enable_`, `remark_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	('2016092111523154537', '8d9fe435-e8f2-4129-bab9-72694aa5be1f', 'admin', '192.168.94.134', '2016-09-21 11:52:32', NULL, NULL, '2016-09-21 11:52:32', 'admin', '2016-09-21 11:52:32', 'admin');
-/*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
 
 -- 导出  表 ibase4j.sys_user 结构
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE IF NOT EXISTS `sys_user` (
-  `id_` varchar(64) NOT NULL,
+  `id_` BIGINT(32) NOT NULL,
   `account_` varchar(20) DEFAULT NULL COMMENT '登陆帐户',
   `password_` varchar(50) DEFAULT NULL COMMENT '密码',
   `phone_` varchar(50) DEFAULT NULL COMMENT '电话',
@@ -557,14 +511,14 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `user_name` varchar(30) DEFAULT NULL COMMENT '用户名',
   `avatar_` varchar(500) DEFAULT NULL,
   `user_type` int(1) DEFAULT '1' COMMENT '人员类型(1:经办员;2:管理员;3:系统内置人员;)',
-  `dept_id` varchar(64) DEFAULT '1' COMMENT '部门编号',
+  `dept_id` BIGINT(32) DEFAULT '1' COMMENT '部门编号',
   `locked_` tinyint(1) DEFAULT '0' COMMENT '锁定标志(1:锁定;0:激活)',
   `enable_` tinyint(1) DEFAULT '1',
   `remark_` varchar(5000) DEFAULT '1',
   `create_time` datetime NOT NULL,
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `account` (`account_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -580,14 +534,14 @@ INSERT INTO `sys_user` (`id_`, `account_`, `password_`, `phone_`, `sex_`, `user_
 -- 导出  表 ibase4j.sys_user_menu 结构
 DROP TABLE IF EXISTS `sys_user_menu`;
 CREATE TABLE IF NOT EXISTS `sys_user_menu` (
-  `user_id` varchar(64) NOT NULL,
-  `menu_id` varchar(64) NOT NULL,
+  `user_id` BIGINT(32) NOT NULL,
+  `menu_id` BIGINT(32) NOT NULL,
   `permission_` varchar(50) NOT NULL COMMENT '权限标识',
   `enable_` tinyint(1) DEFAULT NULL,
   `remark_` varchar(5000) DEFAULT NULL,
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`user_id`,`menu_id`,`permission_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户授权表';
@@ -600,13 +554,13 @@ CREATE TABLE IF NOT EXISTS `sys_user_menu` (
 -- 导出  表 ibase4j.sys_user_role 结构
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE IF NOT EXISTS `sys_user_role` (
-  `user_id` varchar(64) NOT NULL,
-  `role_id` varchar(64) NOT NULL,
+  `user_id` BIGINT(32) NOT NULL,
+  `role_id` BIGINT(32) NOT NULL,
   `enable_` tinyint(1) DEFAULT NULL,
   `remark_` varchar(5000) DEFAULT NULL,
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户授权表';
@@ -621,15 +575,15 @@ INSERT INTO `sys_user_role` (`user_id`, `role_id`, `enable_`, `remark_`, `create
 -- 导出  表 ibase4j.sys_user_thirdparty 结构
 DROP TABLE IF EXISTS `sys_user_thirdparty`;
 CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
-  `id_` varchar(64) NOT NULL,
-  `user_id` varchar(64) NOT NULL,
+  `id_` BIGINT(32) NOT NULL,
+  `user_id` BIGINT(32) NOT NULL,
   `provider_` varchar(50) NOT NULL COMMENT '第三方类型',
   `open_id` varchar(50) NOT NULL COMMENT '第三方Id',
   `enable_` tinyint(1) DEFAULT NULL,
   `remark_` varchar(5000) DEFAULT NULL,
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `user_id_provider__open_id` (`user_id`,`provider_`,`open_id`)
@@ -643,7 +597,7 @@ CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
 -- 导出  表 ibase4j.task_fire_log 结构
 DROP TABLE IF EXISTS `task_fire_log`;
 CREATE TABLE IF NOT EXISTS `task_fire_log` (
-  `id_` varchar(64) NOT NULL,
+  `id_` BIGINT(32) NOT NULL,
   `group_name` varchar(50) NOT NULL,
   `task_name` varchar(50) NOT NULL,
   `start_time` datetime NOT NULL,
@@ -664,15 +618,15 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
 -- 导出  表 ibase4j.task_group 结构
 DROP TABLE IF EXISTS `task_group`;
 CREATE TABLE IF NOT EXISTS `task_group` (
-  `id_` varchar(64) NOT NULL,
+  `id_` BIGINT(32) NOT NULL,
   `group_name` varchar(50) NOT NULL,
   `group_desc` varchar(50) NOT NULL,
   `remark_` varchar(5000) NOT NULL,
   `enable_` tinyint(1) DEFAULT '1',
   `create_time` datetime NOT NULL,
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `group_name` (`group_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -687,8 +641,8 @@ INSERT INTO `task_group` (`id_`, `group_name`, `group_desc`, `remark_`, `enable_
 -- 导出  表 ibase4j.task_scheduler 结构
 DROP TABLE IF EXISTS `task_scheduler`;
 CREATE TABLE IF NOT EXISTS `task_scheduler` (
-  `id_` varchar(64) NOT NULL,
-  `group_id` varchar(64) NOT NULL,
+  `id_` BIGINT(32) NOT NULL,
+  `group_id` BIGINT(32) NOT NULL,
   `task_name` varchar(50) NOT NULL,
   `task_type` varchar(50) NOT NULL,
   `task_desc` varchar(50) DEFAULT NULL,
@@ -696,9 +650,9 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
   `contact_email` varchar(500) DEFAULT NULL COMMENT '多个邮箱用,分割',
   `remark_` varchar(5000) DEFAULT NULL,
   `enable_` tinyint(1) DEFAULT '1',
-  `create_by` varchar(64) NOT NULL,
+  `create_by` BIGINT(32) NOT NULL,
   `create_time` datetime NOT NULL,
-  `update_by` varchar(64) NOT NULL,
+  `update_by` BIGINT(32) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `group_id_task_name` (`group_id`,`task_name`)
@@ -707,8 +661,4 @@ CREATE TABLE IF NOT EXISTS `task_scheduler` (
 -- 正在导出表  ibase4j.task_scheduler 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `task_scheduler` DISABLE KEYS */;
 INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `contact_email`, `remark_`, `enable_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
-	('1', '1', 'cleanExpiredSessions', 'dubbo', '清理无效session', '0 * * * * ?', 'iBase4J@126.com', NULL, 1, '1', '2016-06-13 14:05:30', '1', '2016-09-21 11:30:00');
-/*!40000 ALTER TABLE `task_scheduler` ENABLE KEYS */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+	('1', '1', 'cleanExpiredSessions', 'local', '清理无效session', '0 * * * * ?', 'iBase4J@126.com', NULL, 1, '1', '2016-06-13 14:05:30', '1', '2016-09-21 11:30:00');

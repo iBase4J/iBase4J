@@ -43,8 +43,8 @@ public class SysSessionService {
 	}
 
 	/** 删除会话 */
-	public void delete(String id) {
-		Assert.isNotBlank(id, "ID");
+	public void delete(Long id) {
+		Assert.notNull(id, "ID");
 		SysSession sysSession = sysSessionProvider.queryById(id);
 		if (sysSession != null) {
 			sessionRepository.delete(sysSession.getSessionId());

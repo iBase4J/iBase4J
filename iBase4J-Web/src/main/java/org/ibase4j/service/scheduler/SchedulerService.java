@@ -3,7 +3,6 @@ package org.ibase4j.service.scheduler;
 import java.util.List;
 import java.util.Map;
 
-import org.ibase4j.core.provider.scheduler.SchedulerProvider;
 import org.ibase4j.core.support.Assert;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.scheduler.TaskFireLog;
@@ -11,6 +10,7 @@ import org.ibase4j.model.scheduler.TaskGroup;
 import org.ibase4j.model.scheduler.TaskScheduler;
 import org.ibase4j.model.scheduler.ext.TaskScheduled;
 import org.ibase4j.model.scheduler.ext.TaskSchedulerBean;
+import org.ibase4j.provider.scheduler.SchedulerProvider;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -72,7 +72,7 @@ public class SchedulerService {
      * @param id
      * @return
      */
-    public TaskGroup queryGroupById(String id) {
+    public TaskGroup queryGroupById(Long id) {
         Assert.notNull(id, "ID");
         return schedulerProvider.getGroupById(id);
     }
@@ -88,7 +88,7 @@ public class SchedulerService {
      * @param record
      */
     public void updateGroup(TaskGroup record) {
-        Assert.isNotBlank(record.getId(), "ID");
+        Assert.notNull(record.getId(), "ID");
         schedulerProvider.updateGroup(record);
     }
 
@@ -96,8 +96,8 @@ public class SchedulerService {
      * @param id
      * @return
      */
-    public TaskScheduler querySchedulerById(String id) {
-        Assert.isNotBlank(id, "ID");
+    public TaskScheduler querySchedulerById(Long id) {
+        Assert.notNull(id, "ID");
         return schedulerProvider.getSchedulerById(id);
     }
 

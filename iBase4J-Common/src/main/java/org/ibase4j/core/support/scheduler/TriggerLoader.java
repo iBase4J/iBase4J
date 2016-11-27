@@ -1,9 +1,8 @@
-package org.ibase4j.core.support.scheduler.manager;
+package org.ibase4j.core.support.scheduler;
 
 import java.util.List;
 import java.util.Map;
 
-import org.ibase4j.core.provider.scheduler.SchedulerProvider;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.dao.scheduler.TaskSchedulerMapper;
 import org.ibase4j.model.scheduler.TaskGroup;
@@ -25,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class TriggerLoader {
     @Autowired
-    private SchedulerProvider schedulerProvider;
+    private SchedulerService schedulerService;
     @Autowired
     private TaskSchedulerMapper taskSchedulerMapper;
     // 执行作业的类
@@ -39,11 +38,11 @@ public class TriggerLoader {
         Map<String, Object> params = InstanceUtil.newHashMap();
         String taskType = jobClass.getSimpleName().replace("Job", "").toLowerCase(); // 作业类型
         params.put("taskType", taskType);
-        List<String> taskSchedulerIds = taskSchedulerMapper.selectIdByMap(params);
+        List<Long> taskSchedulerIds = taskSchedulerMapper.selectIdByMap(params);
         Map<Trigger, JobDetail> resultMap = InstanceUtil.newHashMap();
-        for (String id : taskSchedulerIds) {
-            TaskScheduler taskScheduler = schedulerProvider.getSchedulerById(id);
-            TaskGroup taskGroup = schedulerProvider.getGroupById(taskScheduler.getGroupId());
+        for (Long id : taskSchedulerIds) {
+            TaskScheduler taskScheduler = schedulerService.getSchedulerById(id);
+            TaskGroup taskGroup = schedulerService.getGroupById(taskScheduler.getGroupId());
             JobDataMap jobDataMap = new JobDataMap();
             jobDataMap.put("id", taskScheduler.getId());
             jobDataMap.put("enable", taskScheduler.getEnable());

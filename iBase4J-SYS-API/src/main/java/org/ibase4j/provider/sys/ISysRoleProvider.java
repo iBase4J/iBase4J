@@ -13,5 +13,5 @@ public interface ISysRoleProvider extends BaseProvider<SysRole> {
     public Page<SysRoleBean> queryBean(Map<String, Object> params);
 
     /** 根据角色Id获取权限选项value */
-    public List<String> getPermissions(String id);
+    public List<String> getPermissions(Long id);
 }

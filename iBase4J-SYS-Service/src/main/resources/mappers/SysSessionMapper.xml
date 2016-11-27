@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.ibase4j.dao.sys.SysSessionMapper">
-	<select id="selectIdByMap" resultType="java.lang.String">
+	<select id="selectIdByMap" resultType="java.lang.Long">
 		select id_ from sys_session
 		<where>
 			<if test="cm.keyword != null">
@@ -14,7 +14,7 @@
 		delete from
 		sys_session where session_id=#{sessionId}
 	</delete>
-	<select id="queryBySessionId" resultType="java.lang.String">
+	<select id="queryBySessionId" resultType="java.lang.Long">
 		select id_ from sys_session where session_id = #{sessionId}
 	</select>
 	<select id="querySessionIdByAccount" resultType="java.lang.String">

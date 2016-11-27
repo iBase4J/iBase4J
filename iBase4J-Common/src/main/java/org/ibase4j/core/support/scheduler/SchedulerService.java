@@ -1,10 +1,9 @@
-package org.ibase4j.core.support.scheduler.service;
+package org.ibase4j.core.support.scheduler;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.dao.scheduler.TaskFireLogMapper;
@@ -31,17 +30,17 @@ public class SchedulerService extends BaseProviderImpl<TaskGroup> {
     private TaskFireLogMapper logMapper;
 
     @Cacheable("taskGroup")
-    public TaskGroup getGroupById(String id) {
+    public TaskGroup getGroupById(Long id) {
         return mapper.selectById(id);
     }
 
     @Cacheable("taskScheduler")
-    public TaskScheduler getSchedulerById(String id) {
+    public TaskScheduler getSchedulerById(Long id) {
         return taskSchedulerMapper.selectById(id);
     }
 
     @Cacheable("taskFireLog")
-    public TaskFireLog getFireLogById(String id) {
+    public TaskFireLog getFireLogById(Long id) {
         return logMapper.selectById(id);
     }
 
@@ -49,8 +48,7 @@ public class SchedulerService extends BaseProviderImpl<TaskGroup> {
     @CachePut("taskGroup")
     public TaskGroup updateGroup(TaskGroup record) {
         record.setEnable(true);
-        if (StringUtils.isBlank(record.getId())) {
-            record.setId(createId("TaskGroup"));
+        if (record.getId() == null) {
             record.setCreateTime(new Date());
             mapper.insert(record);
         } else {
@@ -64,8 +62,7 @@ public class SchedulerService extends BaseProviderImpl<TaskGroup> {
     @CachePut("taskScheduler")
     public TaskScheduler updateScheduler(TaskScheduler record) {
         record.setEnable(true);
-        if (StringUtils.isBlank(record.getId())) {
-            record.setId(createId("TaskScheduler"));
+        if (record.getId() == null) {
             record.setCreateTime(new Date());
             taskSchedulerMapper.insert(record);
         } else {
@@ -78,8 +75,7 @@ public class SchedulerService extends BaseProviderImpl<TaskGroup> {
     @Transactional
     @CachePut("taskFireLog")
     public TaskFireLog updateLog(TaskFireLog record) {
-        if (StringUtils.isBlank(record.getId())) {
-            record.setId(createId("TaskFireLog"));
+        if (record.getId() == null) {
             logMapper.insert(record);
         } else {
             logMapper.updateById(record);
@@ -88,14 +84,14 @@ public class SchedulerService extends BaseProviderImpl<TaskGroup> {
     }
 
     public Page<TaskGroup> queryGroup(Map<String, Object> params) {
-        Page<String> ids = getPage(params);
+        Page<Long> ids = getPage(params);
         ids.setRecords(mapper.selectIdByMap(ids, params));
 
         Page<TaskGroup> page = new Page<TaskGroup>(ids.getCurrent(), ids.getSize());
         page.setTotal(ids.getTotal());
         if (ids != null) {
             List<TaskGroup> records = InstanceUtil.newArrayList();
-            for (String id : ids.getRecords()) {
+            for (Long id : ids.getRecords()) {
                 records.add(InstanceUtil.getBean(getClass()).getGroupById(id));
             }
             page.setRecords(records);
@@ -104,13 +100,13 @@ public class SchedulerService extends BaseProviderImpl<TaskGroup> {
     }
 
     public Page<TaskSchedulerBean> queryScheduler(Map<String, Object> params) {
-        Page<String> ids = getPage(params);
+        Page<Long> ids = getPage(params);
         ids.setRecords(taskSchedulerMapper.selectIdByMap(ids, params));
         Page<TaskSchedulerBean> page = new Page<TaskSchedulerBean>(ids.getCurrent(), ids.getSize());
         page.setTotal(ids.getTotal());
         if (ids != null) {
             List<TaskSchedulerBean> records = InstanceUtil.newArrayList();
-            for (String id : ids.getRecords()) {
+            for (Long id : ids.getRecords()) {
                 TaskScheduler taskScheduler = InstanceUtil.getBean(getClass()).getSchedulerById(id);
                 TaskSchedulerBean bean = InstanceUtil.to(taskScheduler, TaskSchedulerBean.class);
                 TaskGroup taskGroup = InstanceUtil.getBean(getClass()).getGroupById(bean.getGroupId());
@@ -124,13 +120,13 @@ public class SchedulerService extends BaseProviderImpl<TaskGroup> {
     }
 
     public Page<TaskFireLog> queryLog(Map<String, Object> params) {
-        Page<String> ids = getPage(params);
+        Page<Long> ids = getPage(params);
         ids.setRecords(logMapper.selectIdByMap(ids, params));
         Page<TaskFireLog> page = new Page<TaskFireLog>(ids.getCurrent(), ids.getSize());
         page.setTotal(ids.getTotal());
         if (ids != null) {
             List<TaskFireLog> records = InstanceUtil.newArrayList();
-            for (String id : ids.getRecords()) {
+            for (Long id : ids.getRecords()) {
                 records.add(InstanceUtil.getBean(getClass()).getFireLogById(id));
             }
             page.setRecords(records);

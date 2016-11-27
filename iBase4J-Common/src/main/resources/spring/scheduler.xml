@@ -2,11 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:c="http://www.springframework.org/schema/c" 
-	xmlns:idubbo="http://code.alibabatech.com/schema/idubbo" 
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://code.alibabatech.com/schema/idubbo
-		http://code.alibabatech.com/schema/idubbo/idubbo.xsd">
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<bean id="schedulerFactoryBean"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -17,25 +14,22 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="schedulerManager" class="org.ibase4j.core.support.scheduler.manager.SchedulerManagerImpl">
+	<bean id="schedulerManager" class="org.ibase4j.core.support.scheduler.SchedulerManager">
 		<property name="scheduler" ref="schedulerFactoryBean" />
 		<property name="triggerLoaders">
 			<list>
 				<!--加载器类型 -->
-				<bean class="org.ibase4j.core.support.scheduler.manager.TriggerLoader"
+				<bean class="org.ibase4j.core.support.scheduler.TriggerLoader"
 					c:jobClass="org.ibase4j.core.support.scheduler.job.LocalJob" />
-				<bean class="org.ibase4j.core.support.scheduler.manager.TriggerLoader"
+				<bean class="org.ibase4j.core.support.scheduler.TriggerLoader"
 					c:jobClass="org.ibase4j.core.support.scheduler.job.DubboJob" />
 			</list>
 		</property>
 		<property name="jobListeners">
 			<list>
 				<!--日志监控类型 -->
-				<bean class="org.ibase4j.core.support.scheduler.manager.JobListener" />
+				<bean class="org.ibase4j.core.support.scheduler.JobListener" />
 			</list>
 		</property>
 	</bean>
-	<!-- 调度管理 -->
-	<bean id="scheduleProvider" class="org.ibase4j.core.support.scheduler.provider.SchedulerProviderImpl" />
-	<idubbo:service interface="org.ibase4j.core.provider.scheduler.SchedulerProvider" ref="scheduleProvider" />
 </beans>

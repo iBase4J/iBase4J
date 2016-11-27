@@ -4,13 +4,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.JedisUtil;
 import org.ibase4j.core.util.PropertiesUtil;
+import org.ibase4j.core.util.RedisUtil;
 import org.ibase4j.dao.sys.SysSessionMapper;
 import org.ibase4j.model.sys.SysSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +34,11 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
     @Transactional
     public SysSession update(SysSession record) {
         if (record.getId() == null) {
-            record.setUpdateBy(record.getAccount());
             record.setUpdateTime(new Date());
-            String id = sessionMapper.queryBySessionId(record.getSessionId());
-            if (StringUtils.isNotBlank(id)) {
-                record.setId(id);
+            Long id = sessionMapper.queryBySessionId(record.getSessionId());
+            if (id != null) {
                 mapper.updateById(record);
             } else {
-                record.setId(createId("SysSession"));
-                record.setCreateBy(record.getAccount());
                 record.setCreateTime(new Date());
                 mapper.insert(record);
             }
@@ -54,7 +49,7 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
     }
 
     @CacheEvict
-    public void delete(final String id) {
+    public void delete(final Long id) {
         mapper.deleteById(id);
     }
 
@@ -64,7 +59,7 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
     }
 
     public Page<SysSession> query(Map<String, Object> params) {
-        Page<String> page = this.getPage(params);
+        Page<Long> page = this.getPage(params);
         page.setRecords(mapper.selectIdByMap(page, params));
         return getPage(page);
     }
@@ -77,10 +72,12 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
     public void cleanExpiredSessions() {
         String key = "spring:session:" + PropertiesUtil.getString("session.redis.namespace") + ":sessions:expires:";
         Map<String, Object> columnMap = InstanceUtil.newHashMap();
-        List<String> ids = mapper.selectIdByMap(new RowBounds(), columnMap);
+        List<Long> ids = mapper.selectIdByMap(new RowBounds(), columnMap);
         List<SysSession> sessions = getList(ids);
         for (SysSession sysSession : sessions) {
-            if (!JedisUtil.exists(key + sysSession.getSessionId())) {
+            logger.info("检查SESSION : {}", sysSession.getSessionId());
+            if (!RedisUtil.exists(key + sysSession.getSessionId())) {
+                logger.info("移除SESSION : {}", sysSession.getSessionId());
                 mapper.deleteById(sysSession.getId());
             }
         }

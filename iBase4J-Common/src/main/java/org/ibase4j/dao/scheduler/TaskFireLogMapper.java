@@ -10,5 +10,5 @@ import org.ibase4j.model.scheduler.TaskFireLog;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 public interface TaskFireLogMapper extends BaseMapper<TaskFireLog> {
-    List<String> selectIdByMap(RowBounds rowBounds, @Param("cm") Map<String, Object> params);
+    List<Long> selectIdByMap(RowBounds rowBounds, @Param("cm") Map<String, Object> params);
 }

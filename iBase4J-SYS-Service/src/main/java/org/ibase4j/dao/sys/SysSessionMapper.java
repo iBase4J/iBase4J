@@ -9,7 +9,7 @@ public interface SysSessionMapper extends BaseMapper<SysSession> {
 
     void deleteBySessionId(String sessionId);
 
-    String queryBySessionId(String sessionId);
+    Long queryBySessionId(String sessionId);
 
     List<String> querySessionIdByAccount(String account);
 }

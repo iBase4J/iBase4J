@@ -17,7 +17,7 @@ public interface ISysAuthorizeProvider extends BaseProvider<SysMenu> {
 
     public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus);
 
-    public List<SysMenuBean> queryAuthorizeByUserId(String userId);
+    public List<SysMenuBean> queryAuthorizeByUserId(Long userId);
 
-    public List<String> queryPermissionByUserId(String userId);
+    public List<String> queryPermissionByUserId(Long userId);
 }

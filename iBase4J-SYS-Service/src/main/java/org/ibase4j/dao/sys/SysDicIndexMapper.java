@@ -8,5 +8,5 @@ import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.model.sys.SysDicIndex;
 
 public interface SysDicIndexMapper extends BaseMapper<SysDicIndex> {
-    List<String> selectIdByMap(@Param("cm") Map<String, Object> params);
+    List<Long> selectIdByMap(@Param("cm") Map<String, Object> params);
 }

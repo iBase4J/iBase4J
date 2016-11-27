@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 public class SysMenu extends BaseModel {
     private String menuName;
     private Boolean menuType;
-    private String parentId;
+    private Long parentId;
 
     @TableField("iconcls_")
     private String iconcls;
@@ -58,15 +58,15 @@ public class SysMenu extends BaseModel {
     /**
      * @return the value of sys_menu.parent_id
      */
-    public String getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
     /**
      * @param parentId the value for sys_menu.parent_id
      */
-    public void setParentId(String parentId) {
-        this.parentId = parentId == null ? null : parentId.trim();
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
     /**

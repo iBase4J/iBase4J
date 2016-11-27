@@ -49,7 +49,7 @@ public class SysDeptController extends BaseController {
 	@ApiOperation(value = "部门详情")
 	@RequiresPermissions("sys.dept.read")
 	@RequestMapping(value = "/read/detail")
-	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
+	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Long id) {
 		SysDept record = sysDeptService.queryById(id);
 		return setSuccessModelMap(modelMap, record);
 	}
@@ -79,7 +79,7 @@ public class SysDeptController extends BaseController {
 	@RequiresPermissions("sys.dept.delete")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) String id) {
+			@RequestParam(value = "id", required = false) Long id) {
 		sysDeptService.delete(id);
 		return setSuccessModelMap(modelMap);
 	}

@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.scheduler.manager;
+package org.ibase4j.core.support.scheduler;
 
 import java.sql.Timestamp;
 import java.util.concurrent.ExecutorService;
@@ -7,10 +7,9 @@ import java.util.concurrent.Executors;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ibase4j.core.Constants.JOBSTATE;
 import org.ibase4j.core.support.email.Email;
 import org.ibase4j.core.support.mq.QueueSender;
-import org.ibase4j.core.support.scheduler.Constants;
-import org.ibase4j.core.support.scheduler.service.SchedulerService;
 import org.ibase4j.core.util.NativeUtil;
 import org.ibase4j.model.scheduler.TaskFireLog;
 import org.quartz.JobDataMap;
@@ -35,6 +34,7 @@ public class JobListener implements org.quartz.JobListener {
     private QueueSender queueSender;
     // 线程池
     private ExecutorService executorService = Executors.newCachedThreadPool();
+    private String JOB_LOG = "jobLog";
 
     public String getName() {
         return "taskListener";
@@ -61,18 +61,18 @@ public class JobListener implements org.quartz.JobListener {
         log.setStartTime(context.getFireTime());
         log.setGroupName(groupName);
         log.setTaskName(jobName);
-        log.setStatus(Constants.INIT_STATS);
+        log.setStatus(JOBSTATE.INIT_STATS);
         log.setServerHost(NativeUtil.getHostName());
         log.setServerDuid(NativeUtil.getDUID());
         schedulerService.updateLog(log);
-        jobDataMap.put(Constants.JOB_LOG, log);
+        jobDataMap.put(JOB_LOG, log);
     }
 
     // 任务结束后
     public void jobWasExecuted(final JobExecutionContext context, JobExecutionException exp) {
         Timestamp end = new Timestamp(System.currentTimeMillis());
         final JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
-        if (Constants.ERROR_STATS.equals(jobDataMap.get("taskStatus"))) {
+        if (JOBSTATE.ERROR_STATS.equals(jobDataMap.get("taskStatus"))) {
             return;
         }
         String groupName = context.getJobDetail().getKey().getGroup();
@@ -81,7 +81,7 @@ public class JobListener implements org.quartz.JobListener {
             logger.info("定时任务执行结束：{}.{}", groupName, jobName);
         }
         // 更新任务执行状态
-        final TaskFireLog log = (TaskFireLog)jobDataMap.get(Constants.JOB_LOG);
+        final TaskFireLog log = (TaskFireLog)jobDataMap.get(JOB_LOG);
         if (log != null) {
             log.setEndTime(end);
             if (exp != null) {
@@ -90,11 +90,11 @@ public class JobListener implements org.quartz.JobListener {
                     String topic = String.format("调度[%s.%s]发生异常", groupName, jobName);
                     sendEmail(new Email(contactEmail, topic, exp.getMessage()));
                 }
-                log.setStatus(Constants.ERROR_STATS);
+                log.setStatus(JOBSTATE.ERROR_STATS);
                 log.setFireInfo(exp.getMessage());
             } else {
-                if (log.getStatus().equals(Constants.INIT_STATS)) {
-                    log.setStatus(Constants.SUCCESS_STATS);
+                if (log.getStatus().equals(JOBSTATE.INIT_STATS)) {
+                    log.setStatus(JOBSTATE.SUCCESS_STATS);
                 }
             }
         }

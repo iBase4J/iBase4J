@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 @TableName("sys_dic")
 @SuppressWarnings("serial")
 public class SysDic extends BaseModel {
-    private String indexId;
+    private Long indexId;
     @TableField("code_")
     private String code;
     private String codeText;
@@ -19,15 +19,15 @@ public class SysDic extends BaseModel {
     /**
      * @return the value of sys_dic.index_id
      */
-    public String getIndexId() {
+    public Long getIndexId() {
         return indexId;
     }
 
     /**
      * @param indexId the value for sys_dic.index_id
      */
-    public void setIndexId(String indexId) {
-        this.indexId = indexId == null ? null : indexId.trim();
+    public void setIndexId(Long indexId) {
+        this.indexId = indexId;
     }
 
     /**

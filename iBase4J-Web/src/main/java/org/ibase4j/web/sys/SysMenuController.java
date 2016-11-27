@@ -50,7 +50,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation(value = "菜单详情")
     @RequiresPermissions("sys.menu.read")
     @RequestMapping(value = "/read/detail")
-    public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
+    public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Long id) {
         SysMenu record = sysMenuService.queryById(id);
         return setSuccessModelMap(modelMap, record);
     }
@@ -80,7 +80,7 @@ public class SysMenuController extends BaseController {
     @RequiresPermissions("sys.menu.delete")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public Object delete(HttpServletRequest request, ModelMap modelMap,
-        @RequestParam(value = "id", required = false) String id) {
+        @RequestParam(value = "id", required = false) Long id) {
         sysMenuService.delete(id);
         return setSuccessModelMap(modelMap);
     }
