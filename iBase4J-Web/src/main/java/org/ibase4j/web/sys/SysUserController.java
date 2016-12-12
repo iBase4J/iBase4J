@@ -53,8 +53,8 @@ public class SysUserController extends BaseController {
         SysUser sysUser = Request2ModelUtil.covert(SysUser.class, request);
         if (StringUtils.isNotBlank(sysUser.getAvatar()) && !sysUser.getAvatar().contains("/")) {
             String filePath = UploadUtil.getUploadDir(request) + sysUser.getAvatar();
-            //String avatar = UploadUtil.remove2DFS("sysUser", "user" + sysUser.getId(), filePath).getRemotePath();
-            String avatar = UploadUtil.remove2Sftp(filePath, "user" + sysUser.getId());
+            //String avatar = UploadUtil.remove2DFS("sysUser", "user" + sysUser.getId_(), filePath).getRemotePath();
+            String avatar = UploadUtil.remove2Sftp(filePath, "user" + sysUser.getId_());
             sysUser.setAvatar(avatar);
         }
         sysUserService.updateUserInfo(sysUser);

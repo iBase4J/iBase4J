@@ -197,7 +197,7 @@ public class SysCatalog extends BaseModel {
             return false;
         }
         SysCatalog other = (SysCatalog)that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+        return (this.getId_() == null ? other.getId_() == null : this.getId_().equals(other.getId_()))
             && (this.getCascadeId() == null ? other.getCascadeId() == null
                 : this.getCascadeId().equals(other.getCascadeId()))
             && (this.getRootKey() == null ? other.getRootKey() == null : this.getRootKey().equals(other.getRootKey()))
@@ -231,7 +231,7 @@ public class SysCatalog extends BaseModel {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getId_() == null) ? 0 : getId_().hashCode());
         result = prime * result + ((getCascadeId() == null) ? 0 : getCascadeId().hashCode());
         result = prime * result + ((getRootKey() == null) ? 0 : getRootKey().hashCode());
         result = prime * result + ((getRootName() == null) ? 0 : getRootName().hashCode());

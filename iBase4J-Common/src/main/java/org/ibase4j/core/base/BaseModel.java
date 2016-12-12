@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 @SuppressWarnings("serial")
 public class BaseModel implements Serializable {
     @TableId(value = "id_", type = IdType.ID_WORKER)
-    private Long id;
+    private Long id_;
     @TableField("enable_")
     private Boolean enable;
     @TableField("remark_")
@@ -23,16 +23,24 @@ public class BaseModel implements Serializable {
     /**
      * @return the id
      */
-    public Long getId() {
-        return id;
+    public Long getId_() {
+        return id_;
+    }
+    
+     String getId() {
+        return id_ == null ? "" : id_.toString();
     }
 
     /**
      * @param id
      *            the id to set
      */
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_(Long id) {
+        this.id_ = id;
+    }
+    
+    public void setId(String id) {
+        this.id_ = id == null ? null : Long.parseLong(id);
     }
 
     /**

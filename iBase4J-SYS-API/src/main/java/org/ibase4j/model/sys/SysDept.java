@@ -100,7 +100,7 @@ public class SysDept extends BaseModel {
             return false;
         }
         SysDept other = (SysDept)that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+        return (this.getId_() == null ? other.getId_() == null : this.getId_().equals(other.getId_()))
             && (this.getDeptName() == null ? other.getDeptName() == null
                 : this.getDeptName().equals(other.getDeptName()))
             && (this.getParentId() == null ? other.getParentId() == null
@@ -125,7 +125,7 @@ public class SysDept extends BaseModel {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getId_() == null) ? 0 : getId_().hashCode());
         result = prime * result + ((getDeptName() == null) ? 0 : getDeptName().hashCode());
         result = prime * result + ((getParentId() == null) ? 0 : getParentId().hashCode());
         result = prime * result + ((getSortNo() == null) ? 0 : getSortNo().hashCode());

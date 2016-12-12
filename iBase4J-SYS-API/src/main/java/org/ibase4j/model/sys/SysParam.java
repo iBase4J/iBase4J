@@ -82,7 +82,7 @@ public class SysParam extends BaseModel {
             return false;
         }
         SysParam other = (SysParam) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+        return (this.getId_() == null ? other.getId_() == null : this.getId_().equals(other.getId_()))
             && (this.getParamKey() == null ? other.getParamKey() == null : this.getParamKey().equals(other.getParamKey()))
             && (this.getParamValue() == null ? other.getParamValue() == null : this.getParamValue().equals(other.getParamValue()))
             && (this.getCatalogId() == null ? other.getCatalogId() == null : this.getCatalogId().equals(other.getCatalogId()))
@@ -100,7 +100,7 @@ public class SysParam extends BaseModel {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getId_() == null) ? 0 : getId_().hashCode());
         result = prime * result + ((getParamKey() == null) ? 0 : getParamKey().hashCode());
         result = prime * result + ((getParamValue() == null) ? 0 : getParamValue().hashCode());
         result = prime * result + ((getCatalogId() == null) ? 0 : getCatalogId().hashCode());

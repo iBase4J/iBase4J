@@ -80,7 +80,7 @@ public class Realm extends AuthorizingRealm {
 				sb.append(token.getPassword()[i]);
 			}
 			if (user.getPassword().equals(sb.toString())) {
-				WebUtil.saveCurrentUser(user.getId());
+				WebUtil.saveCurrentUser(user.getId_());
 				saveSession(user.getAccount());
 				AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
 						user.getUserName());

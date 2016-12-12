@@ -59,6 +59,7 @@
 		<logger name="org.apache.activemq" level="INFO" />
 		<logger name="org.springframework" level="INFO" />
 		<logger name="org.apache.zookeeper" level="WARN" />
+		<logger name="org.springframework.scheduling" level="WARN" />
 		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
 		<AsyncLogger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
 			<appender-ref ref="Console" />

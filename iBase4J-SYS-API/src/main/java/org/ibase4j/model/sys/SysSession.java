@@ -105,7 +105,7 @@ public class SysSession extends BaseModel {
             return false;
         }
         SysSession other = (SysSession)that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+        return (this.getId_() == null ? other.getId_() == null : this.getId_().equals(other.getId_()))
             && (this.getSessionId() == null ? other.getSessionId() == null
                 : this.getSessionId().equals(other.getSessionId()))
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
@@ -130,7 +130,7 @@ public class SysSession extends BaseModel {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getId_() == null) ? 0 : getId_().hashCode());
         result = prime * result + ((getSessionId() == null) ? 0 : getSessionId().hashCode());
         result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
         result = prime * result + ((getIp() == null) ? 0 : getIp().hashCode());

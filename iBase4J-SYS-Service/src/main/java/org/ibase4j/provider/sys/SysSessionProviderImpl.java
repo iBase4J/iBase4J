@@ -33,7 +33,7 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
     @CachePut
     @Transactional
     public SysSession update(SysSession record) {
-        if (record.getId() == null) {
+        if (record.getId_() == null) {
             record.setUpdateTime(new Date());
             Long id = sessionMapper.queryBySessionId(record.getSessionId());
             if (id != null) {
@@ -78,7 +78,7 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
             logger.info("检查SESSION : {}", sysSession.getSessionId());
             if (!RedisUtil.exists(key + sysSession.getSessionId())) {
                 logger.info("移除SESSION : {}", sysSession.getSessionId());
-                mapper.deleteById(sysSession.getId());
+                mapper.deleteById(sysSession.getId_());
             }
         }
     }
