@@ -3,9 +3,9 @@ package org.ibase4j.core.base;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.baomidou.mybatisplus.annotations.IdType;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.IdType;
 
 @SuppressWarnings("serial")
 public class BaseModel implements Serializable {
@@ -25,6 +25,10 @@ public class BaseModel implements Serializable {
      */
     public Long getId() {
         return id;
+    }
+    
+    public String getId_() {
+        return id == null ? "" : id.toString();
     }
 
     /**
