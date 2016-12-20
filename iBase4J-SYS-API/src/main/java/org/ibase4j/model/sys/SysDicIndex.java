@@ -85,7 +85,7 @@ public class SysDicIndex extends BaseModel {
             return false;
         }
         SysDicIndex other = (SysDicIndex)that;
-        return (this.getId_() == null ? other.getId_() == null : this.getId_().equals(other.getId_()))
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getCatalogId() == null ? other.getCatalogId() == null
                 : this.getCatalogId().equals(other.getCatalogId()))
             && (this.getKeyValue() == null ? other.getKeyValue() == null : this.getKeyValue().equals(other.getKeyValue()))
@@ -108,7 +108,7 @@ public class SysDicIndex extends BaseModel {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId_() == null) ? 0 : getId_().hashCode());
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getCatalogId() == null) ? 0 : getCatalogId().hashCode());
         result = prime * result + ((getKeyValue() == null) ? 0 : getKeyValue().hashCode());
         result = prime * result + ((getKeyName() == null) ? 0 : getKeyName().hashCode());

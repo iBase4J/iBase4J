@@ -84,7 +84,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 		for (SysMenuBean sysMenuBean : menus) {
 			if (sysMenuBean.getParentId() == 0) {
 				sysMenuBean.setLeaf(0);
-				sysMenuBean.setMenuBeans(getChildMenu(map, sysMenuBean.getId_()));
+				sysMenuBean.setMenuBeans(getChildMenu(map, sysMenuBean.getId()));
 				result.add(sysMenuBean);
 			}
 		}
@@ -96,7 +96,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 		List<SysMenuBean> menus = map.get(id);
 		if (menus != null) {
 			for (SysMenuBean sysMenuBean : menus) {
-				sysMenuBean.setMenuBeans(getChildMenu(map, sysMenuBean.getId_()));
+				sysMenuBean.setMenuBeans(getChildMenu(map, sysMenuBean.getId()));
 			}
 		}
 		return menus;

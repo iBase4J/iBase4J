@@ -86,7 +86,7 @@ public class SysUserThirdparty extends BaseModel {
             return false;
         }
         SysUserThirdparty other = (SysUserThirdparty) that;
-        return (this.getId_() == null ? other.getId_() == null : this.getId_().equals(other.getId_()))
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getProvider() == null ? other.getProvider() == null : this.getProvider().equals(other.getProvider()))
             && (this.getOpenId() == null ? other.getOpenId() == null : this.getOpenId().equals(other.getOpenId()))
@@ -104,7 +104,7 @@ public class SysUserThirdparty extends BaseModel {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId_() == null) ? 0 : getId_().hashCode());
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getProvider() == null) ? 0 : getProvider().hashCode());
         result = prime * result + ((getOpenId() == null) ? 0 : getOpenId().hashCode());

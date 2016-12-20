@@ -39,7 +39,7 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements ISys
     @CachePut(value = "sysDicIndex")
     public void updateDicIndex(SysDicIndex record) {
         record.setUpdateTime(new Date());
-        if (record.getId_() == null) {
+        if (record.getId() == null) {
             record.setCreateTime(new Date());
             dicIndexMapper.insert(record);
         } else {
@@ -51,7 +51,7 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements ISys
     @CachePut(value = "sysDic")
     public void updateDic(SysDic record) {
         record.setUpdateTime(new Date());
-        if (record.getId_() == null) {
+        if (record.getId() == null) {
             record.setCreateTime(new Date());
             dicMapper.insert(record);
         } else {

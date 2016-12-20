@@ -88,7 +88,7 @@ public class SchedulerService {
      * @param record
      */
     public void updateGroup(TaskGroup record) {
-        Assert.notNull(record.getId_(), "ID");
+        Assert.notNull(record.getId(), "ID");
         schedulerProvider.updateGroup(record);
     }
 
@@ -112,7 +112,7 @@ public class SchedulerService {
      * @param record
      */
     public void updateScheduler(TaskScheduler record) {
-        Assert.notNull(record.getId_(), "ID");
+        Assert.notNull(record.getId(), "ID");
         schedulerProvider.updateScheduler(record);
     }
 }

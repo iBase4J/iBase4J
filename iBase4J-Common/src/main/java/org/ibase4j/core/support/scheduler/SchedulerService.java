@@ -48,7 +48,7 @@ public class SchedulerService extends BaseProviderImpl<TaskGroup> {
     @CachePut("taskGroup")
     public TaskGroup updateGroup(TaskGroup record) {
         record.setEnable(true);
-        if (record.getId_() == null) {
+        if (record.getId() == null) {
             record.setCreateTime(new Date());
             mapper.insert(record);
         } else {
@@ -62,7 +62,7 @@ public class SchedulerService extends BaseProviderImpl<TaskGroup> {
     @CachePut("taskScheduler")
     public TaskScheduler updateScheduler(TaskScheduler record) {
         record.setEnable(true);
-        if (record.getId_() == null) {
+        if (record.getId() == null) {
             record.setCreateTime(new Date());
             taskSchedulerMapper.insert(record);
         } else {

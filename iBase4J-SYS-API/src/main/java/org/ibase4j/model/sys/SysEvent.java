@@ -156,7 +156,7 @@ public class SysEvent extends BaseModel {
             return false;
         }
         SysEvent other = (SysEvent)that;
-        return (this.getId_() == null ? other.getId_() == null : this.getId_().equals(other.getId_()))
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
             && (this.getRequestUri() == null ? other.getRequestUri() == null
                 : this.getRequestUri().equals(other.getRequestUri()))
@@ -186,7 +186,7 @@ public class SysEvent extends BaseModel {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId_() == null) ? 0 : getId_().hashCode());
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
         result = prime * result + ((getRequestUri() == null) ? 0 : getRequestUri().hashCode());
         result = prime * result + ((getParameters() == null) ? 0 : getParameters().hashCode());

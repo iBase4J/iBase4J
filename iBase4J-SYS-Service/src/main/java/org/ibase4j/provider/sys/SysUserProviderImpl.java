@@ -91,9 +91,9 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
         thirdparty.setCreateTime(new Date());
 
         this.update(sysUser);
-        sysUser.setAccount(thirdparty.getProvider() + sysUser.getId_());
+        sysUser.setAccount(thirdparty.getProvider() + sysUser.getId());
         this.update(sysUser);
-        thirdparty.setUserId(sysUser.getId_());
+        thirdparty.setUserId(sysUser.getId());
         thirdpartyMapper.insert(thirdparty);
         return sysUser;
     }

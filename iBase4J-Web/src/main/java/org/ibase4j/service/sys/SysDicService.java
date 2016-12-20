@@ -32,7 +32,7 @@ public class SysDicService {
     }
 
     public void updateDicIndex(SysDicIndex record) {
-        Assert.notNull(record.getId_(), Resources.getMessage("ID_IS_NULL"));
+        Assert.notNull(record.getId(), Resources.getMessage("ID_IS_NULL"));
         record.setUpdateBy(WebUtil.getCurrentUser());
         provider.updateDicIndex(record);
     }
@@ -48,7 +48,7 @@ public class SysDicService {
     }
 
     public void updateDic(SysDic record) {
-        Assert.notNull(record.getId_(), Resources.getMessage("ID_IS_NULL"));
+        Assert.notNull(record.getId(), Resources.getMessage("ID_IS_NULL"));
         record.setUpdateBy(WebUtil.getCurrentUser());
         provider.updateDic(record);
     }

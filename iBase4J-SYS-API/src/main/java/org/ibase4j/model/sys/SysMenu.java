@@ -188,7 +188,7 @@ public class SysMenu extends BaseModel {
             return false;
         }
         SysMenu other = (SysMenu) that;
-        return (this.getId_() == null ? other.getId_() == null : this.getId_().equals(other.getId_()))
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getMenuName() == null ? other.getMenuName() == null : this.getMenuName().equals(other.getMenuName()))
             && (this.getMenuType() == null ? other.getMenuType() == null : this.getMenuType().equals(other.getMenuType()))
             && (this.getParentId() == null ? other.getParentId() == null : this.getParentId().equals(other.getParentId()))
@@ -212,7 +212,7 @@ public class SysMenu extends BaseModel {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId_() == null) ? 0 : getId_().hashCode());
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getMenuName() == null) ? 0 : getMenuName().hashCode());
         result = prime * result + ((getMenuType() == null) ? 0 : getMenuType().hashCode());
         result = prime * result + ((getParentId() == null) ? 0 : getParentId().hashCode());

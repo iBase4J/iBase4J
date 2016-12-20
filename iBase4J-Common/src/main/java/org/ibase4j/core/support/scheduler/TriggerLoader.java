@@ -44,7 +44,7 @@ public class TriggerLoader {
             TaskScheduler taskScheduler = schedulerService.getSchedulerById(id);
             TaskGroup taskGroup = schedulerService.getGroupById(taskScheduler.getGroupId());
             JobDataMap jobDataMap = new JobDataMap();
-            jobDataMap.put("id", taskScheduler.getId_());
+            jobDataMap.put("id", taskScheduler.getId());
             jobDataMap.put("enable", taskScheduler.getEnable());
             jobDataMap.put("contactEmail", taskScheduler.getContactEmail());
             jobDataMap.put("desc", taskGroup.getGroupDesc() + ":" + taskScheduler.getTaskDesc());

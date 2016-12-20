@@ -68,7 +68,7 @@ public class TaskGroup extends BaseModel {
             return false;
         }
         TaskGroup other = (TaskGroup) that;
-        return (this.getId_() == null ? other.getId_() == null : this.getId_().equals(other.getId_()))
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getGroupName() == null ? other.getGroupName() == null : this.getGroupName().equals(other.getGroupName()))
             && (this.getGroupDesc() == null ? other.getGroupDesc() == null : this.getGroupDesc().equals(other.getGroupDesc()))
             && (this.getEnable() == null ? other.getEnable() == null : this.getEnable().equals(other.getEnable()))
@@ -85,7 +85,7 @@ public class TaskGroup extends BaseModel {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId_() == null) ? 0 : getId_().hashCode());
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getGroupName() == null) ? 0 : getGroupName().hashCode());
         result = prime * result + ((getGroupDesc() == null) ? 0 : getGroupDesc().hashCode());
         result = prime * result + ((getEnable() == null) ? 0 : getEnable().hashCode());

@@ -37,7 +37,7 @@ public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements IS
         Page<SysRoleBean> pageInfo = getPage(idPage, SysRoleBean.class);
         // 权限信息
         for (SysRoleBean bean : pageInfo.getRecords()) {
-            List<String> permissions = sysRoleMenuMapper.queryPermission(bean.getId_());
+            List<String> permissions = sysRoleMenuMapper.queryPermission(bean.getId());
             for (String permission : permissions) {
                 if (StringUtils.isBlank(bean.getPermission())) {
                     bean.setPermission(permission);
