@@ -17,4 +17,10 @@
 			</list>
 		</property>
 	</bean>
+	 <!-- 设置Cookie domain 和 名称 -->
+    <!-- <bean id="defaultCookieSerializer" class="org.springframework.session.web.http.DefaultCookieSerializer">
+        <property name="domainName" value=".example.com"/>
+        <property name="cookieName" value="JSESSIONID"/>
+        <property name="domainNamePattern" value="^.+?\\.(\\w+\\.[a-z]+)$"/>
+    </bean> -->
 </beans>
