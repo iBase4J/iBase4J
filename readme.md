@@ -44,10 +44,11 @@ iBase4J使用 [Apache License 2.0][] 协议.
 ## 建议
 可以先看一下拆分前的版本，地址：[iBase4J-old][].
 
-## 加入QQ群[538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
+## 加入QQ群[538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3) [498085331](http://shang.qq.com/wpa/qunwpa?idkey=0a7344955bb9b9f6e366d34be42c02709c933f308ab435b1a52ac17d40efdff5)
 交流技术问题，下载项目文档和一键启动依赖服务工具。
 
-![QQ群](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1464169485871.png "QQ群")
+![QQ群](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1464169485871.png "QQ群一")
+![QQ群](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1482378175294.png "QQ群二")
 
 ## UI地址
 [iBase4J-UI](http://git.oschina.net/iBase4J/iBase4J-UI)
