@@ -57,10 +57,9 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         if (ids != null) {
             Page<T> page = new Page<T>(ids.getCurrent(), ids.getSize());
             page.setTotal(ids.getTotal());
-            BaseProviderImpl<T> provider = getProvider();
             List<T> records = InstanceUtil.newArrayList();
             for (Long id : ids.getRecords()) {
-                records.add(provider.queryById(id));
+                records.add(this.queryById(id));
             }
             page.setRecords(records);
             return page;
@@ -73,10 +72,9 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         if (ids != null) {
             Page<K> page = new Page<K>(ids.getCurrent(), ids.getSize());
             page.setTotal(ids.getTotal());
-            BaseProviderImpl<T> provider = getProvider();
             List<K> records = InstanceUtil.newArrayList();
             for (Long id : ids.getRecords()) {
-                T t = provider.queryById(id);
+                T t = this.queryById(id);
                 K k = InstanceUtil.to(t, cls);
                 records.add(k);
             }
@@ -91,7 +89,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         List<T> list = InstanceUtil.newArrayList();
         if (ids != null) {
             for (Long id : ids) {
-                list.add(getProvider().queryById(id));
+                list.add(this.queryById(id));
             }
         }
         return list;
@@ -102,7 +100,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         List<K> list = InstanceUtil.newArrayList();
         if (ids != null) {
             for (Long id : ids) {
-                T t = getProvider().queryById(id);
+                T t = this.queryById(id);
                 K k = InstanceUtil.to(t, cls);
                 list.add(k);
             }
@@ -113,7 +111,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
     @Transactional
     public void delete(Long id, Long userId) {
         try {
-            T record = queryById(id);
+            T record = this.queryById(id);
             record.setEnable(false);
             record.setUpdateTime(new Date());
             record.setUpdateBy(userId);
