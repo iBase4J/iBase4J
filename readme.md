@@ -25,7 +25,7 @@
     ● 核心框架：Spring Framework 4.3.0 + Dubbo 2.5.3
     ● 安全框架：Apache Shiro 1.2
     ● 任务调度：Spring + Quartz
-    ● 持久层框架：MyBatis 3.4 + MyBatis-Plus 1.4.6
+    ● 持久层框架：MyBatis 3.4 + MyBatis-Plus 2.0
     ● 数据库连接池：Alibaba Druid 1.0
     ● 缓存框架：Redis
     ● 会话管理：Spring-Session 1.2
