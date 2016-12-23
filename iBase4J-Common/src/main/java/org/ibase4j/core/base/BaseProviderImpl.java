@@ -47,11 +47,6 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
         return page;
     }
 
-    @SuppressWarnings("unchecked")
-    private BaseProviderImpl<T> getProvider() {
-        return InstanceUtil.getBean(getClass());
-    }
-
     /** 根据Id查询(默认类型T) */
     public Page<T> getPage(Page<Long> ids) {
         if (ids != null) {
