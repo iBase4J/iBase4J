@@ -27,10 +27,6 @@ public class BaseModel implements Serializable {
         return id;
     }
     
-    public String getId_() {
-        return id == null ? "" : id.toString();
-    }
-
     /**
      * @param id
      *            the id to set
