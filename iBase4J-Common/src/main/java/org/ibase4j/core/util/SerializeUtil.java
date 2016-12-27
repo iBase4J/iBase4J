@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * 序列化辅助类
  * 
@@ -16,6 +19,7 @@ import java.io.ObjectOutputStream;
 public final class SerializeUtil {
     private SerializeUtil() {
     }
+    private static final Logger logger = LogManager.getLogger();
 
     /**
      * 序列化
@@ -34,9 +38,18 @@ public final class SerializeUtil {
             throw new RuntimeException(ex.getMessage(), ex);
         } finally {
             try {
-                oos.close();
-                baos.close();
+                if (oos != null) {
+                    oos.close();
+                }
             } catch (Exception e) {
+                logger.error(e);
+            }
+            try {
+                if (baos != null) {
+                    baos.close();
+                }
+            } catch (Exception e) {
+                logger.error(e);
             }
         }
     }
@@ -70,9 +83,18 @@ public final class SerializeUtil {
             throw new RuntimeException(ex.getMessage(), ex);
         } finally {
             try {
-                ois.close();
-                bais.close();
+                if (ois != null) {
+                    ois.close();
+                }
             } catch (Exception e) {
+                logger.error(e);
+            }
+            try {
+                if (bais != null) {
+                    bais.close();
+                }
+            } catch (Exception e) {
+                logger.error(e);
             }
         }
     }

@@ -93,7 +93,7 @@ public final class TypeParseUtil {
 		} else if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
 			return bol.toString();
 		} else if ("Integer".equalsIgnoreCase(type) || DataType.INTEGER.equalsIgnoreCase(type)) {
-			if (bol.booleanValue()) {
+			if (bol) {
 				return new Integer(1);
 			} else {
 				return new Integer(0);
@@ -180,14 +180,14 @@ public final class TypeParseUtil {
 		String fromType = "Integer";
 		Integer intgr = (Integer) value;
 		if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
-			return getNf(locale).format(intgr.longValue());
+			return getNf(locale).format(intgr.toString());
 		} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
-			return new Double(intgr.doubleValue());
+			return new Double(intgr.toString());
 		} else if ("Float".equalsIgnoreCase(type) || DataType.FLOAT.equalsIgnoreCase(type)) {
-			return new Float(intgr.floatValue());
+			return new Float(intgr.toString());
 		} else if ("BigDecimal".equalsIgnoreCase(type) || DataType.BIGDECIMAL.equalsIgnoreCase(type)) {
 			String str = intgr.toString();
-			BigDecimal retBig = new BigDecimal(intgr.doubleValue());
+			BigDecimal retBig = new BigDecimal(intgr.toString());
 			int iscale = str.indexOf(".");
 			int keylen = str.length();
 			if (iscale > -1) {
@@ -197,7 +197,7 @@ public final class TypeParseUtil {
 				return retBig.setScale(0, 5);
 			}
 		} else if ("Long".equalsIgnoreCase(type) || DataType.LONG.equalsIgnoreCase(type)) {
-			return new Long(intgr.longValue());
+			return new Long(intgr.toString());
 		} else if ("Integer".equalsIgnoreCase(type) || DataType.INTEGER.equalsIgnoreCase(type)) {
 			return value;
 		} else {
@@ -210,17 +210,17 @@ public final class TypeParseUtil {
 		String fromType = "Long";
 		Long lng = (Long) value;
 		if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
-			return getNf(locale).format(lng.longValue());
+			return getNf(locale).format(lng.toString());
 		} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
-			return new Double(lng.doubleValue());
+			return new Double(lng.toString());
 		} else if ("Float".equalsIgnoreCase(type) || DataType.FLOAT.equalsIgnoreCase(type)) {
-			return new Float(lng.floatValue());
+			return new Float(lng.toString());
 		} else if ("BigDecimal".equalsIgnoreCase(type) || DataType.BIGDECIMAL.equalsIgnoreCase(type)) {
 			return new BigDecimal(lng.toString());
 		} else if ("Long".equalsIgnoreCase(type) || DataType.LONG.equalsIgnoreCase(type)) {
 			return value;
 		} else if ("Integer".equalsIgnoreCase(type) || DataType.INTEGER.equalsIgnoreCase(type)) {
-			return new Integer(lng.intValue());
+			return new Integer(lng.toString());
 		} else if ("Date".equalsIgnoreCase(type) || DataType.DATE.equalsIgnoreCase(type)) {
 			return new java.util.Date(lng);
 		} else if ("java.sql.Date".equalsIgnoreCase(type)) {
@@ -238,17 +238,17 @@ public final class TypeParseUtil {
 		String fromType = "Float";
 		Float flt = (Float) value;
 		if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
-			return getNf(locale).format(flt.doubleValue());
+			return getNf(locale).format(flt.toString());
 		} else if ("BigDecimal".equalsIgnoreCase(type) || DataType.BIGDECIMAL.equalsIgnoreCase(type)) {
-			return new BigDecimal(flt.doubleValue());
+			return new BigDecimal(flt.toString());
 		} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
-			return new Double(flt.doubleValue());
+			return new Double(flt.toString());
 		} else if ("Float".equalsIgnoreCase(type) || DataType.FLOAT.equalsIgnoreCase(type)) {
 			return value;
 		} else if ("Long".equalsIgnoreCase(type) || DataType.LONG.equalsIgnoreCase(type)) {
-			return new Long(Math.round(flt.doubleValue()));
+			return new Long(flt.toString());
 		} else if ("Integer".equalsIgnoreCase(type) || DataType.INTEGER.equalsIgnoreCase(type)) {
-			return new Integer((int) Math.round(flt.doubleValue()));
+			return new Integer(flt.toString());
 		} else {
 			throw new DataParseException(String.format(support, fromType, type));
 		}
@@ -259,15 +259,15 @@ public final class TypeParseUtil {
 		String fromType = "Double";
 		Double dbl = (Double) value;
 		if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
-			return getNf(locale).format(dbl.doubleValue());
+			return getNf(locale).format(dbl.toString());
 		} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
 			return value;
 		} else if ("Float".equalsIgnoreCase(type) || DataType.FLOAT.equalsIgnoreCase(type)) {
-			return new Float(dbl.floatValue());
+			return new Float(dbl.toString());
 		} else if ("Long".equalsIgnoreCase(type) || DataType.LONG.equalsIgnoreCase(type)) {
-			return new Long(Math.round(dbl.doubleValue()));
+			return new Long(dbl.toString());
 		} else if ("Integer".equalsIgnoreCase(type) || DataType.INTEGER.equalsIgnoreCase(type)) {
-			return new Integer((int) Math.round(dbl.doubleValue()));
+			return new Integer(dbl.toString());
 		} else if ("BigDecimal".equalsIgnoreCase(type) || DataType.BIGDECIMAL.equalsIgnoreCase(type)) {
 			return new BigDecimal(dbl.toString());
 		} else {
@@ -280,17 +280,17 @@ public final class TypeParseUtil {
 		String fromType = "BigDecimal";
 		BigDecimal bigD = (BigDecimal) value;
 		if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
-			return getNf(locale).format(bigD.doubleValue());
+			return getNf(locale).format(bigD.toString());
 		} else if ("BigDecimal".equalsIgnoreCase(type) || DataType.BIGDECIMAL.equalsIgnoreCase(type)) {
 			return value;
 		} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
-			return new Double(bigD.doubleValue());
+			return new Double(bigD.toString());
 		} else if ("Float".equalsIgnoreCase(type) || DataType.FLOAT.equalsIgnoreCase(type)) {
-			return new Float(bigD.floatValue());
+			return new Float(bigD.toString());
 		} else if ("Long".equalsIgnoreCase(type) || DataType.LONG.equalsIgnoreCase(type)) {
-			return new Long(Math.round(bigD.doubleValue()));
+			return new Long(bigD.toString());
 		} else if ("Integer".equals(type) || DataType.INTEGER.equalsIgnoreCase(type)) {
-			return new Integer((int) Math.round(bigD.doubleValue()));
+			return new Integer(bigD.toString());
 		} else {
 			throw new DataParseException(String.format(support, fromType, type));
 		}
@@ -312,7 +312,7 @@ public final class TypeParseUtil {
 					return new Boolean(false);
 			} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
 				Number tempNum = getNf(locale).parse(str.replaceAll(",", ""));
-				return new Double(tempNum.doubleValue());
+				return new Double(tempNum.toString());
 			} else if ("BigDecimal".equalsIgnoreCase(type) || DataType.BIGDECIMAL.equalsIgnoreCase(type)) {
 				BigDecimal retBig = new BigDecimal(str.replaceAll(",", ""));
 				int iscale = str.indexOf(".");
@@ -325,18 +325,18 @@ public final class TypeParseUtil {
 				}
 			} else if ("Float".equalsIgnoreCase(type) || DataType.FLOAT.equalsIgnoreCase(type)) {
 				Number tempNum = getNf(locale).parse(str.replaceAll(",", ""));
-				return new Float(tempNum.floatValue());
+				return new Float(tempNum.toString());
 
 			} else if ("Long".equalsIgnoreCase(type) || DataType.LONG.equalsIgnoreCase(type)) {
 				NumberFormat nf = getNf(locale);
 				nf.setMaximumFractionDigits(0);
 				Number tempNum = nf.parse(str.replaceAll(",", ""));
-				return new Long(tempNum.longValue());
+				return new Long(tempNum.toString());
 			} else if ("Integer".equalsIgnoreCase(type) || DataType.INTEGER.equalsIgnoreCase(type)) {
 				NumberFormat nf = getNf(locale);
 				nf.setMaximumFractionDigits(0);
 				Number tempNum = nf.parse(str.replaceAll(",", ""));
-				return new Integer(tempNum.intValue());
+				return new Integer(tempNum.toString());
 			} else if ("Date".equalsIgnoreCase(type) || DataType.DATE.equalsIgnoreCase(type)) {
 				if (format == null || format.length() == 0) {
 					String separator = String.valueOf(str.charAt(4));

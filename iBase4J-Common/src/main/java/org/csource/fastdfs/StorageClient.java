@@ -775,8 +775,10 @@ public class StorageClient
 			
 			if (bUploadSlave)
 			{
-				System.arraycopy(masterFilenameBytes, 0, wholePkg, offset, masterFilenameBytes.length);
-				offset += masterFilenameBytes.length;
+			    if (masterFilenameBytes != null) {
+	                System.arraycopy(masterFilenameBytes, 0, wholePkg, offset, masterFilenameBytes.length);
+	                offset += masterFilenameBytes.length;
+                }
 			}
 			
 			out.write(wholePkg);
