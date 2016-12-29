@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.exception.BusinessException;
 import org.ibase4j.core.support.scheduler.job.DefaultJob;
 import org.ibase4j.core.support.scheduler.job.StatefulJob;
+import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.model.scheduler.TaskScheduled;
 import org.ibase4j.model.scheduler.TaskScheduled.JobType;
 import org.quartz.CronScheduleBuilder;
@@ -122,7 +123,10 @@ public class SchedulerManager implements InitializingBean {
      */
     public boolean updateTask(TaskScheduled taskScheduled) {
         String jobGroup = "ds_job";
-        String jobName = String.valueOf(System.currentTimeMillis());
+        String jobName = taskScheduled.getTaskName();
+        if (DataUtil.isEmpty(jobName)) {
+            jobName = String.valueOf(System.currentTimeMillis());
+        }
         String cronExpression = taskScheduled.getTaskCron();
         String targetObject = taskScheduled.getTargetObject();
         String targetMethod = taskScheduled.getTargetMethod();
