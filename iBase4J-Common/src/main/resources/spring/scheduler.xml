@@ -16,15 +16,6 @@
 
 	<bean id="schedulerManager" class="org.ibase4j.core.support.scheduler.SchedulerManager">
 		<property name="scheduler" ref="schedulerFactoryBean" />
-		<property name="triggerLoaders">
-			<list>
-				<!--加载器类型 -->
-				<bean class="org.ibase4j.core.support.scheduler.TriggerLoader"
-					c:jobClass="org.ibase4j.core.support.scheduler.job.LocalJob" />
-				<bean class="org.ibase4j.core.support.scheduler.TriggerLoader"
-					c:jobClass="org.ibase4j.core.support.scheduler.job.DubboJob" />
-			</list>
-		</property>
 		<property name="jobListeners">
 			<list>
 				<!--日志监控类型 -->

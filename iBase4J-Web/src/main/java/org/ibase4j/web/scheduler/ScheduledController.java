@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.util.Request2ModelUtil;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.scheduler.ext.TaskScheduled;
+import org.ibase4j.model.scheduler.TaskScheduled;
 import org.ibase4j.service.scheduler.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -37,8 +38,17 @@ public class ScheduledController extends BaseController {
     @Autowired
     private SchedulerService schedulerService;
 
+    @RequestMapping("/update/task")
+    @ApiOperation(value = "新增任务")
+    @RequiresPermissions("task.scheduled.update")
+    public Object updateTask(HttpServletRequest request, ModelMap modelMap) {
+        TaskScheduled scheduled = Request2ModelUtil.covert(TaskScheduled.class, request);
+        schedulerService.updateTask(scheduled);
+        return setSuccessModelMap(modelMap);
+    }
+
     @RequestMapping("/read/tasks")
-    @ApiOperation(value = "调度列表")
+    @ApiOperation(value = "任务列表")
     @RequiresPermissions("task.scheduled.read")
     public Object list(ModelMap modelMap) {
         Page<TaskScheduled> jobs = schedulerService.getAllTaskDetail();
@@ -47,7 +57,7 @@ public class ScheduledController extends BaseController {
 
     // 执行
     @RequestMapping("/run/task")
-    @ApiOperation(value = "立即执行调度")
+    @ApiOperation(value = "立即执行任务")
     @RequiresPermissions("task.scheduled.run")
     public Object exec(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
         @RequestParam(value = "taskName", required = false) String taskName) {
@@ -57,7 +67,7 @@ public class ScheduledController extends BaseController {
 
     // 启动
     @RequestMapping("/open/task")
-    @ApiOperation(value = "启动调度")
+    @ApiOperation(value = "启动任务")
     @RequiresPermissions("task.scheduled.open")
     public Object open(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
         @RequestParam(value = "taskName", required = false) String taskName) {
@@ -67,7 +77,7 @@ public class ScheduledController extends BaseController {
 
     // 暂停
     @RequestMapping("/close/task")
-    @ApiOperation(value = "暂停调度")
+    @ApiOperation(value = "暂停任务")
     @RequiresPermissions("task.scheduled.close")
     public Object close(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
         @RequestParam(value = "taskName", required = false) String taskName) {
@@ -77,7 +87,7 @@ public class ScheduledController extends BaseController {
 
     // 暂停
     @RequestMapping("/del/task")
-    @ApiOperation(value = "暂停调度")
+    @ApiOperation(value = "删除任务")
     @RequiresPermissions("task.scheduled.close")
     public Object delete(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
         @RequestParam(value = "taskName", required = false) String taskName) {
@@ -87,7 +97,7 @@ public class ScheduledController extends BaseController {
 
     // 执行记录
     @RequestMapping("/read/log")
-    @ApiOperation(value = "调度执行记录")
+    @ApiOperation(value = "任务执行记录")
     @RequiresPermissions("task.log.read")
     public Object getFireLog(HttpServletRequest request, ModelMap modelMap) {
         Map<String, Object> params = WebUtil.getParameterMap(request);

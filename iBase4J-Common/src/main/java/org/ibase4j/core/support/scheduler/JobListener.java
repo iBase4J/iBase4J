@@ -15,7 +15,6 @@ import org.ibase4j.model.scheduler.TaskFireLog;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.JobKey;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
@@ -47,20 +46,16 @@ public class JobListener implements org.quartz.JobListener {
     // 任务开始前
     public void jobToBeExecuted(final JobExecutionContext context) {
         final JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
-        JobKey jobKey = context.getJobDetail().getKey();
-        String groupName = jobKey.getGroup();
-        String jobName = jobKey.getName();
+        String targetObject = jobDataMap.getString("targetObject");
+        String targetMethod = jobDataMap.getString("targetMethod");
         if (logger.isInfoEnabled()) {
-            logger.info("定时任务开始执行：{}.{}", groupName, jobName);
-        }
-        if ("cleanExpiredSessions".equals(jobName)) {
-            return;
+            logger.info("定时任务开始执行：{}.{}", targetObject, targetMethod);
         }
         // 保存日志
-        final TaskFireLog log = new TaskFireLog();
+        TaskFireLog log = new TaskFireLog();
         log.setStartTime(context.getFireTime());
-        log.setGroupName(groupName);
-        log.setTaskName(jobName);
+        log.setGroupName(targetObject);
+        log.setTaskName(targetMethod);
         log.setStatus(JOBSTATE.INIT_STATS);
         log.setServerHost(NativeUtil.getHostName());
         log.setServerDuid(NativeUtil.getDUID());
@@ -72,13 +67,10 @@ public class JobListener implements org.quartz.JobListener {
     public void jobWasExecuted(final JobExecutionContext context, JobExecutionException exp) {
         Timestamp end = new Timestamp(System.currentTimeMillis());
         final JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
-        if (JOBSTATE.ERROR_STATS.equals(jobDataMap.get("taskStatus"))) {
-            return;
-        }
-        String groupName = context.getJobDetail().getKey().getGroup();
-        String jobName = context.getJobDetail().getKey().getName();
+        String targetObject = jobDataMap.getString("targetObject");
+        String targetMethod = jobDataMap.getString("targetMethod");
         if (logger.isInfoEnabled()) {
-            logger.info("定时任务执行结束：{}.{}", groupName, jobName);
+            logger.info("定时任务执行结束：{}.{}", targetObject, targetMethod);
         }
         // 更新任务执行状态
         final TaskFireLog log = (TaskFireLog)jobDataMap.get(JOB_LOG);
@@ -87,7 +79,7 @@ public class JobListener implements org.quartz.JobListener {
             if (exp != null) {
                 String contactEmail = jobDataMap.getString("contactEmail");
                 if (StringUtils.isNotBlank(contactEmail)) {
-                    String topic = String.format("调度[%s.%s]发生异常", groupName, jobName);
+                    String topic = String.format("调度[%s.%s]发生异常", targetMethod, targetMethod);
                     sendEmail(new Email(contactEmail, topic, exp.getMessage()));
                 }
                 log.setStatus(JOBSTATE.ERROR_STATS);

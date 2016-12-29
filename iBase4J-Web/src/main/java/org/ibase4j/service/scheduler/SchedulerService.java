@@ -6,10 +6,7 @@ import java.util.Map;
 import org.ibase4j.core.support.Assert;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.scheduler.TaskFireLog;
-import org.ibase4j.model.scheduler.TaskGroup;
-import org.ibase4j.model.scheduler.TaskScheduler;
-import org.ibase4j.model.scheduler.ext.TaskScheduled;
-import org.ibase4j.model.scheduler.ext.TaskSchedulerBean;
+import org.ibase4j.model.scheduler.TaskScheduled;
 import org.ibase4j.provider.scheduler.SchedulerProvider;
 import org.springframework.stereotype.Service;
 
@@ -32,87 +29,42 @@ public class SchedulerService {
         return pageInfo;
     }
 
-    public boolean execTask(String taskGroup, String taskName) {
+    // 修改执行计划
+    public void updateTask(TaskScheduled scheduled) {
+        Assert.notNull(scheduled.getJobType(), "JOBTYPE");
+        Assert.notNull(scheduled.getTaskType(), "TASKTYPE");
+        Assert.notNull(scheduled.getTargetObject(), "TARGETOBJECT");
+        Assert.notNull(scheduled.getTargetMethod(), "TARGETMETHOD");
+        Assert.notNull(scheduled.getTaskCron(), "TASKCRON");
+        Assert.notNull(scheduled.getTaskDesc(), "TASKDESC");
+        schedulerProvider.updateTask(scheduled);
+    }
+
+    public void execTask(String taskGroup, String taskName) {
         Assert.notNull(taskGroup, "TASKGROUP");
         Assert.notNull(taskName, "TASKNAME");
-        return schedulerProvider.execTask(taskGroup, taskName);
+        schedulerProvider.execTask(taskGroup, taskName);
     }
 
-    public boolean openTask(String taskGroup, String taskName) {
+    public void openTask(String taskGroup, String taskName) {
         Assert.notNull(taskGroup, "TASKGROUP");
         Assert.notNull(taskName, "TASKNAME");
-        return schedulerProvider.openCloseTask(taskGroup, taskName, "start");
+        schedulerProvider.openCloseTask(taskGroup, taskName, "start");
     }
 
-    public boolean closeTask(String taskGroup, String taskName) {
+    public void closeTask(String taskGroup, String taskName) {
         Assert.notNull(taskGroup, "TASKGROUP");
         Assert.notNull(taskName, "TASKNAME");
-        return schedulerProvider.openCloseTask(taskGroup, taskName, "stop");
+        schedulerProvider.openCloseTask(taskGroup, taskName, "stop");
     }
 
-    public boolean delTask(String taskGroup, String taskName) {
+    public void delTask(String taskGroup, String taskName) {
         Assert.notNull(taskGroup, "TASKGROUP");
         Assert.notNull(taskName, "TASKNAME");
-        return schedulerProvider.delTask(taskGroup, taskName);
-    }
-
-    public Page<TaskGroup> queryGroup(Map<String, Object> params) {
-        return schedulerProvider.queryGroup(params);
-    }
-
-    public Page<TaskSchedulerBean> queryScheduler(Map<String, Object> params) {
-        return schedulerProvider.queryScheduler(params);
+        schedulerProvider.delTask(taskGroup, taskName);
     }
 
     public Page<TaskFireLog> queryLog(Map<String, Object> params) {
         return schedulerProvider.queryLog(params);
-    }
-
-    /**
-     * @param id
-     * @return
-     */
-    public TaskGroup queryGroupById(Long id) {
-        Assert.notNull(id, "ID");
-        return schedulerProvider.getGroupById(id);
-    }
-
-    /**
-     * @param record
-     */
-    public void addGroup(TaskGroup record) {
-        schedulerProvider.updateGroup(record);
-    }
-
-    /**
-     * @param record
-     */
-    public void updateGroup(TaskGroup record) {
-        Assert.notNull(record.getId(), "ID");
-        schedulerProvider.updateGroup(record);
-    }
-
-    /**
-     * @param id
-     * @return
-     */
-    public TaskScheduler querySchedulerById(Long id) {
-        Assert.notNull(id, "ID");
-        return schedulerProvider.getSchedulerById(id);
-    }
-
-    /**
-     * @param record
-     */
-    public void addScheduler(TaskScheduler record) {
-        schedulerProvider.updateScheduler(record);
-    }
-
-    /**
-     * @param record
-     */
-    public void updateScheduler(TaskScheduler record) {
-        Assert.notNull(record.getId(), "ID");
-        schedulerProvider.updateScheduler(record);
     }
 }

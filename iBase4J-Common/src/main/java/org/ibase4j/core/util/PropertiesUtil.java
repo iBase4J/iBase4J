@@ -33,7 +33,6 @@ public final class PropertiesUtil extends PropertyPlaceholderConfigurer {
             }
             ctxPropertiesMap.put(keyStr, value);
         }
-        logger.info("");
     }
 
     /**

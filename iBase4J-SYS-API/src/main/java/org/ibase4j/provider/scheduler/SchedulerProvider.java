@@ -7,10 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.model.scheduler.TaskFireLog;
-import org.ibase4j.model.scheduler.TaskGroup;
-import org.ibase4j.model.scheduler.TaskScheduler;
-import org.ibase4j.model.scheduler.ext.TaskScheduled;
-import org.ibase4j.model.scheduler.ext.TaskSchedulerBean;
+import org.ibase4j.model.scheduler.TaskScheduled;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -26,29 +23,20 @@ public interface SchedulerProvider {
     public List<TaskScheduled> getAllTaskDetail();
 
     /** 执行任务 */
-    public boolean execTask(String taskGroup, String taskName);
+    public void execTask(String taskGroup, String taskName);
 
     /** 启停 */
-    public boolean openCloseTask(String taskGroup, String taskName, String status);
-    
+    public void openCloseTask(String taskGroup, String taskName, String status);
+
     /** 删除作业 */
-    public boolean delTask(String taskGroup, String taskName);
-
-    public TaskGroup getGroupById(Long id);
-
-    public TaskGroup updateGroup(TaskGroup record);
-
-    public Page<TaskGroup> queryGroup(Map<String, Object> params);
-
-    public TaskScheduler getSchedulerById(Long id);
-
-    public TaskScheduler updateScheduler(TaskScheduler record);
+    public void delTask(String taskGroup, String taskName);
 
     public TaskFireLog updateLog(TaskFireLog record);
-
-    public Page<TaskSchedulerBean> queryScheduler(Map<String, Object> params);
 
     public TaskFireLog getFireLogById(Long id);
 
     public Page<TaskFireLog> queryLog(Map<String, Object> params);
+
+    /** 修改执行计划 */
+    public void updateTask(TaskScheduled taskScheduled);
 }
