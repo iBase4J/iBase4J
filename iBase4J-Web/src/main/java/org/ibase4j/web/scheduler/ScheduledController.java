@@ -47,15 +47,6 @@ public class ScheduledController extends BaseController {
         return setSuccessModelMap(modelMap);
     }
 
-    @RequestMapping("/update/cron")
-    @ApiOperation(value = "修改任务执行计划")
-    @RequiresPermissions("task.scheduled.update")
-    public Object updateCorn(HttpServletRequest request, ModelMap modelMap) {
-        TaskScheduled scheduled = Request2ModelUtil.covert(TaskScheduled.class, request);
-        schedulerService.updateTaskCron(scheduled);
-        return setSuccessModelMap(modelMap);
-    }
-
     @RequestMapping("/read/tasks")
     @ApiOperation(value = "任务列表")
     @RequiresPermissions("task.scheduled.read")

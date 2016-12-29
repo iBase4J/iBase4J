@@ -29,7 +29,7 @@ public class SchedulerService {
         return pageInfo;
     }
 
-    // 新增执行计划
+    // 修改执行计划
     public void updateTask(TaskScheduled scheduled) {
         Assert.notNull(scheduled.getJobType(), "JOBTYPE");
         Assert.notNull(scheduled.getTaskType(), "TASKTYPE");
@@ -38,14 +38,6 @@ public class SchedulerService {
         Assert.notNull(scheduled.getTaskCron(), "TASKCRON");
         Assert.notNull(scheduled.getTaskDesc(), "TASKDESC");
         schedulerProvider.updateTask(scheduled);
-    }
-
-    // 修改执行计划
-    public void updateTaskCron(TaskScheduled scheduled) {
-        Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
-        Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-        Assert.notNull(scheduled.getTaskCron(), "TASKCRON");
-        schedulerProvider.updateTaskCron(scheduled);
     }
 
     public void execTask(String taskGroup, String taskName) {

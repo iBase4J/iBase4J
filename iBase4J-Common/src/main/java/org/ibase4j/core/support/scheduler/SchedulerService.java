@@ -63,11 +63,6 @@ public class SchedulerService {
         schedulerManager.updateTask(taskScheduled);
     }
 
-    // 修改执行计划
-    public void updateTaskCron(TaskScheduled scheduleJob) {
-        schedulerManager.updateTaskCron(scheduleJob);
-    }
-
     @Cacheable("taskFireLog")
     public TaskFireLog getFireLogById(Long id) {
         return logMapper.selectById(id);

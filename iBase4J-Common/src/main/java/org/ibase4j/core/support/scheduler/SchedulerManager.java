@@ -169,25 +169,6 @@ public class SchedulerManager implements InitializingBean {
         return false;
     }
 
-    // 修改执行计划
-    public void updateTaskCron(TaskScheduled scheduleJob) {
-        String triggerName = scheduleJob.getTaskName();
-        String triggerGroup = scheduleJob.getTaskGroup();
-        String cronExpression = scheduleJob.getTaskCron();
-        TriggerKey triggerKey = new TriggerKey(triggerName, triggerGroup);
-        try {
-            Trigger trigger = scheduler.getTrigger(triggerKey);
-            Trigger newTrigger = TriggerBuilder.newTrigger()
-                .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression)).withIdentity(triggerName, triggerGroup)
-                .withDescription(trigger.getDescription()).forJob(trigger.getJobKey())
-                .usingJobData(trigger.getJobDataMap()).build();
-            scheduler.rescheduleJob(triggerKey, newTrigger);
-        } catch (SchedulerException e) {
-            logger.error("SchedulerException", "SchedulerException", e);
-            throw new BusinessException(e);
-        }
-    }
-
     /**
      * 暂停所有触发器
      * 

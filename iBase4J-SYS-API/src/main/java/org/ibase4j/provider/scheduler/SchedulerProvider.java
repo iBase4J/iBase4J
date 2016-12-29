@@ -37,9 +37,6 @@ public interface SchedulerProvider {
 
     public Page<TaskFireLog> queryLog(Map<String, Object> params);
 
-    /** 新增执行计划 */
-    public void updateTask(TaskScheduled taskScheduled);
-
     /** 修改执行计划 */
-    public void updateTaskCron(TaskScheduled scheduleJob);
+    public void updateTask(TaskScheduled taskScheduled);
 }
