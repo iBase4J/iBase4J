@@ -353,8 +353,6 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
 /*!40000 ALTER TABLE `sys_menu` DISABLE KEYS */;
 INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`, `request_`, `expand_`, `sort_no`, `is_show`, `permission_`, `remark_`, `enable_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
 	('1', '系统管理', 1, '0', 'glyphicon glyphicon-cog', '#', 0, 1, 1, 'sys', NULL, 1, '1', '2016-06-20 09:16:56', '1', '2016-06-29 08:19:19'),
-	('10', '任务组管理', 1, '9', 'glyphicon glyphicon-equalizer', 'main.task.group.list', 0, 1, 1, 'task.group', NULL, 1, '1', '2016-06-20 09:16:56', '1', '2016-06-28 18:08:21'),
-	('11', '任务管理', 1, '9', 'glyphicon glyphicon-bookmark', 'main.task.scheduler.list', 0, 2, 1, 'task.scheduler', NULL, 1, '1', '2016-06-20 09:16:56', '1', '2016-06-28 18:08:25'),
 	('12', '调度管理', 1, '9', 'glyphicon glyphicon-random', 'main.task.scheduled.list', 0, 3, 1, 'task.scheduled', NULL, 1, '1', '2016-06-20 09:16:56', '1', '2016-06-30 14:24:02'),
 	('13', '调度日志', 1, '9', 'glyphicon glyphicon-file', 'main.task.log.list', 0, 4, 1, 'task.log', NULL, 1, '1', '2016-06-20 09:16:56', '1', '2016-06-28 18:08:48'),
 	('14', '清除缓存', 1, '1', NULL, NULL, 0, 9, 0, 'sys.cache', NULL, 1, '1', '2016-06-20 09:16:56', '1', '2016-06-29 09:39:25'),
@@ -435,14 +433,7 @@ CREATE TABLE IF NOT EXISTS `sys_role_menu` (
 /*!40000 ALTER TABLE `sys_role_menu` DISABLE KEYS */;
 INSERT INTO `sys_role_menu` (`role_id`, `menu_id`, `permission_`, `enable_`, `remark_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
 	('1', '1', 'read', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:23:04'),
-	('1', '10', 'add', 1, NULL, '1', '2016-06-29 09:21:24', '1', '2016-06-29 09:21:24'),
-	('1', '10', 'delete', 1, NULL, '1', '2016-06-29 09:21:44', '1', '2016-06-29 09:21:44'),
-	('1', '10', 'read', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:23:12'),
-	('1', '10', 'update', 1, NULL, '1', '2016-06-29 09:21:35', '1', '2016-06-29 09:21:35'),
-	('1', '11', 'add', 1, NULL, '1', '2016-06-29 09:21:55', '1', '2016-06-29 09:21:55'),
-	('1', '11', 'delete', 1, NULL, '1', '2016-06-29 09:22:07', '1', '2016-06-29 09:22:32'),
-	('1', '11', 'read', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:23:13'),
-	('1', '11', 'update', 1, NULL, '1', '2016-06-29 09:22:49', '1', '2016-06-29 09:22:49'),
+	('1', '12', 'update', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:23:13'),
 	('1', '12', 'close', 1, NULL, '1', '2016-06-29 08:45:21', '1', '2016-06-29 08:45:21'),
 	('1', '12', 'open', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:23:13'),
 	('1', '12', 'read', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:23:13'),
@@ -609,56 +600,3 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   PRIMARY KEY (`id_`),
   UNIQUE KEY `group_name_task_name_start_time` (`group_name`,`task_name`,`start_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.task_fire_log 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `task_fire_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `task_fire_log` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.task_group 结构
-DROP TABLE IF EXISTS `task_group`;
-CREATE TABLE IF NOT EXISTS `task_group` (
-  `id_` BIGINT(32) NOT NULL,
-  `group_name` varchar(50) NOT NULL,
-  `group_desc` varchar(50) NOT NULL,
-  `remark_` varchar(5000) NOT NULL,
-  `enable_` tinyint(1) DEFAULT '1',
-  `create_time` datetime NOT NULL,
-  `create_by` BIGINT(32) NOT NULL,
-  `update_time` datetime NOT NULL,
-  `update_by` BIGINT(32) NOT NULL,
-  PRIMARY KEY (`id_`),
-  UNIQUE KEY `group_name` (`group_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.task_group 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `task_group` DISABLE KEYS */;
-INSERT INTO `task_group` (`id_`, `group_name`, `group_desc`, `remark_`, `enable_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	('1', 'coreTaskProvider', '系统管理', '', 1, '2016-05-27 14:56:51', '1', '2016-06-16 10:18:58', '1');
-/*!40000 ALTER TABLE `task_group` ENABLE KEYS */;
-
-
--- 导出  表 ibase4j.task_scheduler 结构
-DROP TABLE IF EXISTS `task_scheduler`;
-CREATE TABLE IF NOT EXISTS `task_scheduler` (
-  `id_` BIGINT(32) NOT NULL,
-  `group_id` BIGINT(32) NOT NULL,
-  `task_name` varchar(50) NOT NULL,
-  `task_type` varchar(50) NOT NULL,
-  `task_desc` varchar(50) DEFAULT NULL,
-  `task_cron` varchar(50) NOT NULL,
-  `contact_email` varchar(500) DEFAULT NULL COMMENT '多个邮箱用,分割',
-  `remark_` varchar(5000) DEFAULT NULL,
-  `enable_` tinyint(1) DEFAULT '1',
-  `create_by` BIGINT(32) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_by` BIGINT(32) NOT NULL,
-  `update_time` datetime NOT NULL,
-  PRIMARY KEY (`id_`),
-  UNIQUE KEY `group_id_task_name` (`group_id`,`task_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  ibase4j.task_scheduler 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `task_scheduler` DISABLE KEYS */;
-INSERT INTO `task_scheduler` (`id_`, `group_id`, `task_name`, `task_type`, `task_desc`, `task_cron`, `contact_email`, `remark_`, `enable_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
-	('1', '1', 'cleanExpiredSessions', 'local', '清理无效session', '0 * * * * ?', 'iBase4J@126.com', NULL, 1, '1', '2016-06-13 14:05:30', '1', '2016-09-21 11:30:00');
