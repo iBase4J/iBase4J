@@ -1,24 +1,29 @@
 package org.ibase4j.core.support.scheduler;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.model.scheduler.ext.TaskScheduled;
+import org.ibase4j.core.exception.BusinessException;
+import org.ibase4j.core.support.scheduler.job.DefaultJob;
+import org.ibase4j.core.support.scheduler.job.StatefulJob;
+import org.ibase4j.model.scheduler.TaskScheduled;
+import org.ibase4j.model.scheduler.TaskScheduled.JobType;
+import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
+import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.JobListener;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.quartz.Trigger.TriggerState;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -33,23 +38,16 @@ public class SchedulerManager implements InitializingBean {
 
     private Scheduler scheduler;
 
-    private List<TriggerLoader> triggerLoaders;
-
     private List<JobListener> jobListeners;
 
     public void setScheduler(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
 
-    public void setTriggerLoaders(List<TriggerLoader> triggerLoaders) {
-        this.triggerLoaders = triggerLoaders;
-    }
-
     public void setJobListeners(List<JobListener> jobListeners) {
         this.jobListeners = jobListeners;
     }
 
-    // 调度初始化入口
     public void afterPropertiesSet() throws Exception {
         if (this.jobListeners != null && this.jobListeners.size() > 0) {
             if (logger.isInfoEnabled()) {
@@ -63,106 +61,6 @@ public class SchedulerManager implements InitializingBean {
                 this.scheduler.getListenerManager().addJobListener(listener);
             }
         }
-
-        // 根据配置的初始化装载
-        if (this.triggerLoaders != null && this.triggerLoaders.size() > 0) {
-            if (logger.isInfoEnabled()) {
-                logger.info("Initing task scheduler[" + this.scheduler.getSchedulerName() + "] , trigger loaders size ："
-                    + this.triggerLoaders.size());
-            }
-            for (TriggerLoader loader : this.triggerLoaders) {
-                if (logger.isInfoEnabled()) {
-                    logger.info("Initing triggerLoader[" + loader.getClass().getName() + "].");
-                }
-                Map<Trigger, JobDetail> loadResultMap = loader.loadTriggers();
-                if (loadResultMap != null) {
-                    for (Entry<Trigger, JobDetail> entry : loadResultMap.entrySet()) {
-                        JobDetail oldJobDetail = null;
-                        try {
-                            oldJobDetail = this.scheduler.getJobDetail(entry.getValue().getKey());
-                        } catch (Exception e) {
-                        }
-                        if (oldJobDetail == null) {
-                            scheduler.scheduleJob(entry.getValue(), entry.getKey());
-                        } else {
-                            this.addJobDetail(entry.getValue());
-                            this.updateTrigger(entry.getKey());
-                        }
-                    }
-                    if (logger.isInfoEnabled()) {
-                        logger.info("Initing triggerLoader[" + loader.getClass().getName() + "] end .");
-                    }
-                } else {
-                    logger.warn("No triggers loaded by triggerLoader[" + loader.getClass().getName() + "].");
-                }
-            }
-        } else {
-            logger.warn("No TriggerLoader for initing.");
-        }
-    }
-
-    private void addTrigger(Trigger trigger) {
-        Trigger oldTrigger = null;
-        try {
-            oldTrigger = scheduler.getTrigger(trigger.getKey());
-        } catch (Exception e) {
-        }
-        try {
-            if (oldTrigger == null) {
-                if (logger.isInfoEnabled()) {
-                    logger.info("Try to add trigger : " + trigger);
-                }
-                scheduler.scheduleJob(trigger);
-                if (!trigger.getJobDataMap().getBoolean("enable")) {
-                    scheduler.pauseTrigger(trigger.getKey());
-                }
-            } else {
-                updateTrigger(trigger);
-            }
-        } catch (SchedulerException e) {
-            logger.error("Try to add trigger : " + trigger + "  cause error : ", e);
-        }
-    }
-
-    private void updateTrigger(Trigger trigger) {
-        Trigger oldTrigger = null;
-        try {
-            oldTrigger = scheduler.getTrigger(trigger.getKey());
-        } catch (Exception e) {
-        }
-        try {
-            if (oldTrigger != null) {
-                if (logger.isInfoEnabled()) {
-                    logger.info("Try to update trigger : " + trigger);
-                }
-                scheduler.rescheduleJob(trigger.getKey(), trigger);
-                if (!trigger.getJobDataMap().getBoolean("enable")) {
-                    scheduler.pauseTrigger(trigger.getKey());
-                }
-            } else {
-                logger.warn("Can't update trigger : " + trigger);
-            }
-        } catch (SchedulerException e) {
-            logger.error("Try to update trigger : " + trigger + ", the old trigger is : "
-                + (oldTrigger == null ? "null" : oldTrigger.toString()) + " cause error : ", e);
-        }
-    }
-
-    private void addJobDetail(JobDetail jobDetail) {
-        JobDetail oldJobDetail = null;
-        try {
-            oldJobDetail = this.scheduler.getJobDetail(jobDetail.getKey());
-        } catch (Exception e) {
-        }
-        try {
-            if (logger.isInfoEnabled()) {
-                logger.info("Try to add jobDetail : " + jobDetail);
-            }
-            this.scheduler.addJob(jobDetail, true);
-        } catch (Exception e) {
-            logger.error("Try to add jobDetail : " + jobDetail + ", the old jobDetail is : "
-                + (oldJobDetail == null ? "null" : oldJobDetail.toString()) + " cause error : ", e);
-        }
     }
 
     public List<TaskScheduled> getAllJobDetail() {
@@ -171,12 +69,13 @@ public class SchedulerManager implements InitializingBean {
             GroupMatcher<JobKey> matcher = GroupMatcher.jobGroupContains("");
             Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
             for (JobKey jobKey : jobKeys) {
+                JobDetail jobDetail = scheduler.getJobDetail(jobKey);
                 List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
                 for (Trigger trigger : triggers) {
                     TaskScheduled job = new TaskScheduled();
                     job.setTaskName(jobKey.getName());
                     job.setTaskGroup(jobKey.getGroup());
-                    Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
+                    TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
                     job.setStatus(triggerState.name());
                     if (trigger instanceof CronTrigger) {
                         CronTrigger cronTrigger = (CronTrigger)trigger;
@@ -185,7 +84,17 @@ public class SchedulerManager implements InitializingBean {
                     }
                     job.setPreviousFireTime(trigger.getPreviousFireTime());
                     job.setNextFireTime(trigger.getNextFireTime());
-                    job.setDesc(trigger.getJobDataMap().getString("desc"));
+                    JobDataMap jobDataMap = trigger.getJobDataMap();
+                    job.setTaskType(jobDataMap.getString("taskType"));
+                    job.setTargetObject(jobDataMap.getString("targetObject"));
+                    job.setTargetMethod(jobDataMap.getString("targetMethod"));
+                    job.setTaskDesc(jobDetail.getDescription());
+                    String jobClass = jobDetail.getJobClass().getSimpleName();
+                    if (jobClass.equals("StatefulJob")) {
+                        job.setJobType("statefulJob");
+                    } else if (jobClass.equals("DefaultJob")) {
+                        job.setJobType("job");
+                    }
                     result.add(job);
                 }
             }
@@ -204,132 +113,151 @@ public class SchedulerManager implements InitializingBean {
         return null;
     }
 
-    // 获取运行中任务
-    public List<TaskScheduled> getRuningJobDetail() {
-        List<TaskScheduled> jobList = null;
-        try {
-            List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
-            jobList = new ArrayList<TaskScheduled>(executingJobs.size());
-            for (JobExecutionContext executingJob : executingJobs) {
-                TaskScheduled job = new TaskScheduled();
-                JobDetail jobDetail = executingJob.getJobDetail();
-                JobKey jobKey = jobDetail.getKey();
-                Trigger trigger = executingJob.getTrigger();
-                job.setTaskName(jobKey.getName());
-                job.setTaskGroup(jobKey.getGroup());
-                Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
-                job.setStatus(triggerState.name());
-                if (trigger instanceof CronTrigger) {
-                    CronTrigger cronTrigger = (CronTrigger)trigger;
-                    String cronExpression = cronTrigger.getCronExpression();
-                    job.setTaskCron(cronExpression);
-                }
-                job.setPreviousFireTime(trigger.getPreviousFireTime());
-                job.setNextFireTime(trigger.getNextFireTime());
-                job.setDesc(trigger.getJobDataMap().getString("desc"));
-                jobList.add(job);
-            }
-        } catch (Exception e) {
-            logger.error("Try to load running JobDetail cause error : ", e);
+    /**
+     * 新增job
+     * 
+     * @param inputObject
+     * @param outputObject
+     * @throws Exception
+     */
+    public boolean updateTask(TaskScheduled taskScheduled) {
+        String jobGroup = "ds_job";
+        String jobName = String.valueOf(System.currentTimeMillis());
+        String cronExpression = taskScheduled.getTaskCron();
+        String targetObject = taskScheduled.getTargetObject();
+        String targetMethod = taskScheduled.getTargetMethod();
+        String jobDescription = taskScheduled.getTaskDesc();
+        String jobType = taskScheduled.getJobType();
+        String taskType = taskScheduled.getTaskType();
+        JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.put("targetObject", targetObject);
+        jobDataMap.put("targetMethod", targetMethod);
+        jobDataMap.put("taskType", taskType);
+
+        JobBuilder jobBuilder = null;
+        if (JobType.job.equals(jobType)) {
+            jobBuilder = JobBuilder.newJob(DefaultJob.class);
+        } else if (JobType.statefulJob.equals(jobType)) {
+            jobBuilder = JobBuilder.newJob(StatefulJob.class);
         }
-        return jobList;
+        if (jobBuilder != null) {
+            JobDetail jobDetail = jobBuilder.withIdentity(jobName, jobGroup).withDescription(jobDescription)
+                .storeDurably(true).usingJobData(jobDataMap).build();
+
+            Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
+                .withIdentity(jobName, jobGroup).withDescription(jobDescription).forJob(jobDetail)
+                .usingJobData(jobDataMap).build();
+
+            try {
+                JobDetail detail = scheduler.getJobDetail(new JobKey(jobName, jobGroup));
+                if (detail == null) {
+                    scheduler.scheduleJob(jobDetail, trigger);
+                } else {
+                    scheduler.addJob(jobDetail, true);
+                    scheduler.rescheduleJob(new TriggerKey(jobName, jobGroup), trigger);
+                }
+                return true;
+            } catch (SchedulerException e) {
+                logger.error("SchedulerException", "SchedulerException", e);
+                throw new BusinessException(e);
+            }
+        }
+        return false;
+    }
+
+    // 修改执行计划
+    public void updateTaskCron(TaskScheduled scheduleJob) {
+        String triggerName = scheduleJob.getTaskName();
+        String triggerGroup = scheduleJob.getTaskGroup();
+        String cronExpression = scheduleJob.getTaskCron();
+        TriggerKey triggerKey = new TriggerKey(triggerName, triggerGroup);
+        try {
+            Trigger trigger = scheduler.getTrigger(triggerKey);
+            Trigger newTrigger = TriggerBuilder.newTrigger()
+                .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression)).withIdentity(triggerName, triggerGroup)
+                .withDescription(trigger.getDescription()).forJob(trigger.getJobKey())
+                .usingJobData(trigger.getJobDataMap()).build();
+            scheduler.rescheduleJob(triggerKey, newTrigger);
+        } catch (SchedulerException e) {
+            logger.error("SchedulerException", "SchedulerException", e);
+            throw new BusinessException(e);
+        }
+    }
+
+    /**
+     * 暂停所有触发器
+     * 
+     * @return
+     */
+    public void pauseAllTrigger() {
+        try {
+            scheduler.standby();
+        } catch (SchedulerException e) {
+            logger.error("SchedulerException", "SchedulerException", e);
+            throw new BusinessException(e);
+        }
+    }
+
+    /**
+     * 启动所有触发器
+     * 
+     * @return
+     */
+    public void startAllTrigger() {
+        try {
+            if (scheduler.isInStandbyMode()) {
+                scheduler.start();
+            }
+        } catch (SchedulerException e) {
+            logger.error("SchedulerException", "SchedulerException", e);
+            throw new BusinessException(e);
+        }
     }
 
     // 暂停任务
-    public boolean stopJob(TaskScheduled scheduleJob) {
+    public void stopJob(TaskScheduled scheduleJob) {
         try {
             JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
             scheduler.pauseJob(jobKey);
-            return true;
         } catch (Exception e) {
             logger.error("Try to stop Job cause error : ", e);
+            throw new BusinessException(e);
         }
-        return false;
     }
 
     // 启动任务
-    public boolean resumeJob(TaskScheduled scheduleJob) {
+    public void resumeJob(TaskScheduled scheduleJob) {
         try {
             JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
             scheduler.resumeJob(jobKey);
-            return true;
         } catch (Exception e) {
             logger.error("Try to resume Job cause error : ", e);
+            throw new BusinessException(e);
         }
-        return false;
     }
 
     // 执行任务
-    public boolean runJob(TaskScheduled scheduleJob) {
+    public void runJob(TaskScheduled scheduleJob) {
         try {
             JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
             scheduler.triggerJob(jobKey);
-            return true;
         } catch (Exception e) {
             logger.error("Try to resume Job cause error : ", e);
+            throw new BusinessException(e);
         }
-        return false;
-    }
-    
-    // 删除任务
-    public boolean delJob(TaskScheduled scheduleJob) {
-        try {
-            JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
-            scheduler.deleteJob(jobKey);
-            return true;
-        } catch (Exception e) {
-            logger.error("Try to resume Job cause error : ", e);
-        }
-        return false;
     }
 
-    public boolean refreshScheduler() {
+    // 删除任务
+    public void delJob(TaskScheduled scheduleJob) {
         try {
-            // 根据配置的初始化装载
-            if (this.triggerLoaders != null && this.triggerLoaders.size() > 0) {
-                if (logger.isInfoEnabled()) {
-                    logger.info("Initing task scheduler[" + this.scheduler.getSchedulerName()
-                        + "] , trigger loaders size ：" + this.triggerLoaders.size());
-                }
-                // 获取原始调度状态
-                List<TaskScheduled> scheduleJobs = getAllJobDetail();
-                Map<String, String> stateMap = InstanceUtil.newHashMap();
-                for (TaskScheduled scheduleJob : scheduleJobs) {
-                    stateMap.put(scheduleJob.getTaskGroup() + "." + scheduleJob.getTaskName(), scheduleJob.getStatus());
-                }
-                // 清空调度
-                scheduler.clear();
-                // 加载调度
-                for (TriggerLoader loader : this.triggerLoaders) {
-                    if (logger.isInfoEnabled()) {
-                        logger.info("Initing triggerLoader[" + loader.getClass().getName() + "].");
-                    }
-                    Map<Trigger, JobDetail> loadResultMap = loader.loadTriggers();
-                    if (loadResultMap != null) {
-                        for (Entry<Trigger, JobDetail> entry : loadResultMap.entrySet()) {
-                            this.addJobDetail(entry.getValue());
-                            this.addTrigger(entry.getKey());
-                            JobKey jobKey = entry.getValue().getKey();
-                            String key = jobKey.getGroup() + "." + jobKey.getName();
-                            // 新增任务或原来为暂停状态
-                            if ("PAUSED".equals(stateMap.get(key)) || !stateMap.containsKey(key)) {
-                                scheduler.pauseJob(jobKey);
-                            }
-                        }
-                        if (logger.isInfoEnabled()) {
-                            logger.info("Initing triggerLoader[" + loader.getClass().getName() + "] end .");
-                        }
-                    } else {
-                        logger.warn("No triggers loaded by triggerLoader[" + loader.getClass().getName() + "].");
-                    }
-                }
-            } else {
-                logger.warn("No TriggerLoader for initing.");
-            }
-            return true;
+            JobKey jobKey = JobKey.jobKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
+            TriggerKey triggerKey = TriggerKey.triggerKey(scheduleJob.getTaskName(), scheduleJob.getTaskGroup());
+            scheduler.pauseTrigger(triggerKey);// 停止触发器
+            scheduler.unscheduleJob(triggerKey);// 移除触发器
+            scheduler.deleteJob(jobKey);// 删除任务
         } catch (Exception e) {
-            logger.error("Try to refresh scheduler cause error : ", e);
+            logger.error("Try to resume Job cause error : ", e);
+            throw new BusinessException(e);
         }
-        return false;
     }
 }

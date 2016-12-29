@@ -9,7 +9,7 @@
 - 每个模块服务多系统部署，注册到同一个Zookeeper集群服务注册中心，实现集群部署。
 
 ## 主要功能
- 1. 数据库：Druid数据库连接池，监控数据库访问性能，统计SQL的执行性能。 数据库密码加密。
+ 1. 数据库：Druid数据库连接池，监控数据库访问性能，统计SQL的执行性能。 数据库密码加密，加密方式请查看PropertiesUtil，decryptProperties属性配置需要解密的key。
  2. 持久层：mybatis持久化，使用MyBatis-Plus优化，减少sql开发量；aop切换数据库实现读写分离。Transtraction注解事务。
  3. MVC： 基于spring mvc注解,Rest风格Controller。Exception统一管理。
  4. 调度：Spring+quartz, 可以查询、修改周期、暂停、删除、新增、立即执行，查询执行记录等。

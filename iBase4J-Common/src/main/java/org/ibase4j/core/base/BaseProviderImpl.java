@@ -29,7 +29,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
     protected BaseMapper<T> mapper;
 
     /** 分页查询  */
-    protected Page<Long> getPage(Map<String, Object> params) {
+    public static Page<Long> getPage(Map<String, Object> params) {
         Integer current = 1;
         Integer size = 10;
         String orderBy = "";
