@@ -5,7 +5,7 @@ import org.quartz.Job;
 import org.quartz.PersistJobDataAfterExecution;
 
 /**
- * 本地调用远程作业
+ * 阻塞调度
  * 
  * @author ShenHuaJie
  * @version 2016年5月27日 下午4:30:46

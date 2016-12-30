@@ -7,7 +7,7 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.exception.BusinessException;
-import org.ibase4j.core.support.scheduler.job.DefaultJob;
+import org.ibase4j.core.support.scheduler.job.BaseJob;
 import org.ibase4j.core.support.scheduler.job.StatefulJob;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.model.scheduler.TaskScheduled;
@@ -137,10 +137,11 @@ public class SchedulerManager implements InitializingBean {
         jobDataMap.put("targetObject", targetObject);
         jobDataMap.put("targetMethod", targetMethod);
         jobDataMap.put("taskType", taskType);
+        jobDataMap.put("contactEmail", taskScheduled.getContactEmail());
 
         JobBuilder jobBuilder = null;
         if (JobType.job.equals(jobType)) {
-            jobBuilder = JobBuilder.newJob(DefaultJob.class);
+            jobBuilder = JobBuilder.newJob(BaseJob.class);
         } else if (JobType.statefulJob.equals(jobType)) {
             jobBuilder = JobBuilder.newJob(StatefulJob.class);
         }
