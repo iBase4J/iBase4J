@@ -7,17 +7,18 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.support.dubbo.ReferenceUtil;
 import org.ibase4j.model.scheduler.TaskScheduled.TaskType;
+import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.context.ApplicationContext;
 
 /**
- * 
+ * 默认调度(非阻塞)
  * @author ShenHuaJie
  * @version 2016年12月29日 上午11:52:32
  */
-public abstract class BaseJob {
+public class BaseJob implements Job {
     private Logger logger = LogManager.getLogger(this.getClass());
     private String provider = "org.ibase4j.provider.scheduler.";
     

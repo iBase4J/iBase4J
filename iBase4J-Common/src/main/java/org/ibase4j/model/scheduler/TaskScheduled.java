@@ -52,6 +52,8 @@ public class TaskScheduled implements Serializable {
     private String targetObject;
     // 任务方法
     private String targetMethod;
+    // 通知邮箱地址
+    private String contactEmail;
 
     public String getId() {
         return id;
@@ -171,5 +173,19 @@ public class TaskScheduled implements Serializable {
      */
     public void setTargetMethod(String targetMethod) {
         this.targetMethod = targetMethod;
+    }
+
+    /**
+     * @return the contactEmail
+     */
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    /**
+     * @param contactEmail the contactEmail to set
+     */
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
     }
 }
