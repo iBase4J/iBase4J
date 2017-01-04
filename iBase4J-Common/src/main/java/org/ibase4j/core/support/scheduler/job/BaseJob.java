@@ -20,7 +20,6 @@ import org.springframework.context.ApplicationContext;
  */
 public class BaseJob implements Job {
     private Logger logger = LogManager.getLogger(this.getClass());
-    private String provider = "org.ibase4j.provider.scheduler.";
     
     public void execute(JobExecutionContext context) throws JobExecutionException {
         long start = System.currentTimeMillis();
@@ -36,7 +35,7 @@ public class BaseJob implements Job {
                 Object refer = applicationContext.getBean(targetObject);
                 refer.getClass().getDeclaredMethod(targetMethod).invoke(refer);
             } else if (TaskType.dubbo.equals(taskType)) {
-                Object refer = ReferenceUtil.refer(applicationContext, provider + targetObject);
+                Object refer = ReferenceUtil.refer(applicationContext, targetObject);
                 refer.getClass().getDeclaredMethod(targetMethod).invoke(refer);
             }
             double time = (System.currentTimeMillis() - start) / 1000.0;
