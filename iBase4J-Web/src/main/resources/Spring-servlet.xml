@@ -49,8 +49,13 @@
 		<description>注解controller方法适配器</description>
 		<property name="messageConverters">
 			<list><!--JSON转换器 -->
-				<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-					<property name="supportedMediaTypes" value="application/json;charset=UTF-8" />
+				<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/html;charset=UTF-8</value>
+							<value>application/json</value>
+						</list>
+					</property>
 				</bean>
 			</list>
 		</property>

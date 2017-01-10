@@ -59,7 +59,7 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
     }
 
     public Page<SysSession> query(Map<String, Object> params) {
-        Page<Long> page = this.getPage(params);
+        Page<Long> page = getPage(params);
         page.setRecords(mapper.selectIdByMap(page, params));
         return getPage(page);
     }
