@@ -30,7 +30,7 @@
     ● 缓存框架：Redis
     ● 会话管理：Spring-Session 1.2
     ● 日志管理：SLF4J、Log4j2
-    ● 前端框架：Angular JS + Bootstrap + Jquary
+    ● 前端框架：Angular JS + Bootstrap + Jquery
 
 ## 启动说明
     * 项目依赖activemq、Redis和ZooKeeper服务。

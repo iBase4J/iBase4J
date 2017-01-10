@@ -50,8 +50,8 @@ public class SysSessionController extends BaseController {
 	@ApiOperation(value = "删除会话")
 	@RequiresPermissions("sys.session.delete")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public Object update(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
-		sysSessionService.deleteBySessionId(id);
+	public Object update(ModelMap modelMap, @RequestParam(value = "id", required = false) Long id) {
+		sysSessionService.delete(id);
 		return setSuccessModelMap(modelMap);
 	}
 }
