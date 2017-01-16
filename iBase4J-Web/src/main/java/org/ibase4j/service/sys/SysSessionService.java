@@ -20,47 +20,46 @@ import com.baomidou.mybatisplus.plugins.Page;
  */
 @Service
 public class SysSessionService {
-    @Autowired
-    private ISysSessionProvider sysSessionProvider;
-    @Autowired
-    private RedisOperationsSessionRepository sessionRepository;
+	@Autowired
+	private ISysSessionProvider sysSessionProvider;
+	@Autowired
+	private RedisOperationsSessionRepository sessionRepository;
 
-    public Page<?> query(Map<String, Object> params) {
-        return sysSessionProvider.query(params);
-    }
+	public Page<?> query(Map<String, Object> params) {
+		return sysSessionProvider.query(params);
+	}
 
-    /** 删除会话 */
-    public void deleteByAccount(String account) {
-        Assert.isNotBlank(account, "ACCOUNT");
-        List<String> sessionIds = sysSessionProvider.querySessionIdByAccount(account);
-        if (sessionIds != null) {
-            for (String sessionId : sessionIds) {
-                sysSessionProvider.deleteBySessionId(sessionId);
-                sessionRepository.delete(sessionId);
-                sessionRepository.cleanupExpiredSessions();
-            }
-        }
-    }
+	/** 删除会话 */
+	public void deleteByAccount(String account) {
+		Assert.isNotBlank(account, "ACCOUNT");
+		List<String> sessionIds = sysSessionProvider.querySessionIdByAccount(account);
+		if (sessionIds != null) {
+			for (String sessionId : sessionIds) {
+				sysSessionProvider.deleteBySessionId(sessionId);
+				sessionRepository.delete(sessionId);
+				sessionRepository.cleanupExpiredSessions();
+			}
+		}
+	}
 
-    /** 删除会话 */
-    public void delete(Long id) {
-        Assert.notNull(id, "ID");
-        SysSession sysSession = sysSessionProvider.queryById(id);
-        if (sysSession != null) {
-            sysSessionProvider.delete(id);
-            sessionRepository.delete(sysSession.getSessionId());
-            sessionRepository.cleanupExpiredSessions();
-        }
-    }
+	/** 删除会话 */
+	public void delete(Long id) {
+		Assert.notNull(id, "ID");
+		SysSession sysSession = sysSessionProvider.queryById(id);
+		if (sysSession != null) {
+			sysSessionProvider.delete(id);
+			sessionRepository.delete(sysSession.getSessionId());
+		}
+	}
 
-    /** 更新会话 */
-    public void update(SysSession record) {
-        sysSessionProvider.update(record);
-    }
+	/** 更新会话 */
+	public void update(SysSession record) {
+		sysSessionProvider.update(record);
+	}
 
-    /** 删除会话 */
-    public void deleteBySessionId(String sessionId) {
-        sysSessionProvider.deleteBySessionId(sessionId);
-    }
+	/** 删除会话 */
+	public void deleteBySessionId(String sessionId) {
+		sysSessionProvider.deleteBySessionId(sessionId);
+	}
 
 }

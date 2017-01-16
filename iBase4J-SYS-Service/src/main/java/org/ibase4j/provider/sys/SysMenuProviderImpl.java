@@ -27,7 +27,7 @@ public class SysMenuProviderImpl extends BaseProviderImpl<SysMenu> implements IS
     private ISysDicProvider sysDicProvider;
 
     public Page<SysMenu> query(Map<String, Object> params) {
-        Page<Long> idPage = this.getPage(params);
+        Page<Long> idPage = getPage(params);
         idPage.setRecords(mapper.selectIdByMap(idPage, params));
         Page<SysMenu> pageInfo = getPage(idPage);
         Map<String, String> menuTypeMap = sysDicProvider.queryDicByDicIndexKey("MENUTYPE");

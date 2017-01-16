@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 public class SysEventProviderImpl extends BaseProviderImpl<SysEvent> implements ISysEventProvider {
 	
 	public Page<SysEvent> query(Map<String, Object> params) {
-        Page<Long> page = this.getPage(params);
+        Page<Long> page = getPage(params);
         page.setRecords(mapper.selectIdByMap(page, params));
         return getPage(page);
 	}
