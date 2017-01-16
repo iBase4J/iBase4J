@@ -52,6 +52,7 @@
 		<xfire.version>1.2.6</xfire.version>
 		<jsch.version>0.1.53</jsch.version>
 		<jedis.version>2.9.0</jedis.version>
+		<redisson.version>2.7.2</redisson.version>
 		<shiro.version>1.2.4</shiro.version>
 		<quartz.version>2.2.3</quartz.version>
 		<aspectj.version>1.8.9</aspectj.version>
@@ -62,14 +63,14 @@
 	</properties>
 
 	<repositories>
-	    <repository>
-	        <id>spring-milestones</id>
-	        <name>Spring Milestones</name>
-	        <url>https://repo.spring.io/libs-milestone</url>
-	        <snapshots>
-	            <enabled>false</enabled>
-	        </snapshots>
-	    </repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/libs-milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -182,6 +183,11 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>${redisson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -336,10 +342,10 @@
 								<uriEncoding>UTF-8</uriEncoding>
 								<port>${server.port}</port>
 								<url>http://localhost:8080/manager</url>
-			                    <server>tomcat</server>
-			                    <username>admin</username>
-			                    <password>admin</password>
-			                    <contextReloadable>true</contextReloadable>
+								<server>tomcat</server>
+								<username>admin</username>
+								<password>admin</password>
+								<contextReloadable>true</contextReloadable>
 								<systemProperties>
 									<webapps>
 										<webapp>

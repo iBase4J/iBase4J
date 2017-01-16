@@ -26,13 +26,13 @@ public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements IS
     private SysRoleMenuMapper sysRoleMenuMapper;
 
     public Page<SysRole> query(Map<String, Object> params) {
-        Page<Long> page = this.getPage(params);
+        Page<Long> page = getPage(params);
         page.setRecords(mapper.selectIdByMap(page, params));
         return getPage(page);
     }
 
     public Page<SysRoleBean> queryBean(Map<String, Object> params) {
-        Page<Long> idPage = this.getPage(params);
+        Page<Long> idPage = getPage(params);
         idPage.setRecords(mapper.selectIdByMap(idPage, params));
         Page<SysRoleBean> pageInfo = getPage(idPage, SysRoleBean.class);
         // 权限信息

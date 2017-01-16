@@ -107,7 +107,7 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements ISys
     }
 
     public Page<SysDicIndex> queryDicIndex(Map<String, Object> params) {
-        Page<Long> idPage = this.getPage(params);
+        Page<Long> idPage = getPage(params);
         List<Long> ids = dicIndexMapper.selectIdByMap(idPage, params);
         Page<SysDicIndex> page = new Page<SysDicIndex>(idPage.getCurrent(), idPage.getSize());
         page.setTotal(idPage.getTotal());
@@ -123,7 +123,7 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements ISys
     }
 
     public Page<SysDic> queryDic(Map<String, Object> params) {
-        Page<Long> page = this.getPage(params);
+        Page<Long> page = getPage(params);
         page.setRecords(mapper.selectIdByMap(page, params));
         return getPage(page);
     }

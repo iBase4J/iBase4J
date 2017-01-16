@@ -54,12 +54,14 @@
 	<loggers>
 		<logger name="org.slf4j" level="INFO" />
 		<logger name="org.quartz" level="INFO" />
+		<logger name="org.redisson" level="INFO" />
 		<logger name="com.atomikos" level="WARN" />
 		<logger name="com.alibaba.dubbo" level="INFO" />
 		<logger name="org.apache.activemq" level="INFO" />
 		<logger name="org.springframework" level="INFO" />
 		<logger name="org.apache.zookeeper" level="WARN" />
-		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
+		<logger name="org.springframework.web" level="DEBUG" />
+		<logger name="org.springframework.web.servlet.DispatcherServlet" level="INFO" />
 		<AsyncLogger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
 			<appender-ref ref="Console" />
             <appender-ref ref="ProductLog" />

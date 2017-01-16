@@ -8,16 +8,13 @@ import java.util.Map;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.support.login.ThirdPartyUser;
-import org.ibase4j.core.util.RedisUtil;
+import org.ibase4j.core.util.RedissonUtil;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.dao.sys.SysUserMapper;
 import org.ibase4j.dao.sys.SysUserThirdpartyMapper;
 import org.ibase4j.model.sys.SysUser;
 import org.ibase4j.model.sys.SysUserThirdparty;
 import org.ibase4j.model.sys.ext.SysUserBean;
-import org.ibase4j.provider.sys.ISysDeptProvider;
-import org.ibase4j.provider.sys.ISysDicProvider;
-import org.ibase4j.provider.sys.ISysUserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -43,13 +40,13 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
     private SysUserMapper sysUserMapper;
 
     public Page<SysUser> query(Map<String, Object> params) {
-        Page<Long> page = this.getPage(params);
+        Page<Long> page = getPage(params);
         page.setRecords(mapper.selectIdByMap(page, params));
         return getPage(page);
     }
 
     public Page<SysUserBean> queryBeans(Map<String, Object> params) {
-        Page<Long> idPage = this.getPage(params);
+        Page<Long> idPage = getPage(params);
         idPage.setRecords(mapper.selectIdByMap(idPage, params));
         Map<String, String> userTypeMap = sysDicProvider.queryDicByDicIndexKey("USERTYPE");
         Page<SysUserBean> pageInfo = getPage(idPage, SysUserBean.class);
@@ -101,7 +98,7 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
     public void init() {
         List<Long> list = sysUserMapper.selectIdByMap(Collections.<String, Object>emptyMap());
         for (Long id : list) {
-            RedisUtil.set(getCacheKey(id), mapper.selectById(id));
+            RedissonUtil.set(getCacheKey(id), mapper.selectById(id));
         }
     }
 }
