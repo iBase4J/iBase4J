@@ -351,8 +351,7 @@ public final class TypeParseUtil {
 					}
 				}
 				SimpleDateFormat sdf = new SimpleDateFormat(format);
-				java.util.Date fieldDate = sdf.parse(str);
-				return new Date(fieldDate.getTime());
+				return sdf.parse(str);
 			} else if ("java.sql.Date".equalsIgnoreCase(type)) {
 				if (format == null || format.length() == 0)
 					try {

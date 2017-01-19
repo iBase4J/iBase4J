@@ -40,5 +40,5 @@
 	<import resource="spring/dataSource.xml"/>
 	<import resource="spring/scheduler.xml"/>
 	<import resource="spring/mybatis.xml"/>
-	<import resource="spring/*.xml"/>
+	<import resource="spring/mq-listener.xml"/>
 </beans>
