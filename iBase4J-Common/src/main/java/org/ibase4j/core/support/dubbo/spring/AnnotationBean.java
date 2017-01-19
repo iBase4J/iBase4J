@@ -9,8 +9,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.ibase4j.core.support.dubbo.DubboReferenceConfig;
-import org.ibase4j.core.support.dubbo.DubboServiceConfig;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.springframework.beans.BeansException;
@@ -32,7 +30,11 @@ import com.alibaba.dubbo.config.ModuleConfig;
 import com.alibaba.dubbo.config.MonitorConfig;
 import com.alibaba.dubbo.config.ProtocolConfig;
 import com.alibaba.dubbo.config.ProviderConfig;
+import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
+import com.alibaba.dubbo.config.ServiceConfig;
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.dubbo.config.spring.ReferenceBean;
 
 /**
  * @author ShenHuaJie
@@ -46,9 +48,9 @@ public class AnnotationBean extends AbstractConfig
 
 	private String[] annotationPackages;
 
-	private final Set<DubboServiceConfig<?>> serviceConfigs = new ConcurrentHashSet<DubboServiceConfig<?>>();
+	private final Set<ServiceConfig<?>> serviceConfigs = new ConcurrentHashSet<ServiceConfig<?>>();
 
-	private final ConcurrentMap<String, DubboReferenceBean<?>> referenceConfigs = new ConcurrentHashMap<String, DubboReferenceBean<?>>();
+	private final ConcurrentMap<String, ReferenceBean<?>> referenceConfigs = new ConcurrentHashMap<String, ReferenceBean<?>>();
 
 	public String getPackage() {
 		return annotationPackage;
@@ -96,14 +98,14 @@ public class AnnotationBean extends AbstractConfig
 	}
 
 	public void destroy() throws Exception {
-		for (DubboServiceConfig<?> serviceConfig : serviceConfigs) {
+		for (ServiceConfig<?> serviceConfig : serviceConfigs) {
 			try {
 				serviceConfig.unexport();
 			} catch (Throwable e) {
 				logger.error(e.getMessage(), e);
 			}
 		}
-		for (DubboReferenceConfig<?> referenceConfig : referenceConfigs.values()) {
+		for (ReferenceConfig<?> referenceConfig : referenceConfigs.values()) {
 			try {
 				referenceConfig.destroy();
 			} catch (Throwable e) {
@@ -208,6 +210,18 @@ public class AnnotationBean extends AbstractConfig
 					logger.error("Failed to init remote service reference at method " + name + " in class "
 							+ bean.getClass().getName() + ", cause: " + e.getMessage(), e);
 				}
+				try {
+					Reference reference = method.getAnnotation(Reference.class);
+					if (reference != null) {
+						Object value = refer(reference, method.getParameterTypes()[0]);
+						if (value != null) {
+							method.invoke(bean, new Object[] { value });
+						}
+					}
+				} catch (Throwable e) {
+					logger.error("Failed to init remote service reference at method " + name + " in class "
+							+ bean.getClass().getName() + ", cause: " + e.getMessage(), e);
+				}
 			}
 		}
 		Field[] fields = bean.getClass().getDeclaredFields();
@@ -222,6 +236,13 @@ public class AnnotationBean extends AbstractConfig
 					if (value != null) {
 						field.set(bean, value);
 						continue;
+					}
+				}
+				Reference reference = field.getAnnotation(Reference.class);
+				if (reference != null) {
+					Object value = refer(reference, field.getType());
+					if (value != null) {
+						field.set(bean, value);
 					}
 				}
 			} catch (Throwable e) {
@@ -246,9 +267,76 @@ public class AnnotationBean extends AbstractConfig
 							+ referenceClass.getName() + " is not a interface.");
 		}
 		String key = reference.group() + "/" + interfaceName + ":" + reference.version();
-		DubboReferenceBean<?> referenceConfig = referenceConfigs.get(key);
+		ReferenceBean<?> referenceConfig = referenceConfigs.get(key);
 		if (referenceConfig == null) {
 			referenceConfig = new DubboReferenceBean<Object>(reference);
+			if (void.class.equals(reference.interfaceClass()) && "".equals(reference.interfaceName())
+					&& referenceClass.isInterface()) {
+				referenceConfig.setInterface(referenceClass);
+			}
+			if (applicationContext != null) {
+				referenceConfig.setApplicationContext(applicationContext);
+				if (reference.registry() != null && reference.registry().length > 0) {
+					List<RegistryConfig> registryConfigs = new ArrayList<RegistryConfig>();
+					for (String registryId : reference.registry()) {
+						if (registryId != null && registryId.length() > 0) {
+							registryConfigs
+									.add((RegistryConfig) applicationContext.getBean(registryId, RegistryConfig.class));
+						}
+					}
+					referenceConfig.setRegistries(registryConfigs);
+				}
+				if (reference.consumer() != null && reference.consumer().length() > 0) {
+					referenceConfig.setConsumer(
+							(ConsumerConfig) applicationContext.getBean(reference.consumer(), ConsumerConfig.class));
+				}
+				if (reference.monitor() != null && reference.monitor().length() > 0) {
+					referenceConfig.setMonitor(
+							(MonitorConfig) applicationContext.getBean(reference.monitor(), MonitorConfig.class));
+				}
+				if (reference.application() != null && reference.application().length() > 0) {
+					referenceConfig.setApplication((ApplicationConfig) applicationContext
+							.getBean(reference.application(), ApplicationConfig.class));
+				}
+				if (reference.module() != null && reference.module().length() > 0) {
+					referenceConfig.setModule(
+							(ModuleConfig) applicationContext.getBean(reference.module(), ModuleConfig.class));
+				}
+				if (reference.consumer() != null && reference.consumer().length() > 0) {
+					referenceConfig.setConsumer(
+							(ConsumerConfig) applicationContext.getBean(reference.consumer(), ConsumerConfig.class));
+				}
+				try {
+					referenceConfig.afterPropertiesSet();
+				} catch (RuntimeException e) {
+					throw (RuntimeException) e;
+				} catch (Exception e) {
+					throw new IllegalStateException(e.getMessage(), e);
+				}
+			}
+			referenceConfigs.putIfAbsent(key, referenceConfig);
+			referenceConfig = referenceConfigs.get(key);
+		}
+		return referenceConfig.get();
+	}
+
+	private Object refer(Reference reference, Class<?> referenceClass) { // method.getParameterTypes()[0]
+		String interfaceName;
+		if (!"".equals(reference.interfaceName())) {
+			interfaceName = reference.interfaceName();
+		} else if (!void.class.equals(reference.interfaceClass())) {
+			interfaceName = reference.interfaceClass().getName();
+		} else if (referenceClass.isInterface()) {
+			interfaceName = referenceClass.getName();
+		} else {
+			throw new IllegalStateException(
+					"The @Reference undefined interfaceClass or interfaceName, and the property type "
+							+ referenceClass.getName() + " is not a interface.");
+		}
+		String key = reference.group() + "/" + interfaceName + ":" + reference.version();
+		ReferenceBean<?> referenceConfig = referenceConfigs.get(key);
+		if (referenceConfig == null) {
+			referenceConfig = new ReferenceBean<Object>(reference);
 			if (void.class.equals(reference.interfaceClass()) && "".equals(reference.interfaceName())
 					&& referenceClass.isInterface()) {
 				referenceConfig.setInterface(referenceClass);
