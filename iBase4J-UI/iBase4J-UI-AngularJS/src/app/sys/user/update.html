@@ -1,0 +1,121 @@
+<!-- toaster directive -->
+<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+<!-- / toaster directive -->
+
+<!-- 导航条 -->
+<div class="bg-white bread-crumb">
+    <ul class="breadcrumb b-a m-b-n-xs lter b-b wrapper-md">
+        <li><a ui-sref="main"><i class="fa fa-home"></i> 首页</a></li>
+        <li><a ui-sref="main.sys.user.list">用户管理</a></li>
+        <li class="active" ng-bind="title"></li>
+    </ul>
+</div>
+
+<!-- 内容区域 -->
+<div class="wrapper-md content">
+    <div class="panel panel-default">
+        <!-- 头部 -->
+        <div class="panel-heading font-bold">{{title}}
+        <a class="btn btn-sm btn-icon btn-rounded btn-default pull-right m-t-n-xs" ui-sref="main.sys.user.list"><i class="text-md fa fa-times text-muted"></i></a>
+        </div>
+        <!--表单-->
+            <div class="panel-body">
+                <form class="form-horizontal"  name="user_form">
+                    <!--用户名-->
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="account">
+                        <span class="text-danger wrapper-sm">*</span>账户名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="account" id="account" placeholder="请输入您的用户名..." ng-model="record.account" ng-disabled="record.userId">
+                            <span class="help-block m-b-none">账户名唯一且不可修改。汉字以及字母均可，不得超过10个字符，不可用任何字符。</span>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <!--真实姓名-->
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="userName">
+                        用户名</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="userName" id="userName" placeholder="请输入您的真实姓名..." ng-model="record.userName">
+                            <span class="help-block m-b-none"></span>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <!--联系方式-->
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="phone">
+                        <span class="text-danger wrapper-sm">*</span>联系方式</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="请输入您的联系方式..." ng-model="record.phone">
+                            <span class="help-block m-b-none"></span>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <!--密码-->
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="password">
+                        <!--<span class="text-danger wrapper-sm">*</span>-->密码</label>
+                        <div class="col-sm-6">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="请输入密码..." ng-model="record.password">
+                            <span class="help-block m-b-none">默认密码为：111111。不得超过16个字符，数字以及字母均可，字母区分大小写，不支持任何符号以及汉字。</span>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <!--确认密码-->
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="confirmPassword">
+                        <!--<span class="text-danger wrapper-sm">*</span>-->确认密码</label>
+                        <div class="col-sm-6">
+                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="请确认您的密码..." ng-model="record.confirmPassword">
+                            <span class="help-block m-b-none"></span>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <!--用户头像-->
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="userLogoPic">
+                        用户头像</label>
+                        <div class="col-sm-6">
+                            <div class="m-b upload-pic-box">
+                                <a href="javascript:void(0);" class="btn btn-default btn-addon">
+                                    <i class="fa fa-upload"></i>上传头像
+                                </a>
+                            </div>
+                            <input type="file" id="fileInput" ng-hide="1" />
+                            <div class="hbox hbox-auto-xs">
+                                <div class="col">
+                                    <div class="wrapper-sm b-a bg-white m-r-xs m-b-xs">
+                                        <div class="bg-light" style="height:320px">
+                                            <img-crop
+                                                    image="myImage"
+                                                    result-image="myCroppedImage"
+                                                    result-image-size="160"
+                                                    area-type="square"
+                                                    ></img-crop>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="inline bg-white wrapper-sm b-a">
+                                        <div class="bg-light">
+                                            <img ng-src="{{myCroppedImage}}" />
+                                        </div>
+                                    </div>
+                                    <!--<a class="btn btn-info" ng-click="uploadImg()">上传头像</a>-->
+                                </div>
+                            </div>
+                            <span class="help-block m-b-none">logo尺寸要求宽度*高度为150px*150px。图片格式支持gif,jpg,png</span>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <!--btn-->
+                    <div class="form-group">
+                        <div class="col-sm-6 col-sm-offset-2">
+                            <button type="reset" class="btn btn-default w-xs">重置</button>
+                            <button type="submit" class="btn btn-info w-xs m-l-xl" ng-disabled="isDisabled">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
