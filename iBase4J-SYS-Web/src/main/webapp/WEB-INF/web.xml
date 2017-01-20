@@ -3,7 +3,7 @@
   <display-name>iBase4J-SYS-Web</display-name>
   <context-param>
     <param-name>webAppRootKey</param-name>
-    <param-value>iBase4J-Web</param-value>
+    <param-value>iBase4J-SYS-Web</param-value>
   </context-param>
   <context-param>
     <param-name>contextConfigLocation</param-name>
