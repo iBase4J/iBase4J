@@ -54,10 +54,11 @@
 	<loggers>
 		<logger name="org.slf4j" level="INFO" />
 		<logger name="org.quartz" level="INFO" />
+		<logger name="org.apache" level="INFO" />
 		<logger name="org.redisson" level="INFO" />
 		<logger name="com.atomikos" level="WARN" />
+		<logger name="org.crazycake.shiro" level="INFO" />
 		<logger name="com.alibaba.dubbo" level="INFO" />
-		<logger name="org.apache.activemq" level="INFO" />
 		<logger name="org.springframework" level="INFO" />
 		<logger name="org.apache.zookeeper" level="WARN" />
 		<logger name="org.springframework.web" level="DEBUG" />

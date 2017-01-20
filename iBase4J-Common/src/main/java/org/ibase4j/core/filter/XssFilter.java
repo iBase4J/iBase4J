@@ -71,7 +71,9 @@ public class XssFilter implements Filter {
 		while (params.hasMoreElements()) {
 			paramN = (String) params.nextElement();
 			String paramVale = req.getParameter(paramN);
-			logger.debug(paramN + "==" + paramVale);
+			if (!paramN.toLowerCase().contains("password")) {
+				logger.info(paramN + "==" + paramVale);
+			}
 			if (isNoticeUrl) {
 				paramVale = xssEncode(paramVale);
 			}
