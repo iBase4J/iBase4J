@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SysCacheService {
-    @DubboReference
+	@DubboReference(async = true)
 	private ISysCacheProvider sysCacheProvider;
 
 	public void flushCache() {

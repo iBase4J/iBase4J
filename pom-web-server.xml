@@ -16,6 +16,6 @@
 	<modules>
 		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-API</module>
-		<module>iBase4J-Web</module>
+		<module>iBase4J-SYS-Web</module>
 	</modules>
 </project>
