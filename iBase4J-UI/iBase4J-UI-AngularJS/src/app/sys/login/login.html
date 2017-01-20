@@ -1,0 +1,31 @@
+<!-- 登录页面 -->
+<div class="container"><br/>
+	<div class="body-bg"></div>
+	<div class="login">
+		<div class="login-screen">
+			<div class="login-icon">
+				<img src="res/img/icon.png" title="Welcome to iBase4J" />
+				<h4>
+					Welcome to <small>&nbsp;&nbsp;&nbsp;iBase4J</small>
+				</h4>
+			</div>
+
+			<form class="login-form" ng-submit="login()">
+				<div class="form-group">
+					<input type="text" class="form-control login-field" ng-model="user.account" name="account"
+						placeholder="Enter your account" ng-maxlength="20" autofocus="autofocus" required />
+					<label class="login-field-icon fui-user" for="account"></label>
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control login-field" ng-model="user.password"
+						name="password" placeholder="Password" ng-maxlength="20" required />
+					<label class="login-field-icon fui-lock" for="password"></label>
+				</div>
+				<button class="btn btn-primary btn-lg btn-block" id="btn-login" type="submit">Log in</button>
+				<a class="login-link" href="#">Lost your password?</a>
+				<div class="has-error center"><label class="control-label">{{msg}}</label></div>
+			</form>
+		</div>
+	</div>
+</div>
+<footer class="footer" data-ng-include=" 'src/tpl/footer.html' "></footer>
