@@ -8,9 +8,6 @@
 - 每个模块都是独立的系统，可以无限的扩展模块，模块之间使用Dubbo或MQ进行通信。
 - 每个模块服务多系统部署，注册到同一个Zookeeper集群服务注册中心，实现集群部署。
 
-## UI地址
-[http://git.oschina.net/iBase4J/iBase4J-UI](http://git.oschina.net/iBase4J/iBase4J-UI)
-
 ## 主要功能
  1. 数据库：Druid数据库连接池，监控数据库访问性能，统计SQL的执行性能。 数据库密码加密，加密方式请查看PropertiesUtil，decryptProperties属性配置需要解密的key。
  2. 持久层：mybatis持久化，使用MyBatis-Plus优化，减少sql开发量；aop切换数据库实现读写分离。Transtraction注解事务。
