@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.util.RedissonUtil;
+import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.WebUtil;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -54,7 +54,7 @@ public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel
 		String className = this.getClass().getSimpleName().replace("Service", "");
 		sb.append(className.substring(0, 1).toLowerCase()).append(className.substring(1));
 		sb.append(":").append(id);
-		T record = (T) RedissonUtil.get(sb.toString());
+		T record = (T) CacheUtil.getCache().get(sb.toString());
 		if (record == null) {
 			record = provider.queryById(id);
 		}

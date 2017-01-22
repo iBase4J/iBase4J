@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSessionListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.util.RedissonUtil;
+import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.service.sys.SysSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -58,13 +58,13 @@ public class SessionListener implements HttpSessionListener {
 		Long number = getAllUserNumber() + n;
 		if (number >= 0) {
 			logger.info("用户数：" + number);
-			RedissonUtil.set(Constants.ALLUSER_NUMBER, number, 60 * 60 * 24);
+			CacheUtil.getCache().set(Constants.ALLUSER_NUMBER, number, 60 * 60 * 24);
 		}
 	}
 
 	/** 获取在线用户数量 */
 	public static Long getAllUserNumber() {
-		String v = (String) RedissonUtil.get(Constants.ALLUSER_NUMBER);
+		String v = (String) CacheUtil.getCache().get(Constants.ALLUSER_NUMBER);
 		if (v != null) {
 			return Long.valueOf(v);
 		}

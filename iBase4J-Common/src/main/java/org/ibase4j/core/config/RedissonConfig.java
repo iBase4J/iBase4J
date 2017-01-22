@@ -13,14 +13,13 @@ import org.redisson.config.Config;
 import org.redisson.config.MasterSlaveServersConfig;
 import org.redisson.config.SingleServerConfig;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * Redis连接配置
  * 
  * @author ShenHuaJie
  */
-@Configuration
+//@Configuration
 public class RedissonConfig {
 	/**
 	 * Redis server address

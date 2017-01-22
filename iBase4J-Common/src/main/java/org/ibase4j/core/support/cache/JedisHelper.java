@@ -1,5 +1,6 @@
-package org.ibase4j.core.util;
+package org.ibase4j.core.support.cache;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,14 @@ import redis.clients.jedis.Tuple;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
-public final class JedisUtil {
-	private JedisUtil() {
+public class JedisHelper extends CacheManager {
+
+	public final Object get(final String key) {
+		return JedisTemplate.run(key, new Executor<String>() {
+			public String execute(ShardedJedis jedis) {
+				return jedis.get(key);
+			}
+		});
 	}
 
 	public static final String get(final String key, final Integer... expire) {
@@ -33,34 +40,42 @@ public final class JedisUtil {
 		}, expire);
 	}
 
-	public static final String set(final String key, final Integer seconds, final Object value) {
-		return JedisTemplate.run(key, new Executor<String>() {
+	public void set(final String key, final Serializable value) {
+		JedisTemplate.run(key, new Executor<String>() {
+			public String execute(ShardedJedis jedis) {
+				return jedis.set(key, JSON.toJSONString(value));
+			}
+		});
+	}
+
+	public final void set(final String key, final Serializable value, final int seconds) {
+		JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.setex(key, seconds, JSON.toJSONString(value));
 			}
 		}, seconds, seconds);
 	}
 
-	public static final Boolean exists(final String key) {
-		return JedisTemplate.run(key, new Executor<Boolean>() {
+	public final Boolean exists(final String key) {
+		return JedisTemplate.run((String) key, new Executor<Boolean>() {
 			public Boolean execute(ShardedJedis jedis) {
-				return jedis.exists(key);
+				return jedis.exists((String) key);
 			}
 		});
 	}
 
-	public static final Long del(final String key) {
-		return JedisTemplate.run(key, new Executor<Long>() {
+	public final void del(final String key) {
+		JedisTemplate.run((String) key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
-				return jedis.del(key);
+				return jedis.del((String) key);
 			}
 		});
 	}
 
-	public static final String type(final String key) {
-		return JedisTemplate.run(key, new Executor<String>() {
+	public final String type(final String key) {
+		return JedisTemplate.run((String) key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
-				return jedis.type(key);
+				return jedis.type((String) key);
 			}
 		});
 	}
@@ -70,12 +85,12 @@ public final class JedisUtil {
 	 * 
 	 * @return
 	 */
-	public static final Long expire(final String key, final int seconds) {
+	public final Boolean expire(final String key, final int seconds) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.expire(key, seconds);
 			}
-		}, seconds, seconds);
+		}, seconds, seconds) == 1;
 	}
 
 	/**
@@ -85,15 +100,15 @@ public final class JedisUtil {
 	 * @param unixTime
 	 * @return
 	 */
-	public static final Long expireAt(final String key, final long unixTime) {
+	public final Boolean expireAt(final String key, final long unixTime) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.expireAt(key, unixTime);
 			}
-		});
+		}) == 1;
 	}
 
-	public static final Long ttl(final String key) {
+	public final Long ttl(final String key) {
 		return JedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.ttl(key);
@@ -133,7 +148,7 @@ public final class JedisUtil {
 		});
 	}
 
-	public static final String getSet(final String key, final String value) {
+	public final String getSet(final String key, final String value) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
 				return jedis.getSet(key, value);
@@ -1223,5 +1238,12 @@ public final class JedisUtil {
 				return jedis.getKeyTag(key);
 			}
 		});
+	}
+
+	public Set<Serializable> getAll(String pattern) {
+		return null;
+	}
+
+	public void delAll(String pattern) {
 	}
 }

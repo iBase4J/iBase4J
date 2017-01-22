@@ -7,9 +7,9 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
+import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.RedissonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,7 +111,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			record.setUpdateTime(new Date());
 			record.setUpdateBy(userId);
 			mapper.updateById(record);
-			RedissonUtil.set(getCacheKey(id), record);
+			CacheUtil.getCache().set(getCacheKey(id), record);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
@@ -128,7 +128,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			} else {
 				mapper.updateById(record);
 			}
-			RedissonUtil.set(getCacheKey(record.getId()), record);
+			CacheUtil.getCache().set(getCacheKey(record.getId()), record);
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
@@ -140,10 +140,10 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 	public T queryById(Long id) {
 		try {
 			String key = getCacheKey(id);
-			T record = (T) RedissonUtil.get(key);
+			T record = (T) CacheUtil.getCache().get(key);
 			if (record == null) {
 				record = mapper.selectById(id);
-				RedissonUtil.set(key, record);
+				CacheUtil.getCache().set(key, record);
 			}
 			return record;
 		} catch (Exception e) {
