@@ -8,7 +8,7 @@ import java.util.Map;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.support.login.ThirdPartyUser;
-import org.ibase4j.core.util.RedissonUtil;
+import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.dao.sys.SysUserMapper;
 import org.ibase4j.dao.sys.SysUserThirdpartyMapper;
@@ -98,7 +98,7 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
     public void init() {
         List<Long> list = sysUserMapper.selectIdByMap(Collections.<String, Object>emptyMap());
         for (Long id : list) {
-            RedissonUtil.set(getCacheKey(id), mapper.selectById(id));
+        	CacheUtil.getCache().set(getCacheKey(id), mapper.selectById(id));
         }
     }
 }

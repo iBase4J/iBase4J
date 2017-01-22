@@ -1,10 +1,12 @@
-package org.ibase4j.core.util;
+package org.ibase4j.core.support.cache;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.ibase4j.core.util.PropertiesUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RBucket;
 import org.redisson.api.RType;
@@ -15,17 +17,15 @@ import org.springframework.web.context.WebApplicationContext;
 /**
  * Redis缓存辅助类
  */
-public final class RedissonUtil {
-	private RedissonUtil() {
-	}
+public class RedissonHelper extends CacheManager {
 
-	private static RedissonClient redisTemplate = null;
-	private static Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
+	private RedissonClient redisTemplate = null;
+	private Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
 
 	// 获取连接
-	private static RedissonClient getRedis() {
+	private RedissonClient getRedis() {
 		if (redisTemplate == null) {
-			synchronized (RedissonUtil.class) {
+			synchronized (RedissonHelper.class) {
 				if (redisTemplate == null) {
 					WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
 					redisTemplate = wac.getBean(Redisson.class);
@@ -35,46 +35,46 @@ public final class RedissonUtil {
 		return redisTemplate;
 	}
 
-	private static RBucket<Object> getRedisBucket(String key) {
+	private RBucket<Object> getRedisBucket(String key) {
 		return getRedis().getBucket(key);
 	}
 
-	public static final Object get(final String key) {
+	public final Object get(final String key) {
 		RBucket<Object> temp = getRedisBucket(key);
 		expire(temp, EXPIRE);
 		return temp.get();
 	}
 
-	public static final void set(final String key, final Serializable value) {
+	public final void set(final String key, final Serializable value) {
 		RBucket<Object> temp = getRedisBucket(key);
 		expire(temp, EXPIRE);
 		temp.set(value);
 	}
 
-	public static final void set(final String key, final Serializable value, int seconds) {
+	public final void set(final String key, final Serializable value, int seconds) {
 		RBucket<Object> temp = getRedisBucket(key);
 		expire(temp, seconds);
 		temp.set(value);
 	}
 
-	public static final void multiSet(final Map<String, Object> temps) {
+	public final void multiSet(final Map<String, Object> temps) {
 		getRedis().getBuckets().set(temps);
 	}
 
-	public static final Boolean exists(final String key) {
+	public final Boolean exists(final String key) {
 		RBucket<Object> temp = getRedisBucket(key);
 		return temp.isExists();
 	}
 
-	public static final void del(final String key) {
+	public final void del(final String key) {
 		getRedis().getKeys().deleteAsync(key);
 	}
 
-	public static final void delAll(final String pattern) {
+	public final void delAll(final String pattern) {
 		getRedis().getKeys().deleteByPattern(pattern);
 	}
 
-	public static final String type(final String key) {
+	public final String type(final String key) {
 		RType type = getRedis().getKeys().getType(key);
 		if (type == null) {
 			return null;
@@ -87,7 +87,7 @@ public final class RedissonUtil {
 	 *
 	 * @return
 	 */
-	public static final void expire(final RBucket<Object> bucket, final int seconds) {
+	public final void expire(final RBucket<Object> bucket, final int seconds) {
 		bucket.expireAsync(seconds, TimeUnit.SECONDS);
 	}
 
@@ -98,18 +98,29 @@ public final class RedissonUtil {
 	 * @param unixTime
 	 * @return
 	 */
-	public static final Boolean expireAt(final String key, final long unixTime) {
+	public final Boolean expireAt(final String key, final long unixTime) {
 		return getRedis().getBucket(key).expireAt(new Date(unixTime));
 	}
 
-	public static final Long ttl(final String key) {
+	public final Long ttl(final String key) {
 		RBucket<Object> rBucket = getRedisBucket(key);
 		return rBucket.remainTimeToLive();
 	}
 
-	public static final Object getSet(final String key, final Object value) {
+	public final Object getSet(final String key, final Object value) {
 		RBucket<Object> rBucket = getRedisBucket(key);
 		return rBucket.getAndSet(value);
 	}
 
+	public Set<Serializable> getAll(String pattern) {
+		return null;
+	}
+
+	public Boolean expire(String key, int seconds) {
+		return null;
+	}
+
+	public Serializable getSet(String key, String value) {
+		return null;
+	}
 }

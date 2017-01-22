@@ -7,9 +7,9 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
+import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
-import org.ibase4j.core.util.RedissonUtil;
 import org.ibase4j.dao.sys.SysSessionMapper;
 import org.ibase4j.model.sys.SysSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,7 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
 		List<SysSession> sessions = getList(ids);
 		for (SysSession sysSession : sessions) {
 			logger.info("检查SESSION : {}", sysSession.getSessionId());
-			if (!RedissonUtil.exists(key + sysSession.getSessionId())) {
+			if (!CacheUtil.getCache().exists(key + sysSession.getSessionId())) {
 				logger.info("移除SESSION : {}", sysSession.getSessionId());
 				mapper.deleteById(sysSession.getId());
 			}
