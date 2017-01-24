@@ -41,7 +41,7 @@ public class SysSessionController extends BaseController {
 	public Object get(HttpServletRequest request, ModelMap modelMap) {
 		Map<String, Object> params = WebUtil.getParameterMap(request);
 		Page<?> list = sysSessionService.query(params);
-		Long number = SessionListener.getAllUserNumber();
+		Integer number = SessionListener.getAllUserNumber();
 		modelMap.put("userNumber", number); // 用户数大于会话数,有用户没有登录
 		return setSuccessModelMap(modelMap, list);
 	}
