@@ -48,7 +48,7 @@
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
         p:connection-factory-ref="jedisConnectionFactory"
         p:key-serializer-ref="keySerializer" p:value-serializer-ref="valueSerializer"
-        p:enableTransactionSupport="true" />
+        p:enableTransactionSupport="false" />
 	<!-- 缓存 -->
 	<bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
 		<constructor-arg index="0" ref="redisTemplate" />

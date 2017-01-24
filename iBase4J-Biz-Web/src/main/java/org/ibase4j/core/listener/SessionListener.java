@@ -55,7 +55,7 @@ public class SessionListener implements HttpSessionListener {
 	}
 
 	private void setAllUserNumber(int n) {
-		Long number = getAllUserNumber() + n;
+		Integer number = getAllUserNumber() + n;
 		if (number >= 0) {
 			logger.info("用户数：" + number);
 			CacheUtil.getCache().set(Constants.ALLUSER_NUMBER, number, 60 * 60 * 24);
@@ -63,11 +63,11 @@ public class SessionListener implements HttpSessionListener {
 	}
 
 	/** 获取在线用户数量 */
-	public static Long getAllUserNumber() {
-		String v = (String) CacheUtil.getCache().get(Constants.ALLUSER_NUMBER);
+	public static Integer getAllUserNumber() {
+		Integer v = (Integer) CacheUtil.getCache().get(Constants.ALLUSER_NUMBER);
 		if (v != null) {
-			return Long.valueOf(v);
+			return v;
 		}
-		return 0L;
+		return 0;
 	}
 }
