@@ -57,7 +57,7 @@ public class LoginController extends BaseController {
     @ApiOperation(value = "用户登出")
     @PostMapping("/logout")
     public Object logout(ModelMap modelMap) {
-        Long id = WebUtil.getCurrentUser();
+    	Long id = WebUtil.getCurrentUser();
         if (id != null) {
             sysSessionService.delete(id);
         }
@@ -75,7 +75,7 @@ public class LoginController extends BaseController {
         Assert.notNull(sysUser.getAccount(), "ACCOUNT");
         Assert.notNull(sysUser.getPassword(), "PASSWORD");
         sysUser.setPassword(sysUserService.encryptPassword(sysUser.getPassword()));
-        sysUserService.add(sysUser);
+        sysUserService.update(sysUser);
         if (LoginHelper.login(account, password)) {
             return setSuccessModelMap(modelMap);
         }

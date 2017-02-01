@@ -14,7 +14,7 @@ public class BaseModel implements Serializable {
 	@TableId(value = "id_", type = IdType.ID_WORKER)
 	private Long id;
 	@TableField("enable_")
-	private Boolean enable;
+	private Integer enable;
 	@TableField("remark_")
 	private String remark;
 	private Long createBy;
@@ -44,7 +44,7 @@ public class BaseModel implements Serializable {
 	/**
 	 * @return the enable
 	 */
-	public Boolean getEnable() {
+	public Integer getEnable() {
 		return enable;
 	}
 
@@ -52,7 +52,7 @@ public class BaseModel implements Serializable {
 	 * @param enable
 	 *            the enable to set
 	 */
-	public void setEnable(Boolean enable) {
+	public void setEnable(Integer enable) {
 		this.enable = enable;
 	}
 
@@ -130,5 +130,4 @@ public class BaseModel implements Serializable {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-
 }

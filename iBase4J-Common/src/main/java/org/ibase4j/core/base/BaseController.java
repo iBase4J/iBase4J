@@ -3,9 +3,12 @@
  */
 package org.ibase4j.core.base;
 
+import java.util.Iterator;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authz.UnauthorizedException;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * 控制器基类
@@ -53,8 +57,20 @@ public abstract class BaseController {
 	/** 设置响应代码 */
 	protected ResponseEntity<ModelMap> setModelMap(ModelMap modelMap, HttpCode code, Object data) {
 		modelMap.remove("void");
+		for (Iterator<String> iterator = modelMap.keySet().iterator(); iterator.hasNext();) {
+			String key = iterator.next();
+			if (key.startsWith("org.springframework.validation.BindingResult")) {
+				modelMap.remove(key);
+			}
+		}
 		if (data != null) {
-			modelMap.put("data", data);
+			if (data instanceof Page) {
+				Page<?> page = (Page<?>) data;
+				modelMap.put("data", page.getRecords());
+				modelMap.put("recordsTotal", page.getTotal());
+			} else {
+				modelMap.put("data", data);
+			}
 		}
 		modelMap.put("httpCode", code.value());
 		modelMap.put("msg", code.msg());
@@ -73,12 +89,16 @@ public abstract class BaseController {
 		} else if (ex instanceof IllegalArgumentException) {
 			new IllegalParameterException(ex.getMessage()).handler(modelMap);
 		} else if (ex instanceof UnauthorizedException) {
-			setModelMap(modelMap, HttpCode.FORBIDDEN);
+			modelMap.put("httpCode", HttpCode.FORBIDDEN.value());
+			modelMap.put("msg", StringUtils.defaultIfBlank(ex.getMessage(), HttpCode.FORBIDDEN.msg()));
 		} else {
-			setModelMap(modelMap, HttpCode.INTERNAL_SERVER_ERROR);
+			modelMap.put("httpCode", HttpCode.INTERNAL_SERVER_ERROR.value());
+			String msg = StringUtils.defaultIfBlank(ex.getMessage(), HttpCode.INTERNAL_SERVER_ERROR.msg());
+			modelMap.put("msg", msg.length() > 100 ? "系统走神了,请稍候再试." : msg);
 		}
-		request.setAttribute("msg", modelMap.get("msg"));
 		response.setContentType("application/json;charset=UTF-8");
+		modelMap.put("timestamp", System.currentTimeMillis());
+		logger.info(JSON.toJSON(modelMap));
 		byte[] bytes = JSON.toJSONBytes(modelMap, SerializerFeature.DisableCircularReferenceDetect);
 		response.getOutputStream().write(bytes);
 	}

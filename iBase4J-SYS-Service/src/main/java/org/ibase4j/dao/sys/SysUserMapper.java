@@ -8,5 +8,5 @@ import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.model.sys.SysUser;
 
 public interface SysUserMapper extends BaseMapper<SysUser> {
-    List<Long> selectIdByMap(@Param("cm") Map<String, Object> params);
+    List<Long> selectIdPage(@Param("cm") Map<String, Object> params);
 }

@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.transaction.annotation.Transactional;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.CacheUtil;
@@ -12,13 +16,6 @@ import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
 import org.ibase4j.dao.sys.SysSessionMapper;
 import org.ibase4j.model.sys.SysSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * @author ShenHuaJie
@@ -27,15 +24,13 @@ import com.baomidou.mybatisplus.plugins.Page;
 @CacheConfig(cacheNames = "sysSession")
 @DubboService(interfaceClass = ISysSessionProvider.class)
 public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> implements ISysSessionProvider {
-	@Autowired
-	private SysSessionMapper sessionMapper;
 
 	@CachePut
 	@Transactional
 	public SysSession update(SysSession record) {
 		if (record.getId() == null) {
 			record.setUpdateTime(new Date());
-			Long id = sessionMapper.queryBySessionId(record.getSessionId());
+			Long id = ((SysSessionMapper) mapper).queryBySessionId(record.getSessionId());
 			if (id != null) {
 				mapper.updateById(record);
 			} else {
@@ -55,24 +50,18 @@ public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> impleme
 
 	// 系统触发,由系统自动管理缓存
 	public void deleteBySessionId(final String sessionId) {
-		sessionMapper.deleteBySessionId(sessionId);
-	}
-
-	public Page<SysSession> query(Map<String, Object> params) {
-		Page<Long> page = getPage(params);
-		page.setRecords(mapper.selectIdByMap(page, params));
-		return getPage(page);
+		((SysSessionMapper) mapper).deleteBySessionId(sessionId);
 	}
 
 	public List<String> querySessionIdByAccount(String account) {
-		return sessionMapper.querySessionIdByAccount(account);
+		return ((SysSessionMapper) mapper).querySessionIdByAccount(account);
 	}
 
 	//
 	public void cleanExpiredSessions() {
 		String key = "spring:session:" + PropertiesUtil.getString("session.redis.namespace") + ":sessions:expires:";
 		Map<String, Object> columnMap = InstanceUtil.newHashMap();
-		List<Long> ids = mapper.selectIdByMap(new RowBounds(), columnMap);
+		List<Long> ids = mapper.selectIdPage(new RowBounds(), columnMap);
 		List<SysSession> sessions = getList(ids);
 		for (SysSession sysSession : sessions) {
 			logger.info("检查SESSION : {}", sysSession.getSessionId());

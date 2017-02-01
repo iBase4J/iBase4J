@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
-
 /**
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
@@ -17,13 +16,16 @@ public interface BaseProvider<T extends BaseModel> {
 	public T update(T record);
 
 	@Transactional
-	public void delete(Long id, Long userId);
+	public void del(Long id, Long userId);
+
+	@Transactional
+	public void delete(Long id);
 
 	public T queryById(Long id);
 
 	public Page<T> query(Map<String, Object> params);
-	
-    public <K> Page<K> getPage(Page<Long> ids, Class<K> cls);
 
-    public <K> List<K> getList(List<Long> ids, Class<K> cls);
+	public <K> Page<K> getPage(Page<Long> ids, Class<K> cls);
+
+	public <K> List<K> getList(List<Long> ids, Class<K> cls);
 }

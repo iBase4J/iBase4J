@@ -15,8 +15,6 @@ import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;
 import org.ibase4j.model.sys.SysUserRole;
 import org.ibase4j.model.sys.ext.SysMenuBean;
-import org.ibase4j.provider.sys.ISysAuthorizeProvider;
-import org.ibase4j.provider.sys.ISysMenuProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;

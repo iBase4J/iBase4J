@@ -11,7 +11,10 @@ angular.module('app')
 	        $scope.loading = true;
 			$.ajax({
 				url : '/param/read/list',
-				data: $scope.param
+				type: 'PUT',
+				dataType: 'json',
+		        contentType:'application/json;charset=UTF-8',
+				data: angular.toJson($scope.param)
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.httpCode == 200) {

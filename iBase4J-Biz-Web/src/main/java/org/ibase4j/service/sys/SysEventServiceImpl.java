@@ -55,7 +55,7 @@ public class SysEventServiceImpl extends BaseService<ISysEventProvider, SysEvent
 					Map<String, Object> params = InstanceUtil.newHashMap();
 					params.put("permission_url", record.getRequestUri());
 					
-					add(record);
+					update(record);
 					// 内存信息
 					if (logger.isDebugEnabled()) {
 						String message = "开始时间: {}; 结束时间: {}; 耗时: {}s; URI: {}; ";

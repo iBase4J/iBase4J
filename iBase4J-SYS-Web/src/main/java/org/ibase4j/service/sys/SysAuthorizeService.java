@@ -29,7 +29,7 @@ public class SysAuthorizeService {
 	}
 
 	public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
-	    Long userId = WebUtil.getCurrentUser();
+		Long userId = WebUtil.getCurrentUser();
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
 			sysUserMenu.setCreateBy(userId);
 			sysUserMenu.setUpdateBy(userId);
@@ -38,7 +38,7 @@ public class SysAuthorizeService {
 	}
 
 	public void updateUserRole(List<SysUserRole> sysUserRoles) {
-	    Long userId = WebUtil.getCurrentUser();
+		Long userId = WebUtil.getCurrentUser();
 		for (SysUserRole sysUserRole : sysUserRoles) {
 			sysUserRole.setCreateBy(userId);
 			sysUserRole.setUpdateBy(userId);
@@ -47,7 +47,7 @@ public class SysAuthorizeService {
 	}
 
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus) {
-	    Long userId = WebUtil.getCurrentUser();
+		Long userId = WebUtil.getCurrentUser();
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
 			sysRoleMenu.setCreateBy(userId);
 			sysRoleMenu.setUpdateBy(userId);
