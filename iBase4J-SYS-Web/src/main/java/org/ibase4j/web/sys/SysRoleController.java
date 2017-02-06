@@ -1,6 +1,5 @@
 package org.ibase4j.web.sys;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -33,7 +32,7 @@ public class SysRoleController extends BaseController {
 	private SysRoleService sysRoleService;
 
 	@ApiOperation(value = "查询角色")
-	@RequiresPermissions("sys.role.read")
+	@RequiresPermissions("sys.base.role.read")
 	@RequestMapping(value = "/read/list", method = RequestMethod.PUT)
 	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> sysRoleBean) {
 		Page<?> list = sysRoleService.queryBean(sysRoleBean);
@@ -41,7 +40,7 @@ public class SysRoleController extends BaseController {
 	}
 
 	@ApiOperation(value = "角色详情")
-	@RequiresPermissions("sys.role.read")
+	@RequiresPermissions("sys.base.role.read")
 	@RequestMapping(value = "/read/detail", method = RequestMethod.PUT)
 	public Object detail(ModelMap modelMap, @RequestBody SysRole param) {
 		SysRole record = sysRoleService.queryById(param.getId());
@@ -49,7 +48,7 @@ public class SysRoleController extends BaseController {
 	}
 
 	@ApiOperation(value = "修改角色")
-	@RequiresPermissions("sys.role.update")
+	@RequiresPermissions("sys.base.role.update")
 	@RequestMapping(method = RequestMethod.POST)
 	public Object update(ModelMap modelMap, @RequestBody SysRole record) {
 		sysRoleService.update(record);
@@ -57,18 +56,10 @@ public class SysRoleController extends BaseController {
 	}
 
 	@ApiOperation(value = "删除角色")
-	@RequiresPermissions("sys.role.delete")
+	@RequiresPermissions("sys.base.role.delete")
 	@RequestMapping(method = RequestMethod.DELETE)
 	public Object delete(ModelMap modelMap, @RequestBody SysRole record) {
 		sysRoleService.delete(record.getId());
 		return setSuccessModelMap(modelMap);
-	}
-
-	@ApiOperation(value = "获取角色权限")
-	@RequiresPermissions("sys.role.read")
-	@RequestMapping(value = "/read/permission", method = RequestMethod.PUT)
-	public Object getPermission(ModelMap modelMap, @RequestBody SysRole record) {
-		List<String> permissions = sysRoleService.getPermissions(record.getId());
-		return setSuccessModelMap(modelMap, permissions);
 	}
 }

@@ -25,6 +25,8 @@ public interface BaseProvider<T extends BaseModel> {
 
 	public Page<T> query(Map<String, Object> params);
 
+	public Page<Map<String, Object>> queryMap(Map<String, Object> params);
+
 	public <K> Page<K> getPage(Page<Long> ids, Class<K> cls);
 
 	public <K> List<K> getList(List<Long> ids, Class<K> cls);

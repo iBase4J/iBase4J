@@ -46,8 +46,7 @@
             if(m){
                 $scope.isDisabled = true;//提交disabled
                 $.ajax({
-    				dataType: 'json',
-    		        contentType:'application/json;charset=UTF-8',
+                	type: 'POST',
     				url : '/user/update',
     				data: angular.toJson(m)
     			}).then(callback);
@@ -90,8 +89,9 @@
         function activate(id) {
 	        $scope.loading = true;
         	$.ajax({
+        		type: 'PUT',
 				url : '/user/read/detail',
-				data: {'id': id}
+				data: angular.toJson({'id': id})
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.httpCode == 200) {

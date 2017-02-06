@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.support.Assert;
@@ -45,9 +48,9 @@ public class SysUserController extends BaseController {
 	@Autowired
 	private SysAuthorizeService authorizeService;
 
+	@PostMapping
 	@ApiOperation(value = "修改用户信息")
-	@RequiresPermissions("sys.user.update")
-	@RequestMapping(method = RequestMethod.POST)
+	@RequiresPermissions("sys.base.user.update")
 	public Object update(ModelMap modelMap, @RequestBody SysUser sysUser) {
 		Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
 		Assert.length(sysUser.getAccount(), 3, 15, "ACCOUNT");
@@ -56,8 +59,8 @@ public class SysUserController extends BaseController {
 	}
 
 	@ApiOperation(value = "修改个人信息")
-	@RequiresPermissions("sys.user.update")
-	@RequestMapping(value = "/update/person", method = RequestMethod.POST)
+	@RequiresPermissions("sys.base.user.update")
+	@PostMapping(value = "/update/person")
 	public Object updatePerson(ModelMap modelMap, @RequestBody SysUser sysUser) {
 		sysUser.setId(WebUtil.getCurrentUser());
 		Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
@@ -67,8 +70,8 @@ public class SysUserController extends BaseController {
 	}
 
 	@ApiOperation(value = "修改用户头像")
-	@RequiresPermissions("sys.user.update")
-	@RequestMapping(value = "/update/avatar", method = RequestMethod.POST)
+	@RequiresPermissions("sys.base.user.update")
+	@PostMapping(value = "/update/avatar")
 	public Object updateAvatar(HttpServletRequest request, ModelMap modelMap) {
 		List<String> fileNames = UploadUtil.uploadImage(request);
 		if (fileNames.size() > 0) {
@@ -91,8 +94,8 @@ public class SysUserController extends BaseController {
 
 	// 修改密码
 	@ApiOperation(value = "修改密码")
-	@RequiresPermissions("sys.user.update")
-	@RequestMapping(value = "/update/password", method = RequestMethod.POST)
+	@RequiresPermissions("sys.base.user.update")
+	@PostMapping(value = "/update/password")
 	public Object updatePassword(ModelMap modelMap, @RequestBody SysUser sysUser) {
 		sysUserService.updatePassword(WebUtil.getCurrentUser(), sysUser.getOldPassword(), sysUser.getPassword());
 		return setSuccessModelMap(modelMap);
@@ -100,8 +103,8 @@ public class SysUserController extends BaseController {
 
 	// 查询用户
 	@ApiOperation(value = "查询用户")
-	@RequiresPermissions("sys.user.read")
-	@RequestMapping(value = "/read/list", method = RequestMethod.PUT)
+	@RequiresPermissions("sys.base.user.read")
+	@PutMapping(value = "/read/list")
 	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> sysUser) {
 		Page<?> list = sysUserService.queryBeans(sysUser);
 		return setSuccessModelMap(modelMap, list);
@@ -109,8 +112,8 @@ public class SysUserController extends BaseController {
 
 	// 用户详细信息
 	@ApiOperation(value = "用户详细信息")
-	@RequiresPermissions("sys.user.read")
-	@RequestMapping(value = "/read/detail", method = RequestMethod.PUT)
+	@RequiresPermissions("sys.base.user.read")
+	@PutMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestBody SysUser sysUser) {
 		sysUser = sysUserService.queryById(sysUser.getId());
 		if (sysUser != null) {
@@ -121,8 +124,8 @@ public class SysUserController extends BaseController {
 
 	// 用户详细信息
 	@ApiOperation(value = "删除用户")
-	@RequiresPermissions("sys.user.delete")
-	@RequestMapping(method = RequestMethod.DELETE)
+	@RequiresPermissions("sys.base.user.delete")
+	@DeleteMapping
 	public Object delete(ModelMap modelMap, @RequestBody SysUser sysUser) {
 		sysUserService.delete(sysUser.getId());
 		return setSuccessModelMap(modelMap);
@@ -130,7 +133,7 @@ public class SysUserController extends BaseController {
 
 	// 当前用户
 	@ApiOperation(value = "当前用户信息")
-	@RequestMapping(value = "/read/promission", method = RequestMethod.GET)
+	@GetMapping(value = "/read/promission")
 	public Object promission(ModelMap modelMap) {
 		Long id = getCurrUser();
 		SysUser sysUser = sysUserService.queryById(id);
@@ -145,7 +148,7 @@ public class SysUserController extends BaseController {
 
 	// 当前用户
 	@ApiOperation(value = "当前用户信息")
-	@RequestMapping(value = "/read/current", method = RequestMethod.GET)
+	@GetMapping(value = "/read/current")
 	public Object current(ModelMap modelMap) {
 		Long id = getCurrUser();
 		SysUser sysUser = sysUserService.queryById(id);

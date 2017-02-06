@@ -10,8 +10,9 @@ angular.module('app')
 		$scope.search = function () {
 	        $scope.loading = true;
 			$.ajax({
+				type: 'PUT',
 				url : '/scheduled/read/log',
-				data: $scope.param
+				data: angular.toJson($scope.param)
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.httpCode == 200) {

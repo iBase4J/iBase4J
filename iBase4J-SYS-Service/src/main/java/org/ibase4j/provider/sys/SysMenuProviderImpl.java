@@ -11,7 +11,7 @@ import org.ibase4j.dao.sys.SysMenuMapper;
 import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.model.sys.ext.SysMenuBean;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 
 /**
  * @author ShenHuaJie
@@ -23,14 +23,21 @@ public class SysMenuProviderImpl extends BaseProviderImpl<SysMenu> implements IS
 	@Autowired
 	private ISysDicProvider sysDicProvider;
 
-	public Page<SysMenuBean> queryBean(Map<String, Object> params) {
-		Page<Long> idPage = getPage(params);
-		idPage.setRecords(mapper.selectIdPage(idPage, params));
-		Page<SysMenuBean> pageInfo = getPage(idPage, SysMenuBean.class);
+	public List<SysMenuBean> queryBean(Map<String, Object> params) {
+		List<Long> ids = ((SysMenuMapper) mapper).selectIdPage(params);
+		List<SysMenuBean> pageInfo = getList(ids, SysMenuBean.class);
 		Map<String, String> menuTypeMap = sysDicProvider.queryDicByDicIndexKey("MENUTYPE");
-		for (SysMenuBean sysMenu : pageInfo.getRecords()) {
+		EntityWrapper<SysMenu> wrapper = new EntityWrapper<SysMenu>();
+		for (SysMenuBean sysMenu : pageInfo) {
 			if (sysMenu.getMenuType() != null) {
 				sysMenu.setTypeName(menuTypeMap.get(sysMenu.getMenuType().toString()));
+			}
+			SysMenu menu = new SysMenu();
+			menu.setParentId(sysMenu.getId());
+			wrapper.setEntity(menu);
+			int count = mapper.selectCount(wrapper);
+			if (count > 0) {
+				sysMenu.setLeaf(0);
 			}
 		}
 		return pageInfo;

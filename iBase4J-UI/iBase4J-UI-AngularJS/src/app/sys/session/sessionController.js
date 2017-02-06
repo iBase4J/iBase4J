@@ -36,8 +36,9 @@ angular.module('app')
 		$scope.disableItem = function(id, account) {
 			if(account != $rootScope.userInfo.account || confirm('确认要自杀？')){
 				$.ajax({
+					type: 'POST',
 					url : '/session/delete',
-					data: {'id': id}
+					data: angular.toJson({'id': id})
 				}).then(function(result) {
 			        $scope.loading = false;
 					if (result.httpCode == 200) {

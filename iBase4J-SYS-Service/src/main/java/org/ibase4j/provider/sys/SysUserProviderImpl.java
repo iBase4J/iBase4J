@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,6 +16,7 @@ import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.dao.sys.SysUserMapper;
+import org.ibase4j.dao.sys.SysUserMenuMapper;
 import org.ibase4j.dao.sys.SysUserThirdpartyMapper;
 import org.ibase4j.model.sys.SysUser;
 import org.ibase4j.model.sys.SysUserThirdparty;
@@ -37,6 +39,8 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
 	private ISysDicProvider sysDicProvider;
 	@Autowired
 	private ISysDeptProvider sysDeptProvider;
+	@Autowired
+	private SysUserMenuMapper sysUserMenuMapper;
 
 	public Page<SysUserBean> queryBeans(Map<String, Object> params) {
 		Page<Long> idPage = getPage(params);
@@ -49,6 +53,14 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
 			}
 			if (userBean.getDeptId() != null) {
 				userBean.setDeptName(sysDeptProvider.queryById(userBean.getDeptId()).getDeptName());
+			}
+			List<String> permissions = sysUserMenuMapper.queryPermission(userBean.getId());
+			for (String permission : permissions) {
+				if (StringUtils.isBlank(userBean.getPermission())) {
+					userBean.setPermission(permission);
+				} else {
+					userBean.setPermission(userBean.getPermission() + ";"  + permission);
+				}
 			}
 		}
 		return pageInfo;

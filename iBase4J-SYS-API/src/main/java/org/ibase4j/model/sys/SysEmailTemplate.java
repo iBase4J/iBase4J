@@ -22,39 +22,43 @@ public class SysEmailTemplate extends BaseModel {
 	/**
 	 * 邮件名称
 	 */
-	@TableField(value="email_name")
-	private String emailName;
+	@TableField(value = "sender_name")
+	private String senderName;
 	/**
 	 * 发送邮件帐号
 	 */
-	@TableField(value=" email_account")
-	private String  emailAccount;
+	@TableField(value = " sender_account")
+	private String senderAccount;
 	/**
 	 * 排序号
 	 */
-	@TableField(value="sort_")
+	@TableField(value = "sort_")
 	private Integer sort;
+	/**
+	 * 标题模版
+	 */
+	@TableField(value = "title_")
+	private String title;
 	/**
 	 * 内容模板
 	 */
-	@TableField(value="template_")
+	@TableField(value = "template_")
 	private String template;
 
-
-	public String getEmailName() {
-		return emailName;
+	public String getSenderName() {
+		return senderName;
 	}
 
-	public void setEmailName(String emailName) {
-		this.emailName = emailName;
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
 	}
 
-	public String getEmailAccount() {
-		return  emailAccount;
+	public String getSenderAccount() {
+		return senderAccount;
 	}
 
-	public void setEmailAccount(String  emailAccount) {
-		this. emailAccount =  emailAccount;
+	public void setSenderAccount(String senderAccount) {
+		this.senderAccount = senderAccount;
 	}
 
 	public Integer getSort() {
@@ -63,6 +67,14 @@ public class SysEmailTemplate extends BaseModel {
 
 	public void setSort(Integer sort) {
 		this.sort = sort;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getTemplate() {
@@ -76,5 +88,4 @@ public class SysEmailTemplate extends BaseModel {
 	protected Serializable pkVal() {
 		return getId();
 	}
-
 }

@@ -22,44 +22,53 @@ public class SysNews extends BaseModel {
 	/**
 	 * 新闻标题
 	 */
-	@TableField(value="news_title")
+	@TableField(value = "news_title")
 	private String newsTitle;
 	/**
 	 * 新闻类型
 	 */
-	@TableField(value="news_type")
+	@TableField(value = "news_type")
 	private String newsType;
 	/**
 	 * 发布时间
 	 */
-	@TableField(value="send_time")
+	@TableField(value = "send_time")
 	private Date sendTime;
 	/**
 	 * 作者
 	 */
-	@TableField(value="author_")
+	@TableField(value = "author_")
 	private String author;
 	/**
 	 * 编辑
 	 */
-	@TableField(value="editer_")
-	private String editer;
+	@TableField(value = "editor_")
+	private String editor;
 	/**
 	 * Tag标签
 	 */
-	@TableField(value="tags_")
+	@TableField(value = "tags_")
 	private String tags;
 	/**
 	 * 关键字
 	 */
-	@TableField(value="keys_")
+	@TableField(value = "keys_")
 	private String keys;
 	/**
 	 * 内容
 	 */
-	@TableField(value="content_")
+	@TableField(value = "content_")
 	private String content;
-
+	/**
+	 * 阅读次数
+	 */
+	@TableField(value = "reader_times")
+	private Integer readerTimes;
+	/**
+	 * 发布状态
+	 */
+	@TableField(value = "status_")
+	private String status;
 
 	public String getNewsTitle() {
 		return newsTitle;
@@ -93,12 +102,12 @@ public class SysNews extends BaseModel {
 		this.author = author;
 	}
 
-	public String getEditer() {
-		return editer;
+	public String getEditor() {
+		return editor;
 	}
 
-	public void setEditer(String editer) {
-		this.editer = editer;
+	public void setEditor(String editor) {
+		this.editor = editor;
 	}
 
 	public String getTags() {
@@ -123,6 +132,22 @@ public class SysNews extends BaseModel {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public Integer getReaderTimes() {
+		return readerTimes;
+	}
+
+	public void setReaderTimes(Integer readerTimes) {
+		this.readerTimes = readerTimes;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	protected Serializable pkVal() {

@@ -37,7 +37,7 @@ public class SysParamController extends BaseController {
 
 	@ApiOperation(value = "查询系统参数")
 	@RequestMapping(value = "/read/list")
-	@RequiresPermissions("sys.param.read")
+	@RequiresPermissions("sys.base.param.read")
 	public Object get(HttpServletRequest request, ModelMap modelMap,
 			@RequestBody(required = false) Map<String, Object> sysParam) {
 		Page<?> list = sysParamService.query(sysParam);
@@ -46,7 +46,7 @@ public class SysParamController extends BaseController {
 
 	// 详细信息
 	@ApiOperation(value = "系统参数详情")
-	@RequiresPermissions("sys.param.read")
+	@RequiresPermissions("sys.base.param.read")
 	@RequestMapping(value = "/read/detail")
 	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Long id) {
 		SysParam record = sysParamService.queryById(id);
@@ -55,7 +55,7 @@ public class SysParamController extends BaseController {
 
 	// 修改
 	@ApiOperation(value = "修改系统参数")
-	@RequiresPermissions("sys.param.update")
+	@RequiresPermissions("sys.base.param.update")
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(HttpServletRequest request, ModelMap modelMap) {
 		SysParam record = Request2ModelUtil.covert(SysParam.class, request);
@@ -65,7 +65,7 @@ public class SysParamController extends BaseController {
 
 	// 删除
 	@ApiOperation(value = "删除系统参数")
-	@RequiresPermissions("sys.param.delete")
+	@RequiresPermissions("sys.base.param.delete")
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object delete(HttpServletRequest request, ModelMap modelMap,
 			@RequestParam(value = "id", required = false) Long id) {

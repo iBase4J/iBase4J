@@ -1,6 +1,5 @@
 package org.ibase4j.service.sys;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -24,9 +23,5 @@ public class SysRoleService extends BaseService<ISysRoleProvider, SysRole> {
 
     public Page<?> queryBean(Map<String, Object> params) {
         return provider.queryBean(params);
-    }
-
-    public List<String> getPermissions(Long id) {
-        return provider.getPermissions(id);
     }
 }

@@ -22,8 +22,9 @@
             if(m){
                 $scope.isDisabled = true;//提交disabled
                 $.ajax({
-    				url :'/scheduled/update/task',
-    				data: $scope.record
+                	type: 'POST',
+    				url :'/scheduled',
+    				data: angular.toJson($scope.record)
     			}).then(callback);
             }
             function callback(result) {

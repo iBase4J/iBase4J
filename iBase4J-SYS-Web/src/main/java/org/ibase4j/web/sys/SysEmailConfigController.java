@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.util.DataUtil;
+import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.model.sys.SysEmailConfig;
 import org.ibase4j.service.sys.SysEmailConfigService;
 
@@ -51,6 +53,14 @@ public class SysEmailConfigController extends BaseController {
 	@RequiresPermissions("sys.email.config.update")
 	@RequestMapping(method = RequestMethod.POST)
 	public Object update(ModelMap modelMap, @RequestBody SysEmailConfig record) {
+		if (record.getId() != null) {
+			SysEmailConfig config = sysEmailConfigService.queryById(record.getId());
+			if (record.getSenderPassword() != null && !record.getSenderPassword().equals(config.getSenderPassword())) {
+				record.setSenderPassword(SecurityUtil.encryptMd5(record.getSenderPassword()));
+			}
+		} else if (DataUtil.isNotEmpty(record.getSenderPassword())) {
+			record.setSenderPassword(SecurityUtil.encryptMd5(record.getSenderPassword()));
+		}
 		sysEmailConfigService.update(record);
 		return setSuccessModelMap(modelMap);
 	}

@@ -111,5 +111,11 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.5.0</version>
 		</dependency>
+		<!--  -->
+		<dependency>
+		    <groupId>cz.mallat.uasparser</groupId>
+		    <artifactId>uasparser</artifactId>
+		    <version>0.6.2</version>
+		</dependency>
 	</dependencies>
 </project>

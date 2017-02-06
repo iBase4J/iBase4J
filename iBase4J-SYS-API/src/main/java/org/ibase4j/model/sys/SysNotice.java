@@ -45,6 +45,16 @@ public class SysNotice extends BaseModel {
 	@TableField(value="sources_url")
 	private String sourcesUrl;
 	/**
+	 * 阅读次数
+	 */
+	@TableField(value = "reader_times")
+	private Integer readerTimes;
+	/**
+	 * 发布状态
+	 */
+	@TableField(value = "status_")
+	private String status;
+	/**
 	 * 内容
 	 */
 	@TableField(value="content_")
@@ -97,6 +107,22 @@ public class SysNotice extends BaseModel {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public Integer getReaderTimes() {
+		return readerTimes;
+	}
+
+	public void setReaderTimes(Integer readerTimes) {
+		this.readerTimes = readerTimes;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	protected Serializable pkVal() {

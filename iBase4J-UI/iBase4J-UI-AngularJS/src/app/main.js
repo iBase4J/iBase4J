@@ -85,9 +85,33 @@ angular.module('app')
         }
 
 		$.ajaxSetup({
-			type : "POST",
+            dataType: 'json',
+			contentType:'application/json;charset=UTF-8',
 			beforeSend: function(evt, request, settings) {
 				//request.url = 'iBase4J-Web' + request.url;
+			},
+			dataFilter: function(result) {
+				try {
+					result = JSON.parse(result);
+					if(result.httpCode == 401) {
+						$state.go('access.login');
+			            return null;
+			        } else if(result.httpCode == 303) {
+			        } else if(result.httpCode == 200) {
+						if(result.data && result.data.id) {
+							result.data.id = result.data.id_;
+						} else if(result.data) {
+							var r = result.data;
+							for(var i=0; i<r.length;i++)
+								r[i].id = r[i].id_;
+						}
+			        } else if(result.data) {
+			        	error(result.data.msg);
+					}
+					return JSON.stringify(result);
+				} catch(e) {
+					return result;
+				}
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				switch (jqXHR.status) {
@@ -96,23 +120,5 @@ angular.module('app')
 					break;
 				}
 			}
-		});
-		$(document).ajaxSuccess(function(event, xhr, settings) {
-			if(xhr.responseJSON.httpCode == 401) {
-				$state.go('access.login');
-                return null;
-            } else if(xhr.responseJSON.httpCode == 303) {
-            } else if(xhr.responseJSON.httpCode != 200) {
-            } else {
-				if(xhr.responseJSON.data && xhr.responseJSON.data.records) {
-					var r = xhr.responseJSON.data.records;
-					for(var i=0; i<r.length;i++)
-						r[i].id = r[i].id_;
-				}
-				if(xhr.responseJSON.data && xhr.responseJSON.data.id) {
-					xhr.responseJSON.data.id = xhr.responseJSON.data.id_;
-				}
-			}
-			return event;
 		});
     }]);

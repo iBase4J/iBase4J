@@ -82,7 +82,7 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements ISys
 
 		Map<Long, String> dicIndexMap = InstanceUtil.newHashMap();
 		for (Long id : records) {
-			dicIndexMap.put(id, dicIndexMapper.selectById(id).getKeyValue());
+			dicIndexMap.put(id, dicIndexMapper.selectById(id).getKey());
 		}
 		records = dicMapper.selectIdPage(Collections.<String, Object>emptyMap());
 		Page<Long> idPage = new Page<Long>(1, records.size());

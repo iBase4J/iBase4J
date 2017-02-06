@@ -16,8 +16,6 @@ import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.service.sys.SysMenuService;
 
-import com.baomidou.mybatisplus.plugins.Page;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -35,15 +33,15 @@ public class SysMenuController extends BaseController {
 	private SysMenuService sysMenuService;
 
 	@ApiOperation(value = "查询菜单")
-	@RequiresPermissions("sys.menu.read")
+	@RequiresPermissions("sys.base.menu.read")
 	@RequestMapping(value = "/read/list", method = RequestMethod.PUT)
 	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> sysMenu) {
-		Page<?> list = sysMenuService.query(sysMenu);
+		List<?> list = sysMenuService.queryBean(sysMenu);
 		return setSuccessModelMap(modelMap, list);
 	}
 
 	@ApiOperation(value = "菜单详情")
-	@RequiresPermissions("sys.menu.read")
+	@RequiresPermissions("sys.base.menu.read")
 	@RequestMapping(value = "/read/detail", method = RequestMethod.PUT)
 	public Object detail(ModelMap modelMap, @RequestBody SysMenu param) {
 		SysMenu record = sysMenuService.queryById(param.getId());
@@ -51,7 +49,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	@ApiOperation(value = "修改菜单")
-	@RequiresPermissions("sys.menu.updae")
+	@RequiresPermissions("sys.base.menu.updae")
 	@RequestMapping(method = RequestMethod.POST)
 	public Object update(ModelMap modelMap, @RequestBody SysMenu record) {
 		sysMenuService.update(record);
@@ -59,7 +57,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	@ApiOperation(value = "删除菜单")
-	@RequiresPermissions("sys.menu.delete")
+	@RequiresPermissions("sys.base.menu.delete")
 	@RequestMapping(method = RequestMethod.DELETE)
 	public Object delete(ModelMap modelMap, @RequestBody SysMenu record) {
 		sysMenuService.delete(record.getId());
@@ -67,7 +65,7 @@ public class SysMenuController extends BaseController {
 	}
 
 	@ApiOperation(value = "获取所有权限")
-	@RequiresPermissions("sys.menu.read")
+	@RequiresPermissions("sys.base.menu.read")
 	@RequestMapping(value = "/read/permission")
 	public Object getPermissions(HttpServletRequest request, ModelMap modelMap) {
 		List<Map<String, String>> permissions = sysMenuService.getPermissions();

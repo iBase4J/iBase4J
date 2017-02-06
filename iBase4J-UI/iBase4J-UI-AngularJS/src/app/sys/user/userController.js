@@ -12,8 +12,6 @@ angular.module('app')
 			$.ajax({
 				type: 'PUT',
 				url : '/user/read/list',
-				dataType: 'json',
-		        contentType:'application/json;charset=UTF-8',
 				data: angular.toJson($scope.param)
 			}).then(function(result) {
 		        $scope.loading = false;

@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.dao.sys.SysRoleMenuMapper;
+import org.ibase4j.model.sys.SysDept;
 import org.ibase4j.model.sys.SysRole;
 import org.ibase4j.model.sys.ext.SysRoleBean;
 
@@ -31,33 +32,18 @@ public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements IS
 		// 权限信息
 		for (SysRoleBean bean : pageInfo.getRecords()) {
 			if (bean.getDeptId() != null) {
-				bean.setDeptName(sysDeptProvider.queryById(bean.getDeptId()).getDeptName());
+				SysDept sysDept = sysDeptProvider.queryById(bean.getDeptId());
+				bean.setDeptName(sysDept.getDeptName());
 			}
 			List<String> permissions = sysRoleMenuMapper.queryPermission(bean.getId());
-			int i = 0;
 			for (String permission : permissions) {
 				if (StringUtils.isBlank(bean.getPermission())) {
 					bean.setPermission(permission);
 				} else {
-					bean.setPermission(bean.getPermission() + ";");
-					if (i % 2 == 0) {
-						bean.setPermission(bean.getPermission() + "<br/>");
-					}
-					bean.setPermission(bean.getPermission() + permission);
+					bean.setPermission(bean.getPermission() + ";"  + permission);
 				}
-				i++;
 			}
 		}
 		return pageInfo;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.ibase4j.provider.SysRoleProvider#getPermissions(java.lang.String)
-	 */
-	@Override
-	public List<String> getPermissions(Long id) {
-		return sysRoleMenuMapper.getPermissions(id);
 	}
 }

@@ -32,15 +32,18 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 	public static Page<Long> getPage(Map<String, Object> params) {
 		Integer current = 1;
 		Integer size = 10;
-		String orderBy = "";
+		String orderBy = "id_";
 		if (DataUtil.isNotEmpty(params.get("pageNum"))) {
-			current = Integer.valueOf((String) params.get("pageNum"));
+			current = Integer.valueOf(params.get("pageNum").toString());
 		}
 		if (DataUtil.isNotEmpty(params.get("pageSize"))) {
-			size = Integer.valueOf((String) params.get("pageSize"));
+			size = Integer.valueOf(params.get("pageSize").toString());
 		}
 		if (DataUtil.isNotEmpty(params.get("orderBy"))) {
 			orderBy = (String) params.get("orderBy");
+		}
+		if (size == -1) {
+			return new Page<Long>();
 		}
 		Page<Long> page = new Page<Long>(current, size, orderBy);
 		page.setAsc(false);
@@ -60,6 +63,21 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			return page;
 		}
 		return new Page<T>();
+	}
+
+	/** 根据Id查询(默认类型T) */
+	public Page<Map<String, Object>> getPageMap(Page<Long> ids) {
+		if (ids != null) {
+			Page<Map<String, Object>> page = new Page<Map<String, Object>>(ids.getCurrent(), ids.getSize());
+			page.setTotal(ids.getTotal());
+			List<Map<String, Object>> records = InstanceUtil.newArrayList();
+			for (Long id : ids.getRecords()) {
+				records.add(InstanceUtil.transBean2Map(this.queryById(id)));
+			}
+			page.setRecords(records);
+			return page;
+		}
+		return new Page<Map<String, Object>>();
 	}
 
 	/** 根据Id查询(cls返回类型Class) */
@@ -165,6 +183,12 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 		Page<Long> page = getPage(params);
 		page.setRecords(mapper.selectIdPage(page, params));
 		return getPage(page);
+	}
+
+	public Page<Map<String, Object>> queryMap(Map<String, Object> params) {
+		Page<Long> page = getPage(params);
+		page.setRecords(mapper.selectIdPage(page, params));
+		return getPageMap(page);
 	}
 
 	protected <P> Page<P> query(Map<String, Object> params, Class<P> cls) {

@@ -7,7 +7,9 @@ import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.model.sys.SysRoleMenu;
 
 public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
-    List<String> queryPermission(@Param("roleId") Long id);
+	List<Long> queryMenuIdsByRoleId(@Param("roleId") Long roleId);
 
-    List<String> getPermissions(@Param("roleId") Long id);
+	List<Long> queryPermissions(@Param("roleId") Long roleId, @Param("permission") String permission);
+
+	List<String> queryPermission(@Param("roleId") Long id);
 }

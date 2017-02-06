@@ -8,6 +8,7 @@ import org.ibase4j.model.sys.SysMenu;
 public class SysMenuBean extends SysMenu {
 	private Integer leaf = 1;
 	private String typeName;
+	private String permissionText;
 	private List<SysMenuBean> menuBeans;
 
 	public Integer getLeaf() {
@@ -24,6 +25,21 @@ public class SysMenuBean extends SysMenu {
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+
+	/**
+	 * @return the permissionText
+	 */
+	public String getPermissionText() {
+		return permissionText;
+	}
+
+	/**
+	 * @param permissionText
+	 *            the permissionText to set
+	 */
+	public void setPermissionText(String permissionText) {
+		this.permissionText = permissionText;
 	}
 
 	public List<SysMenuBean> getMenuBeans() {

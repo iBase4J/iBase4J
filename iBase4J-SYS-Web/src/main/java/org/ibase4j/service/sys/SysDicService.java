@@ -3,7 +3,6 @@ package org.ibase4j.service.sys;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.Assert;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.core.util.WebUtil;
@@ -32,13 +31,13 @@ public class SysDicService {
 	}
 
 	public void updateDicIndex(SysDicIndex record) {
-		Assert.notNull(record.getId(), Resources.getMessage("ID_IS_NULL"));
+		Assert.notNull(record.getId(), "ID");
 		record.setUpdateBy(WebUtil.getCurrentUser());
 		provider.updateDicIndex(record);
 	}
 
 	public void deleteDicIndex(Long id) {
-		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
+		Assert.notNull(id, "ID");
 		provider.deleteDicIndex(id);
 	}
 
@@ -48,13 +47,13 @@ public class SysDicService {
 	}
 
 	public void updateDic(SysDic record) {
-		Assert.notNull(record.getId(), Resources.getMessage("ID_IS_NULL"));
+		Assert.notNull(record.getId(), "ID");
 		record.setUpdateBy(WebUtil.getCurrentUser());
 		provider.updateDic(record);
 	}
 
 	public void deleteDic(Long id) {
-		Assert.notNull(id, Resources.getMessage("ID_IS_NULL"));
+		Assert.notNull(id, "ID");
 		provider.deleteDic(id);
 	}
 
@@ -67,7 +66,7 @@ public class SysDicService {
 	}
 
 	public Map<String, String> queryDicByDicIndexKey(String key) {
-		Assert.notNull(key, Resources.getMessage("KEY_IS_NULL"));
+		Assert.notNull(key, "KEY");
 		return provider.queryDicByDicIndexKey(key);
 	}
 

@@ -16,7 +16,7 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @version 2016年5月20日 下午3:47:58
  */
 public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel> {
-	protected Logger logger = LogManager.getLogger();
+	protected static Logger logger = LogManager.getLogger();
 	protected P provider;
 
 	/** 修改 */
@@ -59,5 +59,10 @@ public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel
 	/** 条件查询 */
 	public Page<T> query(Map<String, Object> params) {
 		return provider.query(params);
+	}
+
+	/** 条件查询 */
+	public Page<Map<String, Object>> queryMap(Map<String, Object> params) {
+		return provider.queryMap(params);
 	}
 }
