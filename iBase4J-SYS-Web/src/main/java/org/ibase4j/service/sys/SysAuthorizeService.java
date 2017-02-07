@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ibase4j.core.exception.IllegalParameterException;
 import org.ibase4j.core.util.WebUtil;
+import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;
 import org.ibase4j.model.sys.SysUserRole;
-import org.ibase4j.model.sys.ext.SysMenuBean;
 import org.ibase4j.provider.sys.ISysAuthorizeProvider;
 
 /**
@@ -21,7 +21,7 @@ public class SysAuthorizeService {
 	@Autowired
 	private ISysAuthorizeProvider sysAuthorizeProvider;
 
-	public List<SysMenuBean> queryAuthorizeByUserId(Long id) {
+	public List<SysMenu> queryAuthorizeByUserId(Long id) {
 		return sysAuthorizeProvider.queryAuthorizeByUserId(id);
 	}
 
@@ -85,7 +85,7 @@ public class SysAuthorizeService {
 		sysAuthorizeProvider.updateRoleMenu(sysRoleMenus);
 	}
 
-	public List<SysMenuBean> queryMenusPermission() {
+	public List<SysMenu> queryMenusPermission() {
 		return sysAuthorizeProvider.queryMenusPermission();
 	}
 

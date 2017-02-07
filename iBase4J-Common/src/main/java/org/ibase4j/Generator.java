@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
@@ -93,14 +94,11 @@ public class Generator {
 		mpg.setCfg(cfg);
 		// 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/template 下面内容修改，
 		// 放置自己项目的 src/main/resources/template 目录下, 默认名称一下可以不配置，也可以自定义模板名称
-		// TemplateConfig tc = new TemplateConfig();
-		// tc.setController("...");
-		// tc.setEntity("...");
-		// tc.setMapper("...");
-		// tc.setXml("...");
-		// tc.setService("...");
-		// tc.setServiceImpl("...");
-		// mpg.setTemplate(tc);
+		 TemplateConfig tc = new TemplateConfig();
+		 tc.setEntity("tpl/model.java.vm");
+		 tc.setMapper("tpl/dao.java.vm");
+		 tc.setXml("tpl/mapper.xml.vm");
+		 mpg.setTemplate(tc);
 		// 执行生成
 		mpg.execute();
 		// 打印注入设置

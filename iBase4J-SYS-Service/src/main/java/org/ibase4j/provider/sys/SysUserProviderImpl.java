@@ -20,7 +20,6 @@ import org.ibase4j.dao.sys.SysUserMenuMapper;
 import org.ibase4j.dao.sys.SysUserThirdpartyMapper;
 import org.ibase4j.model.sys.SysUser;
 import org.ibase4j.model.sys.SysUserThirdparty;
-import org.ibase4j.model.sys.ext.SysUserBean;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -42,12 +41,10 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
 	@Autowired
 	private SysUserMenuMapper sysUserMenuMapper;
 
-	public Page<SysUserBean> queryBeans(Map<String, Object> params) {
-		Page<Long> idPage = getPage(params);
-		idPage.setRecords(mapper.selectIdPage(idPage, params));
+	public Page<SysUser> query(Map<String, Object> params) {
 		Map<String, String> userTypeMap = sysDicProvider.queryDicByDicIndexKey("USERTYPE");
-		Page<SysUserBean> pageInfo = getPage(idPage, SysUserBean.class);
-		for (SysUserBean userBean : pageInfo.getRecords()) {
+		Page<SysUser> pageInfo = super.query(params);
+		for (SysUser userBean : pageInfo.getRecords()) {
 			if (userBean.getUserType() != null) {
 				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType().toString()));
 			}
@@ -59,7 +56,7 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
 				if (StringUtils.isBlank(userBean.getPermission())) {
 					userBean.setPermission(permission);
 				} else {
-					userBean.setPermission(userBean.getPermission() + ";"  + permission);
+					userBean.setPermission(userBean.getPermission() + ";" + permission);
 				}
 			}
 		}

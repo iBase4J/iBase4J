@@ -23,8 +23,8 @@ import org.ibase4j.core.support.Assert;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.UploadUtil;
 import org.ibase4j.core.util.WebUtil;
+import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.model.sys.ext.SysMenuBean;
 import org.ibase4j.service.sys.SysAuthorizeService;
 import org.ibase4j.service.sys.SysUserService;
 
@@ -48,9 +48,9 @@ public class SysUserController extends BaseController {
 	@Autowired
 	private SysAuthorizeService authorizeService;
 
-	@PostMapping
 	@ApiOperation(value = "修改用户信息")
 	@RequiresPermissions("sys.base.user.update")
+	@PostMapping
 	public Object update(ModelMap modelMap, @RequestBody SysUser sysUser) {
 		Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
 		Assert.length(sysUser.getAccount(), 3, 15, "ACCOUNT");
@@ -106,7 +106,7 @@ public class SysUserController extends BaseController {
 	@RequiresPermissions("sys.base.user.read")
 	@PutMapping(value = "/read/list")
 	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> sysUser) {
-		Page<?> list = sysUserService.queryBeans(sysUser);
+		Page<?> list = sysUserService.query(sysUser);
 		return setSuccessModelMap(modelMap, list);
 	}
 
@@ -140,7 +140,7 @@ public class SysUserController extends BaseController {
 		if (sysUser != null) {
 			sysUser.setPassword(null);
 		}
-		List<SysMenuBean> menus = authorizeService.queryAuthorizeByUserId(id);
+		List<SysMenu> menus = authorizeService.queryAuthorizeByUserId(id);
 		modelMap.put("user", sysUser);
 		modelMap.put("menus", menus);
 		return setSuccessModelMap(modelMap);

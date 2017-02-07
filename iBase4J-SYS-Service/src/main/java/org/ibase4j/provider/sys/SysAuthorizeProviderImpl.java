@@ -20,7 +20,6 @@ import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;
 import org.ibase4j.model.sys.SysUserRole;
-import org.ibase4j.model.sys.ext.SysMenuBean;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
@@ -165,34 +164,34 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	}
 
 	@Cacheable(value = "getAuthorize")
-	public List<SysMenuBean> queryAuthorizeByUserId(Long userId) {
+	public List<SysMenu> queryAuthorizeByUserId(Long userId) {
 		List<Long> menuIds = sysAuthorizeMapper.getAuthorize(userId);
-		List<SysMenuBean> menus = sysMenuProvider.getList(menuIds, SysMenuBean.class);
-		Map<Long, List<SysMenuBean>> map = InstanceUtil.newHashMap();
-		for (SysMenuBean sysMenuBean : menus) {
-			if (map.get(sysMenuBean.getParentId()) == null) {
-				List<SysMenuBean> menuBeans = InstanceUtil.newArrayList();
-				map.put(sysMenuBean.getParentId(), menuBeans);
+		List<SysMenu> menus = sysMenuProvider.getList(menuIds);
+		Map<Long, List<SysMenu>> map = InstanceUtil.newHashMap();
+		for (SysMenu sysMenu : menus) {
+			if (map.get(sysMenu.getParentId()) == null) {
+				List<SysMenu> menuBeans = InstanceUtil.newArrayList();
+				map.put(sysMenu.getParentId(), menuBeans);
 			}
-			map.get(sysMenuBean.getParentId()).add(sysMenuBean);
+			map.get(sysMenu.getParentId()).add(sysMenu);
 		}
-		List<SysMenuBean> result = InstanceUtil.newArrayList();
-		for (SysMenuBean sysMenuBean : menus) {
-			if (sysMenuBean.getParentId() == 0) {
-				sysMenuBean.setLeaf(0);
-				sysMenuBean.setMenuBeans(getChildMenu(map, sysMenuBean.getId()));
-				result.add(sysMenuBean);
+		List<SysMenu> result = InstanceUtil.newArrayList();
+		for (SysMenu sysMenu : menus) {
+			if (sysMenu.getParentId() == 0) {
+				sysMenu.setLeaf(0);
+				sysMenu.setMenuBeans(getChildMenu(map, sysMenu.getId()));
+				result.add(sysMenu);
 			}
 		}
 		return result;
 	}
 
 	// 递归获取子菜单
-	private List<SysMenuBean> getChildMenu(Map<Long, List<SysMenuBean>> map, Long id) {
-		List<SysMenuBean> menus = map.get(id);
+	private List<SysMenu> getChildMenu(Map<Long, List<SysMenu>> map, Long id) {
+		List<SysMenu> menus = map.get(id);
 		if (menus != null) {
-			for (SysMenuBean sysMenuBean : menus) {
-				sysMenuBean.setMenuBeans(getChildMenu(map, sysMenuBean.getId()));
+			for (SysMenu sysMenu : menus) {
+				sysMenu.setMenuBeans(getChildMenu(map, sysMenu.getId()));
 			}
 		}
 		return menus;
@@ -203,7 +202,7 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 		return sysAuthorizeMapper.queryPermissionByUserId(userId);
 	}
 
-	public List<SysMenuBean> queryMenusPermission() {
+	public List<SysMenu> queryMenusPermission() {
 		return sysAuthorizeMapper.queryMenusPermission();
 	}
 

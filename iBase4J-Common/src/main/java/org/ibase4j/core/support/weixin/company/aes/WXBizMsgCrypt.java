@@ -22,6 +22,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
+import org.ibase4j.core.util.XmlUtil;
 
 /**
  * 提供接收和推送给公众平台消息的加解密接口(UTF8编码的字符串).
@@ -222,8 +223,28 @@ public class WXBizMsgCrypt {
 
 		// System.out.println("发送给平台的签名是: " + signature[1].toString());
 		// 生成发送的xml
-		String result = XMLParse.generate(encrypt, signature, timeStamp, nonce);
+		String result = generate(encrypt, signature, timeStamp, nonce);
 		return result;
+	}
+	
+	/**
+	 * 生成xml消息
+	 * 
+	 * @param encrypt
+	 *            加密后的消息密文
+	 * @param signature
+	 *            安全签名
+	 * @param timestamp
+	 *            时间戳
+	 * @param nonce
+	 *            随机字符串
+	 * @return 生成的xml字符串
+	 */
+	public static String generate(String encrypt, String signature, String timestamp, String nonce) {
+		String format = "<xml>\n" + "<Encrypt><![CDATA[%1$s]]></Encrypt>\n"
+				+ "<MsgSignature><![CDATA[%2$s]]></MsgSignature>\n" + "<TimeStamp>%3$s</TimeStamp>\n"
+				+ "<Nonce><![CDATA[%4$s]]></Nonce>\n" + "</xml>";
+		return String.format(format, encrypt, signature, timestamp, nonce);
 	}
 
 	/**
@@ -247,10 +268,10 @@ public class WXBizMsgCrypt {
 
 		// 密钥，公众账号的app secret
 		// 提取密文
-		Object[] encrypt = XMLParse.extract(postData);
+		Object encrypt = XmlUtil.parseXml2Map(postData).get("Encrypt");
 
 		// 验证安全签名
-		String signature = SHA1.getSHA1(token, timeStamp, nonce, encrypt[1].toString());
+		String signature = SHA1.getSHA1(token, timeStamp, nonce, encrypt.toString());
 
 		// 和URL中的签名比较是否相等
 		// System.out.println("第三方收到URL中的签名：" + msg_sign);
@@ -260,7 +281,7 @@ public class WXBizMsgCrypt {
 		}
 
 		// 解密
-		String result = decrypt(encrypt[1].toString());
+		String result = decrypt(encrypt.toString());
 		return result;
 	}
 

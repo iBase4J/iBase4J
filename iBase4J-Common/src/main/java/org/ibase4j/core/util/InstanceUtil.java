@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.ibase4j.core.exception.DataParseException;
 import org.springframework.web.context.ContextLoader;
 
 /**
@@ -95,13 +96,57 @@ public final class InstanceUtil {
 	}
 
 	/**
+	 * @param oldBean
+	 * @param newBean
+	 * @return
+	 */
+	public static <T> T getDiff(T oldBean, T newBean) {
+		if (oldBean == null && newBean != null) {
+			return newBean;
+		} else if (newBean == null) {
+			return null;
+		} else {
+			Class<?> cls1 = oldBean.getClass();
+			try {
+				@SuppressWarnings("unchecked")
+				T object = (T) cls1.newInstance();
+				BeanInfo beanInfo = Introspector.getBeanInfo(cls1);
+				PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+				for (PropertyDescriptor property : propertyDescriptors) {
+					String key = property.getName();
+					// 过滤class属性
+					if (!key.equals("class")) {
+						// 得到property对应的getter方法
+						Method getter = property.getReadMethod();
+						// 得到property对应的setter方法
+						Method setter = property.getReadMethod();
+						Object oldValue = getter.invoke(oldBean);
+						Object newValue = getter.invoke(newBean);
+						if (newValue != null) {
+							if (oldValue == null) {
+								setter.invoke(object, newValue);
+							} else if (oldValue != null && !newValue.equals(oldValue)) {
+								setter.invoke(object, newValue);
+							}
+						}
+					}
+				}
+				return object;
+			} catch (Exception e) {
+				throw new DataParseException(e);
+			}
+		}
+	}
+
+	/**
 	 * Return the specified class. Checks the ThreadContext classloader first,
 	 * then uses the System classloader. Should replace all calls to
 	 * <code>Class.forName( claz )</code> (which only calls the System class
 	 * loader) when the class might be in a different classloader (e.g. in a
 	 * webapp).
 	 * 
-	 * @param clazz the name of the class to instantiate
+	 * @param clazz
+	 *            the name of the class to instantiate
 	 * @return the requested Class object
 	 */
 	public static final Class<?> getClass(String clazz) {
@@ -126,8 +171,10 @@ public final class InstanceUtil {
 	/**
 	 * 封装实体
 	 * 
-	 * @param cls 实体类
-	 * @param list 实体Map集合
+	 * @param cls
+	 *            实体类
+	 * @param list
+	 *            实体Map集合
 	 * @return
 	 */
 	public static final <E> List<E> getInstanceList(Class<E> cls, List<?> list) {
@@ -144,8 +191,10 @@ public final class InstanceUtil {
 	/**
 	 * 封装实体
 	 * 
-	 * @param cls 实体类
-	 * @param list 数据查询结果集
+	 * @param cls
+	 *            实体类
+	 * @param list
+	 *            数据查询结果集
 	 * @return
 	 */
 	public static final <E> List<E> getInstanceList(Class<E> cls, ResultSet rs) {
@@ -170,8 +219,10 @@ public final class InstanceUtil {
 	/**
 	 * 新建实例
 	 * 
-	 * @param cls 实体类
-	 * @param list 实体属性Map
+	 * @param cls
+	 *            实体类
+	 * @param list
+	 *            实体属性Map
 	 * @return
 	 */
 	public static final <E> E newInstance(Class<E> cls, Map<String, ?> map) {
@@ -192,7 +243,8 @@ public final class InstanceUtil {
 	 * calls the System class loader) when the class might be in a different
 	 * classloader (e.g. in a webapp).
 	 * 
-	 * @param clazz the name of the class to instantiate
+	 * @param clazz
+	 *            the name of the class to instantiate
 	 * @return an instance of the specified class
 	 */
 	public static final Object newInstance(String clazz) {
@@ -222,8 +274,10 @@ public final class InstanceUtil {
 	/**
 	 * 新建实例
 	 * 
-	 * @param className 类名
-	 * @param args 构造函数的参数
+	 * @param className
+	 *            类名
+	 * @param args
+	 *            构造函数的参数
 	 * @return 新建的实例
 	 */
 	public static final Object newInstance(String className, Object... args) {
@@ -238,9 +292,12 @@ public final class InstanceUtil {
 	/**
 	 * 执行某对象方法
 	 * 
-	 * @param owner 对象
-	 * @param methodName 方法名
-	 * @param args 参数
+	 * @param owner
+	 *            对象
+	 * @param methodName
+	 *            方法名
+	 * @param args
+	 *            参数
 	 * @return 方法返回值
 	 */
 	public static final Object invokeMethod(Object owner, String methodName, Object[] args) {
