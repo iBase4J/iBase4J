@@ -10,7 +10,7 @@ angular.module('app')
 		$scope.search = function () {
 	        $scope.loading = true;
 			$.ajax({
-				url : '/menu/read/list',
+				url : '/menu/read/page',
 				type: 'PUT',
 				data: angular.toJson($scope.param)
 			}).then(function(result) {

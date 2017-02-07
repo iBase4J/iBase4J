@@ -2,7 +2,7 @@
             <footer ng-show="pageInfo.total" class="panel-footer">
                 <div class="row">
                     <div class="col-sm-6">
-                        <small class="text-muted inline m-t-sm m-b-sm">共{{pageInfo.total}}条{{pageInfo.pages}}页 当前第{{pageInfo.current}}页</small>
+                        <small class="text-muted inline m-t-sm m-b-sm">共{{pageInfo.pages}}页{{pageInfo.total}}条记录 当前第{{pageInfo.current}}页</small>
                     </div>
 
                     <paging ng-show="pageInfo.total" class="col-sm-6 text-right text-center-xs"
