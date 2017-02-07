@@ -11,11 +11,12 @@ angular.module('app')
 	        $scope.loading = true;
 			$.ajax({
 				url : '/menu/read/list',
-				data: $scope.param
+				type: 'PUT',
+				data: angular.toJson($scope.param)
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.httpCode == 200) {
-					$scope.pageInfo = result.data;
+					$scope.pageInfo = result;
 				} else {
 					$scope.msg = result.msg;
 				}

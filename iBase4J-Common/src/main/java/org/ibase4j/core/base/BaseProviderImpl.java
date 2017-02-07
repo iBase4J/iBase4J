@@ -6,13 +6,13 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.transaction.annotation.Transactional;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -32,15 +32,18 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 	public static Page<Long> getPage(Map<String, Object> params) {
 		Integer current = 1;
 		Integer size = 10;
-		String orderBy = "";
+		String orderBy = "id_";
 		if (DataUtil.isNotEmpty(params.get("pageNum"))) {
-			current = Integer.valueOf((String) params.get("pageNum"));
+			current = Integer.valueOf(params.get("pageNum").toString());
 		}
 		if (DataUtil.isNotEmpty(params.get("pageSize"))) {
-			size = Integer.valueOf((String) params.get("pageSize"));
+			size = Integer.valueOf(params.get("pageSize").toString());
 		}
 		if (DataUtil.isNotEmpty(params.get("orderBy"))) {
 			orderBy = (String) params.get("orderBy");
+		}
+		if (size == -1) {
+			return new Page<Long>();
 		}
 		Page<Long> page = new Page<Long>(current, size, orderBy);
 		page.setAsc(false);
@@ -60,6 +63,21 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			return page;
 		}
 		return new Page<T>();
+	}
+
+	/** 根据Id查询(默认类型T) */
+	public Page<Map<String, Object>> getPageMap(Page<Long> ids) {
+		if (ids != null) {
+			Page<Map<String, Object>> page = new Page<Map<String, Object>>(ids.getCurrent(), ids.getSize());
+			page.setTotal(ids.getTotal());
+			List<Map<String, Object>> records = InstanceUtil.newArrayList();
+			for (Long id : ids.getRecords()) {
+				records.add(InstanceUtil.transBean2Map(this.queryById(id)));
+			}
+			page.setRecords(records);
+			return page;
+		}
+		return new Page<Map<String, Object>>();
 	}
 
 	/** 根据Id查询(cls返回类型Class) */
@@ -104,10 +122,10 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 	}
 
 	@Transactional
-	public void delete(Long id, Long userId) {
+	public void del(Long id, Long userId) {
 		try {
 			T record = this.queryById(id);
-			record.setEnable(false);
+			record.setEnable(0);
 			record.setUpdateTime(new Date());
 			record.setUpdateBy(userId);
 			mapper.updateById(record);
@@ -118,15 +136,25 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 	}
 
 	@Transactional
+	public void delete(Long id) {
+		try {
+			mapper.deleteById(id);
+			CacheUtil.getCache().del(getCacheKey(id));
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
+
+	@Transactional
 	public T update(T record) {
 		try {
-			record.setEnable(true);
 			record.setUpdateTime(new Date());
 			if (record.getId() == null) {
 				record.setCreateTime(new Date());
 				mapper.insert(record);
 			} else {
 				mapper.updateById(record);
+				record = mapper.selectById(record.getId());
 			}
 			CacheUtil.getCache().set(getCacheKey(record.getId()), record);
 		} catch (Exception e) {
@@ -151,6 +179,24 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 		}
 	}
 
+	public Page<T> query(Map<String, Object> params) {
+		Page<Long> page = getPage(params);
+		page.setRecords(mapper.selectIdPage(page, params));
+		return getPage(page);
+	}
+
+	public Page<Map<String, Object>> queryMap(Map<String, Object> params) {
+		Page<Long> page = getPage(params);
+		page.setRecords(mapper.selectIdPage(page, params));
+		return getPageMap(page);
+	}
+
+	protected <P> Page<P> query(Map<String, Object> params, Class<P> cls) {
+		Page<Long> page = getPage(params);
+		page.setRecords(mapper.selectIdPage(page, params));
+		return getPage(page, cls);
+	}
+
 	/** 获取缓存键值 */
 	protected String getCacheKey(Object id) {
 		String cacheName = null;
@@ -161,9 +207,5 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			cacheName = cacheConfig.cacheNames()[0];
 		}
 		return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
-	}
-
-	public Page<T> query(Map<String, Object> params) {
-		return null;
 	}
 }

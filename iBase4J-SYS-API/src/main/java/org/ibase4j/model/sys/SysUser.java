@@ -1,6 +1,10 @@
 package org.ibase4j.model.sys;
 
+import java.util.Date;
+
+import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseModel;
+import org.ibase4j.core.util.PinyinUtil;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -22,12 +26,22 @@ public class SysUser extends BaseModel {
     @TableField("sex_")
 	private Integer sex;
 	private String userName;
+	private String namePinyin;
+    @TableField("email_")
+	private String email;
+	private Date birthDay;
+    @TableField("position_")
+	private String position;
+    @TableField("address_")
+	private String address;
     @TableField("avatar_")
 	private String avatar;
 	private Integer userType;
 	private Long deptId;
     @TableField("locked_")
 	private Integer locked;
+    @TableField(exist = false)
+    private String oldPassword;
 
 	public void setAccount(String account) {
 		this.account = account;
@@ -93,12 +107,62 @@ public class SysUser extends BaseModel {
 		return this.deptId;
 	}
 
+	public Integer getLocked() {
+		return locked;
+	}
+
 	public void setLocked(Integer locked) {
 		this.locked = locked;
 	}
 
-	public Integer getLocked() {
-		return this.locked;
+	public String getNamePinyin() {
+		if (StringUtils.isBlank(namePinyin) && StringUtils.isNotBlank(userName)) {
+			return PinyinUtil.getPinYin(userName).toUpperCase();
+		}
+		return namePinyin;
 	}
 
+	public void setNamePinyin(String namePinyin) {
+		this.namePinyin = namePinyin;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Date getBirthDay() {
+		return birthDay;
+	}
+
+	public void setBirthDay(Date birthDay) {
+		this.birthDay = birthDay;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
 }

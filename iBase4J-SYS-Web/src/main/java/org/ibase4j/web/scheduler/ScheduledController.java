@@ -8,17 +8,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.util.Request2ModelUtil;
-import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.scheduler.TaskScheduled;
-import org.ibase4j.service.scheduler.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.ibase4j.core.base.BaseController;
+import org.ibase4j.model.scheduler.TaskScheduled;
+import org.ibase4j.service.scheduler.SchedulerService;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -33,75 +33,64 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @Api(value = "调度管理", description = "调度管理")
-@RequestMapping(value = "/scheduled", method = RequestMethod.POST)
+@RequestMapping(value = "/scheduled")
 public class ScheduledController extends BaseController {
-    @Autowired
-    private SchedulerService schedulerService;
+	@Autowired
+	private SchedulerService schedulerService;
 
-    @RequestMapping("/update/task")
-    @ApiOperation(value = "新增任务")
-    @RequiresPermissions("task.scheduled.update")
-    public Object updateTask(HttpServletRequest request, ModelMap modelMap) {
-        TaskScheduled scheduled = Request2ModelUtil.covert(TaskScheduled.class, request);
-        schedulerService.updateTask(scheduled);
-        return setSuccessModelMap(modelMap);
-    }
+	@PostMapping
+	@ApiOperation(value = "新增任务")
+	@RequiresPermissions("sys.task.scheduled.update")
+	public Object updateTask(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
+		schedulerService.updateTask(scheduled);
+		return setSuccessModelMap(modelMap);
+	}
 
-    @RequestMapping("/read/tasks")
-    @ApiOperation(value = "任务列表")
-    @RequiresPermissions("task.scheduled.read")
-    public Object list(ModelMap modelMap) {
-        Page<TaskScheduled> jobs = schedulerService.getAllTaskDetail();
-        return setSuccessModelMap(modelMap, jobs);
-    }
+	@DeleteMapping
+	@ApiOperation(value = "删除任务")
+	@RequiresPermissions("sys.task.scheduled.close")
+	public Object delete(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
+		schedulerService.delTask(scheduled.getTaskGroup(), scheduled.getTaskName());
+		return setSuccessModelMap(modelMap);
+	}
 
-    // 执行
-    @RequestMapping("/run/task")
-    @ApiOperation(value = "立即执行任务")
-    @RequiresPermissions("task.scheduled.run")
-    public Object exec(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
-        @RequestParam(value = "taskName", required = false) String taskName) {
-        schedulerService.execTask(taskGroup, taskName);
-        return setSuccessModelMap(modelMap);
-    }
+	@PostMapping("/run")
+	@ApiOperation(value = "立即执行任务")
+	@RequiresPermissions("sys.task.scheduled.run")
+	public Object exec(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
+		schedulerService.execTask(scheduled.getTaskGroup(), scheduled.getTaskName());
+		return setSuccessModelMap(modelMap);
+	}
 
-    // 启动
-    @RequestMapping("/open/task")
-    @ApiOperation(value = "启动任务")
-    @RequiresPermissions("task.scheduled.open")
-    public Object open(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
-        @RequestParam(value = "taskName", required = false) String taskName) {
-        schedulerService.openTask(taskGroup, taskName);
-        return setSuccessModelMap(modelMap);
-    }
+	@PostMapping("/open")
+	@ApiOperation(value = "启动任务")
+	@RequiresPermissions("sys.task.scheduled.open")
+	public Object open(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
+		schedulerService.openTask(scheduled.getTaskGroup(), scheduled.getTaskName());
+		return setSuccessModelMap(modelMap);
+	}
 
-    // 暂停
-    @RequestMapping("/close/task")
-    @ApiOperation(value = "暂停任务")
-    @RequiresPermissions("task.scheduled.close")
-    public Object close(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
-        @RequestParam(value = "taskName", required = false) String taskName) {
-        schedulerService.closeTask(taskGroup, taskName);
-        return setSuccessModelMap(modelMap);
-    }
+	@PostMapping("/close")
+	@ApiOperation(value = "暂停任务")
+	@RequiresPermissions("sys.task.scheduled.close")
+	public Object close(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
+		schedulerService.closeTask(scheduled.getTaskGroup(), scheduled.getTaskName());
+		return setSuccessModelMap(modelMap);
+	}
 
-    // 暂停
-    @RequestMapping("/del/task")
-    @ApiOperation(value = "删除任务")
-    @RequiresPermissions("task.scheduled.close")
-    public Object delete(ModelMap modelMap, @RequestParam(value = "taskGroup", required = false) String taskGroup,
-        @RequestParam(value = "taskName", required = false) String taskName) {
-        schedulerService.delTask(taskGroup, taskName);
-        return setSuccessModelMap(modelMap);
-    }
+	@PutMapping("/read/tasks")
+	@ApiOperation(value = "任务列表")
+	@RequiresPermissions("sys.task.scheduled.read")
+	public Object list(ModelMap modelMap) {
+		Page<TaskScheduled> jobs = schedulerService.getAllTaskDetail();
+		return setSuccessModelMap(modelMap, jobs);
+	}
 
-    // 执行记录
-    @RequestMapping("/read/log")
-    @ApiOperation(value = "任务执行记录")
-    @RequiresPermissions("task.log.read")
-    public Object getFireLog(HttpServletRequest request, ModelMap modelMap) {
-        Map<String, Object> params = WebUtil.getParameterMap(request);
-        Page<?> list = schedulerService.queryLog(params);
-        return setSuccessModelMap(modelMap, list);
-    }
+	@PutMapping("/read/log")
+	@ApiOperation(value = "任务执行记录")
+	@RequiresPermissions("sys.task.log.read")
+	public Object getFireLog(HttpServletRequest request, ModelMap modelMap, @RequestBody Map<String, Object> log) {
+		Page<?> list = schedulerService.queryLog(log);
+		return setSuccessModelMap(modelMap, list);
+	}
 }

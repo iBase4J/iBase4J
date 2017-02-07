@@ -17,7 +17,6 @@
 		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-API</module>
 		<module>iBase4J-Biz-API</module>
-		<module>iBase4J-Biz-Service</module>
 		<module>iBase4J-Biz-Web</module>
 	</modules>
 </project>

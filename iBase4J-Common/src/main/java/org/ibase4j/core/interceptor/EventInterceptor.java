@@ -3,9 +3,13 @@ package org.ibase4j.core.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.SysEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.NamedThreadLocal;
+import org.springframework.web.method.HandlerMethod;
+
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 日志拦截器
@@ -23,6 +27,13 @@ public class EventInterceptor extends BaseInterceptor {
         throws Exception {
         // 开始时间（该数据只有当前请求的线程可见）
         startTimeThreadLocal.set(System.currentTimeMillis());
+		try {
+			HandlerMethod handlerMethod = (HandlerMethod) handler;
+			ApiOperation apiOperation = handlerMethod.getMethod().getDeclaredAnnotation(ApiOperation.class);
+			request.setAttribute(Constants.OPERATION_NAME, apiOperation.value());
+		} catch (Exception e) {
+			logger.error("", e);
+		}
         return super.preHandle(request, response, handler);
     }
 

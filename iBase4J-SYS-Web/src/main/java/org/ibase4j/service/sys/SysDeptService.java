@@ -1,10 +1,10 @@
 package org.ibase4j.service.sys;
 
+import org.springframework.stereotype.Service;
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.sys.SysDept;
 import org.ibase4j.provider.sys.ISysDeptProvider;
-import org.springframework.stereotype.Service;
 
 /**
  * @author ShenHuaJie

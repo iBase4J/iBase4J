@@ -1,14 +1,9 @@
 package org.ibase4j.provider.sys;
 
-import java.util.Map;
-
+import org.springframework.cache.annotation.CacheConfig;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.model.sys.SysParam;
-import org.ibase4j.provider.sys.ISysParamProvider;
-import org.springframework.cache.annotation.CacheConfig;
-
-import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * @author ShenHuaJie
@@ -18,9 +13,4 @@ import com.baomidou.mybatisplus.plugins.Page;
 @DubboService(interfaceClass = ISysParamProvider.class)
 public class SysParamProviderImpl extends BaseProviderImpl<SysParam> implements ISysParamProvider {
 
-	public Page<SysParam> query(Map<String, Object> params) {
-        Page<Long> page = getPage(params);
-        page.setRecords(mapper.selectIdByMap(page, params));
-        return getPage(page);
-	}
 }

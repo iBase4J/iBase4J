@@ -46,9 +46,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="item in pageInfo.records">
-                        <td class="v-middle">{{item.keyName}}</td>
-                        <td class="v-middle">{{item.keyValue}}</td>
+                    <tr ng-repeat="item in pageInfo.data">
+                        <td class="v-middle">{{item.key}}</td>
+                        <td class="v-middle">{{item.name}}</td>
                         <td class="v-middle">
                             <a ui-sref="main.sys.dic.update({id: item.id})" class="btn btn-sm btn-default">
                                 <i class="fa fa-edit m-r-xs text-sm"></i>编辑</a>

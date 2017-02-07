@@ -5,8 +5,9 @@ angular.module('app')
         $scope.user = {};
 		$scope.login = function () {
 			$.ajax({
+				type: 'POST',
 				url : '/login',
-				data: $scope.user
+				data: angular.toJson($scope.user)
 			}).then(function(result) {
 				if (result.httpCode == 200) {
 					$state.go('main.sys.user.list');

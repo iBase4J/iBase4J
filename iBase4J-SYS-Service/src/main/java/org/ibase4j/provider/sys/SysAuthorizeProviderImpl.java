@@ -3,8 +3,14 @@ package org.ibase4j.provider.sys;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.transaction.annotation.Transactional;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
+import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.dao.sys.SysAuthorizeMapper;
 import org.ibase4j.dao.sys.SysRoleMenuMapper;
@@ -15,13 +21,9 @@ import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;
 import org.ibase4j.model.sys.SysUserRole;
 import org.ibase4j.model.sys.ext.SysMenuBean;
-import org.ibase4j.provider.sys.ISysAuthorizeProvider;
-import org.ibase4j.provider.sys.ISysMenuProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 
 /**
  * @author ShenHuaJie
@@ -41,30 +43,124 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	@Autowired
 	private ISysMenuProvider sysMenuProvider;
 
+	public List<Long> queryMenuIdsByUserId(Long userId) {
+		return sysUserMenuMapper.queryMenuIdsByUserId(userId);
+	}
+
 	@Transactional
 	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
 	public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
-		sysAuthorizeMapper.deleteUserMenu(sysUserMenus.get(0).getUserId());
+		Long userId = null;
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
-			sysUserMenuMapper.insert(sysUserMenu);
+			if (sysUserMenu.getUserId() != null && "read".equals(sysUserMenu.getPermission())) {
+				userId = sysUserMenu.getUserId();
+			}
 		}
+		if (userId != null) {
+			sysAuthorizeMapper.deleteUserMenu(userId, "read");
+		}
+		for (SysUserMenu sysUserMenu : sysUserMenus) {
+			if (sysUserMenu.getUserId() != null && sysUserMenu.getMenuId() != null
+					&& "read".equals(sysUserMenu.getPermission())) {
+				sysUserMenuMapper.insert(sysUserMenu);
+			}
+		}
+	}
+
+	@Transactional
+	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
+	public void updateUserPermission(List<SysUserMenu> sysUserMenus) {
+		Long userId = null;
+		String permission = null;
+		for (SysUserMenu sysUserMenu : sysUserMenus) {
+			if (sysUserMenu.getUserId() != null && !"read".equals(sysUserMenu.getPermission())) {
+				userId = sysUserMenu.getUserId();
+				permission = sysUserMenu.getPermission();
+			}
+		}
+		if (userId != null && DataUtil.isNotEmpty(permission)) {
+			sysAuthorizeMapper.deleteUserMenu(userId, permission);
+		}
+		for (SysUserMenu sysUserMenu : sysUserMenus) {
+			if (sysUserMenu.getUserId() != null && sysUserMenu.getMenuId() != null
+					&& !"read".equals(sysUserMenu.getPermission())) {
+				sysUserMenuMapper.insert(sysUserMenu);
+			}
+		}
+	}
+
+	public List<SysUserRole> getRolesByUserId(Long userId) {
+		SysUserRole sysUserRole = new SysUserRole(userId, null);
+		Wrapper<SysUserRole> wrapper = new EntityWrapper<SysUserRole>(sysUserRole);
+		List<SysUserRole> userRoles = sysUserRoleMapper.selectList(wrapper);
+		return userRoles;
 	}
 
 	@Transactional
 	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
 	public void updateUserRole(List<SysUserRole> sysUserRoles) {
-		sysAuthorizeMapper.deleteUserRole(sysUserRoles.get(0).getUserId());
+		Long userId = null;
 		for (SysUserRole sysUserRole : sysUserRoles) {
-			sysUserRoleMapper.insert(sysUserRole);
+			if (sysUserRole.getUserId() != null) {
+				userId = sysUserRole.getUserId();
+				break;
+			}
 		}
+		if (userId != null) {
+			sysAuthorizeMapper.deleteUserRole(userId);
+		}
+		for (SysUserRole sysUserRole : sysUserRoles) {
+			if (sysUserRole.getUserId() != null && sysUserRole.getRoleId() != null) {
+				sysUserRoleMapper.insert(sysUserRole);
+			}
+		}
+	}
+
+	public List<Long> queryMenuIdsByRoleId(Long roleId) {
+		return sysRoleMenuMapper.queryMenuIdsByRoleId(roleId);
 	}
 
 	@Transactional
 	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus) {
-		sysAuthorizeMapper.deleteRoleMenu(sysRoleMenus.get(0).getRoleId());
+		Long roleId = null;
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
-			sysRoleMenuMapper.insert(sysRoleMenu);
+			if (sysRoleMenu.getRoleId() != null && "read".equals(sysRoleMenu.getPermission())) {
+				roleId = sysRoleMenu.getRoleId();
+				break;
+			}
+		}
+		if (roleId != null) {
+			sysAuthorizeMapper.deleteRoleMenu(roleId, "read");
+		}
+		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
+			if (sysRoleMenu.getRoleId() != null && sysRoleMenu.getMenuId() != null
+					&& "read".equals(sysRoleMenu.getPermission())) {
+				sysRoleMenuMapper.insert(sysRoleMenu);
+			}
+		}
+	}
+
+	@Transactional
+	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
+	public void updateRolePermission(List<SysRoleMenu> sysRoleMenus) {
+		Long roleId = null;
+		String permission = null;
+		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
+			if (sysRoleMenu.getRoleId() != null && !"read".equals(sysRoleMenu.getPermission())) {
+				roleId = sysRoleMenu.getRoleId();
+				permission = sysRoleMenu.getPermission();
+				break;
+			}
+		}
+		if (roleId != null && DataUtil.isNotEmpty(permission)) {
+			sysAuthorizeMapper.deleteRoleMenu(roleId, permission);
+		}
+		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
+			if (sysRoleMenu.getRoleId() != null && sysRoleMenu.getMenuId() != null
+					&& !"read".equals(sysRoleMenu.getPermission())) {
+				sysRoleMenuMapper.insert(sysRoleMenu);
+			}
 		}
 	}
 
@@ -105,5 +201,17 @@ public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implemen
 	@Cacheable("sysPermission")
 	public List<String> queryPermissionByUserId(Long userId) {
 		return sysAuthorizeMapper.queryPermissionByUserId(userId);
+	}
+
+	public List<SysMenuBean> queryMenusPermission() {
+		return sysAuthorizeMapper.queryMenusPermission();
+	}
+
+	public List<Long> queryUserPermissions(Long userId, String permission) {
+		return sysUserMenuMapper.queryPermissions(userId, permission);
+	}
+
+	public List<Long> queryRolePermissions(Long roleId, String permission) {
+		return sysRoleMenuMapper.queryPermissions(roleId, permission);
 	}
 }

@@ -1,14 +1,9 @@
 package org.ibase4j.provider.sys;
 
-import java.util.Map;
-
+import org.springframework.cache.annotation.CacheConfig;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.model.sys.SysDept;
-import org.ibase4j.provider.sys.ISysDeptProvider;
-import org.springframework.cache.annotation.CacheConfig;
-
-import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * @author ShenHuaJie
@@ -17,10 +12,5 @@ import com.baomidou.mybatisplus.plugins.Page;
 @CacheConfig(cacheNames = "sysDept")
 @DubboService(interfaceClass = ISysDeptProvider.class)
 public class SysDeptProviderImpl extends BaseProviderImpl<SysDept> implements ISysDeptProvider {
-
-    public Page<SysDept> query(Map<String, Object> params) {
-        Page<Long> page = getPage(params);
-        page.setRecords(mapper.selectIdByMap(page, params));
-        return getPage(page);
-    }
+	
 }

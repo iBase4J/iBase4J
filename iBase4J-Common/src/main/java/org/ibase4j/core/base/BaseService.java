@@ -16,34 +16,29 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @version 2016年5月20日 下午3:47:58
  */
 public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel> {
-	protected Logger logger = LogManager.getLogger();
+	protected static Logger logger = LogManager.getLogger();
 	protected P provider;
 
 	/** 修改 */
 	public void update(T record) {
-		record.setUpdateBy(WebUtil.getCurrentUser());
-		Assert.notNull(record.getId(), "ID");
+		Long uid = WebUtil.getCurrentUser();
+		if (record.getId() == null) {
+			record.setCreateBy(uid == null ? 1 : uid);
+		}
+		record.setUpdateBy(uid == null ? 1 : uid);
 		provider.update(record);
 	}
 
-	/** 新增 */
-	public void add(T record) {
-		Long uid = WebUtil.getCurrentUser();
-		if (record.getCreateBy() == null) {
-			record.setCreateBy(uid == null ? 1 : uid);
-		}
-		if (record.getUpdateBy() == null) {
-			record.setUpdateBy(uid == null ? 1 : uid);
-		} else if (uid != null) {
-			record.setUpdateBy(uid);
-		}
-		provider.update(record);
+	/** 删除 */
+	public void del(Long id) {
+		Assert.notNull(id, "ID");
+		provider.del(id, WebUtil.getCurrentUser());
 	}
 
 	/** 删除 */
 	public void delete(Long id) {
 		Assert.notNull(id, "ID");
-		provider.delete(id, WebUtil.getCurrentUser());
+		provider.delete(id);
 	}
 
 	/** 根据Id查询 */
@@ -64,5 +59,10 @@ public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel
 	/** 条件查询 */
 	public Page<T> query(Map<String, Object> params) {
 		return provider.query(params);
+	}
+
+	/** 条件查询 */
+	public Page<Map<String, Object>> queryMap(Map<String, Object> params) {
+		return provider.queryMap(params);
 	}
 }

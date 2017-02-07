@@ -11,11 +11,12 @@ angular.module('app')
 	        $scope.loading = true;
 			$.ajax({
 				url : '/session/read/list',
-				data: $scope.param
+				type: 'PUT',
+				data: angular.toJson($scope.param)
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.httpCode == 200) {
-					$scope.pageInfo = result.data;
+					$scope.pageInfo = result;
 				} else {
 					$scope.msg = result.msg;
 				}
@@ -33,8 +34,9 @@ angular.module('app')
 		$scope.disableItem = function(id, account) {
 			if(account != $rootScope.userInfo.account || confirm('确认要自杀？')){
 				$.ajax({
-					url : '/session/delete',
-					data: {'id': id}
+					type: 'DELETE',
+					url : '/session',
+					data: angular.toJson({'id': id})
 				}).then(function(result) {
 			        $scope.loading = false;
 					if (result.httpCode == 200) {

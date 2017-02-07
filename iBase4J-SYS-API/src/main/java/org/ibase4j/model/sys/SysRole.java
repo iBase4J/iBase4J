@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 @SuppressWarnings("serial")
 public class SysRole extends BaseModel {
     private String roleName;
-    private String deptId;
+    private Long deptId;
     private Integer roleType;
 
     /**
@@ -28,15 +28,15 @@ public class SysRole extends BaseModel {
     /**
      * @return the value of sys_role.dept_id
      */
-    public String getDeptId() {
+    public Long getDeptId() {
         return deptId;
     }
 
     /**
      * @param deptId the value for sys_role.dept_id
      */
-    public void setDeptId(String deptId) {
-        this.deptId = deptId == null ? null : deptId.trim();
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
     }
 
     /**

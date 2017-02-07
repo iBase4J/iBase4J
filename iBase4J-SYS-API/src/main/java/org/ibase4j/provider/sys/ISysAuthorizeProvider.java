@@ -11,13 +11,29 @@ import org.ibase4j.model.sys.ext.SysMenuBean;
 
 public interface ISysAuthorizeProvider extends BaseProvider<SysMenu> {
 
-    public void updateUserMenu(List<SysUserMenu> sysUserMenus);
+	public List<Long> queryMenuIdsByUserId(Long userId);
 
-    public void updateUserRole(List<SysUserRole> sysUserRoles);
+	public void updateUserMenu(List<SysUserMenu> sysUserMenus);
 
-    public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus);
+	public void updateUserPermission(List<SysUserMenu> sysUserMenus);
 
-    public List<SysMenuBean> queryAuthorizeByUserId(Long userId);
+	public List<SysUserRole> getRolesByUserId(Long userId);
 
-    public List<String> queryPermissionByUserId(Long userId);
+	public void updateUserRole(List<SysUserRole> sysUserRoles);
+
+	public List<Long> queryMenuIdsByRoleId(Long roleId);
+
+	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus);
+
+	public void updateRolePermission(List<SysRoleMenu> sysRoleMenus);
+
+	public List<SysMenuBean> queryAuthorizeByUserId(Long userId);
+
+	public List<SysMenuBean> queryMenusPermission();
+
+	public List<Long> queryUserPermissions(Long userId, String permission);
+
+	public List<Long> queryRolePermissions(Long roleId, String permission);
+
+	public List<String> queryPermissionByUserId(Long userId);
 }

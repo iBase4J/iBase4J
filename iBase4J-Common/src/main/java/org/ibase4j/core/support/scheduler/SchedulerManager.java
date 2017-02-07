@@ -122,7 +122,10 @@ public class SchedulerManager implements InitializingBean {
      * @throws Exception
      */
     public boolean updateTask(TaskScheduled taskScheduled) {
-        String jobGroup = "ds_job";
+    	String jobGroup = taskScheduled.getTaskGroup();
+        if (DataUtil.isEmpty(jobGroup)) {
+			jobGroup = "ds_job";
+		}
         String jobName = taskScheduled.getTaskName();
         if (DataUtil.isEmpty(jobName)) {
             jobName = String.valueOf(System.currentTimeMillis());
@@ -137,6 +140,7 @@ public class SchedulerManager implements InitializingBean {
         jobDataMap.put("targetObject", targetObject);
         jobDataMap.put("targetMethod", targetMethod);
         jobDataMap.put("taskType", taskType);
+        jobDataMap.put("contactName", taskScheduled.getContactName());
         jobDataMap.put("contactEmail", taskScheduled.getContactEmail());
 
         JobBuilder jobBuilder = null;

@@ -10,12 +10,13 @@ angular.module('app')
 		$scope.search = function () {
 	        $scope.loading = true;
 			$.ajax({
+				type: 'PUT',
 				url : '/scheduled/read/tasks',
-				data: $scope.param
+				data: angular.toJson($scope.param)
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.httpCode == 200) {
-					$scope.pageInfo = result.data;
+					$scope.pageInfo = result;
 				} else {
 					$scope.msg = result.msg;
 				}
@@ -32,8 +33,9 @@ angular.module('app')
 		
 		$scope.disableItem = function(group, name, enable) {
 			$.ajax({
+				type: 'POST',
 				url : enable==1? '/scheduled/open/task' : '/scheduled/close/task',
-				data: {'taskGroup': group, 'taskName': name}
+				data: angular.toJson({'taskGroup': group, 'taskName': name})
 			}).then(function(result) {
 				if (result.httpCode == 200) {
 					$scope.search();
@@ -46,8 +48,9 @@ angular.module('app')
 		
 		$scope.runItem = function(group, name) {
 			$.ajax({
+				type: 'POST',
 				url : '/scheduled/run/task',
-				data: {'taskGroup': group, 'taskName': name}
+				data: angular.toJson({'taskGroup': group, 'taskName': name})
 			}).then(function(result) {
 				if (result.httpCode == 200) {
 					setTimeout(function(){
@@ -62,8 +65,9 @@ angular.module('app')
 		
 		$scope.delItem = function(group, name) {
 			$.ajax({
-				url : '/scheduled/del/task',
-				data: {'taskGroup': group, 'taskName': name}
+				type: 'DELETE',
+				url : '/scheduled',
+				data: angular.toJson({'taskGroup': group, 'taskName': name})
 			}).then(function(result) {
 				if (result.httpCode == 200) {
 					setTimeout(function(){

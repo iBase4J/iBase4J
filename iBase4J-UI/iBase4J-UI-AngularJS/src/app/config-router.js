@@ -349,7 +349,7 @@ var app = angular.module('app')
     }])
     .controller("navCtrl",function($rootScope,$state) {
     	$.ajax({
-			url : '/user/read/current',
+			url : '/user/read/promission',
 			success : function(result) {
 				if (result.httpCode == 200) {
 					$rootScope.userInfo = result.user;

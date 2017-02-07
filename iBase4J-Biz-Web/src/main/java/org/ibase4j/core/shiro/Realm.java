@@ -48,10 +48,6 @@ public class Realm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		Long userId = WebUtil.getCurrentUser();
-		SysUser sysUser = sysUserService.queryById(userId);
-		if (sysUser.getUserType() != 1) {
-			userId = null;
-		}
 		List<String> list = sysAuthorizeService.queryPermissionByUserId(userId);
 		for (String permission : list) {
 			if (StringUtils.isNotBlank(permission)) {

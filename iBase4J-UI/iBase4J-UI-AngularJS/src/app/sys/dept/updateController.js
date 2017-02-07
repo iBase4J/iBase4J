@@ -31,8 +31,9 @@
             if(m){
                 $scope.isDisabled = true;//提交disabled
                 $.ajax({
-    				url : $scope.record.id ? '/dept/update' : 'dept/add',
-    				data: $scope.record
+                	type: 'POST',
+    				url : '/dept',
+    				data: angular.toJson($scope.record)
     			}).then(callback);
             }
             function callback(result) {
@@ -70,8 +71,9 @@
         function activate(id) {
 	        $scope.loading = true;
         	$.ajax({
+        		type: 'PUT',
 				url : '/dept/read/detail',
-				data: {'id': id}
+				data: angular.toJson({'id': id})
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.httpCode == 200) {

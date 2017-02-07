@@ -11,23 +11,24 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * SysUser服务接口
+ * 
  * @author ShenHuaJie
  * @version 2016-08-27 22:39:42
  */
 public interface ISysUserProvider extends BaseProvider<SysUser> {
 
-    public Page<SysUserBean> queryBeans(Map<String, Object> params);
+	public Page<SysUserBean> queryBeans(Map<String, Object> params);
 
-    public String encryptPassword(String password);
+	public String encryptPassword(String password);
 
-    /** 查询第三方帐号用户Id */
-    public Long queryUserIdByThirdParty(String openId, String provider);
+	/** 查询第三方帐号用户Id */
+	public Long queryUserIdByThirdParty(String openId, String provider);
 
-    /** 保存第三方帐号 */
-    public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser);
+	/** 保存第三方帐号 */
+	public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser);
 
-    /**
-     * 加载所有用户信息
-     */
-    public void init();
+	/**
+	 * 加载所有用户信息
+	 */
+	public void init();
 }

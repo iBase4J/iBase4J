@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.ibase4j.core.base.BaseProviderImpl;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.dao.sys.SysRoleMenuMapper;
+import org.ibase4j.model.sys.SysDept;
 import org.ibase4j.model.sys.SysRole;
 import org.ibase4j.model.sys.ext.SysRoleBean;
-import org.ibase4j.provider.sys.ISysRoleProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -22,37 +22,28 @@ import com.baomidou.mybatisplus.plugins.Page;
 @CacheConfig(cacheNames = "sysRole")
 @DubboService(interfaceClass = ISysRoleProvider.class)
 public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements ISysRoleProvider {
-    @Autowired
-    private SysRoleMenuMapper sysRoleMenuMapper;
+	@Autowired
+	private ISysDeptProvider sysDeptProvider;
+	@Autowired
+	private SysRoleMenuMapper sysRoleMenuMapper;
 
-    public Page<SysRole> query(Map<String, Object> params) {
-        Page<Long> page = getPage(params);
-        page.setRecords(mapper.selectIdByMap(page, params));
-        return getPage(page);
-    }
-
-    public Page<SysRoleBean> queryBean(Map<String, Object> params) {
-        Page<Long> idPage = getPage(params);
-        idPage.setRecords(mapper.selectIdByMap(idPage, params));
-        Page<SysRoleBean> pageInfo = getPage(idPage, SysRoleBean.class);
-        // 权限信息
-        for (SysRoleBean bean : pageInfo.getRecords()) {
-            List<String> permissions = sysRoleMenuMapper.queryPermission(bean.getId());
-            for (String permission : permissions) {
-                if (StringUtils.isBlank(bean.getPermission())) {
-                    bean.setPermission(permission);
-                } else {
-                    bean.setPermission(bean.getPermission() + ";" + permission);
-                }
-            }
-        }
-        return pageInfo;
-    }
-
-    /* (non-Javadoc)
-     * @see org.ibase4j.provider.SysRoleProvider#getPermissions(java.lang.String) */
-    @Override
-    public List<String> getPermissions(Long id) {
-        return sysRoleMenuMapper.getPermissions(id);
-    }
+	public Page<SysRoleBean> queryBean(Map<String, Object> params) {
+		Page<SysRoleBean> pageInfo = query(params, SysRoleBean.class);
+		// 权限信息
+		for (SysRoleBean bean : pageInfo.getRecords()) {
+			if (bean.getDeptId() != null) {
+				SysDept sysDept = sysDeptProvider.queryById(bean.getDeptId());
+				bean.setDeptName(sysDept.getDeptName());
+			}
+			List<String> permissions = sysRoleMenuMapper.queryPermission(bean.getId());
+			for (String permission : permissions) {
+				if (StringUtils.isBlank(bean.getPermission())) {
+					bean.setPermission(permission);
+				} else {
+					bean.setPermission(bean.getPermission() + ";"  + permission);
+				}
+			}
+		}
+		return pageInfo;
+	}
 }

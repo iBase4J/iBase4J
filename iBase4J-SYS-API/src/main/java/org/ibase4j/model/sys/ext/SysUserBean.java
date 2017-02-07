@@ -6,6 +6,7 @@ import org.ibase4j.model.sys.SysUser;
 public class SysUserBean extends SysUser {
 	private String deptName;
 	private String userTypeText;
+	private String permission;
 
 	public String getDeptName() {
 		return deptName;
@@ -21,5 +22,20 @@ public class SysUserBean extends SysUser {
 
 	public void setUserTypeText(String userTypeText) {
 		this.userTypeText = userTypeText;
+	}
+
+	/**
+	 * @return the permission
+	 */
+	public String getPermission() {
+		return permission;
+	}
+
+	/**
+	 * @param permission
+	 *            the permission to set
+	 */
+	public void setPermission(String permission) {
+		this.permission = permission;
 	}
 }
