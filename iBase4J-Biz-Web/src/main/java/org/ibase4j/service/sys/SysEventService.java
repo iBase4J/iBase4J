@@ -1,7 +1,6 @@
 package org.ibase4j.service.sys;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -9,20 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.core.Constants;
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.core.util.DateUtil;
 import org.ibase4j.core.util.ExceptionUtil;
-import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.sys.SysEvent;
-import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.provider.sys.ISysEventProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.plugins.Page;
 
 import cz.mallat.uasparser.OnlineUpdater;
 import cz.mallat.uasparser.UASparser;
@@ -35,9 +31,6 @@ public class SysEventService extends BaseService<ISysEventProvider, SysEvent>
 	public void setProvider(ISysEventProvider provider) {
 		this.provider = provider;
 	}
-
-	@Autowired
-	private SysMenuService sysMenuService;
 	static UASparser uasParser = null;
 
 	// 初始化uasParser对象
@@ -62,7 +55,6 @@ public class SysEventService extends BaseService<ISysEventProvider, SysEvent>
 		}
 		String path = request.getServletPath();
 		if (!path.contains("/read/") && !path.contains("/unauthorized") && !path.contains("/forbidden")) {
-			final String referurl = request.getHeader("Referer");
 			final SysEvent record = new SysEvent();
 			Long uid = WebUtil.getCurrentUser();
 			record.setMethod(request.getMethod());
@@ -82,17 +74,7 @@ public class SysEventService extends BaseService<ISysEventProvider, SysEvent>
 			executorService.submit(new Runnable() {
 				public void run() {
 					try { // 保存操作
-						Map<String, Object> params = InstanceUtil.newHashMap();
-						params.put("pageSize", -1);
-						Page<SysMenu> page = sysMenuService.query(params);
-						page.getRecords().add(new SysMenu("/login", "登录系统"));
-						page.getRecords().add(new SysMenu("/logout", "登出系统"));
-						for (SysMenu sysMenu : page.getRecords()) {
-							if (referurl.endsWith(sysMenu.getRequest())) {
-								record.setTitle(sysMenu.getMenuName());
-								break;
-							}
-						}
+						record.setTitle((String) request.getAttribute(Constants.OPERATION_NAME));
 						if (StringUtils.isNotBlank(msg)) {
 							record.setRemark(msg);
 						} else {

@@ -5,16 +5,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.listener.SessionListener;
 import org.ibase4j.service.sys.SysSessionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -29,15 +30,15 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @Api(value = "会话管理", description = "会话管理")
-@RequestMapping(value = "/session", method = RequestMethod.POST)
+@RequestMapping(value = "/session")
 public class SysSessionController extends BaseController {
 	@Autowired
 	private SysSessionService sysSessionService;
 
 	// 查询会话
 	@ApiOperation(value = "查询会话")
+	@PutMapping(value = "/read/list")
 	@RequiresPermissions("sys.base.session.read")
-	@RequestMapping(value = "/read/list")
 	public Object get(HttpServletRequest request, ModelMap modelMap,
 			@RequestBody(required = false) Map<String, Object> sysSession) {
 		Page<?> list = sysSessionService.query(sysSession);
@@ -47,9 +48,9 @@ public class SysSessionController extends BaseController {
 	}
 
 	// 删除会话
+	@DeleteMapping
 	@ApiOperation(value = "删除会话")
 	@RequiresPermissions("sys.base.session.delete")
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public Object update(ModelMap modelMap, @RequestParam(value = "id", required = false) Long id) {
 		sysSessionService.delete(id);
 		return setSuccessModelMap(modelMap);

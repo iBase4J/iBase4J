@@ -68,6 +68,9 @@ public abstract class BaseController {
 				Page<?> page = (Page<?>) data;
 				modelMap.put("data", page.getRecords());
 				modelMap.put("recordsTotal", page.getTotal());
+				modelMap.put("total", page.getTotal());
+				modelMap.put("current", page.getCurrent());
+				modelMap.put("size", page.getSize());
 			} else {
 				modelMap.put("data", data);
 			}

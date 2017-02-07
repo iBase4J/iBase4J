@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.baomidou.mybatisplus.plugins.Page;
+
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.service.sys.SysMenuService;
@@ -31,6 +34,14 @@ import io.swagger.annotations.ApiOperation;
 public class SysMenuController extends BaseController {
 	@Autowired
 	private SysMenuService sysMenuService;
+
+	@ApiOperation(value = "查询菜单")
+	@RequiresPermissions("sys.base.menu.read")
+	@RequestMapping(value = "/read/page", method = RequestMethod.PUT)
+	public Object getPage(ModelMap modelMap, @RequestBody Map<String, Object> sysMenu) {
+		Page<?> list = sysMenuService.queryBeanPage(sysMenu);
+		return setSuccessModelMap(modelMap, list);
+	}
 
 	@ApiOperation(value = "查询菜单")
 	@RequiresPermissions("sys.base.menu.read")

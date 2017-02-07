@@ -16,7 +16,7 @@ angular.module('app')
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.httpCode == 200) {
-					$scope.pageInfo = result.data;
+					$scope.pageInfo = result;
 				} else {
 					$scope.msg = result.msg;
 				}

@@ -12,6 +12,8 @@ public interface Constants {
      * 非常遗憾的通知您,程序发生了异常
      */
     public static final String Exception_Head = "OH,MY GOD! SOME ERRORS OCCURED! AS FOLLOWS :";
+    /** 操作名称 */
+    public static final String OPERATION_NAME = "OPERATION_NAME";
     /** 客户端语言 */
     public static final String USERLANGUAGE = "userLanguage";
     /** 客户端主题 */

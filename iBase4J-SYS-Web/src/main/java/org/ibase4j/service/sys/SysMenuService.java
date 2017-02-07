@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.plugins.Page;
+
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.sys.SysMenu;
@@ -19,6 +22,11 @@ public class SysMenuService extends BaseService<ISysMenuProvider, SysMenu> {
 	@DubboReference
 	public void setProvider(ISysMenuProvider provider) {
 		this.provider = provider;
+	}
+
+	/** 条件查询 */
+	public Page<SysMenuBean> queryBeanPage(Map<String, Object> params) {
+		return provider.queryBeanPage(params);
 	}
 
 	/** 条件查询 */
