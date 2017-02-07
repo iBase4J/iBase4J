@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Bean;
  * 
  * @author ShenHuaJie
  */
-//@Configuration
 public class RedissonConfig {
 	/**
 	 * Redis server address

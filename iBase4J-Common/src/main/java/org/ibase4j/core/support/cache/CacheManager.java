@@ -6,7 +6,7 @@ import java.util.Set;
 public abstract class CacheManager {
 	public abstract Object get(final String key);
 
-	public abstract Set<Serializable> getAll(final String pattern);
+	public abstract Set<Object> getAll(final String pattern);
 
 	public abstract void set(final String key, final Serializable value, int seconds);
 
@@ -26,5 +26,9 @@ public abstract class CacheManager {
 
 	public abstract Long ttl(final String key);
 
-	public abstract Serializable getSet(final String key, final String value);
+	public abstract Object getSet(final String key, final Serializable value);
+	
+	public abstract boolean setnx(final String key, final Serializable value);
+
+	public abstract void unlock(String key);
 }

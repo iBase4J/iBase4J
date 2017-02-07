@@ -148,10 +148,10 @@ public class JedisHelper extends CacheManager {
 		});
 	}
 
-	public final String getSet(final String key, final String value) {
+	public final Object getSet(final String key, final Serializable value) {
 		return JedisTemplate.run(key, new Executor<String>() {
 			public String execute(ShardedJedis jedis) {
-				return jedis.getSet(key, value);
+				return jedis.getSet(key, JSON.toJSONString(value));
 			}
 		});
 	}
@@ -1240,10 +1240,22 @@ public class JedisHelper extends CacheManager {
 		});
 	}
 
-	public Set<Serializable> getAll(String pattern) {
+	public Set<Object> getAll(String pattern) {
 		return null;
 	}
 
 	public void delAll(String pattern) {
+	}
+
+	public boolean setnx(final String key, final Serializable value) {
+		return JedisTemplate.run(key, new Executor<Long>() {
+			public Long execute(ShardedJedis jedis) {
+				return jedis.setnx(key, JSON.toJSONString(value));
+			}
+		}) == 0;
+	}
+
+	public void unlock(String key) {
+		del(key);
 	}
 }

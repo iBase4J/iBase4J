@@ -8,24 +8,24 @@
                         http://www.springframework.org/schema/context  
                         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<!-- redis连接 -->
-	<!-- <bean class="org.ibase4j.core.config.RedissonConfig">
+	<bean class="org.ibase4j.core.config.RedissonConfig">
 		<property name="password" value="${redis.password}" />
-		SingleServer
+		<!-- SingleServer -->
 		<property name="address" value="${redis.host}:${redis.port}" />
-		ClusterServers
-		<property name="nodeAddresses">
+		<!-- ClusterServers -->
+		<!-- <property name="nodeAddresses">
 			<array>
 				<value>${redis.host}:${redis.port}</value>
 			</array>
-		</property>
-		MasterSlaveServers
-		<property name="masterAddress" value="${redis.host}:${redis.port}" />
+		</property> -->
+		<!-- MasterSlaveServers -->
+		<!-- <property name="masterAddress" value="${redis.host}:${redis.port}" />
 		<property name="slaveAddresses">
 			<array>
 				<value>${redis.host}:${redis.port}</value>
 			</array>
-		</property>
-	</bean> -->
+		</property> -->
+	</bean>
 	
 	<!-- Jedis线程 -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
@@ -43,15 +43,15 @@
 	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
 		p:shard-info-ref="jedisShardInfo" p:pool-config-ref="jedisPoolConfig" />
     <!-- 缓存序列化方式 -->
-    <bean id="keySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+    <!-- <bean id="keySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer" />
 	<bean id="valueSerializer" class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
         p:connection-factory-ref="jedisConnectionFactory"
         p:key-serializer-ref="keySerializer" p:value-serializer-ref="valueSerializer"
-        p:enableTransactionSupport="false" />
+        p:enableTransactionSupport="false" /> -->
 	<!-- 缓存 -->
-	<bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+	<!-- <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
 		<constructor-arg index="0" ref="redisTemplate" />
 		<property name="defaultExpiration" value="${redis.expiration}" />
-	</bean>
+	</bean> -->
 </beans>

@@ -29,7 +29,7 @@ public class EventInterceptor extends BaseInterceptor {
         startTimeThreadLocal.set(System.currentTimeMillis());
 		try {
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
-			ApiOperation apiOperation = handlerMethod.getMethod().getDeclaredAnnotation(ApiOperation.class);
+			ApiOperation apiOperation = handlerMethod.getMethod().getAnnotation(ApiOperation.class);
 			request.setAttribute(Constants.OPERATION_NAME, apiOperation.value());
 		} catch (Exception e) {
 			logger.error("", e);
