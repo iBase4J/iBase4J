@@ -147,20 +147,26 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 
 	@Transactional
 	public T update(T record) {
-		try {
-			record.setUpdateTime(new Date());
-			if (record.getId() == null) {
-				record.setCreateTime(new Date());
-				mapper.insert(record);
-			} else {
-				mapper.updateById(record);
+		String lock = getClass().getName();
+		if (CacheUtil.getLock(lock)) {
+			try {
+				record.setUpdateTime(new Date());
+				if (record.getId() == null) {
+					record.setCreateTime(new Date());
+					mapper.insert(record);
+				} else {
+					mapper.updateById(record);
+				}
 				record = mapper.selectById(record.getId());
+				CacheUtil.getCache().set(getCacheKey(record.getId()), record);
+			} catch (Exception e) {
+				throw new RuntimeException(e.getMessage(), e);
+			} finally {
+				CacheUtil.unlock(lock);
 			}
-			CacheUtil.getCache().set(getCacheKey(record.getId()), record);
-		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage(), e);
+			return record;
 		}
-		return record;
+		return null;
 	}
 
 	@Transactional

@@ -5,11 +5,11 @@ import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.PropertiesUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
+import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.core.util.PropertiesUtil;
 
 /**
  * Redis缓存辅助类
@@ -41,8 +41,8 @@ public final class RedisHelper extends CacheManager {
 		return getRedis().boundValueOps(key).get();
 	}
 
-	public final Set<Serializable> getAll(final String pattern) {
-		Set<Serializable> values = InstanceUtil.newHashSet();
+	public final Set<Object> getAll(final String pattern) {
+		Set<Object> values = InstanceUtil.newHashSet();
 		Set<Serializable> keys = getRedis().keys(pattern);
 		for (Serializable key : keys) {
 			expire(key.toString(), EXPIRE);
@@ -112,9 +112,18 @@ public final class RedisHelper extends CacheManager {
 		return getRedis().boundValueOps(key).get(startOffset, endOffset);
 	}
 
-	public final Serializable getSet(final String key, final String value) {
+	public final Object getSet(final String key, final Serializable value) {
 		expire(key, EXPIRE);
 		return getRedis().boundValueOps(key).getAndSet(value);
+	}
+
+	public boolean setnx(String key, Serializable value) {
+		getRedis().boundValueOps(key).setIfAbsent(value);
+		return false;
+	}
+
+	public void unlock(String key) {
+		del(key);
 	}
 
 	// 未完，待续...

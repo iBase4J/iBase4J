@@ -4,6 +4,7 @@
 package org.ibase4j.core.base;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import org.ibase4j.core.Constants;
 import org.ibase4j.core.exception.BaseException;
 import org.ibase4j.core.exception.IllegalParameterException;
 import org.ibase4j.core.support.HttpCode;
+import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
@@ -56,11 +58,13 @@ public abstract class BaseController {
 
 	/** 设置响应代码 */
 	protected ResponseEntity<ModelMap> setModelMap(ModelMap modelMap, HttpCode code, Object data) {
-		modelMap.remove("void");
-		for (Iterator<String> iterator = modelMap.keySet().iterator(); iterator.hasNext();) {
+		Map<String, Object> map = InstanceUtil.newLinkedHashMap();
+		map.putAll(modelMap);
+		modelMap.clear();
+		for (Iterator<String> iterator = map.keySet().iterator(); iterator.hasNext();) {
 			String key = iterator.next();
-			if (key.startsWith("org.springframework.validation.BindingResult")) {
-				modelMap.remove(key);
+			if (!key.startsWith("org.springframework.validation.BindingResult") && !key.equals("void")) {
+				modelMap.put(key, map.get(key));
 			}
 		}
 		if (data != null) {
@@ -71,6 +75,7 @@ public abstract class BaseController {
 				modelMap.put("total", page.getTotal());
 				modelMap.put("current", page.getCurrent());
 				modelMap.put("size", page.getSize());
+				modelMap.put("pages", page.getPages());
 			} else {
 				modelMap.put("data", data);
 			}

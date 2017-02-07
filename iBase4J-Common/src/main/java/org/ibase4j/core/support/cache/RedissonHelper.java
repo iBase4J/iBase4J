@@ -2,17 +2,19 @@ package org.ibase4j.core.support.cache;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.ibase4j.core.util.PropertiesUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RBucket;
 import org.redisson.api.RType;
 import org.redisson.api.RedissonClient;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
+import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.core.util.PropertiesUtil;
 
 /**
  * Redis缓存辅助类
@@ -87,7 +89,7 @@ public class RedissonHelper extends CacheManager {
 	 *
 	 * @return
 	 */
-	public final void expire(final RBucket<Object> bucket, final int seconds) {
+	private final void expire(final RBucket<Object> bucket, final int seconds) {
 		bucket.expireAsync(seconds, TimeUnit.SECONDS);
 	}
 
@@ -107,20 +109,32 @@ public class RedissonHelper extends CacheManager {
 		return rBucket.remainTimeToLive();
 	}
 
-	public final Object getSet(final String key, final Object value) {
+	public final Object getSet(final String key, final Serializable value) {
 		RBucket<Object> rBucket = getRedisBucket(key);
 		return rBucket.getAndSet(value);
 	}
 
-	public Set<Serializable> getAll(String pattern) {
-		return null;
+	public Set<Object> getAll(String pattern) {
+		Set<Object> set = InstanceUtil.newHashSet();
+		Iterable<String> keys = getRedis().getKeys().getKeysByPattern(pattern);
+		for (Iterator<String> iterator = keys.iterator(); iterator.hasNext();) {
+			String key = iterator.next();
+			set.add(getRedisBucket(key).get());
+		}
+		return set;
 	}
 
 	public Boolean expire(String key, int seconds) {
-		return null;
+		RBucket<Object> bucket = getRedisBucket(key);
+		expire(bucket, seconds);
+		return true;
 	}
 
-	public Serializable getSet(String key, String value) {
-		return null;
+	public boolean setnx(String key, Serializable value) {
+		return getRedis().getLock(key).tryLock();
+	}
+
+	public void unlock(String key) {
+		getRedis().getLock(key).unlock();
 	}
 }
