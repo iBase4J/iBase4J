@@ -34,8 +34,8 @@ public class SysRoleController extends BaseController {
 	@ApiOperation(value = "查询角色")
 	@RequiresPermissions("sys.base.role.read")
 	@RequestMapping(value = "/read/list", method = RequestMethod.PUT)
-	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> sysRoleBean) {
-		Page<?> list = sysRoleService.queryBean(sysRoleBean);
+	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> sysRole) {
+		Page<?> list = sysRoleService.query(sysRole);
 		return setSuccessModelMap(modelMap, list);
 	}
 

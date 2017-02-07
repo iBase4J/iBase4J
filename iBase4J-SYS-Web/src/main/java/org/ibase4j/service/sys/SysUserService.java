@@ -1,7 +1,5 @@
 package org.ibase4j.service.sys;
 
-import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +10,7 @@ import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.model.sys.ext.SysUserBean;
 import org.ibase4j.provider.sys.ISysUserProvider;
-
-import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * @author ShenHuaJie
@@ -41,10 +36,6 @@ public class SysUserService extends BaseService<ISysUserProvider, SysUser> {
 		}
 		sysUser.setUpdateBy(WebUtil.getCurrentUser());
 		provider.update(sysUser);
-	}
-
-	public Page<SysUserBean> queryBeans(Map<String, Object> params) {
-		return provider.queryBeans(params);
 	}
 
 	/** 修改密码 */

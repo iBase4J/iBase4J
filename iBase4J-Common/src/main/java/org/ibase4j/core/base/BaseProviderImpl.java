@@ -6,13 +6,13 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.transaction.annotation.Transactional;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -155,7 +155,9 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 					record.setCreateTime(new Date());
 					mapper.insert(record);
 				} else {
-					mapper.updateById(record);
+					T org = mapper.selectById(record.getId());
+					T update = InstanceUtil.getDiff(org, record);
+					mapper.updateById(update);
 				}
 				record = mapper.selectById(record.getId());
 				CacheUtil.getCache().set(getCacheKey(record.getId()), record);
@@ -195,6 +197,12 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 		Page<Long> page = getPage(params);
 		page.setRecords(mapper.selectIdPage(page, params));
 		return getPageMap(page);
+	}
+
+	public List<T> queryList(Map<String, Object> params) {
+		List<Long> ids = mapper.selectIdPage(params);
+		List<T> list = getList(ids);
+		return list;
 	}
 
 	protected <P> Page<P> query(Map<String, Object> params, Class<P> cls) {

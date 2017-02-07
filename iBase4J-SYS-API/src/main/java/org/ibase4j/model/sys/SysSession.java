@@ -1,6 +1,7 @@
 package org.ibase4j.model.sys;
 
 import java.util.Date;
+
 import org.ibase4j.core.base.BaseModel;
 
 import com.baomidou.mybatisplus.annotations.TableField;

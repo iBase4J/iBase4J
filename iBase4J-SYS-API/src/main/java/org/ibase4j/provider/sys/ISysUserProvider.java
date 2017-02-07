@@ -1,13 +1,8 @@
 package org.ibase4j.provider.sys;
 
-import java.util.Map;
-
 import org.ibase4j.core.base.BaseProvider;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.model.sys.ext.SysUserBean;
-
-import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * SysUser服务接口
@@ -16,8 +11,6 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @version 2016-08-27 22:39:42
  */
 public interface ISysUserProvider extends BaseProvider<SysUser> {
-
-	public Page<SysUserBean> queryBeans(Map<String, Object> params);
 
 	public String encryptPassword(String password);
 

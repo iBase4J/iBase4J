@@ -7,7 +7,6 @@ import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;
 import org.ibase4j.model.sys.SysUserRole;
-import org.ibase4j.model.sys.ext.SysMenuBean;
 
 public interface ISysAuthorizeProvider extends BaseProvider<SysMenu> {
 
@@ -27,9 +26,9 @@ public interface ISysAuthorizeProvider extends BaseProvider<SysMenu> {
 
 	public void updateRolePermission(List<SysRoleMenu> sysRoleMenus);
 
-	public List<SysMenuBean> queryAuthorizeByUserId(Long userId);
+	public List<SysMenu> queryAuthorizeByUserId(Long userId);
 
-	public List<SysMenuBean> queryMenusPermission();
+	public List<SysMenu> queryMenusPermission();
 
 	public List<Long> queryUserPermissions(Long userId, String permission);
 

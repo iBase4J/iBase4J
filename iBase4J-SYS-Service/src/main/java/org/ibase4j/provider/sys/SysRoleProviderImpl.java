@@ -11,7 +11,6 @@ import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.dao.sys.SysRoleMenuMapper;
 import org.ibase4j.model.sys.SysDept;
 import org.ibase4j.model.sys.SysRole;
-import org.ibase4j.model.sys.ext.SysRoleBean;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -27,10 +26,10 @@ public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements IS
 	@Autowired
 	private SysRoleMenuMapper sysRoleMenuMapper;
 
-	public Page<SysRoleBean> queryBean(Map<String, Object> params) {
-		Page<SysRoleBean> pageInfo = query(params, SysRoleBean.class);
+	public Page<SysRole> query(Map<String, Object> params) {
+		Page<SysRole> pageInfo = super.query(params);
 		// 权限信息
-		for (SysRoleBean bean : pageInfo.getRecords()) {
+		for (SysRole bean : pageInfo.getRecords()) {
 			if (bean.getDeptId() != null) {
 				SysDept sysDept = sysDeptProvider.queryById(bean.getDeptId());
 				bean.setDeptName(sysDept.getDeptName());
@@ -40,7 +39,7 @@ public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements IS
 				if (StringUtils.isBlank(bean.getPermission())) {
 					bean.setPermission(permission);
 				} else {
-					bean.setPermission(bean.getPermission() + ";"  + permission);
+					bean.setPermission(bean.getPermission() + ";" + permission);
 				}
 			}
 		}

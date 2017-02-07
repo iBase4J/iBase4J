@@ -10,7 +10,7 @@
 	<delete id="deleteRoleMenu">
 		delete from sys_role_menu where role_id=#{roleId} and permission_=#{permission}
 	</delete>
-	<select id="queryMenusPermission" resultType="org.ibase4j.model.sys.ext.SysMenuBean">
+	<select id="queryMenusPermission" resultType="org.ibase4j.model.sys.SysMenu">
 	  select menu_id as menuId, menu_name as menuName,
 	  	d.code as permission, d.codeText as permissionText
 	  from sys_menu m, join sys_dic d

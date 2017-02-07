@@ -1,5 +1,7 @@
 package org.ibase4j.model.sys;
 
+import java.util.List;
+
 import org.ibase4j.core.base.BaseModel;
 
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -35,6 +37,15 @@ public class SysMenu extends BaseModel {
 	@TableField("permission_")
 	private String permission;
 
+	@TableField(exist = false)
+	private Integer leaf = 1;
+	@TableField(exist = false)
+	private String typeName;
+	@TableField(exist = false)
+	private String permissionText;
+	@TableField(exist = false)
+	private List<SysMenu> menuBeans;
+	
 	/**
 	 * @return the value of sys_menu.menu_name
 	 */
@@ -168,6 +179,38 @@ public class SysMenu extends BaseModel {
 	 */
 	public void setPermission(String permission) {
 		this.permission = permission == null ? null : permission.trim();
+	}
+
+	public Integer getLeaf() {
+		return leaf;
+	}
+
+	public void setLeaf(Integer leaf) {
+		this.leaf = leaf;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public String getPermissionText() {
+		return permissionText;
+	}
+
+	public void setPermissionText(String permissionText) {
+		this.permissionText = permissionText;
+	}
+
+	public List<SysMenu> getMenuBeans() {
+		return menuBeans;
+	}
+
+	public void setMenuBeans(List<SysMenu> menuBeans) {
+		this.menuBeans = menuBeans;
 	}
 
 	/**

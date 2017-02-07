@@ -40,8 +40,15 @@ public class SysUser extends BaseModel {
 	private Long deptId;
     @TableField("locked_")
 	private Integer locked;
+    
     @TableField(exist = false)
     private String oldPassword;
+    @TableField(exist = false)
+	private String deptName;
+    @TableField(exist = false)
+	private String userTypeText;
+    @TableField(exist = false)
+	private String permission;
 
 	public void setAccount(String account) {
 		this.account = account;
@@ -164,5 +171,29 @@ public class SysUser extends BaseModel {
 
 	public void setOldPassword(String oldPassword) {
 		this.oldPassword = oldPassword;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public String getUserTypeText() {
+		return userTypeText;
+	}
+
+	public void setUserTypeText(String userTypeText) {
+		this.userTypeText = userTypeText;
+	}
+
+	public String getPermission() {
+		return permission;
+	}
+
+	public void setPermission(String permission) {
+		this.permission = permission;
 	}
 }

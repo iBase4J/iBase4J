@@ -3,7 +3,7 @@ package org.ibase4j.dao.sys;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.ibase4j.model.sys.ext.SysMenuBean;
+import org.ibase4j.model.sys.SysMenu;
 
 public interface SysAuthorizeMapper {
 
@@ -17,5 +17,5 @@ public interface SysAuthorizeMapper {
 
 	List<String> queryPermissionByUserId(@Param("userId") Long userId);
 
-	List<SysMenuBean> queryMenusPermission();
+	List<SysMenu> queryMenusPermission();
 }

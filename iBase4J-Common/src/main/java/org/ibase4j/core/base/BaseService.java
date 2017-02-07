@@ -1,5 +1,6 @@
 package org.ibase4j.core.base;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -59,6 +60,11 @@ public abstract class BaseService<P extends BaseProvider<T>, T extends BaseModel
 	/** 条件查询 */
 	public Page<T> query(Map<String, Object> params) {
 		return provider.query(params);
+	}
+
+	/** 条件查询 */
+	public List<T> queryList(Map<String, Object> params) {
+		return provider.queryList(params);
 	}
 
 	/** 条件查询 */
