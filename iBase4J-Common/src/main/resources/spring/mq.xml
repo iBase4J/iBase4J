@@ -33,6 +33,4 @@
 		<property name="receiveTimeout" value="${mq.receiveTimeout}" />
 		<property name="pubSubDomain" value="true" />
 	</bean>
-	<bean id="queueSender" class="org.ibase4j.core.support.mq.QueueSender" />
-	<bean id="topicSender" class="org.ibase4j.core.support.mq.TopicSender" />
 </beans>

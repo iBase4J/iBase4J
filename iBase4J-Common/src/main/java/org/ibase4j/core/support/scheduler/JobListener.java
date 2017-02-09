@@ -30,13 +30,13 @@ public class JobListener implements org.quartz.JobListener {
 	private static Logger logger = LogManager.getLogger(JobListener.class);
 	@Autowired
 	private SchedulerService schedulerService;
-	private QueueSender queueSender;
+	private QueueSender emailQueueSender;
 	// 线程池
 	private static ExecutorService executorService = Executors.newCachedThreadPool();
 	private static String JOB_LOG = "jobLog";
 
-	public void setQueueSender(QueueSender queueSender) {
-		this.queueSender = queueSender;
+	public void setEmailQueueSender(QueueSender emailQueueSender) {
+		this.emailQueueSender = emailQueueSender;
 	}
 
 	public String getName() {
@@ -109,8 +109,8 @@ public class JobListener implements org.quartz.JobListener {
 	private void sendEmail(final Email email) {
 		executorService.submit(new Runnable() {
 			public void run() {
-				if (queueSender != null) {
-					queueSender.send("iBase4J.emailSender", email);
+				if (emailQueueSender != null) {
+					emailQueueSender.send("iBase4J.emailSender", email);
 				} else {
 					logger.info("将发送邮件至：" + email.getSendTo());
 					EmailUtil.sendEmail(email);

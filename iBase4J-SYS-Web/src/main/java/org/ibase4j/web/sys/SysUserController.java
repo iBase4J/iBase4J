@@ -48,9 +48,9 @@ public class SysUserController extends BaseController {
 	@Autowired
 	private SysAuthorizeService authorizeService;
 
+	@PostMapping
 	@ApiOperation(value = "修改用户信息")
 	@RequiresPermissions("sys.base.user.update")
-	@PostMapping
 	public Object update(ModelMap modelMap, @RequestBody SysUser sysUser) {
 		Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
 		Assert.length(sysUser.getAccount(), 3, 15, "ACCOUNT");
