@@ -25,17 +25,16 @@ public class SysUserService extends BaseService<ISysUserProvider, SysUser> {
 
 	/** 修改用户信息 */
 	public void updateUserInfo(SysUser sysUser) {
-		Assert.notNull(sysUser.getId(), "USER_ID");
-		SysUser user = this.queryById(sysUser.getId());
-		Assert.notNull(user, "USER", sysUser.getId());
-		if (StringUtils.isBlank(sysUser.getPassword())) {
-			sysUser.setPassword(user.getPassword());
+		if (sysUser.getId() != null) {
+			SysUser user = this.queryById(sysUser.getId());
+			Assert.notNull(user, "USER", sysUser.getId());
+			if (StringUtils.isNotBlank(sysUser.getPassword())) {
+				if (!sysUser.getPassword().equals(user.getPassword())) {
+					sysUser.setPassword(encryptPassword(sysUser.getPassword()));
+				}
+			}
 		}
-		if (StringUtils.isEmpty(sysUser.getAvatar())) {
-			sysUser.setAvatar(user.getAvatar());
-		}
-		sysUser.setUpdateBy(WebUtil.getCurrentUser());
-		provider.update(sysUser);
+		update(sysUser);
 	}
 
 	/** 修改密码 */
