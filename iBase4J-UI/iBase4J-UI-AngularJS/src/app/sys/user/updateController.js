@@ -47,7 +47,7 @@
                 $scope.isDisabled = true;//提交disabled
                 $.ajax({
                 	type: 'POST',
-    				url : '/user/update',
+    				url : '/user',
     				data: angular.toJson(m)
     			}).then(callback);
             }
