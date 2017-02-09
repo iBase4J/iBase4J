@@ -36,7 +36,7 @@
 		<!-- Shiro的核心安全接口,这个属性是必须的 -->
 		<property name="securityManager" ref="securityManager" />
 		<!-- 要求登录时的链接 -->
-		<property name="loginUrl" value="/unauthorized" />
+		<property name="loginUrl" value="/index.html" />
 		<!-- 用户访问未对其授权的资源时,所显示的连接 -->
 		<property name="unauthorizedUrl" value="/forbidden" />
 		<!-- Shiro连接约束配置,即过滤链的定义 -->

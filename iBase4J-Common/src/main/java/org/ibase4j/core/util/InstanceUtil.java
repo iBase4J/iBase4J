@@ -119,7 +119,7 @@ public final class InstanceUtil {
 						// 得到property对应的getter方法
 						Method getter = property.getReadMethod();
 						// 得到property对应的setter方法
-						Method setter = property.getReadMethod();
+						Method setter = property.getWriteMethod();
 						Object oldValue = getter.invoke(oldBean);
 						Object newValue = getter.invoke(newBean);
 						if (newValue != null) {

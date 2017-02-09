@@ -157,6 +157,7 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 				} else {
 					T org = mapper.selectById(record.getId());
 					T update = InstanceUtil.getDiff(org, record);
+					update.setId(record.getId());
 					mapper.updateById(update);
 				}
 				record = mapper.selectById(record.getId());

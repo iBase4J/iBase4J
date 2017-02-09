@@ -3,12 +3,6 @@ package org.ibase4j.web.sys;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.exception.LoginException;
@@ -19,6 +13,12 @@ import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.sys.SysUser;
 import org.ibase4j.service.sys.SysSessionService;
 import org.ibase4j.service.sys.SysUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -68,7 +68,7 @@ public class LoginController extends BaseController {
 	// 注册
 	@ApiOperation(value = "用户注册")
 	@PostMapping("/regin")
-	public Object regin(HttpServletRequest request, ModelMap modelMap, @RequestBody SysUser sysUser) {
+	public Object regin(ModelMap modelMap, @RequestBody SysUser sysUser) {
 		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
 		Assert.notNull(sysUser.getPassword(), "PASSWORD");
 		sysUser.setPassword(sysUserService.encryptPassword(sysUser.getPassword()));

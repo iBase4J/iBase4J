@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.annotations.TableName;
 public class SysParam extends BaseModel {
     private String paramKey;
     private String paramValue;
-    private String catalogId;
 
     /**
      * @return the value of sys_param.param_key
@@ -40,20 +39,6 @@ public class SysParam extends BaseModel {
     }
 
     /**
-     * @return the value of sys_param.catalog_id
-     */
-    public String getCatalogId() {
-        return catalogId;
-    }
-
-    /**
-     * @param catalogId the value for sys_param.catalog_id
-     */
-    public void setCatalogId(String catalogId) {
-        this.catalogId = catalogId == null ? null : catalogId.trim();
-    }
-
-    /**
      */
     @Override
     public String toString() {
@@ -63,7 +48,6 @@ public class SysParam extends BaseModel {
         sb.append("Hash = ").append(hashCode());
         sb.append(", paramKey=").append(paramKey);
         sb.append(", paramValue=").append(paramValue);
-        sb.append(", catalogId=").append(catalogId);
         sb.append("]");
         return sb.toString();
     }
@@ -85,7 +69,6 @@ public class SysParam extends BaseModel {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getParamKey() == null ? other.getParamKey() == null : this.getParamKey().equals(other.getParamKey()))
             && (this.getParamValue() == null ? other.getParamValue() == null : this.getParamValue().equals(other.getParamValue()))
-            && (this.getCatalogId() == null ? other.getCatalogId() == null : this.getCatalogId().equals(other.getCatalogId()))
             && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
             && (this.getEnable() == null ? other.getEnable() == null : this.getEnable().equals(other.getEnable()))
             && (this.getCreateBy() == null ? other.getCreateBy() == null : this.getCreateBy().equals(other.getCreateBy()))
@@ -103,7 +86,6 @@ public class SysParam extends BaseModel {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getParamKey() == null) ? 0 : getParamKey().hashCode());
         result = prime * result + ((getParamValue() == null) ? 0 : getParamValue().hashCode());
-        result = prime * result + ((getCatalogId() == null) ? 0 : getCatalogId().hashCode());
         result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
         result = prime * result + ((getEnable() == null) ? 0 : getEnable().hashCode());
         result = prime * result + ((getCreateBy() == null) ? 0 : getCreateBy().hashCode());
