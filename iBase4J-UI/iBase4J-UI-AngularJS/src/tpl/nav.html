@@ -11,9 +11,9 @@
 	    </a>
 	    <ul ng-if="menu.leaf==0" class="nav nav-sub dk">
 		      <li ng-repeat="rm in menu.menuBeans" ng-class="{active: $state.includes('**.{{rm.permission}}.**')}">
-		        <a ui-sref="{{rm.request}}">
+		        <a ui-sref="{{rm.request}}"  ng-class="{active: $state.includes('**.{{rm.request}}.**')}">
 		        	<i class="{{rm.iconcls}}"></i>
-		          <span>{{rm.menuName}}</span>
+		          	<span>{{rm.menuName}}</span>
 		        </a>
 		      </li>
 	     </ul>
