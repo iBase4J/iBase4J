@@ -147,29 +147,30 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 
 	@Transactional
 	public T update(T record) {
-		String lock = getClass().getName();
-		if (CacheUtil.getLock(lock)) {
-			try {
-				record.setUpdateTime(new Date());
-				if (record.getId() == null) {
-					record.setCreateTime(new Date());
-					mapper.insert(record);
-				} else {
-					T org = mapper.selectById(record.getId());
-					T update = InstanceUtil.getDiff(org, record);
-					update.setId(record.getId());
-					mapper.updateById(update);
+		try {
+			record.setUpdateTime(new Date());
+			if (record.getId() == null) {
+				record.setCreateTime(new Date());
+				mapper.insert(record);
+			} else {
+				String lockKey = getClass().getName() + record.getId();
+				if (CacheUtil.getLock(lockKey)) {
+					try {
+						T org = mapper.selectById(record.getId());
+						T update = InstanceUtil.getDiff(org, record);
+						update.setId(record.getId());
+						mapper.updateById(update);
+					} finally {
+						CacheUtil.unlock(lockKey);
+					}
 				}
-				record = mapper.selectById(record.getId());
-				CacheUtil.getCache().set(getCacheKey(record.getId()), record);
-			} catch (Exception e) {
-				throw new RuntimeException(e.getMessage(), e);
-			} finally {
-				CacheUtil.unlock(lock);
 			}
-			return record;
+			record = mapper.selectById(record.getId());
+			CacheUtil.getCache().set(getCacheKey(record.getId()), record);
+		} catch (Exception e) {
+			throw new RuntimeException(e.getMessage(), e);
 		}
-		return null;
+		return record;
 	}
 
 	@Transactional
