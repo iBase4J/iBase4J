@@ -19,7 +19,7 @@
 		<property name="jobListeners">
 			<list>
 				<!--日志监控类型 -->
-				<bean class="org.ibase4j.core.support.scheduler.JobListener" />
+				<bean class="org.ibase4j.core.support.scheduler.JobListener" autowire="byType" />
 			</list>
 		</property>
 	</bean>
