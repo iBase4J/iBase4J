@@ -1,7 +1,8 @@
 package org.ibase4j.model.scheduler;
 
-import java.io.Serializable;
 import java.util.Date;
+
+import org.ibase4j.core.base.BaseModel;
 
 /**
  * 计划任务信息
@@ -10,173 +11,185 @@ import java.util.Date;
  * @version $Id: ScheduleJob.java, v 0.1 2015-1-19 下午7:35:44 ShenHuaJie Exp $
  */
 @SuppressWarnings("serial")
-public class TaskScheduled implements Serializable {
-    public interface JobType {
-        String job = "job";
-        String statefulJob = "statefulJob";
-    }
-    public interface TaskType {
-        String local = "LOCAL";
-        String dubbo = "DUBBO";
-    }
+public class TaskScheduled extends BaseModel {
+	public interface JobType {
+		String job = "job";
+		String statefulJob = "statefulJob";
+	}
 
-    public TaskScheduled() {
-    }
+	public interface TaskType {
+		String local = "LOCAL";
+		String dubbo = "DUBBO";
+	}
 
-    public TaskScheduled(String taskGroup, String taskName) {
-        this.taskGroup = taskGroup;
-        this.taskName = taskName;
-    }
+	public TaskScheduled() {
+	}
 
-    /** 任务id */
-    private String id;
-    /** 任务名称 */
-    private String taskName;
-    /** 任务分组 */
-    private String taskGroup;
-    /** 任务状态 0禁用 1启用 2删除 */
-    private String status;
-    /** 任务运行时间表达式 */
-    private String taskCron;
-    /** 最后一次执行时间 */
-    private Date previousFireTime;
-    /** 下次执行时间 */
-    private Date nextFireTime;
-    /** 任务描述 */
-    private String taskDesc;
-    // 任务类型(是否阻塞)
-    private String jobType;
-    // 本地任务/dubbo任务
-    private String taskType;
-    // 任务对象
-    private String targetObject;
-    // 任务方法
-    private String targetMethod;
-    // 通知邮箱地址
+	public TaskScheduled(String taskGroup, String taskName) {
+		this.taskGroup = taskGroup;
+		this.taskName = taskName;
+	}
+
+	/** 任务名称 */
+	private String taskName;
+	/** 任务分组 */
+	private String taskGroup;
+	/** 任务状态 0禁用 1启用 2删除 */
+	private String status;
+	/** 任务运行时间表达式 */
+	private String taskCron;
+	/** 最后一次执行时间 */
+	private Date previousFireTime;
+	/** 下次执行时间 */
+	private Date nextFireTime;
+	/** 任务描述 */
+	private String taskDesc;
+	// 任务类型(是否阻塞)
+	private String jobType;
+	// 本地任务/dubbo任务
+	private String taskType;
+	// 运行系统(dubbo任务必须)
+	private String targetSystem;
+	// 任务对象
+	private String targetObject;
+	// 任务方法
+	private String targetMethod;
+	// 通知邮箱地址
 	private String contactName;
-    private String contactEmail;
+	private String contactEmail;
 
-    public String getId() {
-        return id;
-    }
+	public String getTaskName() {
+		return taskName;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
 
-    public String getTaskName() {
-        return taskName;
-    }
+	public String getTaskGroup() {
+		return taskGroup;
+	}
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
+	public void setTaskGroup(String taskGroup) {
+		this.taskGroup = taskGroup;
+	}
 
-    public String getTaskGroup() {
-        return taskGroup;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setTaskGroup(String taskGroup) {
-        this.taskGroup = taskGroup;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public String getTaskCron() {
+		return taskCron;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public void setTaskCron(String taskCron) {
+		this.taskCron = taskCron;
+	}
 
-    public String getTaskCron() {
-        return taskCron;
-    }
+	public Date getPreviousFireTime() {
+		return previousFireTime;
+	}
 
-    public void setTaskCron(String taskCron) {
-        this.taskCron = taskCron;
-    }
+	public void setPreviousFireTime(Date previousFireTime) {
+		this.previousFireTime = previousFireTime;
+	}
 
-    public Date getPreviousFireTime() {
-        return previousFireTime;
-    }
+	public Date getNextFireTime() {
+		return nextFireTime;
+	}
 
-    public void setPreviousFireTime(Date previousFireTime) {
-        this.previousFireTime = previousFireTime;
-    }
+	public void setNextFireTime(Date nextFireTime) {
+		this.nextFireTime = nextFireTime;
+	}
 
-    public Date getNextFireTime() {
-        return nextFireTime;
-    }
+	public String getTaskDesc() {
+		return taskDesc;
+	}
 
-    public void setNextFireTime(Date nextFireTime) {
-        this.nextFireTime = nextFireTime;
-    }
+	public void setTaskDesc(String taskDesc) {
+		this.taskDesc = taskDesc;
+	}
 
-    public String getTaskDesc() {
-        return taskDesc;
-    }
+	/**
+	 * @return the jobType
+	 */
+	public String getJobType() {
+		return jobType;
+	}
 
-    public void setTaskDesc(String taskDesc) {
-        this.taskDesc = taskDesc;
-    }
+	/**
+	 * @param jobType
+	 *            the jobType to set
+	 */
+	public void setJobType(String jobType) {
+		this.jobType = jobType;
+	}
 
-    /**
-     * @return the jobType
-     */
-    public String getJobType() {
-        return jobType;
-    }
+	/**
+	 * @return the taskType
+	 */
+	public String getTaskType() {
+		return taskType;
+	}
 
-    /**
-     * @param jobType the jobType to set
-     */
-    public void setJobType(String jobType) {
-        this.jobType = jobType;
-    }
+	/**
+	 * @param taskType
+	 *            the taskType to set
+	 */
+	public void setTaskType(String taskType) {
+		this.taskType = taskType;
+	}
 
-    /**
-     * @return the taskType
-     */
-    public String getTaskType() {
-        return taskType;
-    }
+	/**
+	 * @return the targetSystem
+	 */
+	public String getTargetSystem() {
+		return targetSystem;
+	}
 
-    /**
-     * @param taskType the taskType to set
-     */
-    public void setTaskType(String taskType) {
-        this.taskType = taskType;
-    }
+	/**
+	 * @param targetSystem
+	 *            the targetSystem to set
+	 */
+	public void setTargetSystem(String targetSystem) {
+		this.targetSystem = targetSystem;
+	}
 
-    /**
-     * @return the targetObject
-     */
-    public String getTargetObject() {
-        return targetObject;
-    }
+	/**
+	 * @return the targetObject
+	 */
+	public String getTargetObject() {
+		return targetObject;
+	}
 
-    /**
-     * @param targetObject the targetObject to set
-     */
-    public void setTargetObject(String targetObject) {
-        this.targetObject = targetObject;
-    }
+	/**
+	 * @param targetObject
+	 *            the targetObject to set
+	 */
+	public void setTargetObject(String targetObject) {
+		this.targetObject = targetObject;
+	}
 
-    /**
-     * @return the targetMethod
-     */
-    public String getTargetMethod() {
-        return targetMethod;
-    }
+	/**
+	 * @return the targetMethod
+	 */
+	public String getTargetMethod() {
+		return targetMethod;
+	}
 
-    /**
-     * @param targetMethod the targetMethod to set
-     */
-    public void setTargetMethod(String targetMethod) {
-        this.targetMethod = targetMethod;
-    }
+	/**
+	 * @param targetMethod
+	 *            the targetMethod to set
+	 */
+	public void setTargetMethod(String targetMethod) {
+		this.targetMethod = targetMethod;
+	}
 
-    public String getContactName() {
+	public String getContactName() {
 		return contactName;
 	}
 
@@ -185,16 +198,17 @@ public class TaskScheduled implements Serializable {
 	}
 
 	/**
-     * @return the contactEmail
-     */
-    public String getContactEmail() {
-        return contactEmail;
-    }
+	 * @return the contactEmail
+	 */
+	public String getContactEmail() {
+		return contactEmail;
+	}
 
-    /**
-     * @param contactEmail the contactEmail to set
-     */
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
+	/**
+	 * @param contactEmail
+	 *            the contactEmail to set
+	 */
+	public void setContactEmail(String contactEmail) {
+		this.contactEmail = contactEmail;
+	}
 }

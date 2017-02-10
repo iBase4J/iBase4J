@@ -12,6 +12,7 @@ import org.ibase4j.core.support.scheduler.job.StatefulJob;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.model.scheduler.TaskScheduled;
 import org.ibase4j.model.scheduler.TaskScheduled.JobType;
+import org.ibase4j.model.scheduler.TaskScheduled.TaskType;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
@@ -137,6 +138,9 @@ public class SchedulerManager implements InitializingBean {
         String jobType = taskScheduled.getJobType();
         String taskType = taskScheduled.getTaskType();
         JobDataMap jobDataMap = new JobDataMap();
+        if (TaskType.dubbo.equals(taskType)) {
+            jobDataMap.put("targetSystem", taskScheduled.getTargetSystem());
+        }
         jobDataMap.put("targetObject", targetObject);
         jobDataMap.put("targetMethod", targetMethod);
         jobDataMap.put("taskType", taskType);

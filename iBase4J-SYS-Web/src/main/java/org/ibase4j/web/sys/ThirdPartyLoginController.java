@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.config.Resources;
+import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyLoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
-import org.ibase4j.service.sys.SysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ibase4j.model.sys.SysUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +33,9 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 @Api(value = "第三方登录接口", description = "第三方登录接口")
 public class ThirdPartyLoginController extends BaseController {
-	@Autowired
-	private SysUserService sysUserService;
+	public String getService() {
+		return "sysUserService";
+	}
 
 	@RequestMapping("/sns")
 	@ApiOperation(value = "用户登录", httpMethod = "GET")
@@ -78,7 +80,7 @@ public class ThirdPartyLoginController extends BaseController {
 					// 获取第三方用户信息存放到session中
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getWxUserinfo(map.get("access_token"), openId);
 					thirdUser.setProvider("WX");
-					sysUserService.thirdPartyLogin(thirdUser);
+					thirdPartyLogin(thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -109,7 +111,7 @@ public class ThirdPartyLoginController extends BaseController {
 					// 获取第三方用户信息存放到session中
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getQQUserinfo(map.get("access_token"), openId);
 					thirdUser.setProvider("QQ");
-					sysUserService.thirdPartyLogin(thirdUser);
+					thirdPartyLogin(thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -141,7 +143,7 @@ public class ThirdPartyLoginController extends BaseController {
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getSinaUserinfo(json.getString("access_token"),
 							uid);
 					thirdUser.setProvider("SINA");
-					sysUserService.thirdPartyLogin(thirdUser);
+					thirdPartyLogin(thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -159,6 +161,22 @@ public class ThirdPartyLoginController extends BaseController {
 		}
 
 		return "/sns/redirect";
+	}
+
+	private void thirdPartyLogin(ThirdPartyUser param) {
+		SysUser sysUser = null;
+		// 查询是否已经绑定过
+		Parameter parameter = new Parameter(getService(), "queryUserIdByThirdParty").setModel(param);
+		Long userId = provider.exec(parameter).getId();
+
+		if (userId == null) {
+			parameter = new Parameter(getService(), "insertThirdPartyUser").setModel(param);
+			sysUser = (SysUser) provider.exec(parameter).getModel();
+		} else {
+			parameter = new Parameter(getService(), "queryById").setId(param.getId());
+			sysUser = (SysUser) provider.exec(parameter).getModel();
+		}
+		LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
 	}
 
 	private String getRedirectUrl(HttpServletRequest request, String type) {

@@ -22,6 +22,9 @@ public class BaseModel implements Serializable {
 	private Long updateBy;
 	private Date updateTime;
 
+	@TableField(exist = false)
+	private String keyword;
+
 	/**
 	 * @return the id
 	 */
@@ -129,5 +132,13 @@ public class BaseModel implements Serializable {
 	 */
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 }

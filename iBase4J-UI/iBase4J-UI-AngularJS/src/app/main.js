@@ -105,8 +105,9 @@ angular.module('app')
 							for(var i=0; i<r.length;i++)
 								r[i].id = r[i].id_;
 						}
-			        } else if(result.data) {
-			        	error(result.data.msg);
+			        } else if(result) {
+	                    toaster.clear('*');
+	                    toaster.pop('error', '', result.msg);
 					}
 					return JSON.stringify(result);
 				} catch(e) {
@@ -116,7 +117,11 @@ angular.module('app')
 			error : function(jqXHR, textStatus, errorThrown) {
 				switch (jqXHR.status) {
 				case (404):
-					alert("未找到请求的资源");
+	                toaster.clear('*');
+	                toaster.pop('error', '', "未找到请求的资源");
+					break;
+				case (405):
+					$state.go('access.login');
 					break;
 				}
 			}

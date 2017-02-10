@@ -4,16 +4,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.exception.LoginException;
 import org.ibase4j.core.support.Assert;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.support.login.LoginHelper;
+import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.service.sys.SysSessionService;
-import org.ibase4j.service.sys.SysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,10 +32,10 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @Api(value = "登录接口", description = "登录接口")
 public class LoginController extends BaseController {
-	@Autowired
-	private SysUserService sysUserService;
-	@Autowired
-	private SysSessionService sysSessionService;
+
+	public String getService() {
+		return "sysUserService";
+	}
 
 	// 登录
 	@ApiOperation(value = "用户登录")
@@ -45,7 +44,7 @@ public class LoginController extends BaseController {
 			HttpServletRequest request) {
 		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
 		Assert.notNull(sysUser.getPassword(), "PASSWORD");
-		if (LoginHelper.login(sysUser.getAccount(), sysUserService.encryptPassword(sysUser.getPassword()))) {
+		if (LoginHelper.login(sysUser.getAccount(), SecurityUtil.encryptPassword(sysUser.getPassword()))) {
 			request.setAttribute("msg", "[" + sysUser.getAccount() + "]登录成功.");
 			return setSuccessModelMap(modelMap);
 		}
@@ -59,7 +58,7 @@ public class LoginController extends BaseController {
 	public Object logout(ModelMap modelMap) {
 		Long id = WebUtil.getCurrentUser();
 		if (id != null) {
-			sysSessionService.delete(id);
+			provider.exec(new Parameter("sysSessionService", "delete").setId(id));
 		}
 		SecurityUtils.getSubject().logout();
 		return setSuccessModelMap(modelMap);
@@ -71,8 +70,8 @@ public class LoginController extends BaseController {
 	public Object regin(ModelMap modelMap, @RequestBody SysUser sysUser) {
 		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
 		Assert.notNull(sysUser.getPassword(), "PASSWORD");
-		sysUser.setPassword(sysUserService.encryptPassword(sysUser.getPassword()));
-		sysUserService.update(sysUser);
+		sysUser.setPassword(SecurityUtil.encryptPassword(sysUser.getPassword()));
+		provider.exec(new Parameter("sysUserService", "update").setModel(sysUser));
 		if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword())) {
 			return setSuccessModelMap(modelMap);
 		}

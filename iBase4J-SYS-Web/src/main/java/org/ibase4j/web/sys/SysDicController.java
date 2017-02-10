@@ -4,10 +4,11 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.base.BaseModel;
+import org.ibase4j.core.base.Parameter;
+import org.ibase4j.core.support.Assert;
 import org.ibase4j.model.sys.SysDic;
 import org.ibase4j.model.sys.SysDicIndex;
-import org.ibase4j.service.sys.SysDicService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,14 +30,17 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "字典管理", description = "字典管理")
 public class SysDicController extends BaseController {
-	@Autowired
-	private SysDicService sysDicService;
+
+	public String getService() {
+		return "sysDicService";
+	}
 
 	@ApiOperation(value = "查询字典")
 	@RequiresPermissions("sys.base.dic.read")
 	@PutMapping(value = "dicIndex/read/list")
-	public Object getDicIndex(ModelMap modelMap, @RequestBody(required = false) Map<String, Object> sysDicIndex) {
-		Page<?> list = sysDicService.queryDicIndex(sysDicIndex);
+	public Object getDicIndex(ModelMap modelMap, @RequestBody(required = false) Map<String, Object> param) {
+		Parameter parameter = new Parameter(getService(), "queryDicIndex").setMap(param);
+		Page<?> list = provider.exec(parameter).getPage();
 		return setSuccessModelMap(modelMap, list);
 	}
 
@@ -44,63 +48,75 @@ public class SysDicController extends BaseController {
 	@RequiresPermissions("sys.base.dic.read")
 	@PutMapping(value = "dicIndex/read/detail")
 	public Object detail(ModelMap modelMap, @RequestBody(required = false) SysDicIndex param) {
-		SysDicIndex record = sysDicService.queryDicIndexById(param.getId());
-		return setSuccessModelMap(modelMap, record);
+		Assert.notNull(param.getId(), "ID");
+		Parameter parameter = new Parameter(getService(), "queryDicIndexById").setId(param.getId());
+		BaseModel result = provider.exec(parameter).getModel();
+		return setSuccessModelMap(modelMap, result);
 	}
 
 	@ApiOperation(value = "根据关键字查询字典列表")
 	@PutMapping(value = "dic/read/key")
-	public Object getDicByKey(ModelMap modelMap, @RequestBody SysDicIndex record) {
-		Map<String, String> result = sysDicService.queryDicByDicIndexKey(record.getKey());
+	public Object getDicByKey(ModelMap modelMap, @RequestBody SysDicIndex param) {
+		Parameter parameter = new Parameter(getService(), "queryDicByDicIndexKey").setModel(param);
+		Map<?, ?> result = provider.exec(parameter).getMap();
 		return setSuccessModelMap(modelMap, result);
 	}
 
 	@ApiOperation(value = "修改字典")
 	@PostMapping(value = "dicIndex")
 	@RequiresPermissions("sys.base.dic.update")
-	public Object updateDicIndex(ModelMap modelMap, @RequestBody SysDicIndex record) {
-		sysDicService.updateDicIndex(record);
+	public Object updateDicIndex(ModelMap modelMap, @RequestBody SysDicIndex param) {
+		Parameter parameter = new Parameter(getService(), "updateDicIndex").setModel(param);
+		provider.exec(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
 	@ApiOperation(value = "删除字典")
 	@DeleteMapping(value = "dicIndex")
 	@RequiresPermissions("sys.base.dic.delete")
-	public Object deleteDicIndex(ModelMap modelMap, @RequestBody SysDicIndex record) {
-		sysDicService.deleteDicIndex(record.getId());
+	public Object deleteDicIndex(ModelMap modelMap, @RequestBody SysDicIndex param) {
+		Assert.notNull(param.getId(), "ID");
+		Parameter parameter = new Parameter(getService(), "deleteDicIndex").setModel(param);
+		provider.exec(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
 	@ApiOperation(value = "查询字典项")
 	@RequiresPermissions("sys.base.dic.read")
 	@PutMapping(value = "dic/read/list")
-	public Object getDic(ModelMap modelMap, @RequestBody(required = false) Map<String, Object> sysDic) {
-		sysDic.put("orderBy", "sort_no");
-		Page<?> list = sysDicService.queryDic(sysDic);
+	public Object getDic(ModelMap modelMap, @RequestBody(required = false) Map<String, Object> param) {
+		param.put("orderBy", "sort_no");
+		Parameter parameter = new Parameter(getService(), "queryDic").setMap(param);
+		Page<?> list = provider.exec(parameter).getPage();
 		return setSuccessModelMap(modelMap, list);
 	}
 
 	@ApiOperation(value = "字典项详情")
 	@RequiresPermissions("sys.base.dic.read")
 	@PutMapping(value = "dic/read/detail")
-	public Object dicDetail(ModelMap modelMap, @RequestBody(required = false) SysDic sysDic) {
-		SysDic record = sysDicService.queryDicById(sysDic.getId());
+	public Object dicDetail(ModelMap modelMap, @RequestBody(required = false) SysDic param) {
+		Assert.notNull(param.getId(), "ID");
+		Parameter parameter = new Parameter(getService(), "queryDicById").setId(param.getId());
+		BaseModel record = provider.exec(parameter).getModel();
 		return setSuccessModelMap(modelMap, record);
 	}
 
 	@PostMapping(value = "dic")
 	@ApiOperation(value = "修改字典项")
 	@RequiresPermissions("sys.base.dic.update")
-	public Object updateDic(ModelMap modelMap, @RequestBody(required = false) SysDic record) {
-		sysDicService.updateDic(record);
+	public Object updateDic(ModelMap modelMap, @RequestBody(required = false) SysDic param) {
+		Parameter parameter = new Parameter(getService(), "updateDic").setModel(param);
+		provider.exec(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
 	@DeleteMapping(value = "dic")
 	@ApiOperation(value = "删除字典项")
 	@RequiresPermissions("sys.base.dic.delete")
-	public Object deleteDic(ModelMap modelMap, @RequestBody(required = false) SysDic record) {
-		sysDicService.deleteDic(record.getId());
+	public Object deleteDic(ModelMap modelMap, @RequestBody(required = false) SysDic param) {
+		Assert.notNull(param.getId(), "ID");
+		Parameter parameter = new Parameter(getService(), "deleteDic").setId(param.getId());
+		provider.exec(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 }
