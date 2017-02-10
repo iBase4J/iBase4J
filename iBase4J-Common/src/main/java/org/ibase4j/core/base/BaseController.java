@@ -4,6 +4,7 @@
 package org.ibase4j.core.base;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -124,7 +125,7 @@ public abstract class BaseController {
 
 	public Object queryList(ModelMap modelMap, Map<String, Object> param) {
 		Parameter parameter = new Parameter(getService(), "queryList").setMap(param);
-		Page<?> list = provider.execute(parameter).getPage();
+		List<?> list = provider.execute(parameter).getList();
 		return setSuccessModelMap(modelMap, list);
 	}
 
