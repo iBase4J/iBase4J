@@ -16,12 +16,12 @@ public class SysEventService extends BaseService<SysEvent> {
 	@Autowired
 	private SysUserService sysUserService;
 
-	public Page<Map<String, Object>> queryMap(Map<String, Object> params) {
-		Page<Map<String, Object>> page = super.queryMap(params);
-		for (Map<String, Object> map : page.getRecords()) {
-			Long createBy = (Long) map.get("createBy");
+	public Page<SysEvent> query(Map<String, Object> params) {
+		Page<SysEvent> page = super.query(params);
+		for (SysEvent sysEvent : page.getRecords()) {
+			Long createBy = sysEvent.getCreateBy();
 			if (createBy != null) {
-				map.put("userName", sysUserService.queryById(createBy).getUserName());
+				sysEvent.setUserName(sysUserService.queryById(createBy).getUserName());
 			}
 		}
 		return page;
