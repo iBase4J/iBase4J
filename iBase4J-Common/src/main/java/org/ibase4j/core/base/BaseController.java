@@ -118,31 +118,31 @@ public abstract class BaseController {
 
 	public Object query(ModelMap modelMap, Map<String, Object> param) {
 		Parameter parameter = new Parameter(getService(), "query").setMap(param);
-		Page<?> list = provider.exec(parameter).getPage();
+		Page<?> list = provider.execute(parameter).getPage();
 		return setSuccessModelMap(modelMap, list);
 	}
 
 	public Object queryList(ModelMap modelMap, Map<String, Object> param) {
 		Parameter parameter = new Parameter(getService(), "queryList").setMap(param);
-		Page<?> list = provider.exec(parameter).getPage();
+		Page<?> list = provider.execute(parameter).getPage();
 		return setSuccessModelMap(modelMap, list);
 	}
 
 	public Object get(ModelMap modelMap, BaseModel param) {
 		Parameter parameter = new Parameter(getService(), "queryById").setId(param.getId());
-		BaseModel result = provider.exec(parameter).getModel();
+		BaseModel result = provider.execute(parameter).getModel();
 		return setSuccessModelMap(modelMap, result);
 	}
 
 	public Object update(ModelMap modelMap, BaseModel param) {
 		Parameter parameter = new Parameter(getService(), "update").setModel(param);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
 	public Object delete(ModelMap modelMap, BaseModel param) {
 		Parameter parameter = new Parameter(getService(), "delete").setId(param.getId());
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 }

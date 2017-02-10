@@ -53,7 +53,7 @@ public class SysUserController extends BaseController {
 		Assert.length(param.getAccount(), 3, 15, "ACCOUNT");
 		if (param.getId() != null) {
 			Parameter parameter = new Parameter(getService(), "queryById").setId(param.getId());
-			SysUser user = (SysUser) provider.exec(parameter).getModel();
+			SysUser user = (SysUser) provider.execute(parameter).getModel();
 			Assert.notNull(user, "USER", param.getId());
 			if (StringUtils.isNotBlank(param.getPassword())) {
 				if (!param.getPassword().equals(user.getPassword())) {
@@ -94,10 +94,10 @@ public class SysUserController extends BaseController {
 	public Object promission(ModelMap modelMap) {
 		Long id = getCurrUser();
 		Parameter parameter = new Parameter(getService(), "queryById").setId(id);
-		SysUser sysUser = (SysUser) provider.exec(parameter).getModel();
+		SysUser sysUser = (SysUser) provider.execute(parameter).getModel();
 		modelMap.put("user", sysUser);
 		parameter = new Parameter("sysAuthorizeService", "queryAuthorizeByUserId").setId(id);
-		List<?> menus = provider.exec(parameter).getList();
+		List<?> menus = provider.execute(parameter).getList();
 		modelMap.put("menus", menus);
 		return setSuccessModelMap(modelMap);
 	}
@@ -151,14 +151,14 @@ public class SysUserController extends BaseController {
 		Assert.isNotBlank(param.getPassword(), "PASSWORD");
 		String encryptPassword = SecurityUtil.encryptPassword(param.getOldPassword());
 		Parameter parameter = new Parameter(getService(), "queryById").setId(param.getId());
-		SysUser sysUser = (SysUser) provider.exec(parameter).getModel();
+		SysUser sysUser = (SysUser) provider.execute(parameter).getModel();
 		Assert.notNull(sysUser, "USER", param.getId());
 		Long userId = WebUtil.getCurrentUser();
 		if (!param.getId().equals(userId)) {
 			SysUser current = new SysUser();
 			current.setId(userId);
 			parameter = new Parameter(getService(), "queryById").setId(current.getId());
-			SysUser user = (SysUser) provider.exec(parameter).getModel();
+			SysUser user = (SysUser) provider.execute(parameter).getModel();
 			if (user.getUserType() == 1) {
 				throw new UnauthorizedException("您没有权限修改用户密码.");
 			}

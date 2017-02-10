@@ -40,7 +40,7 @@ public class SysDicController extends BaseController {
 	@PutMapping(value = "dicIndex/read/list")
 	public Object getDicIndex(ModelMap modelMap, @RequestBody(required = false) Map<String, Object> param) {
 		Parameter parameter = new Parameter(getService(), "queryDicIndex").setMap(param);
-		Page<?> list = provider.exec(parameter).getPage();
+		Page<?> list = provider.execute(parameter).getPage();
 		return setSuccessModelMap(modelMap, list);
 	}
 
@@ -50,7 +50,7 @@ public class SysDicController extends BaseController {
 	public Object detail(ModelMap modelMap, @RequestBody(required = false) SysDicIndex param) {
 		Assert.notNull(param.getId(), "ID");
 		Parameter parameter = new Parameter(getService(), "queryDicIndexById").setId(param.getId());
-		BaseModel result = provider.exec(parameter).getModel();
+		BaseModel result = provider.execute(parameter).getModel();
 		return setSuccessModelMap(modelMap, result);
 	}
 
@@ -58,7 +58,7 @@ public class SysDicController extends BaseController {
 	@PutMapping(value = "dic/read/key")
 	public Object getDicByKey(ModelMap modelMap, @RequestBody SysDicIndex param) {
 		Parameter parameter = new Parameter(getService(), "queryDicByDicIndexKey").setModel(param);
-		Map<?, ?> result = provider.exec(parameter).getMap();
+		Map<?, ?> result = provider.execute(parameter).getMap();
 		return setSuccessModelMap(modelMap, result);
 	}
 
@@ -67,7 +67,7 @@ public class SysDicController extends BaseController {
 	@RequiresPermissions("sys.base.dic.update")
 	public Object updateDicIndex(ModelMap modelMap, @RequestBody SysDicIndex param) {
 		Parameter parameter = new Parameter(getService(), "updateDicIndex").setModel(param);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -77,7 +77,7 @@ public class SysDicController extends BaseController {
 	public Object deleteDicIndex(ModelMap modelMap, @RequestBody SysDicIndex param) {
 		Assert.notNull(param.getId(), "ID");
 		Parameter parameter = new Parameter(getService(), "deleteDicIndex").setModel(param);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -87,7 +87,7 @@ public class SysDicController extends BaseController {
 	public Object getDic(ModelMap modelMap, @RequestBody(required = false) Map<String, Object> param) {
 		param.put("orderBy", "sort_no");
 		Parameter parameter = new Parameter(getService(), "queryDic").setMap(param);
-		Page<?> list = provider.exec(parameter).getPage();
+		Page<?> list = provider.execute(parameter).getPage();
 		return setSuccessModelMap(modelMap, list);
 	}
 
@@ -97,7 +97,7 @@ public class SysDicController extends BaseController {
 	public Object dicDetail(ModelMap modelMap, @RequestBody(required = false) SysDic param) {
 		Assert.notNull(param.getId(), "ID");
 		Parameter parameter = new Parameter(getService(), "queryDicById").setId(param.getId());
-		BaseModel record = provider.exec(parameter).getModel();
+		BaseModel record = provider.execute(parameter).getModel();
 		return setSuccessModelMap(modelMap, record);
 	}
 
@@ -106,7 +106,7 @@ public class SysDicController extends BaseController {
 	@RequiresPermissions("sys.base.dic.update")
 	public Object updateDic(ModelMap modelMap, @RequestBody(required = false) SysDic param) {
 		Parameter parameter = new Parameter(getService(), "updateDic").setModel(param);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -116,7 +116,7 @@ public class SysDicController extends BaseController {
 	public Object deleteDic(ModelMap modelMap, @RequestBody(required = false) SysDic param) {
 		Assert.notNull(param.getId(), "ID");
 		Parameter parameter = new Parameter(getService(), "deleteDic").setId(param.getId());
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 }

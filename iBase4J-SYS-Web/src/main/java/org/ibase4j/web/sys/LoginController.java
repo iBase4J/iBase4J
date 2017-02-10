@@ -58,7 +58,7 @@ public class LoginController extends BaseController {
 	public Object logout(ModelMap modelMap) {
 		Long id = WebUtil.getCurrentUser();
 		if (id != null) {
-			provider.exec(new Parameter("sysSessionService", "delete").setId(id));
+			provider.execute(new Parameter("sysSessionService", "delete").setId(id));
 		}
 		SecurityUtils.getSubject().logout();
 		return setSuccessModelMap(modelMap);
@@ -71,7 +71,7 @@ public class LoginController extends BaseController {
 		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
 		Assert.notNull(sysUser.getPassword(), "PASSWORD");
 		sysUser.setPassword(SecurityUtil.encryptPassword(sysUser.getPassword()));
-		provider.exec(new Parameter("sysUserService", "update").setModel(sysUser));
+		provider.execute(new Parameter("sysUserService", "update").setModel(sysUser));
 		if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword())) {
 			return setSuccessModelMap(modelMap);
 		}

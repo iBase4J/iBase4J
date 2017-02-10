@@ -72,7 +72,7 @@ public class SysMenuController extends BaseController {
 	@RequestMapping(value = "/read/permission")
 	public Object getPermissions(ModelMap modelMap) {
 		Parameter parameter = new Parameter(getService(), "getPermissions").setModel(new SysMenu());
-		List<?> list = provider.exec(parameter).getList();
+		List<?> list = provider.execute(parameter).getList();
 		return setSuccessModelMap(modelMap, list);
 	}
 }

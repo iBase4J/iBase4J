@@ -52,7 +52,7 @@ public class SysEmailConfigController extends BaseController {
 	public Object update(ModelMap modelMap, @RequestBody SysEmailConfig param) {
 		if (param.getId() != null) {
 			Parameter parameter = new Parameter("sysEmailConfigService", "queryById").setModel(param);
-			SysEmailConfig result = (SysEmailConfig) provider.exec(parameter).getModel();
+			SysEmailConfig result = (SysEmailConfig) provider.execute(parameter).getModel();
 			if (param.getSenderPassword() != null && !param.getSenderPassword().equals(result.getSenderPassword())) {
 				param.setSenderPassword(SecurityUtil.encryptMd5(param.getSenderPassword()));
 			}

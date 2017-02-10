@@ -40,7 +40,7 @@
 			<mvc:exclude-mapping path="/webjars/**" />
 			<mvc:exclude-mapping path="/configuration/**" />
 			<bean class="org.ibase4j.core.interceptor.MaliciousRequestInterceptor">
-				<property name="minRequestIntervalTime" value="1000" />
+				<property name="minRequestIntervalTime" value="500" />
 				<property name="maxMaliciousTimes" value="0" />
 				<property name="nextInterceptor">
 					<array>

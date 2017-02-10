@@ -40,7 +40,7 @@ public class BaseJob implements Job {
 			} else if (TaskType.dubbo.equals(taskType)) {
 				String system = jobDataMap.getString("targetSystem");
 				BaseProvider provider = (BaseProvider) DubboUtil.refer(applicationContext, system);
-				provider.exec(new Parameter(targetObject, targetMethod));
+				provider.execute(new Parameter(targetObject, targetMethod));
 			}
 			double time = (System.currentTimeMillis() - start) / 1000.0;
 			logger.info("定时任务[{}.{}]用时：{}s", targetObject, targetMethod, time);

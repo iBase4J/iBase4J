@@ -88,8 +88,11 @@ public class SchedulerManager implements InitializingBean {
                     job.setNextFireTime(trigger.getNextFireTime());
                     JobDataMap jobDataMap = trigger.getJobDataMap();
                     job.setTaskType(jobDataMap.getString("taskType"));
+                    job.setTargetSystem(jobDataMap.getString("targetSystem"));
                     job.setTargetObject(jobDataMap.getString("targetObject"));
                     job.setTargetMethod(jobDataMap.getString("targetMethod"));
+                    job.setContactName(jobDataMap.getString("contactName"));
+                    job.setContactEmail(jobDataMap.getString("contactEmail"));
                     job.setTaskDesc(jobDetail.getDescription());
                     String jobClass = jobDetail.getJobClass().getSimpleName();
                     if (jobClass.equals("StatefulJob")) {

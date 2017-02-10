@@ -22,7 +22,7 @@ public class BaseProviderImpl implements ApplicationContextAware, BaseProvider {
 		this.applicationContext = applicationContext;
 	}
 
-	public Parameter exec(Parameter parameter) {
+	public Parameter execute(Parameter parameter) {
 		logger.info("请求：{}", JSON.toJSONString(parameter));
 		Object service = applicationContext.getBean(parameter.getService());
 		try {

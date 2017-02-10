@@ -167,14 +167,14 @@ public class ThirdPartyLoginController extends BaseController {
 		SysUser sysUser = null;
 		// 查询是否已经绑定过
 		Parameter parameter = new Parameter(getService(), "queryUserIdByThirdParty").setModel(param);
-		Long userId = provider.exec(parameter).getId();
+		Long userId = provider.execute(parameter).getId();
 
 		if (userId == null) {
 			parameter = new Parameter(getService(), "insertThirdPartyUser").setModel(param);
-			sysUser = (SysUser) provider.exec(parameter).getModel();
+			sysUser = (SysUser) provider.execute(parameter).getModel();
 		} else {
 			parameter = new Parameter(getService(), "queryById").setId(param.getId());
-			sysUser = (SysUser) provider.exec(parameter).getModel();
+			sysUser = (SysUser) provider.execute(parameter).getModel();
 		}
 		LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
 	}

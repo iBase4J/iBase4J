@@ -42,7 +42,7 @@ public class SysAuthorizeController extends BaseController {
 	@RequiresPermissions("sys.permisson.userMenu.read")
 	public Object getUserMenu(ModelMap modelMap, @RequestBody SysUserMenu param) {
 		Parameter parameter = new Parameter(getService(), "queryMenuIdsByUserId").setId(param.getUserId());
-		List<?> menus = provider.exec(parameter).getList();
+		List<?> menus = provider.execute(parameter).getList();
 		return setSuccessModelMap(modelMap, menus);
 	}
 
@@ -63,7 +63,7 @@ public class SysAuthorizeController extends BaseController {
 			sysUserMenu.setUpdateBy(currentUserId);
 		}
 		Parameter parameter = new Parameter(getService(), "updateUserMenu").setList(list);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -72,7 +72,7 @@ public class SysAuthorizeController extends BaseController {
 	@RequiresPermissions("sys.permisson.userRole.read")
 	public Object getUserRole(ModelMap modelMap, @RequestBody SysUserRole param) {
 		Parameter parameter = new Parameter(getService(), "getRolesByUserId").setId(param.getUserId());
-		List<?> menus = provider.exec(parameter).getList();
+		List<?> menus = provider.execute(parameter).getList();
 		return setSuccessModelMap(modelMap, menus);
 	}
 
@@ -93,7 +93,7 @@ public class SysAuthorizeController extends BaseController {
 			sysUserRole.setUpdateBy(currentUserId);
 		}
 		Parameter parameter = new Parameter(getService(), "updateUserRole").setList(list);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -102,7 +102,7 @@ public class SysAuthorizeController extends BaseController {
 	@RequiresPermissions("sys.permisson.roleMenu.read")
 	public Object getRoleMenu(ModelMap modelMap, @RequestBody SysRoleMenu param) {
 		Parameter parameter = new Parameter(getService(), "queryMenuIdsByRoleId").setId(param.getRoleId());
-		List<?> menus = provider.exec(parameter).getList();
+		List<?> menus = provider.execute(parameter).getList();
 		return setSuccessModelMap(modelMap, menus);
 	}
 
@@ -124,7 +124,7 @@ public class SysAuthorizeController extends BaseController {
 		}
 		Parameter parameter = new Parameter(getService(), "updateRoleMenu");
 		parameter.setList(list);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -133,7 +133,7 @@ public class SysAuthorizeController extends BaseController {
 	@RequiresPermissions("sys.permisson.user.read")
 	public Object queryUserPermissions(ModelMap modelMap, @RequestBody SysUserMenu record) {
 		Parameter parameter = new Parameter(getService(), "queryUserPermissions").setModel(record);
-		List<?> menuIds = provider.exec(parameter).getList();
+		List<?> menuIds = provider.execute(parameter).getList();
 		return setSuccessModelMap(modelMap, menuIds);
 	}
 
@@ -142,7 +142,7 @@ public class SysAuthorizeController extends BaseController {
 	@RequiresPermissions("sys.permisson.user.update")
 	public Object updateUserPermission(ModelMap modelMap, @RequestBody List<SysUserMenu> list) {
 		Parameter parameter = new Parameter(getService(), "updateUserPermission").setList(list);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -151,7 +151,7 @@ public class SysAuthorizeController extends BaseController {
 	@RequiresPermissions("sys.permisson.role.read")
 	public Object queryRolePermissions(ModelMap modelMap, @RequestBody SysRoleMenu record) {
 		Parameter parameter = new Parameter(getService(), "queryRolePermissions").setModel(record);
-		List<?> menuIds = provider.exec(parameter).getList();
+		List<?> menuIds = provider.execute(parameter).getList();
 		return setSuccessModelMap(modelMap, menuIds);
 	}
 
@@ -160,7 +160,7 @@ public class SysAuthorizeController extends BaseController {
 	@RequiresPermissions("sys.permisson.role.update")
 	public Object updateRolePermission(ModelMap modelMap, @RequestBody List<SysRoleMenu> list) {
 		Parameter parameter = new Parameter(getService(), "updateRolePermission").setList(list);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -169,7 +169,7 @@ public class SysAuthorizeController extends BaseController {
 	@RequestMapping(value = "/cache/update", method = RequestMethod.POST)
 	public Object flush(HttpServletRequest request, ModelMap modelMap) {
 		Parameter parameter = new Parameter(getService(), "flushCache");
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 }

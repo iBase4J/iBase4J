@@ -110,7 +110,7 @@ public class EventInterceptor extends BaseInterceptor {
 						}
 
 						Parameter parameter = new Parameter("sysEventService", "update").setModel(record);
-						provider.exec(parameter);
+						provider.execute(parameter);
 
 						// 内存信息
 						if (logger.isDebugEnabled()) {

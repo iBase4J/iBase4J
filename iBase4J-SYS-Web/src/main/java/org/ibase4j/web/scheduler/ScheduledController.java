@@ -55,7 +55,7 @@ public class ScheduledController extends BaseController {
 			Assert.notNull(scheduled.getTargetSystem(), "TARGETSYSTEM");
 		}
 		Parameter parameter = new Parameter(getService(), "updateTask").setModel(scheduled);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -66,7 +66,7 @@ public class ScheduledController extends BaseController {
 		Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
 		Assert.notNull(scheduled.getTaskName(), "TASKNAME");
 		Parameter parameter = new Parameter(getService(), "delTask").setModel(scheduled);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -77,7 +77,7 @@ public class ScheduledController extends BaseController {
 		Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
 		Assert.notNull(scheduled.getTaskName(), "TASKNAME");
 		Parameter parameter = new Parameter(getService(), "execTask").setModel(scheduled);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -88,7 +88,7 @@ public class ScheduledController extends BaseController {
 		Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
 		Assert.notNull(scheduled.getTaskName(), "TASKNAME");
 		Parameter parameter = new Parameter(getService(), "openTask").setModel(scheduled);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -99,7 +99,7 @@ public class ScheduledController extends BaseController {
 		Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
 		Assert.notNull(scheduled.getTaskName(), "TASKNAME");
 		Parameter parameter = new Parameter(getService(), "closeTask").setModel(scheduled);
-		provider.exec(parameter);
+		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -108,7 +108,7 @@ public class ScheduledController extends BaseController {
 	@RequiresPermissions("sys.task.scheduled.read")
 	public Object list(ModelMap modelMap) {
 		Parameter parameter = new Parameter(getService(), "getAllTaskDetail");
-		List<?> records = provider.exec(parameter).getList();
+		List<?> records = provider.execute(parameter).getList();
 		modelMap.put("recordsTotal", records.size());
 		modelMap.put("total", records.size());
 		modelMap.put("current", 1);
@@ -121,7 +121,7 @@ public class ScheduledController extends BaseController {
 	@RequiresPermissions("sys.task.log.read")
 	public Object getFireLog(ModelMap modelMap, @RequestBody Map<String, Object> log) {
 		Parameter parameter = new Parameter(getService(), "queryLog").setMap(log);
-		Page<?> list = provider.exec(parameter).getPage();
+		Page<?> list = provider.execute(parameter).getPage();
 		return setSuccessModelMap(modelMap, list);
 	}
 }
