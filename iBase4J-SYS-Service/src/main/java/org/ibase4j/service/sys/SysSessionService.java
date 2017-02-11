@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.RowBounds;
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.InstanceUtil;
@@ -55,8 +54,7 @@ public class SysSessionService extends BaseService<SysSession> {
 	public void cleanExpiredSessions() {
 		String key = "spring:session:" + PropertiesUtil.getString("session.redis.namespace") + ":sessions:expires:";
 		Map<String, Object> columnMap = InstanceUtil.newHashMap();
-		List<Long> ids = mapper.selectIdPage(new RowBounds(), columnMap);
-		List<SysSession> sessions = getList(ids);
+		List<SysSession> sessions = queryList(columnMap);
 		for (SysSession sysSession : sessions) {
 			logger.info("检查SESSION : {}", sysSession.getSessionId());
 			if (!CacheUtil.getCache().exists(key + sysSession.getSessionId())) {

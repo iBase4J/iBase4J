@@ -156,7 +156,7 @@ public abstract class BaseService<T extends BaseModel> {
 				String lockKey = getClass().getName() + record.getId();
 				if (CacheUtil.getLock(lockKey)) {
 					try {
-						T org = mapper.selectById(record.getId());
+						T org = queryById(record.getId());
 						T update = InstanceUtil.getDiff(org, record);
 						update.setId(record.getId());
 						mapper.updateById(update);
