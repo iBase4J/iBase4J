@@ -25,7 +25,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 
 	public List<SysMenu> queryList(Map<String, Object> params) {
 		List<SysMenu> pageInfo = super.queryList(params);
-		Map<String, String> menuTypeMap = sysDicService.queryDicByDicIndexKey("MENUTYPE");
+		Map<String, String> menuTypeMap = sysDicService.queryDicByType("MENUTYPE");
 		EntityWrapper<SysMenu> wrapper = new EntityWrapper<SysMenu>();
 		for (SysMenu sysMenu : pageInfo) {
 			if (sysMenu.getMenuType() != null) {

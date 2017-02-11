@@ -42,7 +42,7 @@ public class SysUserService extends BaseService<SysUser>{
 	private SysUserMenuMapper sysUserMenuMapper;
 
 	public Page<SysUser> query(Map<String, Object> params) {
-		Map<String, String> userTypeMap = sysDicService.queryDicByDicIndexKey("USERTYPE");
+		Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
 		Page<SysUser> pageInfo = super.query(params);
 		for (SysUser userBean : pageInfo.getRecords()) {
 			if (userBean.getUserType() != null) {

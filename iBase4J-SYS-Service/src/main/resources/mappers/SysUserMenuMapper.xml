@@ -14,9 +14,7 @@
 		from
 		sys_user_menu rm
 		join sys_menu m on rm.menu_id=m.id_
-		join sys_dic d on rm.permission_=d.code_
-		join sys_dic_index di on d.index_id=di.id_ and
-		di.key_='CRUD'
+		join sys_dic d on rm.permission_=d.code_ and d.type_='CRUD'
 		<where>
 			<if test="userId != null">
 				rm.user_id=#{userId}

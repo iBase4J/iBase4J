@@ -10,7 +10,7 @@ angular.module('app')
 		$scope.search = function () {
 	        $scope.loading = true;
 			$.ajax({
-				url : '/dicIndex/read/list',
+				url : '/dic/read/list',
 				type: 'PUT',
 				data: angular.toJson($scope.param)
 			}).then(function(result) {
