@@ -59,7 +59,8 @@ public final class SecurityUtil {
 	/**
 	 * 数据解密，算法（DES）
 	 * 
-	 * @param cryptData 加密数据
+	 * @param cryptData
+	 *            加密数据
 	 * @return 解密后的数据
 	 */
 	public static final String decryptDes(String cryptData) {
@@ -69,7 +70,8 @@ public final class SecurityUtil {
 	/**
 	 * 数据加密，算法（DES）
 	 * 
-	 * @param data 要进行加密的数据
+	 * @param data
+	 *            要进行加密的数据
 	 * @return 加密后的数据
 	 */
 	public static final String encryptDes(String data) {
@@ -79,7 +81,8 @@ public final class SecurityUtil {
 	/**
 	 * 基于MD5算法的单向加密
 	 * 
-	 * @param strSrc 明文
+	 * @param strSrc
+	 *            明文
 	 * @return 返回密文
 	 */
 	public static final String encryptMd5(String strSrc) {
@@ -121,7 +124,8 @@ public final class SecurityUtil {
 	/**
 	 * 数据解密，算法（DES）
 	 * 
-	 * @param cryptData 加密数据
+	 * @param cryptData
+	 *            加密数据
 	 * @return 解密后的数据
 	 */
 	public static final String decryptDes(String cryptData, byte[] key) {
@@ -138,7 +142,8 @@ public final class SecurityUtil {
 	/**
 	 * 数据加密，算法（DES）
 	 * 
-	 * @param data 要进行加密的数据
+	 * @param data
+	 *            要进行加密的数据
 	 * @return 加密后的数据
 	 */
 	public static final String encryptDes(String data, byte[] key) {
@@ -170,7 +175,8 @@ public final class SecurityUtil {
 	/**
 	 * RSA签名
 	 * 
-	 * @param data 原数据
+	 * @param data
+	 *            原数据
 	 * @return
 	 */
 	public static final String signRSA(String data, String privateKey) {
@@ -184,7 +190,8 @@ public final class SecurityUtil {
 	/**
 	 * RSA验签
 	 * 
-	 * @param data 原数据
+	 * @param data
+	 *            原数据
 	 * @return
 	 */
 	public static final boolean verifyRSA(String data, String publicKey, String sign) {
@@ -198,7 +205,8 @@ public final class SecurityUtil {
 	/**
 	 * 数据加密，算法（RSA）
 	 * 
-	 * @param data 数据
+	 * @param data
+	 *            数据
 	 * @return 加密后的数据
 	 */
 	public static final String encryptRSAPrivate(String data, String privateKey) {
@@ -212,7 +220,8 @@ public final class SecurityUtil {
 	/**
 	 * 数据解密，算法（RSA）
 	 * 
-	 * @param cryptData 加密数据
+	 * @param cryptData
+	 *            加密数据
 	 * @return 解密后的数据
 	 */
 	public static final String decryptRSAPublic(String cryptData, String publicKey) {
@@ -222,6 +231,10 @@ public final class SecurityUtil {
 		} catch (Exception e) {
 			throw new RuntimeException("解密错误，错误信息：", e);
 		}
+	}
+
+	public static String encryptPassword(String password) {
+		return encryptMd5(SecurityUtil.encryptSHA(password));
 	}
 
 	public static void main(String[] args) throws Exception {

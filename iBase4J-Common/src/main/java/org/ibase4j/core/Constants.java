@@ -28,6 +28,8 @@ public interface Constants {
     public static final String PREREQUEST = "PREREQUEST";
     /** 上次请求时间 */
     public static final String PREREQUEST_TIME = "PREREQUEST_TIME";
+    /** 登录地址 */
+    public static final String LOGIN_URL = "/login.html";
     /** 非法请求次数 */
     public static final String MALICIOUS_REQUEST_TIMES = "MALICIOUS_REQUEST_TIMES";
     /** 缓存命名空间 */

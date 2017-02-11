@@ -3,14 +3,14 @@
  */
 package org.ibase4j.core.support.login;
 
-import java.io.Serializable;
+import org.ibase4j.core.base.BaseModel;
 
 /**
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:26:23
  */
 @SuppressWarnings("serial")
-public class ThirdPartyUser implements Serializable {
+public class ThirdPartyUser extends BaseModel {
 
 	private String account;// 用户
 	private String userName;// 用户昵称

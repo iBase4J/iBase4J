@@ -4,9 +4,8 @@
 	<select id="selectIdPage" resultType="java.lang.Long">
 		select id_ from sys_dic
 		<where>
-			<if test="cm.key != null and cm.key != ''">
-			and exists (select 1 from sys_dic_index where sys_dic.index_id=sys_dic_index.id_
-			and sys_dic_index.key_=#{cm.key})
+			<if test="cm.type != null and cm.type != ''">
+			and type_=#{cm.type}
 			</if>
 		</where>
 	</select>

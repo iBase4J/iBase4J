@@ -42,6 +42,6 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 	<listener>
-		<listener-class>org.ibase4j.core.listener.ServerListerner</listener-class>
+		<listener-class>org.ibase4j.core.SysServerListerner</listener-class>
 	</listener>
 </web-app>

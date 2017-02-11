@@ -40,6 +40,7 @@
                 <table class="table table-striped b-t b-light text-center">
                     <thead>
                     <tr>
+                        <th>类型</th>
                         <th>字典名称</th>
                         <th>关键字</th>
                         <th>&nbsp;</th>
@@ -47,8 +48,9 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="item in pageInfo.data">
-                        <td class="v-middle">{{item.key}}</td>
-                        <td class="v-middle">{{item.name}}</td>
+                        <td class="v-middle">{{item.type}}</td>
+                        <td class="v-middle">{{item.codeText}}</td>
+                        <td class="v-middle">{{item.code}}</td>
                         <td class="v-middle">
                             <a ui-sref="main.sys.dic.update({id: item.id})" class="btn btn-sm btn-default">
                                 <i class="fa fa-edit m-r-xs text-sm"></i>编辑</a>

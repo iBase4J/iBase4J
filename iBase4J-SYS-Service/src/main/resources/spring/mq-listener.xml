@@ -12,15 +12,13 @@
 	<jms:listener-container destination-type="queue"
 		container-type="default" connection-factory="connectionFactory"
 		acknowledge="auto"><!-- 可写多个监听器 -->
-		<jms:listener destination="iBase4J.queue" ref="queueMessageListener" />
 		<jms:listener destination="iBase4J.emailSender" ref="sendEmailListener" />
 	</jms:listener-container>
 	<!-- 定义Topic监听器 -->
-	<jms:listener-container destination-type="topic"
+	<!-- <jms:listener-container destination-type="topic"
 		container-type="default" connection-factory="connectionFactory"
-		acknowledge="auto"><!-- 可写多个监听器 -->
-		<jms:listener destination="iBase4J.topic" ref="topicMessageListener" />
-	</jms:listener-container>
+		acknowledge="auto">可写多个监听器
+	</jms:listener-container> -->
 	<!-- 定义Queue监听器 -->
 	<bean id="sendEmailListener" class="org.ibase4j.core.support.mq.listener.SendEmailListener" />
 </beans>

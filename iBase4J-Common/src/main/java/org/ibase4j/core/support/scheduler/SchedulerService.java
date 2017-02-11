@@ -3,7 +3,7 @@ package org.ibase4j.core.support.scheduler;
 import java.util.List;
 import java.util.Map;
 
-import org.ibase4j.core.base.BaseProviderImpl;
+import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.dao.scheduler.TaskFireLogMapper;
 import org.ibase4j.model.scheduler.TaskFireLog;
@@ -80,7 +80,7 @@ public class SchedulerService {
     }
 
     public Page<TaskFireLog> queryLog(Map<String, Object> params) {
-        Page<Long> ids = BaseProviderImpl.getPage(params);
+        Page<Long> ids = BaseService.getPage(params);
         ids.setRecords(logMapper.selectIdByMap(ids, params));
         Page<TaskFireLog> page = new Page<TaskFireLog>(ids.getCurrent(), ids.getSize());
         page.setTotal(ids.getTotal());
