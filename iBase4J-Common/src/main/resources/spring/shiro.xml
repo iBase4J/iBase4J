@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:idubbo="http://code.alibabatech.com/schema/dubbo"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd
-		http://code.alibabatech.com/schema/idubbo
-		http://code.alibabatech.com/schema/idubbo/idubbo.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
 	<bean id="realm" class="org.ibase4j.core.shiro.Realm" />
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
@@ -29,7 +26,7 @@
 		<!-- Shiro的核心安全接口,这个属性是必须的 -->
 		<property name="securityManager" ref="securityManager" />
 		<!-- 要求登录时的链接 -->
-		<property name="loginUrl" value="/index.html" />
+		<property name="loginUrl" value="/unauthorized" />
 		<!-- 用户访问未对其授权的资源时,所显示的连接 -->
 		<property name="unauthorizedUrl" value="/forbidden" />
 		<!-- Shiro连接约束配置,即过滤链的定义 -->

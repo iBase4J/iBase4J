@@ -1,8 +1,10 @@
 package org.ibase4j.web.sys;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
+import org.ibase4j.core.Constants;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.config.Resources;
@@ -17,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -80,15 +83,19 @@ public class LoginController extends BaseController {
 
 	// 没有登录
 	@ApiOperation(value = "没有登录")
-	@RequestMapping("/unauthorized")
-	public Object unauthorized(ModelMap modelMap) {
-		SecurityUtils.getSubject().logout();
+	@RequestMapping(value = "/unauthorized", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
+	public Object unauthorized(ModelMap modelMap, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		if ("GET".equals(request.getMethod())) {
+			response.sendRedirect(Constants.LOGIN_URL);
+			return null;
+		}
 		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
 	}
 
 	// 没有权限
 	@ApiOperation(value = "没有权限")
-	@RequestMapping("/forbidden")
+	@RequestMapping(value = "/forbidden", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public Object forbidden(ModelMap modelMap) {
 		return setModelMap(modelMap, HttpCode.FORBIDDEN);
 	}
