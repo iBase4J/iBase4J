@@ -65,8 +65,8 @@ public class SysUserService extends BaseService<SysUser>{
 
 	/** 查询第三方帐号用户Id */
 	@Cacheable
-	public Long queryUserIdByThirdParty(String openId, String provider) {
-		return thirdpartyMapper.queryUserIdByThirdParty(provider, openId);
+	public Long queryUserIdByThirdParty(ThirdPartyUser param) {
+		return thirdpartyMapper.queryUserIdByThirdParty(param.getProvider(), param.getOpenid());
 	}
 
 	/** 保存第三方帐号 */
