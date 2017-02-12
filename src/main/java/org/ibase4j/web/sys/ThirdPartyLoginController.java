@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.base.AbstractController;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyLoginHelper;
@@ -31,10 +31,9 @@ import io.swagger.annotations.ApiOperation;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:12:56
  */
-@SuppressWarnings("rawtypes")
 @Controller
 @Api(value = "第三方登录接口", description = "第三方登录接口")
-public class ThirdPartyLoginController extends BaseController {
+public class ThirdPartyLoginController extends AbstractController {
 	@Autowired
 	private SysUserService sysUserService;
 

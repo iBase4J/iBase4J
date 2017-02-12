@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.base.AbstractController;
 import org.ibase4j.core.exception.IllegalParameterException;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.sys.SysRoleMenu;
@@ -30,10 +30,9 @@ import io.swagger.annotations.ApiOperation;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:14:05
  */
-@SuppressWarnings("rawtypes")
 @RestController
 @Api(value = "权限管理", description = "权限管理")
-public class SysAuthorizeController extends BaseController {
+public class SysAuthorizeController extends AbstractController {
 	@Autowired
 	private SysAuthorizeService sysAuthorizeService;
 

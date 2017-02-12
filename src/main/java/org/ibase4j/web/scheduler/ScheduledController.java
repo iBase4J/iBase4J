@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.base.AbstractController;
 import org.ibase4j.core.support.Assert;
 import org.ibase4j.model.scheduler.TaskScheduled;
 import org.ibase4j.model.scheduler.TaskScheduled.TaskType;
@@ -32,11 +32,10 @@ import io.swagger.annotations.ApiOperation;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:20:10
  */
-@SuppressWarnings("rawtypes")
 @RestController
 @Api(value = "调度管理", description = "调度管理")
 @RequestMapping(value = "/scheduled")
-public class ScheduledController extends BaseController {
+public class ScheduledController extends AbstractController {
 	@Autowired
 	private ScheduledService scheduledService;
 

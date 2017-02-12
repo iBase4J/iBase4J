@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.base.AbstractController;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.exception.LoginException;
 import org.ibase4j.core.support.Assert;
@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiParam;
  */
 @RestController
 @Api(value = "登录接口", description = "登录接口")
-public class LoginController extends BaseController<SysUser> {
+public class LoginController extends AbstractController {
 	@Autowired
 	private SysUserService sysUserService;
 	@Autowired
