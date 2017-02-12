@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ibase4j</groupId>
 	<artifactId>iBase4J</artifactId>
-	<version>1.0.0</version>
+	<version>1.1.0</version>
 	<name>iBase4J</name>
 	<packaging>pom</packaging>
 	<url>http://maven.apache.org</url>
