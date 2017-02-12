@@ -3,7 +3,6 @@ package org.ibase4j.service.sys;
 import java.util.List;
 import java.util.Map;
 
-import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.dao.sys.SysAuthorizeMapper;
@@ -30,7 +29,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
  */
 @Service
 @CacheConfig(cacheNames = "sysAuthorize")
-public class SysAuthorizeService extends BaseService<SysMenu> {
+public class SysAuthorizeService {
 	@Autowired
 	private SysUserMenuMapper sysUserMenuMapper;
 	@Autowired
