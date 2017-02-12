@@ -1,10 +1,8 @@
 package org.ibase4j.web.sys;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
-import org.ibase4j.core.Constants;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.config.Resources;
@@ -84,12 +82,8 @@ public class LoginController extends BaseController {
 	// 没有登录
 	@ApiOperation(value = "没有登录")
 	@RequestMapping(value = "/unauthorized", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
-	public Object unauthorized(ModelMap modelMap, HttpServletRequest request, HttpServletResponse response)
+	public Object unauthorized(ModelMap modelMap)
 			throws Exception {
-		if ("GET".equals(request.getMethod())) {
-			response.sendRedirect(Constants.LOGIN_URL);
-			return null;
-		}
 		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
 	}
 

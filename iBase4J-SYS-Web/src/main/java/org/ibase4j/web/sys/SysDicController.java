@@ -4,9 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.base.Parameter;
 import org.ibase4j.model.sys.SysDic;
-import org.ibase4j.model.sys.SysDicIndex;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,14 +29,6 @@ public class SysDicController extends BaseController {
 
 	public String getService() {
 		return "sysDicService";
-	}
-
-	@ApiOperation(value = "根据关键字查询字典列表")
-	@PutMapping(value = "/read/type")
-	public Object getDicByType(ModelMap modelMap, @RequestBody SysDicIndex param) {
-		Parameter parameter = new Parameter(getService(), "queryDicByType").setModel(param);
-		Map<?, ?> result = provider.execute(parameter).getMap();
-		return setSuccessModelMap(modelMap, result);
 	}
 
 	@ApiOperation(value = "查询字典项")
