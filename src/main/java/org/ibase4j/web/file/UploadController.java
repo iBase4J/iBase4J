@@ -22,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:11:42
  */
+@SuppressWarnings("rawtypes")
 @RestController
 @Api(value = "文件上传接口", description = "文件上传接口")
 @RequestMapping(value = "/upload", method = RequestMethod.POST)

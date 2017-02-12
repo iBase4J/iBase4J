@@ -2,22 +2,16 @@ package org.ibase4j.web.sys;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.util.Request2ModelUtil;
-import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.generator.SysParam;
-import org.ibase4j.service.sys.SysParamService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ibase4j.model.sys.SysParam;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.github.pagehelper.PageInfo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,56 +24,34 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @Api(value = "系统参数管理", description = "系统参数管理")
-@RequestMapping(value = "param", method = RequestMethod.POST)
-public class SysParamController extends BaseController {
-	@Autowired
-	private SysParamService sysParamService;
+@RequestMapping(value = "param")
+public class SysParamController extends BaseController<SysParam> {
 
+	@PutMapping(value = "/read/list")
 	@ApiOperation(value = "查询系统参数")
-	@RequestMapping(value = "/read/list")
-	@RequiresPermissions("sys.param.read")
-	public Object get(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = WebUtil.getParameterMap(request);
-		PageInfo<?> list = sysParamService.query(params);
-		return setSuccessModelMap(modelMap, list);
+	@RequiresPermissions("sys.base.param.read")
+	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+		return super.query(modelMap, param);
 	}
 
-	// 详细信息
+	@PutMapping(value = "/read/detail")
 	@ApiOperation(value = "系统参数详情")
-	@RequiresPermissions("sys.param.read")
-	@RequestMapping(value = "/read/detail")
-	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
-		SysParam record = sysParamService.queryById(id);
-		return setSuccessModelMap(modelMap, record);
+	@RequiresPermissions("sys.base.param.read")
+	public Object get(ModelMap modelMap, @RequestBody SysParam param) {
+		return super.get(modelMap, param);
 	}
 
-	// 新增
-	@ApiOperation(value = "添加系统参数")
-	@RequiresPermissions("sys.param.add")
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public Object add(HttpServletRequest request, ModelMap modelMap) {
-		SysParam record = Request2ModelUtil.covert(SysParam.class, request);
-		sysParamService.add(record);
-		return setSuccessModelMap(modelMap);
-	}
-
-	// 修改
+	@PostMapping
 	@ApiOperation(value = "修改系统参数")
-	@RequiresPermissions("sys.param.update")
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public Object update(HttpServletRequest request, ModelMap modelMap) {
-		SysParam record = Request2ModelUtil.covert(SysParam.class, request);
-		sysParamService.update(record);
-		return setSuccessModelMap(modelMap);
+	@RequiresPermissions("sys.base.param.update")
+	public Object update(ModelMap modelMap, @RequestBody SysParam param) {
+		return super.update(modelMap, param);
 	}
 
-	// 删除
+	@DeleteMapping
 	@ApiOperation(value = "删除系统参数")
-	@RequiresPermissions("sys.param.delete")
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public Object delete(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) Integer id) {
-		sysParamService.delete(id);
-		return setSuccessModelMap(modelMap);
+	@RequiresPermissions("sys.base.param.delete")
+	public Object delete(ModelMap modelMap, @RequestBody SysParam param) {
+		return super.delete(modelMap, param);
 	}
 }

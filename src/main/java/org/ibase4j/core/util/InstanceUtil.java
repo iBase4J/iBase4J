@@ -1,5 +1,8 @@
 package org.ibase4j.core.util;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -23,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.ibase4j.core.exception.DataParseException;
 import org.springframework.web.context.ContextLoader;
 
 /**
@@ -46,6 +50,94 @@ public final class InstanceUtil {
 		return bean;
 	}
 
+	// Map --> Bean 1: 利用Introspector,PropertyDescriptor实现 Map --> Bean
+	public static void transMap2Bean(Map<String, Object> map, Object obj) {
+		try {
+			BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
+			PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+			for (PropertyDescriptor property : propertyDescriptors) {
+				String key = property.getName();
+				if (map.containsKey(key)) {
+					Object value = map.get(key);
+					// 得到property对应的setter方法
+					Method setter = property.getWriteMethod();
+					setter.invoke(obj, value);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("transMap2Bean Error " + e);
+		}
+		return;
+	}
+
+	// Bean --> Map 1: 利用Introspector和PropertyDescriptor 将Bean --> Map
+	public static Map<String, Object> transBean2Map(Object obj) {
+		Map<String, Object> map = newHashMap();
+		if (obj == null) {
+			return map;
+		}
+		try {
+			BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
+			PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+			for (PropertyDescriptor property : propertyDescriptors) {
+				String key = property.getName();
+				// 过滤class属性
+				if (!key.equals("class")) {
+					// 得到property对应的getter方法
+					Method getter = property.getReadMethod();
+					Object value = getter.invoke(obj);
+					map.put(key, value);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("transBean2Map Error " + e);
+		}
+		return map;
+	}
+
+	/**
+	 * @param oldBean
+	 * @param newBean
+	 * @return
+	 */
+	public static <T> T getDiff(T oldBean, T newBean) {
+		if (oldBean == null && newBean != null) {
+			return newBean;
+		} else if (newBean == null) {
+			return null;
+		} else {
+			Class<?> cls1 = oldBean.getClass();
+			try {
+				@SuppressWarnings("unchecked")
+				T object = (T) cls1.newInstance();
+				BeanInfo beanInfo = Introspector.getBeanInfo(cls1);
+				PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+				for (PropertyDescriptor property : propertyDescriptors) {
+					String key = property.getName();
+					// 过滤class属性
+					if (!key.equals("class")) {
+						// 得到property对应的getter方法
+						Method getter = property.getReadMethod();
+						// 得到property对应的setter方法
+						Method setter = property.getWriteMethod();
+						Object oldValue = getter.invoke(oldBean);
+						Object newValue = getter.invoke(newBean);
+						if (newValue != null) {
+							if (oldValue == null) {
+								setter.invoke(object, newValue);
+							} else if (oldValue != null && !newValue.equals(oldValue)) {
+								setter.invoke(object, newValue);
+							}
+						}
+					}
+				}
+				return object;
+			} catch (Exception e) {
+				throw new DataParseException(e);
+			}
+		}
+	}
+
 	/**
 	 * Return the specified class. Checks the ThreadContext classloader first,
 	 * then uses the System classloader. Should replace all calls to
@@ -53,7 +145,8 @@ public final class InstanceUtil {
 	 * loader) when the class might be in a different classloader (e.g. in a
 	 * webapp).
 	 * 
-	 * @param clazz the name of the class to instantiate
+	 * @param clazz
+	 *            the name of the class to instantiate
 	 * @return the requested Class object
 	 */
 	public static final Class<?> getClass(String clazz) {
@@ -78,8 +171,10 @@ public final class InstanceUtil {
 	/**
 	 * 封装实体
 	 * 
-	 * @param cls 实体类
-	 * @param list 实体Map集合
+	 * @param cls
+	 *            实体类
+	 * @param list
+	 *            实体Map集合
 	 * @return
 	 */
 	public static final <E> List<E> getInstanceList(Class<E> cls, List<?> list) {
@@ -96,8 +191,10 @@ public final class InstanceUtil {
 	/**
 	 * 封装实体
 	 * 
-	 * @param cls 实体类
-	 * @param list 数据查询结果集
+	 * @param cls
+	 *            实体类
+	 * @param list
+	 *            数据查询结果集
 	 * @return
 	 */
 	public static final <E> List<E> getInstanceList(Class<E> cls, ResultSet rs) {
@@ -122,8 +219,10 @@ public final class InstanceUtil {
 	/**
 	 * 新建实例
 	 * 
-	 * @param cls 实体类
-	 * @param list 实体属性Map
+	 * @param cls
+	 *            实体类
+	 * @param list
+	 *            实体属性Map
 	 * @return
 	 */
 	public static final <E> E newInstance(Class<E> cls, Map<String, ?> map) {
@@ -144,7 +243,8 @@ public final class InstanceUtil {
 	 * calls the System class loader) when the class might be in a different
 	 * classloader (e.g. in a webapp).
 	 * 
-	 * @param clazz the name of the class to instantiate
+	 * @param clazz
+	 *            the name of the class to instantiate
 	 * @return an instance of the specified class
 	 */
 	public static final Object newInstance(String clazz) {
@@ -174,8 +274,10 @@ public final class InstanceUtil {
 	/**
 	 * 新建实例
 	 * 
-	 * @param className 类名
-	 * @param args 构造函数的参数
+	 * @param className
+	 *            类名
+	 * @param args
+	 *            构造函数的参数
 	 * @return 新建的实例
 	 */
 	public static final Object newInstance(String className, Object... args) {
@@ -190,9 +292,12 @@ public final class InstanceUtil {
 	/**
 	 * 执行某对象方法
 	 * 
-	 * @param owner 对象
-	 * @param methodName 方法名
-	 * @param args 参数
+	 * @param owner
+	 *            对象
+	 * @param methodName
+	 *            方法名
+	 * @param args
+	 *            参数
 	 * @return 方法返回值
 	 */
 	public static final Object invokeMethod(Object owner, String methodName, Object[] args) {

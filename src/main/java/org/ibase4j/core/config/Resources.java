@@ -5,7 +5,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
@@ -14,7 +13,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-@PropertySource(value = {"classpath:config/thirdParty.properties", "classpath:i18n/messages*.properties"})
 public final class Resources {
     /** 第三方登录配置 */
     public static final ResourceBundle THIRDPARTY = ResourceBundle.getBundle("config/thirdParty");

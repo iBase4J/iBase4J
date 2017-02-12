@@ -1,17 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>org.ibase4j</groupId>
 	<artifactId>iBase4J</artifactId>
-	<version>0.0.2</version>
-	<packaging>war</packaging>
+	<version>1.1.1</version>
 	<name>iBase4J</name>
+	<packaging>war</packaging>
 	<url>http://maven.apache.org</url>
 
-	<!-- clean:clean package -P build tomcat7:run-war-only -->
-	<!-- mybatis-generator:generate -->
-
+	<profiles>
+		<profile>
+			<id>product</id>
+			<properties>
+				<jdbc.config.path>file:/home/config/iBase4J/jdbc-sys.properties</jdbc.config.path>
+				<system.config.path>file:/home/config/iBase4J/system.properties</system.config.path>
+			</properties>
+		</profile>
+	</profiles>
+	
 	<properties>
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
 		<jdbc.config.path>classpath:config/jdbc.properties</jdbc.config.path>
@@ -20,24 +27,37 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
 		<spring.version>4.3.0.RELEASE</spring.version>
-		<spring-session.version>1.2.0.RC2</spring-session.version>
-		<spring-data-redis.version>1.7.1.RELEASE</spring-data-redis.version>
-		<!-- -->
+		<spring-session.version>1.3.0.RELEASE</spring-session.version>
+		<spring-data-redis.version>2.0.0.M1</spring-data-redis.version>
+		<!-- 数据库 -->
 		<mysql.version>5.1.39</mysql.version>
+		<sharding-jdbc.version>1.4.1</sharding-jdbc.version>
 		<!-- mybatis版本号 -->
-		<mybatis.version>3.4.0</mybatis.version>
+		<mybatis.version>3.4.1</mybatis.version>
 		<mybatis-spring.version>1.3.0</mybatis-spring.version>
+		<mybatis-plus.version>2.0</mybatis-plus.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.9</slf4j.version>
-		<log4j.version>2.1</log4j.version>
+		<log4j.version>2.4.1</log4j.version>
 		<disruptor.version>3.3.4</disruptor.version>
 		<!-- -->
-		<fastjson.version>1.2.8</fastjson.version>
-		<druid.version>1.0.18</druid.version>
+		<druid.version>1.0.27</druid.version>
 		<dubbo.version>2.5.3</dubbo.version>
-		<jedis.version>2.8.1</jedis.version>
+		<fastjson.version>1.2.23</fastjson.version>
+		<!-- -->
+		<poi.version>3.9</poi.version>
+		<jxl.version>2.6.12</jxl.version>
 		<xfire.version>1.2.6</xfire.version>
+		<jsch.version>0.1.53</jsch.version>
+		<jedis.version>2.9.0</jedis.version>
+		<redisson.version>2.7.2</redisson.version>
+		<shiro.version>1.2.4</shiro.version>
 		<quartz.version>2.2.3</quartz.version>
+		<aspectj.version>1.8.9</aspectj.version>
+		<pinyin4j.version>2.5.1</pinyin4j.version>
+		<activemq.version>5.13.3</activemq.version>
+		<jsqlparser.version>0.9.5</jsqlparser.version>
+		<thumbnailator.version>0.4.8</thumbnailator.version>
 	</properties>
 
 	<dependencies>
@@ -111,19 +131,9 @@
 			<version>${mybatis-spring.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.github.pagehelper</groupId>
-			<artifactId>pagehelper</artifactId>
-			<version>4.1.3</version>
-		</dependency>
-		<dependency>
-			<groupId>com.github.jsqlparser</groupId>
-			<artifactId>jsqlparser</artifactId>
-			<version>0.9.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mybatis.generator</groupId>
-			<artifactId>mybatis-generator-core</artifactId>
-			<version>1.3.2</version>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus</artifactId>
+			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<!-- spring核心包 -->
 		<dependency>
@@ -177,31 +187,25 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-			<version>${spring-data-redis.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session</artifactId>
 			<version>${spring-session.version}</version>
 		</dependency>
-		<!-- 事务 -->
 		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.atomikos</groupId>
-			<artifactId>transactions-jta</artifactId>
-			<version>4.0.2</version>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>${spring-data-redis.version}</version>
 		</dependency>
 		<!-- 缓存 -->
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>${redisson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -354,23 +358,13 @@
 					<artifactId>slf4j-log4j12</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty</artifactId>
-			<version>3.7.0.Final</version>
-		</dependency> -->
-		<!-- activemq -->
-		<!-- <dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-core</artifactId>
-			<version>5.7.0</version>
 		</dependency> -->
 		<dependency>
 			<groupId>org.codehaus.xfire</groupId>
 			<artifactId>xfire-core</artifactId>
 			<version>${xfire.version}</version>
 		</dependency>
+		<!--  -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
@@ -387,73 +381,20 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.5.0</version>
 		</dependency>
+		<!--  -->
+		<dependency>
+		    <groupId>cz.mallat.uasparser</groupId>
+		    <artifactId>uasparser</artifactId>
+		    <version>0.6.2</version>
+		</dependency>
+		<!--  -->
+		<dependency>
+			<groupId>com.esotericsoftware</groupId>
+			<artifactId>reflectasm</artifactId>
+			<version>1.11.3</version>
+		</dependency>
 	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>product</id>
-			<properties>
-				<jdbc.config.path>file:/home/config/iBase4J/jdbc-sys.properties</jdbc.config.path>
-				<system.config.path>file:/home/config/iBase4J/system.properties</system.config.path>
-			</properties>
-		</profile>
-		<profile>
-			<id>build</id>
-			<build>
-				<finalName>${project.name}</finalName>
-				<resources>
-					<resource>
-						<directory>src/main/java</directory>
-						<includes>
-							<include>**/*.properties</include>
-							<include>**/*.xml</include>
-						</includes>
-						<filtering>true</filtering>
-					</resource>
-					<resource>
-						<directory>src/main/resources</directory>
-					</resource>
-				</resources>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.tomcat.maven</groupId>
-							<artifactId>tomcat7-maven-plugin</artifactId>
-							<version>2.2</version>
-							<executions>
-								<execution>
-									<id>run-war-only</id>
-									<phase>pre-integration-test</phase>
-									<goals>
-										<goal>run-war-only</goal>
-									</goals>
-								</execution>
-							</executions>
-							<configuration>
-								<warDirectory>target/${project.name}</warDirectory>
-								<path>/</path>
-								<contextReloadable>true</contextReloadable>
-								<uriEncoding>UTF-8</uriEncoding>
-								<port>8088</port>
-								<systemProperties>
-									<webapps>
-										<webapp>
-											<groupId>${project.name}</groupId>
-											<artifactId>${project.name}</artifactId>
-											<version>${project.version}</version>
-											<type>${project.packaging}</type>
-											<asWebapp>true</asWebapp>
-											<contextPath>/</contextPath>
-										</webapp>
-									</webapps>
-								</systemProperties>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-	</profiles>
 	<build>
 		<finalName>${project.name}</finalName>
 		<resources>
@@ -465,59 +406,70 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.3</version>
-					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
-						<encoding>UTF-8</encoding>
-						<testIncludes>
-							<testInclude>none</testInclude>
-						</testIncludes>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jdeps-plugin</artifactId>
-					<version>3.0.0</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>jdkinternals</goal>
-								<goal>test-jdkinternals</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>org.mybatis.generator</groupId>
-					<artifactId>mybatis-generator-maven-plugin</artifactId>
-					<version>1.3.2</version>
-					<configuration>
-						<verbose>true</verbose>
-						<overwrite>true</overwrite>
-					</configuration>
-					<dependencies>
-						<dependency>
-							<groupId>mysql</groupId>
-							<artifactId>mysql-connector-java</artifactId>
-							<version>5.1.30</version>
-						</dependency>
-					</dependencies>
-					<executions>
-						<execution>
-							<id>Generate MyBatis Artifacts</id>
-							<goals>
-								<goal>generate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warSourceExcludes>WEB-INF/lib/log4j-${log4j.version}.jar</warSourceExcludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.0.0</version>
+				<configuration>
+					<contextPath>/</contextPath>
+					<scanIntervalSeconds>300</scanIntervalSeconds>
+					<connectors>
+						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+							<port>8090</port>
+						</connector>
+					</connectors>
+				</configuration>
+			</plugin>
+
+			<!-- tomcat-maven-plugin -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>tomcat-maven-plugin</artifactId>
+				<configuration>
+					<port>8090</port>
+					<path>/</path>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
+	
+	<developers>
+		<developer>
+			<name>ShenHuaJie</name>
+			<id>HuaJie.Shen</id>
+			<email>taoyixuelang@163.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
 </project>

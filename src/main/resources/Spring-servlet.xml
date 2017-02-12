@@ -11,7 +11,25 @@
                         http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
 	<context:component-scan base-package="org.ibase4j.web" />
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<description>JSON转换器</description>
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=UTF-8</value>  
+		             	<value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+				<property name="features">
+		               <array>
+		                   <value>QuoteFieldNames</value>
+		                   <value>WriteDateUseDateFormat</value>
+		               </array>
+		           </property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	<!-- 拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -22,7 +40,7 @@
 			<mvc:exclude-mapping path="/webjars/**" />
 			<mvc:exclude-mapping path="/configuration/**" />
 			<bean class="org.ibase4j.core.interceptor.MaliciousRequestInterceptor">
-				<property name="minRequestIntervalTime" value="1000" />
+				<property name="minRequestIntervalTime" value="500" />
 				<property name="maxMaliciousTimes" value="0" />
 				<property name="nextInterceptor">
 					<array>
@@ -45,19 +63,10 @@
 	<mvc:view-resolvers>
 	    <mvc:jsp cache-views="false" prefix="/WEB-INF/jsp/" suffix=".jsp" />  
 	</mvc:view-resolvers>
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<description>注解controller方法适配器</description>
-		<property name="messageConverters">
-			<list><!--JSON转换器 -->
-				<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-					<property name="supportedMediaTypes" value="application/json;charset=UTF-8" />
-				</bean>
-			</list>
-		</property>
-	</bean>
-	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<description>配置文件上传</description>
-		<property name="defaultEncoding" value="utf-8" />
+		<property name="defaultEncoding" value="UTF-8" />
 		<!-- 文件大小最大值 -->
 		<property name="maxUploadSize" value="10485760000" />
 		<!-- 内存中的最大值 -->

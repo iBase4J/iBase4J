@@ -14,8 +14,16 @@ import java.util.Date;
 public final class DateUtil {
 	private DateUtil() {
 	}
-
-	static String PATTERN = "yyyy-MM-dd";
+	/** 日期格式 **/
+    public interface DATE_PATTERN {
+        String HHMMSS = "HHmmss";
+        String HH_MM_SS = "HH:mm:ss";
+        String YYYYMMDD = "yyyyMMdd";
+        String YYYY_MM_DD = "yyyy-MM-dd";
+        String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+        String YYYYMMDDHHMMSSSSS = "yyyyMMddHHmmssSSS";
+        String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+    }
 
 	/**
 	 * 格式化日期
@@ -25,7 +33,7 @@ public final class DateUtil {
 	 * @return
 	 */
 	public static final String format(Object date) {
-		return format(date, PATTERN);
+		return format(date, DATE_PATTERN.YYYY_MM_DD);
 	}
 
 	/**
@@ -60,7 +68,7 @@ public final class DateUtil {
 	 * @return
 	 */
 	public static final String getDateTime() {
-		return format(new Date(), "yyyy-MM-dd HH:mm:ss");
+		return format(new Date(), DATE_PATTERN.YYYY_MM_DD_HH_MM_SS);
 	}
 
 	/**

@@ -3,35 +3,51 @@ package org.ibase4j.core.base;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.IdType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @SuppressWarnings("serial")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class BaseModel implements Serializable {
-	private Integer id;
-	private Boolean enable;
+	@TableId(value = "id_", type = IdType.ID_WORKER)
+	private Long id;
+	@TableField("enable_")
+	private Integer enable;
+	@TableField("remark_")
 	private String remark;
-	private Integer createBy;
+	private Long createBy;
 	private Date createTime;
-	private Integer updateBy;
+	private Long updateBy;
 	private Date updateTime;
+
+	@TableField(exist = false)
+	private String keyword;
 
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
+	public Long getId() {
 		return id;
+	}
+
+	public String getId_() {
+		return id == null ? "" : id.toString();
 	}
 
 	/**
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	/**
 	 * @return the enable
 	 */
-	public Boolean getEnable() {
+	public Integer getEnable() {
 		return enable;
 	}
 
@@ -39,7 +55,7 @@ public class BaseModel implements Serializable {
 	 * @param enable
 	 *            the enable to set
 	 */
-	public void setEnable(Boolean enable) {
+	public void setEnable(Integer enable) {
 		this.enable = enable;
 	}
 
@@ -61,7 +77,7 @@ public class BaseModel implements Serializable {
 	/**
 	 * @return the createBy
 	 */
-	public Integer getCreateBy() {
+	public Long getCreateBy() {
 		return createBy;
 	}
 
@@ -69,7 +85,7 @@ public class BaseModel implements Serializable {
 	 * @param createBy
 	 *            the createBy to set
 	 */
-	public void setCreateBy(Integer createBy) {
+	public void setCreateBy(Long createBy) {
 		this.createBy = createBy;
 	}
 
@@ -91,7 +107,7 @@ public class BaseModel implements Serializable {
 	/**
 	 * @return the updateBy
 	 */
-	public Integer getUpdateBy() {
+	public Long getUpdateBy() {
 		return updateBy;
 	}
 
@@ -99,7 +115,7 @@ public class BaseModel implements Serializable {
 	 * @param updateBy
 	 *            the updateBy to set
 	 */
-	public void setUpdateBy(Integer updateBy) {
+	public void setUpdateBy(Long updateBy) {
 		this.updateBy = updateBy;
 	}
 
@@ -118,4 +134,11 @@ public class BaseModel implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 }

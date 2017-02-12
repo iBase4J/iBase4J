@@ -7,9 +7,8 @@
         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<!-- SPRING-SESSION -->
 	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
-		<description>会话有效期(秒)</description>
-        <property name="maxInactiveIntervalInSeconds" value="600" />
-        <property name="redisNamespace" value="iBase4J" />
+        <property name="maxInactiveIntervalInSeconds" value="${session.maxInactiveInterval}" />
+        <property name="redisNamespace" value="${session.redis.namespace}" />
 	</bean>
 	<bean class="org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration">
 		<property name="httpSessionListeners">
@@ -18,4 +17,10 @@
 			</list>
 		</property>
 	</bean>
+	 <!-- 设置Cookie domain 和 名称 -->
+    <!-- <bean id="defaultCookieSerializer" class="org.springframework.session.web.http.DefaultCookieSerializer">
+        <property name="domainName" value=".example.com"/>
+        <property name="cookieName" value="JSESSIONID"/>
+        <property name="domainNamePattern" value="^.+?\\.(\\w+\\.[a-z]+)$"/>
+    </bean> -->
 </beans>

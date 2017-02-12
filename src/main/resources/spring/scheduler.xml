@@ -14,19 +14,12 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="schedulerManager" class="org.ibase4j.core.support.scheduler.manager.DefaultSchedulerManager">
+	<bean id="schedulerManager" class="org.ibase4j.core.support.scheduler.SchedulerManager">
 		<property name="scheduler" ref="schedulerFactoryBean" />
-		<property name="triggerLoaders">
-			<list>
-				<!--加载器类型 -->
-				<bean class="org.ibase4j.core.support.scheduler.manager.TriggerLoader"
-					c:taskType="dubbo" c:jobClass="org.ibase4j.core.support.scheduler.task.InvokeTask" />
-			</list>
-		</property>
 		<property name="jobListeners">
 			<list>
 				<!--日志监控类型 -->
-				<bean class="org.ibase4j.core.support.scheduler.manager.TaskListener" />
+				<bean class="org.ibase4j.core.support.scheduler.JobListener" autowire="byName" />
 			</list>
 		</property>
 	</bean>

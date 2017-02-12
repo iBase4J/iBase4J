@@ -7,7 +7,13 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-/** 获取数据源 */
+
+/**
+ * 获取数据源
+ * 
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:17:16
+ */
 public class ChooseDataSource extends AbstractRoutingDataSource {
 	public static Map<String, List<String>> METHODTYPE = new HashMap<String, List<String>>();
 

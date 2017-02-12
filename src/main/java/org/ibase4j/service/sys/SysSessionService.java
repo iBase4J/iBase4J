@@ -1,82 +1,66 @@
 package org.ibase4j.service.sys;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.base.BaseService;
-import org.ibase4j.core.support.Assert;
-import org.ibase4j.dao.generator.SysSessionMapper;
-import org.ibase4j.dao.sys.SysSessionExpandMapper;
-import org.ibase4j.model.generator.SysSession;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ibase4j.core.util.CacheUtil;
+import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.core.util.PropertiesUtil;
+import org.ibase4j.dao.sys.SysSessionMapper;
+import org.ibase4j.model.sys.SysSession;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.session.data.redis.RedisOperationsSessionRepository;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
-
+/**
+ * @author ShenHuaJie
+ * @version 2016年5月20日 下午3:19:19
+ */
 @Service
 @CacheConfig(cacheNames = "sysSession")
 public class SysSessionService extends BaseService<SysSession> {
-    @Autowired
-    private SysSessionMapper sessionMapper;
-    @Autowired
-    private SysSessionExpandMapper sessionExpandMapper;
-    @Autowired
-    private RedisOperationsSessionRepository sessionRepository;
 
-    /** 删除会话 */
-    public void deleteByAccount(String account) {
-        Assert.notNull(account, "ACCOUNT");
-        List<String> sessionIds = sessionExpandMapper.querySessionIdByAccount(account);
-        if (sessionIds != null) {
-            for (String sessionId : sessionIds) {
-                sessionRepository.delete(sessionId);
-                sessionRepository.cleanupExpiredSessions();
-                sessionExpandMapper.deleteBySessionId(sessionId);
-            }
-        }
-    }
+	@CachePut
+	@Transactional
+	public SysSession update(SysSession record) {
+		if (record.getId() == null) {
+			record.setUpdateTime(new Date());
+			Long id = ((SysSessionMapper) mapper).queryBySessionId(record.getSessionId());
+			if (id != null) {
+				mapper.updateById(record);
+			} else {
+				record.setCreateTime(new Date());
+				mapper.insert(record);
+			}
+		} else {
+			mapper.updateById(record);
+		}
+		return record;
+	}
 
-    /** 删除会话 */
-    public void delete(Integer id) {
-        Assert.notNull(id, "ID");
-        SysSession sysSession = sessionMapper.selectByPrimaryKey(id);
-        if (sysSession != null) {
-            sessionRepository.delete(sysSession.getSessionId());
-            sessionRepository.cleanupExpiredSessions();
-            sessionMapper.deleteByPrimaryKey(id);
-        }
-    }
+	// 系统触发,由系统自动管理缓存
+	public void deleteBySessionId(final SysSession sysSession) {
+		((SysSessionMapper) mapper).deleteBySessionId(sysSession.getSessionId());
+	}
 
-    @CacheEvict
-    public void deleteBySessionId(final String sessionId) {
-        sessionExpandMapper.deleteBySessionId(sessionId);
-    }
+	public List<String> querySessionIdByAccount(SysSession sysSession) {
+		return ((SysSessionMapper) mapper).querySessionIdByAccount(sysSession.getAccount());
+	}
 
-    /** 更新会话 */
-    public SysSession update(SysSession record) {
-        if (record.getId() == null) {
-            Integer id = sessionExpandMapper.queryBySessionId(record.getSessionId());
-            if (id != null) {
-                record.setId(id);
-                sessionMapper.updateByPrimaryKey(record);
-            } else {
-                sessionMapper.insert(record);
-            }
-        } else {
-            sessionMapper.updateByPrimaryKey(record);
-        }
-        return record;
-    }
-
-    @Cacheable
-    public PageInfo<SysSession> query(Map<String, Object> params) {
-        this.startPage(params);
-        Page<Integer> ids = sessionExpandMapper.query(params);
-        return new PageInfo<SysSession>(getList(ids));
-    }
+	//
+	public void cleanExpiredSessions() {
+		String key = "spring:session:" + PropertiesUtil.getString("session.redis.namespace") + ":sessions:expires:";
+		Map<String, Object> columnMap = InstanceUtil.newHashMap();
+		List<SysSession> sessions = queryList(columnMap);
+		for (SysSession sysSession : sessions) {
+			logger.info("检查SESSION : {}", sysSession.getSessionId());
+			if (!CacheUtil.getCache().exists(key + sysSession.getSessionId())) {
+				logger.info("移除SESSION : {}", sysSession.getSessionId());
+				mapper.deleteById(sysSession.getId());
+			}
+		}
+	}
 }

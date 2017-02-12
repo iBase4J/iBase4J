@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.dao.scheduler.TaskFireLogMapper">
+	<select id="selectIdByMap" resultType="java.lang.Long">
+		select id_ from task_fire_log
+		<where>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (group_name like CONCAT('%',#{cm.keyword},'%') or task_name like CONCAT('%',#{cm.keyword},'%'))
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -2,22 +2,16 @@ package org.ibase4j.web.sys;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.util.Request2ModelUtil;
-import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.generator.SysRole;
-import org.ibase4j.service.sys.SysRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ibase4j.model.sys.SysRole;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.github.pagehelper.PageInfo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,56 +24,34 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @Api(value = "角色管理", description = "角色管理")
-@RequestMapping(value = "role", method = RequestMethod.POST)
-public class SysRoleController extends BaseController {
-	@Autowired
-	private SysRoleService sysRoleService;
+@RequestMapping(value = "role")
+public class SysRoleController extends BaseController<SysRole> {
 
 	@ApiOperation(value = "查询角色")
-	@RequiresPermissions("sys.role.read")
-	@RequestMapping(value = "/read/list")
-	public Object get(HttpServletRequest request, ModelMap modelMap) {
-		Map<String, Object> params = WebUtil.getParameterMap(request);
-		PageInfo<?> list = sysRoleService.queryBean(params);
-		return setSuccessModelMap(modelMap, list);
+	@RequiresPermissions("sys.base.role.read")
+	@PutMapping(value = "/read/list")
+	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+		return super.query(modelMap, param);
 	}
 
-	// 详细信息
 	@ApiOperation(value = "角色详情")
-	@RequiresPermissions("sys.role.read")
-	@RequestMapping(value = "/read/detail")
-	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) Integer id) {
-		SysRole record = sysRoleService.queryById(id);
-		return setSuccessModelMap(modelMap, record);
+	@RequiresPermissions("sys.base.role.read")
+	@PutMapping(value = "/read/detail")
+	public Object get(ModelMap modelMap, @RequestBody SysRole param) {
+		return super.get(modelMap, param);
 	}
 
-	// 新增
-	@ApiOperation(value = "添加角色")
-	@RequiresPermissions("sys.role.add")
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public Object add(HttpServletRequest request, ModelMap modelMap) {
-		SysRole record = Request2ModelUtil.covert(SysRole.class, request);
-		sysRoleService.add(record);
-		return setSuccessModelMap(modelMap);
-	}
-
-	// 修改
+	@PostMapping
 	@ApiOperation(value = "修改角色")
-	@RequiresPermissions("sys.role.update")
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public Object update(HttpServletRequest request, ModelMap modelMap) {
-		SysRole record = Request2ModelUtil.covert(SysRole.class, request);
-		sysRoleService.update(record);
-		return setSuccessModelMap(modelMap);
+	@RequiresPermissions("sys.base.role.update")
+	public Object update(ModelMap modelMap, @RequestBody SysRole param) {
+		return super.update(modelMap, param);
 	}
 
-	// 删除
+	@DeleteMapping
 	@ApiOperation(value = "删除角色")
-	@RequiresPermissions("sys.role.delete")
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public Object delete(HttpServletRequest request, ModelMap modelMap,
-			@RequestParam(value = "id", required = false) Integer id) {
-		sysRoleService.delete(id);
-		return setSuccessModelMap(modelMap);
+	@RequiresPermissions("sys.base.role.delete")
+	public Object delete(ModelMap modelMap, @RequestBody SysRole param) {
+		return super.delete(modelMap, param);
 	}
 }

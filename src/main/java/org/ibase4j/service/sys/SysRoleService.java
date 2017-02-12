@@ -5,14 +5,14 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseService;
-import org.ibase4j.dao.sys.SysRoleExpandMapper;
-import org.ibase4j.model.generator.SysRole;
-import org.ibase4j.model.sys.SysRoleBean;
+import org.ibase4j.dao.sys.SysRoleMenuMapper;
+import org.ibase4j.model.sys.SysDept;
+import org.ibase4j.model.sys.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 
 /**
  * @author ShenHuaJie
@@ -22,19 +22,19 @@ import com.github.pagehelper.PageInfo;
 @CacheConfig(cacheNames = "sysRole")
 public class SysRoleService extends BaseService<SysRole> {
 	@Autowired
-	private SysRoleExpandMapper sysRoleExpandMapper;
+	private SysDeptService sysDeptService;
+	@Autowired
+	private SysRoleMenuMapper sysRoleMenuMapper;
 
-	public PageInfo<SysRole> query(Map<String, Object> params) {
-		startPage(params);
-		return getPage(sysRoleExpandMapper.query(params));
-	}
-
-	public PageInfo<SysRoleBean> queryBean(Map<String, Object> params) {
-		startPage(params);
-		PageInfo<SysRoleBean> pageInfo = getPage(sysRoleExpandMapper.query(params), SysRoleBean.class);
+	public Page<SysRole> query(Map<String, Object> params) {
+		Page<SysRole> pageInfo = super.query(params);
 		// 权限信息
-		for (SysRoleBean bean : pageInfo.getList()) {
-			List<String> permissions = sysRoleExpandMapper.queryPermission(bean.getId());
+		for (SysRole bean : pageInfo.getRecords()) {
+			if (bean.getDeptId() != null) {
+				SysDept sysDept = sysDeptService.queryById(bean.getDeptId());
+				bean.setDeptName(sysDept.getDeptName());
+			}
+			List<String> permissions = sysRoleMenuMapper.queryPermission(bean.getId());
 			for (String permission : permissions) {
 				if (StringUtils.isBlank(bean.getPermission())) {
 					bean.setPermission(permission);

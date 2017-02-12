@@ -35,35 +35,7 @@ public final class XmlUtil {
 	 * @param pStrXml 待解析的XML字符串
 	 * @return outDto 返回Dto
 	 */
-	public static final Map parseXml2DtoBasedNode(String pStrXml) {
-		Map map = new HashMap();
-		String strTitle = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-		Document document = null;
-		try {
-			if (pStrXml.indexOf("<?xml") < 0)
-				pStrXml = strTitle + pStrXml;
-			document = DocumentHelper.parseText(pStrXml);
-
-		} catch (DocumentException e) {
-			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:", e);
-		}
-		// 获取根节点
-		Element elNode = document.getRootElement();
-		// 遍历节点属性值将其压入Dto
-		for (Iterator it = elNode.elementIterator(); it.hasNext();) {
-			Element leaf = (Element) it.next();
-			map.put(leaf.getName().toLowerCase(), leaf.getData());
-		}
-		return map;
-	}
-
-	/**
-	 * 解析XML并将其节点元素压入Dto返回(基于节点值形式的XML格式)
-	 * 
-	 * @param pStrXml 待解析的XML字符串
-	 * @return outDto 返回Dto
-	 */
-	public static final Map parseXml2DtoDocument(String pStrXml) {
+	public static final Map parseXml2Map(String pStrXml) {
 		Map map = new HashMap();
 		String strTitle = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 		Document document = null;
@@ -162,7 +134,7 @@ public final class XmlUtil {
 	 * @param pXPath 节点路径(例如："//paralist/row" 则表示根节点paralist下的row节点的xPath路径)
 	 * @return outDto 返回Dto
 	 */
-	public static final Map parseXml2DtoBasedNode(String pStrXml, String pXPath) {
+	public static final Map parseXml2Map(String pStrXml, String pXPath) {
 		Map map = new HashMap();
 		String strTitle = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 		Document document = null;
@@ -179,34 +151,6 @@ public final class XmlUtil {
 		for (Iterator it = elNode.elementIterator(); it.hasNext();) {
 			Element leaf = (Element) it.next();
 			map.put(leaf.getName().toLowerCase(), leaf.getData());
-		}
-		return map;
-	}
-
-	/**
-	 * 解析XML并将其节点元素压入Dto返回(基于属性值形式的XML格式)
-	 * 
-	 * @param pStrXml 待解析的XML字符串
-	 * @param pXPath 节点路径(例如："//paralist/row" 则表示根节点paralist下的row节点的xPath路径)
-	 * @return outDto 返回Dto
-	 */
-	public static final Map parseXml2DtoBasedProperty(String pStrXml, String pXPath) {
-		Map map = new HashMap();
-		String strTitle = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-		Document document = null;
-		try {
-			if (pStrXml.indexOf("<?xml") < 0)
-				pStrXml = strTitle + pStrXml;
-			document = DocumentHelper.parseText(pStrXml);
-		} catch (DocumentException e) {
-			log.error("==开发人员请注意:==\n将XML格式的字符串转换为XML DOM对象时发生错误啦!" + "\n详细错误信息如下:", e);
-		}
-		// 根据Xpath搜索节点
-		Element elRoot = (Element) document.selectSingleNode(pXPath);
-		// 遍历节点属性值将其压入Dto
-		for (Iterator it = elRoot.attributeIterator(); it.hasNext();) {
-			Attribute attribute = (Attribute) it.next();
-			map.put(attribute.getName().toLowerCase(), attribute.getData());
 		}
 		return map;
 	}
@@ -268,7 +212,7 @@ public final class XmlUtil {
 	 * @param pFirstNodeName 一级节点名
 	 * @return string 返回XML格式字符串
 	 */
-	public static final String parseDto2Xml(Map map, String pRootNodeName, String pFirstNodeName) {
+	public static final String parseMap2Xml(Map map, String pRootNodeName, String pFirstNodeName) {
 		Document document = DocumentHelper.createDocument();
 		// 增加一个根元素节点
 		document.addElement(pRootNodeName);

@@ -13,6 +13,13 @@
 				<value>${system.config.path}</value>
 			</list>
 		</property>
+		<property name="decryptProperties">
+			<array>
+				<!-- 需要解密的配置 -->
+				<value>db.reader.password</value>
+				<value>db.writer.password</value>
+			</array>
+		</property>
 	</bean>
 	<!-- 扫描注解 -->
 	<context:component-scan base-package="org.ibase4j">
