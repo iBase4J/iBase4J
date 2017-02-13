@@ -46,7 +46,7 @@ public class SysAuthorizeService {
 	}
 
 	@Transactional
-	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
+	@CacheEvict(value = { "getAuthorize", "sysPermission", "userPermission" }, allEntries = true)
 	public void updateUserMenu(List<SysUserMenu> sysUserMenus) {
 		Long userId = null;
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
@@ -66,7 +66,7 @@ public class SysAuthorizeService {
 	}
 
 	@Transactional
-	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
+	@CacheEvict(value = { "getAuthorize", "sysPermission", "userPermission" }, allEntries = true)
 	public void updateUserPermission(List<SysUserMenu> sysUserMenus) {
 		Long userId = null;
 		String permission = null;
@@ -95,7 +95,7 @@ public class SysAuthorizeService {
 	}
 
 	@Transactional
-	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
+	@CacheEvict(value = { "getAuthorize", "sysPermission", "userPermission", "rolePermission" }, allEntries = true)
 	public void updateUserRole(List<SysUserRole> sysUserRoles) {
 		Long userId = null;
 		for (SysUserRole sysUserRole : sysUserRoles) {
@@ -119,7 +119,7 @@ public class SysAuthorizeService {
 	}
 
 	@Transactional
-	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
+	@CacheEvict(value = { "getAuthorize", "sysPermission", "userPermission", "rolePermission" }, allEntries = true)
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus) {
 		Long roleId = null;
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
@@ -140,7 +140,7 @@ public class SysAuthorizeService {
 	}
 
 	@Transactional
-	@CacheEvict(value = { "getAuthorize", "sysPermission" }, allEntries = true)
+	@CacheEvict(value = { "getAuthorize", "sysPermission", "userPermission", "rolePermission" }, allEntries = true)
 	public void updateRolePermission(List<SysRoleMenu> sysRoleMenus) {
 		Long roleId = null;
 		String permission = null;
@@ -199,6 +199,16 @@ public class SysAuthorizeService {
 	@Cacheable("sysPermission")
 	public List<String> queryPermissionByUserId(Long userId) {
 		return sysAuthorizeMapper.queryPermissionByUserId(userId);
+	}
+
+	@Cacheable("userPermission")
+	public List<String> queryUserPermission(Long userId) {
+		return sysUserMenuMapper.queryPermission(userId);
+	}
+
+	@Cacheable("rolePermission")
+	public List<String> queryRolePermission(Long roleId) {
+		return sysRoleMenuMapper.queryPermission(roleId);
 	}
 
 	public List<SysMenu> queryMenusPermission() {

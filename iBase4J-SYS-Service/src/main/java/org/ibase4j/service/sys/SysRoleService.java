@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseService;
-import org.ibase4j.dao.sys.SysRoleMenuMapper;
 import org.ibase4j.model.sys.SysDept;
 import org.ibase4j.model.sys.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class SysRoleService extends BaseService<SysRole> {
 	@Autowired
 	private SysDeptService sysDeptService;
 	@Autowired
-	private SysRoleMenuMapper sysRoleMenuMapper;
+	private SysAuthorizeService sysAuthorizeService;
 
 	public Page<SysRole> query(Map<String, Object> params) {
 		Page<SysRole> pageInfo = super.query(params);
@@ -34,7 +33,7 @@ public class SysRoleService extends BaseService<SysRole> {
 				SysDept sysDept = sysDeptService.queryById(bean.getDeptId());
 				bean.setDeptName(sysDept.getDeptName());
 			}
-			List<String> permissions = sysRoleMenuMapper.queryPermission(bean.getId());
+			List<String> permissions = sysAuthorizeService.queryRolePermission(bean.getId());
 			for (String permission : permissions) {
 				if (StringUtils.isBlank(bean.getPermission())) {
 					bean.setPermission(permission);
