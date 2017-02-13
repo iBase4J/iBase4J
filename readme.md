@@ -45,25 +45,20 @@
 9、项目构建
 ===========
 
-    maven构建项目，mybatis generator生成mybatis映射文件。 
+    maven构建项目。 
 
-10、其它
-===========
-
-    还需要什么功能? ? ? ?
-![QQ](http://pub.idqqimg.com/wpa/images/group.png "QQ")
-[538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
+## 加入QQ群[538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3) [498085331](http://shang.qq.com/wpa/qunwpa?idkey=0a7344955bb9b9f6e366d34be42c02709c933f308ab435b1a52ac17d40efdff5)
+![QQ群](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1464169485871.png "QQ群一")
+![QQ群](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/1482378175294.png "QQ群二")
 
 >####说明：启动项目前请安装activemq、Redis和ZooKeeper，并启动服务，您可以在附件中下载。系统中均使用默认配置。
 
 ```
 eclipse使用maven命令: 
-    mybatis-generator:generate生成mybatis文件；
-    clean:clean package -P build tomcat7:run-war-only 启动tomcat7。
-    哪个框架不需要：删掉pom里的jar导入，删除报错的类，删除spring对应的配置。
+
+    tomcat:run  或 jetty:run
+   
 ```
 ![配置](http://git.oschina.net/iBase4J/iBase4J/raw/9caa79d7beb3f528bcaa66feec472315024d82ee/maven-config.png "maven配置")
 
-[UI效果图](http://git.oschina.net/iBase4J/iBase4J-UI)
-
-![登录](http://git.oschina.net/iBase4J/iBase4J/raw/master/src/upload/login.png "登录")
+![捐赠](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/contribute.png "捐赠")
