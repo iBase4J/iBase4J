@@ -28,7 +28,7 @@
     ● 持久层框架：MyBatis 3.4 + MyBatis-Plus 2.0
     ● 数据库连接池：Alibaba Druid 1.0
     ● 缓存框架：Redis
-    ● 会话管理：Spring-Session 1.2
+    ● 会话管理：Spring-Session 1.3.0
     ● 日志管理：SLF4J、Log4j2
     ● 前端框架：Angular JS + Bootstrap + Jquery
 
