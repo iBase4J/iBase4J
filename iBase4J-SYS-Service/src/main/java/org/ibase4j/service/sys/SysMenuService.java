@@ -5,13 +5,12 @@ import java.util.Map;
 
 import org.ibase4j.core.base.BaseModel;
 import org.ibase4j.core.base.BaseService;
+import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.dao.sys.SysMenuMapper;
 import org.ibase4j.model.sys.SysMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
-
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 
 /**
  * @author ShenHuaJie
@@ -26,16 +25,18 @@ public class SysMenuService extends BaseService<SysMenu> {
 	public List<SysMenu> queryList(Map<String, Object> params) {
 		List<SysMenu> pageInfo = super.queryList(params);
 		Map<String, String> menuTypeMap = sysDicService.queryDicByType("MENUTYPE");
-		EntityWrapper<SysMenu> wrapper = new EntityWrapper<SysMenu>();
+		Map<Long, Integer> leafMap = InstanceUtil.newHashMap();
 		for (SysMenu sysMenu : pageInfo) {
 			if (sysMenu.getMenuType() != null) {
 				sysMenu.setTypeName(menuTypeMap.get(sysMenu.getMenuType().toString()));
 			}
-			SysMenu menu = new SysMenu();
-			menu.setParentId(sysMenu.getId());
-			wrapper.setEntity(menu);
-			int count = mapper.selectCount(wrapper);
-			if (count > 0) {
+			if (leafMap.get(sysMenu.getId()) == null) {
+				leafMap.put(sysMenu.getId(), 0);
+			}
+			leafMap.put(sysMenu.getId(), leafMap.get(sysMenu.getId()) + 1);
+		}
+		for (SysMenu sysMenu : pageInfo) {
+			if (leafMap.get(sysMenu.getId()) > 0) {
 				sysMenu.setLeaf(0);
 			}
 		}

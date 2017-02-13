@@ -11,7 +11,6 @@ import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.dao.sys.SysUserMapper;
-import org.ibase4j.dao.sys.SysUserMenuMapper;
 import org.ibase4j.dao.sys.SysUserThirdpartyMapper;
 import org.ibase4j.model.sys.SysUser;
 import org.ibase4j.model.sys.SysUserThirdparty;
@@ -39,7 +38,7 @@ public class SysUserService extends BaseService<SysUser>{
 	@Autowired
 	private SysDeptService sysDeptService;
 	@Autowired
-	private SysUserMenuMapper sysUserMenuMapper;
+	private SysAuthorizeService sysAuthorizeService;
 
 	public Page<SysUser> query(Map<String, Object> params) {
 		Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
@@ -51,7 +50,7 @@ public class SysUserService extends BaseService<SysUser>{
 			if (userBean.getDeptId() != null) {
 				userBean.setDeptName(sysDeptService.queryById(userBean.getDeptId()).getDeptName());
 			}
-			List<String> permissions = sysUserMenuMapper.queryPermission(userBean.getId());
+			List<String> permissions = sysAuthorizeService.queryUserPermission(userBean.getId());
 			for (String permission : permissions) {
 				if (StringUtils.isBlank(userBean.getPermission())) {
 					userBean.setPermission(permission);
