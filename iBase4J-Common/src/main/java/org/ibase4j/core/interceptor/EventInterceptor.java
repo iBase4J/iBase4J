@@ -18,6 +18,7 @@ import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.sys.SysEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.web.method.HandlerMethod;
 
@@ -41,7 +42,8 @@ public class EventInterceptor extends BaseInterceptor {
 	private ExecutorService executorService = Executors.newCachedThreadPool();
 
 	@Autowired
-	protected BaseProvider provider;
+	@Qualifier("sysProvider")
+	protected BaseProvider sysProvider;
 	
 	static UASparser uasParser = null;
 
@@ -110,7 +112,7 @@ public class EventInterceptor extends BaseInterceptor {
 						}
 
 						Parameter parameter = new Parameter("sysEventService", "update").setModel(record);
-						provider.execute(parameter);
+						sysProvider.execute(parameter);
 
 						// 内存信息
 						if (logger.isDebugEnabled()) {
