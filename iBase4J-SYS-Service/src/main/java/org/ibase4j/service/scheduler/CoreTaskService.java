@@ -20,7 +20,7 @@ public class CoreTaskService {
     private SysSessionService sessionService;
 
     /** 定时清除会话信息 */
-	@Scheduled(cron = "0 * * * * *")
+	@Scheduled(cron = "0 0/5 * * * *")
     public void cleanExpiredSessions() {
         logger.info("cleanExpiredSessions");
         sessionService.cleanExpiredSessions();
