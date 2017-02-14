@@ -17,7 +17,7 @@ import org.ibase4j.core.util.PropertiesUtil;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
-public final class RedisHelper extends CacheManager {
+public final class RedisHelper implements CacheManager {
 
 	private RedisTemplate<Serializable, Serializable> redisTemplate = null;
 	private Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");

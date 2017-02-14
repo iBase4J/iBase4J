@@ -19,7 +19,7 @@ import org.ibase4j.core.util.PropertiesUtil;
 /**
  * Redis缓存辅助类
  */
-public class RedissonHelper extends CacheManager {
+public class RedissonHelper implements CacheManager {
 
 	private RedissonClient redisTemplate = null;
 	private Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
