@@ -1,14 +1,9 @@
 package org.ibase4j.core.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.cache.CacheManager;
 import org.ibase4j.core.support.cache.RedissonHelper;
 
 public final class CacheUtil {
-	private static Logger logger = LogManager.getLogger(CacheUtil.class);
-
 	private CacheUtil() {
 	}
 
@@ -27,12 +22,13 @@ public final class CacheUtil {
 				}
 			}
 		}
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			logger.error(Constants.Exception_Head, e);
+		int expires = 1000 * 60 * 3;
+		String currentValue = (String) getCache().get(key);
+		if (currentValue != null && Long.parseLong(currentValue) < System.currentTimeMillis() - expires) {
+			unlock(key);
+			return getLock(key);
 		}
-		return getLock(key);
+		return false;
 	}
 
 	public static void unlock(String key) {
