@@ -22,7 +22,7 @@ import redis.clients.jedis.Tuple;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
-public class JedisHelper extends CacheManager {
+public class JedisHelper implements CacheManager {
 
 	public final Object get(final String key) {
 		return JedisTemplate.run(key, new Executor<String>() {
