@@ -28,8 +28,6 @@ public class DubboUtil {
                 referenceConfig.setApplicationContext(applicationContext);
                 try {
                     referenceConfig.afterPropertiesSet();
-                } catch (RuntimeException e) {
-                    throw (RuntimeException)e;
                 } catch (Exception e) {
                     throw new IllegalStateException(e.getMessage(), e);
                 }

@@ -6,6 +6,10 @@ import java.util.Map;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
+/**
+ * @author ShenHuaJie
+ * @since 2017年2月14日 下午3:27:17
+ */
 @SuppressWarnings("serial")
 public class Parameter implements Serializable {
 	public Parameter() {
