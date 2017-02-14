@@ -59,7 +59,7 @@ public class SysSessionService extends BaseService<SysSession> {
 			logger.info("检查SESSION : {}", sysSession.getSessionId());
 			if (!CacheUtil.getCache().exists(key + sysSession.getSessionId())) {
 				logger.info("移除SESSION : {}", sysSession.getSessionId());
-				mapper.deleteById(sysSession.getId());
+				delete(sysSession.getId());
 			}
 		}
 	}
