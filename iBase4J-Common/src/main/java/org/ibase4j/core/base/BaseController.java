@@ -140,6 +140,11 @@ public abstract class BaseController {
 	}
 
 	public Object update(ModelMap modelMap, BaseModel param) {
+		Long userId = getCurrUser();
+		if (param.getId() == null) {
+			param.setCreateBy(userId);
+		}
+		param.setUpdateBy(userId);
 		Parameter parameter = new Parameter(getService(), "update").setModel(param);
 		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
