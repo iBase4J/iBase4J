@@ -25,6 +25,7 @@ import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.sys.SysSession;
 import org.ibase4j.model.sys.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -38,6 +39,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 public class Realm extends AuthorizingRealm {
 	private final Logger logger = LogManager.getLogger();
 	@Autowired
+	@Qualifier("sysProvider")
 	protected BaseProvider provider;
 	@Autowired
 	private RedisOperationsSessionRepository sessionRepository;
