@@ -41,7 +41,7 @@ public class Generator {
 		// 自定义文件命名，注意 %s 会自动填充表实体属性！
 		// gc.setMapperName("%sDao");
 		// gc.setXmlName("%sDao");
-		// gc.setServiceName("MP%sService");
+		gc.setServiceName("%sService");
 		// gc.setServiceImplName("%sServiceDiy");
 		// gc.setControllerName("%sAction");
 		mpg.setGlobalConfig(gc);
