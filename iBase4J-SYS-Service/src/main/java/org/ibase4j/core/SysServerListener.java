@@ -10,7 +10,7 @@ import org.ibase4j.service.sys.SysUserService;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
-public class SysServerListerner extends ServerListener {
+public class SysServerListener extends ServerListener {
 	protected final Logger logger = LogManager.getLogger(this.getClass());
 
 	public void contextInitialized(ServletContextEvent contextEvent) {

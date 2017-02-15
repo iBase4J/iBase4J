@@ -325,9 +325,9 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   `status_` int(3) DEFAULT NULL,
   `enable_` tinyint(1) DEFAULT NULL,
   `remark_` text,
-  `create_by` bigint(20) NOT NULL,
+  `create_by` bigint(20) NULL,
   `create_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
+  `update_by` bigint(20) NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作日志表';
