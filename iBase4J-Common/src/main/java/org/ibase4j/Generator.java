@@ -11,12 +11,18 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 /**
  * 代码生成
+ * 注意：不生成service接口
+ * 注意：不生成service接口
+ * 注意：不生成service接口
  * 
  * @author ShenHuaJie
  */
 public class Generator {
 	/**
 	 * 测试 run 执行
+	 * 注意：不生成service接口
+	 * 注意：不生成service接口
+	 * 注意：不生成service接口
 	 * <p>
 	 * 配置方法查看 {@link ConfigGenerator}
 	 * </p>
@@ -27,7 +33,7 @@ public class Generator {
 		GlobalConfig gc = new GlobalConfig();
 		gc.setOutputDir("D://");
 		gc.setFileOverride(false);
-		gc.setActiveRecord(true);
+		gc.setActiveRecord(false);
 		gc.setEnableCache(false);// XML 二级缓存
 		gc.setBaseResultMap(true);// XML ResultMap
 		gc.setBaseColumnList(false);// XML columList
@@ -63,11 +69,11 @@ public class Generator {
 		// 自定义 mapper 父类
 		strategy.setSuperMapperClass("org.ibase4j.core.base.BaseMapper");
 		// 自定义 service 父类
-		// strategy.setSuperServiceClass("org.ibase4j.core.base.BaseService");
+		strategy.setSuperServiceClass("org.ibase4j.core.base.BaseService");
 		// 自定义 service 实现类父类
-		strategy.setSuperServiceImplClass("org.ibase4j.core.base.BaseService");
+		// strategy.setSuperServiceImplClass("org.ibase4j.core.base.BaseService");
 		// 自定义 controller 父类
-		strategy.setSuperControllerClass("org.ibase4j.core.base.BaseController");
+		strategy.setSuperControllerClass("org.ibase4j.core.base.AbstractController");
 		// 【实体】是否生成字段常量（默认 false）
 		// public static final String ID = "test_id";
 		// strategy.setEntityColumnConstant(true);
@@ -82,8 +88,8 @@ public class Generator {
 		pc.setEntity("model" + module);
 		pc.setMapper("dao" + module);
 		pc.setXml("dao" + module);
-		pc.setService("ignore");
-		pc.setServiceImpl("service" + module);
+		pc.setServiceImpl("ignore");
+		pc.setService("service" + module);
 		pc.setController("web" + module);
 		mpg.setPackageInfo(pc);
 		// 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/template 下面内容修改，
@@ -92,7 +98,7 @@ public class Generator {
 		tc.setEntity("template/entity.java.vm");
 		tc.setMapper("template/mapper.java.vm");
 		tc.setXml("template/mapper.xml.vm");
-		tc.setServiceImpl("template/serviceImpl.java.vm");
+		tc.setService("template/service.java.vm");
 		tc.setController("template/controller.java.vm");
 		mpg.setTemplate(tc);
 		// 执行生成
