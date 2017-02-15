@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.base.AbstractController;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.model.sys.SysMenu;
+import org.ibase4j.provider.ISysProvider;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "菜单管理", description = "菜单管理")
 @RequestMapping(value = "menu")
-public class SysMenuController extends BaseController {
+public class SysMenuController extends AbstractController<ISysProvider> {
 	public String getService() {
 		return "sysMenuService";
 	}

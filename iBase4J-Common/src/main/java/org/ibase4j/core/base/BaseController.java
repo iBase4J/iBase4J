@@ -20,7 +20,6 @@ import org.ibase4j.core.exception.IllegalParameterException;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.WebUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,8 +36,6 @@ import com.baomidou.mybatisplus.plugins.Page;
  */
 public abstract class BaseController {
 	protected final Logger logger = LogManager.getLogger(this.getClass());
-	@Autowired
-	protected BaseProvider provider;
 
 	/** 获取当前用户Id */
 	protected Long getCurrUser() {
@@ -117,42 +114,5 @@ public abstract class BaseController {
 		logger.info(JSON.toJSON(modelMap));
 		byte[] bytes = JSON.toJSONBytes(modelMap, SerializerFeature.DisableCircularReferenceDetect);
 		response.getOutputStream().write(bytes);
-	}
-
-	public abstract String getService();
-
-	public Object query(ModelMap modelMap, Map<String, Object> param) {
-		Parameter parameter = new Parameter(getService(), "query").setMap(param);
-		Page<?> list = provider.execute(parameter).getPage();
-		return setSuccessModelMap(modelMap, list);
-	}
-
-	public Object queryList(ModelMap modelMap, Map<String, Object> param) {
-		Parameter parameter = new Parameter(getService(), "queryList").setMap(param);
-		List<?> list = provider.execute(parameter).getList();
-		return setSuccessModelMap(modelMap, list);
-	}
-
-	public Object get(ModelMap modelMap, BaseModel param) {
-		Parameter parameter = new Parameter(getService(), "queryById").setId(param.getId());
-		BaseModel result = provider.execute(parameter).getModel();
-		return setSuccessModelMap(modelMap, result);
-	}
-
-	public Object update(ModelMap modelMap, BaseModel param) {
-		Long userId = getCurrUser();
-		if (param.getId() == null) {
-			param.setCreateBy(userId);
-		}
-		param.setUpdateBy(userId);
-		Parameter parameter = new Parameter(getService(), "update").setModel(param);
-		provider.execute(parameter);
-		return setSuccessModelMap(modelMap);
-	}
-
-	public Object delete(ModelMap modelMap, BaseModel param) {
-		Parameter parameter = new Parameter(getService(), "delete").setId(param.getId());
-		provider.execute(parameter);
-		return setSuccessModelMap(modelMap);
 	}
 }

@@ -3,7 +3,7 @@ package org.ibase4j.web.sys;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
-import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.base.AbstractController;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.exception.LoginException;
@@ -13,6 +13,7 @@ import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.sys.SysUser;
+import org.ibase4j.provider.ISysProvider;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +33,7 @@ import io.swagger.annotations.ApiParam;
  */
 @RestController
 @Api(value = "登录接口", description = "登录接口")
-public class LoginController extends BaseController {
+public class LoginController extends AbstractController<ISysProvider> {
 
 	public String getService() {
 		return "sysUserService";

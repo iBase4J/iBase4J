@@ -5,13 +5,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.base.AbstractController;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.exception.IllegalParameterException;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;
 import org.ibase4j.model.sys.SysUserRole;
+import org.ibase4j.provider.ISysProvider;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @Api(value = "权限管理", description = "权限管理")
-public class SysAuthorizeController extends BaseController {
+public class SysAuthorizeController extends AbstractController<ISysProvider> {
 
 	public String getService() {
 		return "sysAuthorizeService";
