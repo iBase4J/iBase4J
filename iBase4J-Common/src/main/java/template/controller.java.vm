@@ -29,7 +29,7 @@ import ${superControllerClassPackage};
 @Controller
 @RequestMapping("/${table.entityPath}")
 #if(${superControllerClass})
-public class ${table.controllerName} extends ${superControllerClass} {
+public class ${table.controllerName} extends ${superControllerClass}<${cfg.providerClass}> {
 #else
 public class ${table.controllerName} {
 #end

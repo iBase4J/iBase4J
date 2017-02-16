@@ -41,6 +41,7 @@ public abstract class BaseService<T extends BaseModel> {
 		}
 		if (DataUtil.isNotEmpty(params.get("orderBy"))) {
 			orderBy = (String) params.get("orderBy");
+			params.remove("orderBy");
 		}
 		if (size == -1) {
 			return new Page<Long>();
