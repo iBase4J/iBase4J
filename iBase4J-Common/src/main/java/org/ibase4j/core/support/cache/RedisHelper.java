@@ -5,11 +5,11 @@ import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * Redis缓存辅助类
@@ -17,10 +17,16 @@ import org.ibase4j.core.util.PropertiesUtil;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
-public final class RedisHelper implements CacheManager {
+public final class RedisHelper implements CacheManager, ApplicationContextAware {
 
 	private RedisTemplate<Serializable, Serializable> redisTemplate = null;
 	private Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
+
+	protected ApplicationContext applicationContext;
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
 	// 获取连接
 	@SuppressWarnings("unchecked")
@@ -28,8 +34,8 @@ public final class RedisHelper implements CacheManager {
 		if (redisTemplate == null) {
 			synchronized (RedisHelper.class) {
 				if (redisTemplate == null) {
-					WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
-					redisTemplate = (RedisTemplate<Serializable, Serializable>) wac.getBean("redisTemplate");
+					redisTemplate = (RedisTemplate<Serializable, Serializable>) applicationContext
+							.getBean("redisTemplate");
 				}
 			}
 		}

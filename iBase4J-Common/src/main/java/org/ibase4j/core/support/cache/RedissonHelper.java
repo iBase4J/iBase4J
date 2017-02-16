@@ -7,30 +7,35 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.core.util.PropertiesUtil;
 import org.redisson.Redisson;
 import org.redisson.api.RBucket;
 import org.redisson.api.RType;
 import org.redisson.api.RedissonClient;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.PropertiesUtil;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  * Redis缓存辅助类
  */
-public class RedissonHelper implements CacheManager {
+public class RedissonHelper implements CacheManager, ApplicationContextAware {
 
 	private RedissonClient redisTemplate = null;
 	private Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
+
+	protected ApplicationContext applicationContext;
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
 	// 获取连接
 	private RedissonClient getRedis() {
 		if (redisTemplate == null) {
 			synchronized (RedissonHelper.class) {
 				if (redisTemplate == null) {
-					WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
-					redisTemplate = wac.getBean(Redisson.class);
+					redisTemplate = applicationContext.getBean(Redisson.class);
 				}
 			}
 		}

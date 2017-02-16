@@ -37,6 +37,6 @@ public class SysDicService extends BaseService<SysDic> {
 
 	@Cacheable(value = "sysDicMap")
 	public Map<String, String> queryDicByType(String key) {
-		return InstanceUtil.getBean(SysDicService.class).getAllDic().get(key);
+		return applicationContext.getBean(SysDicService.class).getAllDic().get(key);
 	}
 }
