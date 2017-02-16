@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.dao.scheduler.TaskFireLogMapper;
+import org.ibase4j.mapper.scheduler.TaskFireLogMapper;
 import org.ibase4j.model.scheduler.TaskFireLog;
 import org.ibase4j.model.scheduler.TaskScheduled;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 /**
  * 用户登录
@@ -45,8 +44,7 @@ public class LoginController extends AbstractController {
 	// 登录
 	@ApiOperation(value = "用户登录")
 	@PostMapping("/login")
-	public Object login(@ApiParam(required = true, value = "登录帐号和密码") @RequestBody SysUser sysUser, ModelMap modelMap,
-			HttpServletRequest request) {
+	public Object login(@RequestBody SysUser sysUser, ModelMap modelMap, HttpServletRequest request) {
 		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
 		Assert.notNull(sysUser.getPassword(), "PASSWORD");
 		if (LoginHelper.login(sysUser.getAccount(), SecurityUtil.encryptPassword(sysUser.getPassword()))) {

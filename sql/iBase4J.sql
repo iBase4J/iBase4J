@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `sys_dic` (
   UNIQUE KEY `field_id_code` (`type_`,`code_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典明细表';
 
--- 正在导出表  xblk.sys_dic 的数据：~43 rows (大约)
+-- 正在导出表  ibase4j.sys_dic 的数据：~43 rows (大约)
 /*!40000 ALTER TABLE `sys_dic` DISABLE KEYS */;
 INSERT INTO `sys_dic` (`id_`, `type_`, `code_`, `code_text`, `sort_no`, `editable_`, `enable_`, `remark_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
 	(1, 'SEX', '0', '未知', 1, 0, 1, NULL, 1, '2016-06-28 18:04:06', 1, '2016-06-28 18:04:13'),

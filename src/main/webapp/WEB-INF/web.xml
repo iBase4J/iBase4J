@@ -75,29 +75,6 @@
 		<listener-class>org.ibase4j.core.listener.ServerListener</listener-class>
 	</listener>
 	<servlet>
-		<servlet-name>DruidStatView</servlet-name>
-		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-		<init-param>
-			<!-- 允许访问 -->
-			<param-name>allow</param-name>
-			<param-value>127.0.0.1,localhost</param-value>
-		</init-param>
-		<init-param>
-			<!-- 用户名 -->
-			<param-name>loginUsername</param-name>
-			<param-value>druid</param-value>
-		</init-param>
-		<init-param>
-			<!-- 密码 -->
-			<param-name>loginPassword</param-name>
-			<param-value>druid</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DruidStatView</servlet-name>
-		<url-pattern>/druid/*</url-pattern>
-	</servlet-mapping>
-	<servlet>
 		<servlet-name>SpringMVC</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
@@ -114,4 +91,7 @@
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>

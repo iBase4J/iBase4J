@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.base.BaseService;
-import org.ibase4j.dao.sys.SysMenuMapper;
+import org.ibase4j.mapper.sys.SysMenuMapper;
 import org.ibase4j.model.sys.SysMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;

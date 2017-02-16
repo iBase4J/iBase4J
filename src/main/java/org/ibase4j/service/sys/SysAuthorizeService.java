@@ -5,10 +5,10 @@ import java.util.Map;
 
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.dao.sys.SysAuthorizeMapper;
-import org.ibase4j.dao.sys.SysRoleMenuMapper;
-import org.ibase4j.dao.sys.SysUserMenuMapper;
-import org.ibase4j.dao.sys.SysUserRoleMapper;
+import org.ibase4j.mapper.sys.SysAuthorizeMapper;
+import org.ibase4j.mapper.sys.SysRoleMenuMapper;
+import org.ibase4j.mapper.sys.SysUserMenuMapper;
+import org.ibase4j.mapper.sys.SysUserRoleMapper;
 import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;

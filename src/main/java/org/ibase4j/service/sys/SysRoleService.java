@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseService;
-import org.ibase4j.dao.sys.SysRoleMenuMapper;
+import org.ibase4j.mapper.sys.SysRoleMenuMapper;
 import org.ibase4j.model.sys.SysDept;
 import org.ibase4j.model.sys.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
