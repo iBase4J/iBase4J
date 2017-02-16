@@ -81,15 +81,14 @@ public class Generator {
 		// strategy.setEntityBuliderModel(true);
 		mpg.setStrategy(strategy);
 		// 包配置
-		String module = ".sys";
 		PackageConfig pc = new PackageConfig();
 		pc.setParent("org.ibase4j");
-		pc.setEntity("model" + module);
-		pc.setMapper("dao" + module);
-		pc.setXml("dao" + module);
+		pc.setEntity("model");
+		pc.setMapper("mapper");
+		pc.setXml("mapper" + ".xml");
 		pc.setServiceImpl("ignore");
-		pc.setService("service" + module);
-		pc.setController("web" + module);
+		pc.setService("service");
+		pc.setController("web");
 		mpg.setPackageInfo(pc);
 		// 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
 		InjectionConfig cfg = new InjectionConfig() {
