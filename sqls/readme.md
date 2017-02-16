@@ -1,0 +1,1 @@
+2.angularjs-菜单.sql  和 2.datatables-菜单.sql 只需要执行一个；
