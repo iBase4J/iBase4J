@@ -56,7 +56,7 @@ public class SysMenuController extends AbstractController<ISysProvider> {
 
 	@PostMapping
 	@ApiOperation(value = "修改菜单")
-	@RequiresPermissions("sys.base.menu.updae")
+	@RequiresPermissions("sys.base.menu.update")
 	public Object update(ModelMap modelMap, @RequestBody SysMenu param) {
 		return super.update(modelMap, param);
 	}
