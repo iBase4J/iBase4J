@@ -85,7 +85,7 @@ public class Generator {
 		pc.setParent("org.ibase4j");
 		pc.setEntity("model");
 		pc.setMapper("mapper");
-		pc.setXml("mapper" + ".xml");
+		pc.setXml("mapper.xml");
 		pc.setServiceImpl("ignore");
 		pc.setService("service");
 		pc.setController("web");
