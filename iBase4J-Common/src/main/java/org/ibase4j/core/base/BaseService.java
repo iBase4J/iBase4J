@@ -12,6 +12,8 @@ import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -23,10 +25,15 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-public abstract class BaseService<T extends BaseModel> {
+public abstract class BaseService<T extends BaseModel> implements ApplicationContextAware {
 	protected Logger logger = LogManager.getLogger(getClass());
 	@Autowired
 	protected BaseMapper<T> mapper;
+	protected ApplicationContext applicationContext;
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
 	/** 分页查询 */
 	public static Page<Long> getPage(Map<String, Object> params) {
@@ -132,6 +139,7 @@ public abstract class BaseService<T extends BaseModel> {
 			mapper.updateById(record);
 			CacheUtil.getCache().set(getCacheKey(id), record);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
@@ -142,6 +150,7 @@ public abstract class BaseService<T extends BaseModel> {
 			mapper.deleteById(id);
 			CacheUtil.getCache().del(getCacheKey(id));
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
@@ -169,6 +178,7 @@ public abstract class BaseService<T extends BaseModel> {
 			record = mapper.selectById(record.getId());
 			CacheUtil.getCache().set(getCacheKey(record.getId()), record);
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			throw new RuntimeException(e.getMessage(), e);
 		}
 		return record;
@@ -186,6 +196,7 @@ public abstract class BaseService<T extends BaseModel> {
 			}
 			return record;
 		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}

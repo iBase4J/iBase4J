@@ -2,13 +2,21 @@ package org.ibase4j.core.util;
 
 import org.ibase4j.core.support.cache.CacheManager;
 import org.ibase4j.core.support.cache.RedissonHelper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-public final class CacheUtil {
-	private CacheUtil() {
+@Configuration
+public class CacheUtil {
+	private static CacheManager cacheManager;
+
+	@Bean
+	public CacheManager setCache() {
+		cacheManager = new RedissonHelper();
+		return cacheManager;
 	}
 
 	public static CacheManager getCache() {
-		return new RedissonHelper();
+		return cacheManager;
 	}
 
 	/** 获取锁 */

@@ -27,7 +27,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.ibase4j.core.exception.DataParseException;
-import org.springframework.web.context.ContextLoader;
 
 /**
  * 实例辅助类
@@ -312,11 +311,6 @@ public final class InstanceUtil {
 		} catch (Exception e) {
 			throw new InstanceException(e);
 		}
-	}
-
-	/**  */
-	public static final <K> K getBean(Class<K> cls) {
-		return ContextLoader.getCurrentWebApplicationContext().getBean(cls);
 	}
 
 	/**

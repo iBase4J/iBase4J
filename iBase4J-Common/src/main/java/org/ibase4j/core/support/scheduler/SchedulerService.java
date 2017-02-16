@@ -5,12 +5,13 @@ import java.util.Map;
 
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.dao.scheduler.TaskFireLogMapper;
-import org.ibase4j.model.scheduler.TaskFireLog;
-import org.ibase4j.model.scheduler.TaskScheduled;
+import org.ibase4j.mapper.TaskFireLogMapper;
+import org.ibase4j.model.TaskFireLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -19,11 +20,16 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @author ShenHuaJie
  * @version 2016年7月1日 上午11:34:59
  */
-public class SchedulerService {
+public class SchedulerService implements ApplicationContextAware {
 	@Autowired
 	private TaskFireLogMapper logMapper;
 	@Autowired
 	private SchedulerManager schedulerManager;
+	protected ApplicationContext applicationContext;
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
 	// 获取所有作业
 	public List<TaskScheduled> getAllTaskDetail() {
@@ -79,7 +85,7 @@ public class SchedulerService {
 		if (ids != null) {
 			List<TaskFireLog> records = InstanceUtil.newArrayList();
 			for (Long id : ids.getRecords()) {
-				records.add(InstanceUtil.getBean(getClass()).getFireLogById(id));
+				records.add(applicationContext.getBean(getClass()).getFireLogById(id));
 			}
 			page.setRecords(records);
 		}

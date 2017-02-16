@@ -12,7 +12,7 @@ import org.ibase4j.core.support.email.Email;
 import org.ibase4j.core.support.mq.QueueSender;
 import org.ibase4j.core.util.EmailUtil;
 import org.ibase4j.core.util.NativeUtil;
-import org.ibase4j.model.scheduler.TaskFireLog;
+import org.ibase4j.model.TaskFireLog;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
