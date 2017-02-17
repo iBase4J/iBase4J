@@ -30,7 +30,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Biz-API</artifactId>
+			<artifactId>iBase4J-Biz-Facade</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>

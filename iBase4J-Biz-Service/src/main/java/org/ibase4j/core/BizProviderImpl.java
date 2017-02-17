@@ -5,7 +5,7 @@ import org.ibase4j.provider.IBizProvider;
 
 import com.alibaba.dubbo.config.annotation.Service;
 
-@Service
+@Service(interfaceClass = IBizProvider.class)
 public class BizProviderImpl extends BaseProviderImpl implements IBizProvider {
-	
+
 }

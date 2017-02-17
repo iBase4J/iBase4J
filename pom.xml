@@ -11,11 +11,11 @@
 	
 	<modules>
 		<module>iBase4J-Common</module>
-		<module>iBase4J-SYS-API</module>
 		<module>iBase4J-SYS-Service</module>
+		<module>iBase4J-SYS-Facade</module>
 		<module>iBase4J-SYS-Web</module>
-		<module>iBase4J-Biz-API</module>
 		<module>iBase4J-Biz-Service</module>
+		<module>iBase4J-Biz-Facade</module>
 		<module>iBase4J-Biz-Web</module>
 	</modules>
 
@@ -60,6 +60,7 @@
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<activemq.version>5.13.3</activemq.version>
 		<jsqlparser.version>0.9.5</jsqlparser.version>
+		<springfox.version>2.6.1</springfox.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 	</properties>
 

@@ -15,8 +15,8 @@
 	<!-- clean package -P build tomcat7:run-war-only -f pom-biz-web-server.xml -->
 	<modules>
 		<module>iBase4J-Common</module>
-		<module>iBase4J-SYS-API</module>
-		<module>iBase4J-Biz-API</module>
+		<module>iBase4J-SYS-Facade</module>
+		<module>iBase4J-Biz-Facade</module>
 		<module>iBase4J-Biz-Web</module>
 	</modules>
 </project>
