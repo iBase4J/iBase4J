@@ -5,7 +5,7 @@ import org.ibase4j.provider.ISysProvider;
 
 import com.alibaba.dubbo.config.annotation.Service;
 
-@Service
+@Service(interfaceClass = ISysProvider.class)
 public class SysProviderImpl extends BaseProviderImpl implements ISysProvider {
 	
 }
