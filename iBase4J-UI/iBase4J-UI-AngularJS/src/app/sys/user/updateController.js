@@ -29,6 +29,7 @@
         $scope.submit= function(){
             $scope.loading = true;
         	$.ajax({
+        		type: 'POST',
 				url : '/upload/imageData',
 				data: {fileData:$scope.myCroppedImage},
 			}).then(function(result){
