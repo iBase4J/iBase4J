@@ -17,18 +17,6 @@ DROP DATABASE IF EXISTS `ibase4j`;
 CREATE DATABASE IF NOT EXISTS `ibase4j` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ibase4j`;
 
--- 导出  表 ibase4j.qrtz_cron_triggers 结构
-DROP TABLE IF EXISTS `qrtz_cron_triggers`;
-CREATE TABLE IF NOT EXISTS `qrtz_cron_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `CRON_EXPRESSION` varchar(200) NOT NULL,
-  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- 导出  表 ibase4j.qrtz_fired_triggers 结构
 DROP TABLE IF EXISTS `qrtz_fired_triggers`;
 CREATE TABLE IF NOT EXISTS `qrtz_fired_triggers` (
@@ -47,7 +35,6 @@ CREATE TABLE IF NOT EXISTS `qrtz_fired_triggers` (
   `REQUESTS_RECOVERY` varchar(1) DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 -- 导出  表 ibase4j.qrtz_job_details 结构
 DROP TABLE IF EXISTS `qrtz_job_details`;
@@ -147,6 +134,18 @@ CREATE TABLE IF NOT EXISTS `qrtz_triggers` (
   PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
   KEY `SCHED_NAME` (`SCHED_NAME`,`JOB_NAME`,`JOB_GROUP`),
   CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 导出  表 ibase4j.qrtz_cron_triggers 结构
+DROP TABLE IF EXISTS `qrtz_cron_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_cron_triggers` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_NAME` varchar(200) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `CRON_EXPRESSION` varchar(200) NOT NULL,
+  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 导出  表 ibase4j.sys_dept 结构
