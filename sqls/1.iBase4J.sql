@@ -17,18 +17,6 @@ DROP DATABASE IF EXISTS `ibase4j`;
 CREATE DATABASE IF NOT EXISTS `ibase4j` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ibase4j`;
 
--- 导出  表 ibase4j.qrtz_cron_triggers 结构
-DROP TABLE IF EXISTS `qrtz_cron_triggers`;
-CREATE TABLE IF NOT EXISTS `qrtz_cron_triggers` (
-  `SCHED_NAME` varchar(120) NOT NULL,
-  `TRIGGER_NAME` varchar(200) NOT NULL,
-  `TRIGGER_GROUP` varchar(200) NOT NULL,
-  `CRON_EXPRESSION` varchar(200) NOT NULL,
-  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
-  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- 导出  表 ibase4j.qrtz_fired_triggers 结构
 DROP TABLE IF EXISTS `qrtz_fired_triggers`;
 CREATE TABLE IF NOT EXISTS `qrtz_fired_triggers` (
@@ -47,7 +35,6 @@ CREATE TABLE IF NOT EXISTS `qrtz_fired_triggers` (
   `REQUESTS_RECOVERY` varchar(1) DEFAULT NULL,
   PRIMARY KEY (`SCHED_NAME`,`ENTRY_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 -- 导出  表 ibase4j.qrtz_job_details 结构
 DROP TABLE IF EXISTS `qrtz_job_details`;
@@ -149,6 +136,18 @@ CREATE TABLE IF NOT EXISTS `qrtz_triggers` (
   CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- 导出  表 ibase4j.qrtz_cron_triggers 结构
+DROP TABLE IF EXISTS `qrtz_cron_triggers`;
+CREATE TABLE IF NOT EXISTS `qrtz_cron_triggers` (
+  `SCHED_NAME` varchar(120) NOT NULL,
+  `TRIGGER_NAME` varchar(200) NOT NULL,
+  `TRIGGER_GROUP` varchar(200) NOT NULL,
+  `CRON_EXPRESSION` varchar(200) NOT NULL,
+  `TIME_ZONE_ID` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`SCHED_NAME`,`TRIGGER_NAME`,`TRIGGER_GROUP`),
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- 导出  表 ibase4j.sys_dept 结构
 DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE IF NOT EXISTS `sys_dept` (
@@ -160,10 +159,10 @@ CREATE TABLE IF NOT EXISTS `sys_dept` (
   `leaf_` int(1) DEFAULT NULL COMMENT '叶子节点(0:树枝节点;1:叶子节点)',
   `enable_` tinyint(1) DEFAULT NULL COMMENT '启用状态',
   `remark_` varchar(1024) DEFAULT NULL COMMENT '备注',
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门';
 
@@ -186,10 +185,10 @@ CREATE TABLE IF NOT EXISTS `sys_dic` (
   `editable_` tinyint(1) NOT NULL DEFAULT '1',
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
   `remark_` varchar(500) DEFAULT NULL,
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `field_id_code` (`type_`,`code_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典明细表';
@@ -252,10 +251,10 @@ CREATE TABLE IF NOT EXISTS `sys_email` (
   `email_content` text NOT NULL COMMENT '发送内容',
   `remark_` varchar(1024) DEFAULT NULL,
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件表';
 
@@ -277,10 +276,10 @@ CREATE TABLE IF NOT EXISTS `sys_email_config` (
   `sender_password` varchar(32) NOT NULL COMMENT '发邮件邮箱密码',
   `remark_` varchar(1024) DEFAULT NULL,
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件配置表';
 
@@ -301,10 +300,10 @@ CREATE TABLE IF NOT EXISTS `sys_email_template` (
   `template_` text COMMENT '内容模板',
   `remark_` varchar(1024) DEFAULT NULL,
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件模版表';
 
@@ -326,9 +325,9 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   `enable_` tinyint(1) DEFAULT NULL,
   `remark_` text,
   `create_by` bigint(20) NULL,
-  `create_time` datetime NOT NULL,
+  `create_time` datetime DEFAULT NULL,
   `update_by` bigint(20) NULL,
-  `update_time` datetime NOT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='操作日志表';
 
@@ -351,10 +350,10 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   `permission_` varchar(50) DEFAULT NULL COMMENT '权限标识',
   `remark_` varchar(1024) DEFAULT NULL COMMENT '备注',
   `enable_` tinyint(1) DEFAULT '1',
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单';
 
@@ -374,10 +373,10 @@ CREATE TABLE IF NOT EXISTS `sys_news` (
   `status_` varchar(2) NOT NULL DEFAULT '1' COMMENT '发布状态',
   `remark_` varchar(1024) DEFAULT NULL,
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='新闻表';
 
@@ -399,10 +398,10 @@ CREATE TABLE IF NOT EXISTS `sys_notice` (
   `status_` varchar(2) NOT NULL DEFAULT '1' COMMENT '发布状态',
   `remark_` varchar(1024) DEFAULT NULL,
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='通知公告表';
 
@@ -418,10 +417,10 @@ CREATE TABLE IF NOT EXISTS `sys_param` (
   `param_value` varchar(100) DEFAULT NULL COMMENT '参数键值',
   `remark_` varchar(1024) DEFAULT NULL COMMENT '备注',
   `enable_` tinyint(1) DEFAULT '1',
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全局参数表';
 
@@ -438,10 +437,10 @@ CREATE TABLE IF NOT EXISTS `sys_role` (
   `role_type` int(1) NOT NULL DEFAULT '1' COMMENT '角色类型(1:业务角色;2:管理角色 ;3:系统内置角色)',
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
   `remark_` varchar(1024) DEFAULT NULL COMMENT '备注',
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色信息表';
 
@@ -460,10 +459,10 @@ CREATE TABLE IF NOT EXISTS `sys_role_menu` (
   `permission_` varchar(50) NOT NULL COMMENT '权限标识',
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
   `remark_` varchar(1024) DEFAULT NULL,
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `sys_role_menu_key1` (`role_id`,`menu_id`,`permission_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色授权表';
@@ -478,9 +477,9 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   `start_time` datetime NOT NULL,
   `enable_` tinyint(1) DEFAULT NULL,
   `remark_` varchar(1024) DEFAULT NULL,
-  `create_time` datetime NOT NULL,
+  `create_time` datetime DEFAULT NULL,
   `create_by` bigint(20) DEFAULT NULL,
-  `update_time` datetime NOT NULL,
+  `update_time` datetime DEFAULT NULL,
   `update_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会话管理';
@@ -496,10 +495,10 @@ CREATE TABLE IF NOT EXISTS `sys_unit` (
   `sort_` int(5) DEFAULT NULL COMMENT '排序号',
   `enable_` tinyint(1) DEFAULT NULL COMMENT '启用状态',
   `remark_` varchar(1024) DEFAULT NULL,
-  `create_time` datetime NOT NULL,
-  `create_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='单位表';
 
@@ -530,10 +529,10 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `locked_` tinyint(1) DEFAULT '0' COMMENT '锁定标志(1:锁定;0:激活)',
   `enable_` tinyint(1) DEFAULT '1',
   `remark_` varchar(1024) DEFAULT NULL,
-  `create_time` datetime NOT NULL,
-  `create_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `account` (`account_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户管理';
@@ -554,10 +553,10 @@ CREATE TABLE IF NOT EXISTS `sys_user_menu` (
   `permission_` varchar(50) NOT NULL COMMENT '权限标识',
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
   `remark_` varchar(1024) DEFAULT NULL,
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `sys_user_menu_key1` (`user_id`,`menu_id`,`permission_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户授权表';
@@ -574,10 +573,10 @@ CREATE TABLE IF NOT EXISTS `sys_user_role` (
   `role_id` bigint(20) NOT NULL,
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
   `remark_` varchar(1024) DEFAULT NULL,
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `user_id_role_id` (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户授权表';
@@ -597,10 +596,10 @@ CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
   `open_id` varchar(50) NOT NULL COMMENT '第三方Id',
   `enable_` tinyint(1) DEFAULT NULL,
   `remark_` varchar(1024) DEFAULT NULL,
-  `create_by` bigint(20) NOT NULL,
-  `create_time` datetime NOT NULL,
-  `update_by` bigint(20) NOT NULL,
-  `update_time` datetime NOT NULL,
+  `create_by` bigint(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` bigint(20) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `user_id_provider__open_id` (`user_id`,`provider_`,`open_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='第三方用户';
