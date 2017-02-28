@@ -44,8 +44,6 @@ public class ScheduledController extends AbstractController<ISysProvider> {
 	@ApiOperation(value = "新增任务")
 	@RequiresPermissions("sys.task.scheduled.update")
 	public Object updateTask(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
-		Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
-		Assert.notNull(scheduled.getTaskName(), "TASKNAME");
 		Assert.notNull(scheduled.getJobType(), "JOBTYPE");
 		Assert.notNull(scheduled.getTaskType(), "TASKTYPE");
 		Assert.notNull(scheduled.getTargetObject(), "TARGETOBJECT");
