@@ -12,6 +12,7 @@ import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.mapper.SysUserMapper;
 import org.ibase4j.mapper.SysUserThirdpartyMapper;
+import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.model.SysUserThirdparty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,10 @@ public class SysUserService extends BaseService<SysUser>{
 				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType().toString()));
 			}
 			if (userBean.getDeptId() != null) {
-				userBean.setDeptName(sysDeptService.queryById(userBean.getDeptId()).getDeptName());
+				SysDept sysDept = sysDeptService.queryById(userBean.getDeptId());
+				if (sysDept != null) {
+					userBean.setDeptName(sysDept.getDeptName());
+				}
 			}
 			List<String> permissions = sysAuthorizeService.queryUserPermission(userBean.getId());
 			for (String permission : permissions) {

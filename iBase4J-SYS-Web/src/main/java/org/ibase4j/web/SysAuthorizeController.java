@@ -1,5 +1,6 @@
 package org.ibase4j.web;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +63,8 @@ public class SysAuthorizeController extends AbstractController<ISysProvider> {
 			}
 			sysUserMenu.setCreateBy(currentUserId);
 			sysUserMenu.setUpdateBy(currentUserId);
+			sysUserMenu.setCreateTime(new Date());
+			sysUserMenu.setUpdateTime(new Date());
 		}
 		Parameter parameter = new Parameter(getService(), "updateUserMenu").setList(list);
 		provider.execute(parameter);
@@ -92,6 +95,8 @@ public class SysAuthorizeController extends AbstractController<ISysProvider> {
 			}
 			sysUserRole.setCreateBy(currentUserId);
 			sysUserRole.setUpdateBy(currentUserId);
+			sysUserRole.setCreateTime(new Date());
+			sysUserRole.setUpdateTime(new Date());
 		}
 		Parameter parameter = new Parameter(getService(), "updateUserRole").setList(list);
 		provider.execute(parameter);
@@ -122,6 +127,8 @@ public class SysAuthorizeController extends AbstractController<ISysProvider> {
 			}
 			sysRoleMenu.setCreateBy(userId);
 			sysRoleMenu.setUpdateBy(userId);
+			sysRoleMenu.setCreateTime(new Date());
+			sysRoleMenu.setUpdateTime(new Date());
 		}
 		Parameter parameter = new Parameter(getService(), "updateRoleMenu");
 		parameter.setList(list);
@@ -142,6 +149,20 @@ public class SysAuthorizeController extends AbstractController<ISysProvider> {
 	@PostMapping(value = "/user/update/permission")
 	@RequiresPermissions("sys.permisson.user.update")
 	public Object updateUserPermission(ModelMap modelMap, @RequestBody List<SysUserMenu> list) {
+		Long userId = null;
+		Long currentUserId = WebUtil.getCurrentUser();
+		for (SysUserMenu sysUserMenu : list) {
+			if (sysUserMenu.getUserId() != null) {
+				if (userId != null && userId != sysUserMenu.getUserId()) {
+					throw new IllegalParameterException("参数错误.");
+				}
+				userId = sysUserMenu.getUserId();
+			}
+			sysUserMenu.setCreateBy(currentUserId);
+			sysUserMenu.setUpdateBy(currentUserId);
+			sysUserMenu.setCreateTime(new Date());
+			sysUserMenu.setUpdateTime(new Date());
+		}
 		Parameter parameter = new Parameter(getService(), "updateUserPermission").setList(list);
 		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
@@ -160,6 +181,20 @@ public class SysAuthorizeController extends AbstractController<ISysProvider> {
 	@PostMapping(value = "/role/update/permission")
 	@RequiresPermissions("sys.permisson.role.update")
 	public Object updateRolePermission(ModelMap modelMap, @RequestBody List<SysRoleMenu> list) {
+		Long roleId = null;
+		Long userId = WebUtil.getCurrentUser();
+		for (SysRoleMenu sysRoleMenu : list) {
+			if (sysRoleMenu.getRoleId() != null) {
+				if (roleId != null && roleId != sysRoleMenu.getRoleId()) {
+					throw new IllegalParameterException("参数错误.");
+				}
+				roleId = sysRoleMenu.getRoleId();
+			}
+			sysRoleMenu.setCreateBy(userId);
+			sysRoleMenu.setUpdateBy(userId);
+			sysRoleMenu.setCreateTime(new Date());
+			sysRoleMenu.setUpdateTime(new Date());
+		}
 		Parameter parameter = new Parameter(getService(), "updateRolePermission").setList(list);
 		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);

@@ -43,7 +43,7 @@ public class UploadController extends BaseController {
 	public Object uploadImage(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setContentType("text/html;charset=utf-8");
-		List<String> fileNames = UploadUtil.uploadImage(request);
+		List<String> fileNames = UploadUtil.uploadImage(request, true);
 		if (fileNames.size() > 0) {
 			modelMap.put("imgName", fileNames);
 			return setSuccessModelMap(modelMap);

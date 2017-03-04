@@ -11,15 +11,10 @@
 		<property name="cacheManager" ref="shiroCacheManager" />
 		<property name="realm" ref="realm" />
 	</bean>
-	<!--  -->
-    <bean id="shiroCacheManager" class="org.crazycake.shiro.RedisCacheManager">
-    	<property name="redisManager" ref="shiroRedisManager" />
-    </bean>
-	<bean id="shiroRedisManager" class="org.crazycake.shiro.RedisManager">
-		<property name="host" value="${redis.host}" />
-		<property name="port" value="${redis.port}" />
-		<!-- <property name="password" value="${redis.password}" /> -->
-		<property name="expire" value="600" />
+	<!-- shiro的缓存管理器，然后需要将缓存管理器注入到安全管理其中 -->
+	<bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<!--classpath是缓存属性的配置文件 -->
+		<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml" />
 	</bean>
 	<!-- Web应用中,Shiro可控制的Web请求必须经过Shiro主过滤器的拦截,Shiro对基于Spring的Web应用提供了完美的支持 -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">

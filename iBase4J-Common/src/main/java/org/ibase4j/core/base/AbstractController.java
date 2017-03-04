@@ -3,6 +3,7 @@
  */
 package org.ibase4j.core.base;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -48,8 +49,10 @@ public abstract class AbstractController<T extends BaseProvider> extends BaseCon
 		Long userId = getCurrUser();
 		if (param.getId() == null) {
 			param.setCreateBy(userId);
+			param.setCreateTime(new Date());
 		}
 		param.setUpdateBy(userId);
+		param.setUpdateTime(new Date());
 		Parameter parameter = new Parameter(getService(), "update").setModel(param);
 		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);

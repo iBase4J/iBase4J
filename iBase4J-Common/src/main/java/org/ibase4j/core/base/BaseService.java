@@ -4,16 +4,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.DataUtil;
+import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -177,9 +180,14 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 			}
 			record = mapper.selectById(record.getId());
 			CacheUtil.getCache().set(getCacheKey(record.getId()), record);
+		} catch (DuplicateKeyException e) {
+			String msg = ExceptionUtil.getStackTraceAsString(e);
+			logger.error(Constants.Exception_Head + msg, e);
+			throw new RuntimeException("已经存在相同的配置.");
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new RuntimeException(e.getMessage(), e);
+			String msg = ExceptionUtil.getStackTraceAsString(e);
+			logger.error(Constants.Exception_Head + msg, e);
+			throw new RuntimeException(msg);
 		}
 		return record;
 	}
@@ -227,13 +235,21 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 
 	/** 获取缓存键值 */
 	protected String getCacheKey(Object id) {
-		String cacheName = null;
-		CacheConfig cacheConfig = getClass().getAnnotation(CacheConfig.class);
-		if (cacheConfig == null || cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
-			cacheName = getClass().getName();
+		Class<?> cls = getClass();
+		String key = Constants.cacheKeyMap.get(cls);
+		if (StringUtils.isNotBlank(key)) {
+			return key;
 		} else {
-			cacheName = cacheConfig.cacheNames()[0];
+			String cacheName = null;
+			CacheConfig cacheConfig = cls.getAnnotation(CacheConfig.class);
+			if (cacheConfig == null || cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
+				cacheName = getClass().getName();
+			} else {
+				cacheName = cacheConfig.cacheNames()[0];
+			}
+			key = new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
+			Constants.cacheKeyMap.put(cls, key);
+			return key;
 		}
-		return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
 	}
 }
