@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
@@ -235,21 +234,13 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 
 	/** 获取缓存键值 */
 	protected String getCacheKey(Object id) {
-		Class<?> cls = getClass();
-		String key = Constants.cacheKeyMap.get(cls);
-		if (StringUtils.isNotBlank(key)) {
-			return key;
+		String cacheName = null;
+		CacheConfig cacheConfig = getClass().getAnnotation(CacheConfig.class);
+		if (cacheConfig == null || cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
+			cacheName = getClass().getName();
 		} else {
-			String cacheName = null;
-			CacheConfig cacheConfig = cls.getAnnotation(CacheConfig.class);
-			if (cacheConfig == null || cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
-				cacheName = getClass().getName();
-			} else {
-				cacheName = cacheConfig.cacheNames()[0];
-			}
-			key = new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
-			Constants.cacheKeyMap.put(cls, key);
-			return key;
+			cacheName = cacheConfig.cacheNames()[0];
 		}
+		return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
 	}
 }
