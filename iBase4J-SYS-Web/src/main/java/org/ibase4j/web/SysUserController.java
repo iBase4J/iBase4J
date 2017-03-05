@@ -125,16 +125,13 @@ public class SysUserController extends AbstractController<ISysProvider> {
 	@ApiOperation(value = "修改用户头像")
 	@PostMapping(value = "/update/avatar")
 	public Object updateAvatar(HttpServletRequest request, ModelMap modelMap) {
-		List<String> fileNames = UploadUtil.uploadImage(request);
+		List<String> fileNames = UploadUtil.uploadImage(request, false);
 		if (fileNames.size() > 0) {
 			SysUser param = new SysUser();
 			param.setId(WebUtil.getCurrentUser());
 			String filePath = UploadUtil.getUploadDir(request) + fileNames.get(0);
-			// String avatar = UploadUtil.remove2DFS("sysUser", "user" +
-			// sysUser.getId(), filePath).getRemotePath();
-			// String avatar = UploadUtil.remove2Sftp(filePath, "user" +
-			// sysUser.getId());
-			param.setAvatar(filePath);
+			String avatar = UploadUtil.remove2DFS("sysUser", "U" + param.getId(), filePath).getRemotePath();
+			param.setAvatar(avatar);
 			return super.update(modelMap, param);
 		} else {
 			setModelMap(modelMap, HttpCode.BAD_REQUEST);

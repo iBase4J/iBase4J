@@ -9,11 +9,13 @@ import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.DataUtil;
+import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -177,9 +179,14 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 			}
 			record = mapper.selectById(record.getId());
 			CacheUtil.getCache().set(getCacheKey(record.getId()), record);
+		} catch (DuplicateKeyException e) {
+			String msg = ExceptionUtil.getStackTraceAsString(e);
+			logger.error(Constants.Exception_Head + msg, e);
+			throw new RuntimeException("已经存在相同的配置.");
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new RuntimeException(e.getMessage(), e);
+			String msg = ExceptionUtil.getStackTraceAsString(e);
+			logger.error(Constants.Exception_Head + msg, e);
+			throw new RuntimeException(msg);
 		}
 		return record;
 	}

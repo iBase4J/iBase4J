@@ -31,7 +31,9 @@ public class SysRoleService extends BaseService<SysRole> {
 		for (SysRole bean : pageInfo.getRecords()) {
 			if (bean.getDeptId() != null) {
 				SysDept sysDept = sysDeptService.queryById(bean.getDeptId());
-				bean.setDeptName(sysDept.getDeptName());
+				if (sysDept != null) {
+					bean.setDeptName(sysDept.getDeptName());
+				}
 			}
 			List<String> permissions = sysAuthorizeService.queryRolePermission(bean.getId());
 			for (String permission : permissions) {

@@ -98,13 +98,6 @@ angular.module('app')
 			            return null;
 			        } else if(result.httpCode == 303) {
 			        } else if(result.httpCode == 200) {
-						if(result.data && result.data.id) {
-							result.data.id = result.data.id_;
-						} else if(result.data) {
-							var r = result.data;
-							for(var i=0; i<r.length;i++)
-								r[i].id = r[i].id_;
-						}
 			        } else if(result) {
 	                    toaster.clear('*');
 	                    toaster.pop('error', '', result.msg);
