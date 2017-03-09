@@ -76,11 +76,6 @@
 			<version>${shiro.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-ehcache</artifactId>
-			<version>1.4.0-RC2</version>
-		</dependency>
 		<!-- excel -->
 		<dependency>
 			<groupId>net.sourceforge.jexcelapi</groupId>

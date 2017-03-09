@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.Constants;
 import org.ibase4j.core.base.BaseProvider;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.util.DateUtil;
@@ -44,7 +43,7 @@ public class EventInterceptor extends BaseInterceptor {
 	@Autowired
 	@Qualifier("sysProvider")
 	protected BaseProvider sysProvider;
-	
+
 	static UASparser uasParser = null;
 
 	// 初始化uasParser对象
@@ -60,13 +59,6 @@ public class EventInterceptor extends BaseInterceptor {
 			throws Exception {
 		// 开始时间（该数据只有当前请求的线程可见）
 		startTimeThreadLocal.set(System.currentTimeMillis());
-		try {
-			HandlerMethod handlerMethod = (HandlerMethod) handler;
-			ApiOperation apiOperation = handlerMethod.getMethod().getAnnotation(ApiOperation.class);
-			request.setAttribute(Constants.OPERATION_NAME, apiOperation.value());
-		} catch (Exception e) {
-			logger.error("", e);
-		}
 		return super.preHandle(request, response, handler);
 	}
 
@@ -100,11 +92,16 @@ public class EventInterceptor extends BaseInterceptor {
 			record.setCreateBy(uid);
 			record.setUpdateBy(uid);
 			final String msg = (String) request.getAttribute("msg");
-
+			try {
+				HandlerMethod handlerMethod = (HandlerMethod) handler;
+				ApiOperation apiOperation = handlerMethod.getMethod().getAnnotation(ApiOperation.class);
+				record.setTitle(apiOperation.value());
+			} catch (Exception e) {
+				logger.error("", e);
+			}
 			executorService.submit(new Runnable() {
 				public void run() {
 					try { // 保存操作
-						record.setTitle((String) request.getAttribute(Constants.OPERATION_NAME));
 						if (StringUtils.isNotBlank(msg)) {
 							record.setRemark(msg);
 						} else {

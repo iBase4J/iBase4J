@@ -25,6 +25,21 @@ public class SysRoleService extends BaseService<SysRole> {
 	@Autowired
 	private SysAuthorizeService sysAuthorizeService;
 
+	public SysRole queryById(Long id) {
+		SysRole sysRole = super.queryById(id);
+		if (sysRole != null) {
+			if (sysRole.getDeptId() != null) {
+				SysDept sysDept = sysDeptService.queryById(sysRole.getDeptId());
+				if (sysDept != null) {
+					sysRole.setDeptName(sysDept.getDeptName());
+				} else {
+					sysRole.setDeptId(null);
+				}
+			}
+		}
+		return sysRole;
+	}
+
 	public Page<SysRole> query(Map<String, Object> params) {
 		Page<SysRole> pageInfo = super.query(params);
 		// 权限信息
