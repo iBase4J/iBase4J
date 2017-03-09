@@ -23,6 +23,7 @@
 		or exists (select 1
 		from sys_user_role ur join sys_role_menu rm on ur.role_id=rm.role_id
 		where ur.user_id=#{userId} and rm.menu_id=menu.id_))
+		order by parent_id,sort_no
 	</select>
 	<select id="queryPermissionByUserId" resultType="java.lang.String">
 		select CONCAT(menu.permission_,'.',um.permission_) permission 

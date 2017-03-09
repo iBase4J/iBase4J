@@ -31,7 +31,7 @@ import com.baomidou.mybatisplus.plugins.Page;
  */
 @Service
 @CacheConfig(cacheNames = "SysUser")
-public class SysUserService extends BaseService<SysUser>{
+public class SysUserService extends BaseService<SysUser> {
 	@Autowired
 	private SysUserThirdpartyMapper thirdpartyMapper;
 	@Autowired
@@ -40,6 +40,21 @@ public class SysUserService extends BaseService<SysUser>{
 	private SysDeptService sysDeptService;
 	@Autowired
 	private SysAuthorizeService sysAuthorizeService;
+
+	public SysUser queryById(Long id) {
+		SysUser sysUser = super.queryById(id);
+		if (sysUser != null) {
+			if (sysUser.getDeptId() != null) {
+				SysDept sysDept = sysDeptService.queryById(sysUser.getDeptId());
+				if (sysDept != null) {
+					sysUser.setDeptName(sysDept.getDeptName());
+				} else {
+					sysUser.setDeptId(null);
+				}
+			}
+		}
+		return sysUser;
+	}
 
 	public Page<SysUser> query(Map<String, Object> params) {
 		Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");

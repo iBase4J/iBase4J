@@ -12,5 +12,18 @@ import org.springframework.stereotype.Service;
 @Service
 @CacheConfig(cacheNames = "sysDept")
 public class SysDeptService extends BaseService<SysDept> {
-	
+	public SysDept queryById(Long id) {
+		SysDept sysDept = super.queryById(id);
+		if (sysDept != null) {
+			if (sysDept.getParentId() != null) {
+				SysDept parent = super.queryById(sysDept.getParentId());
+				if (parent != null) {
+					sysDept.setParentName(parent.getDeptName());
+				} else {
+					sysDept.setParentId(null);
+				}
+			}
+		}
+		return sysDept;
+	}
 }

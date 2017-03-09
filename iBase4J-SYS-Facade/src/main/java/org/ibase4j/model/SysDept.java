@@ -14,6 +14,8 @@ public class SysDept extends BaseModel {
 	private Integer unitId;
 	@TableField("leaf_")
 	private Integer leaf;
+	@TableField(exist = false)
+	private String parentName;
 
 	/**
 	 * @return the value of sys_dept.dept_name
@@ -81,6 +83,14 @@ public class SysDept extends BaseModel {
 	 */
 	public void setLeaf(Integer leaf) {
 		this.leaf = leaf;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 
 	/**

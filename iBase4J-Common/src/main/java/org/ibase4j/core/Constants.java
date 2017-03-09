@@ -1,5 +1,9 @@
 package org.ibase4j.core;
 
+import java.util.Map;
+
+import org.ibase4j.core.util.InstanceUtil;
+
 /**
  * 常量表
  * 
@@ -34,6 +38,8 @@ public interface Constants {
     public static final String MALICIOUS_REQUEST_TIMES = "MALICIOUS_REQUEST_TIMES";
     /** 缓存命名空间 */
     public static final String CACHE_NAMESPACE = "iBase4J:";
+	/** 缓存键值 */
+	public static final Map<Class<?>, String> cacheKeyMap = InstanceUtil.newHashMap();
 
     /** 日志表状态 */
     public interface JOBSTATE {
