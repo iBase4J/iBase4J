@@ -4,10 +4,10 @@
 	<select id="queryMenuIdsByRoleId" resultType="java.lang.Long">
   	select distinct menu_id from sys_role_menu where role_id=#{roleId} and permission_='read'
   </select>
-  <select id="queryPermissions" resultType="java.lang.Long">
-  	select menu_id
+  <select id="queryPermissions" resultType="java.util.Map">
+  	select menu_id menuId,permission_ permission
   	from sys_role_menu
-	where role_id=#{roleId} and permission_=#{permission}
+	where role_id=#{roleId}
   </select>
 	<select id="queryPermission" resultType="java.lang.String">
 		select CONCAT(menu_name,'(', GROUP_CONCAT(code_text), ')')

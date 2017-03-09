@@ -74,6 +74,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 		return resultList;
 	}
 
+
 	public List<Object> queryTreeList(Map<String, Object> params) {
 		params.put("orderBy", "parent_id,sort_no");
 		List<SysMenu> pageInfo = super.queryList(params);
@@ -106,16 +107,18 @@ public class SysMenuService extends BaseService<SysMenu> {
 			}
 		}
 		for (SysMenu sysMenu : pageInfo) {
-			if (leafMap.get(sysMenu.getId()) != null && leafMap.get(sysMenu.getId()) > 0) {
+			if (leafMap.get(sysMenu.getId()) != null &&leafMap.get(sysMenu.getId()) > 0) {
 				sysMenu.setLeaf(0);
 			} else {
 				List<Map<String, Object>> dicMaps = InstanceUtil.newArrayList();
 				for (SysDic sysDic : sysDics) {
-					Map<String, Object> dicMap = InstanceUtil.transBean2Map(sysDic);
-					dicMap.put("id", "D" + sysDic.getId());
-					dicMap.put("menuName", sysDic.getCodeText());
-					dicMap.put("parentId", sysMenu.getId().toString());
-					dicMaps.add(dicMap);
+					if (!"read".equals(sysDic.getCode())) {
+						Map<String, Object> dicMap = InstanceUtil.transBean2Map(sysDic);
+						dicMap.put("id", "D"+ sysDic.getId());
+						dicMap.put("menuName", sysDic.getCodeText());
+						dicMap.put("parentId", sysMenu.getId().toString());
+						dicMaps.add(dicMap);
+					}
 				}
 				resultList.addAll(resultList.indexOf(sysMenu) + 1, dicMaps);
 			}

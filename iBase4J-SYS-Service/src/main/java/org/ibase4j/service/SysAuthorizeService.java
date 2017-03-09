@@ -10,6 +10,7 @@ import org.ibase4j.mapper.SysAuthorizeMapper;
 import org.ibase4j.mapper.SysRoleMenuMapper;
 import org.ibase4j.mapper.SysUserMenuMapper;
 import org.ibase4j.mapper.SysUserRoleMapper;
+import org.ibase4j.model.SysDic;
 import org.ibase4j.model.SysMenu;
 import org.ibase4j.model.SysRoleMenu;
 import org.ibase4j.model.SysUserMenu;
@@ -41,6 +42,8 @@ public class SysAuthorizeService {
 	private SysAuthorizeMapper sysAuthorizeMapper;
 	@Autowired
 	private SysMenuService sysMenuService;
+	@Autowired
+	private SysDicService sysDicService;
 
 	public List<String> queryMenuIdsByUserId(Long userId) {
 		List<String> resultList = InstanceUtil.newArrayList();
@@ -85,6 +88,15 @@ public class SysAuthorizeService {
 		if (userId != null && DataUtil.isNotEmpty(permissions)) {
 			for (String permission : permissions) {
 				sysAuthorizeMapper.deleteUserMenu(userId, permission);
+			}
+		} else if(userId != null) {
+			Map<String, Object> dicParam = InstanceUtil.newHashMap();
+			dicParam.put("type", "CRUD");
+			List<SysDic> sysDics = sysDicService.queryList(dicParam);
+			for (SysDic sysDic : sysDics) {
+				if (!"read".equals(sysDic.getCode())) {
+					sysAuthorizeMapper.deleteUserMenu(userId, sysDic.getCode());
+				}
 			}
 		}
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
@@ -167,6 +179,15 @@ public class SysAuthorizeService {
 			for (String permission : permissions) {
 				sysAuthorizeMapper.deleteRoleMenu(roleId, permission);
 			}
+		} else if(roleId != null) {
+			Map<String, Object> dicParam = InstanceUtil.newHashMap();
+			dicParam.put("type", "CRUD");
+			List<SysDic> sysDics = sysDicService.queryList(dicParam);
+			for (SysDic sysDic : sysDics) {
+				if (!"read".equals(sysDic.getCode())) {
+					sysAuthorizeMapper.deleteRoleMenu(roleId, sysDic.getCode());
+				}
+			}
 		}
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
 			if (sysRoleMenu.getRoleId() != null && sysRoleMenu.getMenuId() != null
@@ -229,21 +250,13 @@ public class SysAuthorizeService {
 		return sysAuthorizeMapper.queryMenusPermission();
 	}
 
-	public List<String> queryUserPermissions(SysUserMenu sysUserMenu) {
-		List<String> resultList = InstanceUtil.newArrayList();
-		List<Long> list = sysUserMenuMapper.queryPermissions(sysUserMenu.getUserId(), sysUserMenu.getPermission());
-		for (Long id : list) {
-			resultList.add(id.toString());
-		}
-		return resultList;
+	public List<Map<String, Object>> queryUserPermissions(SysUserMenu sysUserMenu) {
+		List<Map<String, Object>> list = sysUserMenuMapper.queryPermissions(sysUserMenu.getUserId());
+		return list;
 	}
 
-	public List<String> queryRolePermissions(SysRoleMenu sysRoleMenu) {
-		List<String> resultList = InstanceUtil.newArrayList();
-		List<Long> list = sysRoleMenuMapper.queryPermissions(sysRoleMenu.getRoleId(), sysRoleMenu.getPermission());
-		for (Long id : list) {
-			resultList.add(id.toString());
-		}
-		return resultList;
+	public List<Map<String, Object>> queryRolePermissions(SysRoleMenu sysRoleMenu) {
+		List<Map<String, Object>> list = sysRoleMenuMapper.queryPermissions(sysRoleMenu.getRoleId());
+		return list;
 	}
 }
