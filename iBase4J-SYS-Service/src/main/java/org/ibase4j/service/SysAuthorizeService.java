@@ -80,7 +80,8 @@ public class SysAuthorizeService {
 		Long userId = null;
 		Set<String> permissions = InstanceUtil.newHashSet();
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
-			if (sysUserMenu.getUserId() != null && !"read".equals(sysUserMenu.getPermission())) {
+			if (sysUserMenu.getUserId() != null && !"read".equals(sysUserMenu.getPermission())
+					&& sysUserMenu.getPermission() != null) {
 				userId = sysUserMenu.getUserId();
 				permissions.add(sysUserMenu.getPermission());
 			}
@@ -89,7 +90,7 @@ public class SysAuthorizeService {
 			for (String permission : permissions) {
 				sysAuthorizeMapper.deleteUserMenu(userId, permission);
 			}
-		} else if(userId != null) {
+		} else if (userId != null) {
 			Map<String, Object> dicParam = InstanceUtil.newHashMap();
 			dicParam.put("type", "CRUD");
 			List<SysDic> sysDics = sysDicService.queryList(dicParam);
@@ -170,7 +171,8 @@ public class SysAuthorizeService {
 		Long roleId = null;
 		Set<String> permissions = InstanceUtil.newHashSet();
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
-			if (sysRoleMenu.getRoleId() != null && !"read".equals(sysRoleMenu.getPermission())) {
+			if (sysRoleMenu.getRoleId() != null && !"read".equals(sysRoleMenu.getPermission())
+					&& sysRoleMenu.getPermission() != null) {
 				roleId = sysRoleMenu.getRoleId();
 				permissions.add(sysRoleMenu.getPermission());
 			}
@@ -179,7 +181,7 @@ public class SysAuthorizeService {
 			for (String permission : permissions) {
 				sysAuthorizeMapper.deleteRoleMenu(roleId, permission);
 			}
-		} else if(roleId != null) {
+		} else if (roleId != null) {
 			Map<String, Object> dicParam = InstanceUtil.newHashMap();
 			dicParam.put("type", "CRUD");
 			List<SysDic> sysDics = sysDicService.queryList(dicParam);
