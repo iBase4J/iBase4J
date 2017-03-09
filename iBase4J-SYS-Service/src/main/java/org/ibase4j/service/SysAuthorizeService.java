@@ -2,9 +2,7 @@ package org.ibase4j.service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.mapper.SysAuthorizeMapper;
 import org.ibase4j.mapper.SysRoleMenuMapper;
@@ -78,18 +76,12 @@ public class SysAuthorizeService {
 	@CacheEvict(value = { "menuPermission", "sysPermission", "userPermission" }, allEntries = true)
 	public void updateUserPermission(List<SysUserMenu> sysUserMenus) {
 		Long userId = null;
-		Set<String> permissions = InstanceUtil.newHashSet();
 		for (SysUserMenu sysUserMenu : sysUserMenus) {
-			if (sysUserMenu.getUserId() != null && !"read".equals(sysUserMenu.getPermission())) {
+			if (sysUserMenu.getUserId() != null) {
 				userId = sysUserMenu.getUserId();
-				permissions.add(sysUserMenu.getPermission());
 			}
 		}
-		if (userId != null && DataUtil.isNotEmpty(permissions)) {
-			for (String permission : permissions) {
-				sysAuthorizeMapper.deleteUserMenu(userId, permission);
-			}
-		} else if(userId != null) {
+		if (userId != null) {
 			Map<String, Object> dicParam = InstanceUtil.newHashMap();
 			dicParam.put("type", "CRUD");
 			List<SysDic> sysDics = sysDicService.queryList(dicParam);
@@ -168,18 +160,12 @@ public class SysAuthorizeService {
 	@CacheEvict(value = { "menuPermission", "sysPermission", "userPermission", "rolePermission" }, allEntries = true)
 	public void updateRolePermission(List<SysRoleMenu> sysRoleMenus) {
 		Long roleId = null;
-		Set<String> permissions = InstanceUtil.newHashSet();
 		for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
-			if (sysRoleMenu.getRoleId() != null && !"read".equals(sysRoleMenu.getPermission())) {
+			if (sysRoleMenu.getRoleId() != null) {
 				roleId = sysRoleMenu.getRoleId();
-				permissions.add(sysRoleMenu.getPermission());
 			}
 		}
-		if (roleId != null && DataUtil.isNotEmpty(permissions)) {
-			for (String permission : permissions) {
-				sysAuthorizeMapper.deleteRoleMenu(roleId, permission);
-			}
-		} else if(roleId != null) {
+		if (roleId != null) {
 			Map<String, Object> dicParam = InstanceUtil.newHashMap();
 			dicParam.put("type", "CRUD");
 			List<SysDic> sysDics = sysDicService.queryList(dicParam);
