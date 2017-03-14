@@ -25,6 +25,9 @@
 		               <array>
 		                   <value>QuoteFieldNames</value>
 		                   <value>WriteDateUseDateFormat</value>
+			               <!-- 字符类型字段如果为null,输出为"",而非null -->
+			               <value>WriteNullStringAsEmpty</value>
+			               <value>WriteNonStringValueAsString</value>
 		               </array>
 		           </property>
 			</bean>
