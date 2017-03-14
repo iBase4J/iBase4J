@@ -230,9 +230,9 @@ public class JedisHelper implements CacheManager {
 		});
 	}
 
-	public final Long hset(final String key, final String field, final String value) {
-		return jedisTemplate.run(key, new Executor<Long>() {
-			public Long execute(ShardedJedis jedis) {
+	public final void hset(final String key, final String field, final String value) {
+		jedisTemplate.run(key, new Executor<Object>() {
+			public Object execute(ShardedJedis jedis) {
 				return jedis.hset(key, field, value);
 			}
 		});
@@ -286,8 +286,8 @@ public class JedisHelper implements CacheManager {
 		});
 	}
 
-	public final Long hdel(final String key, final String field) {
-		return jedisTemplate.run(key, new Executor<Long>() {
+	public final void hdel(final String key, final String field) {
+		jedisTemplate.run(key, new Executor<Long>() {
 			public Long execute(ShardedJedis jedis) {
 				return jedis.hdel(key, field);
 			}

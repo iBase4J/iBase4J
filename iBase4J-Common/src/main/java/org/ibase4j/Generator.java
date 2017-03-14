@@ -30,10 +30,10 @@ public class Generator {
 		// 全局配置
 		GlobalConfig gc = new GlobalConfig();
 		gc.setOutputDir("D://");
-		gc.setFileOverride(true);
+		gc.setFileOverride(false);
 		gc.setActiveRecord(false);
 		gc.setEnableCache(false);// XML 二级缓存
-		gc.setBaseResultMap(true);// XML ResultMap
+		gc.setBaseResultMap(false);// XML ResultMap
 		gc.setBaseColumnList(false);// XML columList
 		gc.setOpen(false);
 		gc.setAuthor("ShenHuaJie");

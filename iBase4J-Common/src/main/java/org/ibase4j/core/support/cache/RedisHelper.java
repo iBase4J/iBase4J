@@ -132,5 +132,17 @@ public final class RedisHelper implements CacheManager, ApplicationContextAware 
 		del(key);
 	}
 
+	public void hset(String key, String field, String value) {
+		getRedis().boundHashOps(key).put(field, value);
+	}
+
+	public Object hget(String key, String field) {
+		return getRedis().boundHashOps(key).get(field);
+	}
+
+	public void hdel(String key, String field) {
+		getRedis().boundHashOps(key).delete(field);
+	}
+
 	// 未完，待续...
 }
