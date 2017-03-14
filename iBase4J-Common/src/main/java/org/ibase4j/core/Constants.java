@@ -40,6 +40,8 @@ public interface Constants {
     public static final String CACHE_NAMESPACE = "iBase4J:";
 	/** 缓存键值 */
 	public static final Map<Class<?>, String> cacheKeyMap = InstanceUtil.newHashMap();
+	/** TOKEN */
+	public static final String TOKEN_KEY = CACHE_NAMESPACE + "TOKEN_KEY";
 
     /** 日志表状态 */
     public interface JOBSTATE {
