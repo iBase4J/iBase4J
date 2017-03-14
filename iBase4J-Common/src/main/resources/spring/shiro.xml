@@ -24,6 +24,7 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/=anon
+				/app/**=anon
 				/index.jsp=anon
 				/regin=anon
 				/login=anon

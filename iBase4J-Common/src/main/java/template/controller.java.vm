@@ -47,21 +47,21 @@ public class ${table.controllerName} {
 	@ApiOperation(value = "${table.comment}详情")
 	@RequiresPermissions(".read")
 	@PutMapping(value = "/read/detail")
-	public Object get(ModelMap modelMap, @RequestBody SysDic param) {
+	public Object get(ModelMap modelMap, @RequestBody ${entity} param) {
 		return super.get(modelMap, param);
 	}
 
 	@PostMapping
 	@ApiOperation(value = "修改${table.comment}")
 	@RequiresPermissions(".update")
-	public Object update(ModelMap modelMap, @RequestBody SysDic param) {
+	public Object update(ModelMap modelMap, @RequestBody ${entity} param) {
 		return super.update(modelMap, param);
 	}
 
 	@DeleteMapping
 	@ApiOperation(value = "删除${table.comment}")
 	@RequiresPermissions(".delete")
-	public Object delete(ModelMap modelMap, @RequestBody SysDic param) {
+	public Object delete(ModelMap modelMap, @RequestBody ${entity} param) {
 		return super.delete(modelMap, param);
 	}
 }
