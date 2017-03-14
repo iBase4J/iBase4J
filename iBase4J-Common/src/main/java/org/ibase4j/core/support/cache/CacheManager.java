@@ -31,4 +31,10 @@ public interface CacheManager {
 	public boolean setnx(final String key, final Serializable value);
 
 	public void unlock(String key);
+
+	public void hset(String key, String field, String value);
+
+	public Object hget(String key, String field);
+
+	public void hdel(String key, String field);
 }

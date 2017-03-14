@@ -142,4 +142,16 @@ public class RedissonHelper implements CacheManager, ApplicationContextAware {
 	public void unlock(String key) {
 		getRedis().getLock(key).unlock();
 	}
+
+	public void hset(String key, String field, String value) {
+		getRedis().getMap(key).put(field, value);
+	}
+
+	public Object hget(String key, String field) {
+		return getRedis().getMap(key).get(field);
+	}
+
+	public void hdel(String key, String field) {
+		getRedis().getMap(key).remove(field);
+	}
 }
