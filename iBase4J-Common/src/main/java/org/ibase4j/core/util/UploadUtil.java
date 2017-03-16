@@ -2,6 +2,9 @@ package org.ibase4j.core.util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -18,12 +21,14 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ibase4j.core.support.decoder.BASE64Decoder;
 import org.ibase4j.core.support.fastdfs.FileManager;
 import org.ibase4j.core.support.fastdfs.FileModel;
 import org.ibase4j.core.support.ftp.SftpClient;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
 
 /**
  * 上传辅助类 与Spring.multipartResolver冲突
@@ -87,13 +92,12 @@ public final class UploadUtil {
 		List<String> fileNames = InstanceUtil.newArrayList();
 		if (multipartResolver.isMultipart(request)) {
 			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-			Iterator<String> iterator = multiRequest.getFileNames();
-			String pathDir = request.getSession().getServletContext().getRealPath(uploadFileDir + DateUtil.getDate());
+			String pathDir = getUploadDir(request);
 			File dirFile = new File(pathDir);
 			if (!dirFile.isDirectory()) {
 				dirFile.mkdirs();
 			}
-			while (iterator.hasNext()) {
+			for (Iterator<String> iterator = multiRequest.getFileNames(); iterator.hasNext();) {
 				String key = iterator.next();
 				MultipartFile multipartFile = multiRequest.getFile(key);
 				if (multipartFile != null) {
@@ -127,6 +131,47 @@ public final class UploadUtil {
 						} catch (Exception e) {
 							logger.error(name + "缩放失败", e);
 						}
+					}
+				}
+			}
+		}
+		return fileNames;
+	}
+
+	public static List<String> uploadImageData(HttpServletRequest request) {
+		List<String> fileNames = InstanceUtil.newArrayList();
+		Enumeration<String> params = request.getParameterNames();
+		String pathDir = getUploadDir(request);
+		File dir = new File(pathDir);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		while (params.hasMoreElements()) {
+			String key = params.nextElement();
+			String fileStr = request.getParameter(key);
+			if (fileStr != null && !"".equals(fileStr)) {
+				int index = fileStr.indexOf("base64");
+				if (index > 0) {
+					try {
+						String fileName = UUID.randomUUID().toString();
+						String preStr = fileStr.substring(0, index + 7);
+						String prefix = preStr.substring(preStr.indexOf("/") + 1, preStr.indexOf(";")).toLowerCase();
+						fileStr = fileStr.substring(fileStr.indexOf(",") + 1);
+						BASE64Decoder decoder = new BASE64Decoder();
+						byte[] bb = decoder.decodeBuffer(fileStr);
+						for (int j = 0; j < bb.length; ++j) {
+							if (bb[j] < 0) {// 调整异常数据
+								bb[j] += 256;
+							}
+						}
+						String distPath = pathDir + fileName + "." + prefix;
+						OutputStream out = new FileOutputStream(distPath);
+						out.write(bb);
+						out.flush();
+						out.close();
+						fileNames.add(fileName + "." + prefix);
+					} catch (Exception e) {
+						logger.error("上传文件异常：", e);
 					}
 				}
 			}
