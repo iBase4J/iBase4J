@@ -49,11 +49,23 @@ public class SessionListener implements HttpSessionListener {
 	}
 
 	private void setAllUserNumber(int n) {
-		Integer number = getAllUserNumber() + n;
-		if (number >= 0) {
-			logger.info("用户数：" + number);
-			CacheUtil.getCache().set(Constants.ALLUSER_NUMBER, number, 60 * 60 * 24);
-		}
+        String key = Constants.CACHE_NAMESPACE + "SESSION:LOCK";
+        while (!CacheUtil.getLock(key)) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                logger.error("", e);
+            }
+        }
+        try {
+            Integer number = getAllUserNumber() + n;
+            if (number >= 0) {
+                logger.info("用户数：" + number);
+                CacheUtil.getCache().set(Constants.ALLUSER_NUMBER, number);
+            }
+        } finally {
+            CacheUtil.unlock(key);
+        }
 	}
 
 	/** 获取在线用户数量 */
