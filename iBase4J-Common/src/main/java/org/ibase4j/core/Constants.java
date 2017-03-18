@@ -16,6 +16,8 @@ public interface Constants {
      * 非常遗憾的通知您,程序发生了异常
      */
     public static final String Exception_Head = "OH,MY GOD! SOME ERRORS OCCURED! AS FOLLOWS :";
+    /** 缓存键值 */
+    public static final Map<Class<?>, String> cacheKeyMap = InstanceUtil.newHashMap();
     /** 操作名称 */
     public static final String OPERATION_NAME = "OPERATION_NAME";
     /** 客户端语言 */
@@ -24,10 +26,6 @@ public interface Constants {
     public static final String WEBTHEME = "webTheme";
     /** 当前用户 */
     public static final String CURRENT_USER = "CURRENT_USER";
-    /** 在线用户数量 */
-    public static final String ALLUSER_NUMBER = "ALLUSER_NUMBER";
-    /** 登录用户数量 */
-    public static final String USER_NUMBER = "USER_NUMBER";
     /** 上次请求地址 */
     public static final String PREREQUEST = "PREREQUEST";
     /** 上次请求时间 */
@@ -38,10 +36,10 @@ public interface Constants {
     public static final String MALICIOUS_REQUEST_TIMES = "MALICIOUS_REQUEST_TIMES";
     /** 缓存命名空间 */
     public static final String CACHE_NAMESPACE = "iBase4J:";
-	/** 缓存键值 */
-	public static final Map<Class<?>, String> cacheKeyMap = InstanceUtil.newHashMap();
-	/** TOKEN */
-	public static final String TOKEN_KEY = CACHE_NAMESPACE + "TOKEN_KEY";
+    /** 在线用户数量 */
+    public static final String ALLUSER_NUMBER = CACHE_NAMESPACE + "ALLUSER_NUMBER";
+    /** TOKEN */
+    public static final String TOKEN_KEY = CACHE_NAMESPACE + "TOKEN_KEY";
 
     /** 日志表状态 */
     public interface JOBSTATE {
