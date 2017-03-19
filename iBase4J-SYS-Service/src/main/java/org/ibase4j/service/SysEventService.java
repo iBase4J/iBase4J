@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.model.SysEvent;
+import org.ibase4j.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,12 @@ public class SysEventService extends BaseService<SysEvent> {
 		for (SysEvent sysEvent : page.getRecords()) {
 			Long createBy = sysEvent.getCreateBy();
 			if (createBy != null) {
-				sysEvent.setUserName(sysUserService.queryById(createBy).getUserName());
+                SysUser sysUser = sysUserService.queryById(createBy);
+                if (sysUser != null) {
+                    sysEvent.setUserName(sysUser.getUserName());
+                } else {
+                    sysEvent.setUserName(createBy.toString());
+                }
 			}
 		}
 		return page;
