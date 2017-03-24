@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.jedis;
+package org.ibase4j.core.support.cache.jedis;
 
 import redis.clients.jedis.ShardedJedis;
 

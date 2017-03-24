@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.ibase4j.core.exception.DataParseException;
+import org.ibase4j.core.exception.InstanceException;
 
 /**
  * 实例辅助类
@@ -323,7 +324,8 @@ public final class InstanceUtil {
 	/**
 	 * Constructs an empty ArrayList.
 	 */
-	public static final <E> ArrayList<E> newArrayList(@SuppressWarnings("unchecked") E... e) {
+	@SuppressWarnings("unchecked")
+    public static final <E> ArrayList<E> newArrayList(E... e) {
 		ArrayList<E> list = new ArrayList<E>();
 		Collections.addAll(list, e);
 		return list;
@@ -413,16 +415,5 @@ public final class InstanceUtil {
 	 */
 	public static final <k, v> ConcurrentHashMap<k, v> newConcurrentHashMap() {
 		return new ConcurrentHashMap<k, v>();
-	}
-}
-
-@SuppressWarnings("serial")
-class InstanceException extends RuntimeException {
-	public InstanceException() {
-		super();
-	}
-
-	public InstanceException(Throwable t) {
-		super(t);
 	}
 }

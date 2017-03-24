@@ -19,7 +19,8 @@
 		<module>iBase4J-Biz-Web</module>
 	</modules>
 
-	<!-- clean package -P build tomcat7:run-war-only -->
+	<!-- clean package -P build -f pom-sys-service-server.xml -->
+	<!-- clean package -P build -f pom-sys-web-server.xml -->
 
 	<properties>
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
@@ -347,7 +348,7 @@
 								<contextReloadable>true</contextReloadable>
 								<uriEncoding>UTF-8</uriEncoding>
 								<port>${server.port}</port>
-								<url>http://localhost:8080/manager</url>
+								<url>http://localhost:${server.port}/manager</url>
 								<server>tomcat</server>
 								<username>admin</username>
 								<password>admin</password>
