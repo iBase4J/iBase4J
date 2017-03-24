@@ -21,7 +21,7 @@
  * 22 * or visit www.oracle.com if you need additional information or have any
  * 23 * questions.
  * 24 */
-package org.ibase4j.core.support.decoder;
+package org.ibase4j.core.support.security;
 
 import java.io.OutputStream;
 import java.io.PushbackInputStream;

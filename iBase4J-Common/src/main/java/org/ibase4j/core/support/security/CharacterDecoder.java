@@ -22,7 +22,7 @@
  * 23 * questions.
  * 24 */
 
-package org.ibase4j.core.support.decoder;
+package org.ibase4j.core.support.security;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

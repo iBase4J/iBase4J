@@ -17,5 +17,5 @@
 		<module>iBase4J-SYS-Facade</module>
 		<module>iBase4J-SYS-Service</module>
 	</modules>
-	<!-- clean package -P build tomcat7:run-war-only -f pom-sys-server.xml -->
+	<!-- clean package -P build tomcat7:run-war-only -f pom-sys-service-server.xml -->
 </project>

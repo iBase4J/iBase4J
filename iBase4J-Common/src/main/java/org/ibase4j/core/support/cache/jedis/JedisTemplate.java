@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.jedis;
+package org.ibase4j.core.support.cache.jedis;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
