@@ -324,7 +324,8 @@ public final class InstanceUtil {
 	/**
 	 * Constructs an empty ArrayList.
 	 */
-	public static final <E> ArrayList<E> newArrayList(@SuppressWarnings("unchecked") E... e) {
+	@SuppressWarnings("unchecked")
+    public static final <E> ArrayList<E> newArrayList(E... e) {
 		ArrayList<E> list = new ArrayList<E>();
 		Collections.addAll(list, e);
 		return list;
