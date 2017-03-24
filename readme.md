@@ -34,9 +34,16 @@
 
 ## 启动说明
     * 项目依赖activemq、Redis和ZooKeeper服务。
-    * 启动SYS-Service命令：clean package -P build tomcat7:run-war-only -f pom-sys-service-server.xml
-    * 启动Web命令：clean package -P build tomcat7:run-war-only -f pom-sys-web-server.xml
     * 使用nginx代理UI：修改配置里的UI目录后重启nginx。
+    * 启动命令：
+    	 clean package -P build tomcat7:run-war-only -f pom-sys-service-server.xml
+    	 clean package -P build tomcat7:run-war-only -f pom-sys-web-server.xml
+    * 打包命令：
+    	 clean package -P build -f pom-sys-service-server.xml
+    	 clean package -P build -f pom-sys-service-server.xml
+    * 生产环境打包命令：
+    	 clean package -P product -f pom-sys-service-server.xml
+    	 clean package -P product -f pom-sys-service-server.xml
     
 ## 版权声明
 iBase4J使用 [Apache License 2.0][] 协议.
