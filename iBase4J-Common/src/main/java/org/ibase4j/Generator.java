@@ -40,7 +40,7 @@ public class Generator {
 		// 自定义文件命名，注意 %s 会自动填充表实体属性！
 		// gc.setMapperName("%sDao");
 		// gc.setXmlName("%sDao");
-		gc.setServiceName("%sService");
+		gc.setServiceImplName("%sService");
 		// gc.setServiceImplName("%sServiceDiy");
 		// gc.setControllerName("%sAction");
 		mpg.setGlobalConfig(gc);
@@ -56,7 +56,7 @@ public class Generator {
 		StrategyConfig strategy = new StrategyConfig();
 		// strategy.setTablePrefix("sys_");// 此处可以修改为您的表前缀
 		strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-		strategy.setInclude(new String[] { "sys_news" }); // 需要生成的表
+		strategy.setInclude(new String[] { "sys_user" }); // 需要生成的表
 		// strategy.setExclude(new String[]{"test"}); // 排除生成的表
 		// 字段名生成策略
 		strategy.setFieldNaming(NamingStrategy.underline_to_camel);
@@ -68,7 +68,7 @@ public class Generator {
 		// 自定义 mapper 父类
 		strategy.setSuperMapperClass("org.ibase4j.core.base.BaseMapper");
 		// 自定义 service 父类
-		strategy.setSuperServiceClass("org.ibase4j.core.base.BaseService");
+		strategy.setSuperServiceImplClass("org.ibase4j.core.base.BaseService");
 		// 自定义 service 实现类父类
 		// strategy.setSuperServiceImplClass("org.ibase4j.core.base.BaseService");
 		// 自定义 controller 父类
@@ -86,8 +86,8 @@ public class Generator {
 		pc.setEntity("model");
 		pc.setMapper("mapper");
 		pc.setXml("mapper.xml");
-		pc.setServiceImpl("ignore");
-		pc.setService("service");
+		pc.setServiceImpl("service");
+		pc.setService("ignore");
 		pc.setController("web");
 		mpg.setPackageInfo(pc);
 		// 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
@@ -102,11 +102,11 @@ public class Generator {
 		// 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/template 下面内容修改，
 		// 放置自己项目的 src/main/resources/template 目录下, 默认名称一下可以不配置，也可以自定义模板名称
 		TemplateConfig tc = new TemplateConfig();
-		tc.setEntity("template/entity.java.vm");
-		tc.setMapper("template/mapper.java.vm");
-		tc.setXml("template/mapper.xml.vm");
-		tc.setService("template/service.java.vm");
-		tc.setController("template/controller.java.vm");
+		tc.setEntity("tpl/entity.java.vm");
+		tc.setMapper("tpl/mapper.java.vm");
+		tc.setXml("tpl/mapper.xml.vm");
+		tc.setService("tpl/service.java.vm");
+		tc.setController("tpl/controller.java.vm");
 		mpg.setTemplate(tc);
 		// 执行生成
 		mpg.execute();
