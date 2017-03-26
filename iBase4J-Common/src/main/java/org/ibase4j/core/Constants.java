@@ -37,7 +37,7 @@ public interface Constants {
     /** 缓存命名空间 */
     public static final String CACHE_NAMESPACE = "iBase4J:";
     /** 在线用户数量 */
-    public static final String ALLUSER_NUMBER = CACHE_NAMESPACE + "ALLUSER_NUMBER";
+    public static final String ALLUSER_NUMBER = "SYSTEM:" + CACHE_NAMESPACE + "ALLUSER_NUMBER";
     /** TOKEN */
     public static final String TOKEN_KEY = CACHE_NAMESPACE + "TOKEN_KEY";
 

@@ -173,13 +173,20 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
                         T update = InstanceUtil.getDiff(org, record);
                         update.setId(record.getId());
                         mapper.updateById(update);
+                        record = mapper.selectById(record.getId());
+                        CacheUtil.getCache().set(getCacheKey(record.getId()), record);
                     } finally {
                         CacheUtil.unlock(lockKey);
                     }
+                } else {
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        logger.error("", e);
+                    }
+                    return update(record);
                 }
             }
-            record = mapper.selectById(record.getId());
-            CacheUtil.getCache().set(getCacheKey(record.getId()), record);
         } catch (DuplicateKeyException e) {
             String msg = ExceptionUtil.getStackTraceAsString(e);
             logger.error(Constants.Exception_Head + msg, e);
@@ -205,6 +212,11 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
                     CacheUtil.getCache().set(key, record);
                     CacheUtil.getCache().del(lockKey);
                 } else {
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        logger.error("", e);
+                    }
                     return queryById(id);
                 }
             }
