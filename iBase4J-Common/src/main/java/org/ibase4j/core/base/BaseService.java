@@ -205,6 +205,11 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
                     CacheUtil.getCache().set(key, record);
                     CacheUtil.getCache().del(lockKey);
                 } else {
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        logger.error("", e);
+                    }
                     return queryById(id);
                 }
             }
