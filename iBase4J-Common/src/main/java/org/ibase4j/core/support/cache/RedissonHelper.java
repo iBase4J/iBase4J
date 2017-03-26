@@ -95,7 +95,7 @@ public class RedissonHelper implements CacheManager, ApplicationContextAware {
 	 * @return
 	 */
 	private final void expire(final RBucket<Object> bucket, final int seconds) {
-		bucket.expireAsync(seconds, TimeUnit.SECONDS);
+		bucket.expire(seconds, TimeUnit.SECONDS);
 	}
 
 	/**
