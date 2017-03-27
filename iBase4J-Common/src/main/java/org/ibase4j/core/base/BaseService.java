@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -245,7 +246,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 
     protected void sleep(int millis) {
         try {
-            Thread.sleep(millis);
+            Thread.sleep(RandomUtils.nextLong(10, millis));
         } catch (InterruptedException e) {
             logger.error("", e);
         }
