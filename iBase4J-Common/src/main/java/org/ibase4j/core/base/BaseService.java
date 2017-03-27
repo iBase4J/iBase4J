@@ -179,11 +179,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
                         CacheUtil.unlock(lockKey);
                     }
                 } else {
-                    try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        logger.error("", e);
-                    }
+                    sleep(20);
                     return update(record);
                 }
             }
@@ -212,11 +208,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
                     CacheUtil.getCache().set(key, record);
                     CacheUtil.getCache().del(lockKey);
                 } else {
-                    try {
-                        Thread.sleep(20);
-                    } catch (InterruptedException e) {
-                        logger.error("", e);
-                    }
+                    sleep(20);
                     return queryById(id);
                 }
             }
@@ -249,6 +241,14 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         Page<Long> page = getPage(params);
         page.setRecords(mapper.selectIdPage(page, params));
         return getPage(page, cls);
+    }
+
+    protected void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            logger.error("", e);
+        }
     }
 
     /** 获取缓存键值 */
