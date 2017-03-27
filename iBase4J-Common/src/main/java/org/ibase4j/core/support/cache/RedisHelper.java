@@ -109,8 +109,8 @@ public final class RedisHelper implements CacheManager, ApplicationContextAware 
 	}
 
 	public final void setrange(final String key, final long offset, final String value) {
-		expire(key, EXPIRE);
 		getRedis().boundValueOps(key).set(value, offset);
+        expire(key, EXPIRE);
 	}
 
 	public final String getrange(final String key, final long startOffset, final long endOffset) {
