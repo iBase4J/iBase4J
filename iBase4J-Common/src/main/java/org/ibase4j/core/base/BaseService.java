@@ -204,7 +204,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
             T record = (T)CacheUtil.getCache().get(key);
             if (record == null) {
                 String lockKey = getLockKey(id);
-                if (CacheUtil.getLock(key)) {
+                if (CacheUtil.getLock(lockKey)) {
                     record = mapper.selectById(id);
                     CacheUtil.getCache().set(key, record);
                     CacheUtil.getCache().del(lockKey);
