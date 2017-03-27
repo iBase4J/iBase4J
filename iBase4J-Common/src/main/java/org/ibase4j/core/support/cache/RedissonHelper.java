@@ -54,14 +54,14 @@ public class RedissonHelper implements CacheManager, ApplicationContextAware {
 
 	public final void set(final String key, final Serializable value) {
 		RBucket<Object> temp = getRedisBucket(key);
-		expire(temp, EXPIRE);
 		temp.set(value);
+        expire(temp, EXPIRE);
 	}
 
 	public final void set(final String key, final Serializable value, int seconds) {
 		RBucket<Object> temp = getRedisBucket(key);
-		expire(temp, seconds);
 		temp.set(value);
+        expire(temp, seconds);
 	}
 
 	public final void multiSet(final Map<String, Object> temps) {
