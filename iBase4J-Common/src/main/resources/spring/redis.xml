@@ -8,30 +8,31 @@
        http://www.springframework.org/schema/context  
        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<!-- redis连接 -->
-	<bean class="org.ibase4j.core.config.RedissonConfig">
+	<!-- <bean class="org.ibase4j.core.config.RedissonConfig">
 		<property name="password" value="${redis.password}" />
-		<!-- SingleServer -->
+		SingleServer
 		<property name="address" value="${redis.host}:${redis.port}" />
-		<!-- ClusterServers -->
-		<!-- <property name="nodeAddresses">
+		ClusterServers
+		<property name="nodeAddresses">
 			<array>
 				<value>${redis.host}:${redis.port}</value>
 			</array>
-		</property> -->
-		<!-- MasterSlaveServers -->
-		<!-- <property name="masterAddress" value="${redis.host}:${redis.port}" />
+		</property>
+		MasterSlaveServers
+		<property name="masterAddress" value="${redis.host}:${redis.port}" />
 		<property name="slaveAddresses">
 			<array>
 				<value>${redis.host}:${redis.port}</value>
 			</array>
-		</property> -->
-	</bean>
+		</property>
+	</bean> -->
 	
 	<!-- Jedis线程 -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<property name="maxIdle" value="${redis.maxIdle}" />
 		<property name="minIdle" value="${redis.minIdle}" />
 		<property name="maxTotal" value="${redis.maxTotal}" />
+		<property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
 		<property name="testOnBorrow" value="true" />
 	</bean>
 	<!-- Redis连接 -->
