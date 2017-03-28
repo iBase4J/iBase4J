@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
-import org.redisson.Redisson;
 import org.redisson.api.RBucket;
 import org.redisson.api.RType;
 import org.redisson.api.RedissonClient;
@@ -35,7 +34,7 @@ public class RedissonHelper implements CacheManager, ApplicationContextAware {
 		if (redisTemplate == null) {
 			synchronized (RedissonHelper.class) {
 				if (redisTemplate == null) {
-					redisTemplate = applicationContext.getBean(Redisson.class);
+					redisTemplate = applicationContext.getBean(RedissonClient.class);
 				}
 			}
 		}

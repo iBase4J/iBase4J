@@ -1,6 +1,7 @@
 package org.ibase4j.core.util;
 
 import org.ibase4j.core.support.cache.CacheManager;
+import org.ibase4j.core.support.cache.RedisHelper;
 import org.ibase4j.core.support.cache.RedissonHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,9 @@ public class CacheUtil {
 	}
 
 	public static CacheManager getCache() {
+        if (cacheManager == null) {
+            cacheManager = new RedisHelper();
+        }
 		return cacheManager;
 	}
 
