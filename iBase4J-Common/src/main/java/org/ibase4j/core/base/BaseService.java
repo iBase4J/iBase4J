@@ -167,10 +167,10 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
                 record.setCreateTime(new Date());
                 mapper.insert(record);
             } else {
+                T org = queryById(record.getId());
                 String lockKey = getLockKey(record.getId());
                 if (CacheUtil.getLock(lockKey)) {
                     try {
-                        T org = queryById(record.getId());
                         T update = InstanceUtil.getDiff(org, record);
                         update.setId(record.getId());
                         mapper.updateById(update);
