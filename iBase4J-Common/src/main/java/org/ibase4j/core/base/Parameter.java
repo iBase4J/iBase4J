@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.toolkit.IdWorker;
 
 /**
  * @author ShenHuaJie
@@ -42,6 +43,8 @@ public class Parameter implements Serializable {
 	private Map<?, ?> map;
 	private Page<?> page;
 	private List<?> list;
+
+    private final String no = "[" + IdWorker.getId() + "]";
 
 	public String getService() {
 		return service;
@@ -104,4 +107,8 @@ public class Parameter implements Serializable {
 		this.list = list;
 		return this;
 	}
+
+    public String getNo() {
+        return no;
+    }
 }

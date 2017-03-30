@@ -21,5 +21,5 @@
 	<!-- 服务端要暴露的服务接口,注解@com.alibaba.dubbo.config.annotation.Service -->
 	<dubbo:annotation package="org.ibase4j" />
 	<!-- 服务消费端配置 -->
-	<dubbo:consumer timeout="${dubbo.timeout}" loadbalance="leastactive" check="false" retries="0" />
+	<dubbo:consumer timeout="${dubbo.timeout}" loadbalance="leastactive" check="false" retries="${dubbo.consumer.retries}" />
 </beans>

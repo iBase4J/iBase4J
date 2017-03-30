@@ -31,13 +31,28 @@ public class UploadController extends BaseController {
 		return null;
 	}
 
+    // 上传文件(支持批量)
+    @RequestMapping("/file")
+    @ApiOperation(value = "上传文件")
+    public Object uploadFile(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+        List<String> fileNames = UploadUtil.uploadImage(request, false);
+        if (fileNames.size() > 0) {
+            modelMap.put("fileNames", fileNames);
+            return setSuccessModelMap(modelMap);
+        } else {
+            setModelMap(modelMap, HttpCode.BAD_REQUEST);
+            modelMap.put("msg", "请选择要上传的文件！");
+            return modelMap;
+        }
+    }
+
 	// 上传文件(支持批量)
 	@RequestMapping("/image")
 	@ApiOperation(value = "上传图片")
 	public Object uploadImage(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
 		List<String> fileNames = UploadUtil.uploadImage(request, true);
 		if (fileNames.size() > 0) {
-			modelMap.put("imgName", fileNames);
+			modelMap.put("fileNames", fileNames);
 			return setSuccessModelMap(modelMap);
 		} else {
 			setModelMap(modelMap, HttpCode.BAD_REQUEST);
@@ -52,7 +67,7 @@ public class UploadController extends BaseController {
 	public Object uploadImageData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
 		List<String> fileNames = UploadUtil.uploadImageData(request);
 		if (fileNames.size() > 0) {
-			modelMap.put("imgName", fileNames);
+			modelMap.put("fileNames", fileNames);
 			return setSuccessModelMap(modelMap);
 		} else {
 			setModelMap(modelMap, HttpCode.BAD_REQUEST);
