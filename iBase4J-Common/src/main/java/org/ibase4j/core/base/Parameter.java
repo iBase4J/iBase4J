@@ -3,9 +3,9 @@ package org.ibase4j.core.base;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.toolkit.IdWorker;
 
 /**
  * @author ShenHuaJie
@@ -43,8 +43,8 @@ public class Parameter implements Serializable {
 	private Map<?, ?> map;
 	private Page<?> page;
 	private List<?> list;
-	
-	private final String no = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+
+    private final String no = "[" + IdWorker.getId() + "]";
 
 	public String getService() {
 		return service;
