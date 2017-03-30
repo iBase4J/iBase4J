@@ -41,6 +41,7 @@ public final class RedisHelper implements CacheManager, ApplicationContextAware 
                     redisTemplate.setKeySerializer(new StringRedisSerializer());
                     redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
                     redisTemplate.setConnectionFactory(connectionFactory);
+                    redisTemplate.afterPropertiesSet();
                 }
             }
         }
