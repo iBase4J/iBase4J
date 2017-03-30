@@ -11,6 +11,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Redis缓存辅助类
@@ -36,7 +38,10 @@ public final class RedisHelper implements CacheManager, ApplicationContextAware 
                 if (redisTemplate == null) {
                     JedisConnectionFactory connectionFactory = applicationContext.getBean(JedisConnectionFactory.class);
                     redisTemplate = new RedisTemplate<Serializable, Serializable>();
+                    redisTemplate.setKeySerializer(new StringRedisSerializer());
+                    redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
                     redisTemplate.setConnectionFactory(connectionFactory);
+                    redisTemplate.afterPropertiesSet();
                 }
             }
         }
