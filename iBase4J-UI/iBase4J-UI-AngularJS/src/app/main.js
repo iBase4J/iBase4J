@@ -85,8 +85,6 @@ angular.module('app')
         }
 
 		$.ajaxSetup({
-            dataType: 'json',
-			contentType:'application/json;charset=UTF-8',
 			beforeSend: function(evt, request, settings) {
 				//request.url = 'iBase4J-Web' + request.url;
 			},

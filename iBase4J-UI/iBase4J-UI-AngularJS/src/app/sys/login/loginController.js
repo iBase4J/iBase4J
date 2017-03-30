@@ -6,6 +6,8 @@ angular.module('app')
 		$scope.login = function () {
 			$.ajax({
 				type: 'POST',
+	            dataType: 'json',
+				contentType:'application/json;charset=UTF-8',
 				url : '/login',
 				data: angular.toJson($scope.user)
 			}).then(function(result) {

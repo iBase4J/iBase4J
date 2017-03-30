@@ -23,6 +23,8 @@
                 $scope.isDisabled = true;//提交disabled
                 $.ajax({
                 	type: 'POST',
+    	            dataType: 'json',
+    				contentType:'application/json;charset=UTF-8',
     				url :'/scheduled',
     				data: angular.toJson($scope.record)
     			}).then(callback);
