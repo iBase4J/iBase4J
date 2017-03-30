@@ -20,7 +20,7 @@ import org.ibase4j.core.util.TokenUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.Login;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.provider.IBizProvider;
+import org.ibase4j.provider.ISysProvider;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,7 +42,7 @@ import io.swagger.annotations.ApiParam;
  */
 @RestController
 @Api(value = "APP登录接口", description = "APP登录接口")
-public class LoginController extends AbstractController<IBizProvider> {
+public class LoginController extends AbstractController<ISysProvider> {
 
     public String getService() {
         return "sysUserService";
