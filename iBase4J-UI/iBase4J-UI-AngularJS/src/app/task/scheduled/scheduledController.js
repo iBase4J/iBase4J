@@ -11,6 +11,8 @@ angular.module('app')
 	        $scope.loading = true;
 			$.ajax({
 				type: 'PUT',
+	            dataType: 'json',
+				contentType:'application/json;charset=UTF-8',
 				url : '/scheduled/read/tasks',
 				data: angular.toJson($scope.param)
 			}).then(function(result) {
@@ -34,6 +36,8 @@ angular.module('app')
 		$scope.disableItem = function(group, name, enable) {
 			$.ajax({
 				type: 'POST',
+	            dataType: 'json',
+				contentType:'application/json;charset=UTF-8',
 				url : enable==1? '/scheduled/open/task' : '/scheduled/close/task',
 				data: angular.toJson({'taskGroup': group, 'taskName': name})
 			}).then(function(result) {
@@ -66,6 +70,8 @@ angular.module('app')
 		$scope.delItem = function(group, name) {
 			$.ajax({
 				type: 'DELETE',
+	            dataType: 'json',
+				contentType:'application/json;charset=UTF-8',
 				url : '/scheduled',
 				data: angular.toJson({'taskGroup': group, 'taskName': name})
 			}).then(function(result) {

@@ -11,6 +11,8 @@ angular.module('app')
 	        $scope.loading = true;
 			$.ajax({
 				type: 'PUT',
+	            dataType: 'json',
+				contentType:'application/json;charset=UTF-8',
 				url : '/scheduled/read/log',
 				data: angular.toJson($scope.param)
 			}).then(function(result) {

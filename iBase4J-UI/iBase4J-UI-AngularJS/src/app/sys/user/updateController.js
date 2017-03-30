@@ -49,6 +49,8 @@
                 $.ajax({
                 	type: 'POST',
     				url : '/user',
+    	            dataType: 'json',
+    				contentType:'application/json;charset=UTF-8',
     				data: angular.toJson(m)
     			}).then(callback);
             }

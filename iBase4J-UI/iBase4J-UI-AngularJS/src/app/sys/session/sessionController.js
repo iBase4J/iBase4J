@@ -10,8 +10,10 @@ angular.module('app')
 		$scope.search = function () {
 	        $scope.loading = true;
 			$.ajax({
-				url : '/session/read/list',
 				type: 'PUT',
+	            dataType: 'json',
+				contentType:'application/json;charset=UTF-8',
+				url : '/session/read/list',
 				data: angular.toJson($scope.param)
 			}).then(function(result) {
 		        $scope.loading = false;
@@ -35,6 +37,8 @@ angular.module('app')
 			if(account != $rootScope.userInfo.account || confirm('确认要自杀？')){
 				$.ajax({
 					type: 'DELETE',
+		            dataType: 'json',
+					contentType:'application/json;charset=UTF-8',
 					url : '/session',
 					data: angular.toJson({'id': id})
 				}).then(function(result) {

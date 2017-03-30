@@ -66,7 +66,6 @@ public class Realm extends AuthorizingRealm {
 			throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("countSql", 0);
 		params.put("enable", 1);
 		params.put("account", token.getUsername());
 		Parameter parameter = new Parameter("sysUserService", "query").setMap(params);

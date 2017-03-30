@@ -31,8 +31,10 @@
             if(m){
                 $scope.isDisabled = true;//提交disabled
                 $.ajax({
-    				url : '/dic',
     				type: 'POST',
+    	            dataType: 'json',
+    				contentType:'application/json;charset=UTF-8',
+    				url : '/dic',
     				data: angular.toJson($scope.record)
     			}).then(callback);
             }
@@ -71,8 +73,10 @@
         function activate(id) {
 	        $scope.loading = true;
         	$.ajax({
-				url : '/dic/read/detail',
 				type: 'PUT',
+	            dataType: 'json',
+				contentType:'application/json;charset=UTF-8',
+				url : '/dic/read/detail',
 				data: angular.toJson({'id': id})
 			}).then(function(result) {
 		        $scope.loading = false;
