@@ -3,6 +3,7 @@ package org.ibase4j.core.base;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -42,6 +43,8 @@ public class Parameter implements Serializable {
 	private Map<?, ?> map;
 	private Page<?> page;
 	private List<?> list;
+	
+	private final String no = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 
 	public String getService() {
 		return service;
@@ -104,4 +107,8 @@ public class Parameter implements Serializable {
 		this.list = list;
 		return this;
 	}
+
+    public String getNo() {
+        return no;
+    }
 }
