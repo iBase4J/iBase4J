@@ -169,19 +169,25 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
             } else {
                 T org = queryById(record.getId());
                 String lockKey = getLockKey(record.getId());
-                if (CacheUtil.getLock(lockKey)) {
-                    try {
-                        T update = InstanceUtil.getDiff(org, record);
-                        update.setId(record.getId());
-                        mapper.updateById(update);
-                        record = mapper.selectById(record.getId());
-                        CacheUtil.getCache().set(getCacheKey(record.getId()), record);
-                    } finally {
-                        CacheUtil.unlock(lockKey);
-                    }
+                if (StringUtils.isBlank(lockKey)) {
+                    T update = InstanceUtil.getDiff(org, record);
+                    update.setId(record.getId());
+                    mapper.updateById(update);
                 } else {
-                    sleep(20);
-                    return update(record);
+                    if (CacheUtil.getLock(lockKey)) {
+                        try {
+                            T update = InstanceUtil.getDiff(org, record);
+                            update.setId(record.getId());
+                            mapper.updateById(update);
+                            record = mapper.selectById(record.getId());
+                            CacheUtil.getCache().set(getCacheKey(record.getId()), record);
+                        } finally {
+                            CacheUtil.unlock(lockKey);
+                        }
+                    } else {
+                        sleep(20);
+                        return update(record);
+                    }
                 }
             }
         } catch (DuplicateKeyException e) {
@@ -201,19 +207,23 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
     public T queryById(Long id) {
         try {
             String key = getCacheKey(id);
-            T record = (T)CacheUtil.getCache().get(key);
-            if (record == null) {
-                String lockKey = getLockKey(id);
-                if (CacheUtil.getLock(lockKey)) {
-                    record = mapper.selectById(id);
-                    CacheUtil.getCache().set(key, record);
-                    CacheUtil.getCache().del(lockKey);
-                } else {
-                    sleep(20);
-                    return queryById(id);
+            if (StringUtils.isBlank(key)) {
+                return mapper.selectById(id);
+            } else {
+                T record = (T)CacheUtil.getCache().get(key);
+                if (record == null) {
+                    String lockKey = getLockKey(id);
+                    if (CacheUtil.getLock(lockKey)) {
+                        record = mapper.selectById(id);
+                        CacheUtil.getCache().set(key, record);
+                        CacheUtil.getCache().del(lockKey);
+                    } else {
+                        sleep(20);
+                        return queryById(id);
+                    }
                 }
+                return record;
             }
-            return record;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
@@ -255,12 +265,18 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
     /** 获取缓存键值 */
     protected String getCacheKey(Object id) {
         String cacheName = getCacheKey();
+        if (StringUtils.isBlank(cacheName)) {
+            return null;
+        }
         return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
     }
 
     /** 获取缓存键值 */
     protected String getLockKey(Object id) {
         String cacheName = getCacheKey();
+        if (StringUtils.isBlank(cacheName)) {
+            return null;
+        }
         return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":LOCK:").append(id).toString();
     }
 
@@ -272,7 +288,9 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         String cacheName = Constants.cacheKeyMap.get(cls);
         if (StringUtils.isBlank(cacheName)) {
             CacheConfig cacheConfig = cls.getAnnotation(CacheConfig.class);
-            if (cacheConfig == null || cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
+            if (cacheConfig == null) {
+                return null;
+            } else if (cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
                 cacheName = getClass().getName();
             } else {
                 cacheName = cacheConfig.cacheNames()[0];
