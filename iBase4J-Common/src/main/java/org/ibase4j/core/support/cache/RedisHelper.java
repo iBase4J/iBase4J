@@ -123,8 +123,7 @@ public final class RedisHelper implements CacheManager, ApplicationContextAware 
     }
 
     public boolean setnx(String key, Serializable value) {
-        getRedis().boundValueOps(key).setIfAbsent(value);
-        return false;
+        return getRedis().boundValueOps(key).setIfAbsent(value);
     }
 
     public void unlock(String key) {
