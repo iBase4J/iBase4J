@@ -34,7 +34,8 @@ public final class RedisHelper implements CacheManager, ApplicationContextAware 
         if (redisTemplate == null) {
             synchronized (RedisHelper.class) {
                 if (redisTemplate == null) {
-                    redisTemplate = applicationContext.getBean(RedisTemplate.class);
+                    redisTemplate = (RedisTemplate<Serializable, Serializable>)applicationContext
+                            .getBean("redisTemplate");
                 }
             }
         }
