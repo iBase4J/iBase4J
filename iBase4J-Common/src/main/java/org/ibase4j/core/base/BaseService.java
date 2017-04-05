@@ -160,6 +160,11 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
     }
 
     @Transactional
+    public Integer deleteByMap(Map<String, Object> columnMap) {
+        return mapper.deleteByMap(columnMap);
+    }
+
+    @Transactional
     public T update(T record) {
         try {
             record.setUpdateTime(new Date());
