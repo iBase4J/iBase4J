@@ -34,7 +34,7 @@
 				data: {fileData:$scope.myCroppedImage},
 			}).then(function(result){
                     if(result && result.httpCode ==200){//成功
-                        $scope.record['avatar'] =result.imgName[0];
+                        $scope.record['avatar'] =result.fileNames[0];
                         saveData();
                     }else if(result && result.httpCode ==400){
                         saveData();
@@ -56,7 +56,7 @@
             }
             function callback(result){
                 if(result.httpCode ==200){//成功
-                    toaster.clear('*');
+                	toaster.clear('*');
                     toaster.pop('success', '', "保存成功");
                     $timeout(function(){
                         $state.go('main.sys.user.list');
@@ -94,6 +94,8 @@
         	$.ajax({
         		type: 'PUT',
 				url : '/user/read/detail',
+	            dataType: 'json',
+				contentType:'application/json;charset=UTF-8',
 				data: angular.toJson({'id': id})
 			}).then(function(result) {
 		        $scope.loading = false;
