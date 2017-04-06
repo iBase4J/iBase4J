@@ -22,7 +22,9 @@ var app = angular.module('app')
                     controller: 'loginController',
                     resolve: {
                     	deps: ['uiLoad', '$ocLazyLoad', function(uiLoad, $ocLazyLoad) {
-                            return uiLoad.load('src/app/sys/login/loginController.js');
+                            return uiLoad.load('src/app/sys/login/loginController.js').then(function() {
+                                return $ocLazyLoad.load('toaster');
+                            });
                         }]
                       }
                 })
@@ -40,7 +42,9 @@ var app = angular.module('app')
                     controller: 'userController',
                     resolve: {
                     	deps: ['uiLoad', '$ocLazyLoad', function(uiLoad, $ocLazyLoad) {
-                            return uiLoad.load('src/app/sys/user/userController.js');
+                            return uiLoad.load('src/app/sys/user/userController.js').then(function() {
+                                return $ocLazyLoad.load('toaster');
+                            });
                         }]
                       }
                 })
@@ -50,7 +54,9 @@ var app = angular.module('app')
                     controller: 'userUpdateController',
                     resolve: {
                     	deps: ['uiLoad', '$ocLazyLoad', function(uiLoad, $ocLazyLoad) {
-                            return uiLoad.load('src/app/sys/user/updateController.js');
+                            return uiLoad.load('src/app/sys/user/updateController.js').then(function() {
+                                return $ocLazyLoad.load('toaster');
+                            });
                         }]
                       }
                 })
@@ -60,7 +66,9 @@ var app = angular.module('app')
                     controller: 'userUpdateController',
                     resolve: {
                     	deps: ['uiLoad', '$ocLazyLoad', function(uiLoad, $ocLazyLoad) {
-                            return uiLoad.load('src/app/sys/user/updateController.js');
+                            return uiLoad.load('src/app/sys/user/updateController.js').then(function() {
+                                return $ocLazyLoad.load('toaster');
+                            });
                         }]
                       }
                 }) // 部门
