@@ -24,6 +24,9 @@ public class SysCacheService {
         String key = param.get("key");
         logger.info("清缓存[{}]开始......", key);
         CacheUtil.getCache().delAll(Constants.CACHE_NAMESPACE + "*" + key + "*");
+        if (key.contains("Permission")) {
+            CacheUtil.getCache().delAll(Constants.CACHE_NAMESPACE + "*shiro_redis_cache*");
+        }
         logger.info("清缓存[{}]结束!", key);
     }
 }
