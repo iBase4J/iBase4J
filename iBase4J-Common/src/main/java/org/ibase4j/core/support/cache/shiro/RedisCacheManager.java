@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;
+import org.ibase4j.core.Constants;
 
 /**
  * 
@@ -26,7 +27,7 @@ public class RedisCacheManager implements CacheManager {
     /**
      * The Redis key prefix for caches 
      */
-    private String keyPrefix = "shiro_redis_cache:";
+    private String keyPrefix = Constants.CACHE_NAMESPACE + "shiro_redis_cache:";
 
     /**
      * Returns the Redis session keys
