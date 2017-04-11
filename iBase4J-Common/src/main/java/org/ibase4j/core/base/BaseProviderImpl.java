@@ -1,5 +1,6 @@
 package org.ibase4j.core.base;
 
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +11,9 @@ import org.ibase4j.core.util.ExceptionUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.util.ReflectionUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.esotericsoftware.reflectasm.MethodAccess;
 
 public abstract class BaseProviderImpl implements ApplicationContextAware, BaseProvider {
     protected static Logger logger = LogManager.getLogger();
@@ -32,17 +33,25 @@ public abstract class BaseProviderImpl implements ApplicationContextAware, BaseP
             List<?> list = parameter.getList();
             Map<?, ?> map = parameter.getMap();
             Object result = null;
-            MethodAccess methodAccess = MethodAccess.get(service.getClass());
             if (id != null) {
-                result = methodAccess.invoke(service, parameter.getMethod(), parameter.getId());
+                Method method = ReflectionUtils.findMethod(service.getClass(), parameter.getMethod(),
+                    parameter.getId().getClass());
+                result = ReflectionUtils.invokeMethod(method, service, parameter.getId());
             } else if (model != null) {
-                result = methodAccess.invoke(service, parameter.getMethod(), parameter.getModel());
+                Method method = ReflectionUtils.findMethod(service.getClass(), parameter.getMethod(),
+                    parameter.getModel().getClass());
+                result = ReflectionUtils.invokeMethod(method, service, parameter.getModel());
             } else if (list != null) {
-                result = methodAccess.invoke(service, parameter.getMethod(), parameter.getList());
+                Method method = ReflectionUtils.findMethod(service.getClass(), parameter.getMethod(),
+                    parameter.getList().getClass());
+                result = ReflectionUtils.invokeMethod(method, service, parameter.getList());
             } else if (map != null) {
-                result = methodAccess.invoke(service, parameter.getMethod(), parameter.getMap());
+                Method method = ReflectionUtils.findMethod(service.getClass(), parameter.getMethod(),
+                    parameter.getMap().getClass());
+                result = ReflectionUtils.invokeMethod(method, service, parameter.getMap());
             } else {
-                result = methodAccess.invoke(service, parameter.getMethod());
+                Method method = ReflectionUtils.findMethod(service.getClass(), parameter.getMethod());
+                result = ReflectionUtils.invokeMethod(method, service);
             }
             if (result != null) {
                 Parameter response = new Parameter(result);
