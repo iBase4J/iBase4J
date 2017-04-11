@@ -8,7 +8,7 @@
 	<name>iBase4J</name>
 	<packaging>pom</packaging>
 	<url>http://maven.apache.org</url>
-	
+
 	<modules>
 		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-Service</module>
@@ -264,11 +264,6 @@
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-spring</artifactId>
 			<version>${activemq.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.esotericsoftware</groupId>
-			<artifactId>reflectasm</artifactId>
-			<version>1.11.3</version>
 		</dependency>
 		<!-- jackson -->
 		<dependency>
