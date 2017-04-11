@@ -316,7 +316,7 @@ public final class InstanceUtil {
         } else {
             try {
                 Method method = ownerClass.getMethod(methodName);
-                return method.invoke(owner, args);
+                return method.invoke(owner);
             } catch (Exception e) {
                 throw new InstanceException(e);
             }
