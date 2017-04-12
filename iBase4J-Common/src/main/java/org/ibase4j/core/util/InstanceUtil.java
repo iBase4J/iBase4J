@@ -26,8 +26,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.exception.DataParseException;
 import org.ibase4j.core.exception.InstanceException;
+
+import com.esotericsoftware.reflectasm.MethodAccess;
 
 /**
  * 实例辅助类
@@ -271,6 +274,8 @@ public final class InstanceUtil {
         }
     }
 
+    public static Map<String, Class<?>> clazzMap = new HashMap<String, Class<?>>();
+
     /**
      * 新建实例
      * 
@@ -282,12 +287,18 @@ public final class InstanceUtil {
      */
     public static final Object newInstance(String className, Object... args) {
         try {
-            Class<?> newoneClass = Class.forName(className);
+            Class<?> newoneClass = clazzMap.get(className);
+            if (newoneClass == null) {
+                newoneClass = Class.forName(className);
+                clazzMap.put(className, newoneClass); // 缓存class对象
+            }
             return newInstance(newoneClass, args);
         } catch (Exception e) {
             throw new InstanceException(e);
         }
     }
+
+    public static Map<String, MethodAccess> methodMap = new HashMap<String, MethodAccess>();
 
     /**
      * 执行某对象方法
@@ -302,25 +313,24 @@ public final class InstanceUtil {
      */
     public static final Object invokeMethod(Object owner, String methodName, Object... args) {
         Class<?> ownerClass = owner.getClass();
+        String key = null;
         if (args != null) {
             Class<?>[] argsClass = new Class[args.length];
             for (int i = 0, j = args.length; i < j; i++) {
-                argsClass[i] = args[i].getClass();
+                if (args[i] != null) {
+                    argsClass[i] = args[i].getClass();
+                }
             }
-            try {
-                Method method = ownerClass.getMethod(methodName, argsClass);
-                return method.invoke(owner, args);
-            } catch (Exception e) {
-                throw new InstanceException(e);
-            }
+            key = ownerClass + "_" + methodName + "_" + StringUtils.join(argsClass, ","); // 用于区分重载的方法
         } else {
-            try {
-                Method method = ownerClass.getMethod(methodName);
-                return method.invoke(owner);
-            } catch (Exception e) {
-                throw new InstanceException(e);
-            }
+            key = ownerClass + "_" + methodName; // 用于区分重载的方法
         }
+        MethodAccess methodAccess = methodMap.get(key);
+        if (methodAccess == null) {
+            methodAccess = MethodAccess.get(ownerClass);
+            methodMap.put(key, methodAccess); // 缓存Method对象
+        }
+        return methodAccess.invoke(owner, methodName, args);
     }
 
     /**

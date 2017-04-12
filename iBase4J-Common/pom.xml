@@ -141,5 +141,11 @@
 			<artifactId>uasparser</artifactId>
 			<version>0.6.2</version>
 		</dependency>
+		<!-- 反射工具 -->
+		<dependency>
+			<groupId>org.db4j</groupId>
+			<artifactId>reflectasm</artifactId>
+			<version>1.11.4-2</version>
+		</dependency>
 	</dependencies>
 </project>
