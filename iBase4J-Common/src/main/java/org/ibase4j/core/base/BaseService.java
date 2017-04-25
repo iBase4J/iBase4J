@@ -3,6 +3,9 @@ package org.ibase4j.core.base;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +23,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 
 /**
@@ -51,7 +55,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
             size = Integer.valueOf(params.get("pageSize").toString());
         }
         if (DataUtil.isNotEmpty(params.get("orderBy"))) {
-            orderBy = (String)params.get("orderBy");
+            orderBy = (String) params.get("orderBy");
             params.remove("orderBy");
         }
         if (size == -1) {
@@ -68,8 +72,23 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
             Page<T> page = new Page<T>(ids.getCurrent(), ids.getSize());
             page.setTotal(ids.getTotal());
             List<T> records = InstanceUtil.newArrayList();
-            for (Long id : ids.getRecords()) {
-                records.add(this.queryById(id));
+            for (int i = 0; i < ids.getRecords().size(); i++) {
+                records.add(null);
+            }
+            ExecutorService executorService = Executors.newFixedThreadPool(5);
+            for (int i = 0; i < ids.getRecords().size(); i++) {
+                final int index = i;
+                executorService.execute(new Runnable() {
+                    public void run() {
+                        records.set(index, queryById(ids.getRecords().get(index)));
+                    }
+                });
+            }
+            executorService.shutdown();
+            try {
+                executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+            } catch (InterruptedException e) {
+                logger.error("awaitTermination", "", e);
             }
             page.setRecords(records);
             return page;
@@ -83,8 +102,23 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
             Page<Map<String, Object>> page = new Page<Map<String, Object>>(ids.getCurrent(), ids.getSize());
             page.setTotal(ids.getTotal());
             List<Map<String, Object>> records = InstanceUtil.newArrayList();
-            for (Long id : ids.getRecords()) {
-                records.add(InstanceUtil.transBean2Map(this.queryById(id)));
+            for (int i = 0; i < ids.getRecords().size(); i++) {
+                records.add(null);
+            }
+            ExecutorService executorService = Executors.newFixedThreadPool(5);
+            for (int i = 0; i < ids.getRecords().size(); i++) {
+                final int index = i;
+                executorService.execute(new Runnable() {
+                    public void run() {
+                        records.set(index, InstanceUtil.transBean2Map(queryById(ids.getRecords().get(index))));
+                    }
+                });
+            }
+            executorService.shutdown();
+            try {
+                executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+            } catch (InterruptedException e) {
+                logger.error("awaitTermination", "", e);
             }
             page.setRecords(records);
             return page;
@@ -98,10 +132,25 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
             Page<K> page = new Page<K>(ids.getCurrent(), ids.getSize());
             page.setTotal(ids.getTotal());
             List<K> records = InstanceUtil.newArrayList();
-            for (Long id : ids.getRecords()) {
-                T t = this.queryById(id);
-                K k = InstanceUtil.to(t, cls);
-                records.add(k);
+            for (int i = 0; i < ids.getRecords().size(); i++) {
+                records.add(null);
+            }
+            ExecutorService executorService = Executors.newFixedThreadPool(5);
+            for (int i = 0; i < ids.getRecords().size(); i++) {
+                final int index = i;
+                executorService.execute(new Runnable() {
+                    public void run() {
+                        T t = queryById(ids.getRecords().get(index));
+                        K k = InstanceUtil.to(t, cls);
+                        records.set(index, k);
+                    }
+                });
+            }
+            executorService.shutdown();
+            try {
+                executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+            } catch (InterruptedException e) {
+                logger.error("awaitTermination", "", e);
             }
             page.setRecords(records);
             return page;
@@ -113,8 +162,23 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
     public List<T> getList(List<Long> ids) {
         List<T> list = InstanceUtil.newArrayList();
         if (ids != null) {
-            for (Long id : ids) {
-                list.add(this.queryById(id));
+            for (int i = 0; i < ids.size(); i++) {
+                list.add(null);
+            }
+            ExecutorService executorService = Executors.newFixedThreadPool(10);
+            for (int i = 0; i < ids.size(); i++) {
+                final int index = i;
+                executorService.execute(new Runnable() {
+                    public void run() {
+                        list.set(index, queryById(ids.get(index)));
+                    }
+                });
+            }
+            executorService.shutdown();
+            try {
+                executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+            } catch (InterruptedException e) {
+                logger.error("awaitTermination", "", e);
             }
         }
         return list;
@@ -124,10 +188,25 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
     public <K> List<K> getList(List<Long> ids, Class<K> cls) {
         List<K> list = InstanceUtil.newArrayList();
         if (ids != null) {
-            for (Long id : ids) {
-                T t = this.queryById(id);
-                K k = InstanceUtil.to(t, cls);
-                list.add(k);
+            for (int i = 0; i < ids.size(); i++) {
+                list.add(null);
+            }
+            ExecutorService executorService = Executors.newFixedThreadPool(10);
+            for (int i = 0; i < ids.size(); i++) {
+                final int index = i;
+                executorService.execute(new Runnable() {
+                    public void run() {
+                        T t = queryById(ids.get(index));
+                        K k = InstanceUtil.to(t, cls);
+                        list.set(index, k);
+                    }
+                });
+            }
+            executorService.shutdown();
+            try {
+                executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+            } catch (InterruptedException e) {
+                logger.error("awaitTermination", "", e);
             }
         }
         return list;
@@ -143,7 +222,6 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
             mapper.updateById(record);
             CacheUtil.getCache().set(getCacheKey(id), record);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
         }
     }
@@ -154,7 +232,6 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
             mapper.deleteById(id);
             CacheUtil.getCache().del(getCacheKey(id));
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
         }
     }
@@ -172,27 +249,21 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
                 record.setCreateTime(new Date());
                 mapper.insert(record);
             } else {
-                T org = queryById(record.getId());
+                T org = this.queryById(record.getId());
                 String lockKey = getLockKey(record.getId());
-                if (StringUtils.isBlank(lockKey)) {
-                    T update = InstanceUtil.getDiff(org, record);
-                    update.setId(record.getId());
-                    mapper.updateById(update);
-                } else {
-                    if (CacheUtil.getLock(lockKey)) {
-                        try {
-                            T update = InstanceUtil.getDiff(org, record);
-                            update.setId(record.getId());
-                            mapper.updateById(update);
-                            record = mapper.selectById(record.getId());
-                            CacheUtil.getCache().set(getCacheKey(record.getId()), record);
-                        } finally {
-                            CacheUtil.unlock(lockKey);
-                        }
-                    } else {
-                        sleep(20);
-                        return update(record);
+                if (CacheUtil.getLock(lockKey)) {
+                    try {
+                        T update = InstanceUtil.getDiff(org, record);
+                        update.setId(record.getId());
+                        mapper.updateById(update);
+                        record = mapper.selectById(record.getId());
+                        CacheUtil.getCache().set(getCacheKey(record.getId()), record);
+                    } finally {
+                        CacheUtil.unlock(lockKey);
                     }
+                } else {
+                    sleep(20);
+                    return update(record);
                 }
             }
         } catch (DuplicateKeyException e) {
@@ -207,44 +278,41 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         return record;
     }
 
+    protected void sleep(int millis) {
+        try {
+            Thread.sleep(RandomUtils.nextLong(10, millis));
+        } catch (InterruptedException e) {
+            logger.error("", e);
+        }
+    }
+
     @Transactional
     @SuppressWarnings("unchecked")
     public T queryById(Long id) {
-        try {
-            String key = getCacheKey(id);
-            if (StringUtils.isBlank(key)) {
-                return mapper.selectById(id);
-            } else {
-                T record = (T)CacheUtil.getCache().get(key);
-                if (record == null) {
-                    String lockKey = getLockKey(id);
-                    if (CacheUtil.getLock(lockKey)) {
-                        record = mapper.selectById(id);
-                        CacheUtil.getCache().set(key, record);
-                        CacheUtil.getCache().del(lockKey);
-                    } else {
-                        sleep(20);
-                        return queryById(id);
-                    }
+        String key = getCacheKey(id);
+        T record = (T) CacheUtil.getCache().get(key);
+        if (record == null) {
+            String lockKey = getLockKey(id);
+            if (CacheUtil.getLock(lockKey)) {
+                try {
+                    record = mapper.selectById(id);
+                    CacheUtil.getCache().set(key, record);
+                } finally {
+                    CacheUtil.unlock(lockKey);
                 }
-                return record;
+            } else {
+                logger.debug(getClass().getSimpleName() + ":" + id + " retry queryById.");
+                sleep(20);
+                return queryById(id);
             }
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(e.getMessage(), e);
         }
+        return record;
     }
 
     public Page<T> query(Map<String, Object> params) {
         Page<Long> page = getPage(params);
         page.setRecords(mapper.selectIdPage(page, params));
         return getPage(page);
-    }
-
-    public Page<Map<String, Object>> queryMap(Map<String, Object> params) {
-        Page<Long> page = getPage(params);
-        page.setRecords(mapper.selectIdPage(page, params));
-        return getPageMap(page);
     }
 
     public List<T> queryList(Map<String, Object> params) {
@@ -259,29 +327,23 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         return getPage(page, cls);
     }
 
-    protected void sleep(int millis) {
-        try {
-            Thread.sleep(RandomUtils.nextLong(10, millis));
-        } catch (InterruptedException e) {
-            logger.error("", e);
-        }
+    public T selectOne(T entity) {
+        return mapper.selectOne(entity);
+    }
+
+    public List<T> selectList(Wrapper<T> entity) {
+        return mapper.selectList(entity);
     }
 
     /** 获取缓存键值 */
     protected String getCacheKey(Object id) {
         String cacheName = getCacheKey();
-        if (StringUtils.isBlank(cacheName)) {
-            return null;
-        }
         return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
     }
 
     /** 获取缓存键值 */
     protected String getLockKey(Object id) {
         String cacheName = getCacheKey();
-        if (StringUtils.isBlank(cacheName)) {
-            return null;
-        }
         return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":LOCK:").append(id).toString();
     }
 
@@ -293,9 +355,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         String cacheName = Constants.cacheKeyMap.get(cls);
         if (StringUtils.isBlank(cacheName)) {
             CacheConfig cacheConfig = cls.getAnnotation(CacheConfig.class);
-            if (cacheConfig == null) {
-                return null;
-            } else if (cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
+            if (cacheConfig == null || cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
                 cacheName = getClass().getName();
             } else {
                 cacheName = cacheConfig.cacheNames()[0];
