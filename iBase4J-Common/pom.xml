@@ -147,5 +147,16 @@
 			<artifactId>reflectasm</artifactId>
 			<version>1.11.4-2</version>
 		</dependency>
+		<!-- 二维码 -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>${zxing.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>${zxing.version}</version>
+		</dependency>
 	</dependencies>
 </project>
