@@ -18,6 +18,8 @@
 			</properties>
 		</profile>
 	</profiles>
+	
+	<!-- maven运行方式：tomcat:run 或 jetty:run -->
 
 	<properties>
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
