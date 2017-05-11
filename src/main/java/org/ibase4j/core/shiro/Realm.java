@@ -95,6 +95,8 @@ public class Realm extends AuthorizingRealm {
 
 	/** 保存session */
 	private void saveSession(String account) {
+		Subject currentUser = SecurityUtils.getSubject();
+		Session session = currentUser.getSession();
 		// 踢出用户
 		SysSession record = new SysSession();
 		record.setAccount(account);
@@ -103,12 +105,12 @@ public class Realm extends AuthorizingRealm {
 			for (Object sessionId : sessionIds) {
 				record.setSessionId((String) sessionId);
 				sysSessionService.deleteBySessionId(record);
-				sessionRepository.delete((String) sessionId);
-				sessionRepository.cleanupExpiredSessions();
+				if (!session.getId().equals(sessionId)) {
+					sessionRepository.delete((String) sessionId);
+					sessionRepository.cleanupExpiredSessions();
+				}
 			}
 		}
-		Subject currentUser = SecurityUtils.getSubject();
-		Session session = currentUser.getSession();
 		record.setSessionId(session.getId().toString());
 		String host = (String) session.getAttribute("HOST");
 		record.setIp(StringUtils.isBlank(host) ? session.getHost() : host);
