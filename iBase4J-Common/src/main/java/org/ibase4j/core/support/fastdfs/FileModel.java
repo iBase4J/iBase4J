@@ -48,7 +48,7 @@ public class FileModel implements Serializable {
 					fileInputStream.read(file_buff);
 				}
 				this.content = file_buff;
-				is = getClass().getResourceAsStream("/META-INF/mime.types");
+				is = getClass().getResourceAsStream("/config/mime.types");
 				MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap(is);
 				this.mime = mimetypesFileTypeMap.getContentType(filename);
 				this.key = UUID.randomUUID().toString();

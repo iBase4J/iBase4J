@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
-import java.util.Random;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -29,7 +29,7 @@ import com.google.zxing.common.HybridBinarizer;
  * @since 2017年2月21日 下午1:30:29
  */
 public class QrcodeUtil {
-	public static String createQrcode(String dir, String _text) {
+	public static String createQrcode(String url, String dir, String _text) {
 		String qrcodeFilePath = "";
 		try {
 			int qrcodeWidth = 300;
@@ -37,12 +37,11 @@ public class QrcodeUtil {
 			String qrcodeFormat = "png";
 			HashMap<EncodeHintType, String> hints = new HashMap<EncodeHintType, String>();
 			hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-			BitMatrix bitMatrix = new MultiFormatWriter().encode("http://www.cnblogs.com/java-class/",
-					BarcodeFormat.QR_CODE, qrcodeWidth, qrcodeHeight, hints);
+			BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, qrcodeWidth, qrcodeHeight,
+					hints);
 
 			BufferedImage image = new BufferedImage(qrcodeWidth, qrcodeHeight, BufferedImage.TYPE_INT_RGB);
-			Random random = new Random();
-			File qrcodeFile = new File(dir + "/" + random.nextInt() + "." + qrcodeFormat);
+			File qrcodeFile = new File(dir + "/" + UUID.randomUUID().toString() + "." + qrcodeFormat);
 			ImageIO.write(image, qrcodeFormat, qrcodeFile);
 			MatrixToImageWriter.writeToPath(bitMatrix, qrcodeFormat, qrcodeFile.toPath());
 			qrcodeFilePath = qrcodeFile.getAbsolutePath();

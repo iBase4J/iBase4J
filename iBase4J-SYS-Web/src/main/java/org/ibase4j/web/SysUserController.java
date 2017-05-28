@@ -11,14 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.AbstractController;
-import org.ibase4j.core.base.Parameter;
-import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.support.HttpCode;
-import org.ibase4j.core.util.SecurityUtil;
-import org.ibase4j.core.util.UploadUtil;
-import org.ibase4j.model.SysUser;
-import org.ibase4j.provider.ISysProvider;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +19,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.ibase4j.core.base.AbstractController;
+import org.ibase4j.core.base.Parameter;
+import org.ibase4j.core.support.Assert;
+import org.ibase4j.core.support.HttpCode;
+import org.ibase4j.core.util.SecurityUtil;
+import org.ibase4j.core.util.UploadUtil;
+import org.ibase4j.model.SysUser;
+import org.ibase4j.provider.ISysProvider;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,7 +53,7 @@ public class SysUserController extends AbstractController<ISysProvider> {
 		Assert.length(param.getAccount(), 3, 15, "ACCOUNT");
 		if (param.getId() != null) {
 			if (param.getEnable() == null) {
-				param.setEnable(0);
+				param.setEnable(1);
 			}
 			Parameter parameter = new Parameter(getService(), "queryById").setId(param.getId());
 			SysUser user = (SysUser) provider.execute(parameter).getModel();
@@ -63,6 +63,8 @@ public class SysUserController extends AbstractController<ISysProvider> {
 					param.setPassword(SecurityUtil.encryptPassword(param.getPassword()));
 				}
 			}
+		} else if (StringUtils.isNotBlank(param.getPassword())) {
+			param.setPassword(SecurityUtil.encryptPassword(param.getPassword()));
 		}
 		return super.update(modelMap, param);
 	}
@@ -100,9 +102,9 @@ public class SysUserController extends AbstractController<ISysProvider> {
 		SysUser sysUser = (SysUser) provider.execute(parameter).getModel();
 		modelMap.put("user", sysUser);
 		parameter = new Parameter("sysAuthorizeService", "queryAuthorizeByUserId").setId(id);
-        logger.info("{} execute queryAuthorizeByUserId start...", parameter.getNo());
+		logger.info("{} execute queryAuthorizeByUserId start...", parameter.getNo());
 		List<?> menus = provider.execute(parameter).getList();
-        logger.info("{} execute queryAuthorizeByUserId end.", parameter.getNo());
+		logger.info("{} execute queryAuthorizeByUserId end.", parameter.getNo());
 		modelMap.put("menus", menus);
 		return setSuccessModelMap(modelMap);
 	}
@@ -156,9 +158,9 @@ public class SysUserController extends AbstractController<ISysProvider> {
 		Long userId = getCurrUser();
 		String encryptPassword = SecurityUtil.encryptPassword(param.getOldPassword());
 		Parameter parameter = new Parameter(getService(), "queryById").setId(userId);
-        logger.info("{} execute queryById start...", parameter.getNo());
+		logger.info("{} execute queryById start...", parameter.getNo());
 		SysUser sysUser = (SysUser) provider.execute(parameter).getModel();
-        logger.info("{} execute queryById end.", parameter.getNo());
+		logger.info("{} execute queryById end.", parameter.getNo());
 		Assert.notNull(sysUser, "USER", param.getId());
 		if (!sysUser.getPassword().equals(encryptPassword)) {
 			throw new UnauthorizedException("原密码错误.");

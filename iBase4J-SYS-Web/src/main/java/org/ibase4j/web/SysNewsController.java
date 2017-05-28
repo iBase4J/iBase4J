@@ -3,9 +3,6 @@ package org.ibase4j.web;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.AbstractController;
-import org.ibase4j.model.SysNews;
-import org.ibase4j.provider.ISysProvider;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.ibase4j.core.base.AbstractController;
+import org.ibase4j.model.SysNews;
+import org.ibase4j.provider.ISysProvider;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,14 +32,14 @@ public class SysNewsController extends AbstractController<ISysProvider> {
 	}
 
 	@ApiOperation(value = "查询新闻")
-	@RequiresPermissions("public.news.read")
+	@RequiresPermissions("sys.cms.news.read")
 	@PutMapping(value = "/read/list")
 	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
 		return super.query(modelMap, param);
 	}
 
 	@ApiOperation(value = "新闻详情")
-	@RequiresPermissions("public.news.read")
+	@RequiresPermissions("sys.cms.news.read")
 	@PutMapping(value = "/read/detail")
 	public Object get(ModelMap modelMap, @RequestBody SysNews param) {
 		return super.get(modelMap, param);
@@ -47,14 +47,17 @@ public class SysNewsController extends AbstractController<ISysProvider> {
 
 	@PostMapping
 	@ApiOperation(value = "修改新闻")
-	@RequiresPermissions("public.news.update")
+	@RequiresPermissions("sys.cms.news.update")
 	public Object update(ModelMap modelMap, @RequestBody SysNews param) {
+		if (param.getStatus() == null) {
+			param.setStatus("0");
+		}
 		return super.update(modelMap, param);
 	}
 
 	@DeleteMapping
 	@ApiOperation(value = "删除新闻")
-	@RequiresPermissions("public.news.delete")
+	@RequiresPermissions("sys.cms.news.delete")
 	public Object delete(ModelMap modelMap, @RequestBody SysNews param) {
 		return super.delete(modelMap, param);
 	}

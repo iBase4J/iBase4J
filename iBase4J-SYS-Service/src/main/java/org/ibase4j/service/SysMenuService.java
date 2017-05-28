@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.stereotype.Service;
 import org.ibase4j.core.base.BaseModel;
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.mapper.SysMenuMapper;
 import org.ibase4j.model.SysDic;
 import org.ibase4j.model.SysMenu;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.stereotype.Service;
 
 /**
  * @author ShenHuaJie
@@ -63,7 +63,7 @@ public class SysMenuService extends BaseService<SysMenu> {
 			}
 		}
 		for (SysMenu sysMenu : pageInfo) {
-			if (leafMap.get(sysMenu.getId()) != null) {
+			if (leafMap.get(sysMenu.getId()) != null &&leafMap.get(sysMenu.getId()) > 0) {
 				sysMenu.setLeaf(0);
 			}
 			if (map.get(sysMenu.getId()) != null) {
@@ -73,7 +73,6 @@ public class SysMenuService extends BaseService<SysMenu> {
 
 		return resultList;
 	}
-
 
 	public List<Object> queryTreeList(Map<String, Object> params) {
 		params.put("orderBy", "parent_id,sort_no");

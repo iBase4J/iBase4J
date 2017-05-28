@@ -20,7 +20,7 @@
 				rm.role_id=#{roleId}
 			</if>
 		</where>
-		group by menu_name,menu_id
+		group by menu_name
 		order by menu_id
 	</select>
 </mapper>

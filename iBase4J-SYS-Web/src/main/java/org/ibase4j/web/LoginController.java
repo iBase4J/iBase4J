@@ -35,58 +35,56 @@ import io.swagger.annotations.ApiParam;
 @Api(value = "登录接口", description = "登录接口")
 public class LoginController extends AbstractController<ISysProvider> {
 
-    public String getService() {
-        return "sysUserService";
-    }
+	public String getService() {
+		return "sysUserService";
+	}
 
-    // 登录
-    @ApiOperation(value = "用户登录")
-    @PostMapping("/login")
-    public Object login(@ApiParam(required = true, value = "登录帐号和密码") @RequestBody Login user, ModelMap modelMap,
-        HttpServletRequest request) {
-        Assert.notNull(user.getAccount(), "ACCOUNT");
-        Assert.notNull(user.getPassword(), "PASSWORD");
-        if (LoginHelper.login(user.getAccount(), SecurityUtil.encryptPassword(user.getPassword()))) {
-            request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
-            return setSuccessModelMap(modelMap);
-        }
-        request.setAttribute("msg", "[" + user.getAccount() + "]登录失败.");
-        throw new LoginException(Resources.getMessage("LOGIN_FAIL"));
-    }
+	// 登录
+	@ApiOperation(value = "用户登录")
+	@PostMapping("/login")
+	public Object login(@ApiParam(required = true, value = "登录帐号和密码") @RequestBody Login user, ModelMap modelMap,
+			HttpServletRequest request) {
+		Assert.notNull(user.getAccount(), "ACCOUNT");
+		Assert.notNull(user.getPassword(), "PASSWORD");
+		if (LoginHelper.login(user.getAccount(), SecurityUtil.encryptPassword(user.getPassword()))) {
+			request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
+			return setSuccessModelMap(modelMap);
+		}
+		request.setAttribute("msg", "[" + user.getAccount() + "]登录失败.");
+		throw new LoginException(Resources.getMessage("LOGIN_FAIL"));
+	}
 
-    // 登出
-    @ApiOperation(value = "用户登出")
-    @PostMapping("/logout")
-    public Object logout(ModelMap modelMap) {
-        SecurityUtils.getSubject().logout();
-        return setSuccessModelMap(modelMap);
-    }
+	// 登出
+	@ApiOperation(value = "用户登出")
+	@PostMapping("/logout")
+	public Object logout(HttpServletRequest request, ModelMap modelMap) {
+		SecurityUtils.getSubject().logout();
+		return setSuccessModelMap(modelMap);
+	}
 
-    // 注册
-    @ApiOperation(value = "用户注册")
-    @PostMapping("/regin")
-    public Object regin(ModelMap modelMap, @RequestBody SysUser sysUser) {
-        Assert.notNull(sysUser.getAccount(), "ACCOUNT");
-        Assert.notNull(sysUser.getPassword(), "PASSWORD");
-        sysUser.setPassword(SecurityUtil.encryptPassword(sysUser.getPassword()));
-        provider.execute(new Parameter("sysUserService", "update").setModel(sysUser));
-        if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword())) {
-            return setSuccessModelMap(modelMap);
-        }
-        throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
-    }
+	// 注册
+	@ApiOperation(value = "用户注册")
+	@PostMapping("/regin")
+	public Object regin(ModelMap modelMap, @RequestBody SysUser sysUser) {
+		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
+		Assert.notNull(sysUser.getPassword(), "PASSWORD");
+		sysUser.setPassword(SecurityUtil.encryptPassword(sysUser.getPassword()));
+		provider.execute(new Parameter("sysUserService", "update").setModel(sysUser));
+		if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword())) {
+			return setSuccessModelMap(modelMap);
+		}
+		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
+	}
 
-    // 没有登录
-    @ApiOperation(value = "没有登录")
-    @RequestMapping(value = "/unauthorized", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
-    public Object unauthorized(ModelMap modelMap) throws Exception {
-        return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
-    }
+	// 没有登录
+	@RequestMapping(value = "/unauthorized", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
+	public Object unauthorized(ModelMap modelMap) throws Exception {
+		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
+	}
 
-    // 没有权限
-    @ApiOperation(value = "没有权限")
-    @RequestMapping(value = "/forbidden", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
-    public Object forbidden(ModelMap modelMap) {
-        return setModelMap(modelMap, HttpCode.FORBIDDEN);
-    }
+	// 没有权限
+	@RequestMapping(value = "/forbidden", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
+	public Object forbidden(ModelMap modelMap) {
+		return setModelMap(modelMap, HttpCode.FORBIDDEN);
+	}
 }

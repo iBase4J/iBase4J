@@ -3,17 +3,17 @@ package org.ibase4j.web;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.ibase4j.core.base.AbstractController;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.model.SysEmailConfig;
 import org.ibase4j.provider.ISysProvider;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -52,7 +52,7 @@ public class SysEmailConfigController extends AbstractController<ISysProvider> {
 	@RequestMapping(method = RequestMethod.POST)
 	public Object update(ModelMap modelMap, @RequestBody SysEmailConfig param) {
 		if (param.getId() != null) {
-			Parameter parameter = new Parameter("sysEmailConfigService", "queryById").setModel(param);
+			Parameter parameter = new Parameter("sysEmailConfigService", "queryById").setId(param.getId());
 			SysEmailConfig result = (SysEmailConfig) provider.execute(parameter).getModel();
 			if (param.getSenderPassword() != null && !param.getSenderPassword().equals(result.getSenderPassword())) {
 				param.setSenderPassword(SecurityUtil.encryptMd5(param.getSenderPassword()));

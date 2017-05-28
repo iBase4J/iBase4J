@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.CacheUtil;
@@ -15,11 +20,6 @@ import org.ibase4j.mapper.SysUserThirdpartyMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.model.SysUserThirdparty;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -30,7 +30,7 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @version 2016-08-27 22:39:42
  */
 @Service
-@CacheConfig(cacheNames = "SysUser")
+@CacheConfig(cacheNames = "sysUser")
 public class SysUserService extends BaseService<SysUser> {
 	@Autowired
 	private SysUserThirdpartyMapper thirdpartyMapper;
@@ -40,7 +40,7 @@ public class SysUserService extends BaseService<SysUser> {
 	private SysDeptService sysDeptService;
 	@Autowired
 	private SysAuthorizeService sysAuthorizeService;
-
+	
 	public SysUser queryById(Long id) {
 		SysUser sysUser = super.queryById(id);
 		if (sysUser != null) {
@@ -55,13 +55,13 @@ public class SysUserService extends BaseService<SysUser> {
 		}
 		return sysUser;
 	}
-
+	
 	public Page<SysUser> query(Map<String, Object> params) {
 		Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
 		Page<SysUser> pageInfo = super.query(params);
 		for (SysUser userBean : pageInfo.getRecords()) {
 			if (userBean.getUserType() != null) {
-				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType().toString()));
+				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType()));
 			}
 			if (userBean.getDeptId() != null) {
 				SysDept sysDept = sysDeptService.queryById(userBean.getDeptId());
@@ -92,7 +92,7 @@ public class SysUserService extends BaseService<SysUser> {
 	public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
 		SysUser sysUser = new SysUser();
 		sysUser.setSex(0);
-		sysUser.setUserType(1);
+		sysUser.setUserType("1");
 		sysUser.setPassword(SecurityUtil.encryptPassword("123456"));
 		sysUser.setUserName(thirdPartyUser.getUserName());
 		sysUser.setAvatar(thirdPartyUser.getAvatarUrl());

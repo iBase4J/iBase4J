@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.model.SysParam;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
 
 /**
  * @author ShenHuaJie
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 @Service
 @CacheConfig(cacheNames = "sysParam")
 public class SysParamService extends BaseService<SysParam> {
-
     @Cacheable(value = Constants.CACHE_NAMESPACE + "sysParams")
     public Map<String, String> getAllParams() {
         Map<String, Object> params = InstanceUtil.newHashMap();

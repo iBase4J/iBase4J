@@ -29,7 +29,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-
 /**
  * 上传辅助类 与Spring.multipartResolver冲突
  * 
@@ -84,6 +83,41 @@ public final class UploadUtil {
 		}
 		return fileItems;
 	}
+
+    /** 上传文件处理(支持批量) */
+    public static List<String> uploadFile(HttpServletRequest request) {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+                request.getSession().getServletContext());
+        List<String> fileNames = InstanceUtil.newArrayList();
+        if (multipartResolver.isMultipart(request)) {
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+            String pathDir = getUploadDir(request);
+            File dirFile = new File(pathDir);
+            if (!dirFile.isDirectory()) {
+                dirFile.mkdirs();
+            }
+            for (Iterator<String> iterator = multiRequest.getFileNames(); iterator.hasNext();) {
+                String key = iterator.next();
+                MultipartFile multipartFile = multiRequest.getFile(key);
+                if (multipartFile != null) {
+                    String name = multipartFile.getOriginalFilename();
+                    String uuid = UUID.randomUUID().toString();
+                    String postFix = name.substring(name.lastIndexOf(".")).toLowerCase();
+                    String fileName = uuid + postFix;
+                    String filePath = pathDir + File.separator + fileName;
+                    File file = new File(filePath);
+                    file.setWritable(true, false);
+                    try {
+                        multipartFile.transferTo(file);
+                        fileNames.add(fileName);
+                    } catch (Exception e) {
+                        logger.error(name + "保存失败", e);
+                    }
+                }
+            }
+        }
+        return fileNames;
+    }
 
 	/** 上传文件处理(支持批量) */
 	public static List<String> uploadImage(HttpServletRequest request, boolean lessen) {
