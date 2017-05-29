@@ -33,6 +33,13 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>com.taobao</groupId>
+			<artifactId>api</artifactId>
+			<version>20170317</version>
+    		<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/taobao-sdk-20170317.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>org.ibase4j</groupId>
 			<artifactId>iBase4J-SYS-Facade</artifactId>
 			<version>${project.version}</version>
@@ -119,6 +126,12 @@
 			<groupId>org.db4j</groupId>
 			<artifactId>reflectasm</artifactId>
 			<version>1.11.4-2</version>
+		</dependency>
+		<!--  -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger.version}</version>
 		</dependency>
 	</dependencies>
 </project>

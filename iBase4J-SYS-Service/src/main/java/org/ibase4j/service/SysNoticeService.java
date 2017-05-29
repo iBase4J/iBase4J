@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
-@CacheConfig(cacheNames = "sysNoticeTemplate")
+@CacheConfig(cacheNames = "sysNotice")
 public class SysNoticeService extends BaseService<SysNotice> {
 
 }

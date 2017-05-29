@@ -22,12 +22,12 @@ public class SysEventService extends BaseService<SysEvent> {
 		for (SysEvent sysEvent : page.getRecords()) {
 			Long createBy = sysEvent.getCreateBy();
 			if (createBy != null) {
-                SysUser sysUser = sysUserService.queryById(createBy);
-                if (sysUser != null) {
-                    sysEvent.setUserName(sysUser.getUserName());
-                } else {
-                    sysEvent.setUserName(createBy.toString());
-                }
+				SysUser sysUser = sysUserService.queryById(createBy);
+				if (sysUser != null) {
+					sysEvent.setUserName(sysUser.getUserName());
+				} else {
+					sysEvent.setUserName(createBy.toString());
+				}
 			}
 		}
 		return page;

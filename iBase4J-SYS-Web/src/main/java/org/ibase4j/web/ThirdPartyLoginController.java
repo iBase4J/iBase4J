@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.ibase4j.core.base.AbstractController;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.config.Resources;
@@ -15,10 +19,6 @@ import org.ibase4j.core.support.login.ThirdPartyLoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.provider.ISysProvider;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSONObject;
 

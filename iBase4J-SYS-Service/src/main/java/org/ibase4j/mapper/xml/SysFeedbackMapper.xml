@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.mapper.SysFeedbackMapper">
+	<select id="selectIdPage" resultType="java.lang.Long">
+		select id_ from sys_feedback
+		<where>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					type_ like CONCAT('%',#{cm.keyword},'%')
+					or user_name like CONCAT('%',#{cm.keyword},'%')
+					or content_ like CONCAT('%',#{cm.keyword},'%')
+					or resource_ like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -7,6 +7,15 @@
 			<if test="cm.type != null and cm.type != ''">
 			and type_=#{cm.type}
 			</if>
+			<if test="cm.parentType != null and cm.parentType != ''">
+			and parent_type=#{cm.parentType}
+			</if>
+			<if test="cm.parentCode != null and cm.parentCode != ''">
+			and parent_code=#{cm.parentCode}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (type_ like #{cm.keyword}"%" OR code_ like #{cm.keyword}"%")
+			</if>
 		</where>
 	</select>
 </mapper>

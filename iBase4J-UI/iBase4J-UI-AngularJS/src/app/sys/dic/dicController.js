@@ -13,7 +13,7 @@ angular.module('app')
 				type: 'PUT',
 	            dataType: 'json',
 				contentType:'application/json;charset=UTF-8',
-				url : '/dic/read/list',
+				url : '/dic/read/page',
 				data: angular.toJson($scope.param)
 			}).then(function(result) {
 		        $scope.loading = false;
