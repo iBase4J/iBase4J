@@ -25,6 +25,17 @@
 				<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL" />
 				<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
 			</Filters>
+            <DefaultRolloverStrategy>
+                <!-- 删除指定目录下7天之前的日志-->
+                <Delete basePath="${LOG_HOME}/${BACKUP_HOME}" maxDepth="1">
+                    <IfFileName glob="*/${SERVER_NAME}*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+                <Delete basePath="${LOG_HOME}/dev_${BACKUP_HOME}" maxDepth="1">
+                    <IfFileName glob="*/dev_${SERVER_NAME}*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
 		</RollingFile>
 		<!-- 只显示error级别的信息 -->
 		<RollingFile name="RollingFileError"
