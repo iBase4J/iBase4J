@@ -12,6 +12,8 @@ import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -23,10 +25,15 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvider<T> {
+public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvider<T>, ApplicationContextAware {
 	protected Logger logger = LogManager.getLogger(getClass());
 	@Autowired
 	protected BaseMapper<T> mapper;
+	protected ApplicationContext applicationContext;
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
 	/** 分页查询 */
 	public static Page<Long> getPage(Map<String, Object> params) {

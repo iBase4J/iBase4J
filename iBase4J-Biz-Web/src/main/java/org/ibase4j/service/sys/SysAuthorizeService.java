@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.ibase4j.core.exception.IllegalParameterException;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.sys.SysMenu;
-import org.ibase4j.model.sys.SysRoleMenu;
-import org.ibase4j.model.sys.SysUserMenu;
-import org.ibase4j.model.sys.SysUserRole;
-import org.ibase4j.provider.sys.ISysAuthorizeProvider;
+import org.ibase4j.model.SysMenu;
+import org.ibase4j.model.SysRoleMenu;
+import org.ibase4j.model.SysUserMenu;
+import org.ibase4j.model.SysUserRole;
+import org.ibase4j.provider.ISysAuthorizeProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

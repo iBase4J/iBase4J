@@ -22,7 +22,6 @@
 
 	<properties>
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
-		<scheduler.jdbc.config.path>classpath:config/jdbc.properties</scheduler.jdbc.config.path>
 		<sys.jdbc.config.path>classpath:config/jdbc.properties</sys.jdbc.config.path>
 		<system.config.path>classpath:config/system.properties</system.config.path>
 		<!-- 编码 -->
@@ -30,35 +29,40 @@
 		<!-- spring版本号 -->
 		<spring.version>4.3.0.RELEASE</spring.version>
 		<spring-session.version>1.3.0.RELEASE</spring-session.version>
-		<spring-data-redis.version>1.8.0.M1</spring-data-redis.version>
+		<spring-data-redis.version>1.8.1.RELEASE</spring-data-redis.version>
 		<!-- 数据库 -->
 		<mysql.version>5.1.39</mysql.version>
 		<sharding-jdbc.version>1.4.1</sharding-jdbc.version>
 		<!-- mybatis版本号 -->
-		<mybatis.version>3.4.1</mybatis.version>
-		<mybatis-spring.version>1.3.0</mybatis-spring.version>
-		<mybatis-plus.version>2.0</mybatis-plus.version>
+		<mybatis.version>3.4.2</mybatis.version>
+		<mybatis-spring.version>1.3.1</mybatis-spring.version>
+		<mybatis-plus.version>2.0.7</mybatis-plus.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.9</slf4j.version>
-		<log4j.version>2.4.1</log4j.version>
+		<log4j.version>2.8.2</log4j.version>
 		<disruptor.version>3.3.4</disruptor.version>
 		<!-- -->
 		<druid.version>1.0.27</druid.version>
 		<dubbo.version>2.5.3</dubbo.version>
-		<fastjson.version>1.2.23</fastjson.version>
+		<fastjson.version>1.2.28</fastjson.version>
 		<!-- -->
 		<poi.version>3.9</poi.version>
 		<jxl.version>2.6.12</jxl.version>
 		<xfire.version>1.2.6</xfire.version>
 		<jsch.version>0.1.53</jsch.version>
 		<jedis.version>2.9.0</jedis.version>
-		<redisson.version>2.7.2</redisson.version>
+		<zxing.version>3.3.0</zxing.version>
+		<redisson.version>3.3.1</redisson.version>
+		<!-- <redisson.version>2.7.2</redisson.version> -->
+		<jackson.version>2.8.6</jackson.version>
 		<shiro.version>1.2.4</shiro.version>
 		<quartz.version>2.2.3</quartz.version>
 		<aspectj.version>1.8.9</aspectj.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<activemq.version>5.13.3</activemq.version>
 		<jsqlparser.version>0.9.5</jsqlparser.version>
+		<springfox.version>2.6.1</springfox.version>
+		<swagger.version>1.5.13</swagger.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 	</properties>
 

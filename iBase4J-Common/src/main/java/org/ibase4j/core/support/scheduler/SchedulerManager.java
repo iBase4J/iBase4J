@@ -7,11 +7,11 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.exception.BusinessException;
+import org.ibase4j.core.support.scheduler.TaskScheduled.JobType;
+import org.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
 import org.ibase4j.core.support.scheduler.job.BaseJob;
 import org.ibase4j.core.support.scheduler.job.StatefulJob;
 import org.ibase4j.core.util.DataUtil;
-import org.ibase4j.model.scheduler.TaskScheduled;
-import org.ibase4j.model.scheduler.TaskScheduled.JobType;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
@@ -87,8 +87,11 @@ public class SchedulerManager implements InitializingBean {
                     job.setNextFireTime(trigger.getNextFireTime());
                     JobDataMap jobDataMap = trigger.getJobDataMap();
                     job.setTaskType(jobDataMap.getString("taskType"));
+                    job.setTargetSystem(jobDataMap.getString("targetSystem"));
                     job.setTargetObject(jobDataMap.getString("targetObject"));
                     job.setTargetMethod(jobDataMap.getString("targetMethod"));
+                    job.setContactName(jobDataMap.getString("contactName"));
+                    job.setContactEmail(jobDataMap.getString("contactEmail"));
                     job.setTaskDesc(jobDetail.getDescription());
                     String jobClass = jobDetail.getJobClass().getSimpleName();
                     if (jobClass.equals("StatefulJob")) {
@@ -137,6 +140,9 @@ public class SchedulerManager implements InitializingBean {
         String jobType = taskScheduled.getJobType();
         String taskType = taskScheduled.getTaskType();
         JobDataMap jobDataMap = new JobDataMap();
+        if (TaskType.dubbo.equals(taskType)) {
+            jobDataMap.put("targetSystem", taskScheduled.getTargetSystem());
+        }
         jobDataMap.put("targetObject", targetObject);
         jobDataMap.put("targetMethod", targetMethod);
         jobDataMap.put("taskType", taskType);

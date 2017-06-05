@@ -7,30 +7,34 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.redisson.Redisson;
+import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.core.util.PropertiesUtil;
 import org.redisson.api.RBucket;
 import org.redisson.api.RType;
 import org.redisson.api.RedissonClient;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.PropertiesUtil;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /**
  * Redis缓存辅助类
  */
-public class RedissonHelper extends CacheManager {
+public class RedissonHelper implements CacheManager, ApplicationContextAware {
 
 	private RedissonClient redisTemplate = null;
 	private Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
+
+	protected ApplicationContext applicationContext;
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
 	// 获取连接
 	private RedissonClient getRedis() {
 		if (redisTemplate == null) {
 			synchronized (RedissonHelper.class) {
 				if (redisTemplate == null) {
-					WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
-					redisTemplate = wac.getBean(Redisson.class);
+					redisTemplate = applicationContext.getBean(RedissonClient.class);
 				}
 			}
 		}
@@ -49,14 +53,14 @@ public class RedissonHelper extends CacheManager {
 
 	public final void set(final String key, final Serializable value) {
 		RBucket<Object> temp = getRedisBucket(key);
-		expire(temp, EXPIRE);
 		temp.set(value);
+        expire(temp, EXPIRE);
 	}
 
 	public final void set(final String key, final Serializable value, int seconds) {
 		RBucket<Object> temp = getRedisBucket(key);
-		expire(temp, seconds);
 		temp.set(value);
+        expire(temp, seconds);
 	}
 
 	public final void multiSet(final Map<String, Object> temps) {
@@ -90,7 +94,7 @@ public class RedissonHelper extends CacheManager {
 	 * @return
 	 */
 	private final void expire(final RBucket<Object> bucket, final int seconds) {
-		bucket.expireAsync(seconds, TimeUnit.SECONDS);
+		bucket.expire(seconds, TimeUnit.SECONDS);
 	}
 
 	/**
@@ -136,5 +140,17 @@ public class RedissonHelper extends CacheManager {
 
 	public void unlock(String key) {
 		getRedis().getLock(key).unlock();
+	}
+
+	public void hset(String key, String field, String value) {
+		getRedis().getMap(key).put(field, value);
+	}
+
+	public Object hget(String key, String field) {
+		return getRedis().getMap(key).get(field);
+	}
+
+	public void hdel(String key, String field) {
+		getRedis().getMap(key).remove(field);
 	}
 }
