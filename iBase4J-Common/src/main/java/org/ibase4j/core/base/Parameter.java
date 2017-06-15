@@ -32,8 +32,10 @@ public class Parameter implements Serializable {
 			this.map = (Map<?, ?>) result;
 		} else if (result instanceof List<?>) {
 			this.list = (List<?>) result;
-		} else {
+		} else if (result instanceof Object[]) {
 			this.param = (Object[]) result;
+		} else {
+			this.result = result;
 		}
 	}
 
@@ -46,6 +48,7 @@ public class Parameter implements Serializable {
 	private Map<?, ?> map;
 	private Page<?> page;
 	private List<?> list;
+	private Object result;
 
 	private final String no = "[" + IdWorker.getId() + "]";
 
@@ -122,5 +125,14 @@ public class Parameter implements Serializable {
 
 	public String getNo() {
 		return no;
+	}
+
+	public Object getResult() {
+		return result;
+	}
+
+	public Parameter setResult(Object result) {
+		this.result = result;
+		return this;
 	}
 }
