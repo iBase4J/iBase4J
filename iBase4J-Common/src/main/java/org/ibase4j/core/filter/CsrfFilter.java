@@ -46,11 +46,9 @@ public class CsrfFilter implements Filter {
 			// 获取请求url地址
 			String url = req.getRequestURL().toString();
 			String referurl = req.getHeader("Referer");
-			logger.info("referurl----->" + referurl);
 			if (isWhiteReq(referurl)) {
 				chain.doFilter(request, response);
 			} else {
-
 				req.getRequestDispatcher("/").forward(req, res);
 
 				// 记录跨站请求日志
@@ -58,7 +56,7 @@ public class CsrfFilter implements Filter {
 				String date = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 				String clientIp = WebUtil.getHost(req);
 
-				log = clientIp + "||" + date + "||" + referurl + "||" + url;
+				log = "跨站请求---->>>" + clientIp + "||" + date + "||" + referurl + "||" + url;
 				logger.warn(log);
 				return;
 			}
