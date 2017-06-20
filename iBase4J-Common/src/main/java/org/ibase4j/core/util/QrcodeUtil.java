@@ -29,7 +29,7 @@ import com.google.zxing.common.HybridBinarizer;
  * @since 2017年2月21日 下午1:30:29
  */
 public class QrcodeUtil {
-	public static String createQrcode(String url, String dir, String _text) {
+	public static String createQrcode(String dir, String _text) {
 		String qrcodeFilePath = "";
 		try {
 			int qrcodeWidth = 300;
@@ -37,8 +37,8 @@ public class QrcodeUtil {
 			String qrcodeFormat = "png";
 			HashMap<EncodeHintType, String> hints = new HashMap<EncodeHintType, String>();
 			hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-			BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, qrcodeWidth, qrcodeHeight,
-					hints);
+			BitMatrix bitMatrix = new MultiFormatWriter().encode(_text, BarcodeFormat.QR_CODE, qrcodeWidth,
+					qrcodeHeight, hints);
 
 			BufferedImage image = new BufferedImage(qrcodeWidth, qrcodeHeight, BufferedImage.TYPE_INT_RGB);
 			File qrcodeFile = new File(dir + "/" + UUID.randomUUID().toString() + "." + qrcodeFormat);
