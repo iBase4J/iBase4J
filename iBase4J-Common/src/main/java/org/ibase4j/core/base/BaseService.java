@@ -23,6 +23,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -253,6 +254,12 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	@Transactional
 	public Integer deleteByMap(Map<String, Object> columnMap) {
 		return mapper.deleteByMap(columnMap);
+	}
+
+	@Transactional
+	public Integer deleteByEntity(T t) {
+		Wrapper<T> wrapper = new EntityWrapper<T>(t);
+		return mapper.delete(wrapper);
 	}
 
 	@Transactional
