@@ -11,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.util.WebUtil;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import cz.mallat.uasparser.OnlineUpdater;
@@ -52,7 +51,6 @@ public class LocaleInterceptor extends BaseInterceptor {
 				locale = request.getLocale();
 			}
 		}
-		session.setAttribute("HOST", WebUtil.getHost(request));
 		LocaleContextHolder.setLocale(locale);
 
 		try {

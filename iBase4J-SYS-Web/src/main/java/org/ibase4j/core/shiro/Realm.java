@@ -80,7 +80,7 @@ public class Realm extends AuthorizingRealm {
 			}
 			if (user.getPassword().equals(sb.toString())) {
 				WebUtil.saveCurrentUser(user.getId());
-				saveSession(user.getAccount());
+				saveSession(user.getAccount(), token.getHost());
 				AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
 						user.getUserName());
 				return authcInfo;
@@ -94,7 +94,7 @@ public class Realm extends AuthorizingRealm {
 	}
 
 	/** 保存session */
-	private void saveSession(String account) {
+	private void saveSession(String account, String host) {
 		// 踢出用户
 		SysSession record = new SysSession();
 		record.setAccount(account);
@@ -120,7 +120,6 @@ public class Realm extends AuthorizingRealm {
 		}
 		// 保存用户
 		record.setSessionId(currentSessionId);
-		String host = (String) session.getAttribute("HOST");
 		record.setIp(StringUtils.isBlank(host) ? session.getHost() : host);
 		record.setStartTime(session.getStartTimestamp());
 		parameter = new Parameter("sysSessionService", "update").setModel(record);
