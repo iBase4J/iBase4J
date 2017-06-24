@@ -201,10 +201,10 @@ public final class WebUtil {
 
 	/** 获取客户端IP */
 	public static final String getHost(HttpServletRequest request) {
-		String ip = request.getHeader("X-Forwarded-For");
+		String ip = request.getHeader("x-forwarded-for");
 		if (ip != null && ip.indexOf(",") > 0) {
 			// 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-			logger.info("X-Forwarded-For ip: " + ip);
+			logger.info("x-forwarded-for ip: " + ip);
 			ip = ip.substring(0, ip.indexOf(","));
 		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
