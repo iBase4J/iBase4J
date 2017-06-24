@@ -202,32 +202,43 @@ public final class WebUtil {
 	/** 获取客户端IP */
 	public static final String getHost(HttpServletRequest request) {
 		String ip = request.getHeader("X-Forwarded-For");
+		if (ip != null && ip.indexOf(",") > 0) {
+			// 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+			logger.info("X-Forwarded-For ip: " + ip);
+			ip = ip.substring(0, ip.indexOf(","));
+		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
+			logger.info("Proxy-Client-IP ip: " + ip);
 		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("WL-Proxy-Client-IP");
+			logger.info("WL-Proxy-Client-IP ip: " + ip);
+		}
+		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_CLIENT_IP");
+			logger.info("HTTP_CLIENT_IP ip: " + ip);
+		}
+		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+			logger.info("HTTP_X_FORWARDED_FOR ip: " + ip);
 		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("X-Real-IP");
+			logger.info("X-Real-IP ip: " + ip);
 		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
+			logger.info("getRemoteAddr ip: " + ip);
 		}
-		if ("127.0.0.1".equals(ip)) {
+		if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)) {
 			InetAddress inet = null;
 			try { // 根据网卡取本机配置的IP
 				inet = InetAddress.getLocalHost();
 			} catch (UnknownHostException e) {
-				e.printStackTrace();
+				logger.error(Constants.Exception_Head, e);
 			}
 			ip = inet.getHostAddress();
-		}
-		// 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-		if (ip != null && ip.length() > 15) {
-			if (ip.indexOf(",") > 0) {
-				ip = ip.substring(0, ip.indexOf(","));
-			}
 		}
 		return ip;
 	}
