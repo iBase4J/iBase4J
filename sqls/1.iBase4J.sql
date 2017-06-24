@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   `id_` bigint(20) NOT NULL,
   `title_` varchar(50) DEFAULT NULL,
   `request_uri` varchar(50) DEFAULT NULL,
-  `parameters_` varchar(500) DEFAULT NULL,
+  `parameters_` varchar(1024) DEFAULT NULL,
   `method_` varchar(20) DEFAULT NULL,
   `client_host` varchar(50) DEFAULT NULL,
   `user_agent` varchar(300) DEFAULT NULL,

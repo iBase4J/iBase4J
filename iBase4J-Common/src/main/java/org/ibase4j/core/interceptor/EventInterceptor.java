@@ -68,7 +68,8 @@ public class EventInterceptor extends BaseInterceptor {
 				if (path.contains("/upload")) {
 					record.setParameters("");
 				} else {
-					record.setParameters(JSON.toJSONString(request.getParameterMap()));
+					String param = JSON.toJSONString(WebUtil.getParameter(request));
+					record.setParameters(param.length() > 1024 ? param.substring(0, 1024) : param);
 				}
 				record.setStatus(response.getStatus());
 				if (uid != null) {
