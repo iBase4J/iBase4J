@@ -1,7 +1,6 @@
 package org.ibase4j.core.util;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -160,7 +159,7 @@ public final class WebUtil {
 			if (StringUtils.isNotBlank(wholeStr)) {
 				return JSON.parseObject(wholeStr, Map.class);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.error("", e);
 		}
 		return getParameterMap(request);
@@ -176,7 +175,7 @@ public final class WebUtil {
 			if (StringUtils.isNotBlank(wholeStr)) {
 				return JSON.parseObject(wholeStr, cls);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.error("", e);
 		}
 		return Request2ModelUtil.covert(cls, request);
@@ -193,7 +192,7 @@ public final class WebUtil {
 			if (StringUtils.isNotBlank(wholeStr)) {
 				return JSON.parseObject(wholeStr, List.class);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.error("", e);
 		}
 		return Request2ListUtil.covert(cls, request);
@@ -201,35 +200,35 @@ public final class WebUtil {
 
 	/** 获取客户端IP */
 	public static final String getHost(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
+		String ip = request.getHeader("X-Forwarded-For");
 		if (ip != null && ip.indexOf(",") > 0) {
 			// 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-			logger.info("x-forwarded-for ip: " + ip);
+			logger.debug("X-Forwarded-For ip: " + ip);
 			ip = ip.substring(0, ip.indexOf(","));
 		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
-			logger.info("Proxy-Client-IP ip: " + ip);
+			logger.debug("Proxy-Client-IP ip: " + ip);
 		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("WL-Proxy-Client-IP");
-			logger.info("WL-Proxy-Client-IP ip: " + ip);
+			logger.debug("WL-Proxy-Client-IP ip: " + ip);
 		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("HTTP_CLIENT_IP");
-			logger.info("HTTP_CLIENT_IP ip: " + ip);
+			logger.debug("HTTP_CLIENT_IP ip: " + ip);
 		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-			logger.info("HTTP_X_FORWARDED_FOR ip: " + ip);
+			logger.debug("HTTP_X_FORWARDED_FOR ip: " + ip);
 		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getHeader("X-Real-IP");
-			logger.info("X-Real-IP ip: " + ip);
+			logger.debug("X-Real-IP ip: " + ip);
 		}
 		if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
-			logger.info("getRemoteAddr ip: " + ip);
+			logger.debug("getRemoteAddr ip: " + ip);
 		}
 		if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)) {
 			InetAddress inet = null;
