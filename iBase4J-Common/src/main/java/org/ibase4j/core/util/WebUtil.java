@@ -1,7 +1,6 @@
 package org.ibase4j.core.util;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -160,7 +159,7 @@ public final class WebUtil {
 			if (StringUtils.isNotBlank(wholeStr)) {
 				return JSON.parseObject(wholeStr, Map.class);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.error("", e);
 		}
 		return getParameterMap(request);
@@ -176,7 +175,7 @@ public final class WebUtil {
 			if (StringUtils.isNotBlank(wholeStr)) {
 				return JSON.parseObject(wholeStr, cls);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.error("", e);
 		}
 		return Request2ModelUtil.covert(cls, request);
@@ -193,7 +192,7 @@ public final class WebUtil {
 			if (StringUtils.isNotBlank(wholeStr)) {
 				return JSON.parseObject(wholeStr, List.class);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.error("", e);
 		}
 		return Request2ListUtil.covert(cls, request);
