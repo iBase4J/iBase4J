@@ -262,6 +262,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 		return mapper.delete(wrapper);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Transactional
 	public T update(T record) {
 		try {
@@ -269,26 +270,41 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 			if (record.getId() == null) {
 				record.setCreateTime(new Date());
 				mapper.insert(record);
+				try {
+					CacheUtil.getCache().set(getCacheKey(record.getId()), record);
+				} catch (Exception e) {
+					logger.error(Constants.Exception_Head, e);
+				}
 			} else {
-				T org = this.queryById(record.getId());
 				String lockKey = getLockKey("U" + record.getId());
 				if (CacheUtil.getLock(lockKey)) {
 					try {
+						T org = null;
+						String key = getCacheKey(record.getId());
+						try {
+							org = (T) CacheUtil.getCache().get(key);
+						} catch (Exception e) {
+							logger.error(Constants.Exception_Head, e);
+						}
+						if (org == null) {
+							org = mapper.selectById(record.getId());
+						}
+
 						T update = InstanceUtil.getDiff(org, record);
 						update.setId(record.getId());
 						mapper.updateById(update);
 						record = mapper.selectById(record.getId());
+						try {
+							CacheUtil.getCache().set(key, record);
+						} catch (Exception e) {
+							logger.error(Constants.Exception_Head, e);
+						}
 					} finally {
 						CacheUtil.unlock(lockKey);
 					}
 				} else {
 					throw new RuntimeException("数据不一致!请刷新页面重新编辑!");
 				}
-			}
-			try {
-				CacheUtil.getCache().set(getCacheKey(record.getId()), record);
-			} catch (Exception e) {
-				logger.error(Constants.Exception_Head, e);
 			}
 		} catch (DuplicateKeyException e) {
 			logger.error(Constants.Exception_Head, e);
