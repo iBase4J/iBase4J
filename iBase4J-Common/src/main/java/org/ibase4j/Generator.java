@@ -66,9 +66,9 @@ public class Generator {
 		// 自定义 mapper 父类
 		strategy.setSuperMapperClass("org.ibase4j.core.base.BaseMapper");
 		// 自定义 service 父类
-		strategy.setSuperServiceImplClass("org.ibase4j.core.base.BaseService");
+		strategy.setSuperServiceClass("org.ibase4j.core.base.BaseService");
 		// 自定义 service 实现类父类
-		// strategy.setSuperServiceImplClass("org.ibase4j.core.base.BaseService");
+		strategy.setSuperServiceImplClass("org.ibase4j.core.base.BaseService");
 		// 自定义 controller 父类
 		strategy.setSuperControllerClass("org.ibase4j.core.base.AbstractController");
 		// 【实体】是否生成字段常量（默认 false）
@@ -93,6 +93,7 @@ public class Generator {
 			public void initMap() {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("providerClass", "ISysProvider");
+				map.put("providerClassPackage", "org.ibase4j.provider.ISysProvider");
 				this.setMap(map);
 			}
 		};

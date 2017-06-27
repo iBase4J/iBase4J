@@ -17,6 +17,9 @@ import io.swagger.annotations.ApiOperation;
 #if(${superControllerClassPackage})
 import ${superControllerClassPackage};
 #end
+#if(${providerClassPackage})
+import ${providerClassPackage};
+#end
 
 /**
  * <p>
@@ -28,6 +31,7 @@ import ${superControllerClassPackage};
  */
 @Controller
 @RequestMapping("/${table.entityPath}")
+@Api(value = "${table.comment}接口", description = "${table.comment}接口")
 #if(${superControllerClass})
 public class ${table.controllerName} extends ${superControllerClass}<${cfg.providerClass}> {
 #else
