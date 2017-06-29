@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.cache.CacheManager;
+import org.ibase4j.core.support.cache.JedisHelper;
 import org.ibase4j.core.support.cache.RedisHelper;
 import org.ibase4j.core.support.cache.RedissonHelper;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ public class CacheUtil {
 	private static Logger logger = LogManager.getLogger(CacheUtil.class);
 	private static CacheManager cacheManager;
 	private static RedisHelper redisHelper;
+	private static JedisHelper jedisHelper;
 
 	@Bean
 	public CacheManager setCache() {
@@ -47,6 +49,23 @@ public class CacheUtil {
 			}
 		}
 		return redisHelper;
+	}
+
+	@Bean
+	public JedisHelper setJedisHelper() {
+		jedisHelper = getJedisHelper();
+		return jedisHelper;
+	}
+
+	public static JedisHelper getJedisHelper() {
+		if (jedisHelper == null) {
+			synchronized (CacheUtil.class) {
+				if (jedisHelper == null) {
+					jedisHelper = new JedisHelper();
+				}
+			}
+		}
+		return jedisHelper;
 	}
 
 	/** 获取锁 */
