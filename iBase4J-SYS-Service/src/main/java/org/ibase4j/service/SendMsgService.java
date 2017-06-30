@@ -94,7 +94,7 @@ public class SendMsgService {
 			cacheKey1 = "LOGIN_" + DateUtil.getDate() + "_" + sendMsg.getPhone();
 			cacheKey2 = "LOGIN_" + sendMsg.getPhone();
 			String times = StringUtils.defaultIfBlank(paramService.getValue("LOGIN_DAILY_TIMES"), "3");
-			String msg = StringUtils.defaultIfBlank(paramService.getValue("LOGIN_LIMIT_MSG"), "您今天发送验证码的次数已达到最大限制。");
+			String msg = StringUtils.defaultIfBlank(paramService.getValue("LOGIN_LIMIT_MSG"), "您今天登录的次数已达到最大限制。");
 			refreshSendTimes(cacheKey1, 60 * 60 * 24, Integer.parseInt(times), msg);
 			sendRandomCode(sender, sendMsg, cacheKey2);
 			break;

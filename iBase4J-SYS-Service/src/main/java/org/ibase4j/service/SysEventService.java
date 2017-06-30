@@ -20,13 +20,15 @@ public class SysEventService extends BaseService<SysEvent> {
 	public Page<SysEvent> query(Map<String, Object> params) {
 		Page<SysEvent> page = super.query(params);
 		for (SysEvent sysEvent : page.getRecords()) {
-			Long createBy = sysEvent.getCreateBy();
-			if (createBy != null) {
-				SysUser sysUser = sysUserService.queryById(createBy);
-				if (sysUser != null) {
-					sysEvent.setUserName(sysUser.getUserName());
-				} else {
-					sysEvent.setUserName(createBy.toString());
+			if (sysEvent != null) {
+				Long createBy = sysEvent.getCreateBy();
+				if (createBy != null) {
+					SysUser sysUser = sysUserService.queryById(createBy);
+					if (sysUser != null) {
+						sysEvent.setUserName(sysUser.getUserName());
+					} else {
+						sysEvent.setUserName(createBy.toString());
+					}
 				}
 			}
 		}

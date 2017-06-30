@@ -27,15 +27,17 @@ public class SysDicService extends BaseService<SysDic> {
 		List<SysDic> list = queryList(params);
 		Map<String, Map<String, String>> resultMap = InstanceUtil.newHashMap();
 		for (SysDic sysDic : list) {
-			String key = sysDic.getType();
-			if (resultMap.get(key) == null) {
-				Map<String, String> dicMap = InstanceUtil.newHashMap();
-				resultMap.put(key, dicMap);
-			}
-			if (StringUtils.isNotBlank(sysDic.getParentCode())) {
-				resultMap.get(key).put(sysDic.getParentCode() + sysDic.getCode(), sysDic.getCodeText());
-			} else {
-				resultMap.get(key).put(sysDic.getCode(), sysDic.getCodeText());
+			if (sysDic != null) {
+				String key = sysDic.getType();
+				if (resultMap.get(key) == null) {
+					Map<String, String> dicMap = InstanceUtil.newHashMap();
+					resultMap.put(key, dicMap);
+				}
+				if (StringUtils.isNotBlank(sysDic.getParentCode())) {
+					resultMap.get(key).put(sysDic.getParentCode() + sysDic.getCode(), sysDic.getCodeText());
+				} else {
+					resultMap.get(key).put(sysDic.getCode(), sysDic.getCodeText());
+				}
 			}
 		}
 		return resultMap;
