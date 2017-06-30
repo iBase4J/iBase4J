@@ -19,39 +19,43 @@ import org.ibase4j.model.SysParam;
 @Service
 @CacheConfig(cacheNames = "sysParam")
 public class SysParamService extends BaseService<SysParam> {
-    @Cacheable(value = Constants.CACHE_NAMESPACE + "sysParams")
-    public Map<String, String> getAllParams() {
-        Map<String, Object> params = InstanceUtil.newHashMap();
-        params.put("orderBy", "type_,sort_no");
-        List<SysParam> list = queryList(params);
-        Map<String, String> resultMap = InstanceUtil.newHashMap();
-        for (SysParam sysParam : list) {
-            resultMap.put(sysParam.getParamKey(), sysParam.getParamValue());
-        }
-        return resultMap;
-    }
+	@Cacheable(value = Constants.CACHE_NAMESPACE + "sysParams")
+	public Map<String, String> getAllParams() {
+		Map<String, Object> params = InstanceUtil.newHashMap();
+		params.put("orderBy", "type_,sort_no");
+		List<SysParam> list = queryList(params);
+		Map<String, String> resultMap = InstanceUtil.newHashMap();
+		for (SysParam sysParam : list) {
+			if (sysParam != null) {
+				resultMap.put(sysParam.getParamKey(), sysParam.getParamValue());
+			}
+		}
+		return resultMap;
+	}
 
-    @Cacheable(value = Constants.CACHE_NAMESPACE + "sysParamName")
-    public String getName(String key) {
-        if (StringUtils.isBlank(key)) {
-            return "";
-        }
-        Map<String, Object> params = InstanceUtil.newHashMap();
-        params.put("orderBy", "type_,sort_no");
-        List<SysParam> list = queryList(params);
-        for (SysParam sysParam : list) {
-            if (key.equals(sysParam.getParamKey())) {
-                return sysParam.getRemark();
-            }
-        }
-        return "";
-    }
+	@Cacheable(value = Constants.CACHE_NAMESPACE + "sysParamName")
+	public String getName(String key) {
+		if (StringUtils.isBlank(key)) {
+			return "";
+		}
+		Map<String, Object> params = InstanceUtil.newHashMap();
+		params.put("orderBy", "type_,sort_no");
+		List<SysParam> list = queryList(params);
+		for (SysParam sysParam : list) {
+			if (sysParam != null) {
+				if (key.equals(sysParam.getParamKey())) {
+					return sysParam.getRemark();
+				}
+			}
+		}
+		return "";
+	}
 
-    public String getValue(String key) {
-        String value = applicationContext.getBean(SysParamService.class).getAllParams().get(key);
-        if (StringUtils.isBlank(value)) {
-            return "";
-        }
-        return value;
-    }
+	public String getValue(String key) {
+		String value = applicationContext.getBean(SysParamService.class).getAllParams().get(key);
+		if (StringUtils.isBlank(value)) {
+			return "";
+		}
+		return value;
+	}
 }

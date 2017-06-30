@@ -26,7 +26,7 @@ public class SysSessionService extends BaseService<SysSession> {
 	@CachePut
 	@Transactional
 	public SysSession update(SysSession record) {
-		if (record.getId() == null) {
+		if (record != null && record.getId() == null) {
 			record.setUpdateTime(new Date());
 			Long id = ((SysSessionMapper) mapper).queryBySessionId(record.getSessionId());
 			if (id != null) {
@@ -43,11 +43,16 @@ public class SysSessionService extends BaseService<SysSession> {
 
 	// 系统触发,由系统自动管理缓存
 	public void deleteBySessionId(final SysSession sysSession) {
-		((SysSessionMapper) mapper).deleteBySessionId(sysSession.getSessionId());
+		if (sysSession != null) {
+			((SysSessionMapper) mapper).deleteBySessionId(sysSession.getSessionId());
+		}
 	}
 
 	public List<String> querySessionIdByAccount(SysSession sysSession) {
-		return ((SysSessionMapper) mapper).querySessionIdByAccount(sysSession.getAccount());
+		if (sysSession != null) {
+			return ((SysSessionMapper) mapper).querySessionIdByAccount(sysSession.getAccount());
+		}
+		return null;
 	}
 
 	//
@@ -56,10 +61,12 @@ public class SysSessionService extends BaseService<SysSession> {
 		Map<String, Object> columnMap = InstanceUtil.newHashMap();
 		List<SysSession> sessions = queryList(columnMap);
 		for (SysSession sysSession : sessions) {
-			logger.info("检查SESSION : {}", sysSession.getSessionId());
-			if (!CacheUtil.getCache().exists(key + sysSession.getSessionId())) {
-				logger.info("移除SESSION : {}", sysSession.getSessionId());
-				delete(sysSession.getId());
+			if (sysSession != null) {
+				logger.info("检查SESSION : {}", sysSession.getSessionId());
+				if (!CacheUtil.getCache().exists(key + sysSession.getSessionId())) {
+					logger.info("移除SESSION : {}", sysSession.getSessionId());
+					delete(sysSession.getId());
+				}
 			}
 		}
 	}

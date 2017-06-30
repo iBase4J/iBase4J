@@ -63,12 +63,6 @@ public class SysUserService extends BaseService<SysUser> {
 			if (userBean.getUserType() != null) {
 				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType()));
 			}
-			if (userBean.getDeptId() != null) {
-				SysDept sysDept = sysDeptService.queryById(userBean.getDeptId());
-				if (sysDept != null) {
-					userBean.setDeptName(sysDept.getDeptName());
-				}
-			}
 			List<String> permissions = sysAuthorizeService.queryUserPermission(userBean.getId());
 			for (String permission : permissions) {
 				if (StringUtils.isBlank(userBean.getPermission())) {
