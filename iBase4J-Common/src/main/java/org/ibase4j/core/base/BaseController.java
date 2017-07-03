@@ -3,6 +3,7 @@
  */
 package org.ibase4j.core.base;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -16,12 +17,16 @@ import org.apache.shiro.authz.UnauthorizedException;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.exception.BaseException;
 import org.ibase4j.core.exception.IllegalParameterException;
+import org.ibase4j.core.support.DateFormat;
 import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.WebUtil;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -39,6 +44,11 @@ public abstract class BaseController {
 	/** 获取当前用户Id */
 	protected Long getCurrUser() {
 		return WebUtil.getCurrentUser();
+	}
+
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(new DateFormat(), true));
 	}
 
 	/** 设置成功响应代码 */

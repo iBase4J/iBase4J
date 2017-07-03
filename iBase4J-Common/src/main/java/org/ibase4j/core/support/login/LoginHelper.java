@@ -1,5 +1,7 @@
 package org.ibase4j.core.support.login;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.ExpiredCredentialsException;
@@ -8,6 +10,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.exception.LoginException;
+import org.ibase4j.core.util.WebUtil;
 
 /**
  * @author ShenHuaJie
@@ -18,8 +21,8 @@ public final class LoginHelper {
 	}
 
 	/** 用户登录 */
-	public static final Boolean login(String account, String password) {
-		UsernamePasswordToken token = new UsernamePasswordToken(account, password);
+	public static final Boolean login(HttpServletRequest request, String account, String password) {
+		UsernamePasswordToken token = new UsernamePasswordToken(account, password, WebUtil.getHost(request));
 		token.setRememberMe(true);
 		Subject subject = SecurityUtils.getSubject();
 		try {

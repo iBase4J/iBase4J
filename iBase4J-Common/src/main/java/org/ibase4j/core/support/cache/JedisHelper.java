@@ -9,7 +9,6 @@ import java.util.Set;
 import org.ibase4j.core.support.cache.jedis.Executor;
 import org.ibase4j.core.support.cache.jedis.JedisTemplate;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import com.alibaba.fastjson.JSON;
 
@@ -24,7 +23,6 @@ import redis.clients.jedis.Tuple;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
-@Configuration
 public class JedisHelper implements CacheManager {
 	JedisTemplate jedisTemplate;
 

@@ -2,15 +2,14 @@ package org.ibase4j.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.ibase4j.core.base.BaseService;
 import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.support.login.LoginHelper;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.provider.ISysUserProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author ShenHuaJie
@@ -64,7 +63,7 @@ public class SysUserService extends BaseService<ISysUserProvider, SysUser> {
 		return provider.encryptPassword(password);
 	}
 
-	public void thirdPartyLogin(ThirdPartyUser thirdUser) {
+	public SysUser thirdPartyLogin(ThirdPartyUser thirdUser) {
 		SysUser sysUser = null;
 		// 查询是否已经绑定过
 		Long userId = provider.queryUserIdByThirdParty(thirdUser.getOpenid(), thirdUser.getProvider());
@@ -73,7 +72,7 @@ public class SysUserService extends BaseService<ISysUserProvider, SysUser> {
 		} else {
 			sysUser = queryById(userId);
 		}
-		LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
+		return sysUser;
 	}
 
 	public SysUser insertThirdPartyUser(ThirdPartyUser thirdUser) {
