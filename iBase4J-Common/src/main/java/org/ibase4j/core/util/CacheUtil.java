@@ -89,7 +89,7 @@ public class CacheUtil {
 			return false;
 		} catch (Exception e) {
 			logger.error(Constants.Exception_Head, e);
-			return true;
+			return false;
 		}
 	}
 
