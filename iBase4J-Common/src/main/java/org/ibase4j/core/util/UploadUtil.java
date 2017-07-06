@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Base64;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +25,6 @@ import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.support.fastdfs.FileManager;
 import org.ibase4j.core.support.fastdfs.FileModel;
 import org.ibase4j.core.support.ftp.SftpClient;
-import org.ibase4j.core.support.security.BASE64Decoder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -191,8 +191,7 @@ public final class UploadUtil {
 						String preStr = fileStr.substring(0, index + 7);
 						String prefix = preStr.substring(preStr.indexOf("/") + 1, preStr.indexOf(";")).toLowerCase();
 						fileStr = fileStr.substring(fileStr.indexOf(",") + 1);
-						BASE64Decoder decoder = new BASE64Decoder();
-						byte[] bb = decoder.decodeBuffer(fileStr);
+						byte[] bb = Base64.getDecoder().decode(fileStr);
 						for (int j = 0; j < bb.length; ++j) {
 							if (bb[j] < 0) {// 调整异常数据
 								bb[j] += 256;

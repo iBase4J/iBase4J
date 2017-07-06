@@ -324,9 +324,12 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 		}
 	}
 
-	@Transactional
-	@SuppressWarnings("unchecked")
 	public T queryById(Long id) {
+		return queryById(id, 1);
+	}
+
+	@SuppressWarnings("unchecked")
+	private T queryById(Long id, int times) {
 		String key = getCacheKey(id);
 		T record = null;
 		try {
@@ -348,9 +351,12 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 					CacheUtil.unlock(lockKey);
 				}
 			} else {
+				if (times > 3) {
+					return mapper.selectById(id);
+				}
 				logger.debug(getClass().getSimpleName() + ":" + id + " retry queryById.");
 				sleep(20);
-				return queryById(id);
+				return queryById(id, times + 1);
 			}
 		}
 		return record;
