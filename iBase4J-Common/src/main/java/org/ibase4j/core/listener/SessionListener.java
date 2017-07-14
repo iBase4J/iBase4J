@@ -7,7 +7,8 @@ import javax.servlet.http.HttpSessionListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.util.CacheUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * 会话监听器
@@ -18,6 +19,8 @@ import org.ibase4j.core.util.CacheUtil;
 public class SessionListener implements HttpSessionListener {
 	private Logger logger = LogManager.getLogger(SessionListener.class);
 
+	@Autowired
+	RedisTemplate<String, String> redisTemplate;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -29,7 +32,7 @@ public class SessionListener implements HttpSessionListener {
 		HttpSession session = event.getSession();
 		session.setAttribute(Constants.WEBTHEME, "default");
 		logger.info("创建了一个Session连接:[" + session.getId() + "]");
-		setAllUserNumber(1);
+		redisTemplate.opsForSet().add(Constants.ALLUSER_NUMBER, session.getId());
 	}
 
 	/*
@@ -45,35 +48,11 @@ public class SessionListener implements HttpSessionListener {
 			logger.info("销毁了一个Session连接:[" + session.getId() + "]");
 		}
 		session.removeAttribute(Constants.CURRENT_USER);
-		setAllUserNumber(-1);
-	}
-
-	private void setAllUserNumber(int n) {
-        String key = Constants.CACHE_NAMESPACE + "SESSION:LOCK";
-        while (!CacheUtil.getLock(key)) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                logger.error("", e);
-            }
-        }
-        try {
-            Integer number = getAllUserNumber() + n;
-            if (number >= 0) {
-                logger.info("用户数：" + number);
-                CacheUtil.getCache().set(Constants.ALLUSER_NUMBER, number);
-            }
-        } finally {
-            CacheUtil.unlock(key);
-        }
+		redisTemplate.opsForSet().remove(Constants.ALLUSER_NUMBER, session.getId());
 	}
 
 	/** 获取在线用户数量 */
-	public static Integer getAllUserNumber() {
-		Integer v = (Integer) CacheUtil.getCache().get(Constants.ALLUSER_NUMBER);
-		if (v != null) {
-			return v;
-		}
-		return 0;
+	public Integer getAllUserNumber() {
+		return redisTemplate.opsForSet().size(Constants.ALLUSER_NUMBER).intValue();
 	}
 }
