@@ -74,11 +74,11 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(默认类型T) */
-	public Page<T> getPage(Page<Long> ids) {
+	public Page<T> getPage(final Page<Long> ids) {
 		if (ids != null) {
 			Page<T> page = new Page<T>(ids.getCurrent(), ids.getSize());
 			page.setTotal(ids.getTotal());
-			List<T> records = InstanceUtil.newArrayList();
+			final List<T> records = InstanceUtil.newArrayList();
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
@@ -104,11 +104,11 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(默认类型T) */
-	public Page<Map<String, Object>> getPageMap(Page<Long> ids) {
+	public Page<Map<String, Object>> getPageMap(final Page<Long> ids) {
 		if (ids != null) {
 			Page<Map<String, Object>> page = new Page<Map<String, Object>>(ids.getCurrent(), ids.getSize());
 			page.setTotal(ids.getTotal());
-			List<Map<String, Object>> records = InstanceUtil.newArrayList();
+			final List<Map<String, Object>> records = InstanceUtil.newArrayList();
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
@@ -134,11 +134,11 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(cls返回类型Class) */
-	public <K> Page<K> getPage(Page<Long> ids, Class<K> cls) {
+	public <K> Page<K> getPage(Page<Long> ids, final Class<K> cls) {
 		if (ids != null) {
 			Page<K> page = new Page<K>(ids.getCurrent(), ids.getSize());
 			page.setTotal(ids.getTotal());
-			List<K> records = InstanceUtil.newArrayList();
+			final List<K> records = InstanceUtil.newArrayList();
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
@@ -166,8 +166,8 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(默认类型T) */
-	public List<T> getList(List<Long> ids) {
-		List<T> list = InstanceUtil.newArrayList();
+	public List<T> getList(final List<Long> ids) {
+		final List<T> list = InstanceUtil.newArrayList();
 		if (ids != null) {
 			for (int i = 0; i < ids.size(); i++) {
 				list.add(null);
@@ -192,8 +192,8 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(cls返回类型Class) */
-	public <K> List<K> getList(List<Long> ids, Class<K> cls) {
-		List<K> list = InstanceUtil.newArrayList();
+	public <K> List<K> getList(List<Long> ids, final Class<K> cls) {
+		final List<K> list = InstanceUtil.newArrayList();
 		if (ids != null) {
 			for (int i = 0; i < ids.size(); i++) {
 				list.add(null);
