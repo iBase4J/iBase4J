@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.cache.CacheManager;
-import org.ibase4j.core.support.cache.JedisHelper;
 import org.ibase4j.core.support.cache.RedisHelper;
 import org.ibase4j.core.support.cache.RedissonHelper;
 import org.springframework.context.annotation.Bean;
@@ -15,12 +14,19 @@ public class CacheUtil {
 	private static Logger logger = LogManager.getLogger(CacheUtil.class);
 	private static CacheManager cacheManager;
 	private static RedisHelper redisHelper;
-	private static JedisHelper jedisHelper;
 
 	@Bean
+	@Deprecated
 	public CacheManager setCache() {
 		cacheManager = getCache();
 		return cacheManager;
+	}
+
+	@Bean
+	@Deprecated
+	public RedisHelper setRedisHelper() {
+		redisHelper = getRedisHelper();
+		return redisHelper;
 	}
 
 	public static CacheManager getCache() {
@@ -32,40 +38,6 @@ public class CacheUtil {
 			}
 		}
 		return cacheManager;
-	}
-
-	@Bean
-	public RedisHelper setRedisHelper() {
-		redisHelper = getRedisHelper();
-		return redisHelper;
-	}
-
-	public static RedisHelper getRedisHelper() {
-		if (redisHelper == null) {
-			synchronized (CacheUtil.class) {
-				if (redisHelper == null) {
-					redisHelper = new RedisHelper();
-				}
-			}
-		}
-		return redisHelper;
-	}
-
-	@Bean
-	public JedisHelper setJedisHelper() {
-		jedisHelper = getJedisHelper();
-		return jedisHelper;
-	}
-
-	public static JedisHelper getJedisHelper() {
-		if (jedisHelper == null) {
-			synchronized (CacheUtil.class) {
-				if (jedisHelper == null) {
-					jedisHelper = new JedisHelper();
-				}
-			}
-		}
-		return jedisHelper;
 	}
 
 	/** 获取锁 */
@@ -94,6 +66,18 @@ public class CacheUtil {
 	}
 
 	public static void unlock(String key) {
-		getRedisHelper().unlock(key);
+		getRedisHelper().del(key);
 	}
+
+	private static RedisHelper getRedisHelper() {
+		if (redisHelper == null) {
+			synchronized (CacheUtil.class) {
+				if (redisHelper == null) {
+					redisHelper = new RedisHelper();
+				}
+			}
+		}
+		return redisHelper;
+	}
+
 }

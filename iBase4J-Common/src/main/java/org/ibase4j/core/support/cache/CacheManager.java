@@ -27,8 +27,8 @@ public interface CacheManager {
 	public Long ttl(final String key);
 
 	public Object getSet(final String key, final Serializable value);
-	
-	public boolean setnx(final String key, final Serializable value);
+
+	public boolean lock(String key);
 
 	public void unlock(String key);
 
