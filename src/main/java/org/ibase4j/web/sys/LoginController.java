@@ -47,7 +47,7 @@ public class LoginController extends AbstractController {
 	public Object login(@RequestBody SysUser sysUser, ModelMap modelMap, HttpServletRequest request) {
 		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
 		Assert.notNull(sysUser.getPassword(), "PASSWORD");
-		if (LoginHelper.login(sysUser.getAccount(), SecurityUtil.encryptPassword(sysUser.getPassword()))) {
+		if (LoginHelper.login(request, sysUser.getAccount(), SecurityUtil.encryptPassword(sysUser.getPassword()))) {
 			request.setAttribute("msg", "[" + sysUser.getAccount() + "]登录成功.");
 			return setSuccessModelMap(modelMap);
 		}
@@ -70,11 +70,11 @@ public class LoginController extends AbstractController {
 	// 注册
 	@ApiOperation(value = "用户注册")
 	@PostMapping("/regin")
-	public Object regin(ModelMap modelMap, @RequestBody SysUser sysUser) {
+	public Object regin(HttpServletRequest request, ModelMap modelMap, @RequestBody SysUser sysUser) {
 		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
 		Assert.notNull(sysUser.getPassword(), "PASSWORD");
 		sysUserService.update(sysUser);
-		if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword())) {
+		if (LoginHelper.login(request, sysUser.getAccount(), sysUser.getPassword())) {
 			return setSuccessModelMap(modelMap);
 		}
 		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));

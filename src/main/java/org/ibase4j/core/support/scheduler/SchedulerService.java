@@ -79,7 +79,7 @@ public class SchedulerService {
 		if (ids != null) {
 			List<TaskFireLog> records = InstanceUtil.newArrayList();
 			for (Long id : ids.getRecords()) {
-				records.add(InstanceUtil.getBean(getClass()).getFireLogById(id));
+				records.add(InstanceUtil.newInstance(getClass()).getFireLogById(id));
 			}
 			page.setRecords(records);
 		}

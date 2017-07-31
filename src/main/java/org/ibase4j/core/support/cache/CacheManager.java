@@ -3,32 +3,38 @@ package org.ibase4j.core.support.cache;
 import java.io.Serializable;
 import java.util.Set;
 
-public abstract class CacheManager {
-	public abstract Object get(final String key);
+public interface CacheManager {
+	public Object get(final String key);
 
-	public abstract Set<Object> getAll(final String pattern);
+	public Set<Object> getAll(final String pattern);
 
-	public abstract void set(final String key, final Serializable value, int seconds);
+	public void set(final String key, final Serializable value, int seconds);
 
-	public abstract void set(final String key, final Serializable value);
+	public void set(final String key, final Serializable value);
 
-	public abstract Boolean exists(final String key);
+	public Boolean exists(final String key);
 
-	public abstract void del(final String key);
+	public void del(final String key);
 
-	public abstract void delAll(final String pattern);
+	public void delAll(final String pattern);
 
-	public abstract String type(final String key);
+	public String type(final String key);
 
-	public abstract Boolean expire(final String key, final int seconds);
+	public Boolean expire(final String key, final int seconds);
 
-	public abstract Boolean expireAt(final String key, final long unixTime);
+	public Boolean expireAt(final String key, final long unixTime);
 
-	public abstract Long ttl(final String key);
+	public Long ttl(final String key);
 
-	public abstract Object getSet(final String key, final Serializable value);
-	
-	public abstract boolean setnx(final String key, final Serializable value);
+	public Object getSet(final String key, final Serializable value);
 
-	public abstract void unlock(String key);
+	public boolean lock(String key);
+
+	public void unlock(String key);
+
+	public void hset(String key, String field, String value);
+
+	public Object hget(String key, String field);
+
+	public void hdel(String key, String field);
 }

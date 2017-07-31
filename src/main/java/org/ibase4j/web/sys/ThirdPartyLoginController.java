@@ -80,7 +80,7 @@ public class ThirdPartyLoginController extends AbstractController {
 					// 获取第三方用户信息存放到session中
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getWxUserinfo(map.get("access_token"), openId);
 					thirdUser.setProvider("WX");
-					thirdPartyLogin(thirdUser);
+					thirdPartyLogin(request, thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -111,7 +111,7 @@ public class ThirdPartyLoginController extends AbstractController {
 					// 获取第三方用户信息存放到session中
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getQQUserinfo(map.get("access_token"), openId);
 					thirdUser.setProvider("QQ");
-					thirdPartyLogin(thirdUser);
+					thirdPartyLogin(request, thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -143,7 +143,7 @@ public class ThirdPartyLoginController extends AbstractController {
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getSinaUserinfo(json.getString("access_token"),
 							uid);
 					thirdUser.setProvider("SINA");
-					thirdPartyLogin(thirdUser);
+					thirdPartyLogin(request, thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -163,7 +163,7 @@ public class ThirdPartyLoginController extends AbstractController {
 		return "/sns/redirect";
 	}
 
-	private void thirdPartyLogin(ThirdPartyUser param) {
+	private void thirdPartyLogin(HttpServletRequest request, ThirdPartyUser param) {
 		SysUser sysUser = null;
 		// 查询是否已经绑定过
 		Long userId = sysUserService.queryUserIdByThirdParty(param);
@@ -173,7 +173,7 @@ public class ThirdPartyLoginController extends AbstractController {
 		} else {
 			sysUser = sysUserService.queryById(param.getId());
 		}
-		LoginHelper.login(sysUser.getAccount(), sysUser.getPassword());
+		LoginHelper.login(request, sysUser.getAccount(), sysUser.getPassword());
 	}
 
 	private String getRedirectUrl(HttpServletRequest request, String type) {

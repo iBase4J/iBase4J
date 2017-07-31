@@ -122,7 +122,7 @@ public class SysUserController extends BaseController<SysUser> {
 	@ApiOperation(value = "修改用户头像")
 	@PostMapping(value = "/update/avatar")
 	public Object updateAvatar(HttpServletRequest request, ModelMap modelMap) {
-		List<String> fileNames = UploadUtil.uploadImage(request);
+		List<String> fileNames = UploadUtil.uploadImage(request, false);
 		if (fileNames.size() > 0) {
 			SysUser param = new SysUser();
 			param.setId(WebUtil.getCurrentUser());

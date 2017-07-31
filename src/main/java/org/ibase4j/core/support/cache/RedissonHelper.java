@@ -7,38 +7,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.redisson.Redisson;
+import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.core.util.PropertiesUtil;
 import org.redisson.api.RBucket;
 import org.redisson.api.RType;
 import org.redisson.api.RedissonClient;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.PropertiesUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Redis缓存辅助类
  */
-public class RedissonHelper extends CacheManager {
-
-	private RedissonClient redisTemplate = null;
+public class RedissonHelper implements CacheManager {
+	@Autowired
+	private RedissonClient redissonClient;
 	private Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
 
-	// 获取连接
-	private RedissonClient getRedis() {
-		if (redisTemplate == null) {
-			synchronized (RedissonHelper.class) {
-				if (redisTemplate == null) {
-					WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
-					redisTemplate = wac.getBean(Redisson.class);
-				}
-			}
-		}
-		return redisTemplate;
-	}
-
 	private RBucket<Object> getRedisBucket(String key) {
-		return getRedis().getBucket(key);
+		return redissonClient.getBucket(key);
 	}
 
 	public final Object get(final String key) {
@@ -49,18 +34,18 @@ public class RedissonHelper extends CacheManager {
 
 	public final void set(final String key, final Serializable value) {
 		RBucket<Object> temp = getRedisBucket(key);
-		expire(temp, EXPIRE);
 		temp.set(value);
+		expire(temp, EXPIRE);
 	}
 
 	public final void set(final String key, final Serializable value, int seconds) {
 		RBucket<Object> temp = getRedisBucket(key);
-		expire(temp, seconds);
 		temp.set(value);
+		expire(temp, seconds);
 	}
 
 	public final void multiSet(final Map<String, Object> temps) {
-		getRedis().getBuckets().set(temps);
+		redissonClient.getBuckets().set(temps);
 	}
 
 	public final Boolean exists(final String key) {
@@ -69,15 +54,15 @@ public class RedissonHelper extends CacheManager {
 	}
 
 	public final void del(final String key) {
-		getRedis().getKeys().deleteAsync(key);
+		redissonClient.getKeys().deleteAsync(key);
 	}
 
 	public final void delAll(final String pattern) {
-		getRedis().getKeys().deleteByPattern(pattern);
+		redissonClient.getKeys().deleteByPattern(pattern);
 	}
 
 	public final String type(final String key) {
-		RType type = getRedis().getKeys().getType(key);
+		RType type = redissonClient.getKeys().getType(key);
 		if (type == null) {
 			return null;
 		}
@@ -90,7 +75,7 @@ public class RedissonHelper extends CacheManager {
 	 * @return
 	 */
 	private final void expire(final RBucket<Object> bucket, final int seconds) {
-		bucket.expireAsync(seconds, TimeUnit.SECONDS);
+		bucket.expire(seconds, TimeUnit.SECONDS);
 	}
 
 	/**
@@ -101,7 +86,7 @@ public class RedissonHelper extends CacheManager {
 	 * @return
 	 */
 	public final Boolean expireAt(final String key, final long unixTime) {
-		return getRedis().getBucket(key).expireAt(new Date(unixTime));
+		return redissonClient.getBucket(key).expireAt(new Date(unixTime));
 	}
 
 	public final Long ttl(final String key) {
@@ -116,7 +101,7 @@ public class RedissonHelper extends CacheManager {
 
 	public Set<Object> getAll(String pattern) {
 		Set<Object> set = InstanceUtil.newHashSet();
-		Iterable<String> keys = getRedis().getKeys().getKeysByPattern(pattern);
+		Iterable<String> keys = redissonClient.getKeys().getKeysByPattern(pattern);
 		for (Iterator<String> iterator = keys.iterator(); iterator.hasNext();) {
 			String key = iterator.next();
 			set.add(getRedisBucket(key).get());
@@ -130,11 +115,23 @@ public class RedissonHelper extends CacheManager {
 		return true;
 	}
 
-	public boolean setnx(String key, Serializable value) {
-		return getRedis().getLock(key).tryLock();
+	public void hset(String key, String field, String value) {
+		redissonClient.getMap(key).put(field, value);
+	}
+
+	public Object hget(String key, String field) {
+		return redissonClient.getMap(key).get(field);
+	}
+
+	public void hdel(String key, String field) {
+		redissonClient.getMap(key).remove(field);
+	}
+
+	public boolean lock(String key) {
+		return redissonClient.getLock(key).tryLock();
 	}
 
 	public void unlock(String key) {
-		getRedis().getLock(key).unlock();
+		redissonClient.getLock(key).unlock();
 	}
 }

@@ -5,11 +5,10 @@ import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * Redis缓存辅助类
@@ -17,65 +16,51 @@ import org.ibase4j.core.util.PropertiesUtil;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
-public final class RedisHelper extends CacheManager {
-
-	private RedisTemplate<Serializable, Serializable> redisTemplate = null;
+public final class RedisHelper implements CacheManager {
+	@Autowired
+	private RedisTemplate<Serializable, Serializable> redisTemplate;
 	private Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
-
-	// 获取连接
-	@SuppressWarnings("unchecked")
-	private RedisTemplate<Serializable, Serializable> getRedis() {
-		if (redisTemplate == null) {
-			synchronized (RedisHelper.class) {
-				if (redisTemplate == null) {
-					WebApplicationContext wac = ContextLoader.getCurrentWebApplicationContext();
-					redisTemplate = (RedisTemplate<Serializable, Serializable>) wac.getBean("redisTemplate");
-				}
-			}
-		}
-		return redisTemplate;
-	}
 
 	public final Object get(final String key) {
 		expire(key, EXPIRE);
-		return getRedis().boundValueOps(key).get();
+		return redisTemplate.boundValueOps(key).get();
 	}
 
 	public final Set<Object> getAll(final String pattern) {
 		Set<Object> values = InstanceUtil.newHashSet();
-		Set<Serializable> keys = getRedis().keys(pattern);
+		Set<Serializable> keys = redisTemplate.keys(pattern);
 		for (Serializable key : keys) {
 			expire(key.toString(), EXPIRE);
-			values.add(getRedis().opsForValue().get(key));
+			values.add(redisTemplate.opsForValue().get(key));
 		}
 		return values;
 	}
 
 	public final void set(final String key, final Serializable value, int seconds) {
-		getRedis().boundValueOps(key).set(value);
+		redisTemplate.boundValueOps(key).set(value);
 		expire(key, seconds);
 	}
 
 	public final void set(final String key, final Serializable value) {
-		getRedis().boundValueOps(key).set(value);
+		redisTemplate.boundValueOps(key).set(value);
 		expire(key, EXPIRE);
 	}
 
 	public final Boolean exists(final String key) {
-		return getRedis().hasKey(key);
+		return redisTemplate.hasKey(key);
 	}
 
 	public final void del(final String key) {
-		getRedis().delete(key);
+		redisTemplate.delete(key);
 	}
 
 	public final void delAll(final String pattern) {
-		getRedis().delete(getRedis().keys(pattern));
+		redisTemplate.delete(redisTemplate.keys(pattern));
 	}
 
 	public final String type(final String key) {
 		expire(key, EXPIRE);
-		return getRedis().type(key).getClass().getName();
+		return redisTemplate.type(key).getClass().getName();
 	}
 
 	/**
@@ -84,7 +69,7 @@ public final class RedisHelper extends CacheManager {
 	 * @return
 	 */
 	public final Boolean expire(final String key, final int seconds) {
-		return getRedis().expire(key, seconds, TimeUnit.SECONDS);
+		return redisTemplate.expire(key, seconds, TimeUnit.SECONDS);
 	}
 
 	/**
@@ -95,35 +80,50 @@ public final class RedisHelper extends CacheManager {
 	 * @return
 	 */
 	public final Boolean expireAt(final String key, final long unixTime) {
-		return getRedis().expireAt(key, new Date(unixTime));
+		return redisTemplate.expireAt(key, new Date(unixTime));
 	}
 
 	public final Long ttl(final String key) {
-		return getRedis().getExpire(key, TimeUnit.SECONDS);
+		return redisTemplate.getExpire(key, TimeUnit.SECONDS);
 	}
 
 	public final void setrange(final String key, final long offset, final String value) {
+		redisTemplate.boundValueOps(key).set(value, offset);
 		expire(key, EXPIRE);
-		getRedis().boundValueOps(key).set(value, offset);
 	}
 
 	public final String getrange(final String key, final long startOffset, final long endOffset) {
 		expire(key, EXPIRE);
-		return getRedis().boundValueOps(key).get(startOffset, endOffset);
+		return redisTemplate.boundValueOps(key).get(startOffset, endOffset);
 	}
 
 	public final Object getSet(final String key, final Serializable value) {
 		expire(key, EXPIRE);
-		return getRedis().boundValueOps(key).getAndSet(value);
+		return redisTemplate.boundValueOps(key).getAndSet(value);
 	}
 
 	public boolean setnx(String key, Serializable value) {
-		getRedis().boundValueOps(key).setIfAbsent(value);
+		return redisTemplate.boundValueOps(key).setIfAbsent(value);
+	}
+
+	public boolean lock(String key) {
 		return false;
 	}
 
 	public void unlock(String key) {
 		del(key);
+	}
+
+	public void hset(String key, String field, String value) {
+		redisTemplate.boundHashOps(key).put(field, value);
+	}
+
+	public Object hget(String key, String field) {
+		return redisTemplate.boundHashOps(key).get(field);
+	}
+
+	public void hdel(String key, String field) {
+		redisTemplate.boundHashOps(key).delete(field);
 	}
 
 	// 未完，待续...
