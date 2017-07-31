@@ -134,7 +134,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(cls返回类型Class) */
-	public <K> Page<K> getPage(Page<Long> ids, final Class<K> cls) {
+	public <K> Page<K> getPage(final Page<Long> ids, final Class<K> cls) {
 		if (ids != null) {
 			Page<K> page = new Page<K>(ids.getCurrent(), ids.getSize());
 			page.setTotal(ids.getTotal());
@@ -192,7 +192,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(cls返回类型Class) */
-	public <K> List<K> getList(List<Long> ids, final Class<K> cls) {
+	public <K> List<K> getList(final List<Long> ids, final Class<K> cls) {
 		final List<K> list = InstanceUtil.newArrayList();
 		if (ids != null) {
 			for (int i = 0; i < ids.size(); i++) {
