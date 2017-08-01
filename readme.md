@@ -46,7 +46,7 @@
     	 clean package -P product -f pom-sys-service-server.xml
     
 ## 版权声明
-	iBase4J使用 [Apache License 2.0][] 协议.
+iBase4J使用 [Apache License 2.0][] 协议.
 
 ## 分支说明
 [NoSplit][] 未拆分版本.
