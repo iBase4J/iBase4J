@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 	</parent>
 	<artifactId>iBase4J-Biz-Service</artifactId>
 	<packaging>war</packaging>
@@ -30,7 +30,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Biz-API</artifactId>
+			<artifactId>iBase4J-Biz-Facade</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
@@ -55,11 +55,6 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
 			<version>${mybatis-spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus</artifactId>
-			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -87,6 +82,11 @@
 			<artifactId>spring-aop</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 		<!-- 切面 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -97,6 +97,12 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
+		</dependency>
+		<!-- 中文拼音 -->
+		<dependency>
+			<groupId>com.belerweb</groupId>
+			<artifactId>pinyin4j</artifactId>
+			<version>${pinyin4j.version}</version>
 		</dependency>
 	</dependencies>
 </project>

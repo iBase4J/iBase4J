@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
-                        http://www.springframework.org/schema/context
-                        http://www.springframework.org/schema/context/spring-context-4.0.xsd
-                        http://www.springframework.org/schema/tx
-                        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
-                        http://www.springframework.org/schema/cache
-                        http://www.springframework.org/schema/cache/spring-cache-4.0.xsd">
+	    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+	    http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	    http://www.springframework.org/schema/tx
+	    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	<bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
 		<description>spring和MyBatis完美整合，不需要mybatis的配置映射文件</description>
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations" value="classpath:mappers/**/*.xml" />
-		<property name="typeAliasesPackage" value="org.ibase4j.model.*" />
-		<property name="dbColumnUnderline" value="true" />
+		<property name="mapperLocations" value="classpath*:**/mapper/xml/*.xml" />
+		<property name="typeAliasesPackage" value="org.ibase4j.model*" />
+		<property name="globalConfig">
+			<bean class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
+				<property name="dbColumnUnderline" value="true" />
+				 <property name="sqlInjector">
+				 	<bean class="com.baomidou.mybatisplus.mapper.AutoSqlInjector" />
+				 </property>
+			</bean>
+		</property>
 	</bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<description>DAO接口所在包名，Spring会自动查找其下的类</description>
-		<property name="basePackage" value="org.ibase4j.dao.*" />
+		<property name="basePackage" value="org.ibase4j.mapper*" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	<!-- 事务 -->

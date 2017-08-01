@@ -1,0 +1,68 @@
+<!-- toaster directive -->
+<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+<!-- / toaster directive -->
+
+<!-- 导航条 -->
+<div class="bg-white bread-crumb">
+    <ul class="breadcrumb b-a m-b-n-xs lter b-b wrapper-md">
+        <li><a ui-href="main"><i class="fa fa-home"></i> 首页</a></li>
+        <li class="active" ng-bind="title"></li>
+    </ul>
+</div>
+
+<!-- 加载提醒 -->
+<div ng-show="loading" class="text-center m-t-md text-lg"><i class="fa fa-spin fa-spinner"></i> 数据加载中...</div>
+
+<!-- 内容区域 -->
+<div ng-hide="loading" class="wrapper-md content">
+    <!-- 数据显示 -->
+    <div class="wrapper-data">
+        <div class="panel panel-default">
+            <!-- 头部 -->
+            <div class="panel-heading clearfix">
+                <div class="w-lg">
+                    <form ng-submit="search()" class="ng-pristine ng-valid">
+                        <div class="input-group search-box">
+                            <input type="text" class="form-control" ng-model="param.keyword" placeholder="帐号">
+                            <i ng-show="session.keyword" ng-click="clearSearch()" class="fa fa-times-circle text-muted search-clear"></i>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 数据表格 -->
+            <div class="table-responsive">
+                <table class="table table-striped b-t b-light text-center">
+                    <thead>
+                    <tr class="text-center">
+                        <th>帐号</th>
+                        <th>会话Id</th>
+                        <th>用户地址</th>
+                        <th>登录时间</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in pageInfo.data">
+                        <td class="v-middle">{{item.account}}</td>
+                        <td class="v-middle">{{item.sessionId}}</td>
+                        <td class="v-middle">{{item.ip}}</td>
+                        <td class="v-middle">{{item.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td class="v-middle">
+                            <button type="button" ng-click="disableItem(item.id, item.account)" class="btn btn-sm btn-default m-l-xs">
+                                 <i class="fa fa-ban m-r-xs text-sm"></i>下线</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+
+            <!-- 底部分页 -->
+			<span data-ng-include=" 'src/tpl/pageInfo.html' "></span>
+        </div><!-- /.panel -->
+    </div><!-- /.wrapper-data -->
+
+</div><!-- /.wrapper-md -->

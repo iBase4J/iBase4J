@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-4.2.xsd  
+                        http://www.springframework.org/schema/mvc  
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
+	<context:component-scan base-package="org.ibase4j.web" />
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<description>JSON转换器</description>
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=UTF-8</value>  
+		             	<value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+				<property name="features">
+		               <array>
+		                   <value>QuoteFieldNames</value>
+		                   <value>WriteDateUseDateFormat</value>
+			               <!-- 字符类型字段如果为null,输出为"",而非null -->
+			               <value>WriteNullStringAsEmpty</value>
+			               <value>WriteNonStringValueAsString</value>
+		               </array>
+		           </property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/*.ico" />
+			<mvc:exclude-mapping path="/*/api-docs" />
+			<mvc:exclude-mapping path="/swagger**" />
+			<mvc:exclude-mapping path="/webjars/**" />
+			<mvc:exclude-mapping path="/configuration/**" />
+			<bean class="org.ibase4j.core.interceptor.MaliciousRequestInterceptor">
+				<property name="minRequestIntervalTime" value="500" />
+				<property name="maxMaliciousTimes" value="0" />
+				<property name="nextInterceptor">
+					<array>
+						<bean class="org.ibase4j.core.interceptor.LocaleInterceptor" />
+						<bean class="org.ibase4j.core.interceptor.EventInterceptor" />
+					</array>
+				</property>
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- AOP式方法级权限检查  -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+		depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    	<property name="securityManager" ref="securityManager"/>
+	</bean>
+	<!--  -->
+	<mvc:view-resolvers>
+	    <mvc:jsp cache-views="false" prefix="/WEB-INF/jsp/" suffix=".jsp" />  
+	</mvc:view-resolvers>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<description>配置文件上传</description>
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760000" />
+		<!-- 内存中的最大值 -->
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+	<!-- 资源重定向(仅作为后台使用不提供静态资源) -->
+	<mvc:resources mapping="upload/**" location="/WEB-INF/upload/" cache-period="300" />
+	<mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+	<mvc:resources mapping="webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+</beans>

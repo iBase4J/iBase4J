@@ -19,15 +19,14 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.ibase4j.core.base.BaseProvider;
+import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.sys.SysSession;
-import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.service.sys.SysAuthorizeService;
-import org.ibase4j.service.sys.SysSessionService;
-import org.ibase4j.service.sys.SysUserService;
+import org.ibase4j.model.SysSession;
+import org.ibase4j.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.baomidou.mybatisplus.plugins.Page;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 
 /**
  * 权限检查类
@@ -38,25 +37,23 @@ import com.baomidou.mybatisplus.plugins.Page;
 public class Realm extends AuthorizingRealm {
 	private final Logger logger = LogManager.getLogger();
 	@Autowired
-	private SysUserService sysUserService;
+	@Qualifier("sysProvider")
+	protected BaseProvider provider;
 	@Autowired
-	private SysSessionService sysSessionService;
-	@Autowired
-	private SysAuthorizeService sysAuthorizeService;
+	private RedisOperationsSessionRepository sessionRepository;
 
 	// 权限
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		String userId = WebUtil.getCurrentUser();
-		SysUser sysUser = sysUserService.queryById(userId);
-		if (sysUser.getUserType() != 1) {
-			userId = null;
-		}
-		List<String> list = sysAuthorizeService.queryPermissionByUserId(userId);
-		for (String permission : list) {
-			if (StringUtils.isNotBlank(permission)) {
+		Long userId = (Long) WebUtil.getCurrentUser();
+		Parameter parameter = new Parameter("sysAuthorizeService", "queryPermissionByUserId").setId(userId);
+		logger.info("{} execute queryPermissionByUserId start...", parameter.getNo());
+		List<?> list = provider.execute(parameter).getList();
+		logger.info("{} execute queryPermissionByUserId end.", parameter.getNo());
+		for (Object permission : list) {
+			if (StringUtils.isNotBlank((String) permission)) {
 				// 添加基于Permission的权限信息
-				info.addStringPermission(permission);
+				info.addStringPermission((String) permission);
 			}
 		}
 		// 添加用户权限
@@ -69,19 +66,21 @@ public class Realm extends AuthorizingRealm {
 			throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("countSql", 0);
 		params.put("enable", 1);
 		params.put("account", token.getUsername());
-		Page<SysUser> pageInfo = sysUserService.query(params);
-		if (pageInfo.getSize() == 1) {
-			SysUser user = pageInfo.getRecords().get(0);
+		Parameter parameter = new Parameter("sysUserService", "queryList").setMap(params);
+		logger.info("{} execute sysUserService.queryList start...", parameter.getNo());
+		List<?> list = provider.execute(parameter).getList();
+		logger.info("{} execute sysUserService.queryList end.", parameter.getNo());
+		if (list.size() == 1) {
+			SysUser user = (SysUser) list.get(0);
 			StringBuilder sb = new StringBuilder(100);
 			for (int i = 0; i < token.getPassword().length; i++) {
 				sb.append(token.getPassword()[i]);
 			}
 			if (user.getPassword().equals(sb.toString())) {
 				WebUtil.saveCurrentUser(user.getId());
-				saveSession(user.getAccount());
+				saveSession(user.getAccount(), token.getHost());
 				AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
 						user.getUserName());
 				return authcInfo;
@@ -95,17 +94,37 @@ public class Realm extends AuthorizingRealm {
 	}
 
 	/** 保存session */
-	private void saveSession(String account) {
+	private void saveSession(String account, String host) {
 		// 踢出用户
-		sysSessionService.deleteByAccount(account);
 		SysSession record = new SysSession();
 		record.setAccount(account);
+		Parameter parameter = new Parameter("sysSessionService", "querySessionIdByAccount").setModel(record);
+		logger.info("{} execute querySessionIdByAccount start...", parameter.getNo());
+		List<?> sessionIds = provider.execute(parameter).getList();
+		logger.info("{} execute querySessionIdByAccount end.", parameter.getNo());
 		Subject currentUser = SecurityUtils.getSubject();
 		Session session = currentUser.getSession();
-		record.setSessionId(session.getId().toString());
-		String host = (String) session.getAttribute("HOST");
+		String currentSessionId = session.getId().toString();
+		if (sessionIds != null) {
+			for (Object sessionId : sessionIds) {
+				record.setSessionId((String) sessionId);
+				parameter = new Parameter("sysSessionService", "deleteBySessionId").setModel(record);
+				logger.info("{} execute deleteBySessionId start...", parameter.getNo());
+				provider.execute(parameter);
+				logger.info("{} execute deleteBySessionId end.", parameter.getNo());
+				if (!currentSessionId.equals(sessionId)) {
+					sessionRepository.delete((String) sessionId);
+					sessionRepository.cleanupExpiredSessions();
+				}
+			}
+		}
+		// 保存会话
+		record.setSessionId(currentSessionId);
 		record.setIp(StringUtils.isBlank(host) ? session.getHost() : host);
 		record.setStartTime(session.getStartTimestamp());
-		sysSessionService.update(record);
+		parameter = new Parameter("sysSessionService", "update").setModel(record);
+		logger.info("{} execute sysSessionService.update start...", parameter.getNo());
+		provider.execute(parameter);
+		logger.info("{} execute sysSessionService.update end.", parameter.getNo());
 	}
 }

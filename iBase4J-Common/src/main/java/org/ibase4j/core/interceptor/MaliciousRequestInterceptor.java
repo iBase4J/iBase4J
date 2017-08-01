@@ -20,10 +20,18 @@ public class MaliciousRequestInterceptor extends BaseInterceptor {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST,GET,PUT,OPTIONS,DELETE");
+		response.setHeader("Access-Control-Allow-Headers",
+				"x-requested-with,Access-Control-Allow-Origin,EX-SysAuthToken,EX-JSESSIONID");
+
+		String url = request.getServletPath();
+		if (url.endsWith("/unauthorized") || url.endsWith("/forbidden")) {
+			return super.preHandle(request, response, handler);
+		}
 		HttpSession session = request.getSession();
 		String preRequest = (String) session.getAttribute(Constants.PREREQUEST);
 		Long preRequestTime = (Long) session.getAttribute(Constants.PREREQUEST_TIME);
-		String url = request.getServletPath();
 		if (preRequestTime != null && preRequest != null) { // 过滤频繁操作
 			if ((url.equals(preRequest) || allRequest)
 					&& System.currentTimeMillis() - preRequestTime < minRequestIntervalTime) {

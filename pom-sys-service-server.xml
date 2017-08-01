@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>iBase4J-SYS-Service-Server</artifactId>
+	<name>${project.artifactId}</name>
+	<packaging>pom</packaging>
+	<url>http://maven.apache.org</url>
+	<parent>
+		<groupId>org.ibase4j</groupId>
+		<artifactId>iBase4J</artifactId>
+		<version>1.1.0</version>
+		<relativePath>./</relativePath>
+	</parent>
+	<modules>
+		<module>iBase4J-Common</module>
+		<module>iBase4J-SYS-Facade</module>
+		<module>iBase4J-SYS-Service</module>
+		<module>iBase4J-Biz-Facade</module>
+	</modules>
+	<!-- clean package -P build tomcat7:run-war-only -f pom-sys-service-server.xml -->
+</project>

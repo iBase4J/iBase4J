@@ -33,6 +33,7 @@ public class FileModel implements Serializable {
 		this.objectId = objectId;
 		if (filePath != null && !"".equals(filePath.trim())) {
 			this.ext = filePath.substring(filePath.lastIndexOf(".") + 1);
+			InputStream is = null;
 			byte[] file_buff = null;
 			FileInputStream fileInputStream = null;
 			try {
@@ -47,13 +48,19 @@ public class FileModel implements Serializable {
 					fileInputStream.read(file_buff);
 				}
 				this.content = file_buff;
-				InputStream is = getClass().getResourceAsStream("/META-INF/mime.types");
+				is = getClass().getResourceAsStream("/config/mime.types");
 				MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap(is);
 				this.mime = mimetypesFileTypeMap.getContentType(filename);
 				this.key = UUID.randomUUID().toString();
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			} finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException e) {
+                    }
+                }
 				if (fileInputStream != null) {
 					try {
 						fileInputStream.close();

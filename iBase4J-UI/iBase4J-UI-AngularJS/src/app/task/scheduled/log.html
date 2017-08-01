@@ -1,0 +1,73 @@
+<!-- toaster directive -->
+<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+<!-- / toaster directive -->
+
+<!-- 导航条 -->
+<div class="bg-white bread-crumb">
+    <ul class="breadcrumb b-a m-b-n-xs lter b-b wrapper-md">
+        <li><a ui-href="main"><i class="fa fa-home"></i> 首页</a></li>
+        <li class="active" ng-bind="title"></li>
+    </ul>
+</div>
+
+<!-- 加载提醒 -->
+<div ng-show="loading" class="text-center m-t-md text-lg"><i class="fa fa-spin fa-spinner"></i> 数据加载中...</div>
+
+<!-- 内容区域 -->
+<div ng-hide="loading" class="wrapper-md content">
+    <!-- 数据显示 -->
+    <div class="wrapper-data">
+        <div class="panel panel-default">
+            <!-- 头部 -->
+            <div class="panel-heading clearfix">
+                <div class="w-lg">
+                    <form ng-submit="search()" class="ng-pristine ng-valid">
+                        <div class="input-group search-box">
+                            <input type="text" class="form-control" ng-model="param.keyword" placeholder="任务组、任务名称">
+                            <i ng-show="user.keyword" ng-click="clearSearch()" class="fa fa-times-circle text-muted search-clear"></i>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 数据表格 -->
+            <div class="table-responsive">
+                <table class="table table-striped b-t b-light text-center">
+                    <thead>
+                    <tr>
+                        <th>任务组</th>
+                        <th>任务名称</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>服务器</th>
+                        <th>状态</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in pageInfo.data">
+                        <td class="v-middle">{{item.groupName}}</td>
+                        <td class="v-middle">{{item.taskName}}</td>
+                        <td class="v-middle">{{item.startTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td class="v-middle">{{item.endTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td class="v-middle">{{item.serverHost}}:{{item.serverDuid}}</td>
+                        <td class="v-middle">
+                            <span ng-show="item.status=='I'" class="text-danger">执行中</span>
+                            <span ng-show="item.status=='S'" class="text-danger">成功</span>
+                            <span ng-show="item.status=='E'" class="text-success">异常</span>
+                        </td>
+                        <td class="v-middle">{{item.fireInfo}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+
+            <!-- 底部分页 -->
+			<span data-ng-include=" 'src/tpl/pageInfo.html' "></span>
+        </div><!-- /.panel -->
+    </div><!-- /.wrapper-data -->
+
+</div><!-- /.wrapper-md -->

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>iBase4J-SYS-Facade</artifactId>
+	<packaging>jar</packaging>
+	<parent>
+		<groupId>org.ibase4j</groupId>
+		<artifactId>iBase4J</artifactId>
+		<version>1.1.0</version>
+	</parent>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.ibase4j</groupId>
+			<artifactId>iBase4J-Common</artifactId>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!--  -->
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger.version}</version>
+		</dependency>
+	</dependencies>
+</project>

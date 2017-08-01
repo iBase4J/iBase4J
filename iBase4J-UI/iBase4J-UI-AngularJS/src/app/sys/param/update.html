@@ -1,0 +1,28 @@
+<!-- toaster directive -->
+<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+<!-- / toaster directive -->
+
+<!-- 导航条 -->
+<div class="bg-white bread-crumb">
+    <ul class="breadcrumb b-a m-b-n-xs lter b-b wrapper-md">
+        <li><a ui-sref="main"><i class="fa fa-home"></i> 首页</a></li>
+        <li><a ui-sref="main.sys.param.list">参数管理</a></li>
+        <li class="active" ng-bind="title"></li>
+    </ul>
+</div>
+
+<!-- 内容区域 -->
+<div class="wrapper-md content">
+    <div class="panel panel-default">
+        <!-- 头部 -->
+        <div class="panel-heading font-bold">{{title}}
+        <a class="btn btn-sm btn-icon btn-rounded btn-default pull-right m-t-n-xs" ui-sref="main.sys.param.list"><i class="text-md fa fa-times text-muted"></i></a>
+        </div>
+        <!--表单-->
+            <div class="panel-body">
+                <form class="form-horizontal"  name="user_form">
+                    待完善...
+                </form>
+            </div>
+    </div>
+</div>

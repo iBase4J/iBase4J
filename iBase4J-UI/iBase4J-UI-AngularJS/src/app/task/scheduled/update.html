@@ -1,0 +1,98 @@
+<!-- toaster directive -->
+<toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+<!-- / toaster directive -->
+
+<!-- 导航条 -->
+<div class="bg-white bread-crumb">
+    <ul class="breadcrumb b-a m-b-n-xs lter b-b wrapper-md">
+        <li><a ui-sref="main"><i class="fa fa-home"></i> 首页</a></li>
+        <li><a ui-sref="main.task.scheduled.list">调度管理</a></li>
+        <li class="active" ng-bind="title"></li>
+    </ul>
+</div>
+
+<!-- 内容区域 -->
+<div class="wrapper-md content">
+    <div class="panel panel-default">
+        <!-- 头部 -->
+        <div class="panel-heading font-bold">{{title}}
+        <a class="btn btn-sm btn-icon btn-rounded btn-default pull-right m-t-n-xs" ui-sref="main.task.scheduled.list"><i class="text-md fa fa-times text-muted"></i></a>
+        </div>
+        <!--表单-->
+            <div class="panel-body">
+                <form class="form-horizontal"  name="task_form">
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="taskDesc">
+                        	<span class="text-danger wrapper-sm">*</span>任务描述
+                        </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="taskDesc" id="taskDesc" placeholder="请输入任务描述..." ng-model="record.taskDesc">
+                            <span class="help-block m-b-none"></span>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="jobType">
+                        	<span class="text-danger wrapper-sm">*</span>执行类型
+                        </label>
+                        <div class="col-sm-6">
+                        	<select class="form-control" name="jobType" id="jobType" ng-model="record.jobType">
+                        		<option value="statefulJob" >单行(阻塞)</option>
+                        		<option value="job">并行(非阻塞)</option>
+                        	</select>
+                            <span class="help-block m-b-none"></span>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="taskType">
+                        	<span class="text-danger wrapper-sm">*</span>执行器类型
+                        </label>
+                        <div class="col-sm-6">
+                        	<select class="form-control" name="taskType" id="taskType" ng-model="record.taskType">
+                        		<option value="LOCAL" >本地(LOCAL)</option>
+                        		<option value="DUBBO">远程(DUBBO)</option>
+                        	</select>
+                            <span class="help-block m-b-none"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="targetObject">
+                        	<span class="text-danger wrapper-sm">*</span>目标对象
+                        </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="targetObject" id="targetObject" placeholder="请输入目标对象..." ng-model="record.targetObject">
+                            <span class="help-block m-b-none"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="targetMethod">
+                        	<span class="text-danger wrapper-sm">*</span>目标方法
+                        </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="targetMethod" id="targetMethod" placeholder="请输入目标方法..." ng-model="record.targetMethod">
+                            <span class="help-block m-b-none"></span>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="form-group">
+                        <label class="col-lg-2 col-sm-3 control-label" for="taskCron">
+                        	<span class="text-danger wrapper-sm">*</span>任务周期
+                        </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="taskCron" id="taskCron" placeholder="请输入任务周期..." ng-model="record.taskCron">
+                            <span class="help-block m-b-none"></span>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <!--btn-->
+                    <div class="form-group">
+                        <div class="col-sm-6 col-sm-offset-2">
+                            <button type="reset" class="btn btn-default w-xs">重置</button>
+                            <button type="submit" class="btn btn-info w-xs m-l-xl" ng-disabled="isDisabled">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<!-- list -->
+<ul class="nav"  ng-controller="navCtrl" >
+	<li ng-repeat="menu in menuList " ng-class="{active: $state.includes('**.{{menu.permission}}.**')}">
+	    <a ng-if="menu.leaf==0" href class="auto">
+	      <span class="pull-right text-muted">
+	        <i class="fa fa-fw fa-angle-right text"></i>
+	        <i class="fa fa-fw fa-angle-down text-active"></i>
+	      </span>
+	      <i class="{{menu.iconcls}}"></i>
+		  <span>{{menu.menuName}}</span>
+	    </a>
+	    <ul ng-if="menu.leaf==0" class="nav nav-sub dk">
+		      <li ng-repeat="rm in menu.menuBeans" ng-class="{active: $state.includes('**.{{rm.permission}}.**')}">
+		        <a ui-sref="{{rm.request}}"  ng-class="{active: $state.includes('**.{{rm.request}}.**')}">
+		        	<i class="{{rm.iconcls}}"></i>
+		          	<span>{{rm.menuName}}</span>
+		        </a>
+		      </li>
+	     </ul>
+	     <a ng-if="menu.leaf==1" ui-sref="{{menu.request}}">
+			<i class="{{menu.iconcls}}"></i>
+			<span>{{menu.menuName}}</span>
+		</a>
+	</li>
+</ul>

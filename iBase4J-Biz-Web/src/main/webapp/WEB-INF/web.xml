@@ -30,6 +30,22 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter>
+		<filter-name>csrfFilter</filter-name>
+		<filter-class>org.ibase4j.core.filter.CsrfFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>csrfFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>xssFilter</filter-name>
+		<filter-class>org.ibase4j.core.filter.XssFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>xssFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
 		<filter-name>springSessionRepositoryFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
@@ -56,7 +72,7 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 	<listener>
-		<listener-class>org.ibase4j.core.listener.ServerListerner</listener-class>
+		<listener-class>org.ibase4j.core.listener.ServerListener</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>SpringMVC</servlet-name>
@@ -72,10 +88,7 @@
 		<servlet-name>SpringMVC</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
 	<session-config>
-		<session-timeout>10</session-timeout>
+		<session-timeout>30</session-timeout>
 	</session-config>
 </web-app>

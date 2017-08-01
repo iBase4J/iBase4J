@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="off">
 	<properties>
-		<property name="LOG_HOME">\output\logs</property>
+		<property name="LOG_HOME">/output/logs</property>
 		<!-- 日志备份目录 -->
 		<property name="BACKUP_HOME">backup</property>
 		<property name="SERVER_NAME">${project.artifactId}</property>
@@ -11,7 +11,7 @@
 	<appenders>
 		<Console name="Console" target="SYSTEM_OUT">
 			<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
-			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%file] - %msg%n" />
+			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{1}:%L] - %msg%n" />
 		</Console>
 		<RollingFile name="RollingFile"
 			fileName="${LOG_HOME}/dev_${SERVER_NAME}.log"
@@ -54,20 +54,22 @@
 	<loggers>
 		<logger name="org.slf4j" level="INFO" />
 		<logger name="org.quartz" level="INFO" />
+		<logger name="org.redisson" level="INFO" />
 		<logger name="com.atomikos" level="WARN" />
 		<logger name="com.alibaba.dubbo" level="INFO" />
 		<logger name="org.apache.activemq" level="INFO" />
 		<logger name="org.springframework" level="INFO" />
 		<logger name="org.apache.zookeeper" level="WARN" />
-		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
-		<AsyncLogger  name="com.angel" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
+		<logger name="org.springframework.web" level="DEBUG" />
+		<logger name="org.springframework.web.servlet.DispatcherServlet" level="INFO" />
+		<AsyncLogger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
 			<appender-ref ref="Console" />
             <appender-ref ref="ProductLog" />
         </AsyncLogger >
-		<asyncRoot  level="DEBUG">
+		<Root  level="DEBUG">
 			<appender-ref ref="Console" />
 			<appender-ref ref="RollingFile" />
 			<appender-ref ref="RollingFileError" />
-		</asyncRoot >
+		</Root >
 	</loggers>
 </configuration>

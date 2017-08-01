@@ -1,0 +1,54 @@
+      <!-- navbar header -->
+      <div class="navbar-header {{app.settings.navbarHeaderColor}}">
+        <button class="pull-right visible-xs dk" ui-toggle-class="show" data-target=".navbar-collapse">
+          <i class="glyphicon glyphicon-cog"></i>
+        </button>
+        <button class="pull-right visible-xs" ui-toggle-class="off-screen" data-target=".app-aside" ui-scroll-to="app">
+          <i class="glyphicon glyphicon-align-justify"></i>
+        </button>
+        <!-- brand -->
+        <a href="javascript:void(0);" class="navbar-brand text-lt">
+          <i class="fa fa-btc"></i>
+          <!-- <img src="res/img/favicon.jpg" alt="."> -->
+          <span class="hidden-folded m-l-xs">{{app.name}}</span>
+        </a>
+        <!-- / brand -->
+      </div>
+      <!-- / navbar header -->
+
+      <!-- navbar collapse -->
+      <div class="collapse pos-rlt navbar-collapse box-shadow {{app.settings.navbarCollapseColor}}">
+        <!-- buttons -->
+        <div class="nav navbar-nav hidden-xs">
+          <a href class="btn no-shadow navbar-btn text-white" ng-click="app.settings.asideFolded = !app.settings.asideFolded">
+            <i class="fa {{app.settings.asideFolded ? 'fa-indent' : 'fa-dedent'}} fa-fw"></i>
+          </a>
+        </div>
+        <!-- / buttons -->
+
+        <!-- nabar right -->
+        <ul class="nav navbar-nav navbar-right">
+          <li class="hidden-xs">
+            <a ui-fullscreen></a>
+          </li>
+          <li class="dropdown">
+            <a href class="dropdown-toggle text-white clear" data-toggle="dropdown">
+              <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
+                <img alt="{{userInfo.userName || userInfo.account}}" ng-src="{{userInfo.avatar || defaultAvatar}}">
+                <i class="on md b-white bottom"></i>
+              </span>
+              <span class="hidden-sm hidden-md" ng-bind="userInfo.userName || userInfo.account"></span> <b class="caret"></b>
+            </a>
+            <!-- dropdown -->
+            <ul class="dropdown-menu">
+              <li>
+                <a  ng-click="logout();">退出</a>
+              </li>
+            </ul>
+            <!-- / dropdown -->
+          </li>
+        </ul>
+        <!-- / navbar right -->
+
+      </div>
+      <!-- / navbar collapse -->

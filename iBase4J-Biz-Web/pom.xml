@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
-		<version>1.0.0</version>
+		<version>1.1.0</version>
 	</parent>
 	<artifactId>iBase4J-Biz-Web</artifactId>
 	<packaging>war</packaging>
@@ -27,7 +27,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Scheduler-API</artifactId>
+			<artifactId>iBase4J-SYS-Facade</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
@@ -38,18 +38,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-SYS-API</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Biz-API</artifactId>
+			<artifactId>iBase4J-Biz-Facade</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
@@ -74,6 +63,12 @@
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring</artifactId>
 			<version>${shiro.version}</version>
+		</dependency>
+		<!-- JSTL标签类 -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<!-- excel -->
 		<dependency>
@@ -117,12 +112,18 @@
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>2.5.0</version>
+			<version>${springfox.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.5.0</version>
+			<version>${springfox.version}</version>
+		</dependency>
+		<!--  -->
+		<dependency>
+		    <groupId>cz.mallat.uasparser</groupId>
+		    <artifactId>uasparser</artifactId>
+		    <version>0.6.2</version>
 		</dependency>
 	</dependencies>
 </project>

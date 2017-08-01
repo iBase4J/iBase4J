@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="off" monitorInterval="1800">
+	<properties>
+		<property name="LOG_HOME">/output/logs</property>
+		<!-- 日志备份目录 -->
+		<property name="BACKUP_HOME">backup</property>
+		<property name="SERVER_NAME">${project.artifactId}</property>
+		<property name="EVERY_FILE_SIZE">5M</property><!-- 日志切割的最小单位 -->
+		<property name="OUTPUT_LOG_LEVEL">DEBUG</property><!-- 日志输出级别 -->
+	</properties>
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{1}:%L] - %msg%n" />
+		</Console>
+		<RollingFile name="RollingFile"
+			fileName="${LOG_HOME}/dev_${SERVER_NAME}.log"
+			filePattern="${LOG_HOME}/dev_${BACKUP_HOME}/dev_${SERVER_NAME}.%d{yyyy-MM-dd-HH}.log">
+			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M] - %msg%n" />
+			<Policies>
+                <SizeBasedTriggeringPolicy size="${EVERY_FILE_SIZE}" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+			<Filters>
+				<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL" />
+				<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
+			</Filters>
+            <DefaultRolloverStrategy>
+                <!-- 删除指定目录下7天之前的日志-->
+                <Delete basePath="${LOG_HOME}/${BACKUP_HOME}" maxDepth="1">
+                    <IfFileName glob="*/${SERVER_NAME}*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+                <Delete basePath="${LOG_HOME}/dev_${BACKUP_HOME}" maxDepth="1">
+                    <IfFileName glob="*/dev_${SERVER_NAME}*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+		</RollingFile>
+		<!-- 只显示error级别的信息 -->
+		<RollingFile name="RollingFileError"
+			fileName="${LOG_HOME}/dev_${SERVER_NAME}_error.log"
+			filePattern="${LOG_HOME}/dev_${BACKUP_HOME}/dev_${SERVER_NAME}_error.%d{yyyy-MM-dd-HH}.log">
+			<PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M:%L] - %msg%xEx%n" />
+			<Policies>  
+                <SizeBasedTriggeringPolicy size="${EVERY_FILE_SIZE}" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies> 
+			<Filters>
+				<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+			</Filters>
+		</RollingFile>
+		<!-- 产品数据分析日志 -->
+        <RollingRandomAccessFile name="ProductLog"  
+			fileName="${LOG_HOME}/${SERVER_NAME}.log"
+			filePattern="${LOG_HOME}/${BACKUP_HOME}/${SERVER_NAME}.%d{yyyy-MM-dd-HH}.log">
+			<PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M:%L] - %msg%xEx%n" />
+            <Policies>  
+                <SizeBasedTriggeringPolicy size="${EVERY_FILE_SIZE}" />
+                <TimeBasedTriggeringPolicy interval="1"  modulate="true" />  
+            </Policies>
+        </RollingRandomAccessFile>
+	</appenders>
+
+	<loggers>
+		<logger name="org.slf4j" level="INFO" />
+		<logger name="org.quartz" level="INFO" />
+		<logger name="org.apache" level="INFO" />
+		<logger name="org.redisson" level="INFO" />
+		<logger name="com.atomikos" level="WARN" />
+		<logger name="org.crazycake.shiro" level="INFO" />
+		<logger name="com.alibaba.dubbo" level="INFO" />
+		<logger name="org.springframework" level="INFO" />
+		<logger name="org.apache.zookeeper" level="WARN" />
+		<logger name="org.springframework.web" level="DEBUG" />
+		<logger name="org.springframework.web.servlet.DispatcherServlet" level="INFO" />
+		<AsyncLogger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
+			<appender-ref ref="Console" />
+            <appender-ref ref="ProductLog" />
+        </AsyncLogger >
+		<Root  level="DEBUG">
+			<appender-ref ref="Console" />
+			<appender-ref ref="RollingFile" />
+			<appender-ref ref="RollingFileError" />
+		</Root >
+	</loggers>
+</configuration>
