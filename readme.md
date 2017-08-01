@@ -53,9 +53,8 @@ iBase4J使用 [Apache License 2.0][] 协议.
 
 [idubbo][] 原始dubbo接口版本,支持事务不支持分布式事务。
 
-develop、master是最新版本，统一dubbo服务接口，一个模块只对外提供一个接口。
-
-springBoot、docker待开发。
+	master是最新版本，统一dubbo服务接口，一个模块只对外提供一个接口。
+	springBoot、docker待开发。
 
 ## 加入QQ群[538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
 交流技术问题，下载项目文档和一键启动依赖服务工具。
