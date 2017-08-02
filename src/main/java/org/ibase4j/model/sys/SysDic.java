@@ -16,6 +16,10 @@ public class SysDic extends BaseModel {
 	private Integer sortNo;
 	@TableField("editable_")
 	private Boolean editable;
+    @TableField("parent_type")
+    private String parentType;
+    @TableField("parent_code")
+    private String parentCode;
 
 	/**
 	 * @return the type
@@ -92,7 +96,23 @@ public class SysDic extends BaseModel {
 		this.editable = editable;
 	}
 
-	/**
+	public String getParentType() {
+        return parentType;
+    }
+
+    public void setParentType(String parentType) {
+        this.parentType = parentType;
+    }
+
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
+    }
+
+    /**
 	 */
 	@Override
 	public String toString() {

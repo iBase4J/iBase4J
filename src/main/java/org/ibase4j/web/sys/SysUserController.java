@@ -153,7 +153,7 @@ public class SysUserController extends BaseController<SysUser> {
 		Long userId = WebUtil.getCurrentUser();
 		if (!param.getId().equals(userId)) {
 			SysUser user = ((SysUserService) service).queryById(userId);
-			if (user.getUserType() == 1) {
+			if ("".equals(user.getUserType())) {
 				throw new UnauthorizedException("您没有权限修改用户密码.");
 			}
 		} else {

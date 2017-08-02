@@ -74,7 +74,7 @@ public class SysUserService extends BaseService<SysUser>{
 	public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
 		SysUser sysUser = new SysUser();
 		sysUser.setSex(0);
-		sysUser.setUserType(1);
+		sysUser.setUserType("1");
 		sysUser.setPassword(SecurityUtil.encryptPassword("123456"));
 		sysUser.setUserName(thirdPartyUser.getUserName());
 		sysUser.setAvatar(thirdPartyUser.getAvatarUrl());
