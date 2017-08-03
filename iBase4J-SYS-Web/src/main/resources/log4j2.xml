@@ -71,6 +71,7 @@
 		<logger name="org.crazycake.shiro" level="INFO" />
 		<logger name="com.alibaba.dubbo" level="INFO" />
 		<logger name="org.springframework" level="INFO" />
+		<logger name="com.weibo.api.motan" level="INFO" />
 		<logger name="org.apache.zookeeper" level="WARN" />
 		<logger name="org.springframework.web" level="DEBUG" />
 		<logger name="org.springframework.web.servlet.DispatcherServlet" level="INFO" />

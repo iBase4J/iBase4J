@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:motan="http://api.weibo.com/schema/motan"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+   http://api.weibo.com/schema/motan
+   http://api.weibo.com/schema/motan.xsd">
+
+	<!-- 注册中心的配置 -->
+	<motan:registry regProtocol="${rpc.type}" name="rpc_registry"
+		address="${rpc.address}" connectTimeout="${rpc.timeout}" />
+
+	<!-- 协议配置。为防止多个业务配置冲突，推荐使用id表示具体协议。 -->
+	<motan:protocol id="motanProtocol" default="true"
+		name="motan" maxServerConnection="80000" maxContentLength="1048576"
+		maxWorkerThread="${rpc.protocol.maxThread}" minWorkerThread="${rpc.protocol.minThread}" />
+	<!-- 服务的默认配置 group：标识服务的分组 module：标识模块信息 registry：标识service使用的注册中心，与motan:registry中的name对应 -->
+	<motan:basicService export="motanProtocol:${rpc.protocol.port}"
+		group="motanRpc" module="motan-rpc" accessLog="true" shareChannel="true"
+		registry="rpc_registry" id="motanServiceBasicConfig" />
+	<!-- 服务端要暴露的服务接口,注解@com.weibo.api.motan.config.springsupport.annotation.MotanService -->
+	<motan:annotation package="org.ibase4j" />
+	<!-- 通用referer基础配置 -->
+	<motan:basicReferer requestTimeout="200" accessLog="true"
+		group="motanRpc" module="motan-rpc" retries="${rpc.consumer.retries}"
+		registry="rpc_registry" id="motanClientBasicConfig"
+		protocol="motanProtocol" throwException="false" check="true" />
+</beans>
