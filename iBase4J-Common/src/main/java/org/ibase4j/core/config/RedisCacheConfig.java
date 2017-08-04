@@ -63,7 +63,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 					}
 				}
 				if (sb.toString().equals(Constants.CACHE_NAMESPACE)) {
-					sb.append(o.getClass().getName());
+					sb.append(o.getClass().getName()).append(".").append(method.getName());
 				}
 				sb.append(":");
 				if (objects != null) {
@@ -85,8 +85,6 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 					} else {
 						sb.append(StringUtils.join(objects, ","));
 					}
-				} else {
-					sb.append(method.getName());
 				}
 				return sb.toString();
 			}
