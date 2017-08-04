@@ -4,10 +4,8 @@
 package org.ibase4j.core.config;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.Constants;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -38,12 +36,11 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 			public Object generate(Object o, Method method, Object... objects) {
 				StringBuilder sb = new StringBuilder(Constants.CACHE_NAMESPACE);
 				CacheConfig cacheConfig = o.getClass().getAnnotation(CacheConfig.class);
-				Cacheable oCacheable = o.getClass().getAnnotation(Cacheable.class);
-				Cacheable mCacheable = method.getAnnotation(Cacheable.class);
+				Cacheable cacheable = method.getAnnotation(Cacheable.class);
 				CachePut cachePut = method.getAnnotation(CachePut.class);
 				CacheEvict cacheEvict = method.getAnnotation(CacheEvict.class);
-				if (mCacheable != null) {
-					String[] cacheNames = mCacheable.value();
+				if (cacheable != null) {
+					String[] cacheNames = cacheable.value();
 					if (ArrayUtils.isNotEmpty(cacheNames)) {
 						sb.append(cacheNames[0]);
 					}
@@ -64,34 +61,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 						sb.append(cacheNames[0]);
 					}
 				}
-				if (oCacheable != null && sb.toString().equals(Constants.CACHE_NAMESPACE)) {
-					String[] cacheNames = oCacheable.cacheNames();
-					if (ArrayUtils.isNotEmpty(cacheNames)) {
-						sb.append(cacheNames[0]);
-					}
-				}
 				if (sb.toString().equals(Constants.CACHE_NAMESPACE)) {
 					sb.append(o.getClass().getName()).append(".").append(method.getName());
 				}
 				sb.append(":");
 				if (objects != null) {
-					if (objects.length == 1) {
-						if (objects[0] instanceof Number || objects[0] instanceof String
-								|| objects[0] instanceof Boolean) {
-							sb.append(objects[0]);
-						} else {
-							try {
-								sb.append(objects[0].getClass().getMethod("getId").invoke(objects[0]));
-							} catch (Exception e) {
-								if (objects[0] instanceof Map && ((Map<?, ?>) objects[0]).get("id") != null) {
-									sb.append(((Map<?, ?>) objects[0]).get("id"));
-								} else {
-									sb.append(JSON.toJSON(objects[0]));
-								}
-							}
-						}
-					} else {
-						sb.append(StringUtils.join(objects, ","));
+					for (Object object : objects) {
+						sb.append(JSON.toJSONString(object));
 					}
 				}
 				return sb.toString();

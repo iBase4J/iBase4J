@@ -19,7 +19,6 @@ import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.dao.DuplicateKeyException;
@@ -410,11 +409,8 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 		String cacheName = Constants.cacheKeyMap.get(cls);
 		if (StringUtils.isBlank(cacheName)) {
 			CacheConfig cacheConfig = cls.getAnnotation(CacheConfig.class);
-			Cacheable cacheable = cls.getAnnotation(Cacheable.class);
 			if (cacheConfig != null && ArrayUtils.isNotEmpty(cacheConfig.cacheNames())) {
 				cacheName = cacheConfig.cacheNames()[0];
-			} else if (cacheable != null && ArrayUtils.isNotEmpty(cacheable.cacheNames())) {
-				cacheName = cacheable.cacheNames()[0];
 			} else {
 				cacheName = getClass().getName();
 			}
