@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +19,7 @@ import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.dao.DuplicateKeyException;
@@ -408,10 +410,13 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 		String cacheName = Constants.cacheKeyMap.get(cls);
 		if (StringUtils.isBlank(cacheName)) {
 			CacheConfig cacheConfig = cls.getAnnotation(CacheConfig.class);
-			if (cacheConfig == null || cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
-				cacheName = getClass().getName();
-			} else {
+			Cacheable cacheable = cls.getAnnotation(Cacheable.class);
+			if (cacheConfig != null && ArrayUtils.isNotEmpty(cacheConfig.cacheNames())) {
 				cacheName = cacheConfig.cacheNames()[0];
+			} else if (cacheable != null && ArrayUtils.isNotEmpty(cacheable.cacheNames())) {
+				cacheName = cacheable.cacheNames()[0];
+			} else {
+				cacheName = getClass().getName();
 			}
 			Constants.cacheKeyMap.put(cls, cacheName);
 		}

@@ -48,12 +48,12 @@
 		<property name="hashKeySerializer" ref="keySerializer" />
 		<property name="hashValueSerializer" ref="valueSerializer" />
 	</bean>
+	<bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+		<constructor-arg index="0" ref="redisTemplate" />
+		<property name="defaultExpiration" value="10" />
+	</bean>
 	<!-- RedissonClient -->
 	<bean class="org.ibase4j.core.config.RedissonConfig">
 		<property name="jedisConnectionFactory" ref="jedisConnectionFactory" />
-	</bean>
-	<!-- 缓存 -->
-	<bean id="redisCacheManager" class="org.redisson.spring.cache.RedissonSpringCacheManager">
-		<constructor-arg index="0" ref="redissonClient" />
 	</bean>
 </beans>
