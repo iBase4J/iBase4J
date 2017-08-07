@@ -4,37 +4,37 @@ import java.io.Serializable;
 import java.util.Set;
 
 public interface CacheManager {
-	public Object get(final String key);
+	Object get(final String key);
 
-	public Set<Object> getAll(final String pattern);
+	Set<Object> getAll(final String pattern);
 
-	public void set(final String key, final Serializable value, int seconds);
+	void set(final String key, final Serializable value, int seconds);
 
-	public void set(final String key, final Serializable value);
+	void set(final String key, final Serializable value);
 
-	public Boolean exists(final String key);
+	Boolean exists(final String key);
 
-	public void del(final String key);
+	void del(final String key);
 
-	public void delAll(final String pattern);
+	void delAll(final String pattern);
 
-	public String type(final String key);
+	String type(final String key);
 
-	public Boolean expire(final String key, final int seconds);
+	Boolean expire(final String key, final int seconds);
 
-	public Boolean expireAt(final String key, final long unixTime);
+	Boolean expireAt(final String key, final long unixTime);
 
-	public Long ttl(final String key);
+	Long ttl(final String key);
 
-	public Object getSet(final String key, final Serializable value);
+	Object getSet(final String key, final Serializable value);
 
-	public boolean lock(String key);
+	boolean lock(String key);
 
-	public void unlock(String key);
+	void unlock(String key);
 
-	public void hset(String key, String field, String value);
+	void hset(String key, String field, String value);
 
-	public Object hget(String key, String field);
+	Object hget(String key, String field);
 
-	public void hdel(String key, String field);
+	void hdel(String key, String field);
 }
