@@ -16,6 +16,7 @@ import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.core.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.dao.DuplicateKeyException;
@@ -36,6 +37,7 @@ public abstract class BaseService<T extends BaseModel> {
 	protected Logger logger = LogManager.getLogger(getClass());
 	@Autowired
 	protected BaseMapper<T> mapper;
+	int maxThread = PropertiesUtil.getInt("db.reader.list.maxThread", 5);
 
 	/** 分页查询 */
 	public static Page<Long> getPage(Map<String, Object> params) {
@@ -75,7 +77,8 @@ public abstract class BaseService<T extends BaseModel> {
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
-			ExecutorService executorService = Executors.newFixedThreadPool(5);
+			int thread = Math.min(maxThread, Math.max(1, records.size() / 2));
+			ExecutorService executorService = Executors.newFixedThreadPool(thread);
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
@@ -105,7 +108,8 @@ public abstract class BaseService<T extends BaseModel> {
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
-			ExecutorService executorService = Executors.newFixedThreadPool(5);
+			int thread = Math.min(maxThread, Math.max(1, records.size() / 2));
+			ExecutorService executorService = Executors.newFixedThreadPool(thread);
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
@@ -135,7 +139,8 @@ public abstract class BaseService<T extends BaseModel> {
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
-			ExecutorService executorService = Executors.newFixedThreadPool(5);
+			int thread = Math.min(maxThread, Math.max(1, records.size() / 2));
+			ExecutorService executorService = Executors.newFixedThreadPool(thread);
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
@@ -165,7 +170,8 @@ public abstract class BaseService<T extends BaseModel> {
 			for (int i = 0; i < ids.size(); i++) {
 				list.add(null);
 			}
-			ExecutorService executorService = Executors.newFixedThreadPool(10);
+			int thread = Math.min(maxThread * 2, Math.max(1, list.size() / 2));
+			ExecutorService executorService = Executors.newFixedThreadPool(thread);
 			for (int i = 0; i < ids.size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
@@ -191,7 +197,8 @@ public abstract class BaseService<T extends BaseModel> {
 			for (int i = 0; i < ids.size(); i++) {
 				list.add(null);
 			}
-			ExecutorService executorService = Executors.newFixedThreadPool(10);
+			int thread = Math.min(maxThread * 2, Math.max(1, list.size() / 2));
+			ExecutorService executorService = Executors.newFixedThreadPool(thread);
 			for (int i = 0; i < ids.size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
