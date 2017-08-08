@@ -31,14 +31,14 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.cache.annotation.EnableCaching" />
 	</context:component-scan>
 	<!-- dubbo -->
-	<!-- <dubbo:reference id="sysProvider" interface="org.ibase4j.provider.ISysProvider" check="false" />
-	<dubbo:reference id="bizProvider" interface="org.ibase4j.provider.IBizProvider" check="false" /> -->
-	<motan:referer id="sysProvider" interface="org.ibase4j.provider.ISysProvider" check="false" />
-	<motan:referer id="bizProvider" interface="org.ibase4j.provider.IBizProvider" check="false" />
+	<dubbo:reference id="sysProvider" interface="org.ibase4j.provider.ISysProvider" check="false" />
+	<dubbo:reference id="bizProvider" interface="org.ibase4j.provider.IBizProvider" check="false" />
+	<!-- <motan:referer id="sysProvider" interface="org.ibase4j.provider.ISysProvider" check="false" />
+	<motan:referer id="bizProvider" interface="org.ibase4j.provider.IBizProvider" check="false" /> -->
 	<!-- 引入SPRING配置文件 -->
 	<!-- <import resource="spring/mq.xml"/> -->
-	<!-- <import resource="spring/dubbo.xml" /> -->
-	<import resource="spring/motan.xml" />
+	<import resource="spring/dubbo.xml" />
+	<!-- <import resource="spring/motan.xml" /> -->
 	<import resource="spring/redis.xml" />
 	<import resource="spring/session.xml" />
 	<import resource="spring/shiro.xml" />
