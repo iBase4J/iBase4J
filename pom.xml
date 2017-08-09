@@ -46,7 +46,7 @@
 		<!-- -->
 		<druid.version>1.1.2</druid.version>
 		<dubbo.version>2.5.3</dubbo.version>
-		<fastjson.version>1.2.33</fastjson.version>
+		<fastjson.version>1.2.36</fastjson.version>
 		<motan.version>0.3.1</motan.version>
 		<!-- -->
 		<poi.version>3.9</poi.version>
