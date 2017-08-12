@@ -37,4 +37,6 @@ public interface CacheManager {
 	Object hget(String key, String field);
 
 	void hdel(String key, String field);
+
+	boolean setnx(String key, Serializable value);
 }

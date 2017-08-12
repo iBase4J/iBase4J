@@ -58,12 +58,13 @@ public class EventInterceptor extends BaseInterceptor {
 			String path = request.getServletPath();
 			Object uid = WebUtil.getCurrentUser(request);
 			String userAgent = (String) request.getSession().getAttribute(Constants.USER_AGENT);
+			String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
 			if (!path.contains("/read/") && !path.contains("/get") && !path.contains("/unauthorized")
 					&& !path.contains("/forbidden")) {
 				final SysEvent record = new SysEvent();
 				record.setMethod(request.getMethod());
 				record.setRequestUri(path);
-				record.setClientHost(WebUtil.getHost(request));
+				record.setClientHost(clientIp);
 				record.setUserAgent(userAgent);
 				if (path.contains("/upload")) {
 					record.setParameters("");
@@ -121,11 +122,11 @@ public class EventInterceptor extends BaseInterceptor {
 					}
 				});
 			} else if (path.contains("/unauthorized")) {
-				logger.warn("用户[{}]没有登录", WebUtil.getHost(request) + "@" + userAgent);
+				logger.warn("用户[{}]没有登录", clientIp + "@" + userAgent);
 			} else if (path.contains("/forbidden")) {
-				logger.warn("用户[{}]没有权限", WebUtil.getCurrentUser() + "@" + WebUtil.getHost(request) + "@" + userAgent);
+				logger.warn("用户[{}]没有权限", WebUtil.getCurrentUser() + "@" + clientIp + "@" + userAgent);
 			} else {
-				logger.info(uid + "@" + path + "@" + WebUtil.getHost(request) + userAgent);
+				logger.info(uid + "@" + path + "@" + clientIp + userAgent);
 			}
 		} catch (Exception e) {
 			logger.error("", e);

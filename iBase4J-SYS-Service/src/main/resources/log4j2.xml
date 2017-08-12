@@ -73,10 +73,10 @@
 		<logger name="com.weibo.api.motan" level="INFO" />
 		<logger name="org.apache.zookeeper" level="WARN" />
 		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
-		<AsyncLogger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
+		<Logger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
 			<appender-ref ref="Console" />
             <appender-ref ref="ProductLog" />
-        </AsyncLogger >
+        </Logger >
 		<Root  level="DEBUG">
 			<appender-ref ref="Console" />
 			<appender-ref ref="RollingFile" />

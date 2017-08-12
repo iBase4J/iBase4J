@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.cache.CacheManager;
 import org.ibase4j.core.support.cache.RedisHelper;
-import org.ibase4j.core.support.cache.RedissonHelper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 public class CacheUtil {
 	private static Logger logger = LogManager.getLogger(CacheUtil.class);
 	private static CacheManager cacheManager;
-	private static RedisHelper redisHelper;
 
 	@Bean
 	@Deprecated
@@ -22,18 +20,11 @@ public class CacheUtil {
 		return cacheManager;
 	}
 
-	@Bean
-	@Deprecated
-	public RedisHelper setRedisHelper() {
-		redisHelper = getRedisHelper();
-		return redisHelper;
-	}
-
 	public static CacheManager getCache() {
 		if (cacheManager == null) {
 			synchronized (CacheUtil.class) {
 				if (cacheManager == null) {
-					cacheManager = new RedissonHelper();
+					cacheManager = new RedisHelper();
 				}
 			}
 		}
@@ -43,17 +34,17 @@ public class CacheUtil {
 	/** 获取锁 */
 	public static boolean getLock(String key) {
 		try {
-			if (!getRedisHelper().exists(key)) {
+			if (!getCache().exists(key)) {
 				synchronized (CacheUtil.class) {
-					if (!getRedisHelper().exists(key)) {
-						if (getRedisHelper().setnx(key, String.valueOf(System.currentTimeMillis()))) {
+					if (!getCache().exists(key)) {
+						if (getCache().setnx(key, String.valueOf(System.currentTimeMillis()))) {
 							return true;
 						}
 					}
 				}
 			}
 			int expires = 1000 * 60 * 3;
-			String currentValue = (String) getRedisHelper().get(key);
+			String currentValue = (String) getCache().get(key);
 			if (currentValue != null && Long.parseLong(currentValue) < System.currentTimeMillis() - expires) {
 				unlock(key);
 				return getLock(key);
@@ -66,18 +57,6 @@ public class CacheUtil {
 	}
 
 	public static void unlock(String key) {
-		getRedisHelper().del(key);
+		getCache().del(key);
 	}
-
-	private static RedisHelper getRedisHelper() {
-		if (redisHelper == null) {
-			synchronized (CacheUtil.class) {
-				if (redisHelper == null) {
-					redisHelper = new RedisHelper();
-				}
-			}
-		}
-		return redisHelper;
-	}
-
 }

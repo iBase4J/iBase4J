@@ -52,8 +52,4 @@
 		<constructor-arg index="0" ref="redisTemplate" />
 		<property name="defaultExpiration" value="10" />
 	</bean>
-	<!-- RedissonClient -->
-	<bean class="org.ibase4j.core.config.RedissonConfig">
-		<property name="jedisConnectionFactory" ref="jedisConnectionFactory" />
-	</bean>
 </beans>
