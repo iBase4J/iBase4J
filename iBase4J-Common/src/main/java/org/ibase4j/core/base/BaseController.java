@@ -99,6 +99,7 @@ public abstract class BaseController {
 		modelMap.put("httpCode", code.value());
 		modelMap.put("msg", code.msg());
 		modelMap.put("timestamp", System.currentTimeMillis());
+		logger.info("RESPONSE : " + JSON.toJSONString(modelMap));
 		return ResponseEntity.ok(modelMap);
 	}
 
@@ -122,7 +123,7 @@ public abstract class BaseController {
 		}
 		response.setContentType("application/json;charset=UTF-8");
 		modelMap.put("timestamp", System.currentTimeMillis());
-		logger.info(JSON.toJSON(modelMap));
+		logger.info("RESPONSE : " + JSON.toJSON(modelMap));
 		byte[] bytes = JSON.toJSONBytes(modelMap, SerializerFeature.DisableCircularReferenceDetect);
 		response.getOutputStream().write(bytes);
 	}

@@ -66,11 +66,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-solr</artifactId>
-			<version>2.1.0.RELEASE</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
 			<version>${spring.version}</version>
@@ -138,9 +133,9 @@
 		</dependency>
 		<!-- swagger -->
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${springfox.version}</version>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger.version}</version>
 		</dependency>
 		<!-- -->
 		<dependency>
