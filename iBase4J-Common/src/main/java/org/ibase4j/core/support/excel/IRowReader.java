@@ -10,5 +10,5 @@ public interface IRowReader {
 	 * @param curRow
 	 * @param rowlist
 	 */
-	public void getRows(int sheetIndex, int curRow, List<String> rowlist);
+	void getRows(int sheetIndex, int curRow, List<String> rowlist);
 }

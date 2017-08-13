@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.ibase4j.core.Constants;
 import org.ibase4j.core.base.AbstractController;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.config.Resources;
@@ -177,7 +178,8 @@ public class ThirdPartyLoginController extends AbstractController<ISysProvider> 
 			parameter = new Parameter(getService(), "queryById").setId(param.getId());
 			sysUser = (SysUser) provider.execute(parameter).getModel();
 		}
-		LoginHelper.login(request, sysUser.getAccount(), sysUser.getPassword());
+		String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
+		LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);
 	}
 
 	private String getRedirectUrl(HttpServletRequest request, String type) {

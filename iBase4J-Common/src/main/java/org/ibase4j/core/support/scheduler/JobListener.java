@@ -80,6 +80,7 @@ public class JobListener implements org.quartz.JobListener {
 		if (log != null) {
 			log.setEndTime(end);
 			if (exp != null) {
+				logger.error("定时任务失败: [" + targetObject + "." + targetMethod + "]", exp);
 				String contactEmail = jobDataMap.getString("contactEmail");
 				if (StringUtils.isNotBlank(contactEmail)) {
 					String topic = String.format("调度[%s.%s]发生异常", targetMethod, targetMethod);

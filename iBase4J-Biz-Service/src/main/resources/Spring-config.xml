@@ -16,8 +16,8 @@
 		<property name="properties">
 			<props>
 				<!-- dubbo个性化配置(服务名,端口) -->
-				<prop key="dubbo.application.name">${project.artifactId}</prop>
-				<prop key="dubbo.protocol.port">1${server.port}</prop>
+				<prop key="rpc.registry.name">${project.artifactId}</prop>
+				<prop key="rpc.protocol.port">1${server.port}</prop>
 			</props>
 		</property>
 		<property name="decryptProperties">
@@ -35,6 +35,7 @@
 	<!-- 引入SPRING配置文件 -->
 	<!-- <import resource="spring/mq.xml"/> -->
 	<import resource="spring/dubbo.xml" />
+	<!-- <import resource="spring/motan.xml" /> -->
 	<import resource="spring/redis.xml"/>
 	<import resource="spring/mybatis.xml"/>
 	<import resource="spring/dataSource.xml"/>

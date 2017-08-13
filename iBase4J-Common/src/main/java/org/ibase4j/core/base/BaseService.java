@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,7 @@ import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.DataUtil;
 import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.core.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.context.ApplicationContext;
@@ -43,6 +45,8 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
+
+	int maxThread = PropertiesUtil.getInt("db.reader.list.maxThread", 5);
 
 	/** 分页查询 */
 	public static Page<Long> getPage(Map<String, Object> params) {
@@ -74,15 +78,16 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(默认类型T) */
-	public Page<T> getPage(Page<Long> ids) {
+	public Page<T> getPage(final Page<Long> ids) {
 		if (ids != null) {
 			Page<T> page = new Page<T>(ids.getCurrent(), ids.getSize());
 			page.setTotal(ids.getTotal());
-			List<T> records = InstanceUtil.newArrayList();
+			final List<T> records = InstanceUtil.newArrayList();
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
-			ExecutorService executorService = Executors.newFixedThreadPool(5);
+			int thread = Math.min(maxThread, Math.max(1, records.size() / 2));
+			ExecutorService executorService = Executors.newFixedThreadPool(thread);
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
@@ -104,15 +109,16 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(默认类型T) */
-	public Page<Map<String, Object>> getPageMap(Page<Long> ids) {
+	public Page<Map<String, Object>> getPageMap(final Page<Long> ids) {
 		if (ids != null) {
 			Page<Map<String, Object>> page = new Page<Map<String, Object>>(ids.getCurrent(), ids.getSize());
 			page.setTotal(ids.getTotal());
-			List<Map<String, Object>> records = InstanceUtil.newArrayList();
+			final List<Map<String, Object>> records = InstanceUtil.newArrayList();
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
-			ExecutorService executorService = Executors.newFixedThreadPool(5);
+			int thread = Math.min(maxThread, Math.max(1, records.size() / 2));
+			ExecutorService executorService = Executors.newFixedThreadPool(thread);
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
@@ -134,15 +140,16 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(cls返回类型Class) */
-	public <K> Page<K> getPage(Page<Long> ids, Class<K> cls) {
+	public <K> Page<K> getPage(final Page<Long> ids, final Class<K> cls) {
 		if (ids != null) {
 			Page<K> page = new Page<K>(ids.getCurrent(), ids.getSize());
 			page.setTotal(ids.getTotal());
-			List<K> records = InstanceUtil.newArrayList();
+			final List<K> records = InstanceUtil.newArrayList();
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
-			ExecutorService executorService = Executors.newFixedThreadPool(5);
+			int thread = Math.min(maxThread, Math.max(1, records.size() / 2));
+			ExecutorService executorService = Executors.newFixedThreadPool(thread);
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
@@ -166,13 +173,14 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(默认类型T) */
-	public List<T> getList(List<Long> ids) {
-		List<T> list = InstanceUtil.newArrayList();
+	public List<T> getList(final List<Long> ids) {
+		final List<T> list = InstanceUtil.newArrayList();
 		if (ids != null) {
 			for (int i = 0; i < ids.size(); i++) {
 				list.add(null);
 			}
-			ExecutorService executorService = Executors.newFixedThreadPool(10);
+			int thread = Math.min(maxThread * 2, Math.max(1, list.size() / 2));
+			ExecutorService executorService = Executors.newFixedThreadPool(thread);
 			for (int i = 0; i < ids.size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
@@ -192,13 +200,14 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 	}
 
 	/** 根据Id查询(cls返回类型Class) */
-	public <K> List<K> getList(List<Long> ids, Class<K> cls) {
-		List<K> list = InstanceUtil.newArrayList();
+	public <K> List<K> getList(final List<Long> ids, final Class<K> cls) {
+		final List<K> list = InstanceUtil.newArrayList();
 		if (ids != null) {
 			for (int i = 0; i < ids.size(); i++) {
 				list.add(null);
 			}
-			ExecutorService executorService = Executors.newFixedThreadPool(10);
+			int thread = Math.min(maxThread * 2, Math.max(1, list.size() / 2));
+			ExecutorService executorService = Executors.newFixedThreadPool(thread);
 			for (int i = 0; i < ids.size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
@@ -408,10 +417,10 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 		String cacheName = Constants.cacheKeyMap.get(cls);
 		if (StringUtils.isBlank(cacheName)) {
 			CacheConfig cacheConfig = cls.getAnnotation(CacheConfig.class);
-			if (cacheConfig == null || cacheConfig.cacheNames() == null || cacheConfig.cacheNames().length < 1) {
-				cacheName = getClass().getName();
-			} else {
+			if (cacheConfig != null && ArrayUtils.isNotEmpty(cacheConfig.cacheNames())) {
 				cacheName = cacheConfig.cacheNames()[0];
+			} else {
+				cacheName = getClass().getName();
 			}
 			Constants.cacheKeyMap.put(cls, cacheName);
 		}

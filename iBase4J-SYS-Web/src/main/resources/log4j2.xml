@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="off" monitorInterval="1800">
+<configuration status="off">
 	<properties>
 		<property name="LOG_HOME">/output/logs</property>
 		<!-- 日志备份目录 -->
@@ -9,7 +9,7 @@
 		<property name="OUTPUT_LOG_LEVEL">DEBUG</property><!-- 日志输出级别 -->
 	</properties>
 	<appenders>
-		<Console name="Console" target="SYSTEM_OUT" follow="true">
+		<Console name="Console" target="SYSTEM_OUT">
 			<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{1}:%L] - %msg%n" />
 		</Console>
@@ -65,19 +65,18 @@
 	<loggers>
 		<logger name="org.slf4j" level="INFO" />
 		<logger name="org.quartz" level="INFO" />
-		<logger name="org.apache" level="INFO" />
 		<logger name="org.redisson" level="INFO" />
 		<logger name="com.atomikos" level="WARN" />
-		<logger name="org.crazycake.shiro" level="INFO" />
 		<logger name="com.alibaba.dubbo" level="INFO" />
+		<logger name="org.apache.activemq" level="INFO" />
 		<logger name="org.springframework" level="INFO" />
+		<logger name="com.weibo.api.motan" level="INFO" />
 		<logger name="org.apache.zookeeper" level="WARN" />
-		<logger name="org.springframework.web" level="DEBUG" />
-		<logger name="org.springframework.web.servlet.DispatcherServlet" level="INFO" />
-		<AsyncLogger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
+		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
+		<Logger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
 			<appender-ref ref="Console" />
             <appender-ref ref="ProductLog" />
-        </AsyncLogger >
+        </Logger >
 		<Root  level="DEBUG">
 			<appender-ref ref="Console" />
 			<appender-ref ref="RollingFile" />
