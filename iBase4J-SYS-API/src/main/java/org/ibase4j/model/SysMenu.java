@@ -38,6 +38,8 @@ public class SysMenu extends BaseModel {
 	private String permission;
 
 	@TableField(exist = false)
+	private String parentName;
+	@TableField(exist = false)
 	private Integer leaf = 1;
 	@TableField(exist = false)
 	private String typeName;
@@ -211,6 +213,14 @@ public class SysMenu extends BaseModel {
 
 	public void setMenuBeans(List<SysMenu> menuBeans) {
 		this.menuBeans = menuBeans;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 
 	/**

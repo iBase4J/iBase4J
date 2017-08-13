@@ -3,6 +3,7 @@ package org.ibase4j.web;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
+import org.ibase4j.core.Constants;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.exception.LoginException;
@@ -45,7 +46,8 @@ public class LoginController extends BaseController {
 			HttpServletRequest request) {
 		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
 		Assert.notNull(sysUser.getPassword(), "PASSWORD");
-		if (LoginHelper.login(request, sysUser.getAccount(), sysUserService.encryptPassword(sysUser.getPassword()))) {
+		String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
+		if (LoginHelper.login(sysUser.getAccount(), sysUserService.encryptPassword(sysUser.getPassword()), clientIp)) {
 			request.setAttribute("msg", "[" + sysUser.getAccount() + "]登录成功.");
 			return setSuccessModelMap(modelMap);
 		}
@@ -73,7 +75,8 @@ public class LoginController extends BaseController {
 		Assert.notNull(sysUser.getPassword(), "PASSWORD");
 		sysUser.setPassword(sysUserService.encryptPassword(sysUser.getPassword()));
 		sysUserService.update(sysUser);
-		if (LoginHelper.login(request, sysUser.getAccount(), sysUser.getPassword())) {
+		String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
+		if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp)) {
 			return setSuccessModelMap(modelMap);
 		}
 		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));

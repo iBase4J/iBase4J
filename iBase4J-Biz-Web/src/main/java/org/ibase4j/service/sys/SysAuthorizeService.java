@@ -1,7 +1,10 @@
 package org.ibase4j.service.sys;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.ibase4j.core.exception.IllegalParameterException;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.SysMenu;
@@ -9,8 +12,6 @@ import org.ibase4j.model.SysRoleMenu;
 import org.ibase4j.model.SysUserMenu;
 import org.ibase4j.model.SysUserRole;
 import org.ibase4j.provider.ISysAuthorizeProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * @author ShenHuaJie
@@ -25,11 +26,11 @@ public class SysAuthorizeService {
 		return sysAuthorizeProvider.queryAuthorizeByUserId(id);
 	}
 
-	public List<Long> queryMenuIdsByUserId(Long userId) {
+	public List<String> queryMenuIdsByUserId(Long userId) {
 		return sysAuthorizeProvider.queryMenuIdsByUserId(userId);
 	}
 
-	public List<Long> queryMenuIdsByRoleId(Long roleId) {
+	public List<String> queryMenuIdsByRoleId(Long roleId) {
 		return sysAuthorizeProvider.queryMenuIdsByRoleId(roleId);
 	}
 
@@ -89,14 +90,6 @@ public class SysAuthorizeService {
 		return sysAuthorizeProvider.queryMenusPermission();
 	}
 
-	public List<Long> queryUserPermissions(Long userId, String permission) {
-		return sysAuthorizeProvider.queryUserPermissions(userId, permission);
-	}
-
-	public List<Long> queryRolePermissions(Long roleId, String permission) {
-		return sysAuthorizeProvider.queryRolePermissions(roleId, permission);
-	}
-
 	public void updateUserPermission(List<SysUserMenu> sysUserMenus) {
 		sysAuthorizeProvider.updateUserPermission(sysUserMenus);
 	}
@@ -108,5 +101,13 @@ public class SysAuthorizeService {
 	/** 获取用户权限 */
 	public List<String> queryPermissionByUserId(Long userId) {
 		return sysAuthorizeProvider.queryPermissionByUserId(userId);
+	}
+
+	public List<Map<String, Object>> queryUserPermissions(SysUserMenu record) {
+		return sysAuthorizeProvider.queryUserPermissions(record);
+	}
+
+	public List<Map<String, Object>> queryRolePermissions(SysRoleMenu record) {
+		return sysAuthorizeProvider.queryRolePermissions(record);
 	}
 }

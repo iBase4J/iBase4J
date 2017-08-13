@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.core.Constants;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.support.login.LoginHelper;
@@ -81,7 +82,8 @@ public class ThirdPartyLoginController extends BaseController {
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getWxUserinfo(map.get("access_token"), openId);
 					thirdUser.setProvider("WX");
 					SysUser sysUser = sysUserService.thirdPartyLogin(thirdUser);
-					LoginHelper.login(request, sysUser.getAccount(), sysUser.getPassword());
+					String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
+					LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -113,7 +115,8 @@ public class ThirdPartyLoginController extends BaseController {
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getQQUserinfo(map.get("access_token"), openId);
 					thirdUser.setProvider("QQ");
 					SysUser sysUser = sysUserService.thirdPartyLogin(thirdUser);
-					LoginHelper.login(request, sysUser.getAccount(), sysUser.getPassword());
+					String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
+					LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -146,7 +149,8 @@ public class ThirdPartyLoginController extends BaseController {
 							uid);
 					thirdUser.setProvider("SINA");
 					SysUser sysUser = sysUserService.thirdPartyLogin(thirdUser);
-					LoginHelper.login(request, sysUser.getAccount(), sysUser.getPassword());
+					String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
+					LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID

@@ -30,14 +30,16 @@ public class SysSessionService {
 	}
 
 	/** 删除会话 */
-	public void deleteByAccount(String account) {
+	public void deleteByAccount(String account, String currentSessionId) {
 		Assert.isNotBlank(account, "ACCOUNT");
 		List<String> sessionIds = sysSessionProvider.querySessionIdByAccount(account);
 		if (sessionIds != null) {
 			for (String sessionId : sessionIds) {
 				sysSessionProvider.deleteBySessionId(sessionId);
-				sessionRepository.delete(sessionId);
-				sessionRepository.cleanupExpiredSessions();
+				if (!sessionId.equals(currentSessionId)) {
+					sessionRepository.delete(sessionId);
+					sessionRepository.cleanupExpiredSessions();
+				}
 			}
 		}
 	}

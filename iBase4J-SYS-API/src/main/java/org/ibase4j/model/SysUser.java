@@ -2,135 +2,185 @@ package org.ibase4j.model;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseModel;
-import org.ibase4j.core.util.PinyinUtil;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 
 /**
- * SysUser实体类
+ * <p>
+ * 用户管理
+ * </p>
+ *
  * @author ShenHuaJie
- * @version 2016-08-27 22:39:42
+ * @since 2017-02-15
  */
 @TableName("sys_user")
 @SuppressWarnings("serial")
 public class SysUser extends BaseModel {
-    @TableField("account_")
+
+	/**
+	 * 登陆帐户
+	 */
+	@TableField("account_")
 	private String account;
-    @TableField("password_")
+	/**
+	 * 密码
+	 */
+	@TableField("password_")
 	private String password;
-    @TableField("phone_")
-	private String phone;
-    @TableField("sex_")
-	private Integer sex;
+	/**
+	 * 用户类型(1普通用户2管理员3系统用户)
+	 */
+	@TableField("user_type")
+	private String userType;
+	/**
+	 * 姓名
+	 */
+	@TableField("user_name")
 	private String userName;
+	/**
+	 * 姓名拼音
+	 */
+	@TableField("name_pinyin")
 	private String namePinyin;
-    @TableField("email_")
-	private String email;
-	private Date birthDay;
-    @TableField("position_")
-	private String position;
-    @TableField("address_")
-	private String address;
-    @TableField("avatar_")
+	/**
+	 * 性别(0:未知;1:男;2:女)
+	 */
+	@TableField("sex_")
+	private Integer sex;
+	/**
+	 * 头像
+	 */
+	@TableField("avatar_")
 	private String avatar;
-	private Integer userType;
+	/**
+	 * 电话
+	 */
+	@TableField("phone_")
+	private String phone;
+	/**
+	 * 邮箱
+	 */
+	@TableField("email_")
+	private String email;
+	/**
+	 * 身份证号码
+	 */
+	@TableField("id_card")
+	private String idCard;
+	/**
+	 * 微信
+	 */
+	@TableField("wei_xin")
+	private String weiXin;
+	/**
+	 * 微博
+	 */
+	@TableField("wei_bo")
+	private String weiBo;
+	/**
+	 * QQ
+	 */
+	@TableField("qq_")
+	private String qq;
+	/**
+	 * 出生日期
+	 */
+	@TableField("birth_day")
+	private Date birthDay;
+	/**
+	 * 部门编号
+	 */
+	@TableField("dept_id")
 	private Long deptId;
-    @TableField("locked_")
-	private Integer locked;
-    
-    @TableField(exist = false)
-    private String oldPassword;
-    @TableField(exist = false)
+	/**
+	 * 职位
+	 */
+	@TableField("position_")
+	private String position;
+	/**
+	 * 详细地址
+	 */
+	@TableField("address_")
+	private String address;
+	/**
+	 * 工号
+	 */
+	@TableField("staff_no")
+	private String staffNo;
+
+	@TableField(exist = false)
+	private String oldPassword;
+	@TableField(exist = false)
 	private String deptName;
-    @TableField(exist = false)
+	@TableField(exist = false)
 	private String userTypeText;
-    @TableField(exist = false)
+	@TableField(exist = false)
 	private String permission;
+
+	public String getAccount() {
+		return account;
+	}
 
 	public void setAccount(String account) {
 		this.account = account;
 	}
 
-	public String getAccount() {
-		return this.account;
+	public String getPassword() {
+		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public String getPassword() {
-		return this.password;
+	public String getUserType() {
+		return userType;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 
-	public String getPhone() {
-		return this.phone;
-	}
-
-	public void setSex(Integer sex) {
-		this.sex = sex;
-	}
-
-	public Integer getSex() {
-		return this.sex;
+	public String getUserName() {
+		return userName;
 	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-	public String getUserName() {
-		return this.userName;
+	public String getNamePinyin() {
+		return namePinyin;
+	}
+
+	public void setNamePinyin(String namePinyin) {
+		this.namePinyin = namePinyin;
+	}
+
+	public Integer getSex() {
+		return sex;
+	}
+
+	public void setSex(Integer sex) {
+		this.sex = sex;
+	}
+
+	public String getAvatar() {
+		return avatar;
 	}
 
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
 
-	public String getAvatar() {
-		return this.avatar;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setUserType(Integer userType) {
-		this.userType = userType;
-	}
-
-	public Integer getUserType() {
-		return this.userType;
-	}
-
-	public void setDeptId(Long deptId) {
-		this.deptId = deptId;
-	}
-
-	public Long getDeptId() {
-		return this.deptId;
-	}
-
-	public Integer getLocked() {
-		return locked;
-	}
-
-	public void setLocked(Integer locked) {
-		this.locked = locked;
-	}
-
-	public String getNamePinyin() {
-		if (StringUtils.isBlank(namePinyin) && StringUtils.isNotBlank(userName)) {
-			return PinyinUtil.getPinYin(userName).toUpperCase();
-		}
-		return namePinyin;
-	}
-
-	public void setNamePinyin(String namePinyin) {
-		this.namePinyin = namePinyin;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getEmail() {
@@ -141,12 +191,36 @@ public class SysUser extends BaseModel {
 		this.email = email;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getIdCard() {
+		return idCard;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
+	}
+
+	public String getWeiXin() {
+		return weiXin;
+	}
+
+	public void setWeiXin(String weiXin) {
+		this.weiXin = weiXin;
+	}
+
+	public String getWeiBo() {
+		return weiBo;
+	}
+
+	public void setWeiBo(String weiBo) {
+		this.weiBo = weiBo;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
 	}
 
 	public Date getBirthDay() {
@@ -157,12 +231,36 @@ public class SysUser extends BaseModel {
 		this.birthDay = birthDay;
 	}
 
+	public Long getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
+
 	public String getPosition() {
 		return position;
 	}
 
 	public void setPosition(String position) {
 		this.position = position;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getStaffNo() {
+		return staffNo;
+	}
+
+	public void setStaffNo(String staffNo) {
+		this.staffNo = staffNo;
 	}
 
 	public String getOldPassword() {

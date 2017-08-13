@@ -41,7 +41,7 @@ public class SysAuthorizeController extends BaseController {
 	@PutMapping(value = "user/read/menu")
 	@RequiresPermissions("sys.permisson.userMenu.read")
 	public Object getUserMenu(ModelMap modelMap, @RequestBody SysUserMenu record) {
-		List<Long> menus = authorizeService.queryMenuIdsByUserId(record.getUserId());
+		List<String> menus = authorizeService.queryMenuIdsByUserId(record.getUserId());
 		return setSuccessModelMap(modelMap, menus);
 	}
 
@@ -73,7 +73,7 @@ public class SysAuthorizeController extends BaseController {
 	@PutMapping(value = "role/read/menu")
 	@RequiresPermissions("sys.permisson.roleMenu.read")
 	public Object getRoleMenu(ModelMap modelMap, @RequestBody SysRoleMenu record) {
-		List<Long> menus = authorizeService.queryMenuIdsByRoleId(record.getRoleId());
+		List<String> menus = authorizeService.queryMenuIdsByRoleId(record.getRoleId());
 		return setSuccessModelMap(modelMap, menus);
 	}
 
@@ -89,7 +89,7 @@ public class SysAuthorizeController extends BaseController {
 	@PutMapping(value = "user/read/permission")
 	@RequiresPermissions("sys.permisson.user.read")
 	public Object queryUserPermissions(ModelMap modelMap, @RequestBody SysUserMenu record) {
-		List<Long> menuIds = authorizeService.queryUserPermissions(record.getUserId(), record.getPermission());
+		List<?> menuIds = authorizeService.queryUserPermissions(record);
 		return setSuccessModelMap(modelMap, menuIds);
 	}
 
@@ -105,7 +105,7 @@ public class SysAuthorizeController extends BaseController {
 	@PutMapping(value = "role/read/permission")
 	@RequiresPermissions("sys.permisson.role.read")
 	public Object queryRolePermissions(ModelMap modelMap, @RequestBody SysRoleMenu record) {
-		List<Long> menuIds = authorizeService.queryRolePermissions(record.getRoleId(), record.getPermission());
+		List<?> menuIds = authorizeService.queryRolePermissions(record);
 		return setSuccessModelMap(modelMap, menuIds);
 	}
 

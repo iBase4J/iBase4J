@@ -46,7 +46,7 @@ public class SysUserService extends BaseService<ISysUserProvider, SysUser> {
 		Long userId = WebUtil.getCurrentUser();
 		if (!id.equals(userId)) {
 			SysUser user = provider.queryById(userId);
-			if (user.getUserType() == 1) {
+			if ("1".equals(user.getUserType())) {
 				throw new UnauthorizedException("您没有权限修改用户密码.");
 			}
 		} else {

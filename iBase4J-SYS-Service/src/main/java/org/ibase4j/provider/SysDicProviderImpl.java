@@ -1,20 +1,15 @@
 package org.ibase4j.provider;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseProviderImpl;
-import org.ibase4j.core.exception.BusinessException;
 import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.mapper.SysDicIndexMapper;
 import org.ibase4j.mapper.SysDicMapper;
 import org.ibase4j.model.SysDic;
-import org.ibase4j.model.SysDicIndex;
-import org.ibase4j.provider.ISysDicProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -33,20 +28,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements ISysDicProvider {
 	@Autowired
 	private SysDicMapper dicMapper;
-	@Autowired
-	private SysDicIndexMapper dicIndexMapper;
-
-	@Transactional
-	@CachePut(value = "sysDicIndex")
-	public void updateDicIndex(SysDicIndex record) {
-		record.setUpdateTime(new Date());
-		if (record.getId() == null) {
-			record.setCreateTime(new Date());
-			dicIndexMapper.insert(record);
-		} else {
-			dicIndexMapper.updateById(record);
-		}
-	}
 
 	@Transactional
 	@CachePut(value = "sysDic")
@@ -66,11 +47,6 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements ISys
 		dicMapper.deleteById(id);
 	}
 
-	@Cacheable(value = "sysDicIndex")
-	public SysDicIndex queryDicIndexById(Long id) {
-		return dicIndexMapper.selectById(id);
-	}
-
 	@Cacheable(value = "sysDic")
 	public SysDic queryDicById(Long id) {
 		return dicMapper.selectById(id);
@@ -79,25 +55,21 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements ISys
 	@Cacheable(value = "sysDics")
 	public Map<String, Map<String, String>> getAllDic() {
 		Map<String, Object> params = InstanceUtil.newHashMap();
-		List<Long> records = dicIndexMapper.selectIdPage(params);
-
-		Map<Long, String> dicIndexMap = InstanceUtil.newHashMap();
-		for (Long id : records) {
-			dicIndexMap.put(id, dicIndexMapper.selectById(id).getKey());
-		}
-		records = dicMapper.selectIdPage(Collections.<String, Object>emptyMap());
-		Page<Long> idPage = new Page<Long>(1, records.size());
-		idPage.setRecords(records);
-		Page<SysDic> sysDics = getPage(idPage, SysDic.class);
+		params.put("orderBy", "type_,sort_no");
+		List<SysDic> list = queryList(params);
 		Map<String, Map<String, String>> resultMap = InstanceUtil.newHashMap();
-		for (SysDic sysDic : sysDics.getRecords()) {
-			String key = dicIndexMap.get(sysDic.getIndexId());
-			if (StringUtils.isNotBlank(key)) {
+		for (SysDic sysDic : list) {
+			if (sysDic != null) {
+				String key = sysDic.getType();
 				if (resultMap.get(key) == null) {
 					Map<String, String> dicMap = InstanceUtil.newHashMap();
 					resultMap.put(key, dicMap);
 				}
-				resultMap.get(key).put(sysDic.getCode(), sysDic.getCodeText());
+				if (StringUtils.isNotBlank(sysDic.getParentCode())) {
+					resultMap.get(key).put(sysDic.getParentCode() + sysDic.getCode(), sysDic.getCodeText());
+				} else {
+					resultMap.get(key).put(sysDic.getCode(), sysDic.getCodeText());
+				}
 			}
 		}
 		return resultMap;
@@ -108,35 +80,9 @@ public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements ISys
 		return applicationContext.getBean(ISysDicProvider.class).getAllDic().get(key);
 	}
 
-	public Page<SysDicIndex> queryDicIndex(Map<String, Object> params) {
-		Page<Long> idPage = getPage(params);
-		List<Long> ids = dicIndexMapper.selectIdPage(idPage, params);
-		Page<SysDicIndex> page = new Page<SysDicIndex>(idPage.getCurrent(), idPage.getSize());
-		page.setTotal(idPage.getTotal());
-		if (ids != null) {
-			ISysDicProvider provider = applicationContext.getBean(getClass());
-			List<SysDicIndex> records = InstanceUtil.newArrayList();
-			for (Long id : ids) {
-				records.add(provider.queryDicIndexById(id));
-			}
-			page.setRecords(records);
-		}
-		return page;
-	}
-
 	public Page<SysDic> queryDic(Map<String, Object> params) {
 		Page<Long> page = getPage(params);
 		page.setRecords(mapper.selectIdPage(page, params));
 		return getPage(page);
-	}
-
-	public void deleteDicIndex(Long id) {
-		Map<String, Object> params = InstanceUtil.newHashMap();
-		params.put("index_id", id);
-		List<Long> ids = dicMapper.selectIdPage(params);
-		if (ids.size() > 0) {
-			throw new BusinessException();
-		}
-		dicIndexMapper.deleteById(id);
 	}
 }

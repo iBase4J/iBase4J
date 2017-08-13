@@ -5,7 +5,6 @@ import java.util.Map;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.SysDic;
-import org.ibase4j.model.SysDicIndex;
 import org.ibase4j.service.SysDicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -31,45 +30,6 @@ import io.swagger.annotations.ApiOperation;
 public class SysDicController extends BaseController {
 	@Autowired
 	private SysDicService sysDicService;
-
-	@ApiOperation(value = "查询字典")
-	@RequiresPermissions("sys.base.dic.read")
-	@PutMapping(value = "dicIndex/read/list")
-	public Object getDicIndex(ModelMap modelMap, @RequestBody(required = false) Map<String, Object> sysDicIndex) {
-		Page<?> list = sysDicService.queryDicIndex(sysDicIndex);
-		return setSuccessModelMap(modelMap, list);
-	}
-
-	@ApiOperation(value = "字典详情")
-	@RequiresPermissions("sys.base.dic.read")
-	@PutMapping(value = "dicIndex/read/detail")
-	public Object detail(ModelMap modelMap, @RequestBody(required = false) SysDicIndex param) {
-		SysDicIndex record = sysDicService.queryDicIndexById(param.getId());
-		return setSuccessModelMap(modelMap, record);
-	}
-
-	@ApiOperation(value = "根据关键字查询字典列表")
-	@PutMapping(value = "dic/read/key")
-	public Object getDicByKey(ModelMap modelMap, @RequestBody SysDicIndex record) {
-		Map<String, String> result = sysDicService.queryDicByDicIndexKey(record.getKey());
-		return setSuccessModelMap(modelMap, result);
-	}
-
-	@ApiOperation(value = "修改字典")
-	@PostMapping(value = "dicIndex")
-	@RequiresPermissions("sys.base.dic.update")
-	public Object updateDicIndex(ModelMap modelMap, @RequestBody SysDicIndex record) {
-		sysDicService.updateDicIndex(record);
-		return setSuccessModelMap(modelMap);
-	}
-
-	@ApiOperation(value = "删除字典")
-	@DeleteMapping(value = "dicIndex")
-	@RequiresPermissions("sys.base.dic.delete")
-	public Object deleteDicIndex(ModelMap modelMap, @RequestBody SysDicIndex record) {
-		sysDicService.deleteDicIndex(record.getId());
-		return setSuccessModelMap(modelMap);
-	}
 
 	@ApiOperation(value = "查询字典项")
 	@RequiresPermissions("sys.base.dic.read")

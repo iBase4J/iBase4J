@@ -26,6 +26,10 @@ public interface Constants {
     public static final String WEBTHEME = "webTheme";
     /** 当前用户 */
     public static final String CURRENT_USER = "CURRENT_USER";
+	/** 客户端信息 */
+	static final String USER_AGENT = "USER-AGENT";
+	/** 客户端信息 */
+	static final String USER_IP = "USER_IP";
     /** 上次请求地址 */
     public static final String PREREQUEST = "PREREQUEST";
     /** 上次请求时间 */

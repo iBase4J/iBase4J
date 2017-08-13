@@ -1,6 +1,7 @@
 package org.ibase4j.provider;
 
 import java.util.List;
+import java.util.Map;
 
 import org.ibase4j.core.base.BaseProvider;
 import org.ibase4j.model.SysMenu;
@@ -10,7 +11,7 @@ import org.ibase4j.model.SysUserRole;
 
 public interface ISysAuthorizeProvider extends BaseProvider<SysMenu> {
 
-	public List<Long> queryMenuIdsByUserId(Long userId);
+	public List<String> queryMenuIdsByUserId(Long userId);
 
 	public void updateUserMenu(List<SysUserMenu> sysUserMenus);
 
@@ -20,7 +21,7 @@ public interface ISysAuthorizeProvider extends BaseProvider<SysMenu> {
 
 	public void updateUserRole(List<SysUserRole> sysUserRoles);
 
-	public List<Long> queryMenuIdsByRoleId(Long roleId);
+	public List<String> queryMenuIdsByRoleId(Long roleId);
 
 	public void updateRoleMenu(List<SysRoleMenu> sysRoleMenus);
 
@@ -30,9 +31,9 @@ public interface ISysAuthorizeProvider extends BaseProvider<SysMenu> {
 
 	public List<SysMenu> queryMenusPermission();
 
-	public List<Long> queryUserPermissions(Long userId, String permission);
-
-	public List<Long> queryRolePermissions(Long roleId, String permission);
-
 	public List<String> queryPermissionByUserId(Long userId);
+
+	public List<Map<String, Object>> queryUserPermissions(SysUserMenu record);
+
+	public List<Map<String, Object>> queryRolePermissions(SysRoleMenu record);
 }

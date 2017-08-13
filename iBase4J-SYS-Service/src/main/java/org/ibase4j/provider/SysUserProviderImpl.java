@@ -82,7 +82,7 @@ public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements IS
 	public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
 		SysUser sysUser = new SysUser();
 		sysUser.setSex(0);
-		sysUser.setUserType(1);
+		sysUser.setUserType("1");
 		sysUser.setPassword(this.encryptPassword("123456"));
 		sysUser.setUserName(thirdPartyUser.getUserName());
 		sysUser.setAvatar(thirdPartyUser.getAvatarUrl());

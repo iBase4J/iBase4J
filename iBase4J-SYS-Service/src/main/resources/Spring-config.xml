@@ -17,8 +17,8 @@
 		<property name="properties">
 			<props>
 				<!-- dubbo个性化配置(服务名,端口) -->
-				<prop key="dubbo.application.name">${project.artifactId}</prop>
-				<prop key="dubbo.protocol.port">1${server.port}</prop>
+				<prop key="rpc.registry.name">${project.artifactId}</prop>
+				<prop key="rpc.protocol.port">1${server.port}</prop>
 			</props>
 		</property>
 		<property name="decryptProperties">

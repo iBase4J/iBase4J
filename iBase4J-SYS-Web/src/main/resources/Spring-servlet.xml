@@ -25,6 +25,9 @@
 		               <array>
 		                   <value>QuoteFieldNames</value>
 		                   <value>WriteDateUseDateFormat</value>
+						<!-- 字符类型字段如果为null,输出为"",而非null -->
+						<value>WriteNullStringAsEmpty</value>
+						<value>WriteNonStringValueAsString</value>
 		               </array>
 		           </property>
 			</bean>
@@ -39,13 +42,14 @@
 			<mvc:exclude-mapping path="/swagger**" />
 			<mvc:exclude-mapping path="/webjars/**" />
 			<mvc:exclude-mapping path="/configuration/**" />
-			<bean class="org.ibase4j.core.interceptor.MaliciousRequestInterceptor">
-				<property name="minRequestIntervalTime" value="1000" />
-				<property name="maxMaliciousTimes" value="0" />
+			<bean class="org.ibase4j.core.interceptor.LocaleInterceptor">
 				<property name="nextInterceptor">
 					<array>
-						<bean class="org.ibase4j.core.interceptor.LocaleInterceptor" />
 						<bean class="org.ibase4j.core.interceptor.EventInterceptor" />
+						<bean class="org.ibase4j.core.interceptor.MaliciousRequestInterceptor">
+							<property name="minRequestIntervalTime" value="500" />
+							<property name="maxMaliciousTimes" value="0" />
+						</bean>
 					</array>
 				</property>
 			</bean>

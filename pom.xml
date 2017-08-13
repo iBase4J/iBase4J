@@ -8,17 +8,19 @@
 	<name>iBase4J</name>
 	<packaging>pom</packaging>
 	<url>http://maven.apache.org</url>
+
 	<modules>
 		<module>iBase4J-Common</module>
-		<module>iBase4J-SYS-API</module>
 		<module>iBase4J-SYS-Service</module>
+		<module>iBase4J-SYS-Facade</module>
 		<module>iBase4J-SYS-Web</module>
-		<module>iBase4J-Biz-API</module>
 		<module>iBase4J-Biz-Service</module>
+		<module>iBase4J-Biz-Facade</module>
 		<module>iBase4J-Biz-Web</module>
 	</modules>
 
-	<!-- clean package -P build tomcat7:run-war-only -->
+	<!-- clean package -P build -f pom-sys-service-server.xml -->
+	<!-- clean package -P build -f pom-sys-web-server.xml -->
 
 	<properties>
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
@@ -27,24 +29,24 @@
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
-		<spring.version>4.3.0.RELEASE</spring.version>
-		<spring-session.version>1.3.0.RELEASE</spring-session.version>
-		<spring-data-redis.version>1.8.1.RELEASE</spring-data-redis.version>
+		<spring.version>5.0.0.M5</spring.version>
+		<spring-session.version>2.0.0.M2</spring-session.version>
+		<spring-data-redis.version>2.0.0.M4</spring-data-redis.version>
 		<!-- 数据库 -->
 		<mysql.version>5.1.39</mysql.version>
 		<sharding-jdbc.version>1.4.1</sharding-jdbc.version>
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.4.2</mybatis.version>
 		<mybatis-spring.version>1.3.1</mybatis-spring.version>
-		<mybatis-plus.version>2.0.7</mybatis-plus.version>
+		<mybatis-plus.version>2.1-gamma</mybatis-plus.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.9</slf4j.version>
 		<log4j.version>2.8.2</log4j.version>
 		<disruptor.version>3.3.4</disruptor.version>
 		<!-- -->
-		<druid.version>1.0.27</druid.version>
+		<druid.version>1.1.2</druid.version>
 		<dubbo.version>2.5.3</dubbo.version>
-		<fastjson.version>1.2.28</fastjson.version>
+		<fastjson.version>1.2.36</fastjson.version>
 		<!-- -->
 		<poi.version>3.9</poi.version>
 		<jxl.version>2.6.12</jxl.version>
@@ -52,8 +54,7 @@
 		<jsch.version>0.1.53</jsch.version>
 		<jedis.version>2.9.0</jedis.version>
 		<zxing.version>3.3.0</zxing.version>
-		<redisson.version>3.3.1</redisson.version>
-		<!-- <redisson.version>2.7.2</redisson.version> -->
+		<zookeeper.version>3.5.3-beta</zookeeper.version>
 		<jackson.version>2.8.6</jackson.version>
 		<shiro.version>1.2.4</shiro.version>
 		<quartz.version>2.2.3</quartz.version>
@@ -132,16 +133,6 @@
 		</dependency>
 		<!-- mybatis -->
 		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>${mybatis.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis-spring</artifactId>
-			<version>${mybatis-spring.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus</artifactId>
 			<version>${mybatis-plus.version}</version>
@@ -150,11 +141,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -169,12 +155,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-jms</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
+			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -187,16 +168,6 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.redisson</groupId>
-			<artifactId>redisson</artifactId>
-			<version>${redisson.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.7.4</version>
 		</dependency>
 		<!-- alibaba工具包 -->
 		<dependency>
@@ -215,12 +186,6 @@
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.5.0-b01</version>
-		</dependency>
-		<!-- JSTL标签类 -->
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
 		</dependency>
 		<!-- 日志文件管理包 -->
 		<dependency>
@@ -248,11 +213,7 @@
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.lmax</groupId>
-			<artifactId>disruptor</artifactId>
-			<version>${disruptor.version}</version>
-		</dependency>
+		<!-- -->
 		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
@@ -275,9 +236,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>com.101tec</groupId>
-			<artifactId>zkclient</artifactId>
-			<version>0.8</version>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>${zookeeper.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -286,9 +247,9 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty</artifactId>
-			<version>3.7.0.Final</version>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.10</version>
 		</dependency>
 		<!-- activemq -->
 		<dependency>
@@ -296,16 +257,46 @@
 			<artifactId>activemq-spring</artifactId>
 			<version>${activemq.version}</version>
 		</dependency>
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
 	</dependencies>
 
 	<profiles>
 		<profile>
 			<id>product</id>
 			<properties>
-				<scheduler.jdbc.config.path>file:/home/config/iBase4J/jdbc-scheduler.properties</scheduler.jdbc.config.path>
 				<sys.jdbc.config.path>file:/home/config/iBase4J/jdbc-sys.properties</sys.jdbc.config.path>
 				<system.config.path>file:/home/config/iBase4J/system.properties</system.config.path>
 			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/java</directory>
+						<includes>
+							<include>**/*.properties</include>
+							<include>**/*.xml</include>
+						</includes>
+						<filtering>true</filtering>
+					</resource>
+					<resource>
+						<directory>src/main/resources</directory>
+					</resource>
+				</resources>
+			</build>
 		</profile>
 		<profile>
 			<id>build</id>
@@ -345,7 +336,7 @@
 								<contextReloadable>true</contextReloadable>
 								<uriEncoding>UTF-8</uriEncoding>
 								<port>${server.port}</port>
-								<url>http://localhost:8080/manager</url>
+								<url>http://localhost:${server.port}/manager</url>
 								<server>tomcat</server>
 								<username>admin</username>
 								<password>admin</password>
@@ -374,9 +365,18 @@
 		<finalName>${project.name}</finalName>
 		<resources>
 			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
 					<include>*</include>
+					<include>*/*</include>
 				</includes>
 				<filtering>true</filtering>
 			</resource>
@@ -388,8 +388,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.3</version>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 						<encoding>UTF-8</encoding>
 						<testIncludes>
 							<testInclude>none</testInclude>
