@@ -18,13 +18,12 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
  */
 public final class PropertiesUtil extends PropertyPlaceholderConfigurer {
 	private static final byte[] KEY = { 9, -1, 0, 5, 39, 8, 6, 19 };
-	private static Map<String, String> ctxPropertiesMap;
+	private static Map<String, String> ctxPropertiesMap = new HashMap<String, String>();
 	private List<String> decryptProperties;
 
 	@Override
 	protected void loadProperties(Properties props) throws IOException {
 		super.loadProperties(props);
-		ctxPropertiesMap = new HashMap<String, String>();
 		for (Object key : props.keySet()) {
 			String keyStr = key.toString();
 			String value = props.getProperty(keyStr);
@@ -34,6 +33,10 @@ public final class PropertiesUtil extends PropertyPlaceholderConfigurer {
 			}
 			ctxPropertiesMap.put(keyStr, value);
 		}
+	}
+
+	public static Map<String, String> getProperties() {
+		return ctxPropertiesMap;
 	}
 
 	/**

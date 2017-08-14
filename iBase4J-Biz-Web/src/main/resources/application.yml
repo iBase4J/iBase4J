@@ -1,0 +1,19 @@
+# Tomcat
+server:
+    name: iBase4J-Biz-Web
+    port: 8090
+    tomcat:
+        max-threads: 1000
+        min-spare-threads: 30
+# mysql
+spring:
+    # 环境 dev|test|prod
+    profiles:
+        active: dev
+    rpc: dubbo
+    # jackson时间格式化
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    thymeleaf:
+        cache: false

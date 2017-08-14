@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.stereotype.Component;
 
 /**
  * 切换数据源(不同方法调用不同数据源)
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * @version 2016年5月20日 下午3:17:52
  */
 @Aspect
+@Component
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class DataSourceAspect {
 	private final Logger logger = LogManager.getLogger();
