@@ -26,12 +26,12 @@ import com.alibaba.dubbo.config.spring.AnnotationBean;
 public class DubboConfig {
 	static class EnableDubbo implements Condition {
 		public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-			return "dubbo".equals(context.getEnvironment().getProperty("rpc.type"));
+			return "dubbo".equals(PropertiesUtil.getString("rpc.type"));
 		}
 	}
 
 	@Bean
-	public AnnotationBean annotationBean(ApplicationContext context) {
+	public AnnotationBean dubboAnnotation(ApplicationContext context) {
 		AnnotationBean bean = new AnnotationBean();
 		bean.setApplicationContext(context);
 		bean.setPackage("org.ibase4j");
@@ -39,15 +39,15 @@ public class DubboConfig {
 	}
 
 	@Bean
-	public ApplicationConfig application() {
+	public ApplicationConfig dubboApplication() {
 		ApplicationConfig config = new ApplicationConfig();
-		config.setName(PropertiesUtil.getString("rpc.registry.name"));
+		config.setName("RPC-" + PropertiesUtil.getString("rpc.registry.name"));
 		config.setLogger("slf4j");
 		return config;
 	}
 
 	@Bean
-	public RegistryConfig registry() {
+	public RegistryConfig dubboRegistry() {
 		RegistryConfig config = new RegistryConfig();
 		String address = PropertiesUtil.getString("rpc.registry") + "://" + PropertiesUtil.getString("rpc.address");
 		config.setAddress(address);
@@ -59,7 +59,7 @@ public class DubboConfig {
 	}
 
 	@Bean
-	public ProtocolConfig protocol() {
+	public ProtocolConfig dubboProtocol() {
 		ProtocolConfig config = new ProtocolConfig();
 		config.setPort(PropertiesUtil.getInt("rpc.protocol.port"));
 		config.setThreads(PropertiesUtil.getInt("rpc.protocol.threads"));
@@ -67,7 +67,7 @@ public class DubboConfig {
 	}
 
 	@Bean
-	public ConsumerConfig consumer() {
+	public ConsumerConfig dubboConsumer() {
 		ConsumerConfig config = new ConsumerConfig();
 		config.setTimeout(PropertiesUtil.getInt("rpc.timeout"));
 		config.setRetries(PropertiesUtil.getInt("rpc.consumer.retries"));

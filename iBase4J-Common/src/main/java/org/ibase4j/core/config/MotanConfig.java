@@ -23,19 +23,19 @@ import com.weibo.api.motan.config.springsupport.RegistryConfigBean;
 public class MotanConfig {
 	static class EnableMotan implements Condition {
 		public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
-			return "motan".equals(context.getEnvironment().getProperty("rpc.type"));
+			return "motan".equals(PropertiesUtil.getString("rpc.type"));
 		}
 	}
 
 	@Bean
-	public AnnotationBean annotationBean() {
+	public AnnotationBean motanAnnotation() {
 		AnnotationBean bean = new AnnotationBean();
 		bean.setPackage("org.ibase4j");
 		return bean;
 	}
 
 	@Bean
-	public RegistryConfigBean registryConfig() {
+	public RegistryConfigBean motanRegistry() {
 		RegistryConfigBean config = new RegistryConfigBean();
 		config.setName(PropertiesUtil.getString("rpc.registry.name"));
 		config.setRegProtocol(PropertiesUtil.getString("rpc.registry"));
@@ -44,8 +44,8 @@ public class MotanConfig {
 		return config;
 	}
 
-	@Bean
-	public ProtocolConfigBean protocolConfig1() {
+	@Bean("motan")
+	public ProtocolConfigBean motanProtocol() {
 		ProtocolConfigBean config = new ProtocolConfigBean();
 		config.setDefault(true);
 		config.setName("motan");
@@ -57,9 +57,9 @@ public class MotanConfig {
 	}
 
 	@Bean
-	public BasicServiceConfigBean baseServiceConfig() {
+	public BasicServiceConfigBean motanBaseService(RegistryConfigBean registry) {
 		BasicServiceConfigBean config = new BasicServiceConfigBean();
-		config.setRegistry(PropertiesUtil.getString("rpc.registry.name"));
+		config.setRegistry(registry.getName());
 		config.setExport("motan:" + PropertiesUtil.getString("rpc.protocol.port"));
 		config.setAccessLog(false);
 		config.setShareChannel(true);
@@ -67,10 +67,10 @@ public class MotanConfig {
 	}
 
 	@Bean
-	public BasicRefererConfigBean baseRefererConfig() {
+	public BasicRefererConfigBean motanBaseReferer(RegistryConfigBean registry) {
 		BasicRefererConfigBean config = new BasicRefererConfigBean();
 		config.setProtocol("motan");
-		config.setRegistry(PropertiesUtil.getString("rpc.registry.name"));
+		config.setRegistry(registry.getName());
 		config.setRetries(PropertiesUtil.getInt("rpc.consumer.retries"));
 		config.setCheck(false);
 		config.setAccessLog(true);
