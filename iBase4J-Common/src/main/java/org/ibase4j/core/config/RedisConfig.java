@@ -15,12 +15,12 @@ import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Redis连接配置
+ * 
  * @author ShenHuaJie
  * @since 2017年8月14日 上午10:17:29
  */
 @Configuration
 public class RedisConfig {
-
 	@Bean
 	public JedisPoolConfig jedisPoolConfig() {
 		JedisPoolConfig config = new JedisPoolConfig();

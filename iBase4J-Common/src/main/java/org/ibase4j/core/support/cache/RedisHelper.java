@@ -106,8 +106,9 @@ public final class RedisHelper implements CacheManager {
 		return redisTemplate.boundValueOps(key).setIfAbsent(value);
 	}
 
+	@Deprecated
 	public boolean lock(String key) {
-		return false;
+		throw new RuntimeException("not support.");
 	}
 
 	public void unlock(String key) {
