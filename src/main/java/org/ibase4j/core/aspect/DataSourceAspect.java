@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.core.NamedThreadLocal;
 
 /**
  * 切换数据源(不同方法调用不同数据源)
@@ -20,8 +21,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class DataSourceAspect {
 	private final Logger logger = LogManager.getLogger();
+	private final ThreadLocal<String> threadLocal = new NamedThreadLocal<String>("DataSourceAspect");
 
-	@Pointcut("execution(* org.ibase4j.provider..*.*(..))")
+	@Pointcut("execution(* org.ibase4j.service..*.*(..))")
 	public void aspect() {
 	}
 
@@ -33,12 +35,20 @@ public class DataSourceAspect {
 		String className = point.getTarget().getClass().getName();
 		String method = point.getSignature().getName();
 		logger.info(className + "." + method + "(" + StringUtils.join(point.getArgs(), ",") + ")");
+		String dataSourceType = threadLocal.get();
+		if (StringUtils.isNotBlank(threadLocal.get())) {
+			logger.info(dataSourceType);
+			HandleDataSource.putDataSource(dataSourceType);
+			threadLocal.set(dataSourceType);
+			return;
+		}
 		try {
 			L: for (String key : ChooseDataSource.METHODTYPE.keySet()) {
 				for (String type : ChooseDataSource.METHODTYPE.get(key)) {
 					if (method.startsWith(type)) {
 						logger.info(key);
 						HandleDataSource.putDataSource(key);
+						threadLocal.set(key);
 						break L;
 					}
 				}
