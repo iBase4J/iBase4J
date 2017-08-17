@@ -52,6 +52,7 @@ iBase4J使用 [Apache License 2.0][] 协议.
 [NoSplit][] 未拆分版本.
 
 [idubbo][] 原始dubbo接口版本，支持事务不支持分布式事务；
+
 [springBoot][] 去xml版本；
 
 	master是最新版本，统一dubbo服务接口，一个模块只对外提供一个接口。
