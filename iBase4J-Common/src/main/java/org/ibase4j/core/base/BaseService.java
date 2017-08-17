@@ -389,6 +389,12 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 		return getPage(page, cls);
 	}
 
+	public Page<Map<String, Object>> queryMap(Map<String, Object> params) {
+		Page<Long> page = getPage(params);
+		page.setRecords(mapper.selectIdPage(page, params));
+		return getPageMap(page);
+	}
+
 	public T selectOne(T entity) {
 		return mapper.selectOne(entity);
 	}
