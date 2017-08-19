@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
+import org.ibase4j.core.support.dbcp.ChooseDataSource;
+import org.ibase4j.core.support.dbcp.HandleDataSource;
 import org.ibase4j.core.util.ExceptionUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.springframework.beans.BeansException;
@@ -33,6 +35,20 @@ public abstract class BaseProviderImpl implements ApplicationContextAware, BaseP
 			Map<?, ?> map = parameter.getMap();
 			String method = parameter.getMethod();
 			Object[] param = parameter.getParam();
+			try {
+				L: for (String key : ChooseDataSource.METHODTYPE.keySet()) {
+					for (String type : ChooseDataSource.METHODTYPE.get(key)) {
+						if (method.startsWith(type)) {
+							logger.info(key);
+							HandleDataSource.putDataSource(key);
+							break L;
+						}
+					}
+				}
+			} catch (Exception e) {
+				logger.error(e);
+				HandleDataSource.putDataSource("write");
+			}
 			Object result = null;
 			if (param != null) {
 				result = InstanceUtil.invokeMethod(service, method, param);

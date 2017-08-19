@@ -19,11 +19,6 @@
         <!--是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个-->  
         <property name="testOnBorrow" value="${redis.testOnBorrow}" />  
     </bean >
-	<bean id="jedisShardInfo" class="org.ibase4j.core.support.cache.jedis.JedisShardInfo">
-		<constructor-arg index="0" value="${redis.host}" />
-		<constructor-arg index="1" value="${redis.port}" type="int" />
-		<property name="password" value="${redis.password}" />
-	</bean>
 	<!-- redisCluster配置 -->
     <!-- <bean id="redisClusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
         <constructor-arg name="propertySource">
@@ -33,9 +28,10 @@
 		    </bean>
         </constructor-arg>
     </bean> -->
-    <!-- redis服务器中心 -->  
+    <!-- redis服务器中心 -->
 	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		p:pool-config-ref="jedisPoolConfig" p:shard-info-ref="jedisShardInfo" p:timeout="${redis.timeout}" />
+		p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.password}"
+		p:pool-config-ref="jedisPoolConfig" p:timeout="${redis.timeout}" />
 	<!-- SPRING-SESSION -->
 	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
         <property name="maxInactiveIntervalInSeconds" value="${session.maxInactiveInterval}" />
