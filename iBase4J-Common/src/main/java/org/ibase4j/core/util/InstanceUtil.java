@@ -298,7 +298,7 @@ public final class InstanceUtil {
         }
     }
 
-    public static Map<String, MethodAccess> methodMap = new HashMap<String, MethodAccess>();
+    private static Map<String, MethodAccess> methodMap = new HashMap<String, MethodAccess>();
 
     /**
      * 执行某对象方法

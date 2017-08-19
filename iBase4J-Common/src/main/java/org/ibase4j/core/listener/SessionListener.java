@@ -7,7 +7,8 @@ import javax.servlet.http.HttpSessionListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
-import org.ibase4j.core.util.CacheUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * 会话监听器
@@ -15,8 +16,12 @@ import org.ibase4j.core.util.CacheUtil;
  * @author ShenHuaJie
  * @version $Id: SessionListener.java, v 0.1 2014年3月28日 上午9:06:12 ShenHuaJie Exp
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class SessionListener implements HttpSessionListener {
 	private Logger logger = LogManager.getLogger(SessionListener.class);
+
+	@Autowired
+	RedisTemplate redisTemplate;
 
 	/*
 	 * (non-Javadoc)
@@ -29,7 +34,7 @@ public class SessionListener implements HttpSessionListener {
 		HttpSession session = event.getSession();
 		session.setAttribute(Constants.WEBTHEME, "default");
 		logger.info("创建了一个Session连接:[" + session.getId() + "]");
-		CacheUtil.getCache().sadd(Constants.ALLUSER_NUMBER, session.getId());
+		redisTemplate.opsForSet().add(Constants.ALLUSER_NUMBER, session.getId());
 	}
 
 	/*
@@ -45,11 +50,11 @@ public class SessionListener implements HttpSessionListener {
 			logger.info("销毁了一个Session连接:[" + session.getId() + "]");
 		}
 		session.removeAttribute(Constants.CURRENT_USER);
-		CacheUtil.getCache().sdel(Constants.ALLUSER_NUMBER, session.getId());
+		redisTemplate.opsForSet().remove(Constants.ALLUSER_NUMBER, session.getId());
 	}
 
 	/** 获取在线用户数量 */
 	public Integer getAllUserNumber() {
-		return CacheUtil.getCache().sall(Constants.ALLUSER_NUMBER).size();
+		return redisTemplate.opsForSet().size(Constants.ALLUSER_NUMBER).intValue();
 	}
 }
