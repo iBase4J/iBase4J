@@ -98,6 +98,12 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
 		</dependency>
+		<!-- 缓存 -->
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>${redisson.version}</version>
+		</dependency>
 		<!-- 中文拼音 -->
 		<dependency>
 			<groupId>com.belerweb</groupId>

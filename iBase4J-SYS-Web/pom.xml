@@ -51,6 +51,17 @@
 			<artifactId>spring-session</artifactId>
 			<version>${spring-session.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>${spring-data-redis.version}</version>
+		</dependency>
+		<!-- 缓存 -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
+		</dependency>
 		<!-- shiro -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>

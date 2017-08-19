@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:redisson="http://redisson.org/schema/redisson"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+       http://www.springframework.org/schema/context  
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://redisson.org/schema/redisson
+       http://redisson.org/schema/redisson/redisson.xsd" default-autowire="byType">
+	<redisson:client id="redissonClient">
+		<redisson:single-server address="redis://${redis.host}:${redis.port}"
+			connect-timeout="${redis.timeout}" />
+	</redisson:client>
+	<bean class="org.ibase4j.core.support.cache.redisson.SpringCacheManager">
+		<property name="redisson" ref="redissonClient" />
+		<property name="patternConfig">
+			<map>
+				<entry key="iBase4J:M:*">
+					<bean class="org.redisson.spring.cache.CacheConfig">
+						<constructor-arg index="0" value="600000" />
+						<constructor-arg index="1" value="0" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<bean class="org.ibase4j.core.support.cache.RedissonHelper" />
+</beans>

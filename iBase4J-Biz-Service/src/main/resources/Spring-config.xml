@@ -36,7 +36,7 @@
 	<!-- <import resource="spring/mq.xml"/> -->
 	<import resource="spring/dubbo.xml" />
 	<!-- <import resource="spring/motan.xml" /> -->
-	<import resource="spring/redis.xml"/>
+	<import resource="spring/redisson.xml"/>
 	<import resource="spring/mybatis.xml"/>
 	<import resource="spring/dataSource.xml"/>
 </beans>
