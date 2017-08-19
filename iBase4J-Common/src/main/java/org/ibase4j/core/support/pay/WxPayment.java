@@ -201,7 +201,7 @@ public class WxPayment {
 	 *             编码错误
 	 */
 	public static String urlEncode(String src) throws UnsupportedEncodingException {
-		return URLEncoder.encode(src, Charsets.UTF_8.name()).replace("+", "%20");
+		return URLEncoder.encode(src, Charsets.toCharset("UTF-8").name()).replace("+", "%20");
 	}
 
 	/**

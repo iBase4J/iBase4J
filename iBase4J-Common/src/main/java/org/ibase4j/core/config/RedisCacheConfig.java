@@ -34,7 +34,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 		return new KeyGenerator() {
 			/** 重写生成key方法 */
 			public Object generate(Object o, Method method, Object... objects) {
-				StringBuilder sb = new StringBuilder(Constants.CACHE_NAMESPACE);
+				StringBuilder sb = new StringBuilder(Constants.CACHE_NAMESPACE + "M:");
 				CacheConfig cacheConfig = o.getClass().getAnnotation(CacheConfig.class);
 				Cacheable cacheable = method.getAnnotation(Cacheable.class);
 				CachePut cachePut = method.getAnnotation(CachePut.class);
