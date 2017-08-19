@@ -70,7 +70,7 @@
 		<property name="minEvictableIdleTimeMillis" value="${db.minEvictableIdleTimeMillis}" />
 		<property name="timeBetweenEvictionRunsMillis" value="${db.timeBetweenEvictionRunsMillis}" />
 	</bean>
-	<bean id="dataSource" class="org.ibase4j.core.aspect.ChooseDataSource" lazy-init="true">
+	<bean id="dataSource" class="org.ibase4j.core.support.dbcp.ChooseDataSource" lazy-init="true">
 		<description>数据源</description>
 		<property name="targetDataSources">
 			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
@@ -90,8 +90,6 @@
 			</map>
 		</property>
 	</bean>
-	<!-- 切面 -->
-	<bean class="org.ibase4j.core.aspect.DataSourceAspect" />
 	<!--  -->
 	<bean class="org.springframework.jdbc.core.JdbcTemplate">
 		<constructor-arg ref="dataSource" />
