@@ -1,4 +1,4 @@
-package org.ibase4j.core.aspect;
+package org.ibase4j.core.support.dbcp;
 
 import java.util.ArrayList;
 import java.util.HashMap;

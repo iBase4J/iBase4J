@@ -7,7 +7,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.ibase4j.core.aspect.ChooseDataSource;
+import org.ibase4j.core.support.dbcp.ChooseDataSource;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
