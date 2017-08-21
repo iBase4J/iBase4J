@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd" default-autowire="byType">
 	<!-- jedis 配置-->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig" >
         <!--最小空闲数-->  
@@ -52,4 +52,5 @@
         <property name="cookiePath" value="/" />
         <property name="domainNamePattern" value="^.+?\\.(\\w+\\.[a-z]+)$"/>
     </bean>
+	<bean class="org.ibase4j.core.support.cache.RedisHelper" />
 </beans>
