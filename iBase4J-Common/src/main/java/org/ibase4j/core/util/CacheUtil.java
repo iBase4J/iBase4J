@@ -4,8 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.cache.CacheManager;
-import org.ibase4j.core.support.cache.RedisHelper;
-import org.springframework.context.annotation.Bean;
+import org.ibase4j.core.support.cache.RedissonHelper;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -13,18 +12,15 @@ public class CacheUtil {
 	private static Logger logger = LogManager.getLogger(CacheUtil.class);
 	private static CacheManager cacheManager;
 
-	@Bean
-	@Deprecated
-	public CacheManager setCache() {
-		cacheManager = getCache();
-		return cacheManager;
+	public static void setCacheManager(CacheManager cacheManager) {
+		CacheUtil.cacheManager = cacheManager;
 	}
 
 	public static CacheManager getCache() {
 		if (cacheManager == null) {
 			synchronized (CacheUtil.class) {
 				if (cacheManager == null) {
-					cacheManager = new RedisHelper();
+					cacheManager = new RedissonHelper();
 				}
 			}
 		}
@@ -37,7 +33,7 @@ public class CacheUtil {
 			if (!getCache().exists(key)) {
 				synchronized (CacheUtil.class) {
 					if (!getCache().exists(key)) {
-						if (getCache().setnx(key, String.valueOf(System.currentTimeMillis()))) {
+						if (getCache().setnx(key, System.currentTimeMillis())) {
 							return true;
 						}
 					}

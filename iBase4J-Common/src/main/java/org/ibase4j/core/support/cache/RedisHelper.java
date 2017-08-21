@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
@@ -16,10 +16,15 @@ import org.springframework.data.redis.core.RedisTemplate;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public final class RedisHelper implements CacheManager {
-	@Autowired
-	private RedisTemplate<Serializable, Serializable> redisTemplate;
-	private Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
+	private RedisTemplate redisTemplate;
+	private final Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
+
+	public void setRedisTemplate(RedisTemplate redisTemplate) {
+		this.redisTemplate = redisTemplate;
+		CacheUtil.setCacheManager(this);
+	}
 
 	public final Object get(final String key) {
 		expire(key, EXPIRE);
@@ -102,7 +107,7 @@ public final class RedisHelper implements CacheManager {
 		return redisTemplate.boundValueOps(key).getAndSet(value);
 	}
 
-	public boolean setnx(String key, Serializable value) {
+	public boolean setnx(String key, long value) {
 		return redisTemplate.boundValueOps(key).setIfAbsent(value);
 	}
 
@@ -115,15 +120,15 @@ public final class RedisHelper implements CacheManager {
 		del(key);
 	}
 
-	public void hset(String key, String field, String value) {
+	public void hset(String key, Serializable field, Serializable value) {
 		redisTemplate.boundHashOps(key).put(field, value);
 	}
 
-	public Object hget(String key, String field) {
+	public Object hget(String key, Serializable field) {
 		return redisTemplate.boundHashOps(key).get(field);
 	}
 
-	public void hdel(String key, String field) {
+	public void hdel(String key, Serializable field) {
 		redisTemplate.boundHashOps(key).delete(field);
 	}
 

@@ -15,8 +15,8 @@ import org.ibase4j.core.support.HttpCode;
  */
 public class MaliciousRequestInterceptor extends BaseInterceptor {
 	private Boolean allRequest = false; // 拦截所有请求,否则拦截相同请求
-	private Long minRequestIntervalTime; // 允许的最小请求间隔
-	private Integer maxMaliciousTimes; // 允许的最大恶意请求次数
+	private Long minRequestIntervalTime = 500L; // 允许的最小请求间隔
+	private Integer maxMaliciousTimes = 0; // 允许的最大恶意请求次数
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {

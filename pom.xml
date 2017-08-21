@@ -52,6 +52,7 @@
 		<fastjson.version>1.2.36</fastjson.version>
 		<motan.version>0.3.1</motan.version>
 		<!-- -->
+		<redisson.version>3.5.0</redisson.version>
 		<poi.version>3.9</poi.version>
 		<jxl.version>2.6.12</jxl.version>
 		<xfire.version>1.2.6</xfire.version>

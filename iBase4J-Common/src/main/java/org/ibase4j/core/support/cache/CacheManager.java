@@ -32,11 +32,11 @@ public interface CacheManager {
 
 	void unlock(String key);
 
-	void hset(String key, String field, String value);
+	void hset(String key, Serializable field, Serializable value);
 
-	Object hget(String key, String field);
+	Object hget(String key, Serializable field);
 
-	void hdel(String key, String field);
+	void hdel(String key, Serializable field);
 
-	boolean setnx(String key, Serializable value);
+	boolean setnx(String key, long value);
 }

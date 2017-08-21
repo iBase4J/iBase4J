@@ -10,7 +10,7 @@
 	<appenders>
 		<Console name="Console" target="SYSTEM_OUT">
 			<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
-			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{1}:%L] - %msg%n" />
+			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{36}:%L] - %msg%n" />
 		</Console>
 		<RollingFile name="RollingFile"
 			fileName="${LOG_HOME}/dev_${SERVER_NAME}.log"
@@ -56,13 +56,15 @@
 		<logger name="org.slf4j" level="INFO" />
 		<logger name="org.quartz" level="INFO" />
 		<logger name="org.redisson" level="INFO" />
+		<logger name="org.apache" level="WARN" />
 		<logger name="com.atomikos" level="WARN" />
 		<logger name="com.alibaba.dubbo" level="INFO" />
 		<logger name="org.apache.activemq" level="INFO" />
 		<logger name="org.springframework" level="INFO" />
 		<logger name="com.weibo.api.motan" level="INFO" />
-		<logger name="org.apache.zookeeper" level="WARN" />
+		<logger name="springfox.documentation" level="ERROR" />
 		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
+		<logger name="org.springframework.web.servlet" level="INFO" />
 		<Logger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
 			<appender-ref ref="Console" />
             <appender-ref ref="ProductLog" />

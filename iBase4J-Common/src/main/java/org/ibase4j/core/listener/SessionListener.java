@@ -16,11 +16,13 @@ import org.springframework.data.redis.core.RedisTemplate;
  * @author ShenHuaJie
  * @version $Id: SessionListener.java, v 0.1 2014年3月28日 上午9:06:12 ShenHuaJie Exp
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class SessionListener implements HttpSessionListener {
 	private Logger logger = LogManager.getLogger(SessionListener.class);
 
 	@Autowired
-	RedisTemplate<String, String> redisTemplate;
+	RedisTemplate redisTemplate;
+
 	/*
 	 * (non-Javadoc)
 	 * 

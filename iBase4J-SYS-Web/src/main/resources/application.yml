@@ -16,3 +16,5 @@ spring:
         date-format: yyyy-MM-dd HH:mm:ss
     thymeleaf:
         cache: false
+    session:
+        store-type: none
