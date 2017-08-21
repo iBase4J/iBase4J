@@ -2,13 +2,11 @@ package org.ibase4j.core.config;
 
 import org.ibase4j.core.listener.SessionListener;
 import org.ibase4j.core.support.cache.RedisHelper;
-import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration;
 import org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 
@@ -21,6 +19,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * @since 2017年8月14日 上午10:15:44
  */
 @Configuration
+@SuppressWarnings("rawtypes")
 public class SessionConfig {
 	@Bean
 	public JedisPoolConfig jedisPoolConfig() {
@@ -53,10 +52,8 @@ public class SessionConfig {
 	}
 
 	@Bean
-	public SpringHttpSessionConfiguration springSessionConfig() {
-		SpringHttpSessionConfiguration config = new SpringHttpSessionConfiguration();
-		config.setHttpSessionListeners(InstanceUtil.newArrayList(new SessionListener()));
-		return config;
+	public SessionListener sessionListener() {
+		return new SessionListener();
 	}
 
 	@Bean
@@ -68,7 +65,6 @@ public class SessionConfig {
 		return cookie;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Bean
 	public RedisHelper redisHelper(RedisTemplate redisTemplate) {
 		RedisHelper redisHelper = new RedisHelper();
