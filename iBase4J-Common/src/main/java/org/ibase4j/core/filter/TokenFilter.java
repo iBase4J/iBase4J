@@ -55,7 +55,7 @@ public class TokenFilter implements Filter {
 		if (isWhiteReq(request.getRequestURI())) {
 			chain.doFilter(request, response);
 		} else {
-			String token = request.getHeader("token");
+			String token = request.getHeader("UUID");
 			if (StringUtils.isNotBlank(token)) {
 				try {
 					Token tokenInfo = TokenUtil.getTokenInfo(token);

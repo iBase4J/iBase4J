@@ -63,6 +63,10 @@ public class LocaleInterceptor extends BaseInterceptor {
 			try {
 				UserAgentInfo userAgentInfo = uasParser.parse(request.getHeader("user-agent"));
 				userAgent = userAgentInfo.getOsName() + " " + userAgentInfo.getType() + " " + userAgentInfo.getUaName();
+				String uuid = request.getHeader("UUID");
+				if ("unknown unknown unknown".equals(userAgent) && StringUtils.isNotBlank(uuid)) {
+					userAgent = uuid;
+				}
 				session.setAttribute(Constants.USER_AGENT, userAgent);
 			} catch (IOException e) {
 				logger.error("", e);

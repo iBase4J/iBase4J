@@ -31,7 +31,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 /**
  * 用户登录
@@ -50,8 +49,10 @@ public class LoginController extends AbstractController<ISysProvider> {
 	// 登录
 	@ApiOperation(value = "用户登录")
 	@PostMapping("app/login")
-	public Object login(@ApiParam(required = true, value = "登录帐号和密码") @RequestBody Login user, ModelMap modelMap,
-			HttpServletRequest request) {
+	public Object login(Login user, ModelMap modelMap, HttpServletRequest request) {
+		String uuid = request.getHeader("UUID");
+		org.springframework.util.Assert.notNull(uuid, "非法操作.");
+		user = WebUtil.getParameter(request, Login.class);
 		Assert.notNull(user.getAccount(), "ACCOUNT");
 		Assert.notNull(user.getPassword(), "PASSWORD");
 
