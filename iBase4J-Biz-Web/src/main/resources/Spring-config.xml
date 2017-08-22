@@ -39,6 +39,7 @@
 	<!-- <import resource="spring/mq.xml"/> -->
 	<import resource="spring/dubbo.xml" />
 	<!-- <import resource="spring/motan.xml" /> -->
+	<import resource="spring/redis.xml" />
 	<import resource="spring/session.xml" />
 	<import resource="spring/shiro.xml" />
 </beans>

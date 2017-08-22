@@ -5,33 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-4.0.xsd" default-autowire="byType">
-	<!-- jedis 配置-->
-    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig" >
-        <!--最小空闲数-->  
-        <property name="minIdle" value="${redis.minIdle}" />
-        <!--最大空闲数-->  
-        <property name="maxIdle" value="${redis.maxIdle}" />
-        <!--最大连接数-->  
-        <property name="maxTotal" value="${redis.maxTotal}" />
-        <!--最大建立连接等待时间-->  
-        <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
-        <!--是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个-->  
-        <property name="testOnBorrow" value="${redis.testOnBorrow}" />  
-    </bean >
-	<!-- redisCluster配置 -->
-    <!-- <bean id="redisClusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
-        <constructor-arg name="propertySource">
-        	<bean id="resourcePropertySource" class="org.springframework.core.io.support.ResourcePropertySource">
-		        <constructor-arg name="name" value="redis.properties"/>
-		        <constructor-arg name="resource" value="classpath:config/system.properties"/>
-		    </bean>
-        </constructor-arg>
-    </bean> -->
-    <!-- redis服务器中心 -->
-	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.password}"
-		p:pool-config-ref="jedisPoolConfig" p:timeout="${redis.timeout}" />
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<!-- SPRING-SESSION -->
 	<bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
         <property name="maxInactiveIntervalInSeconds" value="${session.maxInactiveInterval}" />
@@ -52,5 +26,4 @@
         <property name="cookiePath" value="/" />
         <property name="domainNamePattern" value="^.+?\\.(\\w+\\.[a-z]+)$"/>
     </bean>
-	<bean class="org.ibase4j.core.support.cache.RedisHelper" />
 </beans>

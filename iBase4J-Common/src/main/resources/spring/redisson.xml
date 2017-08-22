@@ -11,6 +11,7 @@
 	<redisson:client id="redissonClient">
 		<redisson:single-server address="redis://${redis.host}:${redis.port}"
 			connect-timeout="${redis.timeout}" />
+		<!-- <redisson:cluster-servers /> -->
 	</redisson:client>
 	<bean class="org.ibase4j.core.support.cache.redisson.SpringCacheManager">
 		<property name="redisson" ref="redissonClient" />

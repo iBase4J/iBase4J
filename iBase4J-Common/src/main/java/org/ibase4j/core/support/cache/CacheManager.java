@@ -42,7 +42,7 @@ public interface CacheManager {
 
 	void sadd(String key, Serializable value);
 
-	Set<Object> sall(String key);
+	Set<?> sall(String key);
 
 	boolean sdel(String key, Serializable value);
 }
