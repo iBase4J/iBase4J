@@ -63,7 +63,6 @@ public abstract class BaseProviderImpl implements ApplicationContextAware, BaseP
 			} else {
 				result = InstanceUtil.invokeMethod(service, method);
 			}
-			HandleDataSource.clear();
 			if (result != null) {
 				Parameter response = new Parameter(result);
 				logger.info("{} response：{}", no, JSON.toJSONString(response));
@@ -75,6 +74,8 @@ public abstract class BaseProviderImpl implements ApplicationContextAware, BaseP
 			String msg = ExceptionUtil.getStackTraceAsString(e);
 			logger.error(no + " " + Constants.Exception_Head + msg, e);
 			throw e;
+		} finally {
+			HandleDataSource.clear();
 		}
 	}
 }

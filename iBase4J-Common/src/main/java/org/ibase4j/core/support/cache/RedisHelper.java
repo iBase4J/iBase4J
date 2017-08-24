@@ -16,12 +16,11 @@ import org.springframework.data.redis.core.RedisTemplate;
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public final class RedisHelper implements CacheManager {
-	private RedisTemplate redisTemplate;
+	private RedisTemplate<Serializable, Serializable> redisTemplate;
 	private final Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
 
-	public void setRedisTemplate(RedisTemplate redisTemplate) {
+	public void setRedisTemplate(RedisTemplate<Serializable, Serializable> redisTemplate) {
 		this.redisTemplate = redisTemplate;
 		CacheUtil.setCacheManager(this);
 	}
