@@ -74,6 +74,8 @@ public abstract class BaseProviderImpl implements ApplicationContextAware, BaseP
 			String msg = ExceptionUtil.getStackTraceAsString(e);
 			logger.error(no + " " + Constants.Exception_Head + msg, e);
 			throw e;
+		} finally {
+			HandleDataSource.clear();
 		}
 	}
 }
