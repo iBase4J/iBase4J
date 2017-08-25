@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
@@ -17,9 +17,13 @@ import org.springframework.data.redis.core.RedisTemplate;
  * @version 2016年4月2日 下午4:17:22
  */
 public final class RedisHelper implements CacheManager {
-	@Autowired
 	private RedisTemplate<Serializable, Serializable> redisTemplate;
-	private Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
+	private final Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
+
+	public void setRedisTemplate(RedisTemplate<Serializable, Serializable> redisTemplate) {
+		this.redisTemplate = redisTemplate;
+		CacheUtil.setCacheManager(this);
+	}
 
 	public final Object get(final String key) {
 		expire(key, EXPIRE);
@@ -102,28 +106,41 @@ public final class RedisHelper implements CacheManager {
 		return redisTemplate.boundValueOps(key).getAndSet(value);
 	}
 
-	public boolean setnx(String key, Serializable value) {
+	public boolean setnx(String key, long value) {
 		return redisTemplate.boundValueOps(key).setIfAbsent(value);
 	}
 
+	@Deprecated
 	public boolean lock(String key) {
-		return false;
+		throw new RuntimeException("not support.");
 	}
 
 	public void unlock(String key) {
 		del(key);
 	}
 
-	public void hset(String key, String field, String value) {
+	public void hset(String key, Serializable field, Serializable value) {
 		redisTemplate.boundHashOps(key).put(field, value);
 	}
 
-	public Object hget(String key, String field) {
+	public Object hget(String key, Serializable field) {
 		return redisTemplate.boundHashOps(key).get(field);
 	}
 
-	public void hdel(String key, String field) {
+	public void hdel(String key, Serializable field) {
 		redisTemplate.boundHashOps(key).delete(field);
+	}
+
+	public void sadd(String key, Serializable value) {
+		redisTemplate.boundSetOps(key).add(value);
+	}
+
+	public Set<?> sall(String key) {
+		return redisTemplate.boundSetOps(key).members();
+	}
+
+	public boolean sdel(String key, Serializable value) {
+		return redisTemplate.boundSetOps(key).remove(value) == 1;
 	}
 
 	// 未完，待续...
