@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>iBase4J-SYS-Web</artifactId>
 	<name>iBase4J-SYS-Web</name>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 
 	<parent>
@@ -15,6 +15,7 @@
 
 	<properties>
 		<server.port>8088</server.port>
+		<moduleName>SysWeb</moduleName>
 	</properties>
 
 	<dependencies>

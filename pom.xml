@@ -309,82 +309,6 @@
 				<sys.jdbc.config.path>file:/home/config/iBase4J/jdbc-sys.properties</sys.jdbc.config.path>
 				<system.config.path>file:/home/config/iBase4J/system.properties</system.config.path>
 			</properties>
-			<build>
-				<resources>
-					<resource>
-						<directory>src/main/java</directory>
-						<includes>
-							<include>**/*.properties</include>
-							<include>**/*.xml</include>
-						</includes>
-						<filtering>true</filtering>
-					</resource>
-					<resource>
-						<directory>src/main/resources</directory>
-					</resource>
-				</resources>
-			</build>
-		</profile>
-		<profile>
-			<id>build</id>
-			<build>
-				<finalName>${project.name}</finalName>
-				<resources>
-					<resource>
-						<directory>src/main/java</directory>
-						<includes>
-							<include>**/*.properties</include>
-							<include>**/*.xml</include>
-						</includes>
-						<filtering>true</filtering>
-					</resource>
-					<resource>
-						<directory>src/main/resources</directory>
-					</resource>
-				</resources>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.tomcat.maven</groupId>
-							<artifactId>tomcat7-maven-plugin</artifactId>
-							<version>2.2</version>
-							<executions>
-								<execution>
-									<id>run-war-only</id>
-									<phase>pre-integration-test</phase>
-									<goals>
-										<goal>run-war-only</goal>
-									</goals>
-								</execution>
-							</executions>
-							<configuration>
-								<warDirectory>target/${project.name}</warDirectory>
-								<path>/</path>
-								<contextReloadable>true</contextReloadable>
-								<uriEncoding>UTF-8</uriEncoding>
-								<port>${server.port}</port>
-								<url>http://localhost:${server.port}/manager</url>
-								<server>tomcat</server>
-								<username>admin</username>
-								<password>admin</password>
-								<contextReloadable>true</contextReloadable>
-								<systemProperties>
-									<webapps>
-										<webapp>
-											<groupId>${project.name}</groupId>
-											<artifactId>${project.name}</artifactId>
-											<version>${project.version}</version>
-											<type>${project.packaging}</type>
-											<asWebapp>true</asWebapp>
-											<contextPath>/</contextPath>
-										</webapp>
-									</webapps>
-								</systemProperties>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
 		</profile>
 	</profiles>
 
@@ -435,6 +359,30 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+				<!-- 打包项目 mvn clean package -->
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<!-- 指定main方法入口 -->
+					<configuration>
+						<mainClass>org.ibase4j.${moduleName}Application</mainClass>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+					<dependencies>
+						<!-- mvn spring-boot:run 热部署启动 -->
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>springloaded</artifactId>
+							<version>1.2.7.RELEASE</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 			</plugins>
 		</pluginManagement>

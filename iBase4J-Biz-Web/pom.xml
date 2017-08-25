@@ -7,10 +7,11 @@
 		<version>1.1.0</version>
 	</parent>
 	<artifactId>iBase4J-Biz-Web</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<properties>
 		<server.port>8090</server.port>
+		<moduleName>BizWeb</moduleName>
 	</properties>
 
 	<dependencies>
@@ -51,12 +52,10 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session</artifactId>
-			<version>${spring-session.version}</version>
 		</dependency>
 		<!-- shiro -->
 		<dependency>
