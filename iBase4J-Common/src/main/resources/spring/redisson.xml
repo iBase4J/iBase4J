@@ -9,7 +9,7 @@
 	<bean class="org.ibase4j.core.support.cache.redisson.Client">
 		<property name="password" value="${redis.password}" />
 		<!-- SingleServer -->
-		<property name="address" value="${redis.host}:${redis.port}" />
+		<property name="address" value="redis://${redis.host}:${redis.port}" />
 		<!-- ClusterServers -->
 		<!-- <property name="nodeAddresses" value="${redis.cluster}}" /> -->
 		<!-- MasterSlaveServers -->
