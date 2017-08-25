@@ -36,73 +36,44 @@ public class SpringCacheManager implements CacheManager, ResourceLoaderAware, In
 	}
 
 	/**
-
 	 * Creates CacheManager supplied by Redisson instance and Cache config
-
 	 * mapped by Cache name
-
 	 *
-
 	 * @param redisson
-
 	 *            object
-
 	 * @param config
-
 	 *            object
-
 	 */
 	public SpringCacheManager(RedissonClient redisson, Map<String, CacheConfig> config) {
 		this(redisson, config, null, null);
 	}
 
 	/**
-
 	 * Creates CacheManager supplied by Redisson instance, Codec instance and
-
 	 * Cache config mapped by Cache name.
-
 	 * <p>
-
 	 * Each Cache instance share one Codec instance.
-
 	 *
-
 	 * @param redisson
-
 	 *            object
-
 	 * @param config
-
 	 *            object
-
 	 * @param codec
-
 	 *            object
-
 	 */
 	public SpringCacheManager(RedissonClient redisson, Map<String, CacheConfig> config, Codec codec) {
 		this(redisson, config, null, codec);
 	}
 
 	/**
-
 	 * Creates CacheManager supplied by Redisson instance and Cache config
-
 	 * mapped by Cache name and RegExp config mapped by pattern.
-
 	 *
-
 	 * @param redisson
-
 	 *            object
-
 	 * @param config
-
 	 *            object
-
 	 * @param patternConfig
-
 	 */
 	public SpringCacheManager(RedissonClient redisson, Map<String, CacheConfig> config,
 			Map<String, CacheConfig> patternConfig) {
@@ -110,31 +81,18 @@ public class SpringCacheManager implements CacheManager, ResourceLoaderAware, In
 	}
 
 	/**
-
 	 * Creates CacheManager supplied by Redisson instance, Codec instance, Cache
-
 	 * config mapped by Cache name and RegExp config mapped by pattern.
-
 	 * <p>
-
 	 * Each Cache instance share one Codec instance.
-
 	 *
-
 	 * @param redisson
-
 	 *            object
-
 	 * @param config
-
 	 *            object
-
 	 * @param patternConfig
-
 	 * @param codec
-
 	 *            object
-
 	 */
 	public SpringCacheManager(RedissonClient redisson, Map<String, CacheConfig> config,
 			Map<String, CacheConfig> patternConfig, Codec codec) {
@@ -149,136 +107,78 @@ public class SpringCacheManager implements CacheManager, ResourceLoaderAware, In
 	}
 
 	/**
-
 	 * Creates CacheManager supplied by Redisson instance and Cache config
-
 	 * mapped by Cache name.
-
 	 * <p>
-
 	 * Loads the config file from the class path, interpreting plain paths as
-
 	 * class path resource names that include the package path (e.g.
-
 	 * "mypackage/myresource.txt").
-
 	 *
-
 	 * @param redisson
-
 	 *            object
-
 	 * @param configLocation
-
 	 *            path
-
 	 */
 	public SpringCacheManager(RedissonClient redisson, String configLocation) {
 		this(redisson, configLocation, null, null);
 	}
 
 	/**
-
 	 * Creates CacheManager supplied by Redisson instance, Cache config location
-
 	 * path and RegExp pattern config location path.
-
 	 * <p>
-
 	 * Loads the config file from the class path, interpreting plain paths as
-
 	 * class path resource names that include the package path (e.g.
-
 	 * "mypackage/myresource.txt").
-
 	 *
-
 	 * @param redisson
-
 	 *            object
-
 	 * @param configLocation
-
 	 *            path
-
 	 * @param regExpConfigLocation
-
 	 */
 	public SpringCacheManager(RedissonClient redisson, String configLocation, String regExpConfigLocation) {
 		this(redisson, configLocation, regExpConfigLocation, null);
 	}
 
 	/**
-
 	 * Creates CacheManager supplied by Redisson instance, Codec instance and
-
 	 * Config location path.
-
 	 * <p>
-
 	 * Each Cache instance share one Codec instance.
-
 	 * <p>
-
 	 * Loads the config file from the class path, interpreting plain paths as
-
 	 * class path resource names that include the package path (e.g.
-
 	 * "mypackage/myresource.txt").
-
 	 *
-
 	 * @param redisson
-
 	 *            object
-
 	 * @param configLocation
-
 	 *            path
-
 	 * @param codec
-
 	 *            object
-
 	 */
 	public SpringCacheManager(RedissonClient redisson, String configLocation, Codec codec) {
 		this(redisson, configLocation, null, codec);
 	}
 
 	/**
-
 	 * Creates CacheManager supplied by Redisson instance, Codec instance,
-
 	 * Config location path and RegExp config location path.
-
 	 * <p>
-
 	 * Each Cache instance share one Codec instance.
-
 	 * <p>
-
 	 * Loads the config file from the class path, interpreting plain paths as
-
 	 * class path resource names that include the package path (e.g.
-
 	 * "mypackage/myresource.txt").
-
 	 *
-
 	 * @param redisson
-
 	 *            object
-
 	 * @param configLocation
-
 	 *            path
-
 	 * @param regExpConfigLocation
-
 	 * @param codec
-
 	 *            object
-
 	 */
 	public SpringCacheManager(RedissonClient redisson, String configLocation, String regExpConfigLocation,
 			Codec codec) {
@@ -290,45 +190,30 @@ public class SpringCacheManager implements CacheManager, ResourceLoaderAware, In
 	}
 
 	/**
-
 	 * Set cache config location
-
 	 *
-
 	 * @param configLocation
-
 	 *            object
-
 	 */
 	public void setConfigLocation(String configLocation) {
 		this.configLocation = configLocation;
 	}
 
 	/**
-
 	 * Set RegExp pattern config location
-
 	 *
-
 	 * @param regExpConfigLocation
-
 	 *            object
-
 	 */
 	public void setRegExpConfigLocation(String regExpConfigLocation) {
 		this.regExpConfigLocation = regExpConfigLocation;
 	}
 
 	/**
-
 	 * Set cache config mapped by cache name
-
 	 *
-
 	 * @param config
-
 	 *            object
-
 	 */
 	public void setConfig(Map<String, ? extends CacheConfig> config) {
 		this.configMap.clear();
@@ -339,15 +224,10 @@ public class SpringCacheManager implements CacheManager, ResourceLoaderAware, In
 	}
 
 	/**
-
 	 * Set cache regexp config mapped by pattern
-
 	 *
-
 	 * @param config
-
 	 *            object
-
 	 */
 	public void setPatternConfig(Map<String, CacheConfig> config) {
 		this.patternMap.clear();
@@ -358,30 +238,20 @@ public class SpringCacheManager implements CacheManager, ResourceLoaderAware, In
 	}
 
 	/**
-
 	 * Set Redisson instance
-
 	 *
-
 	 * @param redisson
-
 	 *            instance
-
 	 */
 	public void setRedisson(RedissonClient redisson) {
 		this.redisson = redisson;
 	}
 
 	/**
-
 	 * Set Codec instance shared between all Cache instances
-
 	 *
-
 	 * @param codec
-
 	 *            object
-
 	 */
 	public void setCodec(Codec codec) {
 		this.codec = codec;
@@ -475,7 +345,6 @@ public class SpringCacheManager implements CacheManager, ResourceLoaderAware, In
 				setConfig(CacheConfig.fromJSON(resource.getInputStream()));
 			} catch (IOException e) {
 				// try to read yaml
-
 				try {
 					setConfig(CacheConfig.fromYAML(resource.getInputStream()));
 				} catch (IOException e1) {
@@ -491,7 +360,6 @@ public class SpringCacheManager implements CacheManager, ResourceLoaderAware, In
 				confs = CacheConfig.fromJSON(resource.getInputStream());
 			} catch (IOException e) {
 				// try to read yaml
-
 				try {
 					confs = CacheConfig.fromYAML(resource.getInputStream());
 				} catch (IOException e1) {

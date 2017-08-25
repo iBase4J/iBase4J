@@ -1,13 +1,11 @@
 package org.ibase4j.core.config;
 
 import org.ibase4j.core.support.cache.RedissonHelper;
+import org.ibase4j.core.support.cache.redisson.Client;
 import org.ibase4j.core.support.cache.redisson.SpringCacheManager;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
-import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
-import org.redisson.config.SingleServerConfig;
 import org.redisson.spring.cache.CacheConfig;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -23,13 +21,12 @@ import org.springframework.context.annotation.Configuration;
 public class RedissonConfig {
 	@Bean
 	public RedissonClient redissonClient() {
-		Config config = new Config();
-		SingleServerConfig singleConfig = config.useSingleServer();
+		Client client = new Client();
 		String address = "redis://" + PropertiesUtil.getString("redis.host") + ":"
 				+ PropertiesUtil.getString("redis.port");
-		singleConfig.setAddress(address);
-		singleConfig.setConnectTimeout(PropertiesUtil.getInt("redis.timeout"));
-		return Redisson.create(config);
+		client.setAddress(address);
+		client.setPassword(PropertiesUtil.getString("redis.password"));
+		return client.getRedissonClient();
 	}
 
 	@Bean
