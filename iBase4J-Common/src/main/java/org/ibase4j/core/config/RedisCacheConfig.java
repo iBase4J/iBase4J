@@ -29,12 +29,14 @@ import com.alibaba.fastjson.JSON;
 @EnableCaching
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
+	String prefix = Constants.CACHE_NAMESPACE + "M:";
+
 	@Bean
 	public KeyGenerator keyGenerator() {
 		return new KeyGenerator() {
 			/** 重写生成key方法 */
 			public Object generate(Object o, Method method, Object... objects) {
-				StringBuilder sb = new StringBuilder(Constants.CACHE_NAMESPACE);
+				StringBuilder sb = new StringBuilder(prefix);
 				CacheConfig cacheConfig = o.getClass().getAnnotation(CacheConfig.class);
 				Cacheable cacheable = method.getAnnotation(Cacheable.class);
 				CachePut cachePut = method.getAnnotation(CachePut.class);
@@ -55,13 +57,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 						sb.append(cacheNames[0]);
 					}
 				}
-				if (cacheConfig != null && sb.toString().equals(Constants.CACHE_NAMESPACE)) {
+				if (cacheConfig != null && sb.toString().equals(prefix)) {
 					String[] cacheNames = cacheConfig.cacheNames();
 					if (ArrayUtils.isNotEmpty(cacheNames)) {
 						sb.append(cacheNames[0]);
 					}
 				}
-				if (sb.toString().equals(Constants.CACHE_NAMESPACE)) {
+				if (sb.toString().equals(prefix)) {
 					sb.append(o.getClass().getName()).append(".").append(method.getName());
 				}
 				sb.append(":");
