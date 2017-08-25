@@ -28,7 +28,8 @@
 		</constructor-arg>
 	</bean>
 	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		c:cluster-config-ref="redisClusterConfiguration" c:pool-config-ref="jedisPoolConfig" p:timeout="${redis.timeout}" /> -->
+		c:cluster-config-ref="redisClusterConfiguration" c:pool-config-ref="jedisPoolConfig" p:timeout="${redis.timeout}"
+		p:password="${redis.password}" /> -->
 	<!-- redis服务器中心 -->
 	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
 		p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.password}"
