@@ -20,24 +20,24 @@
         <property name="testOnBorrow" value="${redis.testOnBorrow}" />  
     </bean >
 	<!-- redisCluster配置 -->
-    <!-- <bean id="redisClusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
-        <constructor-arg name="propertySource">
+	<!-- <bean id="redisClusterConfiguration" class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+		<constructor-arg name="propertySource">
         	<bean id="resourcePropertySource" class="org.springframework.core.io.support.ResourcePropertySource"
-		        c:name="redis.properties" c:resource="classpath:config/system.properties"/>
+		        c:name="redis.properties" c:resource="classpath*:config/system.properties"/>
 		    </bean>
-        </constructor-arg>
-    </bean>
+		</constructor-arg>
+	</bean>
 	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		c:cluster-config-ref="redisClusterConfiguration" c:pool-config-ref="jedisPoolConfig" p:timeout="${redis.timeout}" /> -->
-    <!-- redis服务器中心 -->
+		c:cluster-config-ref="redisClusterConfiguration" c:pool-config-ref="jedisPoolConfig" p:timeout="${redis.timeout}"
+		p:password="${redis.password}" /> -->
+	<!-- redis服务器中心 -->
 	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
 		p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.password}"
 		p:pool-config-ref="jedisPoolConfig" p:timeout="${redis.timeout}" />
-	<!--  -->
 	<!-- 缓存序列化方式 -->
-    <bean id="keySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+	<bean id="keySerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer" />
 	<bean id="valueSerializer" class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer" />
-    <!-- 缓存 -->
+	<!-- 缓存 -->
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
 		<property name="connectionFactory" ref="jedisConnectionFactory" />
 		<property name="keySerializer" ref="keySerializer" />
