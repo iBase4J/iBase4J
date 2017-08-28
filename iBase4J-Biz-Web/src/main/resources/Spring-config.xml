@@ -27,6 +27,7 @@
 	</bean>
 	<!-- 扫描注解 -->
 	<context:component-scan base-package="org.ibase4j">
+		<context:exclude-filter type="assignable" expression="org.ibase4j.core.support.cache.redisson.Client" />
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 		<context:exclude-filter type="annotation" expression="org.springframework.cache.annotation.EnableCaching" />
 	</context:component-scan>
