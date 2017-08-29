@@ -116,7 +116,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		LocaleInterceptor localeInterceptor = new LocaleInterceptor();
 		localeInterceptor.setNextInterceptor(new EventInterceptor(), new MaliciousRequestInterceptor());
 		registry.addInterceptor(localeInterceptor).addPathPatterns("/**").excludePathPatterns("/*.ico", "/*/api-docs",
-				"/swagger**", "/webjars/**", "/configuration/**");
+				"/swagger**", "/swagger-resources/**", "/webjars/**", "/configuration/**");
 	}
 
 	// 资源重定向(仅作为后台使用不提供静态资源)

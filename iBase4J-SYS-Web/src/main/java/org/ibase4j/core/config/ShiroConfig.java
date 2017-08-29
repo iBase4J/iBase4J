@@ -30,15 +30,6 @@ public class ShiroConfig {
 			+ "/unauthorized=anon;/forbidden=anon;/sns*=anon;/*/api-docs=anon;/callback*=anon;/swagger*=anon;"
 			+ "/configuration/*=anon;/*/configuration/*=anon;/webjars/**=anon;" + "/**=authc,user";
 
-	/*@Bean
-	public FilterRegistrationBean shiroFilterRegistration() {
-		FilterRegistrationBean registration = new FilterRegistrationBean(new DelegatingFilterProxy("shiroFilter"));
-		registration.addInitParameter("targetFilterLifecycle", "true");
-		registration.addUrlPatterns("/*");
-		registration.setOrder(5);
-		return registration;
-	}*/
-
 	@Bean
 	public DefaultWebSecurityManager securityManager() {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
@@ -53,7 +44,7 @@ public class ShiroConfig {
 		factory.setSecurityManager(securityManager);
 		factory.setLoginUrl("/unauthorized");
 		factory.setUnauthorizedUrl("/forbidden");
-		Map<String, String> filterMap = InstanceUtil.newHashMap();
+		Map<String, String> filterMap = InstanceUtil.newLinkedHashMap();
 		for (String filter : filters.split("\\;")) {
 			String[] keyValue = filter.split("\\=");
 			filterMap.put(keyValue[0], keyValue[1]);

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 用户登录
@@ -80,12 +81,14 @@ public class LoginController extends AbstractController<ISysProvider> {
 	}
 
 	// 没有登录
+	@ApiIgnore
 	@RequestMapping(value = "/unauthorized", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public Object unauthorized(ModelMap modelMap) throws Exception {
 		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
 	}
 
 	// 没有权限
+	@ApiIgnore
 	@RequestMapping(value = "/forbidden", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
 	public Object forbidden(ModelMap modelMap) {
 		return setModelMap(modelMap, HttpCode.FORBIDDEN);
