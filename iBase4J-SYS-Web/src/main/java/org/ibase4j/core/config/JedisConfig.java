@@ -15,7 +15,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
-public class RedisConfig {
+public class JedisConfig {
 	@Bean
 	public JedisPoolConfig jedisPoolConfig() {
 		JedisPoolConfig config = new JedisPoolConfig();
@@ -28,9 +28,9 @@ public class RedisConfig {
 	}
 
 	@Bean
-	public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig poolConfig) {
+	public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig) {
 		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-		jedisConnectionFactory.setPoolConfig(poolConfig);
+		jedisConnectionFactory.setPoolConfig(jedisPoolConfig);
 		jedisConnectionFactory.setHostName(PropertiesUtil.getString("redis.host"));
 		jedisConnectionFactory.setPort(PropertiesUtil.getInt("redis.port"));
 		jedisConnectionFactory.setPassword(PropertiesUtil.getString("redis.password"));
@@ -39,10 +39,11 @@ public class RedisConfig {
 	}
 
 	@Bean
-	public RedisTemplate<Serializable, Serializable> redisTemplate() {
+	public RedisTemplate<?, ?> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
 		RedisTemplate<Serializable, Serializable> redisTemplate = new RedisTemplate<Serializable, Serializable>();
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer();
+		redisTemplate.setConnectionFactory(jedisConnectionFactory);
 		redisTemplate.setKeySerializer(keySerializer);
 		redisTemplate.setValueSerializer(valueSerializer);
 		redisTemplate.setHashKeySerializer(keySerializer);
