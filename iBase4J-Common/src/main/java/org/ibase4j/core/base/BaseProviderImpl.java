@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -46,7 +45,9 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 		this.applicationContext = applicationContext;
 	}
 
-	int maxThread = PropertiesUtil.getInt("db.reader.list.maxThread", 5);
+	int maxThread = PropertiesUtil.getInt("db.reader.list.maxThread", 500);
+	int threadSleep = PropertiesUtil.getInt("db.reader.list.threadWait", 5);
+	ExecutorService executorService = Executors.newFixedThreadPool(maxThread);
 
 	/** 分页查询 */
 	public static Page<Long> getPage(Map<String, Object> params) {
@@ -86,21 +87,25 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
-			int thread = Math.min(maxThread, Math.max(1, records.size() / 2));
-			ExecutorService executorService = Executors.newFixedThreadPool(thread);
+			final Map<Integer, Object> thread = InstanceUtil.newConcurrentHashMap();
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
 					public void run() {
-						records.set(index, queryById(ids.getRecords().get(index)));
+						try {
+							records.set(index, queryById(ids.getRecords().get(index)));
+						} finally {
+							thread.put(index, 0);
+						}
 					}
 				});
 			}
-			executorService.shutdown();
-			try {
-				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			} catch (InterruptedException e) {
-				logger.error("awaitTermination", "", e);
+			while (thread.size() < records.size()) {
+				try {
+					Thread.sleep(threadSleep);
+				} catch (InterruptedException e) {
+					logger.error("", e);
+				}
 			}
 			page.setRecords(records);
 			return page;
@@ -117,21 +122,25 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
-			int thread = Math.min(maxThread, Math.max(1, records.size() / 2));
-			ExecutorService executorService = Executors.newFixedThreadPool(thread);
+			final Map<Integer, Object> thread = InstanceUtil.newConcurrentHashMap();
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
 					public void run() {
-						records.set(index, InstanceUtil.transBean2Map(queryById(ids.getRecords().get(index))));
+						try {
+							records.set(index, InstanceUtil.transBean2Map(queryById(ids.getRecords().get(index))));
+						} finally {
+							thread.put(index, 0);
+						}
 					}
 				});
 			}
-			executorService.shutdown();
-			try {
-				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			} catch (InterruptedException e) {
-				logger.error("awaitTermination", "", e);
+			while (thread.size() < records.size()) {
+				try {
+					Thread.sleep(threadSleep);
+				} catch (InterruptedException e) {
+					logger.error("", e);
+				}
 			}
 			page.setRecords(records);
 			return page;
@@ -148,23 +157,27 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				records.add(null);
 			}
-			int thread = Math.min(maxThread, Math.max(1, records.size() / 2));
-			ExecutorService executorService = Executors.newFixedThreadPool(thread);
+			final Map<Integer, Object> thread = InstanceUtil.newConcurrentHashMap();
 			for (int i = 0; i < ids.getRecords().size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
 					public void run() {
-						T t = queryById(ids.getRecords().get(index));
-						K k = InstanceUtil.to(t, cls);
-						records.set(index, k);
+						try {
+							T t = queryById(ids.getRecords().get(index));
+							K k = InstanceUtil.to(t, cls);
+							records.set(index, k);
+						} finally {
+							thread.put(index, 0);
+						}
 					}
 				});
 			}
-			executorService.shutdown();
-			try {
-				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			} catch (InterruptedException e) {
-				logger.error("awaitTermination", "", e);
+			while (thread.size() < records.size()) {
+				try {
+					Thread.sleep(threadSleep);
+				} catch (InterruptedException e) {
+					logger.error("", e);
+				}
 			}
 			page.setRecords(records);
 			return page;
@@ -179,21 +192,25 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			for (int i = 0; i < ids.size(); i++) {
 				list.add(null);
 			}
-			int thread = Math.min(maxThread * 2, Math.max(1, list.size() / 2));
-			ExecutorService executorService = Executors.newFixedThreadPool(thread);
+			final Map<Integer, Object> thread = InstanceUtil.newConcurrentHashMap();
 			for (int i = 0; i < ids.size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
 					public void run() {
-						list.set(index, queryById(ids.get(index)));
+						try {
+							list.set(index, queryById(ids.get(index)));
+						} finally {
+							thread.put(index, 0);
+						}
 					}
 				});
 			}
-			executorService.shutdown();
-			try {
-				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			} catch (InterruptedException e) {
-				logger.error("awaitTermination", "", e);
+			while (thread.size() < list.size()) {
+				try {
+					Thread.sleep(threadSleep);
+				} catch (InterruptedException e) {
+					logger.error("", e);
+				}
 			}
 		}
 		return list;
@@ -206,23 +223,27 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 			for (int i = 0; i < ids.size(); i++) {
 				list.add(null);
 			}
-			int thread = Math.min(maxThread * 2, Math.max(1, list.size() / 2));
-			ExecutorService executorService = Executors.newFixedThreadPool(thread);
+			final Map<Integer, Object> thread = InstanceUtil.newConcurrentHashMap();
 			for (int i = 0; i < ids.size(); i++) {
 				final int index = i;
 				executorService.execute(new Runnable() {
 					public void run() {
-						T t = queryById(ids.get(index));
-						K k = InstanceUtil.to(t, cls);
-						list.set(index, k);
+						try {
+							T t = queryById(ids.get(index));
+							K k = InstanceUtil.to(t, cls);
+							list.set(index, k);
+						} finally {
+							thread.put(index, 0);
+						}
 					}
 				});
 			}
-			executorService.shutdown();
-			try {
-				executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-			} catch (InterruptedException e) {
-				logger.error("awaitTermination", "", e);
+			while (thread.size() < list.size()) {
+				try {
+					Thread.sleep(threadSleep);
+				} catch (InterruptedException e) {
+					logger.error("", e);
+				}
 			}
 		}
 		return list;
