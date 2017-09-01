@@ -50,9 +50,12 @@ public class SysDicService extends BaseService<SysDic> {
 
 	@Cacheable(value = Constants.CACHE_NAMESPACE + "sysDics")
 	public Map<String, String> queryDicByType(String key) {
-		Map<String, String> resultMap = applicationContext.getBean(SysDicService.class).getAllDic().get(key);
-		if (resultMap == null) {
-			return InstanceUtil.newHashMap();
+		Map<String, Object> params = InstanceUtil.newHashMap();
+		params.put("type", key);
+		List<SysDic> list = queryList(params);
+		Map<String, String> resultMap = InstanceUtil.newHashMap();
+		for (SysDic sysDic : list) {
+			resultMap.put(sysDic.getCode(), sysDic.getCodeText());
 		}
 		return resultMap;
 	}
