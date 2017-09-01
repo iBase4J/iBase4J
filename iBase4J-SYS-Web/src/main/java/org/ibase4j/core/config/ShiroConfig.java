@@ -31,9 +31,14 @@ public class ShiroConfig {
 			+ "/configuration/*=anon;/*/configuration/*=anon;/webjars/**=anon;" + "/**=authc,user";
 
 	@Bean
-	public DefaultWebSecurityManager securityManager() {
+	public Realm realm() {
+		return new Realm();
+	}
+
+	@Bean
+	public DefaultWebSecurityManager securityManager(Realm realm) {
 		DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
-		manager.setRealm(new Realm());
+		manager.setRealm(realm);
 		manager.setCacheManager(new RedisCacheManager());
 		return manager;
 	}

@@ -19,13 +19,12 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.ibase4j.core.base.BaseProvider;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.SysSession;
 import org.ibase4j.model.SysUser;
+import org.ibase4j.provider.ISysProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 
 /**
@@ -37,8 +36,7 @@ import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 public class Realm extends AuthorizingRealm {
 	private final Logger logger = LogManager.getLogger();
 	@Autowired
-	@Qualifier("sysProvider")
-	protected BaseProvider provider;
+	protected ISysProvider sysProvider;
 	@Autowired
 	private RedisOperationsSessionRepository sessionRepository;
 
@@ -48,7 +46,7 @@ public class Realm extends AuthorizingRealm {
 		Long userId = (Long) WebUtil.getCurrentUser();
 		Parameter parameter = new Parameter("sysAuthorizeService", "queryPermissionByUserId").setId(userId);
 		logger.info("{} execute queryPermissionByUserId start...", parameter.getNo());
-		List<?> list = provider.execute(parameter).getList();
+		List<?> list = sysProvider.execute(parameter).getList();
 		logger.info("{} execute queryPermissionByUserId end.", parameter.getNo());
 		for (Object permission : list) {
 			if (StringUtils.isNotBlank((String) permission)) {
@@ -70,7 +68,7 @@ public class Realm extends AuthorizingRealm {
 		params.put("account", token.getUsername());
 		Parameter parameter = new Parameter("sysUserService", "queryList").setMap(params);
 		logger.info("{} execute sysUserService.queryList start...", parameter.getNo());
-		List<?> list = provider.execute(parameter).getList();
+		List<?> list = sysProvider.execute(parameter).getList();
 		logger.info("{} execute sysUserService.queryList end.", parameter.getNo());
 		if (list.size() == 1) {
 			SysUser user = (SysUser) list.get(0);
@@ -100,17 +98,17 @@ public class Realm extends AuthorizingRealm {
 		record.setAccount(account);
 		Parameter parameter = new Parameter("sysSessionService", "querySessionIdByAccount").setModel(record);
 		logger.info("{} execute querySessionIdByAccount start...", parameter.getNo());
-		List<?> sessionIds = provider.execute(parameter).getList();
+		List<?> sessionIds = sysProvider.execute(parameter).getList();
 		logger.info("{} execute querySessionIdByAccount end.", parameter.getNo());
 		Subject currentUser = SecurityUtils.getSubject();
 		Session session = currentUser.getSession();
-		String currentSessionId= session.getId().toString();
+		String currentSessionId = session.getId().toString();
 		if (sessionIds != null) {
 			for (Object sessionId : sessionIds) {
 				record.setSessionId((String) sessionId);
 				parameter = new Parameter("sysSessionService", "deleteBySessionId").setModel(record);
 				logger.info("{} execute deleteBySessionId start...", parameter.getNo());
-				provider.execute(parameter);
+				sysProvider.execute(parameter);
 				logger.info("{} execute deleteBySessionId end.", parameter.getNo());
 				if (!currentSessionId.equals(sessionId)) {
 					sessionRepository.delete((String) sessionId);
@@ -124,7 +122,7 @@ public class Realm extends AuthorizingRealm {
 		record.setStartTime(session.getStartTimestamp());
 		parameter = new Parameter("sysSessionService", "update").setModel(record);
 		logger.info("{} execute sysSessionService.update start...", parameter.getNo());
-		provider.execute(parameter);
+		sysProvider.execute(parameter);
 		logger.info("{} execute sysSessionService.update end.", parameter.getNo());
 	}
 }
