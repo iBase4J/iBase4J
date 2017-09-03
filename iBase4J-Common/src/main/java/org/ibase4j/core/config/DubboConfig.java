@@ -41,7 +41,7 @@ public class DubboConfig {
 	@Bean
 	public ApplicationConfig dubboApplication() {
 		ApplicationConfig config = new ApplicationConfig();
-		config.setName("RPC-" + PropertiesUtil.getString("rpc.registry.name"));
+		config.setName(PropertiesUtil.getString("rpc.registry.name"));
 		config.setLogger("slf4j");
 		return config;
 	}

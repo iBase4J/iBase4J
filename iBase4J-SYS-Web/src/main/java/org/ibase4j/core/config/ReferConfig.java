@@ -1,20 +1,19 @@
 package org.ibase4j.core.config;
 
-import org.ibase4j.provider.ISysProvider;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.weibo.api.motan.config.springsupport.annotation.MotanReferer;
-
-@Configuration
 public class ReferConfig {
-	@Reference(check = false)
-	@MotanReferer(check = false)
-	ISysProvider sysProvider;
+	@Configuration
+	@Conditional(DubboConfig.EnableDubbo.class)
+	@ImportResource("classpath:refer/dubbo.xml")
+	static class DubboReferConfig {
+	}
 
-	@Bean
-	public ISysProvider sysProvider() {
-		return sysProvider;
+	@Configuration
+	@Conditional(MotanConfig.EnableMotan.class)
+	@ImportResource("classpath:refer/motan.xml")
+	static class MotanReferConfig {
 	}
 }

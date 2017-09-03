@@ -7,10 +7,8 @@ import org.ibase4j.core.filter.XssFilter;
 import org.ibase4j.core.interceptor.EventInterceptor;
 import org.ibase4j.core.interceptor.LocaleInterceptor;
 import org.ibase4j.core.interceptor.MaliciousRequestInterceptor;
-import org.ibase4j.core.listener.ServerListener;
 import org.ibase4j.core.util.InstanceUtil;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +30,6 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
 @Configuration
 @ComponentScan("org.ibase4j.web")
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public FilterRegistrationBean encodingFilterRegistration() {
@@ -66,13 +63,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	public ServletListenerRegistrationBean servletListenerRegistrationBean() {
-		ServletListenerRegistrationBean servletListenerRegistrationBean = new ServletListenerRegistrationBean();
-		servletListenerRegistrationBean.setListener(new ServerListener());
-		return servletListenerRegistrationBean;
-	}
-
-	@Bean
 	public InternalResourceViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setPrefix("/WEB-INF/jsp/");
@@ -88,6 +78,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		resolver.setMaxUploadSize(10485760000L);
 		resolver.setMaxInMemorySize(40960);
 		return resolver;
+	}
+
+	@Bean
+	public EventInterceptor eventInterceptor() {
+		return new EventInterceptor();
 	}
 
 	public void addViewControllers(ViewControllerRegistry registry) {
@@ -114,7 +109,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 	public void addInterceptors(InterceptorRegistry registry) {
 		LocaleInterceptor localeInterceptor = new LocaleInterceptor();
-		localeInterceptor.setNextInterceptor(new EventInterceptor(), new MaliciousRequestInterceptor());
+		localeInterceptor.setNextInterceptor(eventInterceptor(), new MaliciousRequestInterceptor());
 		registry.addInterceptor(localeInterceptor).addPathPatterns("/**").excludePathPatterns("/*.ico", "/*/api-docs",
 				"/swagger**", "/swagger-resources/**", "/webjars/**", "/configuration/**");
 	}

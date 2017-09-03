@@ -37,7 +37,7 @@ public class Configs implements EnvironmentPostProcessor, Ordered {
 		// ......省略new Properties的过程
 		MutablePropertySources propertySources = environment.getPropertySources();
 		// addLast 结合下面的 getOrder() 保证顺序 读者也可以试试其他姿势的加载顺序
-		PropertiesUtil.getProperties().put("rpc.registry.name", "RPC_" + environment.getProperty("server.name"));
+		PropertiesUtil.getProperties().put("rpc.registry.name", environment.getProperty("server.name"));
 		PropertiesUtil.getProperties().put("rpc.protocol.port", "1" + environment.getProperty("server.port"));
 		try {
 			Properties props = getConfig(environment);
