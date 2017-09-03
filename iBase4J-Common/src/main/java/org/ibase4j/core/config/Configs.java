@@ -44,7 +44,7 @@ public class Configs implements EnvironmentPostProcessor, Ordered {
 			for (Object key : props.keySet()) {
 				String keyStr = key.toString();
 				String value = props.getProperty(keyStr);
-				if ("druid.writer.password,druid.read.password".contains(keyStr)) {
+				if ("druid.writer.password,druid.reader.password".contains(keyStr)) {
 					value = SecurityUtil.decryptDes(value, KEY);
 					props.setProperty(keyStr, value);
 				}
