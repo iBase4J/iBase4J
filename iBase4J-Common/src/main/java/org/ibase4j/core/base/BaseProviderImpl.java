@@ -69,7 +69,7 @@ public abstract class BaseProviderImpl implements ApplicationContextAware, BaseP
 				return response;
 			}
 			logger.info("{} response empty.", no);
-			return null;
+			return new Parameter();
 		} catch (Exception e) {
 			String msg = ExceptionUtil.getStackTraceAsString(e);
 			logger.error(no + " " + Constants.Exception_Head + msg, e);
