@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:motan="http://api.weibo.com/schema/motan"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+   		http://api.weibo.com/schema/motan
+   		http://api.weibo.com/schema/motan.xsd">
+
+	<motan:referer id="sysProvider" interface="org.ibase4j.provider.ISysProvider"
+		check="false" />
+	<motan:referer id="bizProvider" interface="org.ibase4j.provider.IBizProvider"
+		check="false" />
+
+</beans>

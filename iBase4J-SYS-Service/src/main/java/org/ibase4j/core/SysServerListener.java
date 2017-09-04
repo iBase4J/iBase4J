@@ -8,10 +8,12 @@ import org.ibase4j.service.SysDicService;
 import org.ibase4j.service.SysUserService;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 
 import com.weibo.api.motan.common.MotanConstants;
 import com.weibo.api.motan.util.MotanSwitcherUtil;
 
+@Component
 public class SysServerListener extends ServerListener {
 	protected final Logger logger = LogManager.getLogger(this.getClass());
 
