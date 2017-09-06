@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.support.cache.CacheManager;
-import org.ibase4j.core.support.cache.RedissonHelper;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -17,13 +16,6 @@ public class CacheUtil {
 	}
 
 	public static CacheManager getCache() {
-		if (cacheManager == null) {
-			synchronized (CacheUtil.class) {
-				if (cacheManager == null) {
-					cacheManager = new RedissonHelper();
-				}
-			}
-		}
 		return cacheManager;
 	}
 
