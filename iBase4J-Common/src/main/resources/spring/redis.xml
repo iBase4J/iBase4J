@@ -40,6 +40,7 @@
 	<!-- 缓存 -->
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
 		<property name="connectionFactory" ref="jedisConnectionFactory" />
+		<property name="enableTransactionSupport" value="true" />
 		<property name="keySerializer" ref="keySerializer" />
 		<property name="valueSerializer" ref="valueSerializer" />
 		<property name="hashKeySerializer" ref="keySerializer" />
