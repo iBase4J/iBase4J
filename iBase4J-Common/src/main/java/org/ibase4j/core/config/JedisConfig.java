@@ -5,8 +5,10 @@ import java.io.Serializable;
 import org.ibase4j.core.support.cache.RedisHelper;
 import org.ibase4j.core.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -58,5 +60,13 @@ public class JedisConfig {
 		RedisHelper redisHelper = new RedisHelper();
 		redisHelper.setRedisTemplate(redisTemplate);
 		return redisHelper;
+	}
+
+	@Bean
+	@Qualifier("redisTemplate")
+	public CacheManager redisCacheManager(RedisTemplate<Serializable, Serializable> redisTemplate) {
+		RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
+		cacheManager.setDefaultExpiration(PropertiesUtil.getInt("redis.expiration", 10));
+		return cacheManager;
 	}
 }
