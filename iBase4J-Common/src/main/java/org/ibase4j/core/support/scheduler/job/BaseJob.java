@@ -34,7 +34,7 @@ public class BaseJob implements Job {
 		String key = targetMethod + "." + targetObject;
 		try {
 			logger.info("定时任务[{}.{}]开始", targetObject, targetMethod);
-			if (CacheUtil.getCache().setnx(key, "1")) {
+			if (CacheUtil.getCache().lock(key)) {
 				try {
 					ApplicationContext applicationContext = (ApplicationContext) context.getScheduler().getContext()
 							.get("applicationContext");
@@ -59,7 +59,7 @@ public class BaseJob implements Job {
 
 	private void unLock(String key) {
 		try {
-			CacheUtil.getCache().del(key);
+			CacheUtil.getCache().unlock(key);
 		} catch (Exception e) {
 			logger.error("", e);
 			try {
