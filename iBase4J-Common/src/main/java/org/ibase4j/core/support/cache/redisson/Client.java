@@ -10,8 +10,6 @@ import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.Config;
 import org.redisson.config.MasterSlaveServersConfig;
 import org.redisson.config.SingleServerConfig;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * Redis连接配置
@@ -19,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
  * @author ShenHuaJie
  * @since 2017年8月23日 上午9:36:53
  */
-@Configuration
 public class Client {
 	/**
 	 * Redis server address
@@ -47,8 +44,7 @@ public class Client {
 	 */
 	private Set<String> slaveAddresses = new HashSet<String>();
 
-	@Bean(name = "redissonClient")
-	public RedissonClient getRedissonClient() {
+	public RedissonClient init() {
 		Config config = new Config();
 		if (StringUtils.isNotBlank(address)) {
 			SingleServerConfig serverConfig = config.useSingleServer().setAddress(address);

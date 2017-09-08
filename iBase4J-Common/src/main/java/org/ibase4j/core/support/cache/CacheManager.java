@@ -38,7 +38,7 @@ public interface CacheManager {
 
 	void hdel(String key, Serializable field);
 
-	boolean setnx(String key, long value);
+	boolean setnx(String key, Serializable value);
 
 	void sadd(String key, Serializable value);
 

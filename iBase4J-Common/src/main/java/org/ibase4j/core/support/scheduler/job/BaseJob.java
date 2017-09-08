@@ -6,6 +6,7 @@ package org.ibase4j.core.support.scheduler.job;
 import org.ibase4j.core.base.BaseProvider;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
+import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.DubboUtil;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
@@ -30,21 +31,43 @@ public class BaseJob implements Job {
 		String taskType = jobDataMap.getString("taskType");
 		String targetObject = jobDataMap.getString("targetObject");
 		String targetMethod = jobDataMap.getString("targetMethod");
+		String key = targetMethod + "." + targetObject;
 		try {
-			ApplicationContext applicationContext = (ApplicationContext) context.getScheduler().getContext()
-					.get("applicationContext");
-			if (TaskType.local.equals(taskType)) {
-				Object refer = applicationContext.getBean(targetObject);
-				refer.getClass().getDeclaredMethod(targetMethod).invoke(refer);
-			} else if (TaskType.dubbo.equals(taskType)) {
-				String system = "org.ibase4j.provider.I" + jobDataMap.getString("targetSystem");
-				BaseProvider provider = (BaseProvider) DubboUtil.refer(applicationContext, system);
-				provider.execute(new Parameter(targetObject, targetMethod));
+			logger.info("定时任务[{}.{}]开始", targetObject, targetMethod);
+			if (CacheUtil.getCache().setnx(key, "1")) {
+				try {
+					ApplicationContext applicationContext = (ApplicationContext) context.getScheduler().getContext()
+							.get("applicationContext");
+					if (TaskType.local.equals(taskType)) {
+						Object refer = applicationContext.getBean(targetObject);
+						refer.getClass().getDeclaredMethod(targetMethod).invoke(refer);
+					} else if (TaskType.dubbo.equals(taskType)) {
+						String system = "org.ibase4j.provider.I" + jobDataMap.getString("targetSystem");
+						BaseProvider provider = (BaseProvider) DubboUtil.refer(applicationContext, system);
+						provider.execute(new Parameter(targetObject, targetMethod));
+					}
+					double time = (System.currentTimeMillis() - start) / 1000.0;
+					logger.info("定时任务[{}.{}]用时：{}s", targetObject, targetMethod, time);
+				} finally {
+					unLock(key);
+				}
 			}
-			double time = (System.currentTimeMillis() - start) / 1000.0;
-			logger.info("定时任务[{}.{}]用时：{}s", targetObject, targetMethod, time);
 		} catch (Exception e) {
 			throw new JobExecutionException(e);
+		}
+	}
+
+	private void unLock(String key) {
+		try {
+			CacheUtil.getCache().del(key);
+		} catch (Exception e) {
+			logger.error("", e);
+			try {
+				Thread.sleep(1000);
+			} catch (Exception e2) {
+				logger.error("", e2);
+			}
+			unLock(key);
 		}
 	}
 }
