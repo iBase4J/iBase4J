@@ -22,14 +22,8 @@ public class CacheUtil {
 	/** 获取锁 */
 	public static boolean getLock(String key) {
 		try {
-			if (!getCache().exists(key)) {
-				synchronized (CacheUtil.class) {
-					if (!getCache().exists(key)) {
-						if (getCache().setnx(key, System.currentTimeMillis())) {
-							return true;
-						}
-					}
-				}
+			if (getCache().setnx(key, System.currentTimeMillis())) {
+				return true;
 			}
 			int expires = 1000 * 60 * 3;
 			String currentValue = (String) getCache().get(key);
