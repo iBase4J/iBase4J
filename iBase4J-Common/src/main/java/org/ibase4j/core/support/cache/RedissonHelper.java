@@ -151,9 +151,9 @@ public class RedissonHelper implements CacheManager {
 		redissonClient.getLock(key).unlock();
 	}
 
-	public boolean setnx(String key, long value) {
+	public boolean setnx(String key, Serializable value) {
 		try {
-			return redissonClient.getLock(key).tryLock(value, TimeUnit.MILLISECONDS);
+			return redissonClient.getLock(key).tryLock(Long.valueOf(value.toString()), TimeUnit.MILLISECONDS);
 		} catch (InterruptedException e) {
 			return false;
 		}

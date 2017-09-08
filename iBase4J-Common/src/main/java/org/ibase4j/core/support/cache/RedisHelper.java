@@ -106,7 +106,7 @@ public final class RedisHelper implements CacheManager {
 		return redisTemplate.boundValueOps(key).getAndSet(value);
 	}
 
-	public boolean setnx(String key, long value) {
+	public boolean setnx(String key, Serializable value) {
 		return redisTemplate.boundValueOps(key).setIfAbsent(value);
 	}
 
