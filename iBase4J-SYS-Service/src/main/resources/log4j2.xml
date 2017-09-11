@@ -66,6 +66,7 @@
 		<logger name="org.slf4j" level="INFO" />
 		<logger name="org.quartz" level="INFO" />
 		<logger name="org.redisson" level="INFO" />
+		<logger name="com.alibaba" level="WARN" />
 		<logger name="com.atomikos" level="WARN" />
 		<logger name="com.alibaba.dubbo" level="INFO" />
 		<logger name="org.apache.activemq" level="INFO" />

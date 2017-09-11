@@ -17,6 +17,10 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 public class ChooseDataSource extends AbstractRoutingDataSource {
 	public static Map<String, List<String>> METHODTYPE = new HashMap<String, List<String>>();
 
+	static {
+		System.setProperty("druid.logType", "log4j2");
+	}
+
 	// 获取数据源名称
 	protected Object determineCurrentLookupKey() {
 		return HandleDataSource.getDataSource();
