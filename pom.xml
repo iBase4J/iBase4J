@@ -354,10 +354,10 @@
 							<version>2.2</version>
 							<executions>
 								<execution>
-									<id>run-war-only</id>
+									<id>run</id>
 									<phase>pre-integration-test</phase>
 									<goals>
-										<goal>run-war-only</goal>
+										<goal>run</goal>
 									</goals>
 								</execution>
 							</executions>
