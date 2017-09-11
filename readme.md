@@ -36,8 +36,8 @@
     * 项目依赖activemq、Redis和ZooKeeper服务。
     * 使用nginx代理UI：修改配置里的UI目录后重启nginx。
     * 启动命令：
-    	 clean package -P build tomcat7:run-war-only -f pom-sys-service-server.xml
-    	 clean package -P build tomcat7:run-war-only -f pom-sys-web-server.xml
+    	 clean package -P build tomcat7:run -f pom-sys-service-server.xml
+    	 clean package -P build tomcat7:run -f pom-sys-web-server.xml
     * 打包命令：
     	 clean package -P build -f pom-sys-service-server.xml
     	 clean package -P build -f pom-sys-service-server.xml
