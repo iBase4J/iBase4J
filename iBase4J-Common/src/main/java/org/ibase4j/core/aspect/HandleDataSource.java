@@ -5,6 +5,9 @@ package org.ibase4j.core.aspect;
  * @version 2016年5月20日 下午3:18:04
  */
 public class HandleDataSource {
+	static {
+		System.setProperty("druid.logType", "log4j2");
+	}
 	// 数据源名称线程池
 	private static final ThreadLocal<String> holder = new ThreadLocal<String>();
 
