@@ -44,7 +44,7 @@
 		<disruptor.version>3.3.4</disruptor.version>
 		<!-- -->
 		<druid.version>1.1.2</druid.version>
-		<dubbo.version>2.5.4</dubbo.version>
+		<dubbo.version>2.5.5</dubbo.version>
 		<fastjson.version>1.2.36</fastjson.version>
 		<motan.version>0.3.1</motan.version>
 		<!-- -->
