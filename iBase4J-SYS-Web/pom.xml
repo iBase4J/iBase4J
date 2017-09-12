@@ -56,6 +56,11 @@
 			<artifactId>spring-data-redis</artifactId>
 			<version>${spring-data-redis.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
 		<!-- 缓存 -->
 		<dependency>
 			<groupId>redis.clients</groupId>
@@ -123,11 +128,11 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${springfox.version}</version>
 		</dependency>
-		<!--  -->
+		<!-- -->
 		<dependency>
-		    <groupId>cz.mallat.uasparser</groupId>
-		    <artifactId>uasparser</artifactId>
-		    <version>0.6.2</version>
+			<groupId>cz.mallat.uasparser</groupId>
+			<artifactId>uasparser</artifactId>
+			<version>0.6.2</version>
 		</dependency>
 	</dependencies>
 </project>
