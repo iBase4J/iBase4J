@@ -39,9 +39,9 @@
 		</dependency>
 		<!-- mybatis -->
 		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>${mybatis.version}</version>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus</artifactId>
+			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.velocity</groupId>
@@ -164,6 +164,12 @@
 			<groupId>org.db4j</groupId>
 			<artifactId>reflectasm</artifactId>
 			<version>1.11.4-2</version>
+		</dependency>
+		<!-- activemq -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-spring</artifactId>
+			<version>${activemq.version}</version>
 		</dependency>
 		<!-- 二维码 -->
 		<dependency>

@@ -29,16 +29,15 @@
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
-		<spring.version>5.0.0.RC3</spring.version>
-		<spring-session.version>2.0.0.M2</spring-session.version>
-		<spring-data-redis.version>2.0.0.M2</spring-data-redis.version>
+		<spring.version>4.3.11.RELEASE</spring.version>
+		<spring-session.version>1.3.1.RELEASE</spring-session.version>
+		<spring-data-redis.version>1.8.7.RELEASE</spring-data-redis.version>
 		<!-- 数据库 -->
 		<mysql.version>5.1.39</mysql.version>
 		<sharding-jdbc.version>1.4.1</sharding-jdbc.version>
 		<!-- mybatis版本号 -->
-		<mybatis.version>3.4.2</mybatis.version>
 		<mybatis-spring.version>1.3.1</mybatis-spring.version>
-		<mybatis-plus.version>2.1-gamma</mybatis-plus.version>
+		<mybatis-plus.version>2.1.1</mybatis-plus.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.9</slf4j.version>
 		<log4j.version>2.8.2</log4j.version>
@@ -60,7 +59,7 @@
 		<jackson.version>2.9.0</jackson.version>
 		<shiro.version>1.2.4</shiro.version>
 		<quartz.version>2.2.3</quartz.version>
-		<aspectj.version>1.8.9</aspectj.version>
+		<aspectj.version>1.8.10</aspectj.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<activemq.version>5.13.3</activemq.version>
 		<jsqlparser.version>0.9.5</jsqlparser.version>
@@ -133,6 +132,16 @@
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus</artifactId>
 			<version>${mybatis-plus.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.mybatis</groupId>
+					<artifactId>mybatis-spring</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.github.jsqlparser</groupId>
+					<artifactId>jsqlparser</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- spring核心包 -->
 		<dependency>
@@ -283,11 +292,11 @@
 			<version>0.10</version>
 		</dependency>
 		<!-- activemq -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-spring</artifactId>
 			<version>${activemq.version}</version>
-		</dependency>
+		</dependency> -->
 		<!-- jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -354,10 +363,10 @@
 							<version>2.2</version>
 							<executions>
 								<execution>
-									<id>run</id>
+									<id>run-war-only</id>
 									<phase>pre-integration-test</phase>
 									<goals>
-										<goal>run</goal>
+										<goal>run-war-only</goal>
 									</goals>
 								</execution>
 							</executions>
