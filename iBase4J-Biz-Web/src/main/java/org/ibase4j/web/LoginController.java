@@ -83,7 +83,7 @@ public class LoginController extends AbstractController<ISysProvider> {
 		if (success) {
 			request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
 			String token = SecurityUtil.encryptPassword(user.getAccount() + DateUtil.getDateTime("yyyyMMddHHmmss"));
-			TokenUtil.setTokenInfo(token, user.getAccount());
+			TokenUtil.setTokenInfo(uuid, user.getAccount());
 			modelMap.put("token", token);
 			return setSuccessModelMap(modelMap);
 		}

@@ -55,15 +55,15 @@ public class TokenFilter implements Filter {
 		if (isWhiteReq(request.getRequestURI())) {
 			chain.doFilter(request, response);
 		} else {
-			String token = request.getHeader("UUID");
-			if (StringUtils.isNotBlank(token)) {
+			String uuid = request.getHeader("UUID");
+			if (StringUtils.isNotBlank(uuid)) {
 				try {
-					Token tokenInfo = TokenUtil.getTokenInfo(token);
+					Token tokenInfo = TokenUtil.getTokenInfo(uuid);
 					if (tokenInfo != null) {
 						Long now = System.currentTimeMillis();
 						if (now - tokenInfo.getTime() < 1000 * 60 * 30) {
 							String value = tokenInfo.getValue();
-							TokenUtil.setTokenInfo(token, value);
+							TokenUtil.setTokenInfo(uuid, value);
 							WebUtil.saveCurrentUser(request, value);
 						}
 					}
