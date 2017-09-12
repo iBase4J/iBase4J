@@ -82,9 +82,7 @@ public class LoginController extends AbstractController<ISysProvider> {
 
 		if (success) {
 			request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
-			String token = SecurityUtil.encryptPassword(user.getAccount() + DateUtil.getDateTime("yyyyMMddHHmmss"));
 			TokenUtil.setTokenInfo(uuid, user.getAccount());
-			modelMap.put("token", token);
 			return setSuccessModelMap(modelMap);
 		}
 		request.setAttribute("msg", "[" + user.getAccount() + "]登录失败.");
@@ -95,9 +93,9 @@ public class LoginController extends AbstractController<ISysProvider> {
 	@ApiOperation(value = "用户登出")
 	@PostMapping("app/logout")
 	public Object logout(HttpServletRequest request, ModelMap modelMap) {
-		String token = request.getHeader("token");
-		if (StringUtils.isNotBlank(token)) {
-			TokenUtil.delToken(token);
+		String uuid = request.getHeader("UUID");
+		if (StringUtils.isNotBlank(uuid)) {
+			TokenUtil.delToken(uuid);
 		}
 		return setSuccessModelMap(modelMap);
 	}
