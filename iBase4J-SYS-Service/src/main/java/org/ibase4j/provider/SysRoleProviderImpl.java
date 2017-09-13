@@ -4,16 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.ibase4j.core.base.BaseProviderImpl;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.mapper.SysRoleMenuMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysRole;
-import org.ibase4j.provider.ISysDeptProvider;
-import org.ibase4j.provider.ISysRoleProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.plugins.Page;
 
 /**
@@ -21,7 +19,7 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @version 2016年5月31日 上午11:01:33
  */
 @CacheConfig(cacheNames = "sysRole")
-@DubboService(interfaceClass = ISysRoleProvider.class)
+@Service(interfaceClass = ISysRoleProvider.class)
 public class SysRoleProviderImpl extends BaseProviderImpl<SysRole> implements ISysRoleProvider {
 	@Autowired
 	private ISysDeptProvider sysDeptProvider;

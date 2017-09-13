@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.core.base.BaseProviderImpl;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.mapper.SysDicMapper;
 import org.ibase4j.model.SysDic;
@@ -17,6 +16,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.plugins.Page;
 
 /**
@@ -24,7 +24,7 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @version 2016年5月20日 下午3:19:19
  */
 @CacheConfig(cacheNames = "SysDic")
-@DubboService(interfaceClass = ISysDicProvider.class)
+@Service(interfaceClass = ISysDicProvider.class)
 public class SysDicProviderImpl extends BaseProviderImpl<SysDic> implements ISysDicProvider {
 	@Autowired
 	private SysDicMapper dicMapper;

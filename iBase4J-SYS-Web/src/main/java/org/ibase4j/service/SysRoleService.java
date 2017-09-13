@@ -1,10 +1,11 @@
 package org.ibase4j.service;
 
-import org.springframework.stereotype.Service;
 import org.ibase4j.core.base.BaseService;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.SysRole;
 import org.ibase4j.provider.ISysRoleProvider;
+import org.springframework.stereotype.Service;
+
+import com.alibaba.dubbo.config.annotation.Reference;
 
 /**
  * @author ShenHuaJie
@@ -12,7 +13,7 @@ import org.ibase4j.provider.ISysRoleProvider;
  */
 @Service
 public class SysRoleService extends BaseService<ISysRoleProvider, SysRole> {
-    @DubboReference
+	@Reference
     public void setProvider(ISysRoleProvider provider) {
         this.provider = provider;
     }

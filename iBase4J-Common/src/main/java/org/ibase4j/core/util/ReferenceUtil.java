@@ -1,4 +1,4 @@
-package org.ibase4j.core.support.dubbo;
+package org.ibase4j.core.util;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

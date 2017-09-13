@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.ibase4j.core.Constants;
 import org.ibase4j.core.base.BaseProviderImpl;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.mapper.SysAuthorizeMapper;
 import org.ibase4j.mapper.SysRoleMenuMapper;
@@ -22,6 +21,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 
@@ -30,7 +30,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
  * @version 2016年5月20日 下午3:19:19
  */
 @CacheConfig(cacheNames = "sysAuthorize")
-@DubboService(interfaceClass = ISysAuthorizeProvider.class)
+@Service(interfaceClass = ISysAuthorizeProvider.class)
 public class SysAuthorizeProviderImpl extends BaseProviderImpl<SysMenu> implements ISysAuthorizeProvider {
 	@Autowired
 	private SysUserMenuMapper sysUserMenuMapper;

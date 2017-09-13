@@ -3,15 +3,13 @@ package org.ibase4j.provider;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.ibase4j.core.base.BaseProviderImpl;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.mapper.SysMenuMapper;
 import org.ibase4j.model.SysMenu;
-import org.ibase4j.provider.ISysDicProvider;
-import org.ibase4j.provider.ISysMenuProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 
 /**
@@ -19,7 +17,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
  * @version 2016年5月20日 下午3:19:19
  */
 @CacheConfig(cacheNames = "sysMenu")
-@DubboService(interfaceClass = ISysMenuProvider.class)
+@Service(interfaceClass = ISysMenuProvider.class)
 public class SysMenuProviderImpl extends BaseProviderImpl<SysMenu> implements ISysMenuProvider {
 	@Autowired
 	private ISysDicProvider sysDicProvider;

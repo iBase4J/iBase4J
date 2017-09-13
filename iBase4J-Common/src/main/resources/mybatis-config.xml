@@ -5,12 +5,18 @@
 	<settings>
 		<setting name="logImpl" value="SLF4J" />
 		<!-- 字段为空时仍调用model的set方法或map的put方法 -->
-		<setting name="callSettersOnNulls" value="true"/>
+		<setting name="callSettersOnNulls" value="true" />
 	</settings>
 	<plugins>
 		<!-- 分页查询插件 -->
 		<plugin interceptor="com.baomidou.mybatisplus.plugins.PaginationInterceptor">
 			<property name="dialectType" value="mysql" />
 		</plugin>
+		<!-- SQL 执行性能分析，开发环境使用，线上不推荐。 maxTime 指的是 sql 最大执行时长 -->
+		<!-- <plugin interceptor="com.baomidou.mybatisplus.plugins.PerformanceInterceptor">
+			<property name="maxTime" value="3000" />
+			SQL是否格式化 默认false
+			<property name="format" value="true" />
+		</plugin> -->
 	</plugins>
 </configuration>

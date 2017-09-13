@@ -94,6 +94,8 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 					public void run() {
 						try {
 							records.set(index, queryById(ids.getRecords().get(index)));
+						} catch (Exception e) {
+							logger.error("", e);
 						} finally {
 							thread.put(index, 0);
 						}
@@ -129,6 +131,8 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 					public void run() {
 						try {
 							records.set(index, InstanceUtil.transBean2Map(queryById(ids.getRecords().get(index))));
+						} catch (Exception e) {
+							logger.error("", e);
 						} finally {
 							thread.put(index, 0);
 						}
@@ -166,6 +170,8 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 							T t = queryById(ids.getRecords().get(index));
 							K k = InstanceUtil.to(t, cls);
 							records.set(index, k);
+						} catch (Exception e) {
+							logger.error("", e);
 						} finally {
 							thread.put(index, 0);
 						}
@@ -199,6 +205,8 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 					public void run() {
 						try {
 							list.set(index, queryById(ids.get(index)));
+						} catch (Exception e) {
+							logger.error("", e);
 						} finally {
 							thread.put(index, 0);
 						}
@@ -232,6 +240,8 @@ public abstract class BaseProviderImpl<T extends BaseModel> implements BaseProvi
 							T t = queryById(ids.get(index));
 							K k = InstanceUtil.to(t, cls);
 							list.set(index, k);
+						} catch (Exception e) {
+							logger.error("", e);
 						} finally {
 							thread.put(index, 0);
 						}

@@ -5,6 +5,7 @@ package org.ibase4j.core.base;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,11 +82,16 @@ public abstract class BaseController {
 			if (data instanceof Page) {
 				Page<?> page = (Page<?>) data;
 				modelMap.put("data", page.getRecords());
-				modelMap.put("recordsTotal", page.getTotal());
-				modelMap.put("total", page.getTotal());
 				modelMap.put("current", page.getCurrent());
 				modelMap.put("size", page.getSize());
 				modelMap.put("pages", page.getPages());
+				modelMap.put("total", page.getTotal());
+				modelMap.put("iTotalRecords", page.getTotal());
+				modelMap.put("iTotalDisplayRecords", page.getTotal());
+			} else if (data instanceof List<?>) {
+				modelMap.put("data", data);
+				modelMap.put("iTotalRecords", ((List<?>) data).size());
+				modelMap.put("iTotalDisplayRecords", ((List<?>) data).size());
 			} else {
 				modelMap.put("data", data);
 			}
@@ -93,6 +99,7 @@ public abstract class BaseController {
 		modelMap.put("httpCode", code.value());
 		modelMap.put("msg", code.msg());
 		modelMap.put("timestamp", System.currentTimeMillis());
+		logger.info("RESPONSE : " + JSON.toJSONString(modelMap));
 		return ResponseEntity.ok(modelMap);
 	}
 
@@ -116,7 +123,7 @@ public abstract class BaseController {
 		}
 		response.setContentType("application/json;charset=UTF-8");
 		modelMap.put("timestamp", System.currentTimeMillis());
-		logger.info(JSON.toJSON(modelMap));
+		logger.info("RESPONSE : " + JSON.toJSON(modelMap));
 		byte[] bytes = JSON.toJSONBytes(modelMap, SerializerFeature.DisableCircularReferenceDetect);
 		response.getOutputStream().write(bytes);
 	}

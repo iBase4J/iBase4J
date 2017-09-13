@@ -5,25 +5,25 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.transaction.annotation.Transactional;
 import org.ibase4j.core.base.BaseProviderImpl;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
 import org.ibase4j.mapper.SysSessionMapper;
 import org.ibase4j.model.SysSession;
-import org.ibase4j.provider.ISysSessionProvider;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.dubbo.config.annotation.Service;
 
 /**
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
 @CacheConfig(cacheNames = "sysSession")
-@DubboService(interfaceClass = ISysSessionProvider.class)
+@Service(interfaceClass = ISysSessionProvider.class)
 public class SysSessionProviderImpl extends BaseProviderImpl<SysSession> implements ISysSessionProvider {
 
 	@CachePut

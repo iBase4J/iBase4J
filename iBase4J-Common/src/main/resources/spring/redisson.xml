@@ -6,7 +6,7 @@
        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
        http://www.springframework.org/schema/context  
        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
-	<bean class="org.ibase4j.core.support.cache.redisson.Client">
+	<bean class="org.ibase4j.core.support.cache.redisson.Client" init-method="init">
 		<property name="password" value="${redis.password}" />
 		<!-- SingleServer -->
 		<property name="address" value="redis://${redis.host}:${redis.port}" />

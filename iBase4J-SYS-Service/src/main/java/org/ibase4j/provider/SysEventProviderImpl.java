@@ -3,17 +3,15 @@ package org.ibase4j.provider;
 import java.util.Map;
 
 import org.ibase4j.core.base.BaseProviderImpl;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.model.SysEvent;
-import org.ibase4j.provider.ISysEventProvider;
-import org.ibase4j.provider.ISysUserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.plugins.Page;
 
 @CacheConfig(cacheNames = "sysEvent")
-@DubboService(interfaceClass = ISysEventProvider.class)
+@Service(interfaceClass = ISysEventProvider.class)
 public class SysEventProviderImpl extends BaseProviderImpl<SysEvent> implements ISysEventProvider {
 	@Autowired
 	private ISysUserProvider sysUserProvider;

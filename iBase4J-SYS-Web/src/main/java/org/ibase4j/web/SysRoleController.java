@@ -1,5 +1,6 @@
 package org.ibase4j.web;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -33,9 +34,17 @@ public class SysRoleController extends BaseController {
 
 	@ApiOperation(value = "查询角色")
 	@RequiresPermissions("sys.base.role.read")
+	@RequestMapping(value = "/read/page", method = RequestMethod.PUT)
+	public Object page(ModelMap modelMap, @RequestBody Map<String, Object> sysRole) {
+		Page<?> list = sysRoleService.query(sysRole);
+		return setSuccessModelMap(modelMap, list);
+	}
+
+	@ApiOperation(value = "查询角色")
+	@RequiresPermissions("sys.base.role.read")
 	@RequestMapping(value = "/read/list", method = RequestMethod.PUT)
 	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> sysRole) {
-		Page<?> list = sysRoleService.query(sysRole);
+		List<SysRole> list = sysRoleService.queryList(sysRole);
 		return setSuccessModelMap(modelMap, list);
 	}
 

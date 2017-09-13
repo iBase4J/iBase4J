@@ -1,10 +1,11 @@
 package org.ibase4j.service;
 
-import org.springframework.stereotype.Service;
 import org.ibase4j.core.base.BaseService;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.SysEmail;
 import org.ibase4j.provider.ISysEmailProvider;
+import org.springframework.stereotype.Service;
+
+import com.alibaba.dubbo.config.annotation.Reference;
 
 /**
  * 邮件管理
@@ -12,7 +13,7 @@ import org.ibase4j.provider.ISysEmailProvider;
  */
 @Service
 public class SysEmailService extends BaseService<ISysEmailProvider, SysEmail> {
-	@DubboReference
+	@Reference
 	public void setProvider(ISysEmailProvider provider) {
 		this.provider = provider;
 	}

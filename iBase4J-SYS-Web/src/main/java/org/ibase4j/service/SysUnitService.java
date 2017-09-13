@@ -1,10 +1,11 @@
 package org.ibase4j.service;
 
-import org.springframework.stereotype.Service;
 import org.ibase4j.core.base.BaseService;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.model.SysUnit;
 import org.ibase4j.provider.ISysUnitProvider;
+import org.springframework.stereotype.Service;
+
+import com.alibaba.dubbo.config.annotation.Reference;
 
 /**
  * 单位管理
@@ -12,7 +13,7 @@ import org.ibase4j.provider.ISysUnitProvider;
  */
 @Service
 public class SysUnitService extends BaseService<ISysUnitProvider, SysUnit> {
-	@DubboReference
+	@Reference
 	public void setProvider(ISysUnitProvider provider) {
 		this.provider = provider;
 	}

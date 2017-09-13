@@ -36,7 +36,7 @@
 	<!-- 引入SPRING配置文件 -->
 	<!-- <import resource="spring/mq.xml"/> -->
 	<import resource="spring/dubbo.xml" />
-	<import resource="spring/redisson.xml"/>
+	<import resource="spring/redis.xml"/>
 	<import resource="spring/dataSource.xml"/>
 	<import resource="spring/scheduler.xml"/>
 	<import resource="spring/mybatis.xml"/>

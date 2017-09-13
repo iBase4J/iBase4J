@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboReference;
 import org.ibase4j.core.support.scheduler.TaskScheduled;
 import org.ibase4j.model.TaskFireLog;
 import org.ibase4j.provider.ISchedulerProvider;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.baomidou.mybatisplus.plugins.Page;
 
 /**
@@ -18,7 +18,7 @@ import com.baomidou.mybatisplus.plugins.Page;
  */
 @Service
 public class SchedulerService {
-	@DubboReference // 依赖调度服务
+	@Reference // 依赖调度服务
 	private ISchedulerProvider schedulerProvider;
 
 	public Page<TaskScheduled> getAllTaskDetail() {

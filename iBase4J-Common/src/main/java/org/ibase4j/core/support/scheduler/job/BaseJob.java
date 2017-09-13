@@ -5,8 +5,8 @@ package org.ibase4j.core.support.scheduler.job;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.core.support.dubbo.ReferenceUtil;
 import org.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
+import org.ibase4j.core.util.ReferenceUtil;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;

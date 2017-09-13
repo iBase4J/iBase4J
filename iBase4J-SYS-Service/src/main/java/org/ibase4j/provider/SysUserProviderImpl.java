@@ -6,12 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.transaction.annotation.Transactional;
 import org.ibase4j.core.base.BaseProviderImpl;
-import org.ibase4j.core.support.dubbo.spring.annotation.DubboService;
 import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.SecurityUtil;
@@ -20,10 +15,12 @@ import org.ibase4j.mapper.SysUserMenuMapper;
 import org.ibase4j.mapper.SysUserThirdpartyMapper;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.model.SysUserThirdparty;
-import org.ibase4j.provider.ISysDeptProvider;
-import org.ibase4j.provider.ISysDicProvider;
-import org.ibase4j.provider.ISysUserProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.plugins.Page;
 
 /**
@@ -33,7 +30,7 @@ import com.baomidou.mybatisplus.plugins.Page;
  * @version 2016-08-27 22:39:42
  */
 @CacheConfig(cacheNames = "SysUser")
-@DubboService(interfaceClass = ISysUserProvider.class)
+@Service(interfaceClass = ISysUserProvider.class)
 public class SysUserProviderImpl extends BaseProviderImpl<SysUser> implements ISysUserProvider {
 	@Autowired
 	private SysUserThirdpartyMapper thirdpartyMapper;

@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -27,8 +26,10 @@ public final class TypeParseUtil {
 	 * 转换核心实现方法
 	 * 
 	 * @param value
-	 * @param type 目标数据类型
-	 * @param format 输入/输出字符串格式
+	 * @param type
+	 *            目标数据类型
+	 * @param format
+	 *            输入/输出字符串格式
 	 * @return Object
 	 * @throws DataParseException
 	 */
@@ -43,8 +44,10 @@ public final class TypeParseUtil {
 	 * 转换核心实现方法
 	 * 
 	 * @param value
-	 * @param type 目标数据类型
-	 * @param format 输入/输出字符串格式
+	 * @param type
+	 *            目标数据类型
+	 * @param format
+	 *            输入/输出字符串格式
 	 * @return Object
 	 * @throws DataParseException
 	 */
@@ -180,7 +183,7 @@ public final class TypeParseUtil {
 		String fromType = "Integer";
 		Integer intgr = (Integer) value;
 		if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
-			return getNf(locale).format(intgr.toString());
+			return intgr.toString();
 		} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
 			return new Double(intgr.toString());
 		} else if ("Float".equalsIgnoreCase(type) || DataType.FLOAT.equalsIgnoreCase(type)) {
@@ -210,7 +213,7 @@ public final class TypeParseUtil {
 		String fromType = "Long";
 		Long lng = (Long) value;
 		if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
-			return getNf(locale).format(lng.toString());
+			return lng.toString();
 		} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
 			return new Double(lng.toString());
 		} else if ("Float".equalsIgnoreCase(type) || DataType.FLOAT.equalsIgnoreCase(type)) {
@@ -238,7 +241,7 @@ public final class TypeParseUtil {
 		String fromType = "Float";
 		Float flt = (Float) value;
 		if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
-			return getNf(locale).format(flt.toString());
+			return flt.toString();
 		} else if ("BigDecimal".equalsIgnoreCase(type) || DataType.BIGDECIMAL.equalsIgnoreCase(type)) {
 			return new BigDecimal(flt.toString());
 		} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
@@ -259,7 +262,7 @@ public final class TypeParseUtil {
 		String fromType = "Double";
 		Double dbl = (Double) value;
 		if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
-			return getNf(locale).format(dbl.toString());
+			return dbl.toString();
 		} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
 			return value;
 		} else if ("Float".equalsIgnoreCase(type) || DataType.FLOAT.equalsIgnoreCase(type)) {
@@ -280,7 +283,7 @@ public final class TypeParseUtil {
 		String fromType = "BigDecimal";
 		BigDecimal bigD = (BigDecimal) value;
 		if ("String".equalsIgnoreCase(type) || DataType.STRING.equalsIgnoreCase(type)) {
-			return getNf(locale).format(bigD.toString());
+			return bigD.toString();
 		} else if ("BigDecimal".equalsIgnoreCase(type) || DataType.BIGDECIMAL.equalsIgnoreCase(type)) {
 			return value;
 		} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
@@ -311,8 +314,7 @@ public final class TypeParseUtil {
 				else
 					return new Boolean(false);
 			} else if ("Double".equalsIgnoreCase(type) || DataType.DOUBLE.equalsIgnoreCase(type)) {
-				Number tempNum = getNf(locale).parse(str.replaceAll(",", ""));
-				return new Double(tempNum.toString());
+				return new BigDecimal(str.replaceAll(",", "")).doubleValue();
 			} else if ("BigDecimal".equalsIgnoreCase(type) || DataType.BIGDECIMAL.equalsIgnoreCase(type)) {
 				BigDecimal retBig = new BigDecimal(str.replaceAll(",", ""));
 				int iscale = str.indexOf(".");
@@ -324,19 +326,11 @@ public final class TypeParseUtil {
 					return retBig.setScale(0, 5);
 				}
 			} else if ("Float".equalsIgnoreCase(type) || DataType.FLOAT.equalsIgnoreCase(type)) {
-				Number tempNum = getNf(locale).parse(str.replaceAll(",", ""));
-				return new Float(tempNum.toString());
-
+				return new BigDecimal(str.replaceAll(",", "")).floatValue();
 			} else if ("Long".equalsIgnoreCase(type) || DataType.LONG.equalsIgnoreCase(type)) {
-				NumberFormat nf = getNf(locale);
-				nf.setMaximumFractionDigits(0);
-				Number tempNum = nf.parse(str.replaceAll(",", ""));
-				return new Long(tempNum.toString());
+				return new BigDecimal(str.replaceAll(",", "")).longValue();
 			} else if ("Integer".equalsIgnoreCase(type) || DataType.INTEGER.equalsIgnoreCase(type)) {
-				NumberFormat nf = getNf(locale);
-				nf.setMaximumFractionDigits(0);
-				Number tempNum = nf.parse(str.replaceAll(",", ""));
-				return new Integer(tempNum.toString());
+				return new BigDecimal(str.replaceAll(",", "")).intValue();
 			} else if ("Date".equalsIgnoreCase(type) || DataType.DATE.equalsIgnoreCase(type)) {
 				if (format == null || format.length() == 0) {
 					String separator = String.valueOf(str.charAt(4));
@@ -404,17 +398,6 @@ public final class TypeParseUtil {
 		} catch (Exception e) {
 			throw new DataParseException(String.format(message, str, type), e);
 		}
-	}
-
-	private static NumberFormat getNf(Locale locale) {
-		NumberFormat nf = null;
-		if (locale == null) {
-			nf = NumberFormat.getNumberInstance();
-		} else {
-			nf = NumberFormat.getNumberInstance(locale);
-		}
-		nf.setGroupingUsed(false);
-		return nf;
 	}
 
 	/** 转换为布尔值 */

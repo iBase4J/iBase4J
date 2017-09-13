@@ -39,6 +39,7 @@
     <!-- 缓存 -->
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
 		<property name="connectionFactory" ref="jedisConnectionFactory" />
+		<property name="enableTransactionSupport" value="true" />
 		<property name="keySerializer" ref="keySerializer" />
 		<property name="valueSerializer" ref="valueSerializer" />
 		<property name="hashKeySerializer" ref="keySerializer" />
@@ -46,5 +47,10 @@
 	</bean>
 	<bean class="org.ibase4j.core.support.cache.RedisHelper" >
 		<property name="redisTemplate" ref="redisTemplate" />
+	</bean>
+	<!-- 缓存管理 -->
+	<bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+		<constructor-arg index="0" ref="redisTemplate" />
+		<property name="defaultExpiration" value="${redis.expiration}" />
 	</bean>
 </beans>
