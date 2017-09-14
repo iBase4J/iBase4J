@@ -57,6 +57,7 @@ public class Generator {
 		// strategy.setTablePrefix("sys_");// 此处可以修改为您的表前缀
 		strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
 		strategy.setInclude(new String[] { "sys_user" }); // 需要生成的表
+		strategy.setTablePrefix(new String[] { "sys_" });// 此处可以修改为您的表前缀
 		// strategy.setExclude(new String[]{"test"}); // 排除生成的表
 		// 自定义实体父类
 		strategy.setSuperEntityClass("org.ibase4j.core.base.BaseModel");
