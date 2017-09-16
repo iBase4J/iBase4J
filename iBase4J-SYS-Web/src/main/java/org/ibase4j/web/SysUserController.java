@@ -165,8 +165,7 @@ public class SysUserController extends AbstractController<ISysProvider> {
 		if (!sysUser.getPassword().equals(encryptPassword)) {
 			throw new UnauthorizedException("原密码错误.");
 		}
-		param.setPassword(encryptPassword);
-		param.setUpdateBy(getCurrUser());
+		param.setPassword(SecurityUtil.encryptPassword(param.getPassword()));
 		return super.update(modelMap, param);
 	}
 }
