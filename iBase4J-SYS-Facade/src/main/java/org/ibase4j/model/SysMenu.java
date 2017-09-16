@@ -32,6 +32,7 @@ public class SysMenu extends BaseModel {
 	private Boolean expand;
 
 	private Integer sortNo;
+    @TableField("is_show")
 	private Boolean isShow;
 
 	@TableField("permission_")
