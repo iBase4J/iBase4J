@@ -27,6 +27,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.exception.DataParseException;
 import org.ibase4j.core.exception.InstanceException;
 
@@ -39,6 +41,8 @@ import com.esotericsoftware.reflectasm.MethodAccess;
  * @since 2012-07-18
  */
 public final class InstanceUtil {
+    protected static Logger logger = LogManager.getLogger(InstanceUtil.class);
+
     private InstanceUtil() {
     }
 
@@ -49,6 +53,17 @@ public final class InstanceUtil {
             bean = clazz.newInstance();
             PropertyUtils.copyProperties(bean, orig);
         } catch (Exception e) {
+        }
+        return bean;
+    }
+
+    public static <T> T transMap2Bean(Map<String, Object> map, Class<T> clazz) {
+        T bean = null;
+        try {
+            bean = clazz.newInstance();
+            transMap2Bean(map, bean);
+        } catch (Exception e) {
+            logger.error("transMap2Bean Error ", e);
         }
         return bean;
     }
@@ -64,11 +79,11 @@ public final class InstanceUtil {
                     Object value = map.get(key);
                     // 得到property对应的setter方法
                     Method setter = property.getWriteMethod();
-                    setter.invoke(obj, value);
+                    setter.invoke(obj, TypeParseUtil.convert(value, property.getPropertyType(), null));
                 }
             }
         } catch (Exception e) {
-            System.out.println("transMap2Bean Error " + e);
+            logger.error("transMap2Bean Error ", e);
         }
         return;
     }
@@ -93,7 +108,7 @@ public final class InstanceUtil {
                 }
             }
         } catch (Exception e) {
-            System.out.println("transBean2Map Error " + e);
+            logger.error("transMap2Bean Error ", e);
         }
         return map;
     }
