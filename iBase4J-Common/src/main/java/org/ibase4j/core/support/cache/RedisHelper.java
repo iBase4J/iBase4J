@@ -9,6 +9,7 @@ import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
 import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisConnectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -21,7 +22,6 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  */
 public final class RedisHelper implements CacheManager {
     private RedisTemplate<Serializable, Serializable> redisTemplate;
-    private RedisConnection redisConnection;
     private RedisSerializer<String> keySerializer;
     private RedisSerializer<Object> valueSerializer;
     private final Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
@@ -29,7 +29,6 @@ public final class RedisHelper implements CacheManager {
     @SuppressWarnings("unchecked")
     public void setRedisTemplate(RedisTemplate<Serializable, Serializable> redisTemplate) {
         this.redisTemplate = redisTemplate;
-        this.redisConnection = RedisConnectionUtils.getConnection(redisTemplate.getConnectionFactory());
         this.keySerializer = (RedisSerializer<String>)redisTemplate.getKeySerializer();
         this.valueSerializer = (RedisSerializer<Object>)redisTemplate.getValueSerializer();
         CacheUtil.setCacheManager(this);
@@ -61,7 +60,14 @@ public final class RedisHelper implements CacheManager {
     }
 
     public final Boolean exists(final String key) {
-        return redisTemplate.hasKey(key);
+        RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
+        RedisConnection redisConnection = null;
+        try {
+            redisConnection = RedisConnectionUtils.getConnection(factory);
+            return redisConnection.exists(keySerializer.serialize(key));
+        } finally {
+            RedisConnectionUtils.releaseConnection(redisConnection, factory);
+        }
     }
 
     public final void del(final String key) {
@@ -117,15 +123,36 @@ public final class RedisHelper implements CacheManager {
     }
 
     public boolean setnx(String key, Serializable value) {
-        return redisConnection.setNX(keySerializer.serialize(key), valueSerializer.serialize(value));
+        RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
+        RedisConnection redisConnection = null;
+        try {
+            redisConnection = RedisConnectionUtils.getConnection(factory);
+            return redisConnection.setNX(keySerializer.serialize(key), valueSerializer.serialize(value));
+        } finally {
+            RedisConnectionUtils.releaseConnection(redisConnection, factory);
+        }
     }
 
     public boolean lock(String key) {
-        return redisConnection.setNX(keySerializer.serialize(key), valueSerializer.serialize("0"));
+        RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
+        RedisConnection redisConnection = null;
+        try {
+            redisConnection = RedisConnectionUtils.getConnection(factory);
+            return redisConnection.setNX(keySerializer.serialize(key), valueSerializer.serialize("0"));
+        } finally {
+            RedisConnectionUtils.releaseConnection(redisConnection, factory);
+        }
     }
 
     public void unlock(String key) {
-        del(key);
+        RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
+        RedisConnection redisConnection = null;
+        try {
+            redisConnection = RedisConnectionUtils.getConnection(factory);
+            redisConnection.del(keySerializer.serialize(key));
+        } finally {
+            RedisConnectionUtils.releaseConnection(redisConnection, factory);
+        }
     }
 
     public void hset(String key, Serializable field, Serializable value) {

@@ -28,25 +28,25 @@ public abstract class AbstractController<T extends BaseProvider> extends BaseCon
     public abstract String getService();
 
     public Object query(ModelMap modelMap, Map<String, Object> param) {
-        Parameter parameter = new Parameter(getService(), "query").setMap(param);
+        Parameter parameter = new Parameter(getService(), "query", param);
         logger.info("{} execute query start...", parameter.getNo());
-        Page<?> list = provider.execute(parameter).getPage();
+        Page<?> list = provider.execute(parameter).getResultPage();
         logger.info("{} execute query end.", parameter.getNo());
         return setSuccessModelMap(modelMap, list);
     }
 
     public Object queryList(ModelMap modelMap, Map<String, Object> param) {
-        Parameter parameter = new Parameter(getService(), "queryList").setMap(param);
+        Parameter parameter = new Parameter(getService(), "queryList", param);
         logger.info("{} execute queryList start...", parameter.getNo());
-        List<?> list = provider.execute(parameter).getList();
+        List<?> list = provider.execute(parameter).getResultList();
         logger.info("{} execute queryList end.", parameter.getNo());
         return setSuccessModelMap(modelMap, list);
     }
 
     public Object get(ModelMap modelMap, BaseModel param) {
-        Parameter parameter = new Parameter(getService(), "queryById").setId(param.getId());
+        Parameter parameter = new Parameter(getService(), "queryById", param.getId());
         logger.info("{} execute queryById start...", parameter.getNo());
-        BaseModel result = provider.execute(parameter).getModel();
+        Object result = provider.execute(parameter).getResult();
         logger.info("{} execute queryById end.", parameter.getNo());
         return setSuccessModelMap(modelMap, result);
     }
@@ -59,7 +59,7 @@ public abstract class AbstractController<T extends BaseProvider> extends BaseCon
         }
         param.setUpdateBy(userId);
         param.setUpdateTime(new Date());
-        Parameter parameter = new Parameter(getService(), "update").setModel(param);
+        Parameter parameter = new Parameter(getService(), "update", param);
         logger.info("{} execute update start...", parameter.getNo());
         provider.execute(parameter);
         logger.info("{} execute update end.", parameter.getNo());
@@ -67,7 +67,7 @@ public abstract class AbstractController<T extends BaseProvider> extends BaseCon
     }
 
     public Object delete(ModelMap modelMap, BaseModel param) {
-        Parameter parameter = new Parameter(getService(), "delete").setId(param.getId());
+        Parameter parameter = new Parameter(getService(), "delete", param.getId());
         logger.info("{} execute delete start...", parameter.getNo());
         provider.execute(parameter);
         logger.info("{} execute delete end.", parameter.getNo());
