@@ -94,7 +94,7 @@ public class EventInterceptor extends BaseInterceptor {
 									record.setRemark(ExceptionUtil.getStackTraceAsString(ex));
 								}
 
-								Parameter parameter = new Parameter("sysEventService", "update").setModel(record);
+								Parameter parameter = new Parameter("sysEventService", "update", record);
 								sysProvider.execute(parameter);
 							} catch (Exception e) {
 								logger.error("Save event log cause error :", e);

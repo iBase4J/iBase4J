@@ -51,8 +51,8 @@ public class SysMenuController extends AbstractController<ISysProvider> {
 	@PutMapping(value = "/read/tree")
 	@RequiresPermissions("sys.base.menu.read")
 	public Object getTree(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		Parameter parameter = new Parameter(getService(), "queryTreeList").setMap(param);
-		List<?> list = provider.execute(parameter).getList();
+		Parameter parameter = new Parameter(getService(), "queryTreeList", param);
+		List<?> list = provider.execute(parameter).getResultList();
 		return setSuccessModelMap(modelMap, list);
 	}
 
@@ -84,8 +84,8 @@ public class SysMenuController extends AbstractController<ISysProvider> {
 	@RequiresPermissions("sys.base.menu.read")
 	@RequestMapping(value = "/read/permission")
 	public Object getPermissions(ModelMap modelMap) {
-		Parameter parameter = new Parameter(getService(), "getPermissions").setModel(new SysMenu());
-		List<?> list = provider.execute(parameter).getList();
+		Parameter parameter = new Parameter(getService(), "getPermissions", new SysMenu());
+		List<?> list = provider.execute(parameter).getResultList();
 		return setSuccessModelMap(modelMap, list);
 	}
 }

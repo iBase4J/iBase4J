@@ -55,8 +55,8 @@ public class SysUserController extends AbstractController<ISysProvider> {
 			if (param.getEnable() == null) {
 				param.setEnable(1);
 			}
-			Parameter parameter = new Parameter(getService(), "queryById").setId(param.getId());
-			SysUser user = (SysUser) provider.execute(parameter).getModel();
+			Parameter parameter = new Parameter(getService(), "queryById", param.getId());
+			SysUser user = (SysUser) provider.execute(parameter).getResult();
 			Assert.notNull(user, "USER", param.getId());
 			if (StringUtils.isNotBlank(param.getPassword())) {
 				if (!param.getPassword().equals(user.getPassword())) {
@@ -98,12 +98,12 @@ public class SysUserController extends AbstractController<ISysProvider> {
 	@GetMapping(value = "/read/promission")
 	public Object promission(ModelMap modelMap) {
 		Long id = getCurrUser();
-		Parameter parameter = new Parameter(getService(), "queryById").setId(id);
-		SysUser sysUser = (SysUser) provider.execute(parameter).getModel();
+		Parameter parameter = new Parameter(getService(), "queryById", id);
+		SysUser sysUser = (SysUser) provider.execute(parameter).getResult();
 		modelMap.put("user", sysUser);
-		parameter = new Parameter("sysAuthorizeService", "queryAuthorizeByUserId").setId(id);
+		parameter = new Parameter("sysAuthorizeService", "queryAuthorizeByUserId", id);
 		logger.info("{} execute queryAuthorizeByUserId start...", parameter.getNo());
-		List<?> menus = provider.execute(parameter).getList();
+		List<?> menus = provider.execute(parameter).getResultList();
 		logger.info("{} execute queryAuthorizeByUserId end.", parameter.getNo());
 		modelMap.put("menus", menus);
 		return setSuccessModelMap(modelMap);
@@ -157,9 +157,9 @@ public class SysUserController extends AbstractController<ISysProvider> {
 		Assert.isNotBlank(param.getPassword(), "PASSWORD");
 		Long userId = getCurrUser();
 		String encryptPassword = SecurityUtil.encryptPassword(param.getOldPassword());
-		Parameter parameter = new Parameter(getService(), "queryById").setId(userId);
+		Parameter parameter = new Parameter(getService(), "queryById", userId);
 		logger.info("{} execute queryById start...", parameter.getNo());
-		SysUser sysUser = (SysUser) provider.execute(parameter).getModel();
+		SysUser sysUser = (SysUser) provider.execute(parameter).getResult();
 		logger.info("{} execute queryById end.", parameter.getNo());
 		Assert.notNull(sysUser, "USER", param.getId());
 		if (!sysUser.getPassword().equals(encryptPassword)) {

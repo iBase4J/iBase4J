@@ -168,15 +168,15 @@ public class ThirdPartyLoginController extends AbstractController<ISysProvider> 
 	private void thirdPartyLogin(HttpServletRequest request, ThirdPartyUser param) {
 		SysUser sysUser = null;
 		// 查询是否已经绑定过
-		Parameter parameter = new Parameter(getService(), "queryUserIdByThirdParty").setModel(param);
-		Long userId = provider.execute(parameter).getId();
+		Parameter parameter = new Parameter(getService(), "queryUserIdByThirdParty", param);
+		Long userId = provider.execute(parameter).getResultLong();
 
 		if (userId == null) {
-			parameter = new Parameter(getService(), "insertThirdPartyUser").setModel(param);
-			sysUser = (SysUser) provider.execute(parameter).getModel();
+			parameter = new Parameter(getService(), "insertThirdPartyUser", param);
+			sysUser = (SysUser) provider.execute(parameter).getResult();
 		} else {
-			parameter = new Parameter(getService(), "queryById").setId(param.getId());
-			sysUser = (SysUser) provider.execute(parameter).getModel();
+			parameter = new Parameter(getService(), "queryById", param.getId());
+			sysUser = (SysUser) provider.execute(parameter).getResult();
 		}
 		String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
 		LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);

@@ -53,6 +53,6 @@ public class CacheUtil {
 	}
 
 	public static void unlock(String key) {
-		getCache().del(key);
+		getCache().unlock(key);
 	}
 }

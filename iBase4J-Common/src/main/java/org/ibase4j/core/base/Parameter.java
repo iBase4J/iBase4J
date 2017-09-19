@@ -2,7 +2,6 @@ package org.ibase4j.core.base;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
@@ -13,126 +12,89 @@ import com.baomidou.mybatisplus.toolkit.IdWorker;
  */
 @SuppressWarnings("serial")
 public class Parameter implements Serializable {
-	public Parameter() {
-	}
+    public Parameter() {
+    }
 
-	public Parameter(String service, String method) {
-		this.service = service;
-		this.method = method;
-	}
+    public Parameter(String service, String method) {
+        this.service = service;
+        this.method = method;
+    }
 
-	public Parameter(Object result) {
-		if (result instanceof Long) {
-			this.id = (Long) result;
-		} else if (result instanceof BaseModel) {
-			this.model = (BaseModel) result;
-		} else if (result instanceof Page) {
-			this.page = (Page<?>) result;
-		} else if (result instanceof Map<?, ?>) {
-			this.map = (Map<?, ?>) result;
-		} else if (result instanceof List<?>) {
-			this.list = (List<?>) result;
-		} else if (result instanceof Object[]) {
-			this.param = (Object[]) result;
-		} else {
-			this.result = result;
-		}
-	}
+    public Parameter(String service, String method, Object... param) {
+        this.service = service;
+        this.method = method;
+        this.param = param;
+    }
 
-	private String service;
-	private String method;
+    public Parameter(Object result) {
+        this.result = result;
+    }
 
-	private Object[] param;
-	private Long id;
-	private BaseModel model;
-	private Map<?, ?> map;
-	private Page<?> page;
-	private List<?> list;
-	private Object result;
+    private String service;
+    private String method;
 
-	private final String no = "[" + IdWorker.getId() + "]";
+    private Object[] param;
+    private Object result;
 
-	public String getService() {
-		return service;
-	}
+    private final String no = "[" + IdWorker.getId() + "]";
 
-	public void setService(String service) {
-		this.service = service;
-	}
+    public String getService() {
+        return service;
+    }
 
-	public String getMethod() {
-		return method;
-	}
+    public void setService(String service) {
+        this.service = service;
+    }
 
-	public Parameter setMethod(String method) {
-		this.method = method;
-		return this;
-	}
+    public String getMethod() {
+        return method;
+    }
 
-	public Object[] getParam() {
-		return param;
-	}
+    public Parameter setMethod(String method) {
+        this.method = method;
+        return this;
+    }
 
-	public Parameter setParam(Object[] param) {
-		this.param = param;
-		return this;
-	}
+    public Object[] getParam() {
+        return param;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Parameter setParam(Object... param) {
+        this.param = param;
+        return this;
+    }
 
-	public Parameter setId(Long id) {
-		this.id = id;
-		return this;
-	}
+    public String getNo() {
+        return no;
+    }
 
-	public BaseModel getModel() {
-		return model;
-	}
+    public Parameter setResult(Object result) {
+        this.result = result;
+        return this;
+    }
 
-	public Parameter setModel(BaseModel model) {
-		this.model = model;
-		return this;
-	}
+    public Object getResult() {
+        return result;
+    }
 
-	public Map<?, ?> getMap() {
-		return map;
-	}
+    public List<?> getResultList() {
+        if (result instanceof List<?>) {
+            return (List<?>)result;
+        }
+        return null;
+    }
 
-	public Parameter setMap(Map<?, ?> map) {
-		this.map = map;
-		return this;
-	}
+    public Page<?> getResultPage() {
+        if (result instanceof Page<?>) {
+            return (Page<?>)result;
+        }
+        return null;
+    }
 
-	public Page<?> getPage() {
-		return page;
-	}
-
-	public Parameter setPage(Page<?> page) {
-		this.page = page;
-		return this;
-	}
-
-	public List<?> getList() {
-		return list;
-	}
-
-	public Parameter setList(List<?> list) {
-		this.list = list;
-		return this;
-	}
-
-	public String getNo() {
-		return no;
-	}
-
-	public Object getResult() {
-		return result;
-	}
-
-	public Parameter setResult(Object result) {
-		this.result = result;
-		return this;
-	}
+    public Long getResultLong() {
+        if (result instanceof Long) {
+            return (Long)result;
+        }
+        return null;
+    }
 }
