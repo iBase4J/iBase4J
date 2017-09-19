@@ -72,7 +72,7 @@ public class LoginController extends AbstractController<ISysProvider> {
 		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
 		Assert.notNull(sysUser.getPassword(), "PASSWORD");
 		sysUser.setPassword(SecurityUtil.encryptPassword(sysUser.getPassword()));
-		provider.execute(new Parameter("sysUserService", "update").setModel(sysUser));
+		provider.execute(new Parameter("sysUserService", "update", sysUser));
 		String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
 		if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp)) {
 			return setSuccessModelMap(modelMap);

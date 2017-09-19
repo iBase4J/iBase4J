@@ -53,7 +53,7 @@ public class ScheduledController extends AbstractController<ISysProvider> {
 		if (TaskType.dubbo.equals(scheduled.getTaskType())) {
 			Assert.notNull(scheduled.getTargetSystem(), "TARGETSYSTEM");
 		}
-		Parameter parameter = new Parameter(getService(), "updateTask").setModel(scheduled);
+		Parameter parameter = new Parameter(getService(), "updateTask", scheduled);
 		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
@@ -64,7 +64,7 @@ public class ScheduledController extends AbstractController<ISysProvider> {
 	public Object delete(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
 		Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
 		Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-		Parameter parameter = new Parameter(getService(), "delTask").setModel(scheduled);
+		Parameter parameter = new Parameter(getService(), "delTask", scheduled);
 		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
@@ -75,7 +75,7 @@ public class ScheduledController extends AbstractController<ISysProvider> {
 	public Object exec(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
 		Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
 		Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-		Parameter parameter = new Parameter(getService(), "execTask").setModel(scheduled);
+		Parameter parameter = new Parameter(getService(), "execTask", scheduled);
 		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
@@ -86,7 +86,7 @@ public class ScheduledController extends AbstractController<ISysProvider> {
 	public Object open(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
 		Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
 		Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-		Parameter parameter = new Parameter(getService(), "openTask").setModel(scheduled);
+		Parameter parameter = new Parameter(getService(), "openTask", scheduled);
 		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
@@ -97,7 +97,7 @@ public class ScheduledController extends AbstractController<ISysProvider> {
 	public Object close(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
 		Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
 		Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-		Parameter parameter = new Parameter(getService(), "closeTask").setModel(scheduled);
+		Parameter parameter = new Parameter(getService(), "closeTask", scheduled);
 		provider.execute(parameter);
 		return setSuccessModelMap(modelMap);
 	}
@@ -107,7 +107,7 @@ public class ScheduledController extends AbstractController<ISysProvider> {
 	@RequiresPermissions("sys.task.scheduled.read")
 	public Object list(ModelMap modelMap) {
 		Parameter parameter = new Parameter(getService(), "getAllTaskDetail");
-		List<?> records = provider.execute(parameter).getList();
+		List<?> records = provider.execute(parameter).getResultList();
 		modelMap.put("recordsTotal", records.size());
 		modelMap.put("total", records.size());
 		modelMap.put("current", 1);
@@ -119,8 +119,8 @@ public class ScheduledController extends AbstractController<ISysProvider> {
 	@ApiOperation(value = "任务执行记录")
 	@RequiresPermissions("sys.task.log.read")
 	public Object getFireLog(ModelMap modelMap, @RequestBody Map<String, Object> log) {
-		Parameter parameter = new Parameter(getService(), "queryLog").setMap(log);
-		Page<?> list = provider.execute(parameter).getPage();
+		Parameter parameter = new Parameter(getService(), "queryLog", log);
+		Page<?> list = provider.execute(parameter).getResultPage();
 		return setSuccessModelMap(modelMap, list);
 	}
 }

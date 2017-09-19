@@ -25,8 +25,8 @@ public class SearchController extends AbstractController<ISysProvider> {
 	@PutMapping("query")
 	@ApiOperation(value = "全库搜索")
 	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		Parameter parameter = new Parameter(getService(), "query").setMap(param);
-		List<?> list = provider.execute(parameter).getList();
+		Parameter parameter = new Parameter(getService(), "query", param);
+		List<?> list = provider.execute(parameter).getResultList();
 		return setSuccessModelMap(modelMap, list);
 	}
 }
