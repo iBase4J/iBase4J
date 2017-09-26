@@ -25,7 +25,7 @@ public class JedisConfig {
 		config.setMaxIdle(PropertiesUtil.getInt("redis.maxIdle"));
 		config.setMaxTotal(PropertiesUtil.getInt("redis.maxTotal"));
 		config.setMaxWaitMillis(PropertiesUtil.getInt("redis.maxWaitMillis"));
-		config.setTestOnBorrow(Boolean.getBoolean(PropertiesUtil.getString("redis.testOnBorrow")));
+		config.setTestOnBorrow(Boolean.valueOf(PropertiesUtil.getString("redis.testOnBorrow")));
 		return config;
 	}
 
