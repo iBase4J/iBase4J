@@ -114,5 +114,11 @@
 			<artifactId>pinyin4j</artifactId>
 			<version>${pinyin4j.version}</version>
 		</dependency>
+		<!-- 反射工具 -->
+		<dependency>
+			<groupId>org.db4j</groupId>
+			<artifactId>reflectasm</artifactId>
+			<version>1.11.4-2</version>
+		</dependency>
 	</dependencies>
 </project>
