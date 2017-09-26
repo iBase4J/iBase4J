@@ -16,7 +16,7 @@
 		maxServerConnection="80000" maxContentLength="1048576"
 		maxWorkerThread="${rpc.protocol.maxThread}" minWorkerThread="${rpc.protocol.minThread}" />
 	<!-- 服务的默认配置 -->
-	<motan:basicService id="motanServiceBasicConfig"
+	<motan:basicService id="motanServiceBasicConfig" shareChannel="true"
 		registry="rpc_registry" export="motan:${rpc.protocol.port}" />
 	<!-- 注解服务端要暴露的服务接口 -->
 	<motan:annotation />
