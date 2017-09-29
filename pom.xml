@@ -33,7 +33,7 @@
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
-		<spring.version>5.0.0.M5</spring.version>
+		<spring.version>5.0.0.RELEASE</spring.version>
 		<spring-session.version>2.0.0.M2</spring-session.version>
 		<spring-data-redis.version>2.0.0.M4</spring-data-redis.version>
 		<!-- 数据库 -->
