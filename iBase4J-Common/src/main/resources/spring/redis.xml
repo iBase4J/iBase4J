@@ -52,6 +52,7 @@
 	<!-- 缓存管理 -->
 	<bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
 		<constructor-arg index="0" ref="redisTemplate" />
+		<property name="transactionAware" value="true" />
 		<property name="defaultExpiration" value="${redis.expiration}" />
 	</bean>
 </beans>
