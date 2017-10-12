@@ -3,14 +3,9 @@
  */
 package org.ibase4j.core.base;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.baomidou.mybatisplus.plugins.Page;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,9 +24,12 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.baomidou.mybatisplus.plugins.Page;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 控制器基类
@@ -114,10 +112,10 @@ public abstract class BaseController {
 		} else if (ex instanceof IllegalArgumentException) {
 			new IllegalParameterException(ex.getMessage()).handler(modelMap);
 		} else if (ex instanceof UnauthorizedException) {
-			modelMap.put("httpCode", HttpCode.FORBIDDEN.value());
+			modelMap.put("httpCode", HttpCode.FORBIDDEN.value().toString());
 			modelMap.put("msg", StringUtils.defaultIfBlank(ex.getMessage(), HttpCode.FORBIDDEN.msg()));
 		} else {
-			modelMap.put("httpCode", HttpCode.INTERNAL_SERVER_ERROR.value());
+			modelMap.put("httpCode", HttpCode.INTERNAL_SERVER_ERROR.value().toString());
 			String msg = StringUtils.defaultIfBlank(ex.getMessage(), HttpCode.INTERNAL_SERVER_ERROR.msg());
 			modelMap.put("msg", msg.length() > 100 ? "系统走神了,请稍候再试." : msg);
 		}

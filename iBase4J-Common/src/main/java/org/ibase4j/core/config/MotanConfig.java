@@ -28,7 +28,7 @@ public class MotanConfig {
 	}
 
 	@Bean
-	public AnnotationBean motanAnnotation() {
+	public static AnnotationBean motanAnnotation() {
 		AnnotationBean bean = new AnnotationBean();
 		bean.setPackage("org.ibase4j");
 		return bean;
@@ -39,7 +39,7 @@ public class MotanConfig {
 		RegistryConfigBean config = new RegistryConfigBean();
 		config.setName(PropertiesUtil.getString("rpc.registry.name"));
 		config.setRegProtocol(PropertiesUtil.getString("rpc.registry"));
-		config.setConnectTimeout(PropertiesUtil.getInt("rpc.timeout"));
+		config.setConnectTimeout(PropertiesUtil.getInt("rpc.connect.timeout"));
 		config.setAddress(PropertiesUtil.getString("rpc.address"));
 		return config;
 	}
@@ -53,6 +53,7 @@ public class MotanConfig {
 		config.setMaxServerConnection(8000);
 		config.setMaxWorkerThread(PropertiesUtil.getInt("rpc.protocol.maxThread"));
 		config.setMinWorkerThread(PropertiesUtil.getInt("rpc.protocol.minThread"));
+        config.setRequestTimeout(PropertiesUtil.getInt("rpc.request.timeout"));
 		return config;
 	}
 

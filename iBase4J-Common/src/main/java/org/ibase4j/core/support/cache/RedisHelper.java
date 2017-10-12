@@ -1,10 +1,5 @@
 package org.ibase4j.core.support.cache;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
@@ -14,9 +9,14 @@ import org.springframework.data.redis.core.RedisConnectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Redis缓存辅助类
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
@@ -29,8 +29,8 @@ public final class RedisHelper implements CacheManager {
     @SuppressWarnings("unchecked")
     public void setRedisTemplate(RedisTemplate<Serializable, Serializable> redisTemplate) {
         this.redisTemplate = redisTemplate;
-        this.keySerializer = (RedisSerializer<String>)redisTemplate.getKeySerializer();
-        this.valueSerializer = (RedisSerializer<Object>)redisTemplate.getValueSerializer();
+        this.keySerializer = (RedisSerializer<String>) redisTemplate.getKeySerializer();
+        this.valueSerializer = (RedisSerializer<Object>) redisTemplate.getValueSerializer();
         CacheUtil.setCacheManager(this);
     }
 
@@ -60,14 +60,7 @@ public final class RedisHelper implements CacheManager {
     }
 
     public final Boolean exists(final String key) {
-        RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
-        RedisConnection redisConnection = null;
-        try {
-            redisConnection = RedisConnectionUtils.getConnection(factory);
-            return redisConnection.exists(keySerializer.serialize(key));
-        } finally {
-            RedisConnectionUtils.releaseConnection(redisConnection, factory);
-        }
+        return redisTemplate.hasKey(key);
     }
 
     public final void del(final String key) {
@@ -85,7 +78,7 @@ public final class RedisHelper implements CacheManager {
 
     /**
      * 在某段时间后失效
-     * 
+     *
      * @return
      */
     public final Boolean expire(final String key, final int seconds) {
@@ -94,7 +87,7 @@ public final class RedisHelper implements CacheManager {
 
     /**
      * 在某个时间点失效
-     * 
+     *
      * @param key
      * @param unixTime
      * @return
@@ -145,14 +138,7 @@ public final class RedisHelper implements CacheManager {
     }
 
     public void unlock(String key) {
-        RedisConnectionFactory factory = redisTemplate.getConnectionFactory();
-        RedisConnection redisConnection = null;
-        try {
-            redisConnection = RedisConnectionUtils.getConnection(factory);
-            redisConnection.del(keySerializer.serialize(key));
-        } finally {
-            RedisConnectionUtils.releaseConnection(redisConnection, factory);
-        }
+        redisTemplate.delete(key);
     }
 
     public void hset(String key, Serializable field, Serializable value) {

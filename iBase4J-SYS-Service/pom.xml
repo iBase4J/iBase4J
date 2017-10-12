@@ -5,7 +5,7 @@
 	<artifactId>iBase4J-SYS-Service</artifactId>
 	<name>iBase4J-SYS-Service</name>
 	<url>http://maven.apache.org</url>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<parent>
 		<groupId>org.ibase4j</groupId>
