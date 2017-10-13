@@ -28,6 +28,7 @@ import org.springframework.web.servlet.view.JstlView;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
+@SuppressWarnings("deprecation")
 @Configuration
 @ComponentScan("org.ibase4j.web")
 public class WebConfig extends WebMvcConfigurerAdapter {
@@ -88,14 +89,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("redirect:/index.html");
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-		super.addViewControllers(registry);
 	}
 
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
 
-	@SuppressWarnings("deprecation")
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
 		List<MediaType> mediaTypes = InstanceUtil.newArrayList();

@@ -64,4 +64,12 @@ public interface Constants {
 		 */
 		static final String UN_STATS = "N";
 	}
+
+    /** 短信验证码类型 */
+    public interface MSGCHKTYPE {
+        /** 注册 */
+        public static final String REGISTER = "REGISTER";
+        /** 登录 */
+        public static final String LOGIN = "LOGIN";
+    }
 }
