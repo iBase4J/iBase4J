@@ -42,7 +42,7 @@
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.4.2</mybatis.version>
 		<mybatis-spring.version>1.3.1</mybatis-spring.version>
-		<mybatis-plus.version>2.1-gamma</mybatis-plus.version>
+		<mybatis-plus.version>2.1.2</mybatis-plus.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.9</slf4j.version>
 		<log4j.version>2.8.2</log4j.version>
@@ -152,6 +152,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -359,30 +360,6 @@
 							</goals>
 						</execution>
 					</executions>
-				</plugin>
-				<!-- 打包项目 mvn clean package -->
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-					<!-- 指定main方法入口 -->
-					<configuration>
-						<mainClass>org.ibase4j.${moduleName}Application</mainClass>
-					</configuration>
-					<executions>
-						<execution>
-							<goals>
-								<goal>repackage</goal>
-							</goals>
-						</execution>
-					</executions>
-					<dependencies>
-						<!-- mvn spring-boot:run 热部署启动 -->
-						<dependency>
-							<groupId>org.springframework</groupId>
-							<artifactId>springloaded</artifactId>
-							<version>1.2.7.RELEASE</version>
-						</dependency>
-					</dependencies>
 				</plugin>
 			</plugins>
 		</pluginManagement>

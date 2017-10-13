@@ -23,7 +23,7 @@ public class SchedulerConfig {
 	@Bean
 	public SchedulerFactoryBean schedulerFactory(DataSource dataSource) {
 		SchedulerFactoryBean schedulerFactory = new SchedulerFactoryBean();
-		schedulerFactory.setSchedulerName(env.getProperty("server.name") + "-Scheduler");
+		schedulerFactory.setSchedulerName("iBase4J-Scheduler");
 		schedulerFactory.setApplicationContextSchedulerContextKey("applicationContext");
 		schedulerFactory.setDataSource(dataSource);
 		Resource resouce = new DefaultResourceLoader().getResource("classpath:quartz.properties");
