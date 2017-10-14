@@ -42,7 +42,6 @@ import com.esotericsoftware.reflectasm.MethodAccess;
  */
 public final class InstanceUtil {
     protected static Logger logger = LogManager.getLogger(InstanceUtil.class);
-
     private InstanceUtil() {
     }
 
@@ -57,21 +56,12 @@ public final class InstanceUtil {
         return bean;
     }
 
+    // Map --> Bean 1: 利用Introspector,PropertyDescriptor实现 Map --> Bean
     public static <T> T transMap2Bean(Map<String, Object> map, Class<T> clazz) {
         T bean = null;
         try {
             bean = clazz.newInstance();
-            transMap2Bean(map, bean);
-        } catch (Exception e) {
-            logger.error("transMap2Bean Error ", e);
-        }
-        return bean;
-    }
-
-    // Map --> Bean 1: 利用Introspector,PropertyDescriptor实现 Map --> Bean
-    public static void transMap2Bean(Map<String, Object> map, Object obj) {
-        try {
-            BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
+            BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
             PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
             for (PropertyDescriptor property : propertyDescriptors) {
                 String key = property.getName();
@@ -79,13 +69,13 @@ public final class InstanceUtil {
                     Object value = map.get(key);
                     // 得到property对应的setter方法
                     Method setter = property.getWriteMethod();
-                    setter.invoke(obj, TypeParseUtil.convert(value, property.getPropertyType(), null));
+                    setter.invoke(bean, TypeParseUtil.convert(value, property.getPropertyType(), null));
                 }
             }
         } catch (Exception e) {
             logger.error("transMap2Bean Error ", e);
         }
-        return;
+        return bean;
     }
 
     // Bean --> Map 1: 利用Introspector和PropertyDescriptor 将Bean --> Map
@@ -108,7 +98,7 @@ public final class InstanceUtil {
                 }
             }
         } catch (Exception e) {
-            logger.error("transMap2Bean Error ", e);
+            System.out.println("transBean2Map Error " + e);
         }
         return map;
     }
@@ -313,7 +303,7 @@ public final class InstanceUtil {
         }
     }
 
-    private static Map<String, MethodAccess> methodMap = new HashMap<String, MethodAccess>();
+    public static Map<String, MethodAccess> methodMap = new HashMap<String, MethodAccess>();
 
     /**
      * 执行某对象方法
@@ -436,10 +426,19 @@ public final class InstanceUtil {
     }
 
     /**
-     * Constructs an empty HashMap.
+     * Constructs an HashMap.
      */
-    public static final <k, v> Map<k, v> newHashMap(k key, v value) {
-        Map<k, v> map = newHashMap();
+    public static final <k, v> HashMap<k, v> newHashMap(k key, v value) {
+        HashMap<k, v> map = newHashMap();
+        map.put(key, value);
+        return map;
+    }
+
+    /**
+     * Constructs an LinkedHashMap.
+     */
+    public static final <k, v> LinkedHashMap<k, v> newLinkedHashMap(k key, v value) {
+        LinkedHashMap<k, v> map = newLinkedHashMap();
         map.put(key, value);
         return map;
     }
