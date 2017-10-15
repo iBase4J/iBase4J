@@ -9,11 +9,6 @@
 	<artifactId>iBase4J-Biz-Web</artifactId>
 	<packaging>war</packaging>
 
-	<properties>
-		<server.port>8090</server.port>
-		<moduleName>BizWeb</moduleName>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.ibase4j</groupId>

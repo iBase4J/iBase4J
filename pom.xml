@@ -27,6 +27,7 @@
 	<!-- clean package -P build -f pom-sys-web-server.xml -->
 
 	<properties>
+		<module.name>${project.artifactId}</module.name>
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
 		<sys.jdbc.config.path>classpath:config/jdbc.properties</sys.jdbc.config.path>
 		<system.config.path>classpath:config/system.properties</system.config.path>
@@ -307,8 +308,6 @@
 		<profile>
 			<id>product</id>
 			<properties>
-				<sys.jdbc.config.path>file:/home/config/iBase4J/jdbc-sys.properties</sys.jdbc.config.path>
-				<system.config.path>file:/home/config/iBase4J/system.properties</system.config.path>
 			</properties>
 		</profile>
 	</profiles>
@@ -327,8 +326,7 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
-					<include>*</include>
-					<include>*/*</include>
+					<include>**/**</include>
 				</includes>
 				<filtering>true</filtering>
 			</resource>
@@ -350,16 +348,11 @@
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jdeps-plugin</artifactId>
-					<version>3.0.0</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>jdkinternals</goal>
-								<goal>test-jdkinternals</goal>
-							</goals>
-						</execution>
-					</executions>
+					<artifactId>maven-resources-plugin</artifactId>
+					<configuration>
+						<encoding>UTF-8</encoding>
+						<useDefaultDelimiters>true</useDefaultDelimiters>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
