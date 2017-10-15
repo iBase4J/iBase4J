@@ -33,7 +33,7 @@ public class SysMenu extends BaseModel {
 
 	private Integer sortNo;
     @TableField("is_show")
-	private Boolean isShow;
+	private String isShow;
 
 	@TableField("permission_")
 	private String permission;
@@ -157,7 +157,7 @@ public class SysMenu extends BaseModel {
 	/**
 	 * @return the value of sys_menu.is_show
 	 */
-	public Boolean getIsShow() {
+	public String getIsShow() {
 		return isShow;
 	}
 
@@ -165,7 +165,7 @@ public class SysMenu extends BaseModel {
 	 * @param isShow
 	 *            the value for sys_menu.is_show
 	 */
-	public void setIsShow(Boolean isShow) {
+	public void setIsShow(String isShow) {
 		this.isShow = isShow;
 	}
 

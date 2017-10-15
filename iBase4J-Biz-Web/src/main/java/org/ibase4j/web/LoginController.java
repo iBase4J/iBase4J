@@ -4,27 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ibase4j.core.base.AbstractController;
+import org.ibase4j.model.TMember;
+import org.ibase4j.provider.IBizProvider;
+import org.ibase4j.core.Constants.MSGCHKTYPE;
 import org.ibase4j.core.base.Parameter;
 import org.ibase4j.core.config.Resources;
 import org.ibase4j.core.exception.LoginException;
 import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.support.HttpCode;
 import org.ibase4j.core.util.CacheUtil;
-import org.ibase4j.core.util.DateUtil;
-import org.ibase4j.core.util.SecurityUtil;
+import org.ibase4j.core.util.DataUtil;
+import org.ibase4j.core.util.InstanceUtil;
+import org.ibase4j.core.util.PropertiesUtil;
 import org.ibase4j.core.util.TokenUtil;
 import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.Login;
-import org.ibase4j.model.SysUser;
-import org.ibase4j.provider.ISysProvider;
+import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.baomidou.mybatisplus.plugins.Page;
@@ -39,96 +39,116 @@ import io.swagger.annotations.ApiOperation;
  * @version 2016年5月20日 下午3:11:21
  */
 @RestController
-@Api(value = "APP登录接口", description = "APP登录接口")
-public class LoginController extends AbstractController<ISysProvider> {
+@RequestMapping("/app/")
+@Api(value = "APP登录注册接口", description = "APP-登录注册接口")
+public class LoginController extends AppBaseController<IBizProvider> {
 
-	public String getService() {
-		return "sysUserService";
-	}
+    public String getService() {
+        return "memberService";
+    }
 
-	// 登录
-	@ApiOperation(value = "用户登录")
-	@PostMapping("app/login")
-	public Object login(Login user, ModelMap modelMap, HttpServletRequest request) {
-		String uuid = request.getHeader("UUID");
-		org.springframework.util.Assert.notNull(uuid, "非法操作.");
-		user = WebUtil.getParameter(request, Login.class);
-		Assert.notNull(user.getAccount(), "ACCOUNT");
-		Assert.notNull(user.getPassword(), "PASSWORD");
+    @PostMapping("login.api")
+    @ApiOperation(value = "APP会员登录", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Object login(Login user, HttpServletRequest request, HttpServletResponse response) {
+        String uuid = request.getHeader("UUID");
+        org.springframework.util.Assert.notNull(uuid, "非法操作.");
+        user = WebUtil.getParameter(request, Login.class);
+        Assert.notNull(user.getAccount(), "ACCOUNT");
+        Assert.notNull(user.getPassword(), "PASSWORD");
 
-		boolean success = false;
-		String password = (String) CacheUtil.getCache().get("LOGIN_" + user.getAccount());
-		if (StringUtils.isNotBlank(password)) {
-			if (user.getPassword().equals(password)) {
-				WebUtil.saveCurrentUser(request, user.getAccount());
-				success = true;
-			}
-		}
-		if (!success) {
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("countSql", 0);
-			params.put("enable", 1);
-			params.put("loginKey", user.getAccount()); // 登录帐号/手机号/邮箱
-			Parameter parameter = new Parameter(getService(), "query", params);
-			Page<?> pageInfo = provider.execute(parameter).getResultPage();
-			if (pageInfo.getTotal() == 1) {
-				SysUser sysUser = (SysUser) pageInfo.getRecords().get(0);
-				if (user.getPassword().equals(SecurityUtil.encryptPassword(user.getPassword()))) {
-					WebUtil.saveCurrentUser(sysUser.getPhone());
-					success = true;
-				}
-			}
-		}
+        String password = (String)CacheUtil.getCache().get(MSGCHKTYPE.LOGIN + user.getAccount());
+        if (user.getPassword().equals(password)) { // 检查验证码
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("countSql", 0);
+            params.put("enable", 1);
+            params.put("loginKey", user.getAccount()); // 登录帐号/手机号/邮箱
+            Parameter parameter = new Parameter(getService(), "query").setParam(params);
+            Page<?> pageInfo = provider.execute(parameter).getResultPage();
+            TMember member = null;
+            if (pageInfo.getTotal() == 1) {
+                member = (TMember)pageInfo.getRecords().get(0);
+                //String oldUuid = StringUtils.defaultIfBlank(member.getUuid(), "");
+                if (StringUtils.isNotBlank(member.getUuid())) {
+                    TokenUtil.delToken(member.getUuid());
+                }
+                member.setIsOnline(1);
+                member.setUuid(uuid);
+                parameter = new Parameter(getService(), "update").setParam(member);
+                provider.execute(parameter);
 
-		if (success) {
-			request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
-			TokenUtil.setTokenInfo(uuid, user.getAccount());
-			return setSuccessModelMap(modelMap);
-		}
-		request.setAttribute("msg", "[" + user.getAccount() + "]登录失败.");
-		throw new LoginException(Resources.getMessage("LOGIN_FAIL"));
-	}
+                try {
+                    /* RongCloud rongCloud = RongCloud.getInstance(getSysParam("APP-KEY"), getSysParam("APP-SECRET"));
+                     * Map<String, Object> extraMap = InstanceUtil.newHashMap();
+                     * extraMap.put("type", SYSTEMPUBLISH.LGN);
+                     * extraMap.put("memberId", member.getId());
+                     * extraMap.put("oldUuid", oldUuid);
+                     * extraMap.put("systemTime", DateUtil.getDateTime());
+                     * String extra = JSON.toJSONString(extraMap);
+                     * String msg = "帐号[" + user.getAccount() + "]在别的设备登录";
+                     * CodeSuccessResult messageResult = rongCloud.message.publishSystem(Constants.SYSTEM_ID,
+                     * new String[]{member.getId().toString()}, new TxtMessage(msg, extra), "登录通知", "登录通知", 0, 0);
+                     * logger.info("== " + messageResult.toString()); */
+                } catch (Exception e) {
+                    logger.error("", e);
+                }
+            } else {
+                TMember param = new TMember();
+                param.setPhone(user.getAccount());
+                param.setAvatar(PropertiesUtil.getString("ui.file.uri.prefix") + "extends/img/dftAvatar.png");
+                param.setIsOnline(1);
+                param.setUuid(uuid);
+                parameter = new Parameter(getService(), "update").setParam(param);
+                member = (TMember)provider.execute(parameter).getResult();
+            }
+            request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
+            ModelMap modelMap = new ModelMap();
+            String token = member.getToken();
+            modelMap.put("token", token);
+            TokenUtil.setTokenInfo(uuid, member.getId().toString());
+            Map<String, Object> result = InstanceUtil.newHashMap("token", token);
+            result.put("userInfo", member);
+            return setSuccessModelMap(modelMap, result);
+        }
+        request.setAttribute("msg", "[" + user.getAccount() + "]登录失败.");
+        throw new LoginException(Resources.getMessage("LOGIN_FAIL"));
+    }
 
-	// 登出
-	@ApiOperation(value = "用户登出")
-	@PostMapping("app/logout")
-	public Object logout(HttpServletRequest request, ModelMap modelMap) {
-		String uuid = request.getHeader("UUID");
-		if (StringUtils.isNotBlank(uuid)) {
-			TokenUtil.delToken(uuid);
-		}
-		return setSuccessModelMap(modelMap);
-	}
+    @PostMapping("logout.api")
+    @ApiOperation(value = "APP会员登出", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Object logout(HttpServletRequest request) {
+        String token = request.getHeader("UUID");
+        Assert.notNull(token, "ACCOUNT");
+        if (StringUtils.isNotBlank(token)) {
+            TokenUtil.delToken(token);
+        }
+        Long id = getCurrUser(request);
+        if (DataUtil.isNotEmpty(id)) {
+            TMember member = new TMember();
+            member.setId(getCurrUser(request));
+            member.setIsOnline(0);
+            Parameter parameter = new Parameter(getService(), "update").setParam(member);
+            provider.execute(parameter);
+        }
+        ModelMap modelMap = new ModelMap();
+        return setSuccessModelMap(modelMap);
+    }
 
-	// 注册
-	@ApiOperation(value = "用户注册")
-	@PostMapping("app/regin")
-	public Object regin(ModelMap modelMap, @RequestBody SysUser sysUser) {
-		Assert.notNull(sysUser.getAccount(), "ACCOUNT");
-		Assert.notNull(sysUser.getPassword(), "PASSWORD");
-		sysUser.setPassword(SecurityUtil.encryptPassword(sysUser.getPassword()));
-		provider.execute(new Parameter("sysUserService", "update", sysUser));
-		try {
-			String token = SecurityUtil.encryptPassword(sysUser.getAccount() + DateUtil.getDateTime("yyyyMMddHHmmss"));
-			TokenUtil.setTokenInfo(token, sysUser.getAccount());
-			modelMap.put("token", token);
-		} catch (Exception e) {
-			logger.error("", e);
-		}
-		throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
-	}
+    @PostMapping("chkAccount.api")
+    @ApiOperation(value = "检查手机号/帐号/邮箱是否存在", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Object chkAccount(Login user, HttpServletRequest request, HttpServletResponse response) {
+        user = WebUtil.getParameter(request, Login.class);
+        Assert.notNull(user.getAccount(), "ACCOUNT");
 
-	// 没有登录
-	@ApiOperation(value = "没有登录")
-	@RequestMapping(value = "/unauthorized", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
-	public Object unauthorized(ModelMap modelMap) throws Exception {
-		return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
-	}
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("countSql", 0);
+        params.put("loginKey", user.getAccount()); // 登录帐号/手机号/邮箱
+        Parameter parameter = new Parameter(getService(), "query").setParam(params);
+        Page<?> pageInfo = provider.execute(parameter).getResultPage();
 
-	// 没有权限
-	@ApiOperation(value = "没有权限")
-	@RequestMapping(value = "/forbidden", method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
-	public Object forbidden(ModelMap modelMap) {
-		return setModelMap(modelMap, HttpCode.FORBIDDEN);
-	}
+        ModelMap modelMap = new ModelMap();
+        if (pageInfo.getTotal() > 1) {
+            return setSuccessModelMap(modelMap, InstanceUtil.newHashMap("exists", 1));
+        }
+        return setSuccessModelMap(modelMap, InstanceUtil.newHashMap("exists", 0));
+    }
 }

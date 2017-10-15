@@ -68,7 +68,7 @@ public class SysMenuController extends AbstractController<ISysProvider> {
 	@RequiresPermissions("sys.base.menu.update")
 	public Object update(ModelMap modelMap, @RequestBody SysMenu param) {
 		if (param.getIsShow() == null) {
-			param.setIsShow(false);
+			param.setIsShow("0");
 		}
 		return super.update(modelMap, param);
 	}
