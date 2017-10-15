@@ -2,7 +2,8 @@ package org.ibase4j.core.util;
 
 import java.io.BufferedReader;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -224,14 +225,25 @@ public final class WebUtil {
 			ip = request.getRemoteAddr();
 		}
 		if ("127.0.0.1".equals(ip) || "0:0:0:0:0:0:0:1".equals(ip)) {
-			InetAddress inet = null;
-			try { // 根据网卡取本机配置的IP
-				inet = InetAddress.getLocalHost();
-			} catch (UnknownHostException e) {
-				logger.error(Constants.Exception_Head, e);
-			}
-			ip = inet.getHostAddress();
-		}
+            Enumeration<NetworkInterface> netInterfaces = null;
+            try {
+                netInterfaces = NetworkInterface.getNetworkInterfaces();
+                a: while (netInterfaces.hasMoreElements()) {
+                    NetworkInterface ni = netInterfaces.nextElement();
+                    logger.info("DisplayName:" + ni.getDisplayName());
+                    logger.info("Name:" + ni.getName());
+                    Enumeration<InetAddress> ips = ni.getInetAddresses();
+                    while (ips.hasMoreElements()) {
+                        ip = ips.nextElement().getHostAddress();
+                        if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+                            break a;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                logger.error(Constants.Exception_Head, e);
+            }
+        }
 		logger.debug("getRemoteAddr ip: " + ip);
 		return ip;
 	}
