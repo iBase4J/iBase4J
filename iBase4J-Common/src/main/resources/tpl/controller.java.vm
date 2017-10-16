@@ -2,8 +2,10 @@ package ${package.Controller};
 
 import java.util.Map;
 
+import ${package.Entity}.${entity};
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +31,11 @@ import ${providerClassPackage};
  * @author ${author}
  * @since ${date}
  */
+#if(${restControllerStyle})
+@RestController
+#else
 @Controller
+#end
 @RequestMapping("/${table.entityPath}")
 @Api(value = "${table.comment}接口", description = "${table.comment}接口")
 #if(${superControllerClass})
@@ -41,31 +47,39 @@ public class ${table.controllerName} {
 		return "${table.entityPath}Service";
 	}
 
-	@ApiOperation(value = "查询${table.comment}")
-	@RequiresPermissions(".read")
+	@RequiresPermissions("${table.entityPath}.read")
 	@PutMapping(value = "/read/list")
-	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+	@ApiOperation(value = "查询${table.comment}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Object query(HttpServletRequest request) {
+		Map<String, Object> param = WebUtil.getParameter(request);
+        ModelMap modelMap = new ModelMap();
 		return super.query(modelMap, param);
 	}
 
-	@ApiOperation(value = "${table.comment}详情")
-	@RequiresPermissions(".read")
+	@RequiresPermissions("${table.entityPath}.read")
 	@PutMapping(value = "/read/detail")
-	public Object get(ModelMap modelMap, @RequestBody ${entity} param) {
+	@ApiOperation(value = "${table.comment}详情", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Object get(HttpServletRequest request) {
+		${entity} param = WebUtil.getParameter(request, ${entity}.class);
+        ModelMap modelMap = new ModelMap();
 		return super.get(modelMap, param);
 	}
 
 	@PostMapping
-	@ApiOperation(value = "修改${table.comment}")
-	@RequiresPermissions(".update")
-	public Object update(ModelMap modelMap, @RequestBody ${entity} param) {
+	@RequiresPermissions("${table.entityPath}.update")
+	@ApiOperation(value = "修改${table.comment}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Object update(HttpServletRequest request) {
+		${entity} param = WebUtil.getParameter(request, ${entity}.class);
+        ModelMap modelMap = new ModelMap();
 		return super.update(modelMap, param);
 	}
 
 	@DeleteMapping
-	@ApiOperation(value = "删除${table.comment}")
-	@RequiresPermissions(".delete")
-	public Object delete(ModelMap modelMap, @RequestBody ${entity} param) {
+	@RequiresPermissions("${table.entityPath}.delete")
+	@ApiOperation(value = "删除${table.comment}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Object delete(HttpServletRequest request) {
+		${entity} param = WebUtil.getParameter(request, ${entity}.class);
+        ModelMap modelMap = new ModelMap();
 		return super.delete(modelMap, param);
 	}
 }
