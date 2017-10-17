@@ -52,6 +52,11 @@
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session</artifactId>
 		</dependency>
+		<!-- 切面 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
 		<!-- shiro -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
