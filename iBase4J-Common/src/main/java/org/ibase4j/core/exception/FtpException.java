@@ -21,7 +21,7 @@ public class FtpException extends BaseException {
         super(message, throwable);
     }
 
-    protected HttpCode getHttpCode() {
+    protected HttpCode getCode() {
         return HttpCode.INTERNAL_SERVER_ERROR;
     }
 }

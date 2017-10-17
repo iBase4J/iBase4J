@@ -30,14 +30,14 @@ public abstract class BaseException extends RuntimeException {
 	}
 
 	public void handler(ModelMap modelMap) {
-		modelMap.put("httpCode", getHttpCode().value());
+		modelMap.put("code", getCode().value());
 		if (StringUtils.isNotBlank(getMessage())) {
 			modelMap.put("msg", getMessage());
 		} else {
-			modelMap.put("msg", getHttpCode().msg());
+			modelMap.put("msg", getCode().msg());
 		}
 		modelMap.put("timestamp", System.currentTimeMillis());
 	}
 
-	protected abstract HttpCode getHttpCode();
+	protected abstract HttpCode getCode();
 }

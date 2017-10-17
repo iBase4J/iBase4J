@@ -20,7 +20,7 @@ public class InstanceException extends BaseException {
         super(t);
     }
 
-    protected HttpCode getHttpCode() {
+    protected HttpCode getCode() {
         return HttpCode.INTERNAL_SERVER_ERROR;
     }
 }

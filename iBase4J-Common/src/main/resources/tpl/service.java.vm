@@ -2,6 +2,7 @@ package ${package.Service};
 
 import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @since ${date}
  */
 @Service
+@CacheConfig(cacheNames = "${entity}")
 public class ${entity}Service extends ${superServiceClass}<${entity}> {
 	
 }

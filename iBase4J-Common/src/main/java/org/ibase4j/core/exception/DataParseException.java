@@ -24,7 +24,7 @@ public class DataParseException extends BaseException {
 		super(message, ex);
 	}
 
-	protected HttpCode getHttpCode() {
+	protected HttpCode getCode() {
 		return HttpCode.INTERNAL_SERVER_ERROR;
 	}
 

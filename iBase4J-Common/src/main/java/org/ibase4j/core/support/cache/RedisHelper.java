@@ -1,5 +1,10 @@
 package org.ibase4j.core.support.cache;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
@@ -9,28 +14,23 @@ import org.springframework.data.redis.core.RedisConnectionUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
 /**
  * Redis缓存辅助类
- *
+ * 
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:17:22
  */
 public final class RedisHelper implements CacheManager {
-    private RedisTemplate<Serializable, Serializable> redisTemplate;
     private RedisSerializer<String> keySerializer;
     private RedisSerializer<Object> valueSerializer;
+    private RedisTemplate<Serializable, Serializable> redisTemplate;
     private final Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
 
     @SuppressWarnings("unchecked")
     public void setRedisTemplate(RedisTemplate<Serializable, Serializable> redisTemplate) {
         this.redisTemplate = redisTemplate;
-        this.keySerializer = (RedisSerializer<String>) redisTemplate.getKeySerializer();
-        this.valueSerializer = (RedisSerializer<Object>) redisTemplate.getValueSerializer();
+        this.keySerializer = (RedisSerializer<String>)redisTemplate.getKeySerializer();
+        this.valueSerializer = (RedisSerializer<Object>)redisTemplate.getValueSerializer();
         CacheUtil.setCacheManager(this);
     }
 
@@ -78,7 +78,7 @@ public final class RedisHelper implements CacheManager {
 
     /**
      * 在某段时间后失效
-     *
+     * 
      * @return
      */
     public final Boolean expire(final String key, final int seconds) {
@@ -87,7 +87,7 @@ public final class RedisHelper implements CacheManager {
 
     /**
      * 在某个时间点失效
-     *
+     * 
      * @param key
      * @param unixTime
      * @return

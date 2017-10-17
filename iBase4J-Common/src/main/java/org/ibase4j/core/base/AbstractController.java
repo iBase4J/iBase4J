@@ -28,6 +28,9 @@ public abstract class AbstractController<T extends BaseProvider> extends BaseCon
     public abstract String getService();
 
     public Object query(ModelMap modelMap, Map<String, Object> param) {
+        if (param.get("keyword") == null && param.get("search") != null) {
+            param.put("keyword", param.get("search"));
+        }
         Parameter parameter = new Parameter(getService(), "query", param);
         logger.info("{} execute query start...", parameter.getNo());
         Page<?> list = provider.execute(parameter).getResultPage();

@@ -1,5 +1,7 @@
 package org.ibase4j.core.config;
 
+import java.io.Serializable;
+
 import org.ibase4j.core.support.cache.RedisHelper;
 import org.ibase4j.core.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,9 +13,8 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import redis.clients.jedis.JedisPoolConfig;
 
-import java.io.Serializable;
+import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 public class JedisConfig {

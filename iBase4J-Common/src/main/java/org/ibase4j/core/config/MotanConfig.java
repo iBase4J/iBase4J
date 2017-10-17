@@ -21,7 +21,7 @@ import com.weibo.api.motan.config.springsupport.RegistryConfigBean;
 @Configuration
 @Conditional(MotanConfig.EnableMotan.class)
 public class MotanConfig {
-	static class EnableMotan implements Condition {
+    public static class EnableMotan implements Condition {
 		public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
 			return "motan".equals(PropertiesUtil.getString("rpc.type"));
 		}

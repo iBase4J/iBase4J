@@ -6,11 +6,12 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 
 public class ServerListener implements ApplicationListener<ApplicationReadyEvent> {
-	protected final Logger logger = LogManager.getLogger(this.getClass());
+    protected final Logger logger = LogManager.getLogger(this.getClass());
 
-	public void onApplicationEvent(ApplicationReadyEvent event) {
-		logger.info("=================================");
-		logger.info("系统[{}]启动完成!!!", event.getSpringApplication().getSources().iterator().next());
-		logger.info("=================================");
-	}
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+        logger.info("=================================");
+        logger.info("系统[{}]启动完成!!!",
+            event.getSpringApplication().getSources().iterator().next().toString().substring(18));
+        logger.info("=================================");
+    }
 }

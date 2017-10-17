@@ -24,7 +24,7 @@ import com.alibaba.dubbo.config.spring.AnnotationBean;
 @Configuration
 @Conditional(DubboConfig.EnableDubbo.class)
 public class DubboConfig {
-    static class EnableDubbo implements Condition {
+    public static class EnableDubbo implements Condition {
         public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
             return "dubbo".equals(PropertiesUtil.getString("rpc.type"));
         }

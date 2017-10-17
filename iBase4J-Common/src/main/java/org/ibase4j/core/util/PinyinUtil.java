@@ -28,6 +28,9 @@ public final class PinyinUtil {
 	 * @return String
 	 */
 	public static final String getPinYin(String src) {
+	    if (src == null) {
+            return "";
+        }
 		char[] t1 = null;
 		t1 = src.toCharArray();
 		String[] t2 = new String[t1.length];

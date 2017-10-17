@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @SuppressWarnings("serial")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class BaseModel implements Serializable {
-	@TableId(value = "id_", type = IdType.ID_WORKER)
+	@TableId(value = "id_", type = IdType.AUTO)
 	private Long id;
 	@TableField("enable_")
 	private Integer enable;
