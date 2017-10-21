@@ -50,7 +50,7 @@ public class Generator {
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("buzhidao");
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/iBase4J_biz?characterEncoding=utf8");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/ibase4j_biz?characterEncoding=utf8");
         mpg.setDataSource(dsc);
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();

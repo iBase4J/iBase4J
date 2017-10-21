@@ -34,7 +34,7 @@ public class DubboConfig {
     public static AnnotationBean dubboAnnotation(ApplicationContext context) {
         AnnotationBean bean = new AnnotationBean();
         bean.setApplicationContext(context);
-        bean.setPackage("org.ibase4j");
+        bean.setPackage(PropertiesUtil.getString("rpc.package"));
         return bean;
     }
 

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
@@ -21,6 +23,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  * @version 2016年4月2日 下午4:17:22
  */
 public final class RedisHelper implements CacheManager {
+    protected static Logger logger = LogManager.getLogger();
     private RedisSerializer<String> keySerializer;
     private RedisSerializer<Object> valueSerializer;
     private RedisTemplate<Serializable, Serializable> redisTemplate;
@@ -120,6 +123,11 @@ public final class RedisHelper implements CacheManager {
         RedisConnection redisConnection = null;
         try {
             redisConnection = RedisConnectionUtils.getConnection(factory);
+            if (redisConnection == null) {
+                return redisTemplate.boundValueOps(key).setIfAbsent(value);
+            }
+            logger.info(keySerializer);
+            logger.info(valueSerializer);
             return redisConnection.setNX(keySerializer.serialize(key), valueSerializer.serialize(value));
         } finally {
             RedisConnectionUtils.releaseConnection(redisConnection, factory);
@@ -131,6 +139,9 @@ public final class RedisHelper implements CacheManager {
         RedisConnection redisConnection = null;
         try {
             redisConnection = RedisConnectionUtils.getConnection(factory);
+            if (redisConnection == null) {
+                return redisTemplate.boundValueOps(key).setIfAbsent("0");
+            }
             return redisConnection.setNX(keySerializer.serialize(key), valueSerializer.serialize("0"));
         } finally {
             RedisConnectionUtils.releaseConnection(redisConnection, factory);

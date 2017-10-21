@@ -30,7 +30,7 @@ public class MotanConfig {
 	@Bean
 	public static AnnotationBean motanAnnotation() {
 		AnnotationBean bean = new AnnotationBean();
-		bean.setPackage("org.ibase4j");
+		bean.setPackage(PropertiesUtil.getString("rpc.package"));
 		return bean;
 	}
 

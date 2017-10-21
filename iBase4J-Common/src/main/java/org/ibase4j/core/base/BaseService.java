@@ -30,8 +30,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 
 /**
- * 业务逻辑层基类<br/>
- * 继承基类后必须配置CacheConfig(cacheNames="")
+ * 业务逻辑层基类,继承基类后必须配置CacheConfig(cacheNames="")
  * 
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
@@ -47,7 +46,11 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
     int threadSleep = PropertiesUtil.getInt("db.reader.list.threadWait", 5);
     ExecutorService executorService = Executors.newFixedThreadPool(maxThread);
 
-    /** 分页查询 */
+    /**
+     * 分页查询
+     * @param params
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static Page<Long> getPage(Map<String, Object> params) {
         Integer current = 1;
@@ -92,6 +95,10 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         return page;
     }
 
+    /**
+     * @param id
+     * @param userId
+     */
     @Transactional
     public void del(Long id, Long userId) {
         try {
@@ -110,6 +117,9 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         }
     }
 
+    /**
+     * @param id
+     */
     @Transactional
     public void delete(Long id) {
         try {
@@ -124,18 +134,30 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         }
     }
 
+    /**
+     * @param t
+     * @return
+     */
     @Transactional
     public Integer deleteByEntity(T t) {
         Wrapper<T> wrapper = new EntityWrapper<T>(t);
         return mapper.delete(wrapper);
     }
 
+    /**
+     * @param columnMap
+     * @return
+     */
     @Transactional
     public Integer deleteByMap(Map<String, Object> columnMap) {
         return mapper.deleteByMap(columnMap);
     }
 
-    /** 根据Id查询(默认类型T) */
+    /**
+     * 根据Id查询(默认类型T)
+     * @param ids
+     * @return
+     */
     public List<T> getList(final List<Long> ids) {
         final List<T> list = InstanceUtil.newArrayList();
         if (ids != null) {
@@ -166,7 +188,12 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         return list;
     }
 
-    /** 根据Id查询(cls返回类型Class) */
+    /**
+     * 根据Id查询(cls返回类型Class)
+     * @param ids
+     * @param cls
+     * @return
+     */
     public <K> List<K> getList(final List<Long> ids, final Class<K> cls) {
         final List<K> list = InstanceUtil.newArrayList();
         if (ids != null) {
@@ -199,7 +226,11 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         return list;
     }
 
-    /** 根据Id查询(默认类型T) */
+    /**
+     * 根据Id查询(默认类型T)
+     * @param ids
+     * @return
+     */
     public Page<Map<String, Object>> getPageMap(final Page<Long> ids) {
         if (ids != null) {
             Page<Map<String, Object>> page = new Page<Map<String, Object>>(ids.getCurrent(), ids.getSize());
@@ -234,35 +265,62 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         return new Page<Map<String, Object>>();
     }
 
+    /**
+     * @param params
+     * @return
+     */
     public Page<T> query(Map<String, Object> params) {
         Page<Long> page = getPage(params);
         page.setRecords(mapper.selectIdPage(page, params));
         return getPage(page);
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @Transactional
     public T queryById(Long id) {
         return queryById(id, 1);
     }
 
+    /**
+     * @param params
+     * @return
+     */
     public List<T> queryList(Map<String, Object> params) {
         List<Long> ids = mapper.selectIdPage(params);
         List<T> list = getList(ids);
         return list;
     }
 
+    /**
+     * @param entity
+     * @return
+     */
     public List<T> selectList(Wrapper<T> entity) {
         return mapper.selectList(entity);
     }
 
+    /**
+     * @param entity
+     * @return
+     */
     public T selectOne(T entity) {
         return mapper.selectOne(entity);
     }
 
+    /* (non-Javadoc)
+     * @see org.springframework.context.ApplicationContextAware#setApplicationContext(org.springframework.context.
+     * ApplicationContext) */
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
+    /**
+     * @param record
+     * @return
+     */
     @SuppressWarnings("unchecked")
     @Transactional
     public T update(T record) {
@@ -278,7 +336,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
                 }
             } else {
                 String lockKey = getLockKey("U" + record.getId());
-                if (CacheUtil.getLock(lockKey)) {
+                if (CacheUtil.tryLock(lockKey)) {
                     try {
                         T org = null;
                         String key = getCacheKey(record.getId());
@@ -317,24 +375,40 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         return record;
     }
 
-    /** 获取缓存键值 */
+    /**
+     * 获取缓存键值
+     * @param id
+     * @return
+     */
     protected String getCacheKey(Object id) {
         String cacheName = getCacheKey();
         return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":").append(id).toString();
     }
 
-    /** 获取缓存键值 */
+    /**
+     * 获取缓存键值
+     * @param id
+     * @return
+     */
     protected String getLockKey(Object id) {
         String cacheName = getCacheKey();
         return new StringBuilder(Constants.CACHE_NAMESPACE).append(cacheName).append(":LOCK:").append(id).toString();
     }
 
+    /**
+     * @param params
+     * @param cls
+     * @return
+     */
     protected <P> Page<P> query(Map<String, Object> params, Class<P> cls) {
         Page<Long> page = getPage(params);
         page.setRecords(mapper.selectIdPage(page, params));
         return getPage(page, cls);
     }
 
+    /**
+     * @param millis
+     */
     protected void sleep(int millis) {
         try {
             Thread.sleep(RandomUtils.nextLong(10, millis));
@@ -444,7 +518,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
         }
         if (record == null) {
             String lockKey = getLockKey(id);
-            if (CacheUtil.getLock(lockKey)) {
+            if (CacheUtil.tryLock(lockKey)) {
                 try {
                     record = mapper.selectById(id);
                     try {

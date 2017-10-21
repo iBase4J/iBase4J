@@ -43,6 +43,9 @@ public final class EmailSender {
 
 	private Multipart mp; // Multipart对象,邮件内容,标题,附件等内容均添加到其中后再生成MimeMessage对象
 
+	/**
+	 * @param smtp
+	 */
 	public EmailSender(String smtp) {
 		try {
 			setSmtpHost(smtp);
@@ -92,7 +95,7 @@ public final class EmailSender {
 	}
 
 	/**
-	 * @param need boolean
+	 * 
 	 */
 	private void setNeedAuth() {
 		if (props == null)
@@ -163,8 +166,8 @@ public final class EmailSender {
 	/**
 	 * 设置附件
 	 * 
-	 * @param name String
-	 * @param pass String
+	 * @param filename
+	 * @return
 	 */
 	public boolean addFileAffix(String filename) {
 		logger.info(Resources.getMessage("EMAIL.ADD_ATTEND"), filename);
@@ -184,8 +187,8 @@ public final class EmailSender {
 	/**
 	 * 设置发信人
 	 * 
-	 * @param name String
-	 * @param pass String
+	 * @param from
+	 * @return
 	 */
 	public boolean setFrom(String from) {
 		if (from == null || from.trim().equals("")) {
@@ -207,8 +210,8 @@ public final class EmailSender {
 	/**
 	 * 设置收信人
 	 * 
-	 * @param name String
-	 * @param pass String
+	 * @param to
+	 * @return
 	 */
 	public boolean setTo(String to) {
 		if (to == null)
@@ -225,9 +228,8 @@ public final class EmailSender {
 
 	/**
 	 * 设置抄送人
-	 * 
-	 * @param name String
-	 * @param pass String
+	 * @param copyto
+	 * @return
 	 */
 	public boolean setCopyTo(String copyto) {
 		if (copyto == null)
@@ -243,9 +245,6 @@ public final class EmailSender {
 
 	/**
 	 * 发送邮件
-	 * 
-	 * @param name String
-	 * @param pass String
 	 */
 	public boolean sendout() {
 		try {

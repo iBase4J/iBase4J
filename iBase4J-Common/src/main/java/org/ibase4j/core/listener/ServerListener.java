@@ -10,8 +10,8 @@ public class ServerListener implements ApplicationListener<ApplicationReadyEvent
 
     public void onApplicationEvent(ApplicationReadyEvent event) {
         logger.info("=================================");
-        logger.info("系统[{}]启动完成!!!",
-            event.getSpringApplication().getSources().iterator().next().toString().substring(18));
+        String server = event.getSpringApplication().getSources().iterator().next().toString();
+        logger.info("系统[{}]启动完成!!!", server.substring(server.lastIndexOf(".") + 1));
         logger.info("=================================");
     }
 }
