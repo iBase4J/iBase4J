@@ -4,45 +4,51 @@ import java.io.Serializable;
 import java.util.Set;
 
 public interface CacheManager {
-	Object get(final String key);
+    Object get(final String key);
 
-	Set<Object> getAll(final String pattern);
+    Set<Object> getAll(final String pattern);
 
-	void set(final String key, final Serializable value, int seconds);
+    void set(final String key, final Serializable value, int seconds);
 
-	void set(final String key, final Serializable value);
+    void set(final String key, final Serializable value);
 
-	Boolean exists(final String key);
+    Boolean exists(final String key);
 
-	void del(final String key);
+    void del(final String key);
 
-	void delAll(final String pattern);
+    void delAll(final String pattern);
 
-	String type(final String key);
+    String type(final String key);
 
-	Boolean expire(final String key, final int seconds);
+    Boolean expire(final String key, final int seconds);
 
-	Boolean expireAt(final String key, final long unixTime);
+    Boolean expireAt(final String key, final long unixTime);
 
-	Long ttl(final String key);
+    Long ttl(final String key);
 
-	Object getSet(final String key, final Serializable value);
+    Object getSet(final String key, final Serializable value);
 
-	boolean lock(String key);
+    boolean lock(String key);
 
-	void unlock(String key);
+    void unlock(String key);
 
-	void hset(String key, Serializable field, Serializable value);
+    void hset(String key, Serializable field, Serializable value);
 
-	Object hget(String key, Serializable field);
+    Object hget(String key, Serializable field);
 
-	void hdel(String key, Serializable field);
+    void hdel(String key, Serializable field);
 
-	boolean setnx(String key, Serializable value);
+    boolean setnx(String key, Serializable value);
 
-	void sadd(String key, Serializable value);
+    Long incr(String key);
 
-	Set<?> sall(String key);
+    void setrange(String key, long offset, String value);
 
-	boolean sdel(String key, Serializable value);
+    String getrange(String key, long startOffset, long endOffset);
+
+    void sadd(String key, Serializable value);
+
+    Set<?> sall(String key);
+
+    boolean sdel(String key, Serializable value);
 }
