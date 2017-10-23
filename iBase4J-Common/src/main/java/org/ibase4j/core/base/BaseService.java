@@ -317,7 +317,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 				}
 			} else {
 				String lockKey = getLockKey("U" + record.getId());
-				if (CacheUtil.getLock(lockKey)) {
+				if (CacheUtil.tryLock(lockKey)) {
 					try {
 						T org = null;
 						String key = getCacheKey(record.getId());
@@ -379,7 +379,7 @@ public abstract class BaseService<T extends BaseModel> implements ApplicationCon
 		}
 		if (record == null) {
 			String lockKey = getLockKey(id);
-			if (CacheUtil.getLock(lockKey)) {
+			if (CacheUtil.tryLock(lockKey)) {
 				try {
 					record = mapper.selectById(id);
 					try {
