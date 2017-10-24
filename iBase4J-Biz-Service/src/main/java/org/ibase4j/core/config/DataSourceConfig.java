@@ -7,9 +7,6 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.ibase4j.core.support.dbcp.ChooseDataSource;
-import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.PropertiesUtil;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +18,10 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.wall.WallConfig;
 import com.alibaba.druid.wall.WallFilter;
+
+import top.ibase4j.core.support.dbcp.ChooseDataSource;
+import top.ibase4j.core.util.InstanceUtil;
+import top.ibase4j.core.util.PropertiesUtil;
 
 @Configuration
 public class DataSourceConfig {

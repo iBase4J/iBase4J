@@ -3,16 +3,6 @@ package org.ibase4j.web;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
-import org.ibase4j.core.Constants;
-import org.ibase4j.core.base.AbstractController;
-import org.ibase4j.core.base.Parameter;
-import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.exception.LoginException;
-import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.support.HttpCode;
-import org.ibase4j.core.support.login.LoginHelper;
-import org.ibase4j.core.util.SecurityUtil;
-import org.ibase4j.model.Login;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.provider.ISysProvider;
 import org.springframework.ui.ModelMap;
@@ -26,6 +16,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import springfox.documentation.annotations.ApiIgnore;
+import top.ibase4j.core.Constants;
+import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.config.Resources;
+import top.ibase4j.core.exception.LoginException;
+import top.ibase4j.core.support.Assert;
+import top.ibase4j.core.support.HttpCode;
+import top.ibase4j.core.support.login.LoginHelper;
+import top.ibase4j.core.util.SecurityUtil;
+import top.ibase4j.model.Login;
 
 /**
  * 用户登录

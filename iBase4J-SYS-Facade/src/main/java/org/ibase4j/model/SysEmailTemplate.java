@@ -2,10 +2,10 @@ package org.ibase4j.model;
 
 import java.io.Serializable;
 
-import org.ibase4j.core.base.BaseModel;
-
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+
+import top.ibase4j.core.base.BaseModel;
 
 /**
  * <p>

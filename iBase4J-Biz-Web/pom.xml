@@ -9,18 +9,11 @@
 	<artifactId>iBase4J-Biz-Web</artifactId>
 	<packaging>war</packaging>
 
+	<properties>
+		<jar.dic>${project.basedir}/../</jar.dic>
+	</properties>
+	
 	<dependencies>
-		<dependency>
-			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Common</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
 			<artifactId>iBase4J-SYS-Facade</artifactId>
@@ -51,11 +44,6 @@
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session</artifactId>
-		</dependency>
-		<!-- 切面 -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 		<!-- shiro -->
 		<dependency>
@@ -118,11 +106,11 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${springfox.version}</version>
 		</dependency>
-		<!--  -->
+		<!-- -->
 		<dependency>
-		    <groupId>cz.mallat.uasparser</groupId>
-		    <artifactId>uasparser</artifactId>
-		    <version>0.6.2</version>
+			<groupId>cz.mallat.uasparser</groupId>
+			<artifactId>uasparser</artifactId>
+			<version>0.6.2</version>
 		</dependency>
 	</dependencies>
 </project>

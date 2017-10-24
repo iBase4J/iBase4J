@@ -11,7 +11,5 @@
 
 	<motan:referer id="sysProvider" interface="org.ibase4j.provider.ISysProvider"
 		check="false" />
-	<motan:referer id="bizProvider" interface="org.ibase4j.provider.IBizProvider"
-		check="false" />
 
 </beans>

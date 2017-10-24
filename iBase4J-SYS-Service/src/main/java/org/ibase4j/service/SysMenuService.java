@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.stereotype.Service;
-import org.ibase4j.core.base.BaseModel;
-import org.ibase4j.core.base.BaseService;
-import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.mapper.SysMenuMapper;
 import org.ibase4j.model.SysDic;
 import org.ibase4j.model.SysMenu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.stereotype.Service;
+
+import top.ibase4j.core.base.BaseModel;
+import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.util.InstanceUtil;
 
 /**
  * @author ShenHuaJie

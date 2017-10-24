@@ -16,12 +16,13 @@
 	<properties>
 		<server.port>8088</server.port>
 		<moduleName>SysWeb</moduleName>
+		<jar.dic>${project.basedir}/../</jar.dic>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Common</artifactId>
+			<artifactId>iBase4J-Biz-Facade</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
@@ -49,11 +50,6 @@
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session</artifactId>
-		</dependency>
-		<!-- 切面 -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 		<!-- shiro -->
 		<dependency>

@@ -4,9 +4,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.ibase4j.core.support.scheduler.JobListener;
-import org.ibase4j.core.support.scheduler.SchedulerManager;
-import org.ibase4j.core.util.InstanceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +11,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+
+import top.ibase4j.core.support.scheduler.JobListener;
+import top.ibase4j.core.support.scheduler.SchedulerManager;
+import top.ibase4j.core.util.InstanceUtil;
 
 @Configuration
 public class SchedulerConfig {

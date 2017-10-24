@@ -1,12 +1,13 @@
 package org.ibase4j.core.config;
 
-import org.ibase4j.core.listener.SessionListener;
-import org.ibase4j.core.util.PropertiesUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration;
 import org.springframework.session.web.http.DefaultCookieSerializer;
+
+import top.ibase4j.core.listener.SessionListener;
+import top.ibase4j.core.util.PropertiesUtil;
 
 /**
  * 会话管理

@@ -10,7 +10,6 @@
 	<url>http://maven.apache.org</url>
 
 	<modules>
-		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-Service</module>
 		<module>iBase4J-SYS-Facade</module>
 		<module>iBase4J-SYS-Web</module>
@@ -21,13 +20,15 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.6.RELEASE</version>
+		<version>1.5.8.RELEASE</version>
 	</parent>
 	<!-- clean package -P build -f pom-sys-service-server.xml -->
 	<!-- clean package -P build -f pom-sys-web-server.xml -->
 
 	<properties>
 		<module.name>${project.artifactId}</module.name>
+		<jar.dic>${project.basedir}</jar.dic>
+		<other.jar>ali*.jar</other.jar>
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
 		<sys.jdbc.config.path>classpath:config/jdbc.properties</sys.jdbc.config.path>
 		<system.config.path>classpath:config/system.properties</system.config.path>
@@ -71,8 +72,27 @@
 		<springfox.version>2.6.1</springfox.version>
 		<swagger.version>1.5.13</swagger.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
+		<redis.host>127.0.0.1</redis.host>
+		<zookeeper.address>127.0.0.1:2181</zookeeper.address>
 	</properties>
 
+	<!-- @TODO -->
+	<profiles>
+		<profile>
+			<id>test</id>
+			<properties>
+				<redis.host>127.0.0.1</redis.host>
+				<zookeeper.address>127.0.0.1:2181</zookeeper.address>
+			</properties>
+		</profile>
+		<profile>
+			<id>product</id>
+			<properties>
+				<redis.host>127.0.0.1</redis.host>
+				<zookeeper.address>127.0.0.1:2181</zookeeper.address>
+			</properties>
+		</profile>
+	</profiles>
 	<repositories>
 		<repository>
 			<id>spring-milestones</id>
@@ -89,6 +109,18 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>top.ibase4j</groupId>
+			<artifactId>ibase4j-common</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.caucho</groupId>
+			<artifactId>hessian</artifactId>
+			<version>4.0.51</version>
+			<scope>system</scope>
+			<systemPath>${jar.dic}/libs/hessian-4.0.51.jar</systemPath>
 		</dependency>
 		<!-- -->
 		<dependency>
@@ -167,6 +199,16 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>${redisson.version}</version>
+		</dependency>
+		<!-- 切面 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 		<!-- alibaba工具包 -->
 		<dependency>
@@ -309,14 +351,6 @@
 		</dependency>
 	</dependencies>
 
-	<profiles>
-		<profile>
-			<id>product</id>
-			<properties>
-			</properties>
-		</profile>
-	</profiles>
-
 	<build>
 		<finalName>${project.name}</finalName>
 		<resources>
@@ -357,6 +391,22 @@
 					<configuration>
 						<encoding>UTF-8</encoding>
 						<useDefaultDelimiters>true</useDefaultDelimiters>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<configuration>
+						<encoding>UTF-8</encoding>
+						<webResources>
+							<resource>
+								<directory>${jar.dic}/libs</directory>
+								<targetPath>WEB-INF/lib</targetPath>
+								<excludes>
+									<exclude>${other.jar}</exclude>
+								</excludes>
+							</resource>
+						</webResources>
 					</configuration>
 				</plugin>
 			</plugins>

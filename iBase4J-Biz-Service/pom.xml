@@ -12,23 +12,13 @@
 	<properties>
 		<server.port>8086</server.port>
 		<moduleName>BizService</moduleName>
+		<jar.dic>${project.basedir}/../</jar.dic>
 	</properties>
 
 	<!-- 生成model -->
 	<!-- mybatis-generator:generate -->
 
 	<dependencies>
-		<dependency>
-			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Common</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
 			<artifactId>iBase4J-Biz-Facade</artifactId>
@@ -92,11 +82,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
-		</dependency>
-		<!-- 切面 -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 		<!-- 中文拼音 -->
 		<dependency>

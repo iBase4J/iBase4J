@@ -8,14 +8,15 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.ibase4j.core.shiro.Realm;
-import org.ibase4j.core.support.cache.shiro.RedisCacheManager;
-import org.ibase4j.core.util.InstanceUtil;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+
+import top.ibase4j.core.support.cache.shiro.RedisCacheManager;
+import top.ibase4j.core.util.InstanceUtil;
 
 /**
  * 权限拦截配置

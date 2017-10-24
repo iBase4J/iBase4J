@@ -2,7 +2,6 @@ package org.ibase4j.core.config;
 
 import javax.sql.DataSource;
 
-import org.ibase4j.core.util.PropertiesUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +12,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.baomidou.mybatisplus.entity.GlobalConfiguration;
 import com.baomidou.mybatisplus.mapper.AutoSqlInjector;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+
+import top.ibase4j.core.util.PropertiesUtil;
 
 @Configuration
 @MapperScan("org.ibase4j.mapper*")
