@@ -40,6 +40,7 @@
 	<!-- <import resource="spring/dubbo.xml" /> -->
 	<import resource="spring/motan.xml" />
 	<import resource="spring/redis.xml" />
+	<import resource="spring/redisson.xml" />
 	<import resource="spring/session.xml" />
 	<!-- 权限管理,作为APP服务端是不引用 -->
 	<import resource="spring/shiro.xml" />
