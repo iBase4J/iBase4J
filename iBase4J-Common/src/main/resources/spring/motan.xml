@@ -13,7 +13,7 @@
 
 	<!-- 协议配置。为防止多个业务配置冲突，推荐使用id表示具体协议。 -->
 	<motan:protocol id="motan" name="motan" default="true"
-		timeout="${rpc.request.timeout}" maxServerConnection="80000"
+		requestTimeout="${rpc.request.timeout}" maxServerConnection="80000"
 		maxContentLength="1048576" maxWorkerThread="${rpc.protocol.maxThread}"
 		minWorkerThread="${rpc.protocol.minThread}" />
 	<!-- 服务的默认配置 -->

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.ibase4j.core.support.cache.redisson.Client;
 import org.ibase4j.core.util.CacheUtil;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.core.util.PropertiesUtil;
@@ -23,8 +24,8 @@ public class RedissonHelper implements CacheManager {
     private RedissonClient redissonClient;
     private final Integer EXPIRE = PropertiesUtil.getInt("redis.expiration");
 
-    public void setRedissonClient(RedissonClient redissonClient) {
-        this.redissonClient = redissonClient;
+    public void setRedissonClient(Client client) {
+        this.redissonClient = client.getRedissonClient();
         CacheUtil.setLockManager(this);
     }
 

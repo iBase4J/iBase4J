@@ -16,19 +16,6 @@
 		<!-- <property name="masterAddress" value="${redis.master}" />
 		<property name="slaveAddresses" value="${redis.slave}" /> -->
 	</bean>
-	<bean class="org.ibase4j.core.support.cache.redisson.SpringCacheManager">
-		<property name="redisson" ref="redissonClient" />
-		<property name="patternConfig">
-			<map>
-				<entry key="iBase4J:M:*">
-					<bean class="org.redisson.spring.cache.CacheConfig">
-						<constructor-arg index="0" value="600000" />
-						<constructor-arg index="1" value="0" />
-					</bean>
-				</entry>
-			</map>
-		</property>
-	</bean>
 	<bean class="org.ibase4j.core.support.cache.RedissonHelper"
 		p:redisson-client-ref="redissonClient" />
 </beans>
