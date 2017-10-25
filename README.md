@@ -42,9 +42,9 @@ iBase4J的SpringBoot版本
     * 启动方法：
     	 	SysServiceApplication.java
     	 	SysWebApplication.java
-    * 打包命令：
-    	 clean package -P build -f pom-sys-service-server.xml
-    	 clean package -P build -f pom-sys-service-server.xml
+    * 测试环境打包命令：
+    	 clean package -P test -f pom-sys-service-server.xml
+    	 clean package -P test -f pom-sys-service-server.xml
     * 生产环境打包命令：
     	 clean package -P product -f pom-sys-service-server.xml
     	 clean package -P product -f pom-sys-service-server.xml
