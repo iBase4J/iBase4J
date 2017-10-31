@@ -47,7 +47,7 @@ angular.module('app')
                 url: '/logout'
             }).then(function(result){
                 var d = result.data;
-                if(d.httpCode==200){//注销成功
+                if(d.code==200){//注销成功
                     deleteUserInfo();
                     $state.go('access.login');
                 }
@@ -91,11 +91,11 @@ angular.module('app')
 			dataFilter: function(result) {
 				try {
 					result = JSON.parse(result);
-					if(result.httpCode == 401) {
+					if(result.code == 401) {
 						$state.go('access.login');
 			            return null;
-			        } else if(result.httpCode == 303) {
-			        } else if(result.httpCode == 200) {
+			        } else if(result.code == 303) {
+			        } else if(result.code == 200) {
 			        } else if(result) {
 	                    toaster.clear('*');
 	                    toaster.pop('error', '', result.msg);

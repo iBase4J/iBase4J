@@ -17,7 +17,7 @@ angular.module('app')
 				data: angular.toJson($scope.param)
 			}).then(function(result) {
 		        $scope.loading = false;
-				if (result.httpCode == 200) {
+				if (result.code == 200) {
 					$scope.pageInfo = result;
 				} else {
 					$scope.msg = result.msg;
@@ -41,7 +41,7 @@ angular.module('app')
 				url : enable==1? '/scheduled/open/task' : '/scheduled/close/task',
 				data: angular.toJson({'taskGroup': group, 'taskName': name})
 			}).then(function(result) {
-				if (result.httpCode == 200) {
+				if (result.code == 200) {
 					$scope.search();
 				} else {
 					$scope.msg = result.msg;
@@ -56,7 +56,7 @@ angular.module('app')
 				url : '/scheduled/run/task',
 				data: angular.toJson({'taskGroup': group, 'taskName': name})
 			}).then(function(result) {
-				if (result.httpCode == 200) {
+				if (result.code == 200) {
 					setTimeout(function(){
 						$scope.search();
 		            },300);
@@ -75,7 +75,7 @@ angular.module('app')
 				url : '/scheduled',
 				data: angular.toJson({'taskGroup': group, 'taskName': name})
 			}).then(function(result) {
-				if (result.httpCode == 200) {
+				if (result.code == 200) {
 					setTimeout(function(){
 						$scope.search();
 		            },300);
