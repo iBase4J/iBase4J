@@ -11,7 +11,7 @@ angular.module('app')
 				url : '/login',
 				data: angular.toJson($scope.user)
 			}).then(function(result) {
-				if (result.httpCode == 200) {
+				if (result.code == 200) {
 					$state.go('main.sys.user.list');
 				} else {
 					$scope.msg = result.msg;
