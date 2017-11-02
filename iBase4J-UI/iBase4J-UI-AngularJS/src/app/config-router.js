@@ -359,7 +359,7 @@ var app = angular.module('app')
     	$.ajax({
 			url : '/user/read/promission',
 			success : function(result) {
-				if (result.httpCode == 200) {
+				if (result.code == 200) {
 					$rootScope.userInfo = result.user;
 					$rootScope.menuList = result.menus;
 					$rootScope.$apply();

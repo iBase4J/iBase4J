@@ -17,7 +17,7 @@ angular.module('app')
 				data: angular.toJson($scope.param)
 			}).then(function(result) {
 		        $scope.loading = false;
-				if (result.httpCode == 200) {
+				if (result.code == 200) {
 					$scope.pageInfo = result;
 				} else {
 					$scope.msg = result.msg;
@@ -43,7 +43,7 @@ angular.module('app')
 					data: angular.toJson({'id': id})
 				}).then(function(result) {
 			        $scope.loading = false;
-					if (result.httpCode == 200) {
+					if (result.code == 200) {
 						$state.reload();
 					} else {
 						$scope.msg = result.msg;
