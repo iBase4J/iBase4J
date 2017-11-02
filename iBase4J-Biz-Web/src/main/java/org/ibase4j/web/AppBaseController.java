@@ -85,7 +85,7 @@ public abstract class AppBaseController<T extends BaseProvider> extends BaseCont
                 dataMap.put("totalCount", ((List<?>)data).size());
                 modelMap.put("rows", dataMap);
             } else {
-                modelMap.put("rows", data);
+                modelMap.put("data", data);
             }
         }
         modelMap.put("code", code.value());
