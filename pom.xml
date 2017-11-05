@@ -22,8 +22,6 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.8.RELEASE</version>
 	</parent>
-	<!-- clean package -P build -f pom-sys-service-server.xml -->
-	<!-- clean package -P build -f pom-sys-web-server.xml -->
 
 	<properties>
 		<module.name>${project.artifactId}</module.name>
@@ -35,7 +33,7 @@
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- spring版本号 -->
-		<spring.version>5.0.0.RELEASE</spring.version>
+		<spring.version>5.0.1.RELEASE</spring.version>
 		<spring-session.version>2.0.0.M2</spring-session.version>
 		<spring-data-redis.version>2.0.0.M4</spring-data-redis.version>
 		<!-- 数据库 -->
@@ -113,7 +111,7 @@
 		<dependency>
 			<groupId>top.ibase4j</groupId>
 			<artifactId>ibase4j-common</artifactId>
-			<version>1.1.3</version>
+			<version>1.1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.caucho</groupId>
