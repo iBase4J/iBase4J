@@ -20,7 +20,7 @@ import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 import top.ibase4j.core.util.PropertiesUtil;
 
 @Configuration
-@MapperScan("*.*.mapper*")
+@MapperScan(value = {"top.ibase4j.mapper*", "org.ibase4j.mapper*"})
 @EnableTransactionManagement(proxyTargetClass = true)
 public class MyBatisConfig {
 
