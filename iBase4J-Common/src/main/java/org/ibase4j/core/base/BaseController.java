@@ -86,12 +86,9 @@ public abstract class BaseController {
 				modelMap.put("size", page.getSize());
 				modelMap.put("pages", page.getPages());
 				modelMap.put("total", page.getTotal());
-				modelMap.put("iTotalRecords", page.getTotal());
-				modelMap.put("iTotalDisplayRecords", page.getTotal());
 			} else if (data instanceof List<?>) {
 				modelMap.put("rows", data);
-				modelMap.put("iTotalRecords", ((List<?>) data).size());
-				modelMap.put("iTotalDisplayRecords", ((List<?>) data).size());
+				modelMap.put("total", ((List<?>) data).size());
 			} else {
 				modelMap.put("data", data);
 			}

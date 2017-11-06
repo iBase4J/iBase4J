@@ -39,7 +39,7 @@ angular.module('app')
 		
 		// 翻页
         $scope.pagination = function (page) {
-            $scope.param.pageNum=page;
+            $scope.param.pageNumber=page;
             $scope.search();
         };
 } ]);
