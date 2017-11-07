@@ -2,9 +2,9 @@ package org.ibase4j;
 
 import java.util.Map;
 
-import org.apache.xbean.spring.context.ClassPathXmlApplicationContext;
 import org.ibase4j.core.util.InstanceUtil;
 import org.ibase4j.service.SysUserService;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.alibaba.fastjson.JSON;
 
