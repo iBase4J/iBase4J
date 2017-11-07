@@ -18,3 +18,7 @@ spring:
         cache: false
     session:
         store-type: none
+#上传文件大小设置
+multipart:
+  maxFileSize: 10Mb
+  maxRequestSize: 50Mb

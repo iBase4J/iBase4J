@@ -2,7 +2,10 @@ package org.ibase4j.core.config;
 
 import java.util.List;
 
+import javax.servlet.MultipartConfigElement;
+
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +13,6 @@ import org.springframework.core.Ordered;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -73,14 +75,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 
-	@Bean
-	public CommonsMultipartResolver multipartResolver() {
-		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-		resolver.setDefaultEncoding("UTF-8");
-		resolver.setMaxUploadSize(10485760000L);
-		resolver.setMaxInMemorySize(40960);
-		return resolver;
-	}
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        // 单个文件最大
+        factory.setMaxFileSize("10MB"); // KB,MB
+        /// 设置总上传数据总大小
+        factory.setMaxRequestSize("100MB");
+        return factory.createMultipartConfig();
+    }
 
 	@Bean
 	public EventInterceptor eventInterceptor() {

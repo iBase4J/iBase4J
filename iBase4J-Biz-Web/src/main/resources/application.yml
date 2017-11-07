@@ -16,3 +16,7 @@ spring:
         date-format: yyyy-MM-dd HH:mm:ss
     thymeleaf:
         cache: false
+#上传文件大小设置
+multipart:
+  maxFileSize: 10Mb
+  maxRequestSize: 50Mb
