@@ -53,7 +53,7 @@ public class SysUserController extends AbstractController<ISysProvider> {
         Assert.length(param.getAccount(), 3, 15, "ACCOUNT");
         if (param.getId() != null) {
             if (param.getEnable() == null) {
-                param.setEnable(1);
+                param.setEnable(0);
             }
             Parameter parameter = new Parameter(getService(), "queryById", param.getId());
             SysUser user = (SysUser)provider.execute(parameter).getResult();
