@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.mapper.TMemberMapper">
+
+	<select id="selectIdPage" resultType="java.lang.Long">
+		select id_ from t_member
+		<where>
+			<if test="cm.loginKey != null and cm.loginKey != ''">
+				and (user_name=#{cm.loginKey} or phone_=#{cm.loginKey} or email_=#{cm.loginKey})
+			</if>
+			<if test="cm.userName != null and cm.userName != ''">
+					and user_name=#{cm.userName}
+			</if>
+			<if test="cm.password != null and cm.password != ''">
+					and password_=#{cm.password}
+			</if>
+			<if test="cm.phone != null and cm.phone != ''">
+					and phone_=#{cm.phone}
+			</if>
+			<if test="cm.nickName != null and cm.nickName != ''">
+					and nick_name=#{cm.nickName}
+			</if>
+			<if test="cm.realName != null and cm.realName != ''">
+					and real_name=#{cm.realName}
+			</if>
+			<if test="cm.email != null and cm.email != ''">
+					and email_=#{cm.email}
+			</if>
+			<if test="cm.sex != null and cm.sex != ''">
+					and sex_=#{cm.sex}
+			</if>
+			<if test="cm.avatar != null and cm.avatar != ''">
+					and avatar_=#{cm.avatar}
+			</if>
+			<if test="cm.qrCode != null and cm.qrCode != ''">
+					and qr_code=#{cm.qrCode}
+			</if>
+			<if test="cm.personalSign != null and cm.personalSign != ''">
+					and personal_sign=#{cm.personalSign}
+			</if>
+			<if test="cm.idCard != null and cm.idCard != ''">
+					and id_card=#{cm.idCard}
+			</if>
+			<if test="cm.birthDay != null and cm.birthDay != ''">
+					and birth_day=#{cm.birthDay}
+			</if>
+			<if test="cm.weiXin != null and cm.weiXin != ''">
+					and wei_xin=#{cm.weiXin}
+			</if>
+			<if test="cm.weiBo != null and cm.weiBo != ''">
+					and wei_bo=#{cm.weiBo}
+			</if>
+			<if test="cm.qq != null and cm.qq != ''">
+					and qq_=#{cm.qq}
+			</if>
+			<if test="cm.isOnline != null and cm.isOnline != ''">
+					and is_online=#{cm.isOnline}
+			</if>
+			<if test="cm.locationCountry != null and cm.locationCountry != ''">
+					and location_country=#{cm.locationCountry}
+			</if>
+			<if test="cm.locationProvince != null and cm.locationProvince != ''">
+					and location_province=#{cm.locationProvince}
+			</if>
+			<if test="cm.locationCity != null and cm.locationCity != ''">
+					and location_city=#{cm.locationCity}
+			</if>
+			<if test="cm.locationArea != null and cm.locationArea != ''">
+					and location_area=#{cm.locationArea}
+			</if>
+			<if test="cm.creditScore != null and cm.creditScore != ''">
+					and credit_score=#{cm.creditScore}
+			</if>
+			<if test="cm.isRealName != null and cm.isRealName != ''">
+					and is_real_name=#{cm.isRealName}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (user_name like CONCAT('%',#{cm.keyword},'%')
+					or phone_ like CONCAT('%',#{cm.keyword},'%')
+					or nick_name like CONCAT('%',#{cm.keyword},'%')
+					or real_name like CONCAT('%',#{cm.keyword},'%')
+					or email_ like CONCAT('%',#{cm.keyword},'%')
+					or personal_sign like CONCAT('%',#{cm.keyword},'%')
+					or id_card like CONCAT('%',#{cm.keyword},'%')
+					or wei_xin like CONCAT('%',#{cm.keyword},'%')
+					or wei_bo like CONCAT('%',#{cm.keyword},'%')
+					or qq_ like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+	</select>
+</mapper>
