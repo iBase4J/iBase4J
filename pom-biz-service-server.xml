@@ -15,6 +15,7 @@
 	<modules>
 		<module>iBase4J-Biz-Facade</module>
 		<module>iBase4J-Biz-Service</module>
+		<module>iBase4J-SYS-Facade</module>
 	</modules>
 	<!-- clean package -P build tomcat7:run-war-only -f pom-biz-service-server.xml -->
 </project>
