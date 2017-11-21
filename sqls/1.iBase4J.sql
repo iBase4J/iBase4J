@@ -13,12 +13,14 @@
 
 
 -- 导出 ibase4j 的数据库结构
+DROP DATABASE IF EXISTS `ibase4j`;
 CREATE DATABASE IF NOT EXISTS `ibase4j` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `ibase4j`;
 
 -- 导出  表 ibase4j.sys_article 结构
+DROP TABLE IF EXISTS `sys_article`;
 CREATE TABLE IF NOT EXISTS `sys_article` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `type_` varchar(2) DEFAULT NULL COMMENT '类型',
   `author_` varchar(16) DEFAULT NULL COMMENT '作者',
   `title_` varchar(128) DEFAULT NULL COMMENT '标题',
@@ -41,8 +43,9 @@ CREATE TABLE IF NOT EXISTS `sys_article` (
 /*!40000 ALTER TABLE `sys_article` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_dept 结构
+DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE IF NOT EXISTS `sys_dept` (
-  `id_` bigint(20) NOT NULL COMMENT '部门编号',
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '部门编号',
   `unit_id` bigint(20) NOT NULL COMMENT '隶属单位',
   `dept_name` varchar(50) DEFAULT NULL COMMENT '部门名称',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '上级部门编号',
@@ -62,12 +65,13 @@ CREATE TABLE IF NOT EXISTS `sys_dept` (
 INSERT INTO `sys_dept` (`id_`, `unit_id`, `dept_name`, `parent_id`, `sort_no`, `leaf_`, `enable_`, `remark_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
 	(1, 1, 'iBase4J', 0, 1, 0, 1, 'qw', 1, '2016-06-28 18:04:06', 1, '2016-06-28 18:04:06'),
 	(2, 1, '市场部', 1, 1, 1, 1, 't', 0, '2016-06-28 18:04:06', 0, '2016-06-28 18:04:06'),
-	(825363166504628224, 1, '技术部', 1, 2, NULL, NULL, NULL, 1, '2017-01-28 23:21:28', 1, '2017-02-21 15:11:35');
+	(825363166504628224, 1, '技术部', 1, 2, NULL, NULL, '', 1, '2017-01-28 23:21:28', 1, '2017-05-29 08:15:29');
 /*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_dic 结构
+DROP TABLE IF EXISTS `sys_dic`;
 CREATE TABLE IF NOT EXISTS `sys_dic` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `type_` varchar(50) NOT NULL,
   `code_` varchar(50) DEFAULT NULL,
   `code_text` varchar(100) DEFAULT NULL,
@@ -121,8 +125,9 @@ INSERT INTO `sys_dic` (`id_`, `type_`, `code_`, `code_text`, `parent_type`, `par
 /*!40000 ALTER TABLE `sys_dic` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_email 结构
+DROP TABLE IF EXISTS `sys_email`;
 CREATE TABLE IF NOT EXISTS `sys_email` (
-  `id_` bigint(20) NOT NULL COMMENT '邮件编号',
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '邮件编号',
   `email_name` varchar(128) NOT NULL COMMENT '邮件名称',
   `sender_` varchar(32) NOT NULL COMMENT '使用发送',
   `email_title` varchar(256) NOT NULL COMMENT '发送标题',
@@ -143,8 +148,9 @@ INSERT INTO `sys_email` (`id_`, `email_name`, `sender_`, `email_title`, `email_c
 /*!40000 ALTER TABLE `sys_email` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_email_config 结构
+DROP TABLE IF EXISTS `sys_email_config`;
 CREATE TABLE IF NOT EXISTS `sys_email_config` (
-  `id_` bigint(20) NOT NULL COMMENT '邮件配置编号',
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '邮件配置编号',
   `smtp_host` varchar(32) NOT NULL COMMENT 'SMTP服务器',
   `smtp_port` varchar(8) NOT NULL COMMENT 'SMTP服务器端口',
   `send_method` varchar(16) NOT NULL COMMENT '发送方式',
@@ -167,8 +173,9 @@ INSERT INTO `sys_email_config` (`id_`, `smtp_host`, `smtp_port`, `send_method`, 
 /*!40000 ALTER TABLE `sys_email_config` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_email_template 结构
+DROP TABLE IF EXISTS `sys_email_template`;
 CREATE TABLE IF NOT EXISTS `sys_email_template` (
-  `id_` bigint(20) NOT NULL COMMENT '邮件模版编号',
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '邮件模版编号',
   `email_name` varchar(128) NOT NULL COMMENT '邮件名称',
   `email_account` varchar(32) DEFAULT NULL COMMENT '发送邮件帐号',
   `sort_` int(5) DEFAULT NULL COMMENT '排序号',
@@ -188,11 +195,12 @@ CREATE TABLE IF NOT EXISTS `sys_email_template` (
 /*!40000 ALTER TABLE `sys_email_template` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_event 结构
+DROP TABLE IF EXISTS `sys_event`;
 CREATE TABLE IF NOT EXISTS `sys_event` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `title_` varchar(50) DEFAULT NULL,
   `request_uri` varchar(50) DEFAULT NULL,
-  `parameters_` varchar(1024) DEFAULT NULL,
+  `parameters_` varchar(500) DEFAULT NULL,
   `method_` varchar(20) DEFAULT NULL,
   `client_host` varchar(50) DEFAULT NULL,
   `user_agent` varchar(300) DEFAULT NULL,
@@ -211,8 +219,9 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
 /*!40000 ALTER TABLE `sys_event` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_menu 结构
+DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE IF NOT EXISTS `sys_menu` (
-  `id_` bigint(20) NOT NULL COMMENT '菜单编号',
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
   `menu_name` varchar(50) DEFAULT NULL COMMENT '菜单名称',
   `menu_type` smallint(2) DEFAULT '2' COMMENT '菜单类型(0:CURD;1:系统菜单;2:业务菜单;)',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '上级菜单编号',
@@ -232,8 +241,9 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单';
 
 -- 导出  表 ibase4j.sys_msg 结构
+DROP TABLE IF EXISTS `sys_msg`;
 CREATE TABLE IF NOT EXISTS `sys_msg` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `biz_id` varchar(64) NOT NULL COMMENT '平台编号',
   `type_` varchar(32) NOT NULL COMMENT '类型',
   `phone_` varchar(20) NOT NULL COMMENT '接收短信号码',
@@ -253,8 +263,9 @@ CREATE TABLE IF NOT EXISTS `sys_msg` (
 /*!40000 ALTER TABLE `sys_msg` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_msg_config 结构
+DROP TABLE IF EXISTS `sys_msg_config`;
 CREATE TABLE IF NOT EXISTS `sys_msg_config` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `sms_plat_url` varchar(128) DEFAULT NULL COMMENT '短信平台地址',
   `sms_plat_account` varchar(32) DEFAULT NULL COMMENT '短信平台帐号',
   `sms_plat_password` varchar(64) DEFAULT NULL COMMENT '短信平台密码',
@@ -279,8 +290,9 @@ CREATE TABLE IF NOT EXISTS `sys_msg_config` (
 /*!40000 ALTER TABLE `sys_msg_config` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_news 结构
+DROP TABLE IF EXISTS `sys_news`;
 CREATE TABLE IF NOT EXISTS `sys_news` (
-  `id_` bigint(20) NOT NULL COMMENT '新闻编号',
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '新闻编号',
   `news_title` varchar(64) NOT NULL COMMENT '新闻标题',
   `news_type` varchar(8) NOT NULL COMMENT '新闻类型',
   `send_time` datetime NOT NULL COMMENT '发布时间',
@@ -305,8 +317,9 @@ CREATE TABLE IF NOT EXISTS `sys_news` (
 /*!40000 ALTER TABLE `sys_news` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_notice 结构
+DROP TABLE IF EXISTS `sys_notice`;
 CREATE TABLE IF NOT EXISTS `sys_notice` (
-  `id_` bigint(20) NOT NULL COMMENT '公告编号',
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '公告编号',
   `notice_title` varchar(128) NOT NULL COMMENT '公告标题',
   `notice_type` varchar(8) NOT NULL COMMENT '公告类型',
   `send_time` datetime DEFAULT NULL COMMENT '发布时间',
@@ -329,8 +342,9 @@ CREATE TABLE IF NOT EXISTS `sys_notice` (
 /*!40000 ALTER TABLE `sys_notice` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_param 结构
+DROP TABLE IF EXISTS `sys_param`;
 CREATE TABLE IF NOT EXISTS `sys_param` (
-  `id_` bigint(20) NOT NULL COMMENT '参数编号',
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '参数编号',
   `param_key` varchar(50) DEFAULT NULL COMMENT '参数键名',
   `param_value` varchar(100) DEFAULT NULL COMMENT '参数键值',
   `catalog_id` bigint(20) DEFAULT NULL,
@@ -343,13 +357,14 @@ CREATE TABLE IF NOT EXISTS `sys_param` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全局参数表';
 
--- 正在导出表  ibase4j.sys_param 的数据：~1 rows (大约)
+-- 正在导出表  ibase4j.sys_param 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_param` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_param` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_role 结构
+DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE IF NOT EXISTS `sys_role` (
-  `id_` bigint(20) NOT NULL COMMENT '角色编号',
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '角色编号',
   `role_name` varchar(50) DEFAULT NULL COMMENT '角色名称',
   `dept_id` bigint(20) DEFAULT NULL COMMENT '所属部门编号',
   `role_type` int(1) NOT NULL DEFAULT '1' COMMENT '角色类型(1:业务角色;2:管理角色 ;3:系统内置角色)',
@@ -369,8 +384,9 @@ INSERT INTO `sys_role` (`id_`, `role_name`, `dept_id`, `role_type`, `enable_`, `
 /*!40000 ALTER TABLE `sys_role` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_role_menu 结构
+DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE IF NOT EXISTS `sys_role_menu` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_id` bigint(20) NOT NULL,
   `menu_id` bigint(20) NOT NULL,
   `permission_` varchar(50) NOT NULL COMMENT '权限标识',
@@ -384,10 +400,10 @@ CREATE TABLE IF NOT EXISTS `sys_role_menu` (
   UNIQUE KEY `sys_role_menu_key1` (`role_id`,`menu_id`,`permission_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色授权表';
 
-
 -- 导出  表 ibase4j.sys_session 结构
+DROP TABLE IF EXISTS `sys_session`;
 CREATE TABLE IF NOT EXISTS `sys_session` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `session_id` varchar(50) DEFAULT NULL,
   `account_` varchar(50) DEFAULT NULL,
   `ip_` varchar(50) DEFAULT NULL,
@@ -406,8 +422,9 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
 /*!40000 ALTER TABLE `sys_session` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_unit 结构
+DROP TABLE IF EXISTS `sys_unit`;
 CREATE TABLE IF NOT EXISTS `sys_unit` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `unit_name` varchar(128) NOT NULL COMMENT '单位名称',
   `principal_` varchar(32) DEFAULT NULL COMMENT '负责人',
   `phone_` varchar(32) DEFAULT NULL COMMENT '联系电话',
@@ -422,15 +439,16 @@ CREATE TABLE IF NOT EXISTS `sys_unit` (
   PRIMARY KEY (`id_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='单位表';
 
--- 正在导出表  ibase4j.sys_unit 的数据：~1 rows (大约)
+-- 正在导出表  ibase4j.sys_unit 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_unit` DISABLE KEYS */;
 INSERT INTO `sys_unit` (`id_`, `unit_name`, `principal_`, `phone_`, `address_`, `sort_`, `enable_`, `remark_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, 'iBase4J', '经理', '13945678911', '中国', 1, NULL, NULL, '2017-01-12 00:00:00', 1, '2017-01-28 23:51:57', 1);
+	(1, 'iBase4J', '经理', '13945678911', '中国', 1, NULL, '', '2017-01-12 00:00:00', 1, '2017-09-19 11:30:17', 1);
 /*!40000 ALTER TABLE `sys_unit` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_user 结构
+DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE IF NOT EXISTS `sys_user` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `account_` varchar(20) DEFAULT NULL COMMENT '登陆帐户',
   `password_` varchar(50) DEFAULT NULL COMMENT '密码',
   `user_type` varchar(2) DEFAULT '1' COMMENT '用户类型(1普通用户2管理员3系统用户)',
@@ -462,13 +480,14 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
 -- 正在导出表  ibase4j.sys_user 的数据：~2 rows (大约)
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
 INSERT INTO `sys_user` (`id_`, `account_`, `password_`, `user_type`, `user_name`, `name_pinyin`, `sex_`, `avatar_`, `phone_`, `email_`, `id_card`, `wei_xin`, `wei_bo`, `qq_`, `birth_day`, `dept_id`, `position_`, `address_`, `staff_no`, `enable_`, `remark_`, `create_time`, `create_by`, `update_time`, `update_by`) VALUES
-	(1, 'admin', 'i/sV2VpTPy7Y+ppesmkCmM==', '3', '管理员', 'GUANLIYUAN', 0, 'a.png', '15333821711', '12@12', NULL, NULL, NULL, NULL, '2017-01-27', 2, '213', NULL, NULL, 1, '1', '2016-05-06 10:06:52', 1, '2017-03-18 18:03:55', 1),
-	(2, 'test', 'i/sV2VpTPy7Y+ppesmkCmM==', '1', 'admin', 'CESHIRENYUAN', 1, 'a.png', '12345678901', '123@163.com', NULL, NULL, NULL, NULL, '2017-02-01', 825363166504628224, '测试', NULL, NULL, 1, '1', '2016-05-13 16:58:17', 1, '2017-04-19 16:26:49', 2);
+	(1, 'admin', 'i/sV2VpTPy7Y+ppesmkCmM==', '3', '管理员', 'GUANLIYUAN', 0, 'http://118.190.43.148/group1/M00/00/00/dr4rlFjNBguAfJl7AAcOE67NTFk744.png', '15333821711', '12@12', NULL, NULL, NULL, NULL, '2017-01-27', 2, '213', NULL, NULL, 1, '1', '2016-05-06 10:06:52', 1, '2017-03-18 18:03:55', 1),
+	(2, 'test', 'i/sV2VpTPy7Y+ppesmkCmM==', '1', 'admin', 'CESHIRENYUAN', 1, 'http://118.190.43.148/group1/M00/00/00/dr4rlFj3H0iATcqFAAv7S9z_iMg689.png', '12345678901', '123@163.com', NULL, NULL, NULL, NULL, '2017-02-01', 825363166504628224, '测试', '', NULL, 1, '1', '2016-05-13 16:58:17', 1, '2017-05-29 08:31:38', 1);
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_user_menu 结构
+DROP TABLE IF EXISTS `sys_user_menu`;
 CREATE TABLE IF NOT EXISTS `sys_user_menu` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `menu_id` bigint(20) NOT NULL,
   `permission_` varchar(50) NOT NULL COMMENT '权限标识',
@@ -484,11 +503,14 @@ CREATE TABLE IF NOT EXISTS `sys_user_menu` (
 
 -- 正在导出表  ibase4j.sys_user_menu 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_user_menu` DISABLE KEYS */;
+INSERT INTO `sys_user_menu` (`id_`, `user_id`, `menu_id`, `permission_`, `enable_`, `remark_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
+	(1, 1, 1, 'read', 1, NULL, 0, '2017-08-28 16:24:01', 0, '2017-08-28 16:24:01');
 /*!40000 ALTER TABLE `sys_user_menu` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_user_role 结构
+DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE IF NOT EXISTS `sys_user_role` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `role_id` bigint(20) NOT NULL,
   `enable_` tinyint(1) NOT NULL DEFAULT '1',
@@ -508,8 +530,9 @@ INSERT INTO `sys_user_role` (`id_`, `user_id`, `role_id`, `enable_`, `remark_`, 
 /*!40000 ALTER TABLE `sys_user_role` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.sys_user_thirdparty 结构
+DROP TABLE IF EXISTS `sys_user_thirdparty`;
 CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `provider_` varchar(50) NOT NULL COMMENT '第三方类型',
   `open_id` varchar(50) NOT NULL COMMENT '第三方Id',
@@ -528,8 +551,9 @@ CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
 /*!40000 ALTER TABLE `sys_user_thirdparty` ENABLE KEYS */;
 
 -- 导出  表 ibase4j.task_fire_log 结构
+DROP TABLE IF EXISTS `task_fire_log`;
 CREATE TABLE IF NOT EXISTS `task_fire_log` (
-  `id_` bigint(20) NOT NULL,
+  `id_` bigint(20) NOT NULL AUTO_INCREMENT,
   `group_name` varchar(50) NOT NULL,
   `task_name` varchar(50) NOT NULL,
   `start_time` datetime NOT NULL,
