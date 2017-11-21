@@ -2,6 +2,7 @@
 INSERT INTO `sys_menu` (`id_`, `menu_name`, `menu_type`, `parent_id`, `iconcls_`, `request_`, `expand_`, `sort_no`, `is_show`, `permission_`, `remark_`, `enable_`, `create_by`, `create_time`, `update_by`, `update_time`) VALUES
 	(1, '系统管理', 1, 0, 'glyphicon glyphicon-cog', '#', 0, 1, 1, 'sys', NULL, 1, 1, '2016-06-20 09:16:56', 1, '2016-06-29 08:19:19'),
 	(2, '用户管理', 1, 1, 'glyphicon glyphicon-user', 'main.sys.user.list', 0, 1, 1, 'sys.base.user', NULL, 1, 1, '2016-06-20 09:16:56', 1, '2016-06-29 08:38:35'),
+	(18, '单位管理', 1, 1, 'glyphicon glyphicon-flag', 'main.sys.unit.list', 0, 2, 1, 'sys.base.unit', NULL, 1, 1, '2016-06-20 09:16:56', 1, '2016-06-28 18:07:43'),
 	(3, '部门管理', 1, 1, 'glyphicon glyphicon-flag', 'main.sys.dept.list', 0, 2, 1, 'sys.base.dept', NULL, 1, 1, '2016-06-20 09:16:56', 1, '2016-06-28 18:07:43'),
 	(4, '菜单管理', 1, 1, 'glyphicon glyphicon-list', 'main.sys.menu.list', 0, 3, 1, 'sys.base.menu', NULL, 1, 1, '2016-06-20 09:16:56', 1, '2016-06-28 18:07:45'),
 	(5, '角色管理', 1, 1, 'glyphicon glyphicon-tags', 'main.sys.role.list', 0, 4, 1, 'sys.base.role', NULL, 1, 1, '2016-06-20 09:16:56', 1, '2016-06-28 18:07:47'),
@@ -57,4 +58,5 @@ INSERT INTO `sys_role_menu` (`id_`, `role_id`, `menu_id`, `permission_`, `enable
 	(37, '1', '14', 'update', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:43:18'),
 	(38, '1', '15', 'update', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:43:33'),
 	(39, '1', '16', 'update', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:43:34'),
-	(40, '1', '17', 'update', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:43:35');
+	(40, '1', '17', 'update', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:43:35'),
+	(41, '1', '18', 'read', 1, NULL, '1', '2016-06-28 18:18:50', '1', '2016-06-29 08:23:13');
