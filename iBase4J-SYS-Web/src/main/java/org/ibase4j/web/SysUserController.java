@@ -129,7 +129,7 @@ public class SysUserController extends AbstractController<ISysProvider> {
     }
 
     @ApiOperation(value = "修改用户头像")
-    @PostMapping(value = "/update/avatar")
+    @PostMapping(value = "/upload/avatar")
     public Object updateAvatar(HttpServletRequest request, ModelMap modelMap) {
         List<String> fileNames = UploadUtil.uploadImageData(request);
         if (fileNames.size() > 0) {
