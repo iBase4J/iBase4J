@@ -120,11 +120,11 @@ public final class HttpUtil {
 			conn.connect();
 
 			out = conn.getOutputStream();
-			out.write(data.getBytes(Charsets.UTF_8));
+			out.write(data.getBytes(Charsets.toCharset("UTF-8")));
 			out.flush();
 
 			inputStream = conn.getInputStream();
-			reader = new BufferedReader(new InputStreamReader(inputStream, Charsets.UTF_8));
+			reader = new BufferedReader(new InputStreamReader(inputStream, Charsets.toCharset("UTF-8")));
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			while ((line = reader.readLine()) != null) {

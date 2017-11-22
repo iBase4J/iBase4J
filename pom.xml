@@ -47,13 +47,13 @@
 		<dubbo.version>2.5.3</dubbo.version>
 		<fastjson.version>1.2.33</fastjson.version>
 		<!-- -->
+		<redisson.version>3.5.0</redisson.version>
 		<poi.version>3.9</poi.version>
 		<jxl.version>2.6.12</jxl.version>
 		<xfire.version>1.2.6</xfire.version>
 		<jsch.version>0.1.53</jsch.version>
 		<jedis.version>2.9.0</jedis.version>
 		<zxing.version>3.3.0</zxing.version>
-		<redisson.version>3.3.1</redisson.version>
 		<jackson.version>2.8.6</jackson.version>
 		<shiro.version>1.2.4</shiro.version>
 		<quartz.version>2.2.3</quartz.version>

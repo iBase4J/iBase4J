@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
 	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
@@ -10,10 +11,11 @@
         <property name="maxInactiveIntervalInSeconds" value="${session.maxInactiveInterval}" />
         <property name="redisNamespace" value="${session.redis.namespace}" />
 	</bean>
+	<bean id="sessionListener" class="org.ibase4j.core.listener.SessionListener" />
 	<bean class="org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration">
 		<property name="httpSessionListeners">
 			<list>
-				<bean class="org.ibase4j.core.listener.SessionListener" />
+				<ref bean="sessionListener"/>
 			</list>
 		</property>
 	</bean>

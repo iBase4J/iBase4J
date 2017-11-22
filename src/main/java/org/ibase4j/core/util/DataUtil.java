@@ -68,10 +68,13 @@ public final class DataUtil {
 	 * 那么使用本方法Path.getFullPathRelateClass("../../resource/test.txt",Test.class)
 	 * 得到的结果是txt文件的在系统中的绝对路径。
 	 * 
-	 * @param relatedPath 相对路径
-	 * @param cls 用来定位的类
+	 * @param relatedPath
+	 *            相对路径
+	 * @param cls
+	 *            用来定位的类
 	 * @return 相对路径所对应的绝对路径
-	 * @throws IOException 因为本方法将查询文件系统，所以可能抛出IO异常
+	 * @throws IOException
+	 *             因为本方法将查询文件系统，所以可能抛出IO异常
 	 */
 	public static final String getFullPathRelateClass(String relatedPath, Class<?> cls) {
 		String path = null;
@@ -129,13 +132,12 @@ public final class DataUtil {
 	 * 判断对象是否Empty(null或元素为0)<br>
 	 * 实用于对如下对象做判断:String Collection及其子类 Map及其子类
 	 * 
-	 * @param pObj 待检查对象
+	 * @param pObj
+	 *            待检查对象
 	 * @return boolean 返回的布尔值
 	 */
 	public static final boolean isEmpty(Object pObj) {
-		if (pObj == null)
-			return true;
-		if (pObj == "")
+		if (pObj == null || "".equals(pObj))
 			return true;
 		if (pObj instanceof String) {
 			if (((String) pObj).trim().length() == 0) {
@@ -157,13 +159,12 @@ public final class DataUtil {
 	 * 判断对象是否为NotEmpty(!null或元素>0)<br>
 	 * 实用于对如下对象做判断:String Collection及其子类 Map及其子类
 	 * 
-	 * @param pObj 待检查对象
+	 * @param pObj
+	 *            待检查对象
 	 * @return boolean 返回的布尔值
 	 */
 	public static final boolean isNotEmpty(Object pObj) {
-		if (pObj == null)
-			return false;
-		if (pObj == "")
+		if (pObj == null || "".equals(pObj))
 			return false;
 		if (pObj instanceof String) {
 			if (((String) pObj).trim().length() == 0) {
