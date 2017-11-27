@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="off">
+<configuration status="WARN"  monitorInterval="30">
 	<properties>
 		<property name="LOG_HOME">/output/logs</property>
 		<!-- 日志备份目录 -->
@@ -63,14 +63,18 @@
 		<logger name="com.weibo.api.motan" level="INFO" />
 		<logger name="org.apache.zookeeper" level="WARN" />
 		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
+		<Logger  name="top.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
+			<AppenderRef ref="Console" />
+            <AppenderRef ref="ProductLog" />
+        </Logger >
 		<Logger  name="org.ibase4j" level="${OUTPUT_LOG_LEVEL}" additivity="false" includeLocation="true">  
-			<appender-ref ref="Console" />
-            <appender-ref ref="ProductLog" />
+			<AppenderRef ref="Console" />
+            <AppenderRef ref="ProductLog" />
         </Logger >
 		<Root  level="DEBUG">
-			<appender-ref ref="Console" />
-			<appender-ref ref="RollingFile" />
-			<appender-ref ref="RollingFileError" />
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+			<AppenderRef ref="RollingFileError" />
 		</Root >
 	</loggers>
 </configuration>
