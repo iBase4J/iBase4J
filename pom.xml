@@ -385,10 +385,10 @@
 							<version>2.2</version>
 							<executions>
 								<execution>
-									<id>run-war-only</id>
+									<id>run-war</id>
 									<phase>pre-integration-test</phase>
 									<goals>
-										<goal>run-war-only</goal>
+										<goal>run-war</goal>
 									</goals>
 								</execution>
 							</executions>
