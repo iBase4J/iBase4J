@@ -3,8 +3,8 @@ package org.ibase4j.web.sys;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.model.sys.SysEmail;
+import org.ibase4j.model.SysEmail;
+import org.ibase4j.web.AbstractController;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "邮件管理", description = "邮件管理")
 @RequestMapping(value = "email")
-public class SysEmailController extends BaseController<SysEmail> {
+public class SysEmailController extends AbstractController<SysEmail> {
 
 	@ApiOperation(value = "查询邮件")
 	@RequiresPermissions("sys.email.list.read")

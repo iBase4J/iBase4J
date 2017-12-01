@@ -3,11 +3,9 @@ package org.ibase4j.web.sys;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.util.DataUtil;
-import org.ibase4j.core.util.SecurityUtil;
-import org.ibase4j.model.sys.SysEmailConfig;
-import org.ibase4j.service.sys.SysEmailConfigService;
+import org.ibase4j.model.SysEmailConfig;
+import org.ibase4j.service.SysEmailConfigService;
+import org.ibase4j.web.AbstractController;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.util.DataUtil;
+import top.ibase4j.core.util.SecurityUtil;
 
 /**
  * 邮件配置管理控制类
@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "邮件配置管理", description = "邮件配置管理")
 @RequestMapping(value = "emailConfig")
-public class SysEmailConfigController extends BaseController<SysEmailConfig> {
+public class SysEmailConfigController extends AbstractController<SysEmailConfig> {
 
 	@ApiOperation(value = "查询邮件配置")
 	@RequiresPermissions("sys.email.config.read")

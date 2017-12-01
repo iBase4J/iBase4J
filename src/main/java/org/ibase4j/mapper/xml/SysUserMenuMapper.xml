@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.mapper.SysUserMenuMapper">
+  <select id="queryMenuIdsByUserId" resultType="java.lang.Long">
+  	select distinct menu_id from sys_user_menu where user_id=#{userId} and permission_='read'
+  </select>
+  <select id="queryPermissions" resultType="java.util.Map">
+  	select menu_id menuId,permission_ permission
+  	from sys_user_menu
+	where user_id=#{userId}
+  </select>
+  <select id="queryPermission" resultType="java.lang.String">
+		select CONCAT(menu_name,'(', GROUP_CONCAT(code_text), ')')
+		from
+		sys_user_menu rm
+		join sys_menu m on rm.menu_id=m.id_
+		join sys_dic d on rm.permission_=d.code_ and d.type_='CRUD'
+		<where>
+			<if test="userId != null">
+				rm.user_id=#{userId}
+			</if>
+		</where>
+		group by menu_name
+		order by menu_id
+	</select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.mapper.SysArticleMapper">
+	<select id="selectIdPage" resultType="java.lang.Long">
+		select id_ from sys_article
+		<where>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (
+					type_ like CONCAT('%',#{cm.keyword},'%')
+					or author_ like CONCAT('%',#{cm.keyword},'%')
+					or title_ like CONCAT('%',#{cm.keyword},'%')
+					or content_ like CONCAT('%',#{cm.keyword},'%')
+					or out_url like CONCAT('%',#{cm.keyword},'%')
+					or seo_keyword like CONCAT('%',#{cm.keyword},'%')
+					or seo_description like CONCAT('%',#{cm.keyword},'%')
+					or is_top like CONCAT('%',#{cm.keyword},'%')
+				)
+			</if>
+		</where>
+	</select>
+</mapper>

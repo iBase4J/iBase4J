@@ -3,8 +3,8 @@ package org.ibase4j.web.sys;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.model.sys.SysParam;
+import org.ibase4j.model.SysParam;
+import org.ibase4j.web.AbstractController;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "系统参数管理", description = "系统参数管理")
 @RequestMapping(value = "param")
-public class SysParamController extends BaseController<SysParam> {
+public class SysParamController extends AbstractController<SysParam> {
 
 	@PutMapping(value = "/read/list")
 	@ApiOperation(value = "查询系统参数")

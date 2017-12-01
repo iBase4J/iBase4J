@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.mapper.SysUnitMapper">
+  <select id="selectIdPage" resultType="java.lang.Long">
+		select id_ from sys_unit
+		<where>
+			<if test="cm.parentId != null and cm.parentId != ''">
+				and parent_id = #{cm.parentId}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (unit_name like CONCAT('%',#{cm.keyword},'%'))
+			</if>
+		</where>
+	</select>
+</mapper>

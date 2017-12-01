@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.mapper.SysDicMapper">
+	<select id="selectIdPage" resultType="java.lang.Long">
+		select id_ from sys_dic
+		<where>
+			<if test="cm.type != null and cm.type != ''">
+			and type_=#{cm.type}
+			</if>
+			<if test="cm.parentType != null and cm.parentType != ''">
+			and parent_type=#{cm.parentType}
+			</if>
+			<if test="cm.parentCode != null and cm.parentCode != ''">
+			and parent_code=#{cm.parentCode}
+			</if>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				and (type_ like #{cm.keyword}"%" OR code_ like #{cm.keyword}"%")
+			</if>
+		</where>
+	</select>
+</mapper>

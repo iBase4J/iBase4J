@@ -9,17 +9,7 @@
 	<packaging>war</packaging>
 	<url>http://maven.apache.org</url>
 
-	<profiles>
-		<profile>
-			<id>product</id>
-			<properties>
-				<jdbc.config.path>file:/home/config/iBase4J/jdbc-sys.properties</jdbc.config.path>
-				<system.config.path>file:/home/config/iBase4J/system.properties</system.config.path>
-			</properties>
-		</profile>
-	</profiles>
-	
-	<!-- maven运行方式：tomcat:run 或 jetty:run -->
+	<!-- maven运行方式：tomcat7:run 或 jetty:run -->
 
 	<properties>
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
@@ -27,6 +17,7 @@
 		<system.config.path>classpath:config/system.properties</system.config.path>
 		<!-- -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<ibase4j.version>1.2.8</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.0.M5</spring.version>
 		<spring-session.version>2.0.0.M2</spring-session.version>
@@ -63,7 +54,31 @@
 		<jsqlparser.version>0.9.5</jsqlparser.version>
 		<springfox.version>2.6.1</springfox.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
+		<!-- 配置 -->
+		<redis.host>127.0.0.1</redis.host>
+		<redis.password></redis.password>
+		<zookeeper.address>127.0.0.1:2181</zookeeper.address>
+		<fastDFS.host>42.51.33.240</fastDFS.host>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>test</id>
+			<properties>
+				<redis.password>heiheiche@2017</redis.password>
+				<redis.host>42.51.33.240</redis.host>
+				<zookeeper.address>42.51.39.214:2181</zookeeper.address>
+				<fastDFS.host>42.51.33.240</fastDFS.host>
+			</properties>
+		</profile>
+		<profile>
+			<id>product</id>
+			<properties>
+				<jdbc.config.path>file:/home/config/iBase4J/jdbc-sys.properties</jdbc.config.path>
+				<system.config.path>file:/home/config/iBase4J/system.properties</system.config.path>
+			</properties>
+		</profile>
+	</profiles>
 
 	<repositories>
 		<repository>
@@ -83,13 +98,45 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>top.ibase4j</groupId>
+			<artifactId>ibase4j-common</artifactId>
+			<version>${ibase4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<!-- -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>alipay-sdk-java</artifactId>
-			<version>java20170615110434</version>
+			<version>java20171012102412</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/alipay-sdk-java20170615110434.jar</systemPath>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/alipay-sdk-java20171012102412.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyuncs</groupId>
+			<artifactId>core</artifactId>
+			<version>3.3.1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/aliyun-java-sdk-core-3.3.1.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyuncs</groupId>
+			<artifactId>dysmsapi</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/aliyun-java-sdk-dysmsapi-1.0.0.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyuncs</groupId>
+			<artifactId>dyvmsapi</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/aliyun-java-sdk-dyvmsapi-1.0.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>commons-net</groupId>
@@ -278,8 +325,8 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
-			<scope>provided</scope>
+			<version>4.0.0</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -329,38 +376,16 @@
 			<version>3.15.0-GA</version>
 		</dependency>
 		<!-- Dubbo -->
-		<!-- <dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>dubbo</artifactId>
-			<version>${dubbo.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.jboss.netty</groupId>
-					<artifactId>netty</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.101tec</groupId>
-			<artifactId>zkclient</artifactId>
-			<version>0.8</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency> -->
+		<!-- <dependency> <groupId>com.alibaba</groupId> <artifactId>dubbo</artifactId> 
+			<version>${dubbo.version}</version> <exclusions> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring</artifactId> </exclusion> <exclusion> <groupId>org.jboss.netty</groupId> 
+			<artifactId>netty</artifactId> </exclusion> </exclusions> </dependency> <dependency> 
+			<groupId>com.101tec</groupId> <artifactId>zkclient</artifactId> <version>0.8</version> 
+			<exclusions> <exclusion> <groupId>org.slf4j</groupId> <artifactId>slf4j-log4j12</artifactId> 
+			</exclusion> </exclusions> </dependency> -->
 		<!-- activemq -->
-		<!-- <dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-spring</artifactId>
-			<version>${activemq.version}</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.apache.activemq</groupId> <artifactId>activemq-spring</artifactId> 
+			<version>${activemq.version}</version> </dependency> -->
 		<dependency>
 			<groupId>com.esotericsoftware</groupId>
 			<artifactId>reflectasm</artifactId>
@@ -437,7 +462,7 @@
 			<artifactId>uasparser</artifactId>
 			<version>0.6.2</version>
 		</dependency>
-		<!--  -->
+		<!-- -->
 		<dependency>
 			<groupId>org.codehaus.xfire</groupId>
 			<artifactId>xfire-core</artifactId>
@@ -531,8 +556,9 @@
 
 			<!-- tomcat-maven-plugin -->
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
 				<configuration>
 					<port>8090</port>
 					<path>/</path>

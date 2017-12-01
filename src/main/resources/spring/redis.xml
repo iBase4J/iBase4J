@@ -46,7 +46,7 @@
 		<property name="hashKeySerializer" ref="keySerializer" />
 		<property name="hashValueSerializer" ref="valueSerializer" />
 	</bean>
-	<bean class="org.ibase4j.core.support.cache.RedisHelper" >
+	<bean class="top.ibase4j.core.support.cache.RedisHelper" >
 		<property name="redisTemplate" ref="redisTemplate" />
 	</bean>
 	<!-- 缓存管理 -->

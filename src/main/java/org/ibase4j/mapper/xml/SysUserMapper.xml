@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.mapper.SysUserMapper">
+	<!-- 查询列表-->
+	<select id="selectIdPage" resultType="java.lang.Long">
+		SELECT id_ FROM sys_user
+		<where>
+			<if test="cm.account != null and cm.account != ''">
+				 and account_ = #{cm.account}
+			</if>
+			<if test="cm.password != null and cm.password != ''">
+				 and password_ = #{cm.password}
+			</if>
+			<if test="cm.phone != null and cm.phone != ''">
+				 and phone_ = #{cm.phone}
+			</if>
+			<if test="cm.sex != null and cm.sex != ''">
+				 and sex_ = #{cm.sex}
+			</if>
+			<if test="cm.userName != null and cm.userName != ''">
+				 and user_name = #{cm.userName}
+			</if>
+			<if test="cm.avatar != null and cm.avatar != ''">
+				 and avatar_ = #{cm.avatar}
+			</if>
+			<if test="cm.userType != null and cm.userType != ''">
+				 and user_type = #{cm.userType}
+			</if>
+			<if test="cm.deptId != null and cm.deptId != ''">
+				 and dept_id = #{cm.deptId}
+			</if>
+			<if test="cm.locked != null and cm.locked != ''">
+				 and locked_ = #{cm.locked}
+			</if>
+			<if test="cm.enable != null and cm.enable != ''">
+				 and enable_ = #{cm.enable}
+			</if>
+			<if test="cm.remark != null and cm.remark != ''">
+				 and remark_ = #{cm.remark}
+			</if>
+			<if test="cm.createTime != null and cm.createTime != ''">
+				 and create_time = #{cm.createTime}
+			</if>
+			<if test="cm.createBy != null and cm.createBy != ''">
+				 and create_by = #{cm.createBy}
+			</if>
+			<if test="cm.updateTime != null and cm.updateTime != ''">
+				 and update_time = #{cm.updateTime}
+			</if>
+			<if test="cm.updateBy != null and cm.updateBy != ''">
+				 and update_by = #{cm.updateBy}
+			</if>
+			<if test="cm.keyword != null">
+				and (account_ like CONCAT('%',#{cm.keyword},'%') or user_name like CONCAT('%',#{cm.keyword},'%') or phone_ like CONCAT('%',#{cm.keyword},'%'))
+			</if>
+		</where>
+		ORDER BY id_ DESC
+	</select>
+</mapper>

@@ -14,8 +14,8 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<!-- 自动扫描mapping.xml文件 -->
-		<property name="mapperLocations" value="classpath*:org/ibase4j/mapper/**/*.xml" />
-		<property name="typeAliasesPackage" value="org.ibase4j.model.*" />
+		<property name="mapperLocations" value="classpath*:*/ibase4j/mapper/**/*.xml" />
+		<property name="typeAliasesPackage" value="*.ibase4j.model*" />
 		<property name="globalConfig">
 			<bean class="com.baomidou.mybatisplus.entity.GlobalConfiguration">
 				<property name="dbColumnUnderline" value="true" />
@@ -27,7 +27,7 @@
 	</bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<description>DAO接口所在包名，Spring会自动查找其下的类</description>
-		<property name="basePackage" value="org.ibase4j.mapper.*" />
+		<property name="basePackage" value="*.ibase4j.mapper*" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	<!-- 事务 -->

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.mapper.SysSessionMapper">
+	<select id="selectIdPage" resultType="java.lang.Long">
+		select id_ from sys_session
+		<where>
+			<if test="cm.keyword != null">
+				and (account_ like CONCAT('%',#{cm.keyword},'%') or session_id like CONCAT('%',#{cm.keyword},'%')
+				or ip_ like CONCAT('%',#{cm.keyword},'%'))
+			</if>
+		</where>
+	</select>
+  <delete id="deleteBySessionId" parameterType="java.lang.String">
+		delete from
+		sys_session where session_id=#{sessionId}
+	</delete>
+	<select id="queryBySessionId" resultType="java.lang.Long">
+		select id_ from sys_session where session_id = #{sessionId}
+	</select>
+	<select id="querySessionIdByAccount" resultType="java.lang.String">
+		select session_id from sys_session where account_ = #{account}
+	</select>
+</mapper>

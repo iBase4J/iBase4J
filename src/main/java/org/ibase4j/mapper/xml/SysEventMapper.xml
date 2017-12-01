@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.mapper.SysEventMapper">
+  <select id="selectIdPage" parameterType="java.util.Map" resultType="java.lang.Long">
+		select e.id_ from sys_event e left join sys_user u on e.create_by = u.id_
+		<where>
+			<if test="cm.keyword != null and cm.keyword != ''">
+				u.user_name like CONCAT('%',#{cm.keyword},'%')
+			</if>
+		</where>
+	</select>
+</mapper>

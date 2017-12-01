@@ -10,7 +10,7 @@
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="realm" />
 		<property name="cacheManager">
-    		<bean class="org.ibase4j.core.support.cache.shiro.RedisCacheManager" />
+    		<bean class="top.ibase4j.core.support.cache.shiro.RedisCacheManager" />
 		</property>
 	</bean>
 	<!-- Web应用中,Shiro可控制的Web请求必须经过Shiro主过滤器的拦截,Shiro对基于Spring的Web应用提供了完美的支持 -->

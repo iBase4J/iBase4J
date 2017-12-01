@@ -7,13 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ibase4j.core.base.AbstractController;
-import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.support.login.LoginHelper;
-import org.ibase4j.core.support.login.ThirdPartyLoginHelper;
-import org.ibase4j.core.support.login.ThirdPartyUser;
-import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.service.sys.SysUserService;
+import org.ibase4j.model.SysUser;
+import org.ibase4j.service.SysUserService;
+import org.ibase4j.web.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,6 +20,11 @@ import com.alibaba.fastjson.JSONObject;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.config.Resources;
+import top.ibase4j.core.support.login.LoginHelper;
+import top.ibase4j.core.support.login.ThirdPartyLoginHelper;
+import top.ibase4j.core.support.login.ThirdPartyUser;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 第三方登录控制类
@@ -33,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Controller
 @Api(value = "第三方登录接口", description = "第三方登录接口")
-public class ThirdPartyLoginController extends AbstractController {
+public class ThirdPartyLoginController extends AbstractController<SysUser> {
 	@Autowired
 	private SysUserService sysUserService;
 
@@ -173,7 +174,7 @@ public class ThirdPartyLoginController extends AbstractController {
 		} else {
 			sysUser = sysUserService.queryById(param.getId());
 		}
-		LoginHelper.login(request, sysUser.getAccount(), sysUser.getPassword());
+		LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), WebUtil.getHost(request));
 	}
 
 	private String getRedirectUrl(HttpServletRequest request, String type) {

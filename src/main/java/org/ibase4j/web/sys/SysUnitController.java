@@ -3,8 +3,8 @@ package org.ibase4j.web.sys;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.model.sys.SysUnit;
+import org.ibase4j.model.SysUnit;
+import org.ibase4j.web.AbstractController;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "单位管理", description = "单位管理")
 @RequestMapping(value = "unit")
-public class SysUnitController extends BaseController<SysUnit> {
+public class SysUnitController extends AbstractController<SysUnit> {
 	public String getService() {
 		return "sysUnitService";
 	}

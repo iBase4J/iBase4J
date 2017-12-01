@@ -3,8 +3,8 @@ package org.ibase4j.web.sys;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.model.sys.SysRole;
+import org.ibase4j.model.SysRole;
+import org.ibase4j.web.AbstractController;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "角色管理", description = "角色管理")
 @RequestMapping(value = "role")
-public class SysRoleController extends BaseController<SysRole> {
+public class SysRoleController extends AbstractController<SysRole> {
 
 	@ApiOperation(value = "查询角色")
 	@RequiresPermissions("sys.base.role.read")
