@@ -19,14 +19,15 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.ibase4j.core.base.BaseProvider;
-import org.ibase4j.core.base.Parameter;
-import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.SysSession;
 import org.ibase4j.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
+
+import top.ibase4j.core.base.BaseProvider;
+import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 权限检查类

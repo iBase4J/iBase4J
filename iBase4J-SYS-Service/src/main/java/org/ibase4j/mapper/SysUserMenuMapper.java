@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
-import org.ibase4j.core.base.BaseMapper;
 import org.ibase4j.model.SysUserMenu;
+
+import top.ibase4j.core.base.BaseMapper;
 
 public interface SysUserMenuMapper extends BaseMapper<SysUserMenu> {
 	List<Long> queryMenuIdsByUserId(@Param("userId") Long userId);

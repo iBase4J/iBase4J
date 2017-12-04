@@ -1,7 +1,8 @@
 package org.ibase4j.mapper;
 
 import org.ibase4j.model.SysArticle;
-import org.ibase4j.core.base.BaseMapper;
+
+import top.ibase4j.core.base.BaseMapper;
 
 /**
  * <p>

@@ -13,10 +13,9 @@
 		<relativePath>./</relativePath>
 	</parent>
 	<modules>
-		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-Facade</module>
 		<module>iBase4J-SYS-Service</module>
 		<module>iBase4J-Biz-Facade</module>
 	</modules>
-	<!-- clean package -P build tomcat7:run-war-only -f pom-sys-service-server.xml -->
+	<!-- clean package -P build tomcat7:run-war -f pom-sys-service-server.xml -->
 </project>

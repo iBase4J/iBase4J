@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -19,14 +17,16 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.ibase4j.core.base.BaseProvider;
-import org.ibase4j.core.base.Parameter;
-import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.SysSession;
 import org.ibase4j.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
+
+import top.ibase4j.core.base.BaseProvider;
+import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.support.logger.Logger;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 权限检查类
@@ -35,7 +35,7 @@ import org.springframework.session.data.redis.RedisOperationsSessionRepository;
  * @version 2016年5月20日 下午3:44:45
  */
 public class Realm extends AuthorizingRealm {
-	private final Logger logger = LogManager.getLogger();
+	private final Logger logger = Logger.getInstance();
 	@Autowired
 	@Qualifier("sysProvider")
 	protected BaseProvider provider;

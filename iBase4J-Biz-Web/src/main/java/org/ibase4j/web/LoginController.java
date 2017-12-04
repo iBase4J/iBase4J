@@ -9,18 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.model.TMember;
 import org.ibase4j.provider.IBizProvider;
-import org.ibase4j.core.Constants.MSGCHKTYPE;
-import org.ibase4j.core.base.Parameter;
-import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.exception.LoginException;
-import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.util.CacheUtil;
-import org.ibase4j.core.util.DataUtil;
-import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.PropertiesUtil;
-import org.ibase4j.core.util.TokenUtil;
-import org.ibase4j.core.util.WebUtil;
-import org.ibase4j.model.Login;
 import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +19,18 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.Constants.MSGCHKTYPE;
+import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.config.Resources;
+import top.ibase4j.core.exception.LoginException;
+import top.ibase4j.core.support.Assert;
+import top.ibase4j.core.util.CacheUtil;
+import top.ibase4j.core.util.DataUtil;
+import top.ibase4j.core.util.InstanceUtil;
+import top.ibase4j.core.util.PropertiesUtil;
+import top.ibase4j.core.util.TokenUtil;
+import top.ibase4j.core.util.WebUtil;
+import top.ibase4j.model.Login;
 
 /**
  * 用户登录

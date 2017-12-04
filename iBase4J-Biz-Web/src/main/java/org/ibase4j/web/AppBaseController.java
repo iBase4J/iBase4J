@@ -12,16 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.ibase4j.core.Constants;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.base.BaseModel;
-import org.ibase4j.core.base.BaseProvider;
-import org.ibase4j.core.base.Parameter;
-import org.ibase4j.core.exception.BaseException;
-import org.ibase4j.core.exception.IllegalParameterException;
-import org.ibase4j.core.support.HttpCode;
-import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.provider.ISysProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +21,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.baomidou.mybatisplus.plugins.Page;
+
+import top.ibase4j.core.Constants;
+import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.base.BaseModel;
+import top.ibase4j.core.base.BaseProvider;
+import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.exception.BaseException;
+import top.ibase4j.core.exception.IllegalParameterException;
+import top.ibase4j.core.support.HttpCode;
+import top.ibase4j.core.util.InstanceUtil;
+import top.ibase4j.core.util.WebUtil;
 
 public abstract class AppBaseController<T extends BaseProvider> extends BaseController {
     protected final Logger logger = LogManager.getLogger(this.getClass());
