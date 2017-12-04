@@ -58,17 +58,17 @@
 		<redis.host>127.0.0.1</redis.host>
 		<redis.password></redis.password>
 		<zookeeper.address>127.0.0.1:2181</zookeeper.address>
-		<fastDFS.host>42.51.33.240</fastDFS.host>
+		<fastDFS.host>127.0.0.1</fastDFS.host>
 	</properties>
 
 	<profiles>
 		<profile>
 			<id>test</id>
 			<properties>
-				<redis.password>heiheiche@2017</redis.password>
-				<redis.host>42.51.33.240</redis.host>
-				<zookeeper.address>42.51.39.214:2181</zookeeper.address>
-				<fastDFS.host>42.51.33.240</fastDFS.host>
+				<redis.password>buzhidao</redis.password>
+				<redis.host>127.0.0.1</redis.host>
+				<zookeeper.address>127.0.0.1:2181</zookeeper.address>
+				<fastDFS.host>127.0.0.1</fastDFS.host>
 			</properties>
 		</profile>
 		<profile>
@@ -98,6 +98,7 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<!--  -->
 		<dependency>
 			<groupId>top.ibase4j</groupId>
 			<artifactId>ibase4j-common</artifactId>
