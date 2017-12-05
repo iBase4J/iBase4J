@@ -69,6 +69,7 @@
 		<swagger.version>1.5.17</swagger.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 		<javassist.version>3.22.0-GA</javassist.version>
+		<disruptor.version>3.3.4</disruptor.version>
 		<!-- 配置 -->
 		<redis.host>127.0.0.1</redis.host>
 		<redis.password></redis.password>
