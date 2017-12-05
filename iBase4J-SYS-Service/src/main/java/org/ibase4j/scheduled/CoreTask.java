@@ -1,12 +1,12 @@
 package org.ibase4j.scheduled;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ibase4j.service.SysSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import top.ibase4j.core.support.logger.Logger;
 
 /**
  * @author ShenHuaJie
@@ -15,7 +15,7 @@ import top.ibase4j.core.support.logger.Logger;
 @Service
 @EnableScheduling
 public class CoreTask {
-	private final Logger logger = Logger.getInstance();
+	private final Logger logger = LogManager.getLogger();
 	@Autowired
 	private SysSessionService sessionService;
 

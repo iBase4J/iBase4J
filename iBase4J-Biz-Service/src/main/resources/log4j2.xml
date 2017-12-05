@@ -15,12 +15,10 @@
 			filePattern="${LOG_HOME}/dev/${SERVER_NAME}.%d{yyyy-MM-dd}.%i.log">
 			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M] - %msg%n" />
             <Policies>  
-                <TimeBasedTriggeringPolicy interval="1" />
-                <SizeBasedTriggeringPolicy size="10 MB" />
+                <SizeBasedTriggeringPolicy size="10MB" />
             </Policies>
 			<Filters>
-				<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL" />
-				<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
+				<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
 			</Filters>
             <DefaultRolloverStrategy>
                 <!-- 删除指定目录下7天之前的日志-->
@@ -32,36 +30,35 @@
 		</RollingFile>
 		<!-- 产品数据分析日志 -->
         <RollingRandomAccessFile name="ProductLog"  
-			fileName="${LOG_HOME}/%d{yyyy-MM-dd}/${SERVER_NAME}.log"
-			filePattern="${LOG_HOME}/%d{yyyy-MM-dd}/${SERVER_NAME}_%d{yyyyMMdd}_%d{HHmmss}.log">
+			fileName="${LOG_HOME}/${SERVER_NAME}.log"
+			filePattern="${LOG_HOME}/%d{yyyy-MM-dd}/${SERVER_NAME}_%d{HHmmss}.log">
 			<PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M:%L] - %msg%xEx%n" />
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" />  
-                <SizeBasedTriggeringPolicy size="10 MB" />  
+                <SizeBasedTriggeringPolicy size="10MB" />
             </Policies>
         </RollingRandomAccessFile>
 	</appenders>
 
 	<loggers>
-		<logger name="org.slf4j" level="INFO" />
-		<logger name="org.quartz" level="WARN" />
-		<logger name="org.redisson" level="INFO" />
-		<logger name="com.atomikos" level="WARN" />
-		<logger name="com.alibaba.dubbo" level="INFO" />
-		<logger name="org.apache.activemq" level="INFO" />
-		<logger name="org.springframework" level="INFO" />
-		<logger name="com.weibo.api.motan" level="WARN" />
-		<logger name="org.apache.zookeeper" level="WARN" />
-		<logger name="org.springframework.web" level="${OUTPUT_LOG_LEVEL}" />
-		<Logger name="org.apache.ibatis" level="DEBUG">  
+		<logger name="org.slf4j" level="info" />
+		<logger name="org.quartz" level="warn" />
+		<logger name="org.redisson" level="info" />
+		<logger name="com.atomikos" level="warn" />
+		<logger name="com.alibaba.dubbo" level="info" />
+		<logger name="org.apache.activemq" level="info" />
+		<logger name="org.springframework" level="info" />
+		<logger name="com.weibo.api.motan" level="warn" />
+		<logger name="org.apache.zookeeper" level="warn" />
+		<logger name="org.springframework.web" level="debug" />
+		<Logger name="top.ibase4j" level="info">  
 			<AppenderRef ref="Console" />
             <AppenderRef ref="ProductLog" />
-        </Logger >
-		<Logger name="java.sql" level="DEBUG">  
+        </Logger>
+		<Logger name="org.ibase4j" level="debug">
 			<AppenderRef ref="Console" />
             <AppenderRef ref="ProductLog" />
-        </Logger >
-		<Root level="DEBUG">
+        </Logger>
+		<Root level="debug">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
 		</Root >

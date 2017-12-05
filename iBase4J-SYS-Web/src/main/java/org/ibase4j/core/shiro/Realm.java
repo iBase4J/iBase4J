@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -25,7 +27,6 @@ import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 
 import top.ibase4j.core.base.BaseProvider;
 import top.ibase4j.core.base.Parameter;
-import top.ibase4j.core.support.logger.Logger;
 import top.ibase4j.core.util.WebUtil;
 
 /**
@@ -35,7 +36,7 @@ import top.ibase4j.core.util.WebUtil;
  * @version 2016年5月20日 下午3:44:45
  */
 public class Realm extends AuthorizingRealm {
-	private final Logger logger = Logger.getInstance();
+	private final Logger logger = LogManager.getLogger();
 	@Autowired
 	@Qualifier("sysProvider")
 	protected BaseProvider provider;

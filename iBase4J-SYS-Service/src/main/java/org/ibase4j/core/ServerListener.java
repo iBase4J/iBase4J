@@ -3,6 +3,8 @@ package org.ibase4j.core;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ibase4j.service.SysCacheService;
 import org.ibase4j.service.SysDicService;
 import org.ibase4j.service.SysUserService;
@@ -12,10 +14,8 @@ import org.springframework.web.context.WebApplicationContext;
 import com.weibo.api.motan.common.MotanConstants;
 import com.weibo.api.motan.util.MotanSwitcherUtil;
 
-import top.ibase4j.core.support.logger.Logger;
-
 public class ServerListener implements ServletContextListener {
-	protected final Logger logger = Logger.getInstance();
+	protected final Logger logger = LogManager.getLogger();
 
 	public void contextDestroyed(ServletContextEvent contextEvent) {
 	}
