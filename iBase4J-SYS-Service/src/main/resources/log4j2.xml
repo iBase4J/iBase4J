@@ -7,7 +7,6 @@
 	</properties>
 	<appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{1}:%L] - %msg%n" />
 		</Console>
 		<RollingFile name="RollingFile"
