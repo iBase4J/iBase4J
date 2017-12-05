@@ -10,7 +10,6 @@
 	<url>http://maven.apache.org</url>
 
 	<modules>
-		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-Service</module>
 		<module>iBase4J-SYS-Facade</module>
 		<module>iBase4J-SYS-Web</module>
@@ -23,6 +22,7 @@
 	<!-- clean package -P build -f pom-sys-web-server.xml -->
 
 	<properties>
+		<module.name>${project.artifactId}</module.name>
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
 		<sys.jdbc.config.path>classpath:config/jdbc.properties</sys.jdbc.config.path>
 		<system.config.path>classpath:config/system.properties</system.config.path>
