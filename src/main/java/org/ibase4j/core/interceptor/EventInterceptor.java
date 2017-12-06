@@ -42,6 +42,7 @@ public class EventInterceptor extends BaseInterceptor {
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
         throws Exception {
+        logger.info("URI [" + request.getServletPath() + "] request start...");
         // 开始时间（该数据只有当前请求的线程可见）
         startTimeThreadLocal.set(System.currentTimeMillis());
         return super.preHandle(request, response, handler);
@@ -113,11 +114,9 @@ public class EventInterceptor extends BaseInterceptor {
             }
         }
         // 内存信息
-        if (logger.isDebugEnabled()) {
-            String message = "开始时间: {}; 结束时间: {}; 耗时: {}s; URI: {}; ";
-            logger.debug(message, DateUtil.format(startTime, "HH:mm:ss.SSS"), DateUtil.format(endTime, "HH:mm:ss.SSS"),
-                (endTime - startTime) / 1000.00, path);
-        }
+        String message = "开始时间: {}; 结束时间: {}; 耗时: {}s; URI: {}; ";
+        logger.info(message, DateUtil.format(startTime, "HH:mm:ss.SSS"), DateUtil.format(endTime, "HH:mm:ss.SSS"),
+            (endTime - startTime) / 1000.00, path);
         super.afterCompletion(request, response, handler, ex);
     }
 

@@ -17,7 +17,7 @@
 		<system.config.path>classpath:config/system.properties</system.config.path>
 		<!-- -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>1.2.9</ibase4j.version>
+		<ibase4j.version>1.2.10</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-session.version>2.0.0.M2</spring-session.version>

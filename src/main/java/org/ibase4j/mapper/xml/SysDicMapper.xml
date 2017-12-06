@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.ibase4j.mapper.SysDicMapper">
+	<!-- 开启二级缓存 -->
+	<cache type="top.ibase4j.core.support.cache.MybatisRedisCache"/>
+	<!--  -->
 	<select id="selectIdPage" resultType="java.lang.Long">
 		select id_ from sys_dic
 		<where>
@@ -14,7 +17,7 @@
 			and parent_code=#{cm.parentCode}
 			</if>
 			<if test="cm.keyword != null and cm.keyword != ''">
-				and (type_ like #{cm.keyword}"%" OR code_ like #{cm.keyword}"%")
+				and (type_ like CONCAT(#{cm.keyword},'%') OR code_ like CONCAT('%',#{cm.keyword},'%'))
 			</if>
 		</where>
 	</select>

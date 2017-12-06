@@ -21,7 +21,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import top.ibase4j.core.base.BaseService;
 import top.ibase4j.core.support.login.ThirdPartyUser;
-import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.SecurityUtil;
 
 /**
@@ -106,9 +105,6 @@ public class SysUserService extends BaseService<SysUser> {
 	}
 
 	public void init() {
-		List<Long> list = ((SysUserMapper) mapper).selectIdPage(Collections.<String, Object>emptyMap());
-		for (Long id : list) {
-			CacheUtil.getCache().set(getCacheKey(id), mapper.selectById(id));
-		}
+		((SysUserMapper) mapper).selectIdPage(Collections.<String, Object>emptyMap());
 	}
 }
