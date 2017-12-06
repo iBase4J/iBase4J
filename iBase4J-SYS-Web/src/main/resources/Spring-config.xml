@@ -11,7 +11,7 @@
    		http://api.weibo.com/schema/motan
    		http://api.weibo.com/schema/motan.xsd">
 	<!-- 引入属性配置文件 -->
-	<bean class="org.ibase4j.core.util.PropertiesUtil">
+	<bean class="top.ibase4j.core.support.PropertyPlaceholder">
 		<property name="locations">
 			<list>
 				<value>${system.config.path}</value>

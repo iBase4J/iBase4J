@@ -1,7 +1,7 @@
 package org.ibase4j.mapper;
 
-import org.ibase4j.core.base.BaseMapper;
-import org.ibase4j.model.SysEvent;
+import top.ibase4j.core.base.BaseMapper;
+import top.ibase4j.model.SysEvent;
 
 public interface SysEventMapper extends BaseMapper<SysEvent> {
 }

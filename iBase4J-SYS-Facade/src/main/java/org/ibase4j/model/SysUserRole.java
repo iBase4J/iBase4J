@@ -1,8 +1,8 @@
 package org.ibase4j.model;
 
-import org.ibase4j.core.base.BaseModel;
-
 import com.baomidou.mybatisplus.annotations.TableName;
+
+import top.ibase4j.core.base.BaseModel;
 
 @TableName("sys_user_role")
 @SuppressWarnings("serial")

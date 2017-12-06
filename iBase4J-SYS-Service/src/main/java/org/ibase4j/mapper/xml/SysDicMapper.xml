@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.ibase4j.mapper.SysDicMapper">
+<mapper namespace="org.hbkms.mapper.SysDicMapper">
+	<!--  -->
 	<select id="selectIdPage" resultType="java.lang.Long">
 		select id_ from sys_dic
 		<where>
@@ -14,8 +15,11 @@
 			and parent_code=#{cm.parentCode}
 			</if>
 			<if test="cm.keyword != null and cm.keyword != ''">
-				and (type_ like #{cm.keyword}"%" OR code_ like #{cm.keyword}"%")
+				and (type_ like CONCAT(#{cm.keyword},'%') OR code_ like CONCAT(#{cm.keyword},'%'))
 			</if>
 		</where>
+		<if test="cm.orderBy != null and cm.orderBy != ''">
+			order by #{cm.orderBy}
+		</if>
 	</select>
 </mapper>

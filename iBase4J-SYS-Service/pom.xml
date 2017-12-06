@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
-		<version>1.1.0</version>
+		<version>2.1.0</version>
 	</parent>
 	<artifactId>iBase4J-SYS-Service</artifactId>
 	<name>iBase4J-SYS-Service</name>
@@ -13,6 +13,9 @@
 
 	<properties>
 		<server.port>8085</server.port>
+		<moduleName>SysService</moduleName>
+		<jar.dic>${project.basedir}/../</jar.dic>
+		<other.jar>alipay*.jar</other.jar>
 	</properties>
 
 	<!-- 生成model -->
@@ -20,22 +23,32 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.taobao</groupId>
-			<artifactId>api</artifactId>
-			<version>20170317</version>
-    		<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/taobao-sdk-20170317.jar</systemPath>
+			<groupId>com.alibaba</groupId>
+			<artifactId>alipay-sdk-java</artifactId>
+			<version>java20171012102412</version>
+			<scope>system</scope>
+			<systemPath>${jar.dic}/libs/alipay-sdk-java20171012102412.jar</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Common</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>com.aliyuncs</groupId>
+			<artifactId>core</artifactId>
+			<version>3.3.1</version>
+			<scope>system</scope>
+			<systemPath>${jar.dic}/libs/aliyun-java-sdk-core-3.3.1.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyuncs</groupId>
+			<artifactId>dysmsapi</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${jar.dic}/libs/aliyun-java-sdk-dysmsapi-1.0.0.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyuncs</groupId>
+			<artifactId>dyvmsapi</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${jar.dic}/libs/aliyun-java-sdk-dyvmsapi-1.0.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>

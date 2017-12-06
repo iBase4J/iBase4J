@@ -31,7 +31,7 @@
 	</filter-mapping>
 	<filter>
 		<filter-name>csrfFilter</filter-name>
-		<filter-class>org.ibase4j.core.filter.CsrfFilter</filter-class>
+		<filter-class>top.ibase4j.core.filter.CsrfFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>csrfFilter</filter-name>
@@ -39,7 +39,7 @@
 	</filter-mapping>
 	<filter>
 		<filter-name>xssFilter</filter-name>
-		<filter-class>org.ibase4j.core.filter.XssFilter</filter-class>
+		<filter-class>top.ibase4j.core.filter.XssFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>xssFilter</filter-name>
@@ -72,7 +72,7 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 	<listener>
-		<listener-class>org.ibase4j.core.listener.ServerListener</listener-class>
+		<listener-class>org.ibase4j.core.ServerListener</listener-class>
 	</listener>
 	<servlet>
 		<servlet-name>SpringMVC</servlet-name>

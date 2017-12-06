@@ -5,16 +5,15 @@
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
-		<version>1.1.0</version>
+		<version>2.1.0</version>
 		<relativePath>./</relativePath>
 	</parent>
 	<artifactId>iBase4J-Biz-Web-Server</artifactId>
 	<name>${project.artifactId}</name>
 	<packaging>pom</packaging>
 	<url>http://maven.apache.org</url>
-	<!-- clean package -P build tomcat7:run-war-only -f pom-biz-web-server.xml -->
+	<!-- clean package -P build tomcat7:run-war -f pom-biz-web-server.xml -->
 	<modules>
-		<module>iBase4J-Common</module>
 		<module>iBase4J-SYS-Facade</module>
 		<module>iBase4J-Biz-Facade</module>
 		<module>iBase4J-Biz-Web</module>

@@ -3,20 +3,20 @@ package org.ibase4j.web;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.ibase4j.model.SysEmailConfig;
+import org.ibase4j.provider.ISysProvider;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.ibase4j.core.base.AbstractController;
-import org.ibase4j.core.base.Parameter;
-import org.ibase4j.core.util.DataUtil;
-import org.ibase4j.core.util.SecurityUtil;
-import org.ibase4j.model.SysEmailConfig;
-import org.ibase4j.provider.ISysProvider;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.util.DataUtil;
+import top.ibase4j.core.util.SecurityUtil;
 
 /**
  * 邮件配置管理控制类

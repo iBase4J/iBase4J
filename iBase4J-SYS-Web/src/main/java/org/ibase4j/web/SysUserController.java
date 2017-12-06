@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.ibase4j.model.SysUser;
+import org.ibase4j.provider.ISysProvider;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,17 +21,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.ibase4j.core.base.AbstractController;
-import org.ibase4j.core.base.Parameter;
-import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.support.HttpCode;
-import org.ibase4j.core.util.SecurityUtil;
-import org.ibase4j.core.util.UploadUtil;
-import org.ibase4j.model.SysUser;
-import org.ibase4j.provider.ISysProvider;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.support.Assert;
+import top.ibase4j.core.support.HttpCode;
+import top.ibase4j.core.util.SecurityUtil;
+import top.ibase4j.core.util.UploadUtil;
 
 /**
  * 用户管理控制器

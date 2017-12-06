@@ -6,22 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.ibase4j.core.base.BaseService;
-import org.ibase4j.core.support.login.ThirdPartyUser;
-import org.ibase4j.core.util.CacheUtil;
-import org.ibase4j.core.util.SecurityUtil;
 import org.ibase4j.mapper.SysUserMapper;
 import org.ibase4j.mapper.SysUserThirdpartyMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.model.SysUserThirdparty;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.baomidou.mybatisplus.plugins.Page;
+
+import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.support.login.ThirdPartyUser;
+import top.ibase4j.core.util.SecurityUtil;
 
 /**
  * SysUser服务实现类
@@ -105,9 +105,6 @@ public class SysUserService extends BaseService<SysUser> {
 	}
 
 	public void init() {
-		List<Long> list = ((SysUserMapper) mapper).selectIdPage(Collections.<String, Object>emptyMap());
-		for (Long id : list) {
-			CacheUtil.getCache().set(getCacheKey(id), mapper.selectById(id));
-		}
+		((SysUserMapper) mapper).selectIdPage(Collections.<String, Object>emptyMap());
 	}
 }
