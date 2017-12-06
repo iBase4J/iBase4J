@@ -9,24 +9,6 @@
 		<Console name="Console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{1}:%L] - %msg%n" />
 		</Console>
-		<RollingFile name="RollingFile"
-			fileName="${LOG_HOME}/dev/${SERVER_NAME}.log"
-			filePattern="${LOG_HOME}/dev/${SERVER_NAME}.%d{yyyy-MM-dd}.%i.log">
-			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M] - %msg%n" />
-            <Policies>  
-                <SizeBasedTriggeringPolicy size="10MB" />
-            </Policies>
-			<Filters>
-				<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
-			</Filters>
-            <DefaultRolloverStrategy>
-                <!-- 删除指定目录下7天之前的日志-->
-                <Delete basePath="${LOG_HOME}" maxDepth="2">
-                    <IfFileName glob="*/*.log" />
-                    <IfLastModified age="7d" />
-                </Delete>
-            </DefaultRolloverStrategy>
-		</RollingFile>
 		<!-- 产品数据分析日志 -->
         <RollingRandomAccessFile name="ProductLog"  
 			fileName="${LOG_HOME}/${SERVER_NAME}.log"
@@ -35,6 +17,13 @@
             <Policies>
                 <SizeBasedTriggeringPolicy size="10MB" />
             </Policies>
+            <DefaultRolloverStrategy>
+                <!-- 删除指定目录下7天之前的日志-->
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="*/*.log" />
+                    <IfLastModified age="7d" />
+                </Delete>
+            </DefaultRolloverStrategy>
         </RollingRandomAccessFile>
 	</appenders>
 
@@ -50,7 +39,6 @@
 		<logger name="org.apache.zookeeper" level="warn" />
 		<logger name="org.springframework.web" level="debug" />
 		<Logger name="top.ibase4j" level="info">  
-			<AppenderRef ref="Console" />
             <AppenderRef ref="ProductLog" />
         </Logger>
 		<Logger name="org.ibase4j" level="debug">
@@ -59,7 +47,6 @@
         </Logger>
 		<Root level="debug">
 			<AppenderRef ref="Console" />
-			<AppenderRef ref="RollingFile" />
 		</Root >
 	</loggers>
 </configuration>
