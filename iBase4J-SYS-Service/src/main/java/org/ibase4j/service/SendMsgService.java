@@ -14,13 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.dyvmsapi.model.v20170525.SingleCallByTtsRequest;
+import com.aliyuncs.dyvmsapi.model.v20170525.SingleCallByTtsResponse;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.http.MethodType;
+import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.profile.IClientProfile;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
-import com.taobao.api.ApiException;
-import com.taobao.api.DefaultTaobaoClient;
-import com.taobao.api.TaobaoClient;
-import com.taobao.api.domain.BizResult;
-import com.taobao.api.request.AlibabaAliqinFcSmsNumSendRequest;
-import com.taobao.api.response.AlibabaAliqinFcSmsNumSendResponse;
 
 import top.ibase4j.core.Constants.MSGCHKTYPE;
 import top.ibase4j.core.util.CacheUtil;
@@ -35,16 +39,15 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 public class SendMsgService {
-	protected Logger logger = LogManager.getLogger(getClass());
-	@Autowired
-	private SysParamService paramService;
-	@Autowired
-	private SysMsgService msgService;
-	@Autowired
-	private SysMsgConfigService msgConfigService;
+    protected Logger logger = LogManager.getLogger(getClass());
+    @Autowired
+    private SysParamService paramService;
+    @Autowired
+    private SysMsgService msgService;
+    @Autowired
+    private SysMsgConfigService msgConfigService;
 
-	@SuppressWarnings("rawtypes")
-    public void sendMsg(SendMsg sendMsg) throws ApiException {
+    public void sendMsg(SendMsg sendMsg) throws ClientException {
         Map<String, Object> params = InstanceUtil.newHashMap();
         List<SysMsgConfig> configList = msgConfigService.queryList(params);
         if (configList.isEmpty()) {
@@ -52,39 +55,53 @@ public class SendMsgService {
         }
         SysMsgConfig config = configList.get(0);
 
-        String type = "SMS_TYPE_" + sendMsg.getMsgType();
+        String type = "SMS_TYPE_" + sendMsg.getBizType();
         String templateCode = paramService.getValue(type);
         if (StringUtils.isBlank(templateCode)) {
-            throw new RuntimeException("不支持的短信类型:" + sendMsg.getMsgType());
+            throw new RuntimeException("不支持的短信类型:" + sendMsg.getBizType());
         }
         String sender = StringUtils.defaultIfBlank(sendMsg.getSender(), config.getSenderName());
 
         setParams(sender, sendMsg);
 
-        TaobaoClient client = new DefaultTaobaoClient(config.getSmsPlatUrl(), config.getSmsPlatAccount(),
-                config.getSmsPlatPassword());
-        AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
-        req.setSmsType("normal");
-        req.setSmsFreeSignName(config.getSenderName());
-        req.setSmsParamString(sendMsg.getParams());
-        req.setRecNum(sendMsg.getPhone());
-        req.setSmsTemplateCode(templateCode);
-        AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
-        logger.info(rsp.getBody());
+        // 设置超时时间-可自行调整
+        System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
+        System.setProperty("sun.net.client.defaultReadTimeout", "10000");
+        // 初始化ascClient,暂时不支持多region
+        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", config.getSmsPlatAccount(),
+            config.getSmsPlatPassword());
+        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Dysmsapi", config.getSmsPlatUrl());
+        IAcsClient acsClient = new DefaultAcsClient(profile);
 
-        BizResult result = rsp.getResult();
+        // 组装请求对象
+        SendSmsRequest request = new SendSmsRequest();
+        // 使用post提交
+        request.setMethod(MethodType.POST);
+        // 必填:待发送手机号。支持以逗号分隔的形式进行批量调用，批量上限为1000个手机号码,批量调用相对于单条调用及时性稍有延迟,验证码类型的短信推荐使用单条调用的方式
+        request.setPhoneNumbers(sendMsg.getPhone());
+        // 必填:短信签名-可在短信控制台中找到
+        request.setSignName(config.getSenderName());
+        // 必填:短信模板-可在短信控制台中找到
+        request.setTemplateCode(templateCode);
+        // 可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
+        // 友情提示:如果JSON中需要带换行符,请参照标准的JSON协议对换行符的要求,比如短信内容中包含\r\n的情况在JSON中需要表示成\\r\\n,否则会导致JSON在服务端解析失败
+        request.setTemplateParam(sendMsg.getParams());
+        // 可选-上行短信扩展码(扩展码字段控制在7位或以下，无特殊需求用户请忽略此字段)
+        // request.setSmsUpExtendCode("90997");
+        // 请求失败这里会抛ClientException异常
+        SendSmsResponse response = acsClient.getAcsResponse(request);
+        logger.info(JSON.toJSONString(response));
         SysMsg record = new SysMsg();
-        if (result != null) {
-            record.setBizId(result.getModel());
-            record.setSendState(result.getSuccess() ? "1" : "0");
-        } else {
-            try {
-                Map response = (Map) JSON.parseObject(rsp.getBody(), Map.class).get("error_response");
-                record.setBizId((String) response.get("request_id"));
-                record.setRemark((String) response.get("sub_msg"));
-            } catch (Exception e) {
-                record.setBizId(IdWorker.get32UUID());
+        if (response.getCode() != null) {
+            record.setBizId(response.getRequestId());
+            if (response.getCode().equals("OK")) {
+                // 请求成功
+                record.setSendState("1");
+            } else {
+                record.setSendState("0");
             }
+        } else {
+            record.setBizId(IdWorker.get32UUID());
             record.setSendState("0");
         }
         record.setType(paramService.getName(type));
@@ -92,18 +109,77 @@ public class SendMsgService {
         record.setContent(sendMsg.getParams());
         msgService.update(record);
 
-        if (result != null && !result.getSuccess()) {
-            throw new RuntimeException(result.getMsg());
+        if ("0".equals(record.getSendState())) {
+            throw new RuntimeException(response.getMessage());
         }
-        if (StringUtils.isNotBlank(rsp.getSubMsg())) {
-            throw new RuntimeException(rsp.getSubMsg());
+    }
+
+    public void sendTts(SendMsg sendMsg) throws ClientException {
+        Map<String, Object> params = InstanceUtil.newHashMap();
+        List<SysMsgConfig> configList = msgConfigService.queryList(params);
+        if (configList.isEmpty()) {
+            throw new RuntimeException("缺少短信平台配置.");
+        }
+        SysMsgConfig config = configList.get(0);
+
+        String type = "TTS_TYPE_" + sendMsg.getBizType();
+        String templateCode = paramService.getValue(type);
+        if (StringUtils.isBlank(templateCode)) {
+            throw new RuntimeException("不支持的短信类型:" + sendMsg.getBizType());
+        }
+        String sender = StringUtils.defaultIfBlank(sendMsg.getSender(), config.getSenderName());
+
+        setParams(sender, sendMsg);
+
+        // 设置超时时间-可自行调整
+        System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
+        System.setProperty("sun.net.client.defaultReadTimeout", "10000");
+        // 初始化ascClient,暂时不支持多region
+        IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", config.getSmsPlatAccount(),
+            config.getSmsPlatPassword());
+        DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Dyvmsapi", "dyvmsapi.aliyuncs.com");
+        IAcsClient acsClient = new DefaultAcsClient(profile);
+
+        // 组装请求对象
+        SingleCallByTtsRequest request = new SingleCallByTtsRequest();
+        // 必填-被叫显号,可在语音控制台中找到所购买的显号
+        request.setCalledShowNumber(paramService.getValue("TTS_CALL_NUMBER"));
+        // 必填-被叫号码
+        request.setCalledNumber(sendMsg.getPhone());
+        // 必填-Tts模板ID
+        request.setTtsCode(templateCode);
+        // 可选-当模板中存在变量时需要设置此值
+        request.setTtsParam(sendMsg.getParams());
+        // 请求失败这里会抛ClientException异常
+        SingleCallByTtsResponse response = acsClient.getAcsResponse(request);
+        logger.info(JSON.toJSONString(response));
+        SysMsg record = new SysMsg();
+        if (response.getCode() != null) {
+            record.setBizId(response.getRequestId());
+            if (response.getCode().equals("OK")) {
+                // 请求成功
+                record.setSendState("1");
+            } else {
+                record.setSendState("0");
+            }
+        } else {
+            record.setBizId(IdWorker.get32UUID());
+            record.setSendState("0");
+        }
+        record.setType(paramService.getName(type));
+        record.setPhone(sendMsg.getPhone());
+        record.setContent(sendMsg.getParams());
+        msgService.update(record);
+
+        if ("0".equals(record.getSendState())) {
+            throw new RuntimeException(response.getMessage());
         }
     }
 
     /** 设置参数 */
     private void setParams(String sender, SendMsg sendMsg) {
         String cacheKey1, cacheKey2;
-        switch (sendMsg.getMsgType()) {
+        switch (sendMsg.getBizType()) {
         case "1":// 用户注册验证码
             cacheKey2 = MSGCHKTYPE.REGISTER + sendMsg.getPhone();
             sendRandomCode(sender, sendMsg, cacheKey2);
@@ -143,11 +219,11 @@ public class SendMsgService {
         Map<String, String> param = InstanceUtil.newHashMap();
         param.put("code", random.toString());
         param.put("product", sender);
-        if ("6".equals(sendMsg.getMsgType())) {
+        if ("6".equals(sendMsg.getBizType())) {
             param.put("", sendMsg.getParams());
         }
         sendMsg.setParams(JSON.toJSONString(param));
-        String seconds = paramService.getValue("AUTH-CODE-EXPIRATION-SMS" + sendMsg.getMsgType(), "120");
+        String seconds = paramService.getValue("AUTH-CODE-EXPIRATION-SMS" + sendMsg.getBizType(), "120");
         CacheUtil.getCache().set(cacheKey, random.toString(), Integer.valueOf(seconds));
     }
 
@@ -167,7 +243,7 @@ public class SendMsgService {
         if (CacheUtil.getLock(key + "-LOCK")) {
             try {
                 Integer times = 1;
-                String timesStr = (String) CacheUtil.getCache().get(key);
+                String timesStr = (String)CacheUtil.getCache().get(key);
                 if (StringUtils.isNotBlank(timesStr)) {
                     times = Integer.valueOf(timesStr) + 1;
                     if (times > frequency) {

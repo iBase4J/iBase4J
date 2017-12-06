@@ -9,8 +9,10 @@ import io.swagger.annotations.ApiModelProperty;
 @SuppressWarnings("serial")
 public class SendMsg implements Serializable {
 
+    @ApiModelProperty(value = "信息类型：1短信2语音", required = true)
+    private String msgType;
 	@ApiModelProperty(value = "短信类型:1.用户注册验证码2.登录确认验证码3.修改密码验证码4.身份验证验证码5.信息变更验证码6.活动确认验证码", required = true)
-	private String msgType;
+	private String bizType;
 	@ApiModelProperty(value = "手机号", required = true)
 	private String phone;
 	@ApiModelProperty(value = "短信参数", required = false)
@@ -19,11 +21,19 @@ public class SendMsg implements Serializable {
 	private String sender;
 
 	public String getMsgType() {
-		return msgType;
+        return msgType;
+    }
+
+    public void setMsgType(String msgType) {
+        this.msgType = msgType;
+    }
+
+    public String getBizType() {
+		return bizType;
 	}
 
-	public void setMsgType(String msgType) {
-		this.msgType = msgType;
+	public void setBizType(String bizType) {
+		this.bizType = bizType;
 	}
 
 	public String getPhone() {
