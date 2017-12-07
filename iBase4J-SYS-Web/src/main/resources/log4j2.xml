@@ -42,7 +42,6 @@
             <AppenderRef ref="ProductLog" />
         </Logger>
 		<Logger name="org.ibase4j" level="debug">
-			<AppenderRef ref="Console" />
             <AppenderRef ref="ProductLog" />
         </Logger>
 		<Root level="debug">
