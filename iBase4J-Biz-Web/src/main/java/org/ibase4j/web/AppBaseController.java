@@ -79,12 +79,12 @@ public abstract class AppBaseController<T extends BaseProvider> extends BaseCont
                 dataMap.put("current", page.getCurrent());
                 dataMap.put("totalCount", page.getTotal());
                 dataMap.put("pageCount", page.getPages());
-                modelMap.put("rows", dataMap);
+                modelMap.put("data", dataMap);
             } else if (data instanceof List<?>) {
                 Map<String, Object> dataMap = InstanceUtil.newHashMap();
                 dataMap.put(listKey, data);
                 dataMap.put("totalCount", ((List<?>)data).size());
-                modelMap.put("rows", dataMap);
+                modelMap.put("data", dataMap);
             } else {
                 modelMap.put("data", data);
             }
