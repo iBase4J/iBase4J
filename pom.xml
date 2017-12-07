@@ -75,7 +75,7 @@
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 		<javassist.version>3.22.0-GA</javassist.version>
 		<disruptor.version>3.3.4</disruptor.version>
-		
+
 		<redis.host>127.0.0.1</redis.host>
 		<redis.password></redis.password>
 		<zookeeper.address>127.0.0.1:2181</zookeeper.address>
@@ -118,6 +118,11 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
