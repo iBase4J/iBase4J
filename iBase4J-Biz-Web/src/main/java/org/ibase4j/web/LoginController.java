@@ -101,12 +101,9 @@ public class LoginController extends AppBaseController<IBizProvider> {
                 member = (TMember)provider.execute(parameter).getResult();
             }
             request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
-            ModelMap modelMap = new ModelMap();
-            String token = member.getToken();
-            modelMap.put("token", token);
             TokenUtil.setTokenInfo(uuid, member.getId().toString());
-            Map<String, Object> result = InstanceUtil.newHashMap("token", token);
-            result.put("userInfo", member);
+            ModelMap modelMap = new ModelMap();
+            Map<String, Object> result = InstanceUtil.newHashMap("userInfo", member);
             return setSuccessModelMap(modelMap, result);
         }
         request.setAttribute("msg", "[" + user.getAccount() + "]登录失败.");
