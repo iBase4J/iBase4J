@@ -124,6 +124,12 @@
 			<groupId>top.ibase4j</groupId>
 			<artifactId>ibase4j-common</artifactId>
 			<version>${ibase4j.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.caucho</groupId>
