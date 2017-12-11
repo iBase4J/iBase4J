@@ -42,7 +42,7 @@
 		<mybatis-plus.version>2.1.6</mybatis-plus.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.25</slf4j.version>
-		<log4j.version>2.10.0</log4j.version>
+		<log4j.version>2.9.1</log4j.version>
 		<!-- -->
 		<druid.version>1.1.6</druid.version>
 		<dubbo.version>2.5.7</dubbo.version>
@@ -232,11 +232,6 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>${log4j.version}</version>
@@ -249,6 +244,11 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-1.2-api</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
 		<!-- -->
