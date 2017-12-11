@@ -6,7 +6,7 @@
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
     <!-- 引入属性配置文件 -->
-	<bean class="top.ibase4j.core.support.PropertyPlaceholder">
+	<bean class="top.ibase4j.core.support.context.PropertyPlaceholder">
 		<property name="locations">
 			<list>
 				<value>${sys.jdbc.config.path}</value>
