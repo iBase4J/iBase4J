@@ -77,5 +77,5 @@ iBase4J is released under version 2.0 of the [Apache License][].
 [Apache License 2.0]: http://www.apache.org/licenses/LICENSE-2.0
 [NoSplit]: http://git.oschina.net/iBase4J/iBase4J/tree/NoSplit
 [idubbo]: http://git.oschina.net/iBase4J/iBase4J/tree/idubbo
-[springBoot]: https://gitee.com/iBase4J/iBase4J/tree/springBoot
+[springBoot]: https://gitee.com/iBase4J/iBase4J-SpringBoot
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
