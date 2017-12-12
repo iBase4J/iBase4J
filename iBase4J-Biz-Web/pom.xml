@@ -12,6 +12,7 @@
 
 	<properties>
 		<server.port>8090</server.port>
+		<jar.dic>${project.basedir}/../</jar.dic>
 	</properties>
 
 	<dependencies>

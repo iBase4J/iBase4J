@@ -13,9 +13,7 @@
 
 	<properties>
 		<server.port>8085</server.port>
-		<moduleName>SysService</moduleName>
 		<jar.dic>${project.basedir}/../</jar.dic>
-		<other.jar>alipay*.jar</other.jar>
 	</properties>
 
 	<!-- 生成model -->
