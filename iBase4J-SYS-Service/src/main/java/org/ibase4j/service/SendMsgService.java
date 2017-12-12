@@ -99,6 +99,7 @@ public class SendMsgService {
                 record.setSendState("1");
             } else {
                 record.setSendState("0");
+                response.setMessage(paramService.getValue(response.getCode(), response.getMessage()));
             }
         } else {
             record.setBizId(IdWorker.get32UUID());
