@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ServerListener implements ServletContextListener {
-	protected final Logger logger = LogManager.getLogger(this.getClass());
+	protected final Logger logger = LogManager.getLogger();
 
 	public void contextDestroyed(ServletContextEvent contextEvent) {
 	}
