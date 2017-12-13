@@ -194,19 +194,19 @@ public class SendMsgService {
             sendRandomCode(sender, sendMsg, cacheKey2);
             break;
         case "3":// 修改密码验证码
-            cacheKey2 = "CHGPWD_" + sendMsg.getPhone();
+            cacheKey2 = MSGCHKTYPE.CHGPWD + sendMsg.getPhone();
             sendRandomCode(sender, sendMsg, cacheKey2);
             break;
         case "4":// 身份验证验证码
-            cacheKey2 = "VLDID_" + sendMsg.getPhone();
+            cacheKey2 = MSGCHKTYPE.VLDID + sendMsg.getPhone();
             sendRandomCode(sender, sendMsg, cacheKey2);
             break;
         case "5":// 信息变更验证码
-            cacheKey2 = "CHGINFO_" + sendMsg.getPhone();
+            cacheKey2 = MSGCHKTYPE.CHGINFO + sendMsg.getPhone();
             sendRandomCode(sender, sendMsg, cacheKey2);
             break;
         case "6":// 活动确认验证码
-            cacheKey2 = "AVTCMF_" + sendMsg.getPhone();
+            cacheKey2 = MSGCHKTYPE.AVTCMF + sendMsg.getPhone();
             sendRandomCode(sender, sendMsg, cacheKey2);
             break;
         default:
