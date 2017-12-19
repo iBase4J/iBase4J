@@ -15,6 +15,7 @@
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
 		<jdbc.config.path>classpath:config/jdbc.properties</jdbc.config.path>
 		<system.config.path>classpath:config/system.properties</system.config.path>
+		<module.name>${project.artifactId}</module.name>
 		<!-- -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<ibase4j.version>1.2.12</ibase4j.version>
