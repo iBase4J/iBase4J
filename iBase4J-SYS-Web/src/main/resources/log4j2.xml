@@ -30,7 +30,7 @@
 		<!-- 产品数据分析日志 -->
         <RollingRandomAccessFile name="ProductLog"  
 			fileName="${LOG_HOME}/${SERVER_NAME}.log"
-			filePattern="${LOG_HOME}/%d{yyyy-MM-dd}/${SERVER_NAME}_%d{HHmmss}.log">
+			filePattern="${LOG_HOME}/back/${SERVER_NAME}.%d{yyyyMMddHHmmss}.log">
 			<PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M:%L] - %msg%xEx%n" />
             <Policies>
                 <SizeBasedTriggeringPolicy size="10MB" />
