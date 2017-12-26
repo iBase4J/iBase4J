@@ -32,10 +32,9 @@
 		<system.config.path>classpath:config/system.properties</system.config.path>
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>1.2.14</ibase4j.version>
+		<ibase4j.version>1.2.15</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
-		<spring-session.version>2.0.0.M2</spring-session.version>
 		<spring-data-redis.version>2.0.0.M4</spring-data-redis.version>
 		<!-- 数据库 -->
 		<mysql.version>5.1.39</mysql.version>
@@ -63,7 +62,7 @@
 		<zxing.version>3.3.1</zxing.version>
 		<jackson.version>2.9.2</jackson.version>
 		<zookeeper.version>3.4.11</zookeeper.version>
-		<shiro.version>1.2.4</shiro.version>
+		<shiro.version>1.4.0</shiro.version>
 		<quartz.version>2.3.0</quartz.version>
 		<aspectj.version>1.8.13</aspectj.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
@@ -79,6 +78,7 @@
 		<redis.password></redis.password>
 		<zookeeper.address>127.0.0.1:2181</zookeeper.address>
 		<fastDFS.host>127.0.0.1</fastDFS.host>
+		<session.cookie.secure>false</session.cookie.secure>
 	</properties>
 
 	<!-- @TODO -->
@@ -99,6 +99,7 @@
 				<redis.password></redis.password>
 				<zookeeper.address>127.0.0.1:2181</zookeeper.address>
 				<fastDFS.host>127.0.0.1</fastDFS.host>
+				<session.cookie.secure>true</session.cookie.secure>
 			</properties>
 		</profile>
 	</profiles>

@@ -23,9 +23,9 @@ import org.ibase4j.model.SysSession;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.provider.ISysProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 
 import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.support.cache.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.WebUtil;
 
 /**
@@ -39,7 +39,7 @@ public class Realm extends AuthorizingRealm {
     @Autowired
     protected ISysProvider sysProvider;
     @Autowired
-    private RedisOperationsSessionRepository sessionRepository;
+    private RedisSessionDAO sessionDAO;
 
     // 权限
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -112,8 +112,7 @@ public class Realm extends AuthorizingRealm {
                 sysProvider.execute(parameter);
                 logger.info("{} execute deleteBySessionId end.", parameter.getNo());
                 if (!currentSessionId.equals(sessionId)) {
-                    sessionRepository.delete((String)sessionId);
-                    sessionRepository.cleanupExpiredSessions();
+                    sessionDAO.delete((String)sessionId);
                 }
             }
         }
