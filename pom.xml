@@ -18,7 +18,7 @@
 		<module.name>${project.artifactId}</module.name>
 		<!-- -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>1.2.14</ibase4j.version>
+		<ibase4j.version>1.2.15</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-session.version>2.0.0.M2</spring-session.version>
@@ -50,7 +50,7 @@
 		<zxing.version>3.3.1</zxing.version>
 		<jackson.version>2.9.2</jackson.version>
 		<zookeeper.version>3.4.11</zookeeper.version>
-		<shiro.version>1.2.4</shiro.version>
+		<shiro.version>1.4.0</shiro.version>
 		<quartz.version>2.3.0</quartz.version>
 		<aspectj.version>1.8.13</aspectj.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
