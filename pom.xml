@@ -34,7 +34,7 @@
 		<log4j.version>2.10.0</log4j.version>
 		<!-- -->
 		<druid.version>1.1.6</druid.version>
-		<dubbo.version>2.5.8</dubbo.version>
+		<dubbo.version>2.5.7</dubbo.version>
 		<fastjson.version>1.2.44</fastjson.version>
 		<motan.version>1.1.0</motan.version>
 		<!-- -->
