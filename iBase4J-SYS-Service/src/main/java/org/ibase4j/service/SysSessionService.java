@@ -11,10 +11,10 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import top.ibase4j.core.Constants;
 import top.ibase4j.core.base.BaseService;
 import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.InstanceUtil;
-import top.ibase4j.core.util.PropertiesUtil;
 
 /**
  * @author ShenHuaJie
@@ -58,13 +58,12 @@ public class SysSessionService extends BaseService<SysSession> {
 
 	//
 	public void cleanExpiredSessions() {
-		String key = "spring:session:" + PropertiesUtil.getString("session.redis.namespace") + ":sessions:expires:";
 		Map<String, Object> columnMap = InstanceUtil.newHashMap();
 		List<SysSession> sessions = queryList(columnMap);
 		for (SysSession sysSession : sessions) {
 			if (sysSession != null) {
 				logger.info("检查SESSION : {}", sysSession.getSessionId());
-				if (!CacheUtil.getCache().exists(key + sysSession.getSessionId())) {
+				if (!CacheUtil.getCache().exists(Constants.REDIS_SHIRO_SESSION + sysSession.getSessionId())) {
 					logger.info("移除SESSION : {}", sysSession.getSessionId());
 					delete(sysSession.getId());
 				}
