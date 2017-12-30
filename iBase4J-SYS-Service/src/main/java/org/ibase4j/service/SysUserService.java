@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ibase4j.mapper.SysUserMapper;
 import org.ibase4j.mapper.SysUserThirdpartyMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysUser;
@@ -105,6 +104,6 @@ public class SysUserService extends BaseService<SysUser> {
 	}
 
 	public void init() {
-		((SysUserMapper) mapper).selectIdPage(Collections.<String, Object>emptyMap());
+		queryList(Collections.<String, Object>emptyMap());
 	}
 }
