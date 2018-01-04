@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="WARN"  monitorInterval="30">
 	<properties>
-		<property name="LOG_HOME">../logs</property>
+		<property name="LOG_HOME">/output/logs</property>
 		<!-- 日志备份目录 -->
 		<property name="SERVER_NAME">${module.name}</property>
 	</properties>
@@ -10,7 +10,7 @@
 			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{1}:%L] - %msg%n" />
 		</Console>
 		<RollingFile name="RollingFile"
-			fileName="${LOG_HOME}/${SERVER_NAME}-dev/${SERVER_NAME}.log"
+			fileName="${LOG_HOME}/${SERVER_NAME}-dev/${SERVER_NAME}.%d{HHmmss}.log"
 			filePattern="${LOG_HOME}/${SERVER_NAME}-dev/${SERVER_NAME}.%d{yyyy-MM-dd}.%i.log">
 			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M] - %msg%n" />
             <Policies>  
