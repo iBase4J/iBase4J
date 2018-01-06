@@ -10,7 +10,7 @@
 			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{1}:%L] - %msg%n" />
 		</Console>
 		<RollingFile name="RollingFile"
-			fileName="${LOG_HOME}/${SERVER_NAME}-dev/${SERVER_NAME}.%d{HHmmss}.log"
+			fileName="${LOG_HOME}/${SERVER_NAME}-dev/${SERVER_NAME}.log"
 			filePattern="${LOG_HOME}/${SERVER_NAME}-dev/${SERVER_NAME}.%d{yyyy-MM-dd}.%i.log">
 			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M] - %msg%n" />
             <Policies>  
