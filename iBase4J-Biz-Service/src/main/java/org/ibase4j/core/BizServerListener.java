@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import com.weibo.api.motan.common.MotanConstants;
 import com.weibo.api.motan.util.MotanSwitcherUtil;
 
-import top.ibase4j.core.listener.ServerListener;
+import top.ibase4j.core.listener.ApplicationReadyListener;
 
 @Component
-public class BizServerListener extends ServerListener {
+public class BizServerListener extends ApplicationReadyListener {
     protected final Logger logger = LogManager.getLogger(this.getClass());
 
     public void onApplicationEvent(ApplicationReadyEvent event) {
