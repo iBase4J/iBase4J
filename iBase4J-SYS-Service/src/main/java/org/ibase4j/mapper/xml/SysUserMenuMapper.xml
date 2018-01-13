@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.ibase4j.mapper.SysUserMenuMapper">
+<mapper namespace="org.hbkms.mapper.SysUserMenuMapper">
 	<!--  -->
   <select id="queryMenuIdsByUserId" resultType="java.lang.Long">
   	select distinct menu_id from sys_user_menu where user_id=#{userId} and permission_='read'
@@ -21,7 +21,7 @@
 				rm.user_id=#{userId}
 			</if>
 		</where>
-		group by menu_name
+		group by menu_name,menu_id
 		order by menu_id
 	</select>
 </mapper>
