@@ -32,7 +32,7 @@
 		<system.config.path>classpath:config/system.properties</system.config.path>
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>2.0.1</ibase4j.version>
+		<ibase4j.version>2.0.2</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data-redis.version>1.8.9.RELEASE</spring-data-redis.version>
