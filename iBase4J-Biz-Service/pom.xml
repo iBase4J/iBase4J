@@ -10,8 +10,6 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<server.port>8086</server.port>
-		<moduleName>BizService</moduleName>
 		<jar.dic>${project.basedir}/../</jar.dic>
 	</properties>
 
