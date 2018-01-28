@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.ibase4j.mapper.SysMenuMapper">
 	<!--  -->
-	<select id="selectIdPage" parameterType="java.util.Map" resultType="java.lang.Long">
+	<select id="selectIdPage" parameterType="java.util.Map" resultType="java.lang.Long" useCache="false">
 		select id_ from sys_menu
 		<where>
 			<if test="cm.parentId != null">
@@ -16,7 +16,7 @@
 			order by ${cm.orderBy}
 		</if>
 	</select>
-	<select id="getPermissions" resultType="java.util.Map">
+	<select id="getPermissions" resultType="java.util.Map" useCache="false">
 		select CONCAT(m.id_, code_) as value, CONCAT(menu_name, code_text) as text
 		from sys_menu m
 		join sys_dic_index di on  di.key_='CRUD'

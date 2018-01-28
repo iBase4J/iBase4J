@@ -8,8 +8,12 @@
 	<name>iBase4J</name>
 	<packaging>war</packaging>
 	<url>http://maven.apache.org</url>
-
-	<!-- maven运行方式：tomcat7:run 或 jetty:run -->
+	
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.8.RELEASE</version>
+	</parent>
 
 	<properties>
 		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
@@ -18,7 +22,7 @@
 		<module.name>${project.artifactId}</module.name>
 		<!-- -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>2.0.0</ibase4j.version>
+		<ibase4j.version>2.2.1</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data-redis.version>1.8.9.RELEASE</spring-data-redis.version>
@@ -29,6 +33,7 @@
 		<mybatis.version>3.4.5</mybatis.version>
 		<mybatis-spring.version>1.3.1</mybatis-spring.version>
 		<mybatis-plus.version>2.1.7</mybatis-plus.version>
+		<mybatis-ehcache.version>1.1.0</mybatis-ehcache.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.25</slf4j.version>
 		<log4j.version>2.10.0</log4j.version>
@@ -99,7 +104,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 		<!--  -->
@@ -156,17 +160,14 @@
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>1.11</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-digester</groupId>
 			<artifactId>commons-digester</artifactId>
-			<version>2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
-			<version>1.9.3</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -199,83 +200,88 @@
 			<artifactId>mybatis-plus</artifactId>
 			<version>${mybatis-plus.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mybatis.caches</groupId>
+			<artifactId>mybatis-ehcache</artifactId>
+			<version>${mybatis-ehcache.version}</version>
+		</dependency>
 		<!-- spring核心包 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
-			<version>${spring-data-redis.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 		<!-- 切面 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>${aspectj.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>${aspectj.version}</version>
 		</dependency>
 		<!-- 缓存 -->
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>${jedis.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.redisson</groupId>
@@ -297,7 +303,6 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -320,7 +325,6 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -338,44 +342,27 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-slf4j-impl</artifactId>
-			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-1.2-api</artifactId>
-			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
-			<version>3.15.0-GA</version>
 		</dependency>
-		<!-- Dubbo -->
-		<!-- <dependency> <groupId>com.alibaba</groupId> <artifactId>dubbo</artifactId> 
-			<version>${dubbo.version}</version> <exclusions> <exclusion> <groupId>org.springframework</groupId> 
-			<artifactId>spring</artifactId> </exclusion> <exclusion> <groupId>org.jboss.netty</groupId> 
-			<artifactId>netty</artifactId> </exclusion> </exclusions> </dependency> <dependency> 
-			<groupId>com.101tec</groupId> <artifactId>zkclient</artifactId> <version>0.8</version> 
-			<exclusions> <exclusion> <groupId>org.slf4j</groupId> <artifactId>slf4j-log4j12</artifactId> 
-			</exclusion> </exclusions> </dependency> -->
-		<!-- activemq -->
-		<!-- <dependency> <groupId>org.apache.activemq</groupId> <artifactId>activemq-spring</artifactId> 
-			<version>${activemq.version}</version> </dependency> -->
 		<dependency>
 			<groupId>com.esotericsoftware</groupId>
 			<artifactId>reflectasm</artifactId>
@@ -385,17 +372,14 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson.version}</version>
 		</dependency>
 		<!-- excel -->
 		<dependency>
@@ -497,67 +481,55 @@
 				<includes>
 					<include>**/*.xml</include>
 				</includes>
-				<filtering>true</filtering>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
 				<includes>
 					<include>**/*.*</include>
 				</includes>
-				<filtering>true</filtering>
 			</resource>
 		</resources>
-
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+					<testIncludes>
+						<testInclude>none</testInclude>
+					</testIncludes>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 				<configuration>
 					<encoding>UTF-8</encoding>
+					<useDefaultDelimiters>true</useDefaultDelimiters>
+					<!-- 过滤后缀为pem、pfx的证书文件 -->
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>pem</nonFilteredFileExtension>
+						<nonFilteredFileExtension>p12</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
-					<warSourceExcludes>WEB-INF/lib/log4j-${log4j.version}.jar</warSourceExcludes>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.0.0</version>
-				<configuration>
-					<contextPath>/</contextPath>
-					<scanIntervalSeconds>300</scanIntervalSeconds>
-					<connectors>
-						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-							<port>8090</port>
-						</connector>
-					</connectors>
-				</configuration>
-			</plugin>
-
-			<!-- tomcat-maven-plugin -->
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<port>8090</port>
-					<path>/</path>
+					<encoding>UTF-8</encoding>
+					<webResources>
+						<resource>
+							<directory>${jar.dic}/libs</directory>
+							<targetPath>WEB-INF/lib</targetPath>
+							<excludes>
+								<exclude>${other.jar}</exclude>
+							</excludes>
+						</resource>
+					</webResources>
 				</configuration>
 			</plugin>
 		</plugins>

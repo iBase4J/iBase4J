@@ -35,12 +35,20 @@ public class SysDicController extends AbstractController<SysDic> {
 		return setSuccessModelMap(modelMap, result);
 	}
 
+    @ApiOperation(value = "查询字典项")
+    @RequiresPermissions("sys.base.dic.read")
+    @PutMapping(value = "/read/page")
+    public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        param.put("orderBy", "sort_no");
+        return super.query(modelMap, param);
+    }
+
 	@ApiOperation(value = "查询字典项")
 	@RequiresPermissions("sys.base.dic.read")
 	@PutMapping(value = "/read/list")
-	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+	public Object queryList(ModelMap modelMap, @RequestBody Map<String, Object> param) {
 		param.put("orderBy", "sort_no");
-		return super.query(modelMap, param);
+		return super.queryList(modelMap, param);
 	}
 
 	@ApiOperation(value = "字典项详情")
