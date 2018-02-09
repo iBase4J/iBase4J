@@ -69,7 +69,7 @@ iBase4J使用 [Apache License 2.0][] 协议.
 ![主页](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/index.png "主页")
 ![接口](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/swagger.png "接口")
 
-##==可购买完整版UI(iBase4J-UI-DataTables/iBase4J-UI-AdminLTE)
+##==可购买完整版UI([iBase4J-UI-DataTables][]/[iBase4J-UI-AdminLTE][])
 
 ![登录](https://gitee.com/iBase4J/iBase4J-SpringBoot/raw/master/iBase4J-UI/iBase4J-UI-AdminLTE/desc/1.png "登录")
 ![主页](https://gitee.com/iBase4J/iBase4J-SpringBoot/raw/master/iBase4J-UI/iBase4J-UI-AdminLTE/desc/2.png "主页")
@@ -84,3 +84,5 @@ iBase4J is released under version 2.0 of the [Apache License][].
 [idubbo]: http://git.oschina.net/iBase4J/iBase4J/tree/idubbo
 [springBoot]: https://gitee.com/iBase4J/iBase4J-SpringBoot
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
+[iBase4J-UI-DataTables]: https://gitee.com/iBase4J/iBase4J/tree/master/iBase4J-UI/iBase4J-UI-DataTables
+[iBase4J-UI-AdminLTE]: https://gitee.com/iBase4J/iBase4J/tree/master/iBase4J-UI/iBase4J-UI-AdminLTE
