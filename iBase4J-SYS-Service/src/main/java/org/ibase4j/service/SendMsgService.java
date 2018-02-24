@@ -190,7 +190,7 @@ public class SendMsgService {
             cacheKey2 = MSGCHKTYPE.LOGIN + sendMsg.getPhone();
             String times = StringUtils.defaultIfBlank(paramService.getValue("LOGIN_DAILY_TIMES"), "3");
             String msg = StringUtils.defaultIfBlank(paramService.getValue("LOGIN_LIMIT_MSG"), "您今天登录的次数已达到最大限制。");
-            refreshSendTimes(cacheKey1, 60 * 60 * 24, Integer.parseInt(times), msg);
+            CacheUtil.refreshTimes(cacheKey1, 60 * 60 * 24, Integer.parseInt(times), msg);
             sendRandomCode(sender, sendMsg, cacheKey2);
             break;
         case "3":// 修改密码验证码
@@ -226,37 +226,5 @@ public class SendMsgService {
         sendMsg.setParams(JSON.toJSONString(param));
         String seconds = paramService.getValue("AUTH-CODE-EXPIRATION-SMS" + sendMsg.getBizType(), "120");
         CacheUtil.getCache().set(cacheKey, random.toString(), Integer.valueOf(seconds));
-    }
-
-    /**
-     * 发送频率检查
-     * 
-     * @param key
-     *            缓存键
-     * @param seconds
-     *            缓存有效期
-     * @param frequency
-     *            最大频率
-     * @param message
-     *            超过频率提示信息
-     */
-    private void refreshSendTimes(String key, int seconds, int frequency, String message) {
-        if (CacheUtil.getLock(key + "-LOCK")) {
-            try {
-                Integer times = 1;
-                String timesStr = (String)CacheUtil.getCache().get(key);
-                if (StringUtils.isNotBlank(timesStr)) {
-                    times = Integer.valueOf(timesStr) + 1;
-                    if (times > frequency) {
-                        throw new RuntimeException(message);
-                    }
-                }
-                CacheUtil.getCache().set(key, times.toString(), seconds);
-            } finally {
-                CacheUtil.unlock(key + "-LOCK");
-            }
-        } else {
-            refreshSendTimes(key, seconds, frequency, message);
-        }
     }
 }
