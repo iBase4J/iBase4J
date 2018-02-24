@@ -1,5 +1,6 @@
 package org.ibase4j.core.config;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.mgt.RememberMeManager;
@@ -25,6 +26,7 @@ import org.springframework.context.annotation.DependsOn;
 import top.ibase4j.core.listener.SessionListener;
 import top.ibase4j.core.support.cache.shiro.RedisCacheManager;
 import top.ibase4j.core.support.cache.shiro.RedisSessionDAO;
+import top.ibase4j.core.util.FileUtil;
 import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.PropertiesUtil;
 
@@ -37,9 +39,27 @@ import top.ibase4j.core.util.PropertiesUtil;
 @Configuration
 @EnableAutoConfiguration(exclude = RedisAutoConfiguration.class)
 public class ShiroConfig {
-    String filters = "/=anon;/app/**=anon;/index.jsp=anon;/regin=anon;/login=anon;/*.ico=anon;/upload/*=anon;"
+    static String filters = "/=anon;/app/**=anon;/index.jsp=anon;/regin=anon;/login=anon;/*.ico=anon;/upload/*=anon;"
         + "/unauthorized=anon;/forbidden=anon;/sns*=anon;/*/api-docs=anon;/callback*=anon;/swagger*=anon;"
         + "/configuration/*=anon;/*/configuration/*=anon;/webjars/**=anon;" + "/**=authc,user";
+
+    static {
+        String path = ShiroConfig.class.getResource("/").getFile();
+        try {
+            List<String> urlList = FileUtil.readFile(path + "config/shiro.config");
+            if (urlList != null) {
+                StringBuilder sb = new StringBuilder();
+                for (String url : urlList) {
+                    sb.append(url.trim());
+                    if (!url.trim().endsWith(";")) {
+                        sb.append(";");
+                    }
+                }
+                filters = sb.toString();
+            }
+        } catch (Exception e) {
+        }
+    }
 
     @Bean
     public Realm realm(SessionDAO sessionDAO) {
