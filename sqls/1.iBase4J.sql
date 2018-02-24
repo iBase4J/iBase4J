@@ -218,6 +218,15 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
 /*!40000 ALTER TABLE `sys_event` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_event` ENABLE KEYS */;
 
+-- 导出  表 iteachs.sys_lock 结构
+CREATE TABLE IF NOT EXISTS `sys_lock` (
+  `key_` varchar(128) NOT NULL,
+  `name_` varchar(64) NOT NULL,
+  `expire_` datetime NOT NULL,
+  PRIMARY KEY (`key_`),               
+  KEY `expire_` (`expire_`)
+) ENGINE=InnoDB;
+
 -- 导出  表 ibase4j.sys_menu 结构
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE IF NOT EXISTS `sys_menu` (
