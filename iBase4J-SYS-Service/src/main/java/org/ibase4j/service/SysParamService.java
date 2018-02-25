@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.support.context.ApplicationContextHolder;
 import top.ibase4j.core.util.InstanceUtil;
 
 /**
@@ -57,7 +58,7 @@ public class SysParamService extends BaseService<SysParam> {
     }
 
     public String getValue(String key, String defaultValue) {
-        String value = applicationContext.getBean(SysParamService.class).getAllParams().get(key);
+        String value = ApplicationContextHolder.getBean(SysParamService.class).getAllParams().get(key);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
         }
