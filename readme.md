@@ -14,7 +14,7 @@
  3. MVC： 基于spring mvc注解,Rest风格Controller。Exception统一管理。
  4. 调度：Spring+quartz, 可以查询、修改周期、暂停、删除、新增、立即执行，查询执行记录等。
  5. 基于session的国际化提示信息，职责链模式的本地语言拦截器,Shiro登录、URL权限管理。会话管理，强制结束会话。
- 6. 缓存和Session：注解redis缓存数据，Spring-session和redis实现分布式session同步，重启服务会话不丢失。
+ 6. 缓存和Session：注解redis缓存数据；shiro实现redis分布式session同步，重启服务会话不丢失。
  7. 多系统交互：Dubbo,ActiveMQ多系统交互，ftp/sftp/fastdafs发送文件到独立服务器，使文件服务分离。
  8. 前后端分离：没有权限的文件只用nginx代理即可。
  9. 日志：log4j2打印日志，业务日志和调试日志分开打印。同时基于时间和文件大小分割日志文件。
