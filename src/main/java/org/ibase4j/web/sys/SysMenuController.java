@@ -29,46 +29,54 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "menu")
 public class SysMenuController extends AbstractController<SysMenu> {
 
-	@ApiOperation(value = "查询菜单")
-	@PutMapping(value = "/read/page")
-	@RequiresPermissions("sys.base.menu.read")
-	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		return super.query(modelMap, param);
-	}
+    @ApiOperation(value = "查询菜单")
+    @PutMapping(value = "/read/page")
+    @RequiresPermissions("sys.base.menu.read")
+    public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        return super.query(modelMap, param);
+    }
 
-	@ApiOperation(value = "查询菜单")
-	@PutMapping(value = "/read/list")
-	@RequiresPermissions("sys.base.menu.read")
-	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		return super.queryList(modelMap, param);
-	}
+    @ApiOperation(value = "查询菜单")
+    @PutMapping(value = "/read/list")
+    @RequiresPermissions("sys.base.menu.read")
+    public Object get(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        return super.queryList(modelMap, param);
+    }
 
-	@ApiOperation(value = "菜单详情")
-	@PutMapping(value = "/read/detail")
-	@RequiresPermissions("sys.base.menu.read")
-	public Object get(ModelMap modelMap, @RequestBody SysMenu param) {
-		return super.get(modelMap, param);
-	}
+    @ApiOperation(value = "查询菜单")
+    @PutMapping(value = "/read/tree")
+    @RequiresPermissions("sys.base.menu.read")
+    public Object getTree(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        List<?> list = ((SysMenuService)service).queryTreeList(param);
+        return setSuccessModelMap(modelMap, list);
+    }
 
-	@PostMapping
-	@ApiOperation(value = "修改菜单")
-	@RequiresPermissions("sys.base.menu.updae")
-	public Object update(ModelMap modelMap, @RequestBody SysMenu param) {
-		return super.update(modelMap, param);
-	}
+    @ApiOperation(value = "菜单详情")
+    @PutMapping(value = "/read/detail")
+    @RequiresPermissions("sys.base.menu.read")
+    public Object get(ModelMap modelMap, @RequestBody SysMenu param) {
+        return super.get(modelMap, param);
+    }
 
-	@DeleteMapping
-	@ApiOperation(value = "删除菜单")
-	@RequiresPermissions("sys.base.menu.delete")
-	public Object delete(ModelMap modelMap, @RequestBody SysMenu param) {
-		return super.delete(modelMap, param);
-	}
+    @PostMapping
+    @ApiOperation(value = "修改菜单")
+    @RequiresPermissions("sys.base.menu.updae")
+    public Object update(ModelMap modelMap, @RequestBody SysMenu param) {
+        return super.update(modelMap, param);
+    }
 
-	@ApiOperation(value = "获取所有权限")
-	@RequiresPermissions("sys.base.menu.read")
-	@RequestMapping(value = "/read/permission")
-	public Object getPermissions(ModelMap modelMap) {
-		List<?> list = ((SysMenuService)service).getPermissions();
-		return setSuccessModelMap(modelMap, list);
-	}
+    @DeleteMapping
+    @ApiOperation(value = "删除菜单")
+    @RequiresPermissions("sys.base.menu.delete")
+    public Object delete(ModelMap modelMap, @RequestBody SysMenu param) {
+        return super.delete(modelMap, param);
+    }
+
+    @ApiOperation(value = "获取所有权限")
+    @RequiresPermissions("sys.base.menu.read")
+    @RequestMapping(value = "/read/permission")
+    public Object getPermissions(ModelMap modelMap) {
+        List<?> list = ((SysMenuService)service).getPermissions();
+        return setSuccessModelMap(modelMap, list);
+    }
 }

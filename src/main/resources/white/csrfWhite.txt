@@ -1,3 +1,4 @@
+login.html
 index.html
 swagger-ui.html
 springfox-swagger-ui
