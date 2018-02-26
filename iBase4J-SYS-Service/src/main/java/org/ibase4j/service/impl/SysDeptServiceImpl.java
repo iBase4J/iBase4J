@@ -1,10 +1,11 @@
-package org.ibase4j.service;
+package org.ibase4j.service.impl;
 
 import org.ibase4j.model.SysDept;
 import org.ibase4j.service.ISysDeptService;
 import org.springframework.cache.annotation.CacheConfig;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseService;
 
@@ -14,6 +15,7 @@ import top.ibase4j.core.base.BaseService;
  */
 @CacheConfig(cacheNames = "sysDept")
 @Service(interfaceClass = ISysDeptService.class)
+@MotanService(interfaceClass = ISysDeptService.class)
 public class SysDeptServiceImpl extends BaseService<SysDept> implements ISysDeptService {
 	
 }

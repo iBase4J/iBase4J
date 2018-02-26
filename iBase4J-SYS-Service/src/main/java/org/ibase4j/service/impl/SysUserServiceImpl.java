@@ -1,4 +1,4 @@
-package org.ibase4j.service;
+package org.ibase4j.service.impl;
 
 import java.util.Collections;
 import java.util.Date;
@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseService;
 import top.ibase4j.core.support.login.ThirdPartyUser;
@@ -35,6 +36,7 @@ import top.ibase4j.core.util.SecurityUtil;
  */
 @CacheConfig(cacheNames = "SysUser")
 @Service(interfaceClass = ISysUserService.class)
+@MotanService(interfaceClass = ISysUserService.class)
 public class SysUserServiceImpl extends BaseService<SysUser> implements ISysUserService {
 	@Autowired
 	private SysUserThirdpartyMapper thirdpartyMapper;

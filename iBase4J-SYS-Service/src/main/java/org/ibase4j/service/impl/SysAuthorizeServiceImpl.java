@@ -1,4 +1,4 @@
-package org.ibase4j.service;
+package org.ibase4j.service.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.base.BaseService;
@@ -35,6 +36,7 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @CacheConfig(cacheNames = "sysAuthorize")
 @Service(interfaceClass = ISysAuthorizeService.class)
+@MotanService(interfaceClass = ISysAuthorizeService.class)
 public class SysAuthorizeServiceImpl extends BaseService<SysMenu> implements ISysAuthorizeService {
 	@Autowired
 	private SysUserMenuMapper sysUserMenuMapper;

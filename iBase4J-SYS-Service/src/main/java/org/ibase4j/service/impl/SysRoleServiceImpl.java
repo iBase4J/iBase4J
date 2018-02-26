@@ -1,4 +1,4 @@
-package org.ibase4j.service;
+package org.ibase4j.service.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.CacheConfig;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseService;
 
@@ -23,6 +24,7 @@ import top.ibase4j.core.base.BaseService;
  */
 @CacheConfig(cacheNames = "sysRole")
 @Service(interfaceClass = ISysRoleService.class)
+@MotanService(interfaceClass = ISysRoleService.class)
 public class SysRoleServiceImpl extends BaseService<SysRole> implements ISysRoleService {
 	@Autowired
 	private ISysDeptService sysDeptService;

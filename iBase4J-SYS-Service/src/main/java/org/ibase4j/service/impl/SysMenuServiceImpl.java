@@ -1,4 +1,4 @@
-package org.ibase4j.service;
+package org.ibase4j.service.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.CacheConfig;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseService;
 
@@ -21,6 +22,7 @@ import top.ibase4j.core.base.BaseService;
  */
 @CacheConfig(cacheNames = "sysMenu")
 @Service(interfaceClass = ISysMenuService.class)
+@MotanService(interfaceClass = ISysMenuService.class)
 public class SysMenuServiceImpl extends BaseService<SysMenu> implements ISysMenuService {
 	@Autowired
 	private ISysDicService sysDicService;

@@ -1,4 +1,4 @@
-package org.ibase4j.service;
+package org.ibase4j.service.impl;
 
 import java.util.Map;
 
@@ -10,12 +10,14 @@ import org.springframework.cache.annotation.CacheConfig;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseService;
 import top.ibase4j.model.SysEvent;
 
 @CacheConfig(cacheNames = "sysEvent")
 @Service(interfaceClass = ISysEventService.class)
+@MotanService(interfaceClass = ISysEventService.class)
 public class SysEventServiceImpl extends BaseService<SysEvent> implements ISysEventService {
 	@Autowired
 	private ISysUserService sysUserService;
