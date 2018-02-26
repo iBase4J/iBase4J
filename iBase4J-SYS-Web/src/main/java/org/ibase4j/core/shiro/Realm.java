@@ -19,15 +19,15 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.SysSession;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.service.SysAuthorizeService;
-import org.ibase4j.service.SysSessionService;
-import org.ibase4j.service.SysUserService;
+import org.ibase4j.service.ISysAuthorizeService;
+import org.ibase4j.service.ISysSessionService;
+import org.ibase4j.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import top.ibase4j.core.support.cache.shiro.RedisSessionDAO;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 权限检查类
@@ -38,11 +38,13 @@ import com.baomidou.mybatisplus.plugins.Page;
 public class Realm extends AuthorizingRealm {
 	private final Logger logger = LogManager.getLogger();
 	@Autowired
-	private SysUserService sysUserService;
+	private RedisSessionDAO sessionDAO;
 	@Autowired
-	private SysSessionService sysSessionService;
+	private ISysUserService sysUserService;
 	@Autowired
-	private SysAuthorizeService sysAuthorizeService;
+	private ISysSessionService sysSessionService;
+	@Autowired
+	private ISysAuthorizeService sysAuthorizeService;
 
 	// 权限
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -65,12 +67,11 @@ public class Realm extends AuthorizingRealm {
 			throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("countSql", 0);
 		params.put("enable", 1);
 		params.put("account", token.getUsername());
-		Page<SysUser> pageInfo = sysUserService.query(params);
-		if (pageInfo.getTotal() == 1) {
-			SysUser user = pageInfo.getRecords().get(0);
+		List<?> list = sysUserService.queryList(params);
+		if (list.size() == 1) {
+			SysUser user = (SysUser) list.get(0);
 			StringBuilder sb = new StringBuilder(100);
 			for (int i = 0; i < token.getPassword().length; i++) {
 				sb.append(token.getPassword()[i]);
@@ -96,9 +97,19 @@ public class Realm extends AuthorizingRealm {
 		Session session = currentUser.getSession();
 		String currentSessionId = session.getId().toString();
 		// 踢出用户
-		sysSessionService.deleteByAccount(account, currentSessionId);
 		SysSession record = new SysSession();
 		record.setAccount(account);
+		List<?> sessionIds = sysSessionService.querySessionIdByAccount(record);
+		if (sessionIds != null) {
+			for (Object sessionId : sessionIds) {
+				record.setSessionId((String) sessionId);
+				sysSessionService.deleteBySessionId(record);
+				if (!currentSessionId.equals(sessionId)) {
+					sessionDAO.delete((String) sessionId);
+				}
+			}
+		}
+		// 保存用户
 		record.setSessionId(currentSessionId);
 		record.setIp(StringUtils.isBlank(host) ? session.getHost() : host);
 		record.setStartTime(session.getStartTimestamp());

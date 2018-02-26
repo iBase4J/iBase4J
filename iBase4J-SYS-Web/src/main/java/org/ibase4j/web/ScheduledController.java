@@ -3,14 +3,13 @@
  */
 package org.ibase4j.web;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.support.scheduler.TaskScheduled;
-import org.ibase4j.service.SchedulerService;
+import org.ibase4j.service.ISchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +23,8 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.support.scheduler.TaskScheduled;
 
 /**
  * 内存调度管理
@@ -36,7 +37,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/scheduled")
 public class ScheduledController extends BaseController {
 	@Autowired
-	private SchedulerService schedulerService;
+	private ISchedulerService schedulerService;
 
 	@PostMapping
 	@ApiOperation(value = "新增任务")
@@ -50,7 +51,7 @@ public class ScheduledController extends BaseController {
 	@ApiOperation(value = "删除任务")
 	@RequiresPermissions("sys.task.scheduled.close")
 	public Object delete(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
-		schedulerService.delTask(scheduled.getTaskGroup(), scheduled.getTaskName());
+		schedulerService.delTask(scheduled);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -58,7 +59,7 @@ public class ScheduledController extends BaseController {
 	@ApiOperation(value = "立即执行任务")
 	@RequiresPermissions("sys.task.scheduled.run")
 	public Object exec(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
-		schedulerService.execTask(scheduled.getTaskGroup(), scheduled.getTaskName());
+		schedulerService.execTask(scheduled);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -66,7 +67,7 @@ public class ScheduledController extends BaseController {
 	@ApiOperation(value = "启动任务")
 	@RequiresPermissions("sys.task.scheduled.open")
 	public Object open(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
-		schedulerService.openTask(scheduled.getTaskGroup(), scheduled.getTaskName());
+		schedulerService.openTask(scheduled);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -74,7 +75,7 @@ public class ScheduledController extends BaseController {
 	@ApiOperation(value = "暂停任务")
 	@RequiresPermissions("sys.task.scheduled.close")
 	public Object close(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
-		schedulerService.closeTask(scheduled.getTaskGroup(), scheduled.getTaskName());
+		schedulerService.closeTask(scheduled);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -82,7 +83,7 @@ public class ScheduledController extends BaseController {
 	@ApiOperation(value = "任务列表")
 	@RequiresPermissions("sys.task.scheduled.read")
 	public Object list(ModelMap modelMap) {
-		Page<TaskScheduled> jobs = schedulerService.getAllTaskDetail();
+		List<TaskScheduled> jobs = schedulerService.getAllTaskDetail();
 		return setSuccessModelMap(modelMap, jobs);
 	}
 

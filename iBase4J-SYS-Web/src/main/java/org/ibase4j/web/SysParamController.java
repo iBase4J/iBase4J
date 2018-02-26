@@ -3,9 +3,8 @@ package org.ibase4j.web;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.SysParam;
-import org.ibase4j.service.SysParamService;
+import org.ibase4j.service.ISysParamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +18,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 参数管理
@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "param")
 public class SysParamController extends BaseController {
 	@Autowired
-	private SysParamService sysParamService;
+	private ISysParamService sysParamService;
 
 	@PutMapping(value = "/read/list")
 	@ApiOperation(value = "查询系统参数")

@@ -6,9 +6,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.SysMenu;
-import org.ibase4j.service.SysMenuService;
+import org.ibase4j.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +21,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 菜单管理
@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "menu")
 public class SysMenuController extends BaseController {
 	@Autowired
-	private SysMenuService sysMenuService;
+	private ISysMenuService sysMenuService;
 
 	@ApiOperation(value = "查询菜单")
 	@PutMapping(value = "/read/page")

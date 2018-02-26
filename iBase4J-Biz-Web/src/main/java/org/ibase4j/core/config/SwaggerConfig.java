@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableWebMvc
 @EnableSwagger2
-@ComponentScan("org.ibase4j.web")
+@ComponentScan("org.xshop.web")
 public class SwaggerConfig {
 
 	@Bean
@@ -28,9 +28,9 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("iBase4J-API").description("©2016 Copyright. Powered By iBase4J.")
+		return new ApiInfoBuilder().title("xshop-API").description("©2016 Copyright. Powered By xshop.")
 				// .termsOfServiceUrl("")
-				.contact(new Contact("iBase4J", "", "iBase4J@163.com")).license("Apache License Version 2.0")
+				.contact(new Contact("xshop", "", "xshop@163.com")).license("Apache License Version 2.0")
 				.licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE").version("2.0").build();
 	}
 

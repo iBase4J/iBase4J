@@ -3,17 +3,9 @@ package org.ibase4j.web;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
-import org.ibase4j.core.Constants;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.exception.LoginException;
-import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.support.HttpCode;
-import org.ibase4j.core.support.login.LoginHelper;
-import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.service.SysSessionService;
-import org.ibase4j.service.SysUserService;
+import org.ibase4j.service.ISysSessionService;
+import org.ibase4j.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import top.ibase4j.core.Constants;
+import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.config.Resources;
+import top.ibase4j.core.exception.LoginException;
+import top.ibase4j.core.support.Assert;
+import top.ibase4j.core.support.HttpCode;
+import top.ibase4j.core.support.login.LoginHelper;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 用户登录
@@ -35,9 +35,9 @@ import io.swagger.annotations.ApiParam;
 @Api(value = "登录接口", description = "登录接口")
 public class LoginController extends BaseController {
 	@Autowired
-	private SysUserService sysUserService;
+	private ISysUserService sysUserService;
 	@Autowired
-	private SysSessionService sysSessionService;
+	private ISysSessionService sysSessionService;
 
 	// 登录
 	@ApiOperation(value = "用户登录")

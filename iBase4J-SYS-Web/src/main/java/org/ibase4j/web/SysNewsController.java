@@ -3,9 +3,8 @@ package org.ibase4j.web;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.SysNews;
-import org.ibase4j.service.SysNewsService;
+import org.ibase4j.service.ISysNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +16,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 新闻管理控制类
@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "news")
 public class SysNewsController extends BaseController {
 	@Autowired
-	private SysNewsService sysNewsService;
+	private ISysNewsService sysNewsService;
 
 	@ApiOperation(value = "查询新闻")
 	@RequiresPermissions("public.news.read")

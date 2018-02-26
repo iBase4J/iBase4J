@@ -9,11 +9,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.support.HttpCode;
-import org.ibase4j.core.support.security.BASE64Decoder;
-import org.ibase4j.core.util.InstanceUtil;
-import org.ibase4j.core.util.UploadUtil;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.support.HttpCode;
+import top.ibase4j.core.support.security.BASE64Decoder;
+import top.ibase4j.core.util.InstanceUtil;
+import top.ibase4j.core.util.UploadUtil;
 
 /**
  * 文件上传控制器

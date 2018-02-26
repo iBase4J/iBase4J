@@ -7,14 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ibase4j.core.Constants;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.config.Resources;
-import org.ibase4j.core.support.login.LoginHelper;
-import org.ibase4j.core.support.login.ThirdPartyLoginHelper;
-import org.ibase4j.core.support.login.ThirdPartyUser;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.service.SysUserService;
+import org.ibase4j.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,6 +19,12 @@ import com.alibaba.fastjson.JSONObject;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.Constants;
+import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.config.Resources;
+import top.ibase4j.core.support.login.LoginHelper;
+import top.ibase4j.core.support.login.ThirdPartyLoginHelper;
+import top.ibase4j.core.support.login.ThirdPartyUser;
 
 /**
  * 第三方登录控制类
@@ -36,7 +36,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "第三方登录接口", description = "第三方登录接口")
 public class ThirdPartyLoginController extends BaseController {
 	@Autowired
-	private SysUserService sysUserService;
+	private ISysUserService sysUserService;
 
 	@RequestMapping("/sns")
 	@ApiOperation(value = "用户登录", httpMethod = "GET")
@@ -81,9 +81,7 @@ public class ThirdPartyLoginController extends BaseController {
 					// 获取第三方用户信息存放到session中
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getWxUserinfo(map.get("access_token"), openId);
 					thirdUser.setProvider("WX");
-					SysUser sysUser = sysUserService.thirdPartyLogin(thirdUser);
-					String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
-					LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);
+					thirdPartyLogin(request, thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -114,9 +112,7 @@ public class ThirdPartyLoginController extends BaseController {
 					// 获取第三方用户信息存放到session中
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getQQUserinfo(map.get("access_token"), openId);
 					thirdUser.setProvider("QQ");
-					SysUser sysUser = sysUserService.thirdPartyLogin(thirdUser);
-					String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
-					LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);
+					thirdPartyLogin(request, thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -148,9 +144,7 @@ public class ThirdPartyLoginController extends BaseController {
 					ThirdPartyUser thirdUser = ThirdPartyLoginHelper.getSinaUserinfo(json.getString("access_token"),
 							uid);
 					thirdUser.setProvider("SINA");
-					SysUser sysUser = sysUserService.thirdPartyLogin(thirdUser);
-					String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
-					LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);
+					thirdPartyLogin(request, thirdUser);
 					// 跳转到登录成功界面
 					modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
 				} else {// 如果未获取到OpenID
@@ -168,6 +162,20 @@ public class ThirdPartyLoginController extends BaseController {
 		}
 
 		return "/sns/redirect";
+	}
+
+	private void thirdPartyLogin(HttpServletRequest request, ThirdPartyUser param) {
+		SysUser sysUser = null;
+		// 查询是否已经绑定过
+		Long userId = sysUserService.queryUserIdByThirdParty(param);
+
+		if (userId == null) {
+			sysUser = sysUserService.insertThirdPartyUser(param);
+		} else {
+			sysUser = sysUserService.queryById(param.getId());
+		}
+		String clientIp = (String) request.getSession().getAttribute(Constants.USER_IP);
+		LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);
 	}
 
 	private String getRedirectUrl(HttpServletRequest request, String type) {

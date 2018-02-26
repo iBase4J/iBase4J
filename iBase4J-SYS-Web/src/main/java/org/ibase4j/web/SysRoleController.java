@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.SysRole;
-import org.ibase4j.service.SysRoleService;
+import org.ibase4j.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +17,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 角色管理
@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "role")
 public class SysRoleController extends BaseController {
 	@Autowired
-	private SysRoleService sysRoleService;
+	private ISysRoleService sysRoleService;
 
 	@ApiOperation(value = "查询角色")
 	@RequiresPermissions("sys.base.role.read")

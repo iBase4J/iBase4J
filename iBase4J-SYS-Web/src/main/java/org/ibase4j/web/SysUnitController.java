@@ -3,9 +3,8 @@ package org.ibase4j.web;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.SysUnit;
-import org.ibase4j.service.SysUnitService;
+import org.ibase4j.service.ISysUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +16,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 单位管理控制类
@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "unit")
 public class SysUnitController extends BaseController {
 	@Autowired
-	private SysUnitService sysUnitService;
+	private ISysUnitService sysUnitService;
 
 	@ApiOperation(value = "查询单位")
 	@RequiresPermissions("sys.base.unit.read")

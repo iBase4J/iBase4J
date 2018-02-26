@@ -3,9 +3,8 @@ package org.ibase4j.web;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.SysEmail;
-import org.ibase4j.service.SysEmailService;
+import org.ibase4j.service.ISysEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +16,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 邮件管理控制类
@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "email")
 public class SysEmailController extends BaseController {
 	@Autowired
-	private SysEmailService sysEmailService;
+	private ISysEmailService sysEmailService;
 
 	@ApiOperation(value = "查询邮件")
 	@RequiresPermissions("sys.email.list.read")

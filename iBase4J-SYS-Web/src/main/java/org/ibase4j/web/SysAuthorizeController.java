@@ -1,16 +1,14 @@
 package org.ibase4j.web;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.SysRoleMenu;
 import org.ibase4j.model.SysUserMenu;
 import org.ibase4j.model.SysUserRole;
-import org.ibase4j.service.SysAuthorizeService;
-import org.ibase4j.service.SysCacheService;
+import org.ibase4j.service.ISysAuthorizeService;
+import org.ibase4j.service.ISysCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 权限管理
@@ -33,9 +32,9 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "权限管理", description = "权限管理")
 public class SysAuthorizeController extends BaseController {
 	@Autowired
-	private SysAuthorizeService authorizeService;
+	private ISysAuthorizeService authorizeService;
 	@Autowired
-	private SysCacheService sysCacheService;
+	private ISysCacheService sysCacheService;
 
 	@ApiOperation(value = "获取用户菜单编号")
 	@PutMapping(value = "user/read/menu")
@@ -120,8 +119,8 @@ public class SysAuthorizeController extends BaseController {
 	@ApiOperation(value = "清理缓存")
 	@RequiresPermissions("sys.cache.update")
 	@RequestMapping(value = "/cache/update", method = RequestMethod.POST)
-	public Object flush(HttpServletRequest request, ModelMap modelMap) {
-		sysCacheService.flushCache();
+	public Object flush(ModelMap modelMap, @RequestBody Map<String, String> param) {
+		sysCacheService.flush(param);
 		return setSuccessModelMap(modelMap);
 	}
 }

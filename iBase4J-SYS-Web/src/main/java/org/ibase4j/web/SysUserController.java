@@ -8,16 +8,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.support.Assert;
-import org.ibase4j.core.support.HttpCode;
-import org.ibase4j.core.util.UploadUtil;
-import org.ibase4j.core.util.WebUtil;
 import org.ibase4j.model.SysMenu;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.service.SysAuthorizeService;
-import org.ibase4j.service.SysUserService;
+import org.ibase4j.service.ISysAuthorizeService;
+import org.ibase4j.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,6 +28,12 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.support.Assert;
+import top.ibase4j.core.support.HttpCode;
+import top.ibase4j.core.util.SecurityUtil;
+import top.ibase4j.core.util.UploadUtil;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 用户管理控制器
@@ -44,9 +46,9 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/user")
 public class SysUserController extends BaseController {
 	@Autowired
-	private SysUserService sysUserService;
+	private ISysUserService sysUserService;
 	@Autowired
-	private SysAuthorizeService authorizeService;
+	private ISysAuthorizeService authorizeService;
 
 	@PostMapping
 	@ApiOperation(value = "修改用户信息")
@@ -54,7 +56,7 @@ public class SysUserController extends BaseController {
 	public Object update(ModelMap modelMap, @RequestBody SysUser sysUser) {
 		Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
 		Assert.length(sysUser.getAccount(), 3, 15, "ACCOUNT");
-		sysUserService.updateUserInfo(sysUser);
+		sysUserService.update(sysUser);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -65,7 +67,7 @@ public class SysUserController extends BaseController {
 		sysUser.setId(WebUtil.getCurrentUser());
 		Assert.isNotBlank(sysUser.getAccount(), "ACCOUNT");
 		Assert.length(sysUser.getAccount(), 3, 15, "ACCOUNT");
-		sysUserService.updateUserInfo(sysUser);
+		sysUserService.update(sysUser);
 		return setSuccessModelMap(modelMap);
 	}
 
@@ -83,7 +85,7 @@ public class SysUserController extends BaseController {
 			// String avatar = UploadUtil.remove2Sftp(filePath, "user" +
 			// sysUser.getId());
 			sysUser.setAvatar(filePath);
-			sysUserService.updateUserInfo(sysUser);
+			sysUserService.update(sysUser);
 			return setSuccessModelMap(modelMap);
 		} else {
 			setModelMap(modelMap, HttpCode.BAD_REQUEST);
@@ -96,8 +98,18 @@ public class SysUserController extends BaseController {
 	@ApiOperation(value = "修改密码")
 	@RequiresPermissions("sys.base.user.update")
 	@PostMapping(value = "/update/password")
-	public Object updatePassword(ModelMap modelMap, @RequestBody SysUser sysUser) {
-		sysUserService.updatePassword(WebUtil.getCurrentUser(), sysUser.getOldPassword(), sysUser.getPassword());
+	public Object updatePassword(ModelMap modelMap, @RequestBody SysUser param) {
+		Assert.isNotBlank(param.getOldPassword(), "OLDPASSWORD");
+		Assert.isNotBlank(param.getPassword(), "PASSWORD");
+		Long userId = getCurrUser();
+		String encryptPassword = SecurityUtil.encryptPassword(param.getOldPassword());
+		SysUser sysUser = sysUserService.queryById(userId);
+		Assert.notNull(sysUser, "USER", param.getId());
+		if (!sysUser.getPassword().equals(encryptPassword)) {
+			throw new UnauthorizedException("原密码错误.");
+		}
+		sysUser.setPassword(SecurityUtil.encryptPassword(param.getPassword()));
+		sysUserService.update(sysUser);
 		return setSuccessModelMap(modelMap);
 	}
 

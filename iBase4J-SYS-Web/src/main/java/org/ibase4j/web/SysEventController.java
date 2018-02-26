@@ -3,8 +3,7 @@ package org.ibase4j.web;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
-import org.ibase4j.core.support.ISysEventService;
+import org.ibase4j.service.ISysEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +15,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 系统日志控制类
@@ -34,7 +34,7 @@ public class SysEventController extends BaseController {
 	@RequiresPermissions("public.news.read")
 	@RequestMapping(value = "/read/list", method = RequestMethod.PUT)
 	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> params) {
-		Page<?> list = sysEventService.queryMap(params);
+		Page<?> list = sysEventService.query(params);
 		return setSuccessModelMap(modelMap, list);
 	}
 }

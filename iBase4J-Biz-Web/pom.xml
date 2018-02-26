@@ -4,19 +4,19 @@
 	<parent>
 		<groupId>org.ibase4j</groupId>
 		<artifactId>iBase4J</artifactId>
-		<version>1.0.0</version>
+		<version>1.2.0</version>
 	</parent>
 	<artifactId>iBase4J-Biz-Web</artifactId>
 	<packaging>war</packaging>
 
 	<properties>
-		<server.port>8090</server.port>
+		<jar.dic>${project.basedir}/../</jar.dic>
 	</properties>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Common</artifactId>
+			<artifactId>iBase4J-SYS-Facade</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
@@ -27,18 +27,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-SYS-API</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.ibase4j</groupId>
-			<artifactId>iBase4J-Biz-API</artifactId>
+			<artifactId>iBase4J-Biz-Facade</artifactId>
 			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
@@ -51,23 +40,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session</artifactId>
-			<version>${spring-session.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-			<version>${spring-data-redis.version}</version>
-		</dependency>
-		<!-- 缓存 -->
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>${jedis.version}</version>
 		</dependency>
 		<!-- shiro -->
 		<dependency>
@@ -86,6 +58,12 @@
 			<groupId>net.sourceforge.jexcelapi</groupId>
 			<artifactId>jxl</artifactId>
 			<version>${jxl.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -130,11 +108,11 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${springfox.version}</version>
 		</dependency>
-		<!--  -->
+		<!-- -->
 		<dependency>
-		    <groupId>cz.mallat.uasparser</groupId>
-		    <artifactId>uasparser</artifactId>
-		    <version>0.6.2</version>
+			<groupId>cz.mallat.uasparser</groupId>
+			<artifactId>uasparser</artifactId>
+			<version>0.6.2</version>
 		</dependency>
 	</dependencies>
 </project>

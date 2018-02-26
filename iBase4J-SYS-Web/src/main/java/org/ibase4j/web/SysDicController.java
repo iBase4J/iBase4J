@@ -3,9 +3,8 @@ package org.ibase4j.web;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.core.base.BaseController;
 import org.ibase4j.model.SysDic;
-import org.ibase4j.service.SysDicService;
+import org.ibase4j.service.ISysDicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +17,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 字典管理
@@ -29,14 +29,14 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "字典管理", description = "字典管理")
 public class SysDicController extends BaseController {
 	@Autowired
-	private SysDicService sysDicService;
+	private ISysDicService sysDicService;
 
 	@ApiOperation(value = "查询字典项")
 	@RequiresPermissions("sys.base.dic.read")
 	@PutMapping(value = "dic/read/list")
 	public Object getDic(ModelMap modelMap, @RequestBody(required = false) Map<String, Object> sysDic) {
 		sysDic.put("orderBy", "sort_no");
-		Page<?> list = sysDicService.queryDic(sysDic);
+		Page<?> list = sysDicService.query(sysDic);
 		return setSuccessModelMap(modelMap, list);
 	}
 
@@ -44,7 +44,7 @@ public class SysDicController extends BaseController {
 	@RequiresPermissions("sys.base.dic.read")
 	@PutMapping(value = "dic/read/detail")
 	public Object dicDetail(ModelMap modelMap, @RequestBody(required = false) SysDic sysDic) {
-		SysDic record = sysDicService.queryDicById(sysDic.getId());
+		SysDic record = sysDicService.queryById(sysDic.getId());
 		return setSuccessModelMap(modelMap, record);
 	}
 
