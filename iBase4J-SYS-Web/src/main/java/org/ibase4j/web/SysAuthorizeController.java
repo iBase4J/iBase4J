@@ -1,5 +1,6 @@
 package org.ibase4j.web;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.exception.IllegalParameterException;
 
 /**
  * 权限管理
@@ -30,7 +32,7 @@ import top.ibase4j.core.base.BaseController;
  */
 @RestController
 @Api(value = "权限管理", description = "权限管理")
-public class SysAuthorizeController extends BaseController {
+public class SysAuthorizeController extends AbstractController {
 	@Autowired
 	private ISysAuthorizeService authorizeService;
 	@Autowired
@@ -39,8 +41,8 @@ public class SysAuthorizeController extends BaseController {
 	@ApiOperation(value = "获取用户菜单编号")
 	@PutMapping(value = "user/read/menu")
 	@RequiresPermissions("sys.permisson.userMenu.read")
-	public Object getUserMenu(ModelMap modelMap, @RequestBody SysUserMenu record) {
-		List<String> menus = authorizeService.queryMenuIdsByUserId(record.getUserId());
+	public Object getUserMenu(ModelMap modelMap, @RequestBody SysUserMenu param) {
+		List<?> menus = authorizeService.queryMenuIdsByUserId(param.getUserId());
 		return setSuccessModelMap(modelMap, menus);
 	}
 
@@ -48,6 +50,21 @@ public class SysAuthorizeController extends BaseController {
 	@PostMapping(value = "/user/update/menu")
 	@RequiresPermissions("sys.permisson.userMenu.update")
 	public Object userMenu(ModelMap modelMap, @RequestBody List<SysUserMenu> list) {
+		Long userId = null;
+		Long currentUserId = getCurrUser();
+		for (SysUserMenu sysUserMenu : list) {
+			if (sysUserMenu.getUserId() != null) {
+				if (userId != null && sysUserMenu.getUserId() != null
+						&& userId.longValue() != sysUserMenu.getUserId()) {
+					throw new IllegalParameterException("参数错误.");
+				}
+				userId = sysUserMenu.getUserId();
+			}
+			sysUserMenu.setCreateBy(currentUserId);
+			sysUserMenu.setUpdateBy(currentUserId);
+			sysUserMenu.setCreateTime(new Date());
+			sysUserMenu.setUpdateTime(new Date());
+		}
 		authorizeService.updateUserMenu(list);
 		return setSuccessModelMap(modelMap);
 	}
@@ -55,8 +72,8 @@ public class SysAuthorizeController extends BaseController {
 	@ApiOperation(value = "获取用户角色")
 	@PutMapping(value = "user/read/role")
 	@RequiresPermissions("sys.permisson.userRole.read")
-	public Object getUserRole(ModelMap modelMap, @RequestBody SysUserRole record) {
-		List<SysUserRole> menus = authorizeService.getRolesByUserId(record.getUserId());
+	public Object getUserRole(ModelMap modelMap, @RequestBody SysUserRole param) {
+		List<?> menus = authorizeService.getRolesByUserId(param.getUserId());
 		return setSuccessModelMap(modelMap, menus);
 	}
 
@@ -64,6 +81,21 @@ public class SysAuthorizeController extends BaseController {
 	@PostMapping(value = "/user/update/role")
 	@RequiresPermissions("sys.permisson.userRole.update")
 	public Object userRole(ModelMap modelMap, @RequestBody List<SysUserRole> list) {
+		Long userId = null;
+		Long currentUserId = getCurrUser();
+		for (SysUserRole sysUserRole : list) {
+			if (sysUserRole.getUserId() != null) {
+				if (userId != null && sysUserRole.getUserId() != null
+						&& userId.longValue() != sysUserRole.getUserId()) {
+					throw new IllegalParameterException("参数错误.");
+				}
+				userId = sysUserRole.getUserId();
+			}
+			sysUserRole.setCreateBy(currentUserId);
+			sysUserRole.setUpdateBy(currentUserId);
+			sysUserRole.setCreateTime(new Date());
+			sysUserRole.setUpdateTime(new Date());
+		}
 		authorizeService.updateUserRole(list);
 		return setSuccessModelMap(modelMap);
 	}
@@ -71,8 +103,8 @@ public class SysAuthorizeController extends BaseController {
 	@ApiOperation(value = "获取角色菜单编号")
 	@PutMapping(value = "role/read/menu")
 	@RequiresPermissions("sys.permisson.roleMenu.read")
-	public Object getRoleMenu(ModelMap modelMap, @RequestBody SysRoleMenu record) {
-		List<String> menus = authorizeService.queryMenuIdsByRoleId(record.getRoleId());
+	public Object getRoleMenu(ModelMap modelMap, @RequestBody SysRoleMenu param) {
+		List<?> menus = authorizeService.queryMenuIdsByRoleId(param.getRoleId());
 		return setSuccessModelMap(modelMap, menus);
 	}
 
@@ -80,6 +112,21 @@ public class SysAuthorizeController extends BaseController {
 	@PostMapping(value = "/role/update/menu")
 	@RequiresPermissions("sys.permisson.roleMenu.update")
 	public Object roleMenu(ModelMap modelMap, @RequestBody List<SysRoleMenu> list) {
+		Long roleId = null;
+		Long userId = getCurrUser();
+		for (SysRoleMenu sysRoleMenu : list) {
+			if (sysRoleMenu.getRoleId() != null) {
+				if (roleId != null && sysRoleMenu.getRoleId() != null
+						&& roleId.longValue() != sysRoleMenu.getRoleId()) {
+					throw new IllegalParameterException("参数错误.");
+				}
+				roleId = sysRoleMenu.getRoleId();
+			}
+			sysRoleMenu.setCreateBy(userId);
+			sysRoleMenu.setUpdateBy(userId);
+			sysRoleMenu.setCreateTime(new Date());
+			sysRoleMenu.setUpdateTime(new Date());
+		}
 		authorizeService.updateRoleMenu(list);
 		return setSuccessModelMap(modelMap);
 	}
@@ -96,6 +143,21 @@ public class SysAuthorizeController extends BaseController {
 	@PostMapping(value = "/user/update/permission")
 	@RequiresPermissions("sys.permisson.user.update")
 	public Object updateUserPermission(ModelMap modelMap, @RequestBody List<SysUserMenu> list) {
+		Long userId = null;
+		Long currentUserId = getCurrUser();
+		for (SysUserMenu sysUserMenu : list) {
+			if (sysUserMenu.getUserId() != null) {
+				if (userId != null && sysUserMenu.getUserId() != null
+						&& userId.longValue() != sysUserMenu.getUserId()) {
+					throw new IllegalParameterException("参数错误.");
+				}
+				userId = sysUserMenu.getUserId();
+			}
+			sysUserMenu.setCreateBy(currentUserId);
+			sysUserMenu.setUpdateBy(currentUserId);
+			sysUserMenu.setCreateTime(new Date());
+			sysUserMenu.setUpdateTime(new Date());
+		}
 		authorizeService.updateUserPermission(list);
 		return setSuccessModelMap(modelMap);
 	}
@@ -112,6 +174,21 @@ public class SysAuthorizeController extends BaseController {
 	@PostMapping(value = "/role/update/permission")
 	@RequiresPermissions("sys.permisson.role.update")
 	public Object updateRolePermission(ModelMap modelMap, @RequestBody List<SysRoleMenu> list) {
+		Long roleId = null;
+		Long userId = getCurrUser();
+		for (SysRoleMenu sysRoleMenu : list) {
+			if (sysRoleMenu.getRoleId() != null) {
+				if (roleId != null && sysRoleMenu.getRoleId() != null
+						&& roleId.longValue() != sysRoleMenu.getRoleId()) {
+					throw new IllegalParameterException("参数错误.");
+				}
+				roleId = sysRoleMenu.getRoleId();
+			}
+			sysRoleMenu.setCreateBy(userId);
+			sysRoleMenu.setUpdateBy(userId);
+			sysRoleMenu.setCreateTime(new Date());
+			sysRoleMenu.setUpdateTime(new Date());
+		}
 		authorizeService.updateRolePermission(list);
 		return setSuccessModelMap(modelMap);
 	}

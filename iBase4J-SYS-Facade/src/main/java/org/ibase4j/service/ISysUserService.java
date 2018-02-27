@@ -13,8 +13,6 @@ import top.ibase4j.core.support.login.ThirdPartyUser;
  */
 public interface ISysUserService extends IBaseService<SysUser> {
 
-	public String encryptPassword(String password);
-
 	/** 查询第三方帐号用户Id */
 	public Long queryUserIdByThirdParty(ThirdPartyUser thirdPartyUser);
 

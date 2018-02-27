@@ -13,9 +13,9 @@ import top.ibase4j.core.base.BaseService;
  * @author ShenHuaJie
  *
  */
+@Service(interfaceClass=ISysUnitService.class)
+@MotanService(interfaceClass=ISysUnitService.class)
 @CacheConfig(cacheNames = "sysUnit")
-@Service(interfaceClass = ISysUnitService.class)
-@MotanService(interfaceClass = ISysUnitService.class)
 public class SysUnitServiceImpl extends BaseService<SysUnit> implements ISysUnitService {
 
 }

@@ -15,14 +15,18 @@ import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 import top.ibase4j.core.base.BaseService;
 import top.ibase4j.model.SysEvent;
 
-@CacheConfig(cacheNames = "sysEvent")
+/**
+ * @author ShenHuaJie
+ * @since 2018年2月26日 下午7:54:43
+ */
 @Service(interfaceClass = ISysEventService.class)
 @MotanService(interfaceClass = ISysEventService.class)
-public class SysEventServiceImpl extends BaseService<SysEvent> implements ISysEventService {
+@CacheConfig(cacheNames = "sysEvent")
+public class SysEventServiceImpl extends BaseService<SysEvent> implements ISysEventService{
 	@Autowired
 	private ISysUserService sysUserService;
 
-	public Page<SysEvent> queryMap(Map<String, Object> params) {
+	public Page<SysEvent> query(Map<String, Object> params) {
 		Page<SysEvent> page = super.query(params);
 		for (SysEvent sysEvent : page.getRecords()) {
 			if (sysEvent != null) {

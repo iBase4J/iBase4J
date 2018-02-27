@@ -13,9 +13,9 @@ import top.ibase4j.core.base.BaseService;
  * @author ShenHuaJie
  *
  */
-@CacheConfig(cacheNames = "sysNews")
 @Service(interfaceClass = ISysNewsService.class)
 @MotanService(interfaceClass = ISysNewsService.class)
+@CacheConfig(cacheNames = "sysNews")
 public class SysNewsServiceImpl extends BaseService<SysNews> implements ISysNewsService {
 
 }

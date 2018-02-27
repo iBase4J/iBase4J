@@ -8,39 +8,50 @@
          http://www.springframework.org/schema/context/spring-context-4.0.xsd
    		http://api.weibo.com/schema/motan
    		http://api.weibo.com/schema/motan.xsd">
-
-	<motan:referer id="schedulerService" interface="org.ibase4j.service.ISchedulerService"
+	<!-- SYS -->
+	<motan:referer id="schedulerService" interface="org.xshop.service.ISchedulerService"
 		check="false" />
-	<motan:referer id="sysAuthorizeService" interface="org.ibase4j.service.ISysAuthorizeService"
+	<motan:referer id="sendMsgService" interface="org.xshop.service.ISendMsgService"
 		check="false" />
-	<motan:referer id="sysCacheService" interface="org.ibase4j.service.ISysCacheService"
+	<motan:referer id="sendArticleService" interface="org.xshop.service.ISysArticleService"
 		check="false" />
-	<motan:referer id="sysDeptService" interface="org.ibase4j.service.ISysDeptService"
+	<motan:referer id="sysAuthorizeService" interface="org.xshop.service.ISysAuthorizeService"
 		check="false" />
-	<motan:referer id="sysDicService" interface="org.ibase4j.service.ISysDicService"
+	<motan:referer id="sysCacheService" interface="org.xshop.service.ISysCacheService"
 		check="false" />
-	<motan:referer id="sysEmailConfigService" interface="org.ibase4j.service.ISysEmailConfigService"
+	<motan:referer id="sysDeptService" interface="org.xshop.service.ISysDeptService"
 		check="false" />
-	<motan:referer id="sysEmailService" interface="org.ibase4j.service.ISysEmailService"
+	<motan:referer id="sysDicService" interface="org.xshop.service.ISysDicService"
 		check="false" />
-	<motan:referer id="sysEmailTemplateService" interface="org.ibase4j.service.ISysEmailTemplateService"
+	<motan:referer id="sysEmailConfigService" interface="org.xshop.service.ISysEmailConfigService"
 		check="false" />
-	<motan:referer id="sysEventService" interface="org.ibase4j.service.ISysEventService"
+	<motan:referer id="sysEmailService" interface="org.xshop.service.ISysEmailService"
 		check="false" />
-	<motan:referer id="sysMenuService" interface="org.ibase4j.service.ISysMenuService"
+	<motan:referer id="sysEmailTemplateService" interface="org.xshop.service.ISysEmailTemplateService"
 		check="false" />
-	<motan:referer id="sysNewsService" interface="org.ibase4j.service.ISysNewsService"
+	<motan:referer id="sysEventService" interface="org.xshop.service.ISysEventService"
 		check="false" />
-	<motan:referer id="sysNoticeService" interface="org.ibase4j.service.ISysNoticeService"
+	<motan:referer id="sysFeedbackService" interface="org.xshop.service.ISysFeedbackService"
 		check="false" />
-	<motan:referer id="sysParamService" interface="org.ibase4j.service.ISysParamService"
+	<motan:referer id="sysMenuService" interface="org.xshop.service.ISysMenuService"
 		check="false" />
-	<motan:referer id="sysRoleService" interface="org.ibase4j.service.ISysRoleService"
+	<motan:referer id="sysMsgConfigService" interface="org.xshop.service.ISysMsgConfigService"
 		check="false" />
-	<motan:referer id="sysSessionService" interface="org.ibase4j.service.ISysSessionService"
+	<motan:referer id="sysMsgService" interface="org.xshop.service.ISysMsgService"
 		check="false" />
-	<motan:referer id="sysUnitService" interface="org.ibase4j.service.ISysUnitService"
+	<motan:referer id="sysNewsService" interface="org.xshop.service.ISysNewsService"
 		check="false" />
-	<motan:referer id="sysUserService" interface="org.ibase4j.service.ISysUserService"
+	<motan:referer id="sysNoticeService" interface="org.xshop.service.ISysNoticeService"
 		check="false" />
+	<motan:referer id="sysParamService" interface="org.xshop.service.ISysParamService"
+		check="false" />
+	<motan:referer id="sysRoleService" interface="org.xshop.service.ISysRoleService"
+		check="false" />
+	<motan:referer id="sysSessionService" interface="org.xshop.service.ISysSessionService"
+		check="false" />
+	<motan:referer id="sysUnitService" interface="org.xshop.service.ISysUnitService"
+		check="false" />
+	<motan:referer id="sysUserService" interface="org.xshop.service.ISysUserService"
+		check="false" />
+	<!-- Biz -->
 </beans>

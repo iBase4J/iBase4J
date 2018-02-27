@@ -23,12 +23,12 @@ import top.ibase4j.core.util.InstanceUtil;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-@CacheConfig(cacheNames = "sysSession")
 @Service(interfaceClass = ISysSessionService.class)
 @MotanService(interfaceClass = ISysSessionService.class)
+@CacheConfig(cacheNames = "sysSession")
 public class SysSessionServiceImpl extends BaseService<SysSession> implements ISysSessionService {
 
-	@CachePut
+    @CachePut
     @Transactional
     public SysSession update(SysSession record) {
         if (record != null && record.getId() == null) {

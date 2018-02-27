@@ -12,12 +12,12 @@ import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.util.CacheUtil;
 
-@Service(interfaceClass = ISysCacheService.class)
-@MotanService(interfaceClass = ISysCacheService.class)
+@Service(interfaceClass=ISysCacheService.class)
+@MotanService(interfaceClass=ISysCacheService.class)
 public class SysCacheServiceImpl implements ISysCacheService {
-	Logger logger = LogManager.getLogger();
+    Logger logger = LogManager.getLogger();
 
-	// 清缓存
+    // 清缓存
     public void flush() {
         logger.info("清缓存开始......");
         CacheUtil.getCache().delAll(Constants.CACHE_NAMESPACE + "*");

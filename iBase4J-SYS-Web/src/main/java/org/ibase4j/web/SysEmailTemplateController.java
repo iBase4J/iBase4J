@@ -5,14 +5,11 @@ import java.util.Map;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysEmailTemplate;
 import org.ibase4j.service.ISysEmailTemplateService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,39 +24,32 @@ import top.ibase4j.core.base.BaseController;
 @RestController
 @Api(value = "邮件模版管理", description = "邮件模版管理")
 @RequestMapping(value = "emailTemplate")
-public class SysEmailTemplateController extends BaseController {
-	@Autowired
-	private ISysEmailTemplateService sysEmailTemplateService;
-
+public class SysEmailTemplateController extends BaseController<SysEmailTemplate, ISysEmailTemplateService> {
 	@ApiOperation(value = "查询邮件模版")
 	@RequiresPermissions("sys.email.template.read")
 	@RequestMapping(value = "/read/list", method = RequestMethod.PUT)
-	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> params) {
-		Page<?> list = sysEmailTemplateService.query(params);
-		return setSuccessModelMap(modelMap, list);
+	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+		return super.query(modelMap, param);
 	}
 
 	@ApiOperation(value = "邮件模版详情")
 	@RequiresPermissions("sys.email.template.read")
 	@RequestMapping(value = "/read/detail", method = RequestMethod.PUT)
-	public Object detail(ModelMap modelMap, @RequestBody SysEmailTemplate params) {
-		SysEmailTemplate record = sysEmailTemplateService.queryById(params.getId());
-		return setSuccessModelMap(modelMap, record);
+	public Object get(ModelMap modelMap, @RequestBody SysEmailTemplate param) {
+		return super.get(modelMap, param);
 	}
 
 	@ApiOperation(value = "修改邮件模版")
 	@RequiresPermissions("sys.email.template.update")
 	@RequestMapping(method = RequestMethod.POST)
-	public Object update(ModelMap modelMap, @RequestBody SysEmailTemplate record) {
-		sysEmailTemplateService.update(record);
-		return setSuccessModelMap(modelMap);
+	public Object update(ModelMap modelMap, @RequestBody SysEmailTemplate param) {
+		return super.update(modelMap, param);
 	}
 
 	@ApiOperation(value = "删除邮件模版")
 	@RequiresPermissions("sys.email.template.delete")
 	@RequestMapping(method = RequestMethod.DELETE)
-	public Object delete(ModelMap modelMap, @RequestBody SysEmailTemplate record) {
-		sysEmailTemplateService.delete(record.getId());
-		return setSuccessModelMap(modelMap);
+	public Object delete(ModelMap modelMap, @RequestBody SysEmailTemplate param) {
+		return super.delete(modelMap, param);
 	}
 }

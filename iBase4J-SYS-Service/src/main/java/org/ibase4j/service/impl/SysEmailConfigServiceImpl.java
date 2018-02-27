@@ -13,9 +13,9 @@ import top.ibase4j.core.base.BaseService;
  * @author ShenHuaJie
  *
  */
-@CacheConfig(cacheNames = "sysEmailConfig")
 @Service(interfaceClass = ISysEmailConfigService.class)
 @MotanService(interfaceClass = ISysEmailConfigService.class)
+@CacheConfig(cacheNames = "sysEmailConfig")
 public class SysEmailConfigServiceImpl extends BaseService<SysEmailConfig> implements ISysEmailConfigService {
 
 }

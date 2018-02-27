@@ -37,4 +37,8 @@ public interface ISysAuthorizeService extends IBaseService<SysMenu> {
 	public List<Map<String, Object>> queryUserPermissions(SysUserMenu record);
 
 	public List<Map<String, Object>> queryRolePermissions(SysRoleMenu record);
+
+	public List<String> queryRolePermission(Long id);
+
+	public List<String> queryUserPermission(Long id);
 }

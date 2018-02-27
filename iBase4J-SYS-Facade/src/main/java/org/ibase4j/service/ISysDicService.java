@@ -9,9 +9,7 @@ import top.ibase4j.core.base.IBaseService;
 public interface ISysDicService extends IBaseService<SysDic> {
 	public Map<String, Map<String, String>> getAllDic();
 
-	public void updateDic(SysDic record);
+	public Map<String, String> queryDicByTypeMap(Map<String, Object> params);
 
-	public void deleteDic(Long id);
-
-	public Map<String, String> queryDicByDicIndexKey(String key);
+	public Map<String, String> queryDicByType(String type);
 }

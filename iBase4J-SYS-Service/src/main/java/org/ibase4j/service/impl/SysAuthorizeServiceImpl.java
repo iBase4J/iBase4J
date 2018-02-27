@@ -34,9 +34,9 @@ import top.ibase4j.core.util.InstanceUtil;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
+@Service(interfaceClass=ISysAuthorizeService.class)
+@MotanService(interfaceClass=ISysAuthorizeService.class)
 @CacheConfig(cacheNames = "sysAuthorize")
-@Service(interfaceClass = ISysAuthorizeService.class)
-@MotanService(interfaceClass = ISysAuthorizeService.class)
 public class SysAuthorizeServiceImpl extends BaseService<SysMenu> implements ISysAuthorizeService {
 	@Autowired
 	private SysUserMenuMapper sysUserMenuMapper;
