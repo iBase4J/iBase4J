@@ -1,20 +1,16 @@
 package org.ibase4j.core;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.stereotype.Component;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import top.ibase4j.core.Constants;
+import top.ibase4j.core.listener.ApplicationReadyListener;
+import top.ibase4j.core.util.CacheUtil;
 
-public class ServerListener implements ServletContextListener {
-	protected final Logger logger = LogManager.getLogger();
-
-	public void contextDestroyed(ServletContextEvent contextEvent) {
-	}
-
-	public void contextInitialized(ServletContextEvent contextEvent) {
-		logger.info("=================================");
-		logger.info("系统[{}]启动完成!!!", contextEvent.getServletContext().getServletContextName());
-		logger.info("=================================");
+@Component
+public class ServerListener extends ApplicationReadyListener {
+	public void onApplicationEvent(ApplicationReadyEvent event) {
+		CacheUtil.getCache().delAll(Constants.MYBATIS_CACHE + "*");
+		super.onApplicationEvent(event);
 	}
 }
