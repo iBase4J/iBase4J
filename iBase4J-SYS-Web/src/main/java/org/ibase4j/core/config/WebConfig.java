@@ -22,9 +22,9 @@ import org.springframework.web.servlet.view.JstlView;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
+import top.ibase4j.core.base.provider.EventInterceptor;
 import top.ibase4j.core.filter.CsrfFilter;
 import top.ibase4j.core.filter.XssFilter;
-import top.ibase4j.core.interceptor.EventInterceptor;
 import top.ibase4j.core.interceptor.LocaleInterceptor;
 import top.ibase4j.core.interceptor.MaliciousRequestInterceptor;
 import top.ibase4j.core.util.InstanceUtil;
