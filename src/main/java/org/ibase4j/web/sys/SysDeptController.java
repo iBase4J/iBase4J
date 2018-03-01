@@ -3,8 +3,8 @@ package org.ibase4j.web.sys;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.model.SysDept;
-import org.ibase4j.web.AbstractController;
+import org.ibase4j.model.sys.SysDept;
+import org.ibase4j.service.sys.SysDeptService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 部门管理控制类
@@ -25,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "部门管理", description = "部门管理")
 @RequestMapping(value = "dept")
-public class SysDeptController extends AbstractController<SysDept> {
+public class SysDeptController extends BaseController<SysDept, SysDeptService> {
 
     @ApiOperation(value = "查询部门")
     @RequiresPermissions("sys.base.dept.read")

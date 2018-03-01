@@ -3,8 +3,8 @@ package org.ibase4j.web.sys;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.model.SysSession;
-import org.ibase4j.web.AbstractController;
+import org.ibase4j.model.sys.SysSession;
+import org.ibase4j.service.sys.SysSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.listener.SessionListener;
 
 /**
@@ -26,7 +27,7 @@ import top.ibase4j.core.listener.SessionListener;
 @RestController
 @Api(value = "会话管理", description = "会话管理")
 @RequestMapping(value = "/session")
-public class SysSessionController extends AbstractController<SysSession> {
+public class SysSessionController extends BaseController<SysSession, SysSessionService> {
 
     @Autowired
     SessionListener sessionListener;

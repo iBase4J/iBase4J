@@ -11,10 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.model.SysUser;
-import org.ibase4j.service.SysAuthorizeService;
-import org.ibase4j.service.SysUserService;
-import org.ibase4j.web.AbstractController;
+import org.ibase4j.model.sys.SysUser;
+import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.HttpCode;
 import top.ibase4j.core.util.SecurityUtil;
@@ -42,7 +42,7 @@ import top.ibase4j.core.util.WebUtil;
 @RestController
 @Api(value = "用户管理", description = "用户管理")
 @RequestMapping(value = "/user")
-public class SysUserController extends AbstractController<SysUser> {
+public class SysUserController extends BaseController<SysUser, SysUserService> {
 	@Autowired
 	private SysAuthorizeService sysAuthorizeService;
 

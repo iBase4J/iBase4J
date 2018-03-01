@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
-import org.ibase4j.model.SysUser;
-import org.ibase4j.service.SysSessionService;
-import org.ibase4j.web.AbstractController;
+import org.ibase4j.model.sys.SysUser;
+import org.ibase4j.service.sys.SysSessionService;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.Constants;
+import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.config.Resources;
 import top.ibase4j.core.exception.LoginException;
 import top.ibase4j.core.support.Assert;
@@ -34,7 +35,7 @@ import top.ibase4j.core.util.WebUtil;
  */
 @RestController
 @Api(value = "登录接口", description = "登录接口")
-public class LoginController extends AbstractController<SysUser> {
+public class LoginController extends BaseController<SysUser, SysUserService> {
     @Autowired
     private SysSessionService sysSessionService;
 

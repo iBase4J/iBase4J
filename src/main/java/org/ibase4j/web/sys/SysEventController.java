@@ -3,7 +3,7 @@ package org.ibase4j.web.sys;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.web.AbstractController;
+import org.ibase4j.service.sys.SysEventService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 import top.ibase4j.model.SysEvent;
 
 /**
@@ -23,7 +24,7 @@ import top.ibase4j.model.SysEvent;
 @RestController
 @Api(value = "系统日志", description = "系统日志")
 @RequestMapping(value = "event")
-public class SysEventController extends AbstractController<SysEvent> {
+public class SysEventController extends BaseController<SysEvent, SysEventService> {
 
 	@ApiOperation(value = "查询日志")
 	@RequiresPermissions("public.news.read")

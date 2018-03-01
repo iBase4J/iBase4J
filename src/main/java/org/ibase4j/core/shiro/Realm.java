@@ -19,11 +19,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.ibase4j.model.SysSession;
-import org.ibase4j.model.SysUser;
-import org.ibase4j.service.SysAuthorizeService;
-import org.ibase4j.service.SysSessionService;
-import org.ibase4j.service.SysUserService;
+import org.ibase4j.model.sys.SysSession;
+import org.ibase4j.model.sys.SysUser;
+import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysSessionService;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import top.ibase4j.core.support.cache.shiro.RedisSessionDAO;

@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.model.SysRoleMenu;
-import org.ibase4j.model.SysUserMenu;
-import org.ibase4j.model.SysUserRole;
-import org.ibase4j.service.SysAuthorizeService;
-import org.ibase4j.service.SysCacheService;
+import org.ibase4j.model.sys.SysRoleMenu;
+import org.ibase4j.model.sys.SysUserMenu;
+import org.ibase4j.model.sys.SysUserRole;
+import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.base.AbstractController;
 import top.ibase4j.core.exception.IllegalParameterException;
 import top.ibase4j.core.util.WebUtil;
 
@@ -32,7 +32,7 @@ import top.ibase4j.core.util.WebUtil;
  */
 @RestController
 @Api(value = "权限管理", description = "权限管理")
-public class SysAuthorizeController extends BaseController {
+public class SysAuthorizeController extends AbstractController {
     @Autowired
     private SysAuthorizeService sysAuthorizeService;
     @Autowired

@@ -3,8 +3,8 @@ package org.ibase4j.web.sys;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.model.SysNews;
-import org.ibase4j.web.AbstractController;
+import org.ibase4j.model.sys.SysNews;
+import org.ibase4j.service.sys.SysNewsService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 新闻管理控制类
@@ -25,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "新闻管理", description = "新闻管理")
 @RequestMapping(value = "news")
-public class SysNewsController extends AbstractController<SysNews> {
+public class SysNewsController extends BaseController<SysNews, SysNewsService> {
 
 	@ApiOperation(value = "查询新闻")
 	@RequiresPermissions("public.news.read")
