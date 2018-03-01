@@ -20,8 +20,8 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
-import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.base.provider.BaseController;
+import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.scheduler.TaskScheduled;
 import top.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
@@ -35,7 +35,7 @@ import top.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
 @RestController
 @Api(value = "调度管理", description = "调度管理")
 @RequestMapping(value = "/scheduled")
-public class ScheduledController extends AbstractController<ISysProvider> {
+public class ScheduledController extends BaseController<ISysProvider> {
     public String getService() {
         return "scheduledService";
     }

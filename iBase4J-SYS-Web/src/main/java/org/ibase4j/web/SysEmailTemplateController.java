@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.provider.BaseController;
 
 /**
  * 邮件模版管理控制类
@@ -24,7 +24,7 @@ import top.ibase4j.core.base.AbstractController;
 @RestController
 @Api(value = "邮件模版管理", description = "邮件模版管理")
 @RequestMapping(value = "emailTemplate")
-public class SysEmailTemplateController extends AbstractController<ISysProvider> {
+public class SysEmailTemplateController extends BaseController<ISysProvider> {
 	public String getService() {
 		return "sysEmailTemplateService";
 	}

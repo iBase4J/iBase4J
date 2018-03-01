@@ -24,7 +24,7 @@ import org.ibase4j.model.SysUser;
 import org.ibase4j.provider.ISysProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.support.cache.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.WebUtil;
 

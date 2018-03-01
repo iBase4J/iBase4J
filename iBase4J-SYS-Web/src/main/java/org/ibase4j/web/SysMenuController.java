@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
-import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.base.provider.BaseController;
+import top.ibase4j.core.base.provider.Parameter;
 
 /**
  * 菜单管理
@@ -28,7 +28,7 @@ import top.ibase4j.core.base.Parameter;
 @RestController
 @Api(value = "菜单管理", description = "菜单管理")
 @RequestMapping(value = "menu")
-public class SysMenuController extends AbstractController<ISysProvider> {
+public class SysMenuController extends BaseController<ISysProvider> {
     public String getService() {
         return "sysMenuService";
     }

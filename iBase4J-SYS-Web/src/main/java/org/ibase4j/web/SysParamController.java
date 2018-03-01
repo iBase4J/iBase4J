@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.provider.BaseController;
 
 /**
  * 参数管理
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.AbstractController;
 @RestController
 @Api(value = "系统参数管理", description = "系统参数管理")
 @RequestMapping(value = "param")
-public class SysParamController extends AbstractController<ISysProvider> {
+public class SysParamController extends BaseController<ISysProvider> {
 	public String getService() {
 		return "sysParamService";
 	}
