@@ -26,6 +26,7 @@ import org.ibase4j.service.sys.SysSessionService;
 import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import top.ibase4j.core.support.cache.shiro.IRealm;
 import top.ibase4j.core.support.cache.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.WebUtil;
 
@@ -35,7 +36,7 @@ import top.ibase4j.core.util.WebUtil;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:44:45
  */
-public class Realm extends AuthorizingRealm {
+public class Realm extends AuthorizingRealm implements IRealm {
     private final Logger logger = LogManager.getLogger();
     @Autowired
     private SysAuthorizeService sysAuthorizeService;
@@ -43,8 +44,11 @@ public class Realm extends AuthorizingRealm {
     private SysUserService sysUserService;
     @Autowired
     private SysSessionService sysSessionService;
-    @Autowired
     private RedisSessionDAO sessionDAO;
+
+    public void setSessionDAO(RedisSessionDAO sessionDAO) {
+        this.sessionDAO = sessionDAO;
+    }
 
     // 权限
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {

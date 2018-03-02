@@ -59,7 +59,7 @@
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<activemq.version>5.13.3</activemq.version>
 		<jsqlparser.version>0.9.5</jsqlparser.version>
-		<springfox.version>2.6.1</springfox.version>
+		<springfox.version>2.7.0</springfox.version>
 		<swagger.version>1.5.17</swagger.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 		<javassist.version>3.22.0-GA</javassist.version>
@@ -213,6 +213,10 @@
 			<exclusions>
 				<exclusion>
 					<groupId>ch.qos.logback</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.logging.log4j</groupId>
 					<artifactId>*</artifactId>
 				</exclusion>
 			</exclusions>
