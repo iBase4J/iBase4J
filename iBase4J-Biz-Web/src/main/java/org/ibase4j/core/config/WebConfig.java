@@ -34,11 +34,12 @@ import top.ibase4j.core.util.InstanceUtil;
 @ComponentScan("org.xshop.web")
 public class WebConfig extends WebMvcConfigurerAdapter {
 	@Bean
-	public FilterRegistrationBean encodingFilterRegistration() {
+	public FilterRegistrationBean<CharacterEncodingFilter> encodingFilterRegistration() {
 		CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
 		encodingFilter.setEncoding("UTF-8");
 		encodingFilter.setForceEncoding(true);
-		FilterRegistrationBean registration = new FilterRegistrationBean(encodingFilter);
+		FilterRegistrationBean<CharacterEncodingFilter> registration = new FilterRegistrationBean<CharacterEncodingFilter>(
+				encodingFilter);
 		registration.setName("encodingFilter");
 		registration.addUrlPatterns("/*");
 		registration.setAsyncSupported(true);
@@ -47,8 +48,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	public FilterRegistrationBean csrfFilterRegistration() {
-		FilterRegistrationBean registration = new FilterRegistrationBean(new CsrfFilter());
+	public FilterRegistrationBean<CsrfFilter> csrfFilterRegistration() {
+		FilterRegistrationBean<CsrfFilter> registration = new FilterRegistrationBean<CsrfFilter>(new CsrfFilter());
 		registration.setName("csrfFilter");
 		registration.addUrlPatterns("/*");
 		registration.setOrder(2);
@@ -56,22 +57,22 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	public FilterRegistrationBean xssFilterRegistration() {
-		FilterRegistrationBean registration = new FilterRegistrationBean(new XssFilter());
+	public FilterRegistrationBean<XssFilter> xssFilterRegistration() {
+		FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<XssFilter>(new XssFilter());
 		registration.setName("xssFilter");
 		registration.addUrlPatterns("/*");
 		registration.setOrder(3);
 		return registration;
 	}
 
-    @Bean
-    public FilterRegistrationBean tokenFilterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean(new TokenFilter());
-        registration.setName("tokenFilter");
-        registration.addUrlPatterns("/*");
-        registration.setOrder(4);
-        return registration;
-    }
+	@Bean
+	public FilterRegistrationBean<TokenFilter> tokenFilterRegistration() {
+		FilterRegistrationBean<TokenFilter> registration = new FilterRegistrationBean<TokenFilter>(new TokenFilter());
+		registration.setName("tokenFilter");
+		registration.addUrlPatterns("/*");
+		registration.setOrder(4);
+		return registration;
+	}
 
 	@Bean
 	public InternalResourceViewResolver viewResolver() {
