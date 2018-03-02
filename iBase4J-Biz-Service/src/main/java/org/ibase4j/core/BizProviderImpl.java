@@ -5,7 +5,7 @@ import org.ibase4j.provider.IBizProvider;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
-import top.ibase4j.core.base.BaseProviderImpl;
+import top.ibase4j.core.base.provider.BaseProviderImpl;
 
 @Service(interfaceClass = IBizProvider.class)
 @MotanService(interfaceClass = IBizProvider.class)

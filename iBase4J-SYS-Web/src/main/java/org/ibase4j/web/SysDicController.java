@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.provider.BaseController;
 
 /**
  * 字典管理
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.AbstractController;
 @RestController
 @Api(value = "字典管理", description = "字典管理")
 @RequestMapping(value = "/dic")
-public class SysDicController extends AbstractController<ISysProvider> {
+public class SysDicController extends BaseController<ISysProvider> {
 
 	public String getService() {
 		return "sysDicService";

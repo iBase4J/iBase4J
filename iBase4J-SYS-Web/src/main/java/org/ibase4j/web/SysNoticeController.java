@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.provider.BaseController;
 
 /**
  * 通知管理控制类
@@ -24,7 +24,7 @@ import top.ibase4j.core.base.AbstractController;
 @RestController
 @Api(value = "通知管理", description = "通知管理")
 @RequestMapping(value = "notice")
-public class SysNoticeController extends AbstractController<ISysProvider> {
+public class SysNoticeController extends BaseController<ISysProvider> {
 	public String getService() {
 		return "sysNoticeService";
 	}

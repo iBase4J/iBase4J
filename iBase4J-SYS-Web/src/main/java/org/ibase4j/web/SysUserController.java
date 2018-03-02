@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
-import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.base.provider.BaseController;
+import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.HttpCode;
 import top.ibase4j.core.util.SecurityUtil;
@@ -40,7 +40,7 @@ import top.ibase4j.core.util.UploadUtil;
 @RestController
 @Api(value = "用户管理", description = "用户管理")
 @RequestMapping(value = "/user")
-public class SysUserController extends AbstractController<ISysProvider> {
+public class SysUserController extends BaseController<ISysProvider> {
 	public String getService() {
 		return "sysUserService";
 	}

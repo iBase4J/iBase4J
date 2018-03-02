@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.provider.BaseController;
 
 /**
  * <p>
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.AbstractController;
  */
 @Controller
 @RequestMapping("/msgConfig")
-public class SysMsgConfigController extends AbstractController<ISysProvider> {
+public class SysMsgConfigController extends BaseController<ISysProvider> {
 	public String getService() {
 		return "sysMsgConfigService";
 	}

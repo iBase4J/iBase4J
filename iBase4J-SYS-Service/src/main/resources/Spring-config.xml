@@ -24,8 +24,8 @@
 		<property name="decryptProperties">
 			<array>
 				<!-- 需要解密的配置 -->
-				<value>db.reader.password</value>
-				<value>db.writer.password</value>
+				<value>druid.reader.password</value>
+				<value>druid.writer.password</value>
 			</array>
 		</property>
 	</bean>

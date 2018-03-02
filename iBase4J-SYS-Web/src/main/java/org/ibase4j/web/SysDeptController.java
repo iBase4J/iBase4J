@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.provider.BaseController;
 
 /**
  * 部门管理控制类
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.AbstractController;
 @RestController
 @Api(value = "部门管理", description = "部门管理")
 @RequestMapping(value = "dept")
-public class SysDeptController extends AbstractController<ISysProvider> {
+public class SysDeptController extends BaseController<ISysProvider> {
 	public String getService() {
 		return "sysDeptService";
 	}

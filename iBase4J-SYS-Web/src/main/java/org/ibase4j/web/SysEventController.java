@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.provider.BaseController;
 
 /**
  * 系统日志控制类
@@ -23,7 +23,7 @@ import top.ibase4j.core.base.AbstractController;
 @RestController
 @Api(value = "系统日志", description = "系统日志")
 @RequestMapping(value = "event")
-public class SysEventController extends AbstractController<ISysProvider> {
+public class SysEventController extends BaseController<ISysProvider> {
 	public String getService() {
 		return "sysEventService";
 	}

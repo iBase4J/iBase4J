@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.provider.BaseController;
 
 /**
  * 邮件管理控制类
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.AbstractController;
 @RestController
 @Api(value = "邮件管理", description = "邮件管理")
 @RequestMapping(value = "email")
-public class SysEmailController extends AbstractController<ISysProvider> {
+public class SysEmailController extends BaseController<ISysProvider> {
 
 	public String getService() {
 		return "sysEmailService";

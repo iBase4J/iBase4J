@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.base.provider.AppBaseController;
+import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.DataUtil;
