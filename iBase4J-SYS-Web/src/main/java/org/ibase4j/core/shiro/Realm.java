@@ -23,9 +23,11 @@ import org.ibase4j.model.SysSession;
 import org.ibase4j.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import top.ibase4j.core.base.provider.IBaseProvider;
 import top.ibase4j.core.base.provider.Parameter;
+import top.ibase4j.core.support.cache.shiro.IRealm;
 import top.ibase4j.core.support.cache.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.WebUtil;
 
@@ -35,13 +37,17 @@ import top.ibase4j.core.util.WebUtil;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:44:45
  */
-public class Realm extends AuthorizingRealm {
+@Component
+public class Realm extends AuthorizingRealm implements IRealm {
 	private final Logger logger = LogManager.getLogger();
 	@Autowired
 	@Qualifier("sysProvider")
 	protected IBaseProvider provider;
-	@Autowired
 	private RedisSessionDAO sessionDAO;
+
+	public void setSessionDAO(RedisSessionDAO sessionDAO) {
+		this.sessionDAO = sessionDAO;
+	}
 
 	// 权限
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
