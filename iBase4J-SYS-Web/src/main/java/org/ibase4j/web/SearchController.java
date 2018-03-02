@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
-import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.base.provider.BaseController;
+import top.ibase4j.core.base.provider.Parameter;
 
 @RestController
 @Api(value = "搜索", description = "搜索")
-public class SearchController extends AbstractController<ISysProvider> {
+public class SearchController extends BaseController<ISysProvider> {
 
 	public String getService() {
 		return "searchService";

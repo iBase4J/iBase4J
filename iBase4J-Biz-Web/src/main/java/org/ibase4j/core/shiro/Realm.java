@@ -24,8 +24,8 @@ import org.ibase4j.model.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import top.ibase4j.core.base.BaseProvider;
-import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.base.provider.IBaseProvider;
+import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.support.cache.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.WebUtil;
 
@@ -39,7 +39,7 @@ public class Realm extends AuthorizingRealm {
 	private final Logger logger = LogManager.getLogger();
 	@Autowired
 	@Qualifier("sysProvider")
-	protected BaseProvider provider;
+	protected IBaseProvider provider;
 	@Autowired
 	private RedisSessionDAO sessionDAO;
 

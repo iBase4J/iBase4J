@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.AbstractController;
+import top.ibase4j.core.base.provider.BaseController;
 
 /**
  * 角色管理
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.AbstractController;
 @RestController
 @Api(value = "角色管理", description = "角色管理")
 @RequestMapping(value = "role")
-public class SysRoleController extends AbstractController<ISysProvider> {
+public class SysRoleController extends BaseController<ISysProvider> {
 	public String getService() {
 		return "sysRoleService";
 	}

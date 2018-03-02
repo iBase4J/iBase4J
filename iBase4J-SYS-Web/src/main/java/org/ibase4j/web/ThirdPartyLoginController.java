@@ -19,8 +19,8 @@ import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.Constants;
-import top.ibase4j.core.base.AbstractController;
-import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.base.provider.BaseController;
+import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.config.Resources;
 import top.ibase4j.core.support.login.LoginHelper;
 import top.ibase4j.core.support.login.ThirdPartyLoginHelper;
@@ -34,7 +34,7 @@ import top.ibase4j.core.support.login.ThirdPartyUser;
  */
 @Controller
 @Api(value = "第三方登录接口", description = "第三方登录接口")
-public class ThirdPartyLoginController extends AbstractController<ISysProvider> {
+public class ThirdPartyLoginController extends BaseController<ISysProvider> {
 	public String getService() {
 		return "sysUserService";
 	}

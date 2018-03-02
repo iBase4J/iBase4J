@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.base.AbstractController;
 import top.ibase4j.core.support.HttpCode;
 import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.UploadUtil;
@@ -27,7 +27,7 @@ import top.ibase4j.core.util.UploadUtil;
 @RestController
 @Api(value = "文件上传接口", description = "文件上传接口")
 @RequestMapping(value = "/upload", method = RequestMethod.POST)
-public class UploadController extends BaseController {
+public class UploadController extends AbstractController {
 
 	public String getService() {
 		return null;

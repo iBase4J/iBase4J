@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.Parameter;
+import top.ibase4j.core.base.provider.AppBaseController;
+import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.util.WebUtil;
 
 /**
