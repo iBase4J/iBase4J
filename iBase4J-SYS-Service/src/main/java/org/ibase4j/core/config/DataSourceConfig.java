@@ -70,8 +70,8 @@ public class DataSourceConfig {
 	}
 
 	@Bean
-	public ServletRegistrationBean druidServlet() {
-		ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
+	public ServletRegistrationBean<StatViewServlet> druidServlet() {
+		ServletRegistrationBean<StatViewServlet> servletRegistrationBean = new ServletRegistrationBean<StatViewServlet>();
 		servletRegistrationBean.setServlet(new StatViewServlet());
 		servletRegistrationBean.addUrlMappings("/druid/*");
 		return servletRegistrationBean;
