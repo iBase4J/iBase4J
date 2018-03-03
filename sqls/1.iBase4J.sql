@@ -583,10 +583,10 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   UNIQUE KEY `group_name_task_name_start_time` (`group_name`,`task_name`,`start_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.task_fire_log 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `task_fire_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `task_fire_log` ENABLE KEYS */;
-
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+CREATE TABLE `sys_lock` (
+  `key_` varchar(128) NOT NULL,
+  `name_` varchar(64) NOT NULL,
+  `expire_` datetime NOT NULL,
+  PRIMARY KEY (`key_`),
+  KEY `expire_` (`expire_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
