@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- SYS -->
+	<dubbo:reference id="sendMsgService" interface="org.ibase4j.service.ISendMsgService"
+		check="false" />
+	<dubbo:reference id="sendArticleService" interface="org.ibase4j.service.ISysArticleService"
+		check="false" />
+	<dubbo:reference id="sysDicService" interface="org.ibase4j.service.ISysDicService"
+		check="false" />
+	<dubbo:reference id="sysEmailService" interface="org.ibase4j.service.ISysEmailService"
+		check="false" />
+	<dubbo:reference id="sysEventService" interface="org.ibase4j.service.ISysEventService"
+		check="false" />
+	<dubbo:reference id="sysFeedbackService" interface="org.ibase4j.service.ISysFeedbackService"
+		check="false" />
+	<dubbo:reference id="sysNewsService" interface="org.ibase4j.service.ISysNewsService"
+		check="false" />
+	<dubbo:reference id="sysNoticeService" interface="org.ibase4j.service.ISysNoticeService"
+		check="false" />
+	<dubbo:reference id="sysParamService" interface="org.ibase4j.service.ISysParamService"
+		check="false" />
+	<!-- Biz -->
+</beans>
