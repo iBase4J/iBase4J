@@ -157,7 +157,11 @@
 			<version>${mybatis-plus.version}</version>
 			<exclusions>
 				<exclusion>
-					<groupId>*</groupId>
+					<groupId>org.mybatis</groupId>
+					<artifactId>mybatis-spring</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
 					<artifactId>*</artifactId>
 				</exclusion>
 			</exclusions>
