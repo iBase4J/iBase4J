@@ -1,11 +1,12 @@
 package org.ibase4j.mapper;
 
-import org.apache.ibatis.annotations.CacheNamespace;
 import org.ibase4j.model.SysParam;
 
 import top.ibase4j.core.base.BaseMapper;
-import top.ibase4j.core.support.cache.mybatis.EhcacheRedisCache;
 
-@CacheNamespace(implementation = EhcacheRedisCache.class)
+/**
+ * @author ShenHuaJie
+ * @since 2018年3月3日 下午7:23:58
+ */
 public interface SysParamMapper extends BaseMapper<SysParam> {
 }

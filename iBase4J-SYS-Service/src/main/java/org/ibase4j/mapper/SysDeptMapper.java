@@ -1,16 +1,13 @@
 package org.ibase4j.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.CacheNamespace;
-import org.apache.ibatis.annotations.Param;
 import org.ibase4j.model.SysDept;
 
 import top.ibase4j.core.base.BaseMapper;
-import top.ibase4j.core.support.cache.mybatis.EhcacheRedisCache;
 
-@CacheNamespace(implementation = EhcacheRedisCache.class)
+/**
+ * @author ShenHuaJie
+ * @since 2018年3月3日 下午7:22:33
+ */
 public interface SysDeptMapper extends BaseMapper<SysDept> {
 
-	List<Long> selectIdPage(@Param("cm") SysDept sysDept);
 }
