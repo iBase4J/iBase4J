@@ -8,6 +8,10 @@ import org.ibase4j.model.sys.SysRoleMenu;
 
 import top.ibase4j.core.base.BaseMapper;
 
+/**
+ * @author ShenHuaJie
+ * @since 2018年3月3日 下午7:24:13
+ */
 public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
 	List<Long> queryMenuIdsByRoleId(@Param("roleId") Long roleId);
 
