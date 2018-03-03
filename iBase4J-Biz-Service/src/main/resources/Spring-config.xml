@@ -23,8 +23,8 @@
 		<property name="decryptProperties">
 			<array>
 				<!-- 需要解密的配置 -->
-				<value>db.reader.password</value>
-				<value>db.writer.password</value>
+				<value>druid.reader.password</value>
+				<value>druid.writer.password</value>
 			</array>
 		</property>
 	</bean>
@@ -35,7 +35,9 @@
 	<!-- 引入SPRING配置文件 -->
 	<!-- <import resource="spring/mq.xml"/> -->
 	<!-- <import resource="spring/dubbo.xml" /> -->
+	<!-- <import resource="refer/dubbo.xml" /> -->
 	<import resource="spring/motan.xml" />
+	<import resource="refer/motan.xml" />
 	<import resource="spring/redis.xml" />
 	<import resource="spring/redisson.xml" />
 	<import resource="spring/mybatis.xml"/>
