@@ -5,6 +5,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.ibase4j.model.SysMenu;
 
+/**
+ * @author ShenHuaJie
+ * @since 2018年3月3日 下午7:29:43
+ */
 public interface SysAuthorizeMapper {
 
 	void deleteUserMenu(@Param("userId") Long userId, @Param("permission") String permission);
