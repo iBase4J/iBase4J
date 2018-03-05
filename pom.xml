@@ -196,7 +196,7 @@
 			<exclusions>
 				<exclusion>
 					<groupId>org.mybatis</groupId>
-					<artifactId>*</artifactId>
+					<artifactId>mybatis-spring</artifactId>
 				</exclusion>
 				<exclusion>
 					<groupId>org.springframework</groupId>
