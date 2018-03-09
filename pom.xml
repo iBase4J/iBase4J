@@ -22,7 +22,7 @@
 		<module.name>${project.artifactId}</module.name>
 		<!-- -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.0.2</ibase4j.version>
+		<ibase4j.version>3.0.3</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data-redis.version>1.8.9.RELEASE</spring-data-redis.version>
@@ -295,11 +295,6 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.redisson</groupId>
-			<artifactId>redisson</artifactId>
-			<version>${redisson.version}</version>
 		</dependency>
 		<!-- shiro -->
 		<dependency>

@@ -27,8 +27,8 @@ import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import top.ibase4j.core.support.cache.shiro.IRealm;
-import top.ibase4j.core.support.cache.shiro.RedisSessionDAO;
+import top.ibase4j.core.support.shiro.IRealm;
+import top.ibase4j.core.support.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.WebUtil;
 
 /**
