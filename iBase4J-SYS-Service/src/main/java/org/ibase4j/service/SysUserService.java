@@ -1,12 +1,10 @@
 package org.ibase4j.service;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ibase4j.mapper.SysUserMapper;
 import org.ibase4j.mapper.SysUserThirdpartyMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysUser;
@@ -21,6 +19,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 
 import top.ibase4j.core.base.BaseService;
 import top.ibase4j.core.support.login.ThirdPartyUser;
+import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.SecurityUtil;
 
 /**
@@ -105,6 +104,6 @@ public class SysUserService extends BaseService<SysUser> {
 	}
 
 	public void init() {
-		((SysUserMapper) mapper).selectIdPage(Collections.<String, Object>emptyMap());
+		queryList(InstanceUtil.newHashMap());
 	}
 }
