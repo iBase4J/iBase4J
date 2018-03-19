@@ -232,7 +232,7 @@ DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE IF NOT EXISTS `sys_menu` (
   `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
   `menu_name` varchar(50) DEFAULT NULL COMMENT '菜单名称',
-  `menu_type` smallint(2) DEFAULT '2' COMMENT '菜单类型(0:CURD;1:系统菜单;2:业务菜单;)',
+  `menu_type` varchar(2) DEFAULT '2' COMMENT '菜单类型(0:CURD;1:系统菜单;2:业务菜单;)',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '上级菜单编号',
   `iconcls_` varchar(50) DEFAULT NULL COMMENT '节点图标CSS类名',
   `request_` varchar(100) DEFAULT NULL COMMENT '请求地址',

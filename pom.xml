@@ -376,12 +376,13 @@
 		<profile>
 			<id>product</id>
 			<properties>
-				<redis.password>buzhidao</redis.password>
 				<redis.host>127.0.0.1</redis.host>
+				<redis.password></redis.password>
 				<zookeeper.address>127.0.0.1:2181</zookeeper.address>
 				<fastDFS.host>127.0.0.1</fastDFS.host>
-				<sys.jdbc.config.path>file:/home/config/iBase4J/jdbc-sys.properties</sys.jdbc.config.path>
-				<system.config.path>file:/home/config/iBase4J/system.properties</system.config.path>
+				<session.cookie.secure>false</session.cookie.secure>
+				<jdbc.host>127.0.0.1</jdbc.host>
+				<jdbc.password>68NKG7n1mN8rErEfbag2qM==</jdbc.password>
 			</properties>
 			<build>
 				<resources>
