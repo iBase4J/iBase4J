@@ -240,7 +240,7 @@ DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE IF NOT EXISTS `sys_menu` (
   `id_` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
   `menu_name` varchar(50) DEFAULT NULL COMMENT '菜单名称',
-  `menu_type` smallint(2) DEFAULT '2' COMMENT '菜单类型(0:CURD;1:系统菜单;2:业务菜单;)',
+  `menu_type` varchar(2) DEFAULT '2' COMMENT '菜单类型(0:CURD;1:系统菜单;2:业务菜单;)',
   `parent_id` bigint(20) DEFAULT NULL COMMENT '上级菜单编号',
   `iconcls_` varchar(50) DEFAULT NULL COMMENT '节点图标CSS类名',
   `request_` varchar(100) DEFAULT NULL COMMENT '请求地址',
@@ -584,8 +584,8 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `sys_lock` (
-  `key_` varchar(128) NOT NULL,
-  `name_` varchar(64) NOT NULL,
+  `key_` varchar(256) NOT NULL,
+  `name_` varchar(128) NOT NULL,
   `expire_` datetime NOT NULL,
   PRIMARY KEY (`key_`),
   KEY `expire_` (`expire_`)

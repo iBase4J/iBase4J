@@ -8,8 +8,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.provider.ISysProvider;
@@ -28,7 +26,6 @@ import top.ibase4j.core.base.provider.BaseController;
 import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.HttpCode;
-import top.ibase4j.core.util.SecurityUtil;
 import top.ibase4j.core.util.UploadUtil;
 
 /**
@@ -51,20 +48,8 @@ public class SysUserController extends BaseController<ISysProvider> {
     public Object update(ModelMap modelMap, @RequestBody SysUser param) {
         Assert.isNotBlank(param.getAccount(), "ACCOUNT");
         Assert.length(param.getAccount(), 3, 15, "ACCOUNT");
-        if (param.getId() != null) {
-            if (param.getEnable() == null) {
-                param.setEnable(0);
-            }
-            Parameter parameter = new Parameter(getService(), "queryById", param.getId());
-            SysUser user = (SysUser)provider.execute(parameter).getResult();
-            Assert.notNull(user, "USER", param.getId());
-            if (StringUtils.isNotBlank(param.getPassword())) {
-                if (!param.getPassword().equals(user.getPassword())) {
-                    param.setPassword(SecurityUtil.encryptPassword(param.getPassword()));
-                }
-            }
-        } else if (StringUtils.isNotBlank(param.getPassword())) {
-            param.setPassword(SecurityUtil.encryptPassword(param.getPassword()));
+        if (param.getEnable() == null) {
+            param.setEnable(0);
         }
         return super.update(modelMap, param);
     }
@@ -156,16 +141,8 @@ public class SysUserController extends BaseController<ISysProvider> {
         Assert.isNotBlank(param.getOldPassword(), "OLDPASSWORD");
         Assert.isNotBlank(param.getPassword(), "PASSWORD");
         Long userId = getCurrUser();
-        String encryptPassword = SecurityUtil.encryptPassword(param.getOldPassword());
-        Parameter parameter = new Parameter(getService(), "queryById", userId);
-        logger.info("{} execute queryById start...", parameter.getNo());
-        SysUser sysUser = (SysUser)provider.execute(parameter).getResult();
-        logger.info("{} execute queryById end.", parameter.getNo());
-        Assert.notNull(sysUser, "USER", param.getId());
-        if (!sysUser.getPassword().equals(encryptPassword)) {
-            throw new UnauthorizedException("原密码错误.");
-        }
-        sysUser.setPassword(SecurityUtil.encryptPassword(param.getPassword()));
-        return super.update(modelMap, sysUser);
+        param.setId(userId);
+        param.setUpdateBy(userId);
+        return super.update(modelMap, param);
     }
 }

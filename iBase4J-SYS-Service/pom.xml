@@ -96,15 +96,14 @@
 			<version>${mybatis-spring.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mybatis.caches</groupId>
-			<artifactId>mybatis-ehcache</artifactId>
-			<version>${mybatis-ehcache.version}</version>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus</artifactId>
+			<version>${mybatis-plus.version}</version>
 		</dependency>
 		<!-- -->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
-			<version>${quartz.version}</version>
 		</dependency>
 		<!-- Spring -->
 		<dependency>

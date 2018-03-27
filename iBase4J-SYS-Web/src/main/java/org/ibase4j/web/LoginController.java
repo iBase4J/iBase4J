@@ -49,7 +49,7 @@ public class LoginController extends BaseController<ISysProvider> {
         Assert.notNull(user.getAccount(), "ACCOUNT");
         Assert.notNull(user.getPassword(), "PASSWORD");
         String clientIp = (String)request.getSession().getAttribute(Constants.USER_IP);
-        if (LoginHelper.login(user.getAccount(), SecurityUtil.encryptPassword(user.getPassword()), clientIp)) {
+        if (LoginHelper.login(user.getAccount(), user.getPassword(), clientIp)) {
             request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
             return setSuccessModelMap(modelMap);
         }

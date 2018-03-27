@@ -100,6 +100,7 @@ public class LoginController extends AppBaseController<IBizProvider> {
                 param.setUuid(uuid);
                 parameter = new Parameter(getService(), "update").setParam(param);
                 member = (TMember)provider.execute(parameter).getResult();
+                member.setPassword(null);
             }
             request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
             TokenUtil.setTokenInfo(uuid, member.getId().toString());

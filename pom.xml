@@ -32,7 +32,7 @@
 		<system.config.path>classpath:config/system.properties</system.config.path>
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.0.2</ibase4j.version>
+		<ibase4j.version>3.0.3</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data-redis.version>2.0.5.RELEASE</spring-data-redis.version>
@@ -49,7 +49,7 @@
 		<log4j.version>2.10.0</log4j.version>
 		<!-- -->
 		<druid.version>1.1.6</druid.version>
-		<dubbo.version>2.5.8</dubbo.version>
+		<dubbo.version>2.6.1</dubbo.version>
 		<fastjson.version>1.2.44</fastjson.version>
 		<motan.version>1.1.0</motan.version>
 		<!-- -->
@@ -191,7 +191,7 @@
 		<!-- mybatis -->
 		<dependency>
 			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus</artifactId>
+			<artifactId>mybatis-plus-support</artifactId>
 			<version>${mybatis-plus.version}</version>
 			<exclusions>
 				<exclusion>

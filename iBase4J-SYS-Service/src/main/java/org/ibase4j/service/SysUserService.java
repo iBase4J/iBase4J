@@ -19,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.plugins.Page;
 
 import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.exception.BusinessException;
 import top.ibase4j.core.support.login.ThirdPartyUser;
+import top.ibase4j.core.util.DataUtil;
 import top.ibase4j.core.util.SecurityUtil;
 
 /**
@@ -31,79 +33,110 @@ import top.ibase4j.core.util.SecurityUtil;
 @Service
 @CacheConfig(cacheNames = "sysUser")
 public class SysUserService extends BaseService<SysUser> {
-	@Autowired
-	private SysUserThirdpartyMapper thirdpartyMapper;
-	@Autowired
-	private SysDicService sysDicService;
-	@Autowired
-	private SysDeptService sysDeptService;
-	@Autowired
-	private SysAuthorizeService sysAuthorizeService;
-	
-	public SysUser queryById(Long id) {
-		SysUser sysUser = super.queryById(id);
-		if (sysUser != null) {
-			if (sysUser.getDeptId() != null) {
-				SysDept sysDept = sysDeptService.queryById(sysUser.getDeptId());
-				if (sysDept != null) {
-					sysUser.setDeptName(sysDept.getDeptName());
-				} else {
-					sysUser.setDeptId(null);
-				}
-			}
-		}
-		return sysUser;
-	}
-	
-	public Page<SysUser> query(Map<String, Object> params) {
-		Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
-		Page<SysUser> pageInfo = super.query(params);
-		for (SysUser userBean : pageInfo.getRecords()) {
-			if (userBean.getUserType() != null) {
-				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType()));
-			}
-			List<String> permissions = sysAuthorizeService.queryUserPermission(userBean.getId());
-			for (String permission : permissions) {
-				if (StringUtils.isBlank(userBean.getPermission())) {
-					userBean.setPermission(permission);
-				} else {
-					userBean.setPermission(userBean.getPermission() + ";" + permission);
-				}
-			}
-		}
-		return pageInfo;
-	}
+    @Autowired
+    private SysUserThirdpartyMapper thirdpartyMapper;
+    @Autowired
+    private SysDicService sysDicService;
+    @Autowired
+    private SysDeptService sysDeptService;
+    @Autowired
+    private SysAuthorizeService sysAuthorizeService;
 
-	/** 查询第三方帐号用户Id */
-	@Cacheable
-	public Long queryUserIdByThirdParty(ThirdPartyUser param) {
-		return thirdpartyMapper.queryUserIdByThirdParty(param.getProvider(), param.getOpenid());
-	}
+    @Transactional
+    public SysUser update(SysUser record) {
+        if (DataUtil.isEmpty(record.getPassword())) {
+            record.setPassword(null);
+        } else {
+            record.setPassword(SecurityUtil.encryptPassword(record.getPassword()));
+        }
+        if (DataUtil.isNotEmpty(record.getOldPassword())) {
+            SysUser sysUser = super.queryById(record.getId());
+            String encryptPassword = SecurityUtil.encryptPassword(record.getOldPassword());
+            if (!sysUser.getPassword().equals(encryptPassword)) {
+                throw new BusinessException("原密码错误.");
+            }
+        }
+        return super.update(record);
+    }
 
-	/** 保存第三方帐号 */
-	@Transactional
-	public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
-		SysUser sysUser = new SysUser();
-		sysUser.setSex(0);
-		sysUser.setUserType("1");
-		sysUser.setPassword(SecurityUtil.encryptPassword("123456"));
-		sysUser.setUserName(thirdPartyUser.getUserName());
-		sysUser.setAvatar(thirdPartyUser.getAvatarUrl());
-		// 初始化第三方信息
-		SysUserThirdparty thirdparty = new SysUserThirdparty();
-		thirdparty.setProvider(thirdPartyUser.getProvider());
-		thirdparty.setOpenId(thirdPartyUser.getOpenid());
-		thirdparty.setCreateTime(new Date());
+    public SysUser queryById(Long id) {
+        SysUser record = super.queryById(id);
+        record.setPassword(null);
+        return record;
+    }
 
-		this.update(sysUser);
-		sysUser.setAccount(thirdparty.getProvider() + sysUser.getId());
-		this.update(sysUser);
-		thirdparty.setUserId(sysUser.getId());
-		thirdpartyMapper.insert(thirdparty);
-		return sysUser;
-	}
+    public SysUser login(String account, String password) {
+        SysUser params = new SysUser();
+        params.setAccount(account);
+        params.setEnable(1);
+        List<SysUser> list = super.selectList(params);
+        if (list.size() == 1) {
+            SysUser user = (SysUser)list.get(0);
+            if (user.getPassword().equals(SecurityUtil.encryptPassword(password))) {
+                user.setPassword(null);
+                return user;
+            }
+        }
+        return null;
+    }
 
-	public void init() {
-		queryList(Collections.<String, Object>emptyMap());
-	}
+    public Page<SysUser> query(Map<String, Object> params) {
+        Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
+        Page<SysUser> pageInfo = super.query(params);
+        for (SysUser userBean : pageInfo.getRecords()) {
+            if (userBean.getDeptId() != null) {
+                SysDept sysDept = sysDeptService.queryById(userBean.getDeptId());
+                if (sysDept != null) {
+                    userBean.setDeptName(sysDept.getDeptName());
+                } else {
+                    userBean.setDeptId(null);
+                }
+            }
+            if (userBean.getUserType() != null) {
+                userBean.setUserTypeText(userTypeMap.get(userBean.getUserType()));
+            }
+            List<String> permissions = sysAuthorizeService.queryUserPermission(userBean.getId());
+            for (String permission : permissions) {
+                if (StringUtils.isBlank(userBean.getPermission())) {
+                    userBean.setPermission(permission);
+                } else {
+                    userBean.setPermission(userBean.getPermission() + ";" + permission);
+                }
+            }
+        }
+        return pageInfo;
+    }
+
+    /** 查询第三方帐号用户Id */
+    @Cacheable
+    public Long queryUserIdByThirdParty(ThirdPartyUser param) {
+        return thirdpartyMapper.queryUserIdByThirdParty(param.getProvider(), param.getOpenid());
+    }
+
+    /** 保存第三方帐号 */
+    @Transactional
+    public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
+        SysUser sysUser = new SysUser();
+        sysUser.setSex(0);
+        sysUser.setUserType("1");
+        sysUser.setPassword(SecurityUtil.encryptPassword("123456"));
+        sysUser.setUserName(thirdPartyUser.getUserName());
+        sysUser.setAvatar(thirdPartyUser.getAvatarUrl());
+        // 初始化第三方信息
+        SysUserThirdparty thirdparty = new SysUserThirdparty();
+        thirdparty.setProvider(thirdPartyUser.getProvider());
+        thirdparty.setOpenId(thirdPartyUser.getOpenid());
+        thirdparty.setCreateTime(new Date());
+
+        this.update(sysUser);
+        sysUser.setAccount(thirdparty.getProvider() + sysUser.getId());
+        this.update(sysUser);
+        thirdparty.setUserId(sysUser.getId());
+        thirdpartyMapper.insert(thirdparty);
+        return sysUser;
+    }
+
+    public void init() {
+        queryList(Collections.<String, Object>emptyMap());
+    }
 }

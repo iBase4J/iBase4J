@@ -47,6 +47,7 @@
 		<logger name="org.apache.activemq" level="info" />
 		<logger name="org.springframework" level="info" />
 		<logger name="serviceStatsLog" level="warn" />
+		<logger name="org.mybatis.spring" level="info" />
 		<logger name="org.apache.zookeeper" level="warn" />
 		<logger name="org.springframework.web" level="debug" />
 		<Logger name="top.ibase4j" level="info">  
