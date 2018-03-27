@@ -19,7 +19,7 @@ public class SysMenu extends BaseModel {
 	}
 
 	private String menuName;
-	private Boolean menuType;
+	private String menuType;
 	private Long parentId;
 
 	@TableField("iconcls_")
@@ -67,7 +67,7 @@ public class SysMenu extends BaseModel {
 	/**
 	 * @return the value of sys_menu.menu_type
 	 */
-	public Boolean getMenuType() {
+	public String getMenuType() {
 		return menuType;
 	}
 
@@ -75,7 +75,7 @@ public class SysMenu extends BaseModel {
 	 * @param menuType
 	 *            the value for sys_menu.menu_type
 	 */
-	public void setMenuType(Boolean menuType) {
+	public void setMenuType(String menuType) {
 		this.menuType = menuType;
 	}
 

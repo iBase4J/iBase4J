@@ -1,12 +1,10 @@
 package org.ibase4j.service;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.ibase4j.mapper.SysUserMapper;
 import org.ibase4j.mapper.SysUserThirdpartyMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysUser;
@@ -20,7 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.baomidou.mybatisplus.plugins.Page;
 
 import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.exception.BusinessException;
 import top.ibase4j.core.support.login.ThirdPartyUser;
+import top.ibase4j.core.util.DataUtil;
+import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.SecurityUtil;
 
 /**
@@ -32,79 +33,90 @@ import top.ibase4j.core.util.SecurityUtil;
 @Service
 @CacheConfig(cacheNames = "sysUser")
 public class SysUserService extends BaseService<SysUser> {
-	@Autowired
-	private SysUserThirdpartyMapper thirdpartyMapper;
-	@Autowired
-	private SysDicService sysDicService;
-	@Autowired
-	private SysDeptService sysDeptService;
-	@Autowired
-	private SysAuthorizeService sysAuthorizeService;
-	
-	public SysUser queryById(Long id) {
-		SysUser sysUser = super.queryById(id);
-		if (sysUser != null) {
-			if (sysUser.getDeptId() != null) {
-				SysDept sysDept = sysDeptService.queryById(sysUser.getDeptId());
-				if (sysDept != null) {
-					sysUser.setDeptName(sysDept.getDeptName());
-				} else {
-					sysUser.setDeptId(null);
-				}
-			}
-		}
-		return sysUser;
-	}
-	
-	public Page<SysUser> query(Map<String, Object> params) {
-		Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
-		Page<SysUser> pageInfo = super.query(params);
-		for (SysUser userBean : pageInfo.getRecords()) {
-			if (userBean.getUserType() != null) {
-				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType()));
-			}
-			List<String> permissions = sysAuthorizeService.queryUserPermission(userBean.getId());
-			for (String permission : permissions) {
-				if (StringUtils.isBlank(userBean.getPermission())) {
-					userBean.setPermission(permission);
-				} else {
-					userBean.setPermission(userBean.getPermission() + ";" + permission);
-				}
-			}
-		}
-		return pageInfo;
-	}
+    @Autowired
+    private SysUserThirdpartyMapper thirdpartyMapper;
+    @Autowired
+    private SysDicService sysDicService;
+    @Autowired
+    private SysDeptService sysDeptService;
+    @Autowired
+    private SysAuthorizeService sysAuthorizeService;
 
-	/** 查询第三方帐号用户Id */
-	@Cacheable
-	public Long queryUserIdByThirdParty(ThirdPartyUser param) {
-		return thirdpartyMapper.queryUserIdByThirdParty(param.getProvider(), param.getOpenid());
-	}
+    @Transactional
+    public SysUser update(SysUser record) {
+        if (DataUtil.isEmpty(record.getPassword())) {
+            record.setPassword(null);
+        } else {
+            record.setPassword(SecurityUtil.encryptPassword(record.getPassword()));
+        }
+        if (DataUtil.isNotEmpty(record.getOldPassword())) {
+            SysUser sysUser = super.queryById(record.getId());
+            String encryptPassword = SecurityUtil.encryptPassword(record.getOldPassword());
+            if (!sysUser.getPassword().equals(encryptPassword)) {
+                throw new BusinessException("原密码错误.");
+            }
+        }
+        return super.update(record);
+    }
 
-	/** 保存第三方帐号 */
-	@Transactional
-	public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
-		SysUser sysUser = new SysUser();
-		sysUser.setSex(0);
-		sysUser.setUserType("1");
-		sysUser.setPassword(SecurityUtil.encryptPassword("123456"));
-		sysUser.setUserName(thirdPartyUser.getUserName());
-		sysUser.setAvatar(thirdPartyUser.getAvatarUrl());
-		// 初始化第三方信息
-		SysUserThirdparty thirdparty = new SysUserThirdparty();
-		thirdparty.setProvider(thirdPartyUser.getProvider());
-		thirdparty.setOpenId(thirdPartyUser.getOpenid());
-		thirdparty.setCreateTime(new Date());
+    public Page<SysUser> query(Map<String, Object> params) {
+        Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
+        Page<SysUser> pageInfo = super.query(params);
+        for (SysUser sysUser : pageInfo.getRecords()) {
+            if (sysUser.getDeptId() != null) {
+                SysDept sysDept = sysDeptService.queryById(sysUser.getDeptId());
+                if (sysDept != null) {
+                    sysUser.setDeptName(sysDept.getDeptName());
+                } else {
+                    sysUser.setDeptId(null);
+                }
+            }
+            if (sysUser.getUserType() != null) {
+                sysUser.setUserTypeText(userTypeMap.get(sysUser.getUserType()));
+            }
+            List<String> permissions = sysAuthorizeService.queryUserPermission(sysUser.getId());
+            for (String permission : permissions) {
+                if (StringUtils.isBlank(sysUser.getPermission())) {
+                    sysUser.setPermission(permission);
+                } else {
+                    sysUser.setPermission(sysUser.getPermission() + ";" + permission);
+                }
+            }
+            sysUser.setPassword(null);
+        }
+        return pageInfo;
+    }
 
-		this.update(sysUser);
-		sysUser.setAccount(thirdparty.getProvider() + sysUser.getId());
-		this.update(sysUser);
-		thirdparty.setUserId(sysUser.getId());
-		thirdpartyMapper.insert(thirdparty);
-		return sysUser;
-	}
+    /** 查询第三方帐号用户Id */
+    @Cacheable
+    public Long queryUserIdByThirdParty(ThirdPartyUser param) {
+        return thirdpartyMapper.queryUserIdByThirdParty(param.getProvider(), param.getOpenid());
+    }
 
-	public void init() {
-		((SysUserMapper) mapper).selectIdPage(Collections.<String, Object>emptyMap());
-	}
+    /** 保存第三方帐号 */
+    @Transactional
+    public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
+        SysUser sysUser = new SysUser();
+        sysUser.setSex(0);
+        sysUser.setUserType("1");
+        sysUser.setPassword(SecurityUtil.encryptPassword("123456"));
+        sysUser.setUserName(thirdPartyUser.getUserName());
+        sysUser.setAvatar(thirdPartyUser.getAvatarUrl());
+        // 初始化第三方信息
+        SysUserThirdparty thirdparty = new SysUserThirdparty();
+        thirdparty.setProvider(thirdPartyUser.getProvider());
+        thirdparty.setOpenId(thirdPartyUser.getOpenid());
+        thirdparty.setCreateTime(new Date());
+
+        this.update(sysUser);
+        sysUser.setAccount(thirdparty.getProvider() + sysUser.getId());
+        this.update(sysUser);
+        thirdparty.setUserId(sysUser.getId());
+        thirdpartyMapper.insert(thirdparty);
+        return sysUser;
+    }
+
+    public void init() {
+        queryList(InstanceUtil.newHashMap());
+    }
 }

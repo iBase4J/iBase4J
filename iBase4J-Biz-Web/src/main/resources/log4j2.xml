@@ -41,6 +41,8 @@
 	<loggers>
 		<logger name="org.slf4j" level="info" />
 		<logger name="org.quartz" level="warn" />
+		<logger name="springfox" level="error" />
+		<logger name="io.swagger" level="info" />
 		<logger name="org.redisson" level="info" />
 		<logger name="com.atomikos" level="warn" />
 		<logger name="com.alibaba.dubbo" level="info" />
