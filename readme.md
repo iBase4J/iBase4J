@@ -9,7 +9,7 @@
 - 可以无限的扩展子系统，子系统之间使用Dubbo或MQ进行通信。
 
 ## 主要功能
- 1. 数据库：Druid数据库连接池，监控数据库访问性能，统计SQL的执行性能。 数据库密码加密，加密方式请查看PropertiesUtil，decryptProperties属性配置需要解密的key。
+ 1. 数据库：Druid数据库连接池，监控数据库访问性能，统计SQL的执行性能。
  2. 持久层：mybatis持久化，使用MyBatis-Plus优化，减少sql开发量；aop切换数据库实现读写分离。Transtraction注解事务。
  3. MVC： 基于spring mvc注解,Rest风格Controller。Exception统一管理。
  4. 调度：Spring+quartz, 可以查询、修改周期、暂停、删除、新增、立即执行，查询执行记录等。
@@ -22,13 +22,13 @@
  11. 工具类：excel导入导出，汉字转拼音，身份证号码验证，数字转大写人民币，FTP/SFTP/fastDFS上传下载，发送邮件，redis缓存，加密等等。
 
 ## 技术选型
-    ● 核心框架：Spring Framework 4.3.0 + Dubbo 2.5.3
-    ● 安全框架：Apache Shiro 1.2
+    ● 核心框架：Spring Framework + Dubbo
+    ● 安全框架：Apache Shiro
     ● 任务调度：Spring + Quartz
-    ● 持久层框架：MyBatis 3.4 + MyBatis-Plus 2.0
-    ● 数据库连接池：Alibaba Druid 1.0
+    ● 持久层框架：MyBatis + MyBatis-Plus
+    ● 数据库连接池：Alibaba Druid
     ● 缓存框架：Redis
-    ● 会话管理：Spring-Session 1.3.0
+    ● 会话管理：Spring-Shiro + redis
     ● 日志管理：SLF4J、Log4j2
     ● 前端框架：Angular JS + Bootstrap + Jquery
 
@@ -56,7 +56,6 @@ iBase4J使用 [Apache License 2.0][] 协议.
 [springBoot][] 去xml版本；
 
 	master是最新版本，统一dubbo服务接口，一个模块只对外提供一个接口。
-	docker待开发。
 
 ## 加入QQ群[538240548](http://shang.qq.com/wpa/qunwpa?idkey=b0fb32618d54e6a7f3cb718cd469b2952c8a968b1ef6f17fd68c83338ae4bce3)
 交流技术问题，下载项目文档和一键启动依赖服务工具。
