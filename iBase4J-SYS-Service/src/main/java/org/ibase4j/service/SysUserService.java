@@ -1,6 +1,5 @@
 package org.ibase4j.service;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +21,7 @@ import top.ibase4j.core.base.BaseService;
 import top.ibase4j.core.exception.BusinessException;
 import top.ibase4j.core.support.login.ThirdPartyUser;
 import top.ibase4j.core.util.DataUtil;
+import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.SecurityUtil;
 
 /**
@@ -137,6 +137,6 @@ public class SysUserService extends BaseService<SysUser> {
     }
 
     public void init() {
-        queryList(Collections.<String, Object>emptyMap());
+        queryList(InstanceUtil.newHashMap());
     }
 }
