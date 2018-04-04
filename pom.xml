@@ -16,13 +16,10 @@
 	</parent>
 
 	<properties>
-		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
-		<jdbc.config.path>classpath:config/jdbc.properties</jdbc.config.path>
-		<system.config.path>classpath:config/system.properties</system.config.path>
 		<module.name>${project.artifactId}</module.name>
 		<!-- -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.0.4</ibase4j.version>
+		<ibase4j.version>3.0.6</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data-redis.version>1.8.9.RELEASE</spring-data-redis.version>
