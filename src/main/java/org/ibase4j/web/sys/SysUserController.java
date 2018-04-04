@@ -77,7 +77,9 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
 	@RequiresPermissions("sys.base.user.read")
 	@PutMapping(value = "/read/detail")
 	public Object get(ModelMap modelMap, @RequestBody SysUser param) {
-		return super.get(modelMap, param);
+        SysUser sysUser = service.queryById(param.getId());
+        sysUser.setPassword(null);
+        return setSuccessModelMap(modelMap, sysUser);
 	}
 
 	// 用户详细信息
@@ -93,7 +95,8 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
 	@GetMapping(value = "/read/promission")
 	public Object promission(ModelMap modelMap) {
 		Long id = getCurrUser();
-		SysUser sysUser = ((SysUserService) service).queryById(id);
+        SysUser sysUser = service.queryById(id);
+		sysUser.setPassword(null);
 		modelMap.put("user", sysUser);
 		List<?> menus = sysAuthorizeService.queryAuthorizeByUserId(id);
 		modelMap.put("menus", menus);
@@ -106,7 +109,9 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
 	public Object current(ModelMap modelMap) {
 		SysUser param = new SysUser();
 		param.setId(getCurrUser());
-		return super.get(modelMap, param);
+		SysUser sysUser = service.queryById(param.getId());
+        sysUser.setPassword(null);
+        return setSuccessModelMap(modelMap, sysUser);
 	}
 
 	@ApiOperation(value = "修改个人信息")

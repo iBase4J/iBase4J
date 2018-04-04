@@ -59,6 +59,7 @@ public class SysUserService extends BaseService<SysUser> {
 		Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
 		Page<SysUser> pageInfo = super.query(params);
 		for (SysUser userBean : pageInfo.getRecords()) {
+		    userBean.setPassword(null);
 			if (userBean.getUserType() != null) {
 				userBean.setUserTypeText(userTypeMap.get(userBean.getUserType()));
 			}
