@@ -23,9 +23,6 @@
 
 	<properties>
 		<module.name>${project.artifactId}</module.name>
-		<!-- 开发阶段配置文件位置, 发布时打包加参数：-P product -->
-		<sys.jdbc.config.path>classpath:config/jdbc.properties</sys.jdbc.config.path>
-		<system.config.path>classpath:config/system.properties</system.config.path>
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<ibase4j.version>3.0.5</ibase4j.version>
