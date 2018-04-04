@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.provider.ISysProvider;
@@ -26,6 +27,7 @@ import top.ibase4j.core.base.provider.BaseController;
 import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.HttpCode;
+import top.ibase4j.core.util.SecurityUtil;
 import top.ibase4j.core.util.UploadUtil;
 
 /**
@@ -67,7 +69,12 @@ public class SysUserController extends BaseController<ISysProvider> {
     @RequiresPermissions("sys.base.user.read")
     @PutMapping(value = "/read/detail")
     public Object get(ModelMap modelMap, @RequestBody SysUser param) {
-        return super.get(modelMap, param);
+        Parameter parameter = new Parameter(getService(), "queryById", param.getId());
+        logger.info("{} execute queryById start...", parameter.getNo());
+        SysUser result = (SysUser)provider.execute(parameter).getResult();
+        logger.info("{} execute queryById end.", parameter.getNo());
+        result.setPassword(null);
+        return setSuccessModelMap(modelMap, result);
     }
 
     // 用户详细信息
@@ -85,6 +92,7 @@ public class SysUserController extends BaseController<ISysProvider> {
         Long id = getCurrUser();
         Parameter parameter = new Parameter(getService(), "queryById", id);
         SysUser sysUser = (SysUser)provider.execute(parameter).getResult();
+        sysUser.setPassword(null);
         modelMap.put("user", sysUser);
         parameter = new Parameter("sysAuthorizeService", "queryAuthorizeByUserId", id);
         logger.info("{} execute queryAuthorizeByUserId start...", parameter.getNo());
@@ -100,7 +108,12 @@ public class SysUserController extends BaseController<ISysProvider> {
     public Object current(ModelMap modelMap) {
         SysUser param = new SysUser();
         param.setId(getCurrUser());
-        return super.get(modelMap, param);
+        Parameter parameter = new Parameter(getService(), "queryById", param.getId());
+        logger.info("{} execute queryById start...", parameter.getNo());
+        SysUser result = (SysUser)provider.execute(parameter).getResult();
+        logger.info("{} execute queryById end.", parameter.getNo());
+        result.setPassword(null);
+        return setSuccessModelMap(modelMap, result);
     }
 
     @ApiOperation(value = "修改个人信息")
@@ -141,8 +154,16 @@ public class SysUserController extends BaseController<ISysProvider> {
         Assert.isNotBlank(param.getOldPassword(), "OLDPASSWORD");
         Assert.isNotBlank(param.getPassword(), "PASSWORD");
         Long userId = getCurrUser();
-        param.setId(userId);
-        param.setUpdateBy(userId);
-        return super.update(modelMap, param);
+        String encryptPassword = SecurityUtil.encryptPassword(param.getOldPassword());
+        Parameter parameter = new Parameter(getService(), "queryById", userId);
+        logger.info("{} execute queryById start...", parameter.getNo());
+        SysUser sysUser = (SysUser)provider.execute(parameter).getResult();
+        logger.info("{} execute queryById end.", parameter.getNo());
+        Assert.notNull(sysUser, "USER", param.getId());
+        if (!sysUser.getPassword().equals(encryptPassword)) {
+            throw new UnauthorizedException("原密码错误.");
+        }
+        sysUser.setPassword(SecurityUtil.encryptPassword(param.getPassword()));
+        return super.update(modelMap, sysUser);
     }
 }

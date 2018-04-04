@@ -61,7 +61,14 @@ public class SysUserService extends BaseService<SysUser> {
 
     public SysUser queryById(Long id) {
         SysUser record = super.queryById(id);
-        record.setPassword(null);
+        if (record.getDeptId() != null) {
+            SysDept sysDept = sysDeptService.queryById(record.getDeptId());
+            if (sysDept != null) {
+                record.setDeptName(sysDept.getDeptName());
+            } else {
+                record.setDeptId(null);
+            }
+        }
         return record;
     }
 
