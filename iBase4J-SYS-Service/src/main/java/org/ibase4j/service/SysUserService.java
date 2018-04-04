@@ -59,6 +59,19 @@ public class SysUserService extends BaseService<SysUser> {
         return super.update(record);
     }
 
+    public SysUser queryById(Long id) {
+        SysUser record = super.queryById(id);
+        if (record.getDeptId() != null) {
+            SysDept sysDept = sysDeptService.queryById(record.getDeptId());
+            if (sysDept != null) {
+                record.setDeptName(sysDept.getDeptName());
+            } else {
+                record.setDeptId(null);
+            }
+        }
+        return record;
+    }
+
     public Page<SysUser> query(Map<String, Object> params) {
         Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
         Page<SysUser> pageInfo = super.query(params);
