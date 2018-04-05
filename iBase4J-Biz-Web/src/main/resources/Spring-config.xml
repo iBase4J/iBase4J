@@ -14,7 +14,7 @@
 	<bean class="top.ibase4j.core.support.context.PropertyPlaceholder">
 		<property name="locations">
 			<list>
-				<value>${system.config.path}</value>
+				<value>classpath*:config/system.properties</value>
 			</list>
 		</property>
 	</bean>

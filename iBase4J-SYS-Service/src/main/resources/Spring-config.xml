@@ -10,8 +10,8 @@
 	<bean class="top.ibase4j.core.support.context.PropertyPlaceholder">
 		<property name="locations">
 			<list>
-				<value>${sys.jdbc.config.path}</value>
-				<value>${system.config.path}</value>
+				<value>classpath:config/jdbc.properties</value>
+				<value>classpath*:config/system.properties</value>
 			</list>
 		</property>
 		<property name="decryptProperties">
