@@ -69,27 +69,32 @@ public class Realm extends AuthorizingRealm implements IRealm {
     // 登录验证
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
         throws AuthenticationException {
-        UsernamePasswordToken token = (UsernamePasswordToken)authcToken;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("enable", 1);
         params.put("account", token.getUsername());
-        StringBuilder sb = new StringBuilder(100);
-        for (int i = 0; i < token.getPassword().length; i++) {
-            sb.append(token.getPassword()[i]);
-        }
-        Parameter parameter = new Parameter("sysUserService", "login", token.getUsername(), sb.toString());
+        Parameter parameter = new Parameter("sysUserService", "queryList", params);
         logger.info("{} execute sysUserService.queryList start...", parameter.getNo());
-        SysUser user = (SysUser)sysProvider.execute(parameter).getResult();
+        List<?> list = sysProvider.execute(parameter).getResultList();
         logger.info("{} execute sysUserService.queryList end.", parameter.getNo());
-        if (user != null) {
-            WebUtil.saveCurrentUser(user.getId());
-            saveSession(token.getUsername(), token.getHost());
-            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(token.getUsername(), sb.toString(),
-                user.getUserName());
-            return authcInfo;
+        if (list.size() == 1) {
+            SysUser user = (SysUser)list.get(0);
+            StringBuilder sb = new StringBuilder(100);
+            for (int i = 0; i < token.getPassword().length; i++) {
+                sb.append(token.getPassword()[i]);
+            }
+            if (user.getPassword().equals(sb.toString())) {
+                WebUtil.saveCurrentUser(user.getId());
+                saveSession(user.getAccount(), token.getHost());
+                AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
+                    user.getUserName());
+                return authcInfo;
+            }
+            logger.warn("USER [{}] PASSWORD IS WRONG: {}", token.getUsername(), sb.toString());
+            return null;
+        } else {
+            logger.warn("No user: {}", token.getUsername());
+            return null;
         }
-        logger.warn("USER [{}] PASSWORD IS WRONG: {}", token.getUsername(), sb.toString());
-        return null;
     }
 
     /** 保存session */

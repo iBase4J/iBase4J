@@ -72,21 +72,6 @@ public class SysUserService extends BaseService<SysUser> {
         return record;
     }
 
-    public SysUser login(String account, String password) {
-        SysUser params = new SysUser();
-        params.setAccount(account);
-        params.setEnable(1);
-        List<SysUser> list = super.selectList(params);
-        if (list.size() == 1) {
-            SysUser user = (SysUser)list.get(0);
-            if (user.getPassword().equals(SecurityUtil.encryptPassword(password))) {
-                user.setPassword(null);
-                return user;
-            }
-        }
-        return null;
-    }
-
     public Page<SysUser> query(Map<String, Object> params) {
         Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
         Page<SysUser> pageInfo = super.query(params);
