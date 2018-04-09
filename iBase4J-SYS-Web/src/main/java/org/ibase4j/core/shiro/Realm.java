@@ -67,8 +67,9 @@ public class Realm extends AuthorizingRealm implements IRealm {
     }
 
     // 登录验证
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
-        throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
+            throws AuthenticationException {
+        UsernamePasswordToken token = (UsernamePasswordToken)authcToken;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("enable", 1);
         params.put("account", token.getUsername());
