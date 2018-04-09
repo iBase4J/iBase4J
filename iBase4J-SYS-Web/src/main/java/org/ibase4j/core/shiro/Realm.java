@@ -85,10 +85,10 @@ public class Realm extends AuthorizingRealm implements IRealm {
 			for (int i = 0; i < token.getPassword().length; i++) {
 				sb.append(token.getPassword()[i]);
 			}
-			if (user.getPassword().equals(sb.toString())) {
+			if (user.getPassword().equals(SecurityUtil.encryptPassword(sb.toString()))) {
 				WebUtil.saveCurrentUser(user.getId());
 				saveSession(user.getAccount(), token.getHost());
-				AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
+				AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), sb.toString(),
 						user.getUserName());
 				return authcInfo;
 			}
