@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 
 import top.ibase4j.core.support.shiro.IRealm;
 import top.ibase4j.core.support.shiro.RedisSessionDAO;
-import top.ibase4j.core.util.WebUtil;
+import top.ibase4j.core.util.ShiroUtil;
 
 /**
  * 权限检查类
@@ -55,7 +55,7 @@ public class Realm extends AuthorizingRealm implements IRealm {
     // 权限
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Long userId = (Long)WebUtil.getCurrentUser();
+        Long userId = (Long)ShiroUtil.getCurrentUser();
         List<?> list = sysAuthorizeService.queryPermissionByUserId(userId);
         for (Object permission : list) {
             if (StringUtils.isNotBlank((String)permission)) {
@@ -83,7 +83,7 @@ public class Realm extends AuthorizingRealm implements IRealm {
                 sb.append(token.getPassword()[i]);
             }
             if (user.getPassword().equals(sb.toString())) {
-                WebUtil.saveCurrentUser(user.getId());
+                ShiroUtil.saveCurrentUser(user.getId());
                 saveSession(user.getAccount(), token.getHost());
                 AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
                     user.getUserName());

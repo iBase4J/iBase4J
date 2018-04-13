@@ -58,7 +58,7 @@ public class LoginController extends BaseController<SysUser, SysUserService> {
     @ApiOperation(value = "用户登出")
     @PostMapping("/logout")
     public Object logout(ModelMap modelMap) {
-        Long id = WebUtil.getCurrentUser();
+        Long id = getCurrUser();
         if (id != null) {
             sysSessionService.delete(id);
         }

@@ -22,7 +22,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.AbstractController;
 import top.ibase4j.core.exception.IllegalParameterException;
-import top.ibase4j.core.util.WebUtil;
 
 /**
  * 权限管理
@@ -51,7 +50,7 @@ public class SysAuthorizeController extends AbstractController {
     @RequiresPermissions("sys.permisson.userMenu.update")
     public Object userMenu(ModelMap modelMap, @RequestBody List<SysUserMenu> list) {
         Long userId = null;
-        Long currentUserId = WebUtil.getCurrentUser();
+        Long currentUserId = getCurrUser();
         for (SysUserMenu sysUserMenu : list) {
             if (sysUserMenu.getUserId() != null) {
                 if (userId != null && userId != sysUserMenu.getUserId()) {
@@ -79,7 +78,7 @@ public class SysAuthorizeController extends AbstractController {
     @RequiresPermissions("sys.permisson.userRole.update")
     public Object userRole(ModelMap modelMap, @RequestBody List<SysUserRole> list) {
         Long userId = null;
-        Long currentUserId = WebUtil.getCurrentUser();
+        Long currentUserId = getCurrUser();
         for (SysUserRole sysUserRole : list) {
             if (sysUserRole.getUserId() != null) {
                 if (userId != null && userId != sysUserRole.getUserId()) {
@@ -107,7 +106,7 @@ public class SysAuthorizeController extends AbstractController {
     @RequiresPermissions("sys.permisson.roleMenu.update")
     public Object roleMenu(ModelMap modelMap, @RequestBody List<SysRoleMenu> list) {
         Long roleId = null;
-        Long userId = WebUtil.getCurrentUser();
+        Long userId = getCurrUser();
         for (SysRoleMenu sysRoleMenu : list) {
             if (sysRoleMenu.getRoleId() != null) {
                 if (roleId != null && roleId != sysRoleMenu.getRoleId()) {

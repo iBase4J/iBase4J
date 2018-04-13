@@ -31,7 +31,6 @@ import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.HttpCode;
 import top.ibase4j.core.util.SecurityUtil;
 import top.ibase4j.core.util.UploadUtil;
-import top.ibase4j.core.util.WebUtil;
 
 /**
  * 用户管理控制器
@@ -117,7 +116,7 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
 	@ApiOperation(value = "修改个人信息")
 	@PostMapping(value = "/update/person")
 	public Object updatePerson(ModelMap modelMap, @RequestBody SysUser param) {
-		param.setId(WebUtil.getCurrentUser());
+		param.setId(getCurrUser());
 		param.setPassword(null);
 		Assert.isNotBlank(param.getAccount(), "ACCOUNT");
 		Assert.length(param.getAccount(), 3, 15, "ACCOUNT");
@@ -130,7 +129,7 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
 		List<String> fileNames = UploadUtil.uploadImage(request, false);
 		if (fileNames.size() > 0) {
 			SysUser param = new SysUser();
-			param.setId(WebUtil.getCurrentUser());
+			param.setId(getCurrUser());
 			String filePath = UploadUtil.getUploadDir(request) + fileNames.get(0);
 			// String avatar = UploadUtil.remove2DFS("sysUser", "user" +
 			// sysUser.getId(), filePath).getRemotePath();
@@ -155,7 +154,7 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
 		String encryptPassword = SecurityUtil.encryptPassword(param.getOldPassword());
 		SysUser sysUser = ((SysUserService) service).queryById(param.getId());
 		Assert.notNull(sysUser, "USER", param.getId());
-		Long userId = WebUtil.getCurrentUser();
+		Long userId = getCurrUser();
 		if (!param.getId().equals(userId)) {
 			SysUser user = ((SysUserService) service).queryById(userId);
 			if ("".equals(user.getUserType())) {
@@ -167,7 +166,7 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
 			}
 		}
 		param.setPassword(encryptPassword);
-		param.setUpdateBy(WebUtil.getCurrentUser());
+		param.setUpdateBy(getCurrUser());
 		return super.update(modelMap, param);
 	}
 }
