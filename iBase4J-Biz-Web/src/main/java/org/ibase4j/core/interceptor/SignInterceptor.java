@@ -39,9 +39,6 @@ public class SignInterceptor extends BaseInterceptor {
         }
         // 判断密钥是否过期
         String uuid = request.getHeader("UUID");
-        if (uuid == null) {
-            return true;
-        }
         String publicKey = (String)CacheUtil.getCache().get(Constants.SYSTEM_CACHE_NAMESPACE + "SIGN:" + uuid);
         if (publicKey == null) {
             response.setContentType("text/html; charset=UTF-8");
