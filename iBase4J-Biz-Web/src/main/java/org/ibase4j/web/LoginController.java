@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.net.util.Base64;
 import org.ibase4j.model.TMember;
 import org.ibase4j.provider.IBizProvider;
 import org.springframework.http.MediaType;
@@ -18,13 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import top.ibase4j.core.Constants;
 import top.ibase4j.core.Constants.MSGCHKTYPE;
 import top.ibase4j.core.base.provider.AppBaseController;
 import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.config.Resources;
 import top.ibase4j.core.exception.LoginException;
 import top.ibase4j.core.support.Assert;
+import top.ibase4j.core.support.security.coder.RSACoder;
 import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.DataUtil;
 import top.ibase4j.core.util.InstanceUtil;
@@ -46,6 +50,25 @@ public class LoginController extends AppBaseController<IBizProvider> {
 
     public String getService() {
         return "memberService";
+    }
+
+    @PostMapping("secret.api")
+    @ApiOperation(value = "APP获取私钥", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParam(name = "UUID", defaultValue = "1", paramType = "header")
+    public Object getSecret(HttpServletRequest request, HttpServletResponse response) {
+        String uuid = request.getHeader("UUID");
+        org.springframework.util.Assert.notNull(uuid, "非法操作.");
+        try {
+            Map<String, Object> keyMap = RSACoder.initKey();
+            String privateKey = Base64.encodeBase64String(RSACoder.getPrivateKey(keyMap));
+            String publicKey = Base64.encodeBase64String(RSACoder.getPublicKey(keyMap));
+            logger.info("Private key: " + privateKey);
+            logger.info("Public key: " + publicKey);
+            CacheUtil.getCache().set(Constants.SYSTEM_CACHE_NAMESPACE + "SIGN:" + uuid, publicKey, 60 * 60 * 24 * 10);
+            return setSuccessModelMap(privateKey);
+        } catch (Exception e) {
+            throw new RuntimeException("获取密钥失败");
+        }
     }
 
     @PostMapping("login.api")
