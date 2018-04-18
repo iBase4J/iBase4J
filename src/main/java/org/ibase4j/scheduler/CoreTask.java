@@ -1,4 +1,4 @@
-package org.ibase4j.task;
+package org.ibase4j.scheduler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,10 +24,12 @@ public class CoreTask {
     public void cleanExpiredSessions() {
         logger.info("cleanExpiredSessions");
         sessionService.cleanExpiredSessions();
-        // 最大内存: {}M; 已分配内存: {}M; 已分配内存中的剩余空间: {}M;最大可用内存:{}M.
-        long total = Runtime.getRuntime().totalMemory() / 1024 / 1024;
-        long max = Runtime.getRuntime().maxMemory() / 1024 / 1024;
-        long free = Runtime.getRuntime().freeMemory() / 1024 / 1024;
+        // 
+        long mb = 1024 * 1024;
+        Runtime runtime = Runtime.getRuntime();
+        long total = runtime.totalMemory() / mb;
+        long max = runtime.maxMemory() / mb;
+        long free = runtime.freeMemory() / mb;
         logger.info("最大内存: {}m; 已分配内存: {}m; 已分配内存中的剩余空间: {}m; 最大可用内存: {}m.", max, total, free, max - total + free);
     }
 }
