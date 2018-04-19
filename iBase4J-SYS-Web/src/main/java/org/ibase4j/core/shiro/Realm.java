@@ -29,7 +29,8 @@ import top.ibase4j.core.base.provider.IBaseProvider;
 import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.support.shiro.IRealm;
 import top.ibase4j.core.support.shiro.RedisSessionDAO;
-import top.ibase4j.core.util.WebUtil;
+import top.ibase4j.core.util.SecurityUtil;
+import top.ibase4j.core.util.ShiroUtil;
 
 /**
  * 权限检查类
@@ -52,7 +53,7 @@ public class Realm extends AuthorizingRealm implements IRealm {
 	// 权限
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		Long userId = (Long) WebUtil.getCurrentUser();
+		Long userId = (Long) ShiroUtil.getCurrentUser();
 		Parameter parameter = new Parameter("sysAuthorizeService", "queryPermissionByUserId", userId);
 		logger.info("{} execute queryPermissionByUserId start...", parameter.getNo());
 		List<?> list = provider.execute(parameter).getResultList();
@@ -85,10 +86,10 @@ public class Realm extends AuthorizingRealm implements IRealm {
 			for (int i = 0; i < token.getPassword().length; i++) {
 				sb.append(token.getPassword()[i]);
 			}
-			if (user.getPassword().equals(sb.toString())) {
-				WebUtil.saveCurrentUser(user.getId());
+			if (user.getPassword().equals(SecurityUtil.encryptPassword(sb.toString()))) {
+			    ShiroUtil.saveCurrentUser(user.getId());
 				saveSession(user.getAccount(), token.getHost());
-				AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
+				AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), sb.toString(),
 						user.getUserName());
 				return authcInfo;
 			}
