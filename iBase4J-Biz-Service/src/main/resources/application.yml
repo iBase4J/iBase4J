@@ -16,3 +16,4 @@ spring:
         date-format: yyyy-MM-dd HH:mm:ss
     thymeleaf:
         cache: false
+#alipay: Y
