@@ -10,7 +10,7 @@
 
 ## 主要功能
  1. 数据库：Druid数据库连接池，监控数据库访问性能，统计SQL的执行性能。
- 2. 持久层：mybatis持久化，使用MyBatis-Plus优化，减少sql开发量；aop切换数据库实现读写分离。Transtraction注解事务。
+ 2. 持久层：mybatis持久化，使用MyBatis-Plus优化，减少sql开发量；aop切换数据库实现读写分离。Transactional注解事务。
  3. MVC： 基于spring mvc注解,Rest风格Controller。Exception统一管理。
  4. 调度：Spring+quartz, 可以查询、修改周期、暂停、删除、新增、立即执行，查询执行记录等。
  5. 基于session的国际化提示信息，职责链模式的本地语言拦截器,Shiro登录、URL权限管理。会话管理，强制结束会话。
