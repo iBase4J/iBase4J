@@ -1,9 +1,7 @@
 package org.ibase4j.core.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.service.ApiInfo;
@@ -17,9 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @version 2016年6月21日 上午9:50:58
  */
 @Configuration
-@EnableWebMvc
 @EnableSwagger2
-@ComponentScan("org.ibase4j.web")
 public class SwaggerConfig {
 
 	@Bean
