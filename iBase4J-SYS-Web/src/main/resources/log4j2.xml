@@ -51,6 +51,7 @@
 		<logger name="com.weibo.api.motan" level="warn" />
 		<logger name="org.apache.zookeeper" level="warn" />
 		<logger name="org.springframework.web" level="debug" />
+		<logger name="org.springframework.web.servlet.handler" level="info" />
 		<Logger name="top.ibase4j" level="info">  
             <AppenderRef ref="ProductLog" />
         </Logger>

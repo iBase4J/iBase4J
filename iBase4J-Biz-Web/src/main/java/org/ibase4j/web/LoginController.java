@@ -1,6 +1,7 @@
 package org.ibase4j.web;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baomidou.mybatisplus.plugins.Page;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -25,9 +24,9 @@ import top.ibase4j.core.Constants;
 import top.ibase4j.core.Constants.MSGCHKTYPE;
 import top.ibase4j.core.base.provider.AppBaseController;
 import top.ibase4j.core.base.provider.Parameter;
-import top.ibase4j.core.config.Resources;
 import top.ibase4j.core.exception.LoginException;
 import top.ibase4j.core.support.Assert;
+import top.ibase4j.core.support.context.Resources;
 import top.ibase4j.core.support.security.coder.RSACoder;
 import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.DataUtil;
@@ -83,14 +82,13 @@ public class LoginController extends AppBaseController<IBizProvider> {
         String password = (String)CacheUtil.getCache().get(MSGCHKTYPE.LOGIN + user.getAccount());
         if (user.getPassword().equals(password)) { // 检查验证码
             Map<String, Object> params = new HashMap<String, Object>();
-            params.put("countSql", 0);
             params.put("enable", 1);
             params.put("loginKey", user.getAccount()); // 登录帐号/手机号/邮箱
-            Parameter parameter = new Parameter(getService(), "query").setParam(params);
-            Page<?> pageInfo = provider.execute(parameter).getResultPage();
+            Parameter parameter = new Parameter(getService(), "queryList", params);
+            List<?> list = provider.execute(parameter).getResultList();
             TMember member = null;
-            if (pageInfo.getTotal() == 1) {
-                member = (TMember)pageInfo.getRecords().get(0);
+            if (list.size() == 1) {
+                member = (TMember)list.get(0);
                 //String oldUuid = StringUtils.defaultIfBlank(member.getUuid(), "");
                 if (StringUtils.isNotBlank(member.getUuid())) {
                     TokenUtil.delToken(member.getUuid());
@@ -163,11 +161,11 @@ public class LoginController extends AppBaseController<IBizProvider> {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("countSql", 0);
         params.put("loginKey", user.getAccount()); // 登录帐号/手机号/邮箱
-        Parameter parameter = new Parameter(getService(), "query").setParam(params);
-        Page<?> pageInfo = provider.execute(parameter).getResultPage();
+        Parameter parameter = new Parameter(getService(), "queryList", params);
+        List<?> pageInfo = provider.execute(parameter).getResultList();
 
         ModelMap modelMap = new ModelMap();
-        if (pageInfo.getTotal() > 1) {
+        if (pageInfo.size() > 1) {
             return setSuccessModelMap(modelMap, InstanceUtil.newHashMap("exists", 1));
         }
         return setSuccessModelMap(modelMap, InstanceUtil.newHashMap("exists", 0));
