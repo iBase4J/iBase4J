@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.base.provider.BaseController;
 import top.ibase4j.core.base.provider.Parameter;
-import top.ibase4j.core.config.Resources;
+import top.ibase4j.core.support.context.Resources;
 import top.ibase4j.core.support.login.LoginHelper;
 import top.ibase4j.core.support.login.ThirdPartyLoginHelper;
 import top.ibase4j.core.support.login.ThirdPartyUser;
