@@ -147,27 +147,6 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<!-- mybatis -->
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-support</artifactId>
-			<version>${mybatis-plus.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.mybatis</groupId>
-					<artifactId>mybatis-spring</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.4.5</version>
-		</dependency>
 		<!-- spring核心包 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
