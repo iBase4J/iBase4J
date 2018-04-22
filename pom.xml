@@ -29,7 +29,7 @@
 		<other.jar>ali*.jar</other.jar>
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.2.0</ibase4j.version>
+		<ibase4j.version>3.2.1</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data-redis.version>2.0.5.RELEASE</spring-data-redis.version>
