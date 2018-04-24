@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.util.Base64;
 import org.ibase4j.model.TMember;
-import org.ibase4j.provider.IBizProvider;
+import org.ibase4j.service.IMemberService;
 import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +22,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.Constants.MSGCHKTYPE;
-import top.ibase4j.core.base.provider.AppBaseController;
-import top.ibase4j.core.base.provider.Parameter;
+import top.ibase4j.core.base.AppBaseController;
 import top.ibase4j.core.exception.LoginException;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.context.Resources;
@@ -45,12 +44,7 @@ import top.ibase4j.model.Login;
 @RestController
 @RequestMapping("/app/")
 @Api(value = "APP登录注册接口", description = "APP-登录注册接口")
-public class LoginController extends AppBaseController<IBizProvider> {
-
-    public String getService() {
-        return "memberService";
-    }
-
+public class LoginController extends AppBaseController<TMember, IMemberService> {
     @PostMapping("secret.api")
     @ApiOperation(value = "APP获取私钥", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParam(name = "UUID", defaultValue = "1", paramType = "header")
@@ -84,19 +78,17 @@ public class LoginController extends AppBaseController<IBizProvider> {
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("enable", 1);
             params.put("loginKey", user.getAccount()); // 登录帐号/手机号/邮箱
-            Parameter parameter = new Parameter(getService(), "queryList", params);
-            List<?> list = provider.execute(parameter).getResultList();
+            List<?> list = service.queryList(params);
             TMember member = null;
             if (list.size() == 1) {
                 member = (TMember)list.get(0);
-                //String oldUuid = StringUtils.defaultIfBlank(member.getUuid(), "");
+                // String oldUuid = StringUtils.defaultIfBlank(member.getUuid(), "");
                 if (StringUtils.isNotBlank(member.getUuid())) {
                     TokenUtil.delToken(member.getUuid());
                 }
                 member.setIsOnline(1);
                 member.setUuid(uuid);
-                parameter = new Parameter(getService(), "update").setParam(member);
-                provider.execute(parameter);
+                service.update(member);
 
                 try {
                     /* RongCloud rongCloud = RongCloud.getInstance(getSysParam("APP-KEY"), getSysParam("APP-SECRET"));
@@ -119,8 +111,8 @@ public class LoginController extends AppBaseController<IBizProvider> {
                 param.setAvatar(PropertiesUtil.getString("ui.file.uri.prefix") + "extends/img/dftAvatar.png");
                 param.setIsOnline(1);
                 param.setUuid(uuid);
-                parameter = new Parameter(getService(), "update").setParam(param);
-                member = (TMember)provider.execute(parameter).getResult();
+                member = service.update(param);
+                member.setPassword(null);
             }
             request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
             TokenUtil.setTokenInfo(uuid, member.getId().toString());
@@ -145,8 +137,7 @@ public class LoginController extends AppBaseController<IBizProvider> {
             TMember member = new TMember();
             member.setId(getCurrUser(request));
             member.setIsOnline(0);
-            Parameter parameter = new Parameter(getService(), "update").setParam(member);
-            provider.execute(parameter);
+            service.update(member);
         }
         ModelMap modelMap = new ModelMap();
         return setSuccessModelMap(modelMap);
@@ -159,10 +150,8 @@ public class LoginController extends AppBaseController<IBizProvider> {
         Assert.notNull(user.getAccount(), "ACCOUNT");
 
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("countSql", 0);
         params.put("loginKey", user.getAccount()); // 登录帐号/手机号/邮箱
-        Parameter parameter = new Parameter(getService(), "queryList", params);
-        List<?> pageInfo = provider.execute(parameter).getResultList();
+        List<?> pageInfo = service.queryList(params);
 
         ModelMap modelMap = new ModelMap();
         if (pageInfo.size() > 1) {

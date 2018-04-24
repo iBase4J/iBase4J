@@ -2,9 +2,9 @@ package org.ibase4j.core.listener;
 
 import javax.servlet.ServletContextEvent;
 
-import org.ibase4j.service.SysCacheService;
-import org.ibase4j.service.SysDicService;
-import org.ibase4j.service.SysUserService;
+import org.ibase4j.service.ISysCacheService;
+import org.ibase4j.service.ISysDicService;
+import org.ibase4j.service.ISysUserService;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -19,9 +19,9 @@ public class SysServerListener extends ServerListener {
 
 	public void contextInitialized(ServletContextEvent contextEvent) {
 		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
-		context.getBean(SysCacheService.class).flush();
-		context.getBean(SysUserService.class).init();
-		context.getBean(SysDicService.class).getAllDic();
+		context.getBean(ISysCacheService.class).flush();
+		context.getBean(ISysUserService.class).init();
+		context.getBean(ISysDicService.class).getAllDic();
 		super.contextInitialized(contextEvent);
 	}
 }

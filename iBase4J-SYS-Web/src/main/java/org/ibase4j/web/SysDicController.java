@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysDic;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISysDicService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.provider.BaseController;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 字典管理
@@ -26,12 +26,7 @@ import top.ibase4j.core.base.provider.BaseController;
 @RestController
 @Api(value = "字典管理", description = "字典管理")
 @RequestMapping(value = "/dic")
-public class SysDicController extends BaseController<ISysProvider> {
-
-	public String getService() {
-		return "sysDicService";
-	}
-
+public class SysDicController extends BaseController<SysDic, ISysDicService> {
 	@ApiOperation(value = "查询字典项")
 	@RequiresPermissions("sys.base.dic.read")
 	@PutMapping(value = "/read/page")

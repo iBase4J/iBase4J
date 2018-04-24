@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ibase4j.model.SysDic;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISysDicService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.provider.AppBaseController;
+import top.ibase4j.core.base.AppBaseController;
 import top.ibase4j.core.util.WebUtil;
 
 /**
@@ -27,12 +27,7 @@ import top.ibase4j.core.util.WebUtil;
 @Controller
 @Api(value = "字典管理", description = "APP-字典接口")
 @RequestMapping(value = "/app/dic/")
-public class SysDicController extends AppBaseController<ISysProvider> {
-
-    public String getService() {
-        return "sysDicService";
-    }
-
+public class SysDicController extends AppBaseController<SysDic, ISysDicService> {
     @ApiOperation(value = "查询字典项", produces = MediaType.APPLICATION_JSON_VALUE, response = SysDic.class)
     @RequestMapping(value = "query.api", method = {RequestMethod.GET, RequestMethod.POST})
     public Object queryList(HttpServletRequest request, String type) {

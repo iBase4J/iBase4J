@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.bean.Member;
 import org.ibase4j.model.MemberPhoto;
 import org.ibase4j.model.TMember;
-import org.ibase4j.provider.IBizProvider;
+import org.ibase4j.service.IMemberService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.provider.AppBaseController;
-import top.ibase4j.core.base.provider.Parameter;
+import top.ibase4j.core.base.AppBaseController;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.DataUtil;
@@ -42,18 +41,13 @@ import top.ibase4j.model.Login;
 @Controller
 @RequestMapping("/app/member/")
 @Api(value = "会员管理接口", description = "APP-个人中心-个人信息管理接口")
-public class TMemberController extends AppBaseController<IBizProvider> {
-    public String getService() {
-        return "memberService";
-    }
-
+public class TMemberController extends AppBaseController<TMember, IMemberService> {
     @ApiOperation(value = "获取个人基本信息", produces = MediaType.APPLICATION_JSON_VALUE, response = TMember.class)
     @RequestMapping(value = "getUserBaseInfo.api", method = {RequestMethod.GET, RequestMethod.POST})
     public Object getBaseInfo(HttpServletRequest request, String id) {
         Member param = WebUtil.getParameter(request, Member.class);
         Assert.notNull(param.getId(), "ID");
-        Parameter parameter = new Parameter(getService(), "getBaseInfo", param.getId());
-        Object result = provider.execute(parameter).getResult();
+        Object result = service.getBaseInfo(param.getId());
         ModelMap modelMap = new ModelMap();
         return setSuccessModelMap(modelMap, result);
     }
@@ -67,12 +61,9 @@ public class TMemberController extends AppBaseController<IBizProvider> {
             param.setId(memberId);
         }
         Assert.notNull(param.getId(), "ID");
-        Parameter parameter = new Parameter(getService(), "getInfo", param.getId());
-        logger.info("{} execute queryById start...", parameter.getNo());
-        TMember result = (TMember)provider.execute(parameter).getResult();
+        TMember result = service.getInfo(param.getId());
         result.setPassword(null);
         ModelMap modelMap = new ModelMap();
-        logger.info("{} execute queryById end.", parameter.getNo());
         return setSuccessModelMap(modelMap, result);
     }
 
@@ -85,8 +76,7 @@ public class TMemberController extends AppBaseController<IBizProvider> {
             member.setId(id);
         }
         Assert.notNull(param.getId(), "ID");
-        Parameter parameter = new Parameter(getService(), "queryById").setParam(param.getId());
-        TMember user = (TMember)provider.execute(parameter).getResult();
+        TMember user = service.queryById(param.getId());
         Assert.notNull(user, "MEMBER", param.getId());
         if (StringUtils.isNotBlank(param.getPassword())) {
             if (!param.getPassword().equals(user.getPassword())) {
@@ -109,8 +99,7 @@ public class TMemberController extends AppBaseController<IBizProvider> {
         org.springframework.util.Assert.notEmpty(avatars, "头像数据dataFile不能为空");
         TMember member = new TMember();
         member.setId(param.getMemberId());
-        Parameter parameter = new Parameter(getService(), "queryById", member.getId());
-        TMember user = (TMember)provider.execute(parameter).getResult();
+        TMember user = service.queryById(member.getId());
         Assert.notNull(user, "MEMBER", member.getId());
         String filePath = UploadUtil.getUploadDir(request) + avatars.get(0);
         String avatar = UploadUtil.remove2DFS("member", "M" + member.getId(), filePath).getRemotePath();
@@ -118,10 +107,7 @@ public class TMemberController extends AppBaseController<IBizProvider> {
         Long userId = getCurrUser(request);
         member.setUpdateBy(userId);
         member.setUpdateTime(new Date());
-        parameter = new Parameter(getService(), "update", member);
-        logger.info("{} execute update start...", parameter.getNo());
-        provider.execute(parameter);
-        logger.info("{} execute update end.", parameter.getNo());
+        service.update(member);
         Map<String, Object> result = InstanceUtil.newHashMap("bizeCode", 1);
         result.put("avatar", avatar);
         return setSuccessModelMap(new ModelMap(), result);
@@ -132,8 +118,7 @@ public class TMemberController extends AppBaseController<IBizProvider> {
     public Object updatePhone(HttpServletRequest request, String newPhone, String orderPhone, String idCard,
         String realname) {
         Map<String, Object> parame = WebUtil.getParameter(request);
-        Parameter parameter = new Parameter(getService(), "updataphone", parame);
-        Object result = provider.execute(parameter).getResult();
+        Object result = service.updataphone(parame);
         return setSuccessModelMap(new ModelMap(), result);
     }
 
@@ -156,8 +141,7 @@ public class TMemberController extends AppBaseController<IBizProvider> {
     @PostMapping("/authentication.api")
     public Object authentication(HttpServletRequest request, String memberId, String realName, String idCard) {
         Map<String, Object> parame = WebUtil.getParameter(request);
-        Parameter parameter = new Parameter(getService(), "authentication", parame);
-        Object result = provider.execute(parameter).getResult();
+        Object result = service.authentication(parame);
         return setSuccessModelMap(new ModelMap(), result);
     }
 }
