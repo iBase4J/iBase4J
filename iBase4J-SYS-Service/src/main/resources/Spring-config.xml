@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
          http://www.springframework.org/schema/context
@@ -31,10 +32,12 @@
 	<!-- <import resource="spring/dubbo.xml" /> -->
 	<import resource="spring/motan.xml" />
 	<import resource="spring/redis.xml" />
-	<import resource="spring/redisson.xml" />
+	<!-- <import resource="spring/redisson.xml" /> -->
 	<import resource="spring/dataSource.xml"/>
 	<import resource="spring/scheduler.xml"/>
 	<import resource="spring/mybatis.xml"/>
+	<bean id="redisConnectFactory" factory-bean="jedisConfig" factory-method="redisConnectFactory"
+		c:pool-config-ref="jedisPoolConfig" />
 	<!-- <import resource="spring/mq-listener.xml"/>
 	<import resource="spring/mq-sender.xml"/> -->
 </beans>

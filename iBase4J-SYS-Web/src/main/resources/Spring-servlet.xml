@@ -46,7 +46,7 @@
 			<bean class="top.ibase4j.core.interceptor.LocaleInterceptor">
 				<property name="nextInterceptor">
 					<array>
-						<bean class="top.ibase4j.core.interceptor.provider.EventInterceptor" />
+						<bean class="top.ibase4j.core.interceptor.EventInterceptor" />
 						<bean class="top.ibase4j.core.interceptor.MaliciousRequestInterceptor">
 							<property name="minRequestIntervalTime" value="500" />
 							<property name="maxMaliciousTimes" value="0" />

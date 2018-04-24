@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:motan="http://api.weibo.com/schema/motan"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
          http://www.springframework.org/schema/context
-         http://www.springframework.org/schema/context/spring-context-4.0.xsd
-		http://code.alibabatech.com/schema/dubbo
-		http://code.alibabatech.com/schema/dubbo/dubbo.xsd
-   		http://api.weibo.com/schema/motan
-   		http://api.weibo.com/schema/motan.xsd">
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<!-- 引入属性配置文件 -->
 	<bean class="top.ibase4j.core.support.context.PropertyPlaceholder">
 		<property name="locations">
@@ -30,6 +26,8 @@
 	<import resource="spring/motan.xml" />
 	<import resource="refer/motan.xml" />
 	<import resource="spring/redis.xml" />
-	<import resource="spring/redisson.xml" />
+	<bean id="redisConnectFactory" factory-bean="jedisConfig" factory-method="redisConnectFactory"
+		c:pool-config-ref="jedisPoolConfig" />
+	<!-- <import resource="spring/redisson.xml" /> -->
 	<import resource="spring/shiro.xml" />
 </beans>
