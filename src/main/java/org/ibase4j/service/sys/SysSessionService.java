@@ -22,7 +22,7 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysSession")
-public class SysSessionService extends BaseService<SysSession> {
+public class SysSessionService extends BaseService<SysSession, SysSessionMapper> {
 
     @CachePut
     @Transactional

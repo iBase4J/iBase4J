@@ -20,7 +20,7 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysMenu")
-public class SysMenuService extends BaseService<SysMenu> {
+public class SysMenuService extends BaseService<SysMenu, SysMenuMapper> {
     @Autowired
     private SysDicService sysDicService;
 

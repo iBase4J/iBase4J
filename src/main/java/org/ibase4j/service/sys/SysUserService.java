@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.mapper.sys.SysUserMapper;
 import org.ibase4j.mapper.sys.SysUserThirdpartyMapper;
 import org.ibase4j.model.sys.SysDept;
 import org.ibase4j.model.sys.SysUser;
@@ -15,9 +16,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baomidou.mybatisplus.plugins.Page;
-
 import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.support.Pagination;
 import top.ibase4j.core.support.login.ThirdPartyUser;
 import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.SecurityUtil;
@@ -30,7 +30,7 @@ import top.ibase4j.core.util.SecurityUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysUser")
-public class SysUserService extends BaseService<SysUser> {
+public class SysUserService extends BaseService<SysUser, SysUserMapper> {
 	@Autowired
 	private SysUserThirdpartyMapper thirdpartyMapper;
 	@Autowired
@@ -55,9 +55,9 @@ public class SysUserService extends BaseService<SysUser> {
 		return sysUser;
 	}
 	
-	public Page<SysUser> query(Map<String, Object> params) {
+	public Pagination<SysUser> query(Map<String, Object> params) {
 		Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
-		Page<SysUser> pageInfo = super.query(params);
+		Pagination<SysUser> pageInfo = super.query(params);
 		for (SysUser userBean : pageInfo.getRecords()) {
 		    userBean.setPassword(null);
 			if (userBean.getUserType() != null) {

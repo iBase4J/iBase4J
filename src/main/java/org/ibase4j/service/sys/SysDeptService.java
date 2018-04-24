@@ -1,5 +1,6 @@
 package org.ibase4j.service.sys;
 
+import org.ibase4j.mapper.sys.SysDeptMapper;
 import org.ibase4j.model.sys.SysDept;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import top.ibase4j.core.base.BaseService;
  */
 @Service
 @CacheConfig(cacheNames = "sysDept")
-public class SysDeptService extends BaseService<SysDept> {
+public class SysDeptService extends BaseService<SysDept, SysDeptMapper> {
 	public SysDept queryById(Long id) {
 		SysDept sysDept = super.queryById(id);
 		if (sysDept != null) {

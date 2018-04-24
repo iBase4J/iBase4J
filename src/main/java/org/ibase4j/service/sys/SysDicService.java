@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.mapper.sys.SysDicMapper;
 import org.ibase4j.model.sys.SysDic;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,7 +20,7 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysDic")
-public class SysDicService extends BaseService<SysDic> {
+public class SysDicService extends BaseService<SysDic, SysDicMapper> {
 
 	@Cacheable(value = Constants.CACHE_NAMESPACE + "sysDics")
 	public Map<String, Map<String, String>> getAllDic() {

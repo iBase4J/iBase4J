@@ -1,5 +1,6 @@
 package org.ibase4j.service.sys;
 
+import org.ibase4j.mapper.sys.SysNewsMapper;
 import org.ibase4j.model.sys.SysNews;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,6 @@ import top.ibase4j.core.base.BaseService;
  */
 @Service
 @CacheConfig(cacheNames = "sysNews")
-public class SysNewsService extends BaseService<SysNews> {
+public class SysNewsService extends BaseService<SysNews, SysNewsMapper> {
 
 }

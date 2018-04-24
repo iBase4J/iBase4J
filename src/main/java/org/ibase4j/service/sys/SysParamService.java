@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.mapper.sys.SysParamMapper;
 import org.ibase4j.model.sys.SysParam;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,7 +21,7 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysParam")
-public class SysParamService extends BaseService<SysParam> {
+public class SysParamService extends BaseService<SysParam, SysParamMapper> {
     @Cacheable(value = Constants.CACHE_NAMESPACE + "sysParams")
     public Map<String, String> getAllParams() {
         Map<String, Object> params = InstanceUtil.newHashMap();

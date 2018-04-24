@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ibase4j.mapper.sys.SysRoleMapper;
 import org.ibase4j.model.sys.SysDept;
 import org.ibase4j.model.sys.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
-import com.baomidou.mybatisplus.plugins.Page;
-
 import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.support.Pagination;
 
 /**
  * @author ShenHuaJie
@@ -20,7 +20,7 @@ import top.ibase4j.core.base.BaseService;
  */
 @Service
 @CacheConfig(cacheNames = "sysRole")
-public class SysRoleService extends BaseService<SysRole> {
+public class SysRoleService extends BaseService<SysRole, SysRoleMapper> {
 	@Autowired
 	private SysDeptService sysDeptService;
 	@Autowired
@@ -41,8 +41,8 @@ public class SysRoleService extends BaseService<SysRole> {
 		return sysRole;
 	}
 
-	public Page<SysRole> query(Map<String, Object> params) {
-		Page<SysRole> pageInfo = super.query(params);
+	public Pagination<SysRole> query(Map<String, Object> params) {
+	    Pagination<SysRole> pageInfo = super.query(params);
 		// 权限信息
 		for (SysRole bean : pageInfo.getRecords()) {
 			if (bean.getDeptId() != null) {

@@ -194,7 +194,7 @@ public class SysAuthorizeService {
     @Cacheable(value = Constants.CACHE_NAMESPACE + "menuPermission")
     public List<SysMenu> queryAuthorizeByUserId(Long userId) {
         List<Long> menuIds = sysAuthorizeMapper.getAuthorize(userId);
-        List<SysMenu> menus = sysMenuService.getListByIds(menuIds);
+        List<SysMenu> menus = sysMenuService.queryList(menuIds);
         Map<Long, List<SysMenu>> map = InstanceUtil.newHashMap();
         for (SysMenu sysMenu : menus) {
             if (sysMenu != null && map.get(sysMenu.getParentId()) == null) {

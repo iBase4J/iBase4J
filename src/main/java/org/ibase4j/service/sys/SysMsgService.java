@@ -1,5 +1,6 @@
 package org.ibase4j.service.sys;
 
+import org.ibase4j.mapper.sys.SysMsgMapper;
 import org.ibase4j.model.sys.SysMsg;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,6 @@ import top.ibase4j.core.base.BaseService;
  */
 @Service
 @CacheConfig(cacheNames = "sysMsg")
-public class SysMsgService extends BaseService<SysMsg> {
+public class SysMsgService extends BaseService<SysMsg, SysMsgMapper> {
 	
 }
