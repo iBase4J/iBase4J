@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.ibase4j</groupId>
 	<artifactId>iBase4J</artifactId>
-	<version>1.2.0</version>
+	<version>1.3.0</version>
 	<name>iBase4J</name>
 	<packaging>pom</packaging>
 	<url>http://maven.apache.org</url>
@@ -29,7 +29,7 @@
 		<other.jar>ali*.jar</other.jar>
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.2.1</ibase4j.version>
+		<ibase4j.version>3.3.0</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data-redis.version>2.0.5.RELEASE</spring-data-redis.version>
@@ -218,11 +218,6 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.redisson</groupId>
-			<artifactId>redisson</artifactId>
-			<version>${redisson.version}</version>
-		</dependency>
 		<!-- 切面 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -374,10 +369,10 @@
 			</exclusions>
 		</dependency>
 		<!-- activemq -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-spring</artifactId>
-		</dependency>
+		</dependency> -->
 		<!-- jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

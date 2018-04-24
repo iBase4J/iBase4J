@@ -6,12 +6,14 @@ package org.ibase4j.web;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISysAuthorizeService;
+import org.ibase4j.service.ISysUserService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.provider.BaseController;
-import top.ibase4j.core.base.provider.Parameter;
+import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.HttpCode;
 import top.ibase4j.core.util.SecurityUtil;
@@ -39,10 +40,9 @@ import top.ibase4j.core.util.UploadUtil;
 @RestController
 @Api(value = "用户管理", description = "用户管理")
 @RequestMapping(value = "/user")
-public class SysUserController extends BaseController<ISysProvider> {
-    public String getService() {
-        return "sysUserService";
-    }
+public class SysUserController extends BaseController<SysUser, ISysUserService> {
+    @Resource
+    private ISysAuthorizeService sysAuthorizeService;
 
     @PostMapping
     @ApiOperation(value = "修改用户信息")
@@ -69,10 +69,7 @@ public class SysUserController extends BaseController<ISysProvider> {
     @RequiresPermissions("sys.base.user.read")
     @PutMapping(value = "/read/detail")
     public Object get(ModelMap modelMap, @RequestBody SysUser param) {
-        Parameter parameter = new Parameter(getService(), "queryById", param.getId());
-        logger.info("{} execute queryById start...", parameter.getNo());
-        SysUser result = (SysUser)provider.execute(parameter).getResult();
-        logger.info("{} execute queryById end.", parameter.getNo());
+        SysUser result = service.queryById(param.getId());
         result.setPassword(null);
         return setSuccessModelMap(modelMap, result);
     }
@@ -90,14 +87,10 @@ public class SysUserController extends BaseController<ISysProvider> {
     @GetMapping(value = "/read/promission")
     public Object promission(ModelMap modelMap) {
         Long id = getCurrUser();
-        Parameter parameter = new Parameter(getService(), "queryById", id);
-        SysUser sysUser = (SysUser)provider.execute(parameter).getResult();
+        SysUser sysUser = service.queryById(id);
         sysUser.setPassword(null);
         modelMap.put("user", sysUser);
-        parameter = new Parameter("sysAuthorizeService", "queryAuthorizeByUserId", id);
-        logger.info("{} execute queryAuthorizeByUserId start...", parameter.getNo());
-        List<?> menus = provider.execute(parameter).getResultList();
-        logger.info("{} execute queryAuthorizeByUserId end.", parameter.getNo());
+        List<?> menus = sysAuthorizeService.queryAuthorizeByUserId(id);
         modelMap.put("menus", menus);
         return setSuccessModelMap(modelMap);
     }
@@ -106,12 +99,7 @@ public class SysUserController extends BaseController<ISysProvider> {
     @ApiOperation(value = "当前用户信息")
     @GetMapping(value = "/read/current")
     public Object current(ModelMap modelMap) {
-        SysUser param = new SysUser();
-        param.setId(getCurrUser());
-        Parameter parameter = new Parameter(getService(), "queryById", param.getId());
-        logger.info("{} execute queryById start...", parameter.getNo());
-        SysUser result = (SysUser)provider.execute(parameter).getResult();
-        logger.info("{} execute queryById end.", parameter.getNo());
+        SysUser result = service.queryById(getCurrUser());
         result.setPassword(null);
         return setSuccessModelMap(modelMap, result);
     }
@@ -153,12 +141,8 @@ public class SysUserController extends BaseController<ISysProvider> {
     public Object updatePassword(ModelMap modelMap, @RequestBody SysUser param) {
         Assert.isNotBlank(param.getOldPassword(), "OLDPASSWORD");
         Assert.isNotBlank(param.getPassword(), "PASSWORD");
-        Long userId = getCurrUser();
         String encryptPassword = SecurityUtil.encryptPassword(param.getOldPassword());
-        Parameter parameter = new Parameter(getService(), "queryById", userId);
-        logger.info("{} execute queryById start...", parameter.getNo());
-        SysUser sysUser = (SysUser)provider.execute(parameter).getResult();
-        logger.info("{} execute queryById end.", parameter.getNo());
+        SysUser sysUser = service.queryById(getCurrUser());
         Assert.notNull(sysUser, "USER", param.getId());
         if (!sysUser.getPassword().equals(encryptPassword)) {
             throw new UnauthorizedException("原密码错误.");

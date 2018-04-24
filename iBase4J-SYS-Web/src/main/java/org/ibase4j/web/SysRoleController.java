@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysRole;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISysRoleService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.provider.BaseController;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 角色管理
@@ -26,11 +26,7 @@ import top.ibase4j.core.base.provider.BaseController;
 @RestController
 @Api(value = "角色管理", description = "角色管理")
 @RequestMapping(value = "role")
-public class SysRoleController extends BaseController<ISysProvider> {
-	public String getService() {
-		return "sysRoleService";
-	}
-
+public class SysRoleController extends BaseController<SysRole, ISysRoleService> {
 	@ApiOperation(value = "查询角色")
 	@RequiresPermissions("sys.base.role.read")
 	@PutMapping(value = "/read/page")

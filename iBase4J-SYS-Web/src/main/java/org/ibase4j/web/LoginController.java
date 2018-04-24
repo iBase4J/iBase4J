@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISysUserService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import springfox.documentation.annotations.ApiIgnore;
 import top.ibase4j.core.Constants;
-import top.ibase4j.core.base.provider.BaseController;
-import top.ibase4j.core.base.provider.Parameter;
+import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.exception.LoginException;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.HttpCode;
@@ -35,11 +34,7 @@ import top.ibase4j.model.Login;
  */
 @RestController
 @Api(value = "登录接口", description = "登录接口")
-public class LoginController extends BaseController<ISysProvider> {
-
-    public String getService() {
-        return "sysUserService";
-    }
+public class LoginController extends BaseController<SysUser, ISysUserService> {
 
     // 登录
     @ApiOperation(value = "用户登录")
@@ -72,7 +67,7 @@ public class LoginController extends BaseController<ISysProvider> {
         Assert.notNull(sysUser.getAccount(), "ACCOUNT");
         Assert.notNull(sysUser.getPassword(), "PASSWORD");
         sysUser.setPassword(SecurityUtil.encryptPassword(sysUser.getPassword()));
-        provider.execute(new Parameter("sysUserService", "update", sysUser));
+        service.update(sysUser);
         String clientIp = (String)request.getSession().getAttribute(Constants.USER_IP);
         if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp)) {
             return setSuccessModelMap(modelMap);

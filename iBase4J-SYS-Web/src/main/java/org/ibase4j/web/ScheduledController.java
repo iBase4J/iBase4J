@@ -6,8 +6,10 @@ package org.ibase4j.web;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISchedulerService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.provider.BaseController;
-import top.ibase4j.core.base.provider.Parameter;
+import top.ibase4j.core.base.AbstractController;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.scheduler.TaskScheduled;
 import top.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
@@ -33,10 +34,9 @@ import top.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
 @RestController
 @Api(value = "调度管理", description = "调度管理")
 @RequestMapping(value = "/scheduled")
-public class ScheduledController extends BaseController<ISysProvider> {
-    public String getService() {
-        return "scheduledService";
-    }
+public class ScheduledController extends AbstractController {
+    @Resource
+    private ISchedulerService schedulerService;
 
     @PostMapping
     @ApiOperation(value = "新增任务")
@@ -51,9 +51,8 @@ public class ScheduledController extends BaseController<ISysProvider> {
         if (TaskType.dubbo.equals(scheduled.getTaskType())) {
             Assert.notNull(scheduled.getTargetSystem(), "TARGETSYSTEM");
         }
-        Parameter parameter = new Parameter(getService(), "updateTask", scheduled);
-        provider.execute(parameter);
-        return setSuccessModelMap(modelMap);
+        schedulerService.updateTask(scheduled);
+        return setSuccessModelMap();
     }
 
     @DeleteMapping
@@ -62,8 +61,7 @@ public class ScheduledController extends BaseController<ISysProvider> {
     public Object delete(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
         Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
         Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-        Parameter parameter = new Parameter(getService(), "delTask", scheduled);
-        provider.execute(parameter);
+        schedulerService.delTask(scheduled);
         return setSuccessModelMap(modelMap);
     }
 
@@ -73,8 +71,7 @@ public class ScheduledController extends BaseController<ISysProvider> {
     public Object exec(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
         Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
         Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-        Parameter parameter = new Parameter(getService(), "execTask", scheduled);
-        provider.execute(parameter);
+        schedulerService.execTask(scheduled);
         return setSuccessModelMap(modelMap);
     }
 
@@ -84,8 +81,7 @@ public class ScheduledController extends BaseController<ISysProvider> {
     public Object open(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
         Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
         Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-        Parameter parameter = new Parameter(getService(), "openTask", scheduled);
-        provider.execute(parameter);
+        schedulerService.openTask(scheduled);
         return setSuccessModelMap(modelMap);
     }
 
@@ -95,8 +91,7 @@ public class ScheduledController extends BaseController<ISysProvider> {
     public Object close(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
         Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
         Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-        Parameter parameter = new Parameter(getService(), "closeTask", scheduled);
-        provider.execute(parameter);
+        schedulerService.closeTask(scheduled);
         return setSuccessModelMap(modelMap);
     }
 
@@ -104,8 +99,7 @@ public class ScheduledController extends BaseController<ISysProvider> {
     @ApiOperation(value = "任务列表")
     @RequiresPermissions("sys.task.scheduled.read")
     public Object list(ModelMap modelMap) {
-        Parameter parameter = new Parameter(getService(), "getAllTaskDetail");
-        List<?> records = provider.execute(parameter).getResultList();
+        List<?> records = schedulerService.getAllTaskDetail();
         modelMap.put("recordsTotal", records.size());
         modelMap.put("total", records.size());
         modelMap.put("current", 1);
@@ -117,8 +111,7 @@ public class ScheduledController extends BaseController<ISysProvider> {
     @ApiOperation(value = "任务执行记录")
     @RequiresPermissions("sys.task.log.read")
     public Object getFireLog(ModelMap modelMap, @RequestBody Map<String, Object> log) {
-        Parameter parameter = new Parameter(getService(), "queryLog", log);
-        Object list = provider.execute(parameter).getResult();
+        Object list = schedulerService.queryLog(log);
         return setSuccessModelMap(modelMap, list);
     }
 }

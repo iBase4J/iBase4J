@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,11 +23,11 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.model.SysSession;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.provider.ISysProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ibase4j.service.ISysAuthorizeService;
+import org.ibase4j.service.ISysSessionService;
+import org.ibase4j.service.ISysUserService;
 import org.springframework.stereotype.Component;
 
-import top.ibase4j.core.base.provider.Parameter;
 import top.ibase4j.core.support.shiro.IRealm;
 import top.ibase4j.core.support.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.SecurityUtil;
@@ -40,8 +42,13 @@ import top.ibase4j.core.util.ShiroUtil;
 @Component
 public class Realm extends AuthorizingRealm implements IRealm {
     private final Logger logger = LogManager.getLogger();
-    @Autowired
-    protected ISysProvider sysProvider;
+    @Resource
+    private ISysAuthorizeService sysAuthorizeService;
+    @Resource
+    private ISysUserService sysUserService;
+    @Resource
+    private ISysSessionService sysSessionService;
+
     private RedisSessionDAO sessionDAO;
 
     public void setSessionDAO(RedisSessionDAO sessionDAO) {
@@ -52,10 +59,7 @@ public class Realm extends AuthorizingRealm implements IRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Long userId = (Long)ShiroUtil.getCurrentUser();
-        Parameter parameter = new Parameter("sysAuthorizeService", "queryPermissionByUserId", userId);
-        logger.info("{} execute queryPermissionByUserId start...", parameter.getNo());
-        List<?> list = sysProvider.execute(parameter).getResultList();
-        logger.info("{} execute queryPermissionByUserId end.", parameter.getNo());
+        List<?> list = sysAuthorizeService.queryPermissionByUserId(userId);
         for (Object permission : list) {
             if (StringUtils.isNotBlank((String)permission)) {
                 // 添加基于Permission的权限信息
@@ -69,15 +73,12 @@ public class Realm extends AuthorizingRealm implements IRealm {
 
     // 登录验证
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
-            throws AuthenticationException {
+        throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken)authcToken;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("enable", 1);
         params.put("account", token.getUsername());
-        Parameter parameter = new Parameter("sysUserService", "queryList", params);
-        logger.info("{} execute sysUserService.queryList start...", parameter.getNo());
-        List<?> list = sysProvider.execute(parameter).getResultList();
-        logger.info("{} execute sysUserService.queryList end.", parameter.getNo());
+        List<?> list = sysUserService.queryList(params);
         if (list.size() == 1) {
             SysUser user = (SysUser)list.get(0);
             StringBuilder sb = new StringBuilder(100);
@@ -104,20 +105,14 @@ public class Realm extends AuthorizingRealm implements IRealm {
         // 踢出用户
         SysSession record = new SysSession();
         record.setAccount(account);
-        Parameter parameter = new Parameter("sysSessionService", "querySessionIdByAccount", record);
-        logger.info("{} execute querySessionIdByAccount start...", parameter.getNo());
-        List<?> sessionIds = sysProvider.execute(parameter).getResultList();
-        logger.info("{} execute querySessionIdByAccount end.", parameter.getNo());
+        List<?> sessionIds = sysSessionService.querySessionIdByAccount(record);
         Subject currentUser = SecurityUtils.getSubject();
         Session session = currentUser.getSession();
         String currentSessionId = session.getId().toString();
         if (sessionIds != null) {
             for (Object sessionId : sessionIds) {
                 record.setSessionId((String)sessionId);
-                parameter = new Parameter("sysSessionService", "deleteBySessionId", record);
-                logger.info("{} execute deleteBySessionId start...", parameter.getNo());
-                sysProvider.execute(parameter);
-                logger.info("{} execute deleteBySessionId end.", parameter.getNo());
+                sysSessionService.deleteBySessionId(record);
                 if (!currentSessionId.equals(sessionId)) {
                     sessionDAO.delete((String)sessionId);
                 }
@@ -127,9 +122,6 @@ public class Realm extends AuthorizingRealm implements IRealm {
         record.setSessionId(currentSessionId);
         record.setIp(StringUtils.isBlank(host) ? session.getHost() : host);
         record.setStartTime(session.getStartTimestamp());
-        parameter = new Parameter("sysSessionService", "update", record);
-        logger.info("{} execute sysSessionService.update start...", parameter.getNo());
-        sysProvider.execute(parameter);
-        logger.info("{} execute sysSessionService.update end.", parameter.getNo());
+        sysSessionService.update(record);
     }
 }

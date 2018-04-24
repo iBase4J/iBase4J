@@ -4,11 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysRoleMenu;
 import org.ibase4j.model.SysUserMenu;
 import org.ibase4j.model.SysUserRole;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISysAuthorizeService;
+import org.ibase4j.service.ISysCacheService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,8 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.provider.BaseController;
-import top.ibase4j.core.base.provider.Parameter;
+import top.ibase4j.core.base.AbstractController;
 import top.ibase4j.core.exception.IllegalParameterException;
 
 /**
@@ -31,20 +33,17 @@ import top.ibase4j.core.exception.IllegalParameterException;
  */
 @RestController
 @Api(value = "权限管理", description = "权限管理")
-public class SysAuthorizeController extends BaseController<ISysProvider> {
-
-    public String getService() {
-        return "sysAuthorizeService";
-    }
+public class SysAuthorizeController extends AbstractController {
+    @Resource
+    private ISysAuthorizeService authorizeService;
+    @Resource
+    private ISysCacheService sysCacheService;
 
     @ApiOperation(value = "获取用户菜单编号")
     @PutMapping(value = "user/read/menu")
     @RequiresPermissions("sys.permisson.userMenu.read")
     public Object getUserMenu(ModelMap modelMap, @RequestBody SysUserMenu param) {
-        Parameter parameter = new Parameter(getService(), "queryMenuIdsByUserId", param.getUserId());
-        logger.info("{} execute queryMenuIdsByUserId start...", parameter.getNo());
-        List<?> menus = provider.execute(parameter).getResultList();
-        logger.info("{} execute queryMenuIdsByUserId end.", parameter.getNo());
+        List<?> menus = authorizeService.queryMenuIdsByUserId(param.getUserId());
         return setSuccessModelMap(modelMap, menus);
     }
 
@@ -67,10 +66,7 @@ public class SysAuthorizeController extends BaseController<ISysProvider> {
             sysUserMenu.setCreateTime(new Date());
             sysUserMenu.setUpdateTime(new Date());
         }
-        Parameter parameter = new Parameter(getService(), "updateUserMenu", list);
-        logger.info("{} execute updateUserMenu start...", parameter.getNo());
-        provider.execute(parameter);
-        logger.info("{} execute updateUserMenu end.", parameter.getNo());
+        authorizeService.updateUserMenu(list);
         return setSuccessModelMap(modelMap);
     }
 
@@ -78,10 +74,7 @@ public class SysAuthorizeController extends BaseController<ISysProvider> {
     @PutMapping(value = "user/read/role")
     @RequiresPermissions("sys.permisson.userRole.read")
     public Object getUserRole(ModelMap modelMap, @RequestBody SysUserRole param) {
-        Parameter parameter = new Parameter(getService(), "getRolesByUserId", param.getUserId());
-        logger.info("{} execute getRolesByUserId start...", parameter.getNo());
-        List<?> menus = provider.execute(parameter).getResultList();
-        logger.info("{} execute getRolesByUserId end.", parameter.getNo());
+        List<?> menus = authorizeService.getRolesByUserId(param.getUserId());
         return setSuccessModelMap(modelMap, menus);
     }
 
@@ -104,10 +97,7 @@ public class SysAuthorizeController extends BaseController<ISysProvider> {
             sysUserRole.setCreateTime(new Date());
             sysUserRole.setUpdateTime(new Date());
         }
-        Parameter parameter = new Parameter(getService(), "updateUserRole", list);
-        logger.info("{} execute updateUserRole start...", parameter.getNo());
-        provider.execute(parameter);
-        logger.info("{} execute updateUserRole end.", parameter.getNo());
+        authorizeService.updateUserRole(list);
         return setSuccessModelMap(modelMap);
     }
 
@@ -115,10 +105,7 @@ public class SysAuthorizeController extends BaseController<ISysProvider> {
     @PutMapping(value = "role/read/menu")
     @RequiresPermissions("sys.permisson.roleMenu.read")
     public Object getRoleMenu(ModelMap modelMap, @RequestBody SysRoleMenu param) {
-        Parameter parameter = new Parameter(getService(), "queryMenuIdsByRoleId", param.getRoleId());
-        logger.info("{} execute queryMenuIdsByRoleId start...", parameter.getNo());
-        List<?> menus = provider.execute(parameter).getResultList();
-        logger.info("{} execute queryMenuIdsByRoleId end.", parameter.getNo());
+        List<?> menus = authorizeService.queryMenuIdsByRoleId(param.getRoleId());
         return setSuccessModelMap(modelMap, menus);
     }
 
@@ -141,10 +128,7 @@ public class SysAuthorizeController extends BaseController<ISysProvider> {
             sysRoleMenu.setCreateTime(new Date());
             sysRoleMenu.setUpdateTime(new Date());
         }
-        Parameter parameter = new Parameter(getService(), "updateRoleMenu", list);
-        logger.info("{} execute updateRoleMenu start...", parameter.getNo());
-        provider.execute(parameter);
-        logger.info("{} execute updateRoleMenu end.", parameter.getNo());
+        authorizeService.updateRoleMenu(list);
         return setSuccessModelMap(modelMap);
     }
 
@@ -152,10 +136,7 @@ public class SysAuthorizeController extends BaseController<ISysProvider> {
     @PutMapping(value = "user/read/permission")
     @RequiresPermissions("sys.permisson.user.read")
     public Object queryUserPermissions(ModelMap modelMap, @RequestBody SysUserMenu record) {
-        Parameter parameter = new Parameter(getService(), "queryUserPermissions", record);
-        logger.info("{} execute queryUserPermissions start...", parameter.getNo());
-        List<?> menuIds = provider.execute(parameter).getResultList();
-        logger.info("{} execute queryUserPermissions end.", parameter.getNo());
+        List<?> menuIds = authorizeService.queryUserPermissions(record);
         return setSuccessModelMap(modelMap, menuIds);
     }
 
@@ -178,10 +159,7 @@ public class SysAuthorizeController extends BaseController<ISysProvider> {
             sysUserMenu.setCreateTime(new Date());
             sysUserMenu.setUpdateTime(new Date());
         }
-        Parameter parameter = new Parameter(getService(), "updateUserPermission", list);
-        logger.info("{} execute updateUserPermission start...", parameter.getNo());
-        provider.execute(parameter);
-        logger.info("{} execute updateUserPermission end.", parameter.getNo());
+        authorizeService.updateUserPermission(list);
         return setSuccessModelMap(modelMap);
     }
 
@@ -189,10 +167,7 @@ public class SysAuthorizeController extends BaseController<ISysProvider> {
     @PutMapping(value = "role/read/permission")
     @RequiresPermissions("sys.permisson.role.read")
     public Object queryRolePermissions(ModelMap modelMap, @RequestBody SysRoleMenu record) {
-        Parameter parameter = new Parameter(getService(), "queryRolePermissions", record);
-        logger.info("{} execute queryRolePermissions start...", parameter.getNo());
-        List<?> menuIds = provider.execute(parameter).getResultList();
-        logger.info("{} execute queryRolePermissions end.", parameter.getNo());
+        List<?> menuIds = authorizeService.queryRolePermissions(record);
         return setSuccessModelMap(modelMap, menuIds);
     }
 
@@ -215,10 +190,7 @@ public class SysAuthorizeController extends BaseController<ISysProvider> {
             sysRoleMenu.setCreateTime(new Date());
             sysRoleMenu.setUpdateTime(new Date());
         }
-        Parameter parameter = new Parameter(getService(), "updateRolePermission", list);
-        logger.info("{} execute updateRolePermission start...", parameter.getNo());
-        provider.execute(parameter);
-        logger.info("{} execute updateRolePermission end.", parameter.getNo());
+        authorizeService.updateRolePermission(list);
         return setSuccessModelMap(modelMap);
     }
 
@@ -226,10 +198,7 @@ public class SysAuthorizeController extends BaseController<ISysProvider> {
     @RequiresPermissions("sys.cache.update")
     @RequestMapping(value = "/cache/update", method = RequestMethod.POST)
     public Object flush(ModelMap modelMap, @RequestBody Map<String, String> param) {
-        Parameter parameter = new Parameter("sysCacheService", "flush", param);
-        logger.info("{} execute sysCacheService.flush start...", parameter.getNo());
-        provider.execute(parameter);
-        logger.info("{} execute sysCacheService.flush end.", parameter.getNo());
+        sysCacheService.flush(param);
         return setSuccessModelMap(modelMap);
     }
 }

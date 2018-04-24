@@ -8,10 +8,22 @@
          http://www.springframework.org/schema/context/spring-context-4.0.xsd
    		http://api.weibo.com/schema/motan
    		http://api.weibo.com/schema/motan.xsd">
-
-	<motan:referer id="sysProvider" interface="org.ibase4j.provider.ISysProvider"
+	<!-- SYS -->
+	<motan:referer id="sendMsgService" interface="org.ibase4j.service.ISendMsgService"
 		check="false" />
-	<motan:referer id="bizProvider" interface="org.ibase4j.provider.IBizProvider"
+	<motan:referer id="sysArticleService" interface="org.ibase4j.service.ISysArticleService"
+		check="false" />
+	<motan:referer id="sysDicService" interface="org.ibase4j.service.ISysDicService"
+		check="false" />
+	<motan:referer id="sysEventService" interface="org.ibase4j.service.ISysEventService"
+		check="false" />
+	<motan:referer id="sysFeedbackService" interface="org.ibase4j.service.ISysFeedbackService"
+		check="false" />
+	<motan:referer id="sysNewsService" interface="org.ibase4j.service.ISysNewsService"
+		check="false" />
+	<motan:referer id="sysNoticeService" interface="org.ibase4j.service.ISysNoticeService"
+		check="false" />
+	<motan:referer id="sysParamService" interface="org.ibase4j.service.ISysParamService"
 		check="false" />
 
 </beans>

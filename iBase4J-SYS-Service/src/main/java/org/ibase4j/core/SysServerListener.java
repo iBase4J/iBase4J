@@ -2,9 +2,9 @@ package org.ibase4j.core;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.service.SysCacheService;
-import org.ibase4j.service.SysDicService;
-import org.ibase4j.service.SysUserService;
+import org.ibase4j.service.ISysCacheService;
+import org.ibase4j.service.ISysDicService;
+import org.ibase4j.service.ISysUserService;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -20,9 +20,9 @@ public class SysServerListener extends ApplicationReadyListener {
 
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		ConfigurableApplicationContext context = event.getApplicationContext();
-		context.getBean(SysCacheService.class).flush();
-		context.getBean(SysUserService.class).init();
-		SysDicService sysDicService = context.getBean(SysDicService.class);
+		context.getBean(ISysCacheService.class).flush();
+		context.getBean(ISysUserService.class).init();
+		ISysDicService sysDicService = context.getBean(ISysDicService.class);
 		sysDicService.getAllDic();
 		MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
 		super.onApplicationEvent(event);

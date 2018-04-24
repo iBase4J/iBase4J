@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 import top.ibase4j.core.config.WebMvcConfig;
 import top.ibase4j.core.filter.TokenFilter;
-import top.ibase4j.core.interceptor.provider.EventInterceptor;
+import top.ibase4j.core.interceptor.EventInterceptor;
 
 /**
  * @author ShenHuaJie

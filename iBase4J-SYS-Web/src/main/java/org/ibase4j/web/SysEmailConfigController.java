@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysEmailConfig;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISysEmailConfigService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.provider.BaseController;
-import top.ibase4j.core.base.provider.Parameter;
+import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.util.DataUtil;
 import top.ibase4j.core.util.SecurityUtil;
 
@@ -27,12 +26,7 @@ import top.ibase4j.core.util.SecurityUtil;
 @RestController
 @Api(value = "邮件配置管理", description = "邮件配置管理")
 @RequestMapping(value = "emailConfig")
-public class SysEmailConfigController extends BaseController<ISysProvider> {
-
-    public String getService() {
-        return "sysEmailConfigService";
-    }
-
+public class SysEmailConfigController extends BaseController<SysEmailConfig, ISysEmailConfigService> {
     @ApiOperation(value = "查询邮件配置")
     @RequiresPermissions("sys.email.config.read")
     @RequestMapping(value = "/read/list", method = RequestMethod.PUT)
@@ -52,8 +46,7 @@ public class SysEmailConfigController extends BaseController<ISysProvider> {
     @RequestMapping(method = RequestMethod.POST)
     public Object update(ModelMap modelMap, @RequestBody SysEmailConfig param) {
         if (param.getId() != null) {
-            Parameter parameter = new Parameter("sysEmailConfigService", "queryById", param.getId());
-            SysEmailConfig result = (SysEmailConfig)provider.execute(parameter).getResult();
+            SysEmailConfig result = service.queryById(param.getId());
             if (param.getSenderPassword() != null && !param.getSenderPassword().equals(result.getSenderPassword())) {
                 param.setSenderPassword(SecurityUtil.encryptMd5(param.getSenderPassword()));
             }

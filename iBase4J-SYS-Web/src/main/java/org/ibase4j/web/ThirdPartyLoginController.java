@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISysUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +19,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.Constants;
-import top.ibase4j.core.base.provider.BaseController;
-import top.ibase4j.core.base.provider.Parameter;
+import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.support.context.Resources;
 import top.ibase4j.core.support.login.LoginHelper;
 import top.ibase4j.core.support.login.ThirdPartyLoginHelper;
@@ -34,11 +33,7 @@ import top.ibase4j.core.support.login.ThirdPartyUser;
  */
 @Controller
 @Api(value = "第三方登录接口", description = "第三方登录接口")
-public class ThirdPartyLoginController extends BaseController<ISysProvider> {
-    public String getService() {
-        return "sysUserService";
-    }
-
+public class ThirdPartyLoginController extends BaseController<SysUser, ISysUserService> {
     @RequestMapping("/sns")
     @ApiOperation(value = "用户登录", httpMethod = "GET")
     public void thirdLogin(HttpServletRequest request, HttpServletResponse response, @RequestParam("t") String type) {
@@ -168,15 +163,12 @@ public class ThirdPartyLoginController extends BaseController<ISysProvider> {
     private void thirdPartyLogin(HttpServletRequest request, ThirdPartyUser param) {
         SysUser sysUser = null;
         // 查询是否已经绑定过
-        Parameter parameter = new Parameter(getService(), "queryUserIdByThirdParty", param);
-        Long userId = provider.execute(parameter).getResultLong();
+        Long userId = service.queryUserIdByThirdParty(param);
 
         if (userId == null) {
-            parameter = new Parameter(getService(), "insertThirdPartyUser", param);
-            sysUser = (SysUser)provider.execute(parameter).getResult();
+            sysUser =service.insertThirdPartyUser(param);
         } else {
-            parameter = new Parameter(getService(), "queryById", param.getId());
-            sysUser = (SysUser)provider.execute(parameter).getResult();
+            sysUser = service.queryById(param.getId());
         }
         String clientIp = (String)request.getSession().getAttribute(Constants.USER_IP);
         LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);

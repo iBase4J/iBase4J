@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysMsg;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISysMsgService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.provider.BaseController;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * <p>
@@ -26,11 +26,7 @@ import top.ibase4j.core.base.provider.BaseController;
  */
 @Controller
 @RequestMapping("/msg")
-public class SysMsgController extends BaseController<ISysProvider> {
-	public String getService() {
-		return "sysMsgService";
-	}
-
+public class SysMsgController extends BaseController<SysMsg, ISysMsgService> {
 	@ApiOperation(value = "查询短信")
 	@RequiresPermissions("msg.list.read")
 	@PutMapping(value = "/read/list")

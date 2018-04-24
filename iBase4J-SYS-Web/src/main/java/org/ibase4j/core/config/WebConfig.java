@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import top.ibase4j.core.config.WebMvcConfig;
-import top.ibase4j.core.interceptor.provider.EventInterceptor;
+import top.ibase4j.core.interceptor.EventInterceptor;
 
 /**
  * @author ShenHuaJie

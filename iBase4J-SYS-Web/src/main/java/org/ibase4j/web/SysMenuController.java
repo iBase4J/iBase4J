@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysMenu;
-import org.ibase4j.provider.ISysProvider;
+import org.ibase4j.service.ISysMenuService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import top.ibase4j.core.base.provider.BaseController;
-import top.ibase4j.core.base.provider.Parameter;
+import top.ibase4j.core.base.BaseController;
 
 /**
  * 菜单管理
@@ -28,11 +27,7 @@ import top.ibase4j.core.base.provider.Parameter;
 @RestController
 @Api(value = "菜单管理", description = "菜单管理")
 @RequestMapping(value = "menu")
-public class SysMenuController extends BaseController<ISysProvider> {
-    public String getService() {
-        return "sysMenuService";
-    }
-
+public class SysMenuController extends BaseController<SysMenu, ISysMenuService> {
     @ApiOperation(value = "查询菜单")
     @PutMapping(value = "/read/page")
     @RequiresPermissions("sys.base.menu.read")
@@ -51,8 +46,7 @@ public class SysMenuController extends BaseController<ISysProvider> {
     @PutMapping(value = "/read/tree")
     @RequiresPermissions("sys.base.menu.read")
     public Object getTree(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-        Parameter parameter = new Parameter(getService(), "queryTreeList", param);
-        List<?> list = provider.execute(parameter).getResultList();
+        List<?> list = service.queryTreeList(param);
         return setSuccessModelMap(modelMap, list);
     }
 
@@ -84,8 +78,7 @@ public class SysMenuController extends BaseController<ISysProvider> {
     @RequiresPermissions("sys.base.menu.read")
     @RequestMapping(value = "/read/permission")
     public Object getPermissions(ModelMap modelMap) {
-        Parameter parameter = new Parameter(getService(), "getPermissions", new SysMenu());
-        List<?> list = provider.execute(parameter).getResultList();
+        List<?> list = service.getPermissions();
         return setSuccessModelMap(modelMap, list);
     }
 }
