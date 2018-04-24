@@ -8,8 +8,10 @@
          http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://code.alibabatech.com/schema/dubbo
 		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-
-	<dubbo:reference id="sysProvider" interface="org.ibase4j.provider.ISysProvider"
+	<!-- SYS -->
+	<dubbo:reference id="sysDicService" interface="org.ibase4j.service.ISysDicService"
 		check="false" />
-
+	<dubbo:reference id="sysParamService" interface="org.ibase4j.service.ISysParamService"
+		check="false" />
+	<!--  -->
 </beans>

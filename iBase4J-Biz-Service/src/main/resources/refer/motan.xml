@@ -8,8 +8,10 @@
          http://www.springframework.org/schema/context/spring-context-4.0.xsd
    		http://api.weibo.com/schema/motan
    		http://api.weibo.com/schema/motan.xsd">
-
-	<motan:referer id="sysProvider" interface="org.ibase4j.provider.ISysProvider"
+	<!-- SYS -->
+	<motan:referer id="sysDicService" interface="org.ibase4j.service.ISysDicService"
+		check="false" />
+	<motan:referer id="sysParamService" interface="org.ibase4j.service.ISysParamService"
 		check="false" />
 
 </beans>
