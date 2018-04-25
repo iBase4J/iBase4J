@@ -1,4 +1,4 @@
-package org.ibase4j.service.sys;
+package org.ibase4j.service.sys.impl;
 
 import java.util.Date;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.ibase4j.mapper.sys.SysSessionMapper;
 import org.ibase4j.model.sys.SysSession;
+import org.ibase4j.service.sys.ISysSessionService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,15 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysSession")
-public class SysSessionService extends BaseService<SysSession, SysSessionMapper> {
+public class SysSessionServiceImpl extends BaseService<SysSession, SysSessionMapper> implements ISysSessionService {
 
+    @Override
     @CachePut
     @Transactional
     public SysSession update(SysSession record) {
         if (record != null && record.getId() == null) {
             record.setUpdateTime(new Date());
-            Long id = ((SysSessionMapper)mapper).queryBySessionId(record.getSessionId());
+            Long id = mapper.queryBySessionId(record.getSessionId());
             if (id != null) {
                 mapper.updateById(record);
             } else {
@@ -43,20 +45,23 @@ public class SysSessionService extends BaseService<SysSession, SysSessionMapper>
     }
 
     // 系统触发,由系统自动管理缓存
+    @Override
     public void deleteBySessionId(final SysSession sysSession) {
         if (sysSession != null) {
-            ((SysSessionMapper)mapper).deleteBySessionId(sysSession.getSessionId());
+            mapper.deleteBySessionId(sysSession.getSessionId());
         }
     }
 
+    @Override
     public List<String> querySessionIdByAccount(SysSession sysSession) {
         if (sysSession != null) {
-            return ((SysSessionMapper)mapper).querySessionIdByAccount(sysSession.getAccount());
+            return mapper.querySessionIdByAccount(sysSession.getAccount());
         }
         return null;
     }
 
     //
+    @Override
     public void cleanExpiredSessions() {
         Map<String, Object> columnMap = InstanceUtil.newHashMap();
         List<SysSession> sessions = queryList(columnMap);

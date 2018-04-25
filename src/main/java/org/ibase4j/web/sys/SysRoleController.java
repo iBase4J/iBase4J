@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysRole;
-import org.ibase4j.service.sys.SysRoleService;
+import org.ibase4j.service.sys.ISysRoleService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +26,7 @@ import top.ibase4j.core.base.BaseController;
 @RestController
 @Api(value = "角色管理", description = "角色管理")
 @RequestMapping(value = "role")
-public class SysRoleController extends BaseController<SysRole, SysRoleService> {
-
+public class SysRoleController extends BaseController<SysRole, ISysRoleService> {
 	@ApiOperation(value = "查询角色")
 	@RequiresPermissions("sys.base.role.read")
 	@PutMapping(value = "/read/page")
@@ -38,7 +37,7 @@ public class SysRoleController extends BaseController<SysRole, SysRoleService> {
 	@ApiOperation(value = "查询角色")
 	@RequiresPermissions("sys.base.role.read")
 	@PutMapping(value = "/read/list")
-	public Object queryList(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+	public Object list(ModelMap modelMap, @RequestBody Map<String, Object> param) {
 		return super.queryList(modelMap, param);
 	}
 

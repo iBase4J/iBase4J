@@ -1,8 +1,5 @@
 package org.ibase4j.web.sys;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +15,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.AbstractController;
 import top.ibase4j.core.support.HttpCode;
-import top.ibase4j.core.support.security.BASE64Decoder;
 import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.UploadUtil;
 
@@ -33,15 +29,91 @@ import top.ibase4j.core.util.UploadUtil;
 @RequestMapping(value = "/upload", method = RequestMethod.POST)
 public class UploadController extends AbstractController {
 
+	public String getService() {
+		return null;
+	}
+
+	// 上传文件(支持批量)
+	@RequestMapping("/temp/file")
+	@ApiOperation(value = "上传文件")
+	public Object uploadFile(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+		List<String> fileNames = UploadUtil.uploadFile(request);
+		if (fileNames.size() > 0) {
+			modelMap.put("fileNames", fileNames);
+			return setSuccessModelMap(modelMap);
+		} else {
+			setModelMap(modelMap, HttpCode.BAD_REQUEST);
+			modelMap.put("msg", "请选择要上传的文件！");
+			return modelMap;
+		}
+	}
+
+	// 上传文件(支持批量)
+	@RequestMapping("/temp/image")
+	@ApiOperation(value = "上传图片")
+	public Object uploadImage(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+		List<String> fileNames = UploadUtil.uploadImage(request, false);
+		if (fileNames.size() > 0) {
+			modelMap.put("fileNames", fileNames);
+			return setSuccessModelMap(modelMap);
+		} else {
+			setModelMap(modelMap, HttpCode.BAD_REQUEST);
+			modelMap.put("msg", "请选择要上传的文件！");
+			return modelMap;
+		}
+	}
+
+	// 上传文件(支持批量)
+	@RequestMapping("/temp/imageData")
+	@ApiOperation(value = "上传图片")
+	public Object uploadImageData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+		List<String> fileNames = UploadUtil.uploadImageData(request);
+		if (fileNames.size() > 0) {
+			modelMap.put("fileNames", fileNames);
+			return setSuccessModelMap(modelMap);
+		} else {
+			setModelMap(modelMap, HttpCode.BAD_REQUEST);
+			modelMap.put("msg", "请选择要上传的文件！");
+			return modelMap;
+		}
+	}
+
+	// 上传文件(支持批量)
+	@RequestMapping("/file")
+	@ApiOperation(value = "上传文件")
+	public Object uploadFile2Ftp(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+		List<String> fileNames = UploadUtil.uploadFile(request);
+		if (fileNames.size() > 0) {
+			List<String> resultList = InstanceUtil.newArrayList();
+			for (int i = 0; i < fileNames.size(); i++) {
+				String filePath = UploadUtil.getUploadDir(request) + fileNames.get(i);
+				String objectId = UUID.randomUUID().toString().replaceAll("-", "");
+				String file = UploadUtil.remove2DFS("file", objectId, filePath).getRemotePath();
+				resultList.add(file);
+			}
+			modelMap.put("fileNames", resultList);
+			return setSuccessModelMap(modelMap);
+		} else {
+			setModelMap(modelMap, HttpCode.BAD_REQUEST);
+			modelMap.put("msg", "请选择要上传的文件！");
+			return modelMap;
+		}
+	}
+
 	// 上传文件(支持批量)
 	@RequestMapping("/image")
 	@ApiOperation(value = "上传图片")
-	public Object uploadImage(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setContentType("text/html;charset=utf-8");
-		List<String> fileNames = UploadUtil.uploadImage(request, true);
+	public Object uploadImage2Ftp(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+		List<String> fileNames = UploadUtil.uploadImage(request, false);
 		if (fileNames.size() > 0) {
-			modelMap.put("imgName", fileNames);
+			List<String> resultList = InstanceUtil.newArrayList();
+			for (int i = 0; i < fileNames.size(); i++) {
+				String filePath = UploadUtil.getUploadDir(request) + fileNames.get(i);
+				String objectId = UUID.randomUUID().toString().replaceAll("-", "");
+				String file = UploadUtil.remove2DFS("image", objectId, filePath).getRemotePath();
+				resultList.add(file);
+			}
+			modelMap.put("fileNames", resultList);
 			return setSuccessModelMap(modelMap);
 		} else {
 			setModelMap(modelMap, HttpCode.BAD_REQUEST);
@@ -53,51 +125,17 @@ public class UploadController extends AbstractController {
 	// 上传文件(支持批量)
 	@RequestMapping("/imageData")
 	@ApiOperation(value = "上传图片")
-	public Object uploadImageData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setContentType("text/html;charset=utf-8");
-		List<String> fileNames = InstanceUtil.newArrayList();
-		String[] fileDatas = request.getParameterValues("fileData");
-		for (int i = 0; i < fileDatas.length; i++) {
-			String fileStr = fileDatas[i];
-			if (fileStr != null && !"".equals(fileStr)) {
-				int index = fileStr.indexOf("base64");
-				if (index > 0) {
-					try {
-						String fileName = UUID.randomUUID().toString();
-						String preStr = fileStr.substring(0, index + 7);
-						String prefix = preStr.substring(preStr.indexOf("/") + 1, preStr.indexOf(";")).toLowerCase();
-						fileStr = fileStr.substring(fileStr.indexOf(",") + 1);
-						String pathDir = UploadUtil.getUploadDir(request);
-						BASE64Decoder decoder = new BASE64Decoder();
-						byte[] bb = decoder.decodeBuffer(fileStr);
-						for (int j = 0; j < bb.length; ++j) {
-							if (bb[j] < 0) {// 调整异常数据
-								bb[j] += 256;
-							}
-						}
-						File dir = new File(pathDir);
-						if (!dir.exists()) {
-							dir.mkdirs();
-						}
-						String distPath = pathDir + fileName + "." + prefix;
-						OutputStream out = new FileOutputStream(distPath);
-						out.write(bb);
-						out.flush();
-						out.close();
-						fileNames.add(fileName + "." + prefix);
-					} catch (Exception e) {
-						logger.error("上传文件异常：", e);
-					}
-				} else {
-					setModelMap(modelMap, HttpCode.BAD_REQUEST);
-					modelMap.put("msg", "请选择要上传的文件！");
-					return modelMap;
-				}
-			}
-		}
+	public Object uploadImageData2Ftp(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) {
+		List<String> fileNames = UploadUtil.uploadImageData(request);
 		if (fileNames.size() > 0) {
-			modelMap.put("imgName", fileNames);
+			List<String> resultList = InstanceUtil.newArrayList();
+			for (int i = 0; i < fileNames.size(); i++) {
+				String filePath = UploadUtil.getUploadDir(request) + fileNames.get(i);
+				String objectId = UUID.randomUUID().toString().replaceAll("-", "");
+				String file = UploadUtil.remove2DFS("image", objectId, filePath).getRemotePath();
+				resultList.add(file);
+			}
+			modelMap.put("fileNames", resultList);
 			return setSuccessModelMap(modelMap);
 		} else {
 			setModelMap(modelMap, HttpCode.BAD_REQUEST);

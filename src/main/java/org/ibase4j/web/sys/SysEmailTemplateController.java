@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysEmailTemplate;
-import org.ibase4j.service.sys.SysEmailTemplateService;
+import org.ibase4j.service.sys.ISysEmailTemplateService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +24,7 @@ import top.ibase4j.core.base.BaseController;
 @RestController
 @Api(value = "邮件模版管理", description = "邮件模版管理")
 @RequestMapping(value = "emailTemplate")
-public class SysEmailTemplateController extends BaseController<SysEmailTemplate, SysEmailTemplateService> {
-
+public class SysEmailTemplateController extends BaseController<SysEmailTemplate, ISysEmailTemplateService> {
 	@ApiOperation(value = "查询邮件模版")
 	@RequiresPermissions("sys.email.template.read")
 	@RequestMapping(value = "/read/list", method = RequestMethod.PUT)

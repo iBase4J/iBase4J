@@ -1,4 +1,4 @@
-package org.ibase4j.service.sys;
+package org.ibase4j.service.sys.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.mapper.sys.SysParamMapper;
 import org.ibase4j.model.sys.SysParam;
+import org.ibase4j.service.sys.ISysParamService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,8 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysParam")
-public class SysParamService extends BaseService<SysParam, SysParamMapper> {
+public class SysParamServiceImpl extends BaseService<SysParam, SysParamMapper> implements ISysParamService {
+    @Override
     @Cacheable(value = Constants.CACHE_NAMESPACE + "sysParams")
     public Map<String, String> getAllParams() {
         Map<String, Object> params = InstanceUtil.newHashMap();
@@ -36,6 +38,7 @@ public class SysParamService extends BaseService<SysParam, SysParamMapper> {
         return resultMap;
     }
 
+    @Override
     @Cacheable(value = Constants.CACHE_NAMESPACE + "sysParamName")
     public String getName(String key) {
         if (StringUtils.isBlank(key)) {
@@ -54,12 +57,14 @@ public class SysParamService extends BaseService<SysParam, SysParamMapper> {
         return "";
     }
 
+    @Override
     public String getValue(String key) {
         return getValue(key, "");
     }
 
+    @Override
     public String getValue(String key, String defaultValue) {
-        String value = ApplicationContextHolder.getBean(SysParamService.class).getAllParams().get(key);
+        String value = ApplicationContextHolder.getBean(ISysParamService.class).getAllParams().get(key);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
         }

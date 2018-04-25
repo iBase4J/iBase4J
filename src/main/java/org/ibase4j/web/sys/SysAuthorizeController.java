@@ -1,15 +1,17 @@
 package org.ibase4j.web.sys;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;
 import org.ibase4j.model.sys.SysUserRole;
-import org.ibase4j.service.sys.SysAuthorizeService;
-import org.ibase4j.service.sys.SysCacheService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ibase4j.service.sys.ISysAuthorizeService;
+import org.ibase4j.service.sys.ISysCacheService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,16 +34,16 @@ import top.ibase4j.core.exception.IllegalParameterException;
 @RestController
 @Api(value = "权限管理", description = "权限管理")
 public class SysAuthorizeController extends AbstractController {
-    @Autowired
-    private SysAuthorizeService sysAuthorizeService;
-    @Autowired
-    private SysCacheService cacheService;
+    @Resource
+    private ISysAuthorizeService authorizeService;
+    @Resource
+    private ISysCacheService sysCacheService;
 
     @ApiOperation(value = "获取用户菜单编号")
     @PutMapping(value = "user/read/menu")
     @RequiresPermissions("sys.permisson.userMenu.read")
     public Object getUserMenu(ModelMap modelMap, @RequestBody SysUserMenu param) {
-        List<?> menus = sysAuthorizeService.queryMenuIdsByUserId(param.getUserId());
+        List<?> menus = authorizeService.queryMenuIdsByUserId(param.getUserId());
         return setSuccessModelMap(modelMap, menus);
     }
 
@@ -53,15 +55,18 @@ public class SysAuthorizeController extends AbstractController {
         Long currentUserId = getCurrUser();
         for (SysUserMenu sysUserMenu : list) {
             if (sysUserMenu.getUserId() != null) {
-                if (userId != null && userId != sysUserMenu.getUserId()) {
+                if (userId != null && sysUserMenu.getUserId() != null
+                    && userId.longValue() != sysUserMenu.getUserId()) {
                     throw new IllegalParameterException("参数错误.");
                 }
                 userId = sysUserMenu.getUserId();
             }
             sysUserMenu.setCreateBy(currentUserId);
             sysUserMenu.setUpdateBy(currentUserId);
+            sysUserMenu.setCreateTime(new Date());
+            sysUserMenu.setUpdateTime(new Date());
         }
-        sysAuthorizeService.updateUserMenu(list);
+        authorizeService.updateUserMenu(list);
         return setSuccessModelMap(modelMap);
     }
 
@@ -69,7 +74,7 @@ public class SysAuthorizeController extends AbstractController {
     @PutMapping(value = "user/read/role")
     @RequiresPermissions("sys.permisson.userRole.read")
     public Object getUserRole(ModelMap modelMap, @RequestBody SysUserRole param) {
-        List<?> menus = sysAuthorizeService.getRolesByUserId(param.getUserId());
+        List<?> menus = authorizeService.getRolesByUserId(param.getUserId());
         return setSuccessModelMap(modelMap, menus);
     }
 
@@ -81,15 +86,18 @@ public class SysAuthorizeController extends AbstractController {
         Long currentUserId = getCurrUser();
         for (SysUserRole sysUserRole : list) {
             if (sysUserRole.getUserId() != null) {
-                if (userId != null && userId != sysUserRole.getUserId()) {
+                if (userId != null && sysUserRole.getUserId() != null
+                    && userId.longValue() != sysUserRole.getUserId()) {
                     throw new IllegalParameterException("参数错误.");
                 }
                 userId = sysUserRole.getUserId();
             }
             sysUserRole.setCreateBy(currentUserId);
             sysUserRole.setUpdateBy(currentUserId);
+            sysUserRole.setCreateTime(new Date());
+            sysUserRole.setUpdateTime(new Date());
         }
-        sysAuthorizeService.updateUserRole(list);
+        authorizeService.updateUserRole(list);
         return setSuccessModelMap(modelMap);
     }
 
@@ -97,7 +105,7 @@ public class SysAuthorizeController extends AbstractController {
     @PutMapping(value = "role/read/menu")
     @RequiresPermissions("sys.permisson.roleMenu.read")
     public Object getRoleMenu(ModelMap modelMap, @RequestBody SysRoleMenu param) {
-        List<?> menus = sysAuthorizeService.queryMenuIdsByRoleId(param.getRoleId());
+        List<?> menus = authorizeService.queryMenuIdsByRoleId(param.getRoleId());
         return setSuccessModelMap(modelMap, menus);
     }
 
@@ -109,15 +117,18 @@ public class SysAuthorizeController extends AbstractController {
         Long userId = getCurrUser();
         for (SysRoleMenu sysRoleMenu : list) {
             if (sysRoleMenu.getRoleId() != null) {
-                if (roleId != null && roleId != sysRoleMenu.getRoleId()) {
+                if (roleId != null && sysRoleMenu.getRoleId() != null
+                    && roleId.longValue() != sysRoleMenu.getRoleId()) {
                     throw new IllegalParameterException("参数错误.");
                 }
                 roleId = sysRoleMenu.getRoleId();
             }
             sysRoleMenu.setCreateBy(userId);
             sysRoleMenu.setUpdateBy(userId);
+            sysRoleMenu.setCreateTime(new Date());
+            sysRoleMenu.setUpdateTime(new Date());
         }
-        sysAuthorizeService.updateRoleMenu(list);
+        authorizeService.updateRoleMenu(list);
         return setSuccessModelMap(modelMap);
     }
 
@@ -125,7 +136,7 @@ public class SysAuthorizeController extends AbstractController {
     @PutMapping(value = "user/read/permission")
     @RequiresPermissions("sys.permisson.user.read")
     public Object queryUserPermissions(ModelMap modelMap, @RequestBody SysUserMenu record) {
-        List<?> menuIds = sysAuthorizeService.queryUserPermissions(record);
+        List<?> menuIds = authorizeService.queryUserPermissions(record);
         return setSuccessModelMap(modelMap, menuIds);
     }
 
@@ -133,7 +144,22 @@ public class SysAuthorizeController extends AbstractController {
     @PostMapping(value = "/user/update/permission")
     @RequiresPermissions("sys.permisson.user.update")
     public Object updateUserPermission(ModelMap modelMap, @RequestBody List<SysUserMenu> list) {
-        sysAuthorizeService.updateUserPermission(list);
+        Long userId = null;
+        Long currentUserId = getCurrUser();
+        for (SysUserMenu sysUserMenu : list) {
+            if (sysUserMenu.getUserId() != null) {
+                if (userId != null && sysUserMenu.getUserId() != null
+                    && userId.longValue() != sysUserMenu.getUserId()) {
+                    throw new IllegalParameterException("参数错误.");
+                }
+                userId = sysUserMenu.getUserId();
+            }
+            sysUserMenu.setCreateBy(currentUserId);
+            sysUserMenu.setUpdateBy(currentUserId);
+            sysUserMenu.setCreateTime(new Date());
+            sysUserMenu.setUpdateTime(new Date());
+        }
+        authorizeService.updateUserPermission(list);
         return setSuccessModelMap(modelMap);
     }
 
@@ -141,7 +167,7 @@ public class SysAuthorizeController extends AbstractController {
     @PutMapping(value = "role/read/permission")
     @RequiresPermissions("sys.permisson.role.read")
     public Object queryRolePermissions(ModelMap modelMap, @RequestBody SysRoleMenu record) {
-        List<?> menuIds = sysAuthorizeService.queryRolePermissions(record);
+        List<?> menuIds = authorizeService.queryRolePermissions(record);
         return setSuccessModelMap(modelMap, menuIds);
     }
 
@@ -149,7 +175,22 @@ public class SysAuthorizeController extends AbstractController {
     @PostMapping(value = "/role/update/permission")
     @RequiresPermissions("sys.permisson.role.update")
     public Object updateRolePermission(ModelMap modelMap, @RequestBody List<SysRoleMenu> list) {
-        sysAuthorizeService.updateRolePermission(list);
+        Long roleId = null;
+        Long userId = getCurrUser();
+        for (SysRoleMenu sysRoleMenu : list) {
+            if (sysRoleMenu.getRoleId() != null) {
+                if (roleId != null && sysRoleMenu.getRoleId() != null
+                    && roleId.longValue() != sysRoleMenu.getRoleId()) {
+                    throw new IllegalParameterException("参数错误.");
+                }
+                roleId = sysRoleMenu.getRoleId();
+            }
+            sysRoleMenu.setCreateBy(userId);
+            sysRoleMenu.setUpdateBy(userId);
+            sysRoleMenu.setCreateTime(new Date());
+            sysRoleMenu.setUpdateTime(new Date());
+        }
+        authorizeService.updateRolePermission(list);
         return setSuccessModelMap(modelMap);
     }
 
@@ -157,7 +198,7 @@ public class SysAuthorizeController extends AbstractController {
     @RequiresPermissions("sys.cache.update")
     @RequestMapping(value = "/cache/update", method = RequestMethod.POST)
     public Object flush(ModelMap modelMap, @RequestBody Map<String, String> param) {
-        cacheService.flush(param);
+        sysCacheService.flush(param);
         return setSuccessModelMap(modelMap);
     }
 }

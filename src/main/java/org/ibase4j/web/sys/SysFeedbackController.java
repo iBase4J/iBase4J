@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysFeedback;
-import org.ibase4j.service.sys.SysFeedbackService;
+import org.ibase4j.service.sys.ISysFeedbackService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.BaseController;
  */
 @Controller
 @RequestMapping("/feedback")
-public class SysFeedbackController extends BaseController<SysFeedback, SysFeedbackService> {
+public class SysFeedbackController extends BaseController<SysFeedback, ISysFeedbackService> {
 	@ApiOperation(value = "查询反馈")
 	@RequiresPermissions("cms.feedback.read")
 	@PutMapping(value = "/read/list")

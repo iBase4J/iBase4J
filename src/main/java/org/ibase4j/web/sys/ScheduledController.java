@@ -6,9 +6,10 @@ package org.ibase4j.web.sys;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.service.sys.ScheduledService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ibase4j.service.sys.ISchedulerService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.baomidou.mybatisplus.plugins.Page;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,15 +35,13 @@ import top.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
 @Api(value = "调度管理", description = "调度管理")
 @RequestMapping(value = "/scheduled")
 public class ScheduledController extends AbstractController {
-    @Autowired
-    private ScheduledService scheduledService;
+    @Resource
+    private ISchedulerService schedulerService;
 
     @PostMapping
     @ApiOperation(value = "新增任务")
     @RequiresPermissions("sys.task.scheduled.update")
     public Object updateTask(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
-        Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
-        Assert.notNull(scheduled.getTaskName(), "TASKNAME");
         Assert.notNull(scheduled.getJobType(), "JOBTYPE");
         Assert.notNull(scheduled.getTaskType(), "TASKTYPE");
         Assert.notNull(scheduled.getTargetObject(), "TARGETOBJECT");
@@ -54,17 +51,17 @@ public class ScheduledController extends AbstractController {
         if (TaskType.dubbo.equals(scheduled.getTaskType())) {
             Assert.notNull(scheduled.getTargetSystem(), "TARGETSYSTEM");
         }
-        scheduledService.updateTask(scheduled);
-        return setSuccessModelMap(modelMap);
+        schedulerService.updateTask(scheduled);
+        return setSuccessModelMap();
     }
 
     @DeleteMapping
     @ApiOperation(value = "删除任务")
-    @RequiresPermissions("sys.task.scheduled.close")
+    @RequiresPermissions("sys.task.scheduled.delete")
     public Object delete(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
         Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
         Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-        scheduledService.delTask(scheduled);
+        schedulerService.delTask(scheduled);
         return setSuccessModelMap(modelMap);
     }
 
@@ -74,7 +71,7 @@ public class ScheduledController extends AbstractController {
     public Object exec(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
         Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
         Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-        scheduledService.execTask(scheduled);
+        schedulerService.execTask(scheduled);
         return setSuccessModelMap(modelMap);
     }
 
@@ -84,7 +81,7 @@ public class ScheduledController extends AbstractController {
     public Object open(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
         Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
         Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-        scheduledService.openTask(scheduled);
+        schedulerService.openTask(scheduled);
         return setSuccessModelMap(modelMap);
     }
 
@@ -94,7 +91,7 @@ public class ScheduledController extends AbstractController {
     public Object close(@RequestBody TaskScheduled scheduled, ModelMap modelMap) {
         Assert.notNull(scheduled.getTaskGroup(), "TASKGROUP");
         Assert.notNull(scheduled.getTaskName(), "TASKNAME");
-        scheduledService.closeTask(scheduled);
+        schedulerService.closeTask(scheduled);
         return setSuccessModelMap(modelMap);
     }
 
@@ -102,7 +99,7 @@ public class ScheduledController extends AbstractController {
     @ApiOperation(value = "任务列表")
     @RequiresPermissions("sys.task.scheduled.read")
     public Object list(ModelMap modelMap) {
-        List<?> records = scheduledService.getAllTaskDetail();
+        List<?> records = schedulerService.getAllTaskDetail();
         modelMap.put("recordsTotal", records.size());
         modelMap.put("total", records.size());
         modelMap.put("current", 1);
@@ -114,7 +111,7 @@ public class ScheduledController extends AbstractController {
     @ApiOperation(value = "任务执行记录")
     @RequiresPermissions("sys.task.log.read")
     public Object getFireLog(ModelMap modelMap, @RequestBody Map<String, Object> log) {
-        Page<?> list = scheduledService.queryLog(log);
+        Object list = schedulerService.queryLog(log);
         return setSuccessModelMap(modelMap, list);
     }
 }

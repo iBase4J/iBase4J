@@ -1,13 +1,10 @@
 package org.ibase4j.web.sys;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.service.sys.SysSessionService;
-import org.ibase4j.service.sys.SysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ibase4j.service.sys.ISysUserService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import springfox.documentation.annotations.ApiIgnore;
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.exception.LoginException;
@@ -25,7 +24,7 @@ import top.ibase4j.core.support.HttpCode;
 import top.ibase4j.core.support.context.Resources;
 import top.ibase4j.core.support.login.LoginHelper;
 import top.ibase4j.core.util.SecurityUtil;
-import top.ibase4j.core.util.WebUtil;
+import top.ibase4j.model.Login;
 
 /**
  * 用户登录
@@ -35,33 +34,28 @@ import top.ibase4j.core.util.WebUtil;
  */
 @RestController
 @Api(value = "登录接口", description = "登录接口")
-public class LoginController extends BaseController<SysUser, SysUserService> {
-    @Autowired
-    private SysSessionService sysSessionService;
+public class LoginController extends BaseController<SysUser, ISysUserService> {
 
     // 登录
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
-    public Object login(@RequestBody SysUser sysUser, ModelMap modelMap, HttpServletRequest request) {
-        Assert.notNull(sysUser.getAccount(), "ACCOUNT");
-        Assert.notNull(sysUser.getPassword(), "PASSWORD");
-        if (LoginHelper.login(sysUser.getAccount(), SecurityUtil.encryptPassword(sysUser.getPassword()),
-            WebUtil.getHost(request))) {
-            request.setAttribute("msg", "[" + sysUser.getAccount() + "]登录成功.");
+    public Object login(@ApiParam(required = true, value = "登录帐号和密码") @RequestBody Login user, ModelMap modelMap,
+        HttpServletRequest request) {
+        Assert.notNull(user.getAccount(), "ACCOUNT");
+        Assert.notNull(user.getPassword(), "PASSWORD");
+        String clientIp = (String)request.getSession().getAttribute(Constants.USER_IP);
+        if (LoginHelper.login(user.getAccount(), user.getPassword(), clientIp)) {
+            request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
             return setSuccessModelMap(modelMap);
         }
-        request.setAttribute("msg", "[" + sysUser.getAccount() + "]登录失败.");
+        request.setAttribute("msg", "[" + user.getAccount() + "]登录失败.");
         throw new LoginException(Resources.getMessage("LOGIN_FAIL"));
     }
 
     // 登出
     @ApiOperation(value = "用户登出")
     @PostMapping("/logout")
-    public Object logout(ModelMap modelMap) {
-        Long id = getCurrUser();
-        if (id != null) {
-            sysSessionService.delete(id);
-        }
+    public Object logout(HttpServletRequest request, ModelMap modelMap) {
         SecurityUtils.getSubject().logout();
         return setSuccessModelMap(modelMap);
     }
@@ -72,27 +66,24 @@ public class LoginController extends BaseController<SysUser, SysUserService> {
     public Object regin(HttpServletRequest request, ModelMap modelMap, @RequestBody SysUser sysUser) {
         Assert.notNull(sysUser.getAccount(), "ACCOUNT");
         Assert.notNull(sysUser.getPassword(), "PASSWORD");
+        sysUser.setPassword(SecurityUtil.encryptPassword(sysUser.getPassword()));
         service.update(sysUser);
-        if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), WebUtil.getHost(request))) {
+        String clientIp = (String)request.getSession().getAttribute(Constants.USER_IP);
+        if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp)) {
             return setSuccessModelMap(modelMap);
         }
         throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
     }
 
     // 没有登录
-    @ApiOperation(value = "没有登录")
+    @ApiIgnore
     @RequestMapping(value = "/unauthorized", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
-    public Object unauthorized(ModelMap modelMap, HttpServletRequest request, HttpServletResponse response)
-        throws Exception {
-        if ("GET".equals(request.getMethod())) {
-            response.sendRedirect(Constants.LOGIN_URL);
-            return null;
-        }
+    public Object unauthorized(ModelMap modelMap) throws Exception {
         return setModelMap(modelMap, HttpCode.UNAUTHORIZED);
     }
 
     // 没有权限
-    @ApiOperation(value = "没有权限")
+    @ApiIgnore
     @RequestMapping(value = "/forbidden", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
     public Object forbidden(ModelMap modelMap) {
         return setModelMap(modelMap, HttpCode.FORBIDDEN);

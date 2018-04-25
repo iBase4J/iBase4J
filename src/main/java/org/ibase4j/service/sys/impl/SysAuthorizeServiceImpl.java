@@ -1,4 +1,4 @@
-package org.ibase4j.service.sys;
+package org.ibase4j.service.sys.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +12,9 @@ import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;
 import org.ibase4j.model.sys.SysUserRole;
+import org.ibase4j.service.sys.ISysAuthorizeService;
+import org.ibase4j.service.sys.ISysDicService;
+import org.ibase4j.service.sys.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -31,7 +34,7 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysAuthorize")
-public class SysAuthorizeService {
+public class SysAuthorizeServiceImpl implements ISysAuthorizeService {
     @Autowired
     private SysUserMenuMapper sysUserMenuMapper;
     @Autowired
@@ -41,10 +44,11 @@ public class SysAuthorizeService {
     @Autowired
     private SysAuthorizeMapper sysAuthorizeMapper;
     @Autowired
-    private SysMenuService sysMenuService;
+    private ISysMenuService sysMenuService;
     @Autowired
-    private SysDicService sysDicService;
+    private ISysDicService sysDicService;
 
+    @Override
     public List<String> queryMenuIdsByUserId(Long userId) {
         List<String> resultList = InstanceUtil.newArrayList();
         List<Long> list = sysUserMenuMapper.queryMenuIdsByUserId(userId);
@@ -54,6 +58,7 @@ public class SysAuthorizeService {
         return resultList;
     }
 
+    @Override
     @Transactional
     @CacheEvict(value = {Constants.CACHE_NAMESPACE + "menuPermission", Constants.CACHE_NAMESPACE + "sysPermission",
         Constants.CACHE_NAMESPACE + "userPermission"}, allEntries = true)
@@ -69,12 +74,13 @@ public class SysAuthorizeService {
         }
         for (SysUserMenu sysUserMenu : sysUserMenus) {
             if (sysUserMenu != null && sysUserMenu.getUserId() != null && sysUserMenu.getMenuId() != null
-                && "read".equals(sysUserMenu.getPermission())) {
+                    && "read".equals(sysUserMenu.getPermission())) {
                 sysUserMenuMapper.insert(sysUserMenu);
             }
         }
     }
 
+    @Override
     @Transactional
     @CacheEvict(value = {Constants.CACHE_NAMESPACE + "menuPermission", Constants.CACHE_NAMESPACE + "sysPermission",
         Constants.CACHE_NAMESPACE + "userPermission"}, allEntries = true)
@@ -98,12 +104,13 @@ public class SysAuthorizeService {
         }
         for (SysUserMenu sysUserMenu : sysUserMenus) {
             if (sysUserMenu != null && sysUserMenu.getUserId() != null && sysUserMenu.getMenuId() != null
-                && !"read".equals(sysUserMenu.getPermission())) {
+                    && !"read".equals(sysUserMenu.getPermission())) {
                 sysUserMenuMapper.insert(sysUserMenu);
             }
         }
     }
 
+    @Override
     public List<SysUserRole> getRolesByUserId(Long userId) {
         SysUserRole sysUserRole = new SysUserRole(userId, null);
         Wrapper<SysUserRole> wrapper = new EntityWrapper<SysUserRole>(sysUserRole);
@@ -111,6 +118,7 @@ public class SysAuthorizeService {
         return userRoles;
     }
 
+    @Override
     @Transactional
     @CacheEvict(value = {Constants.CACHE_NAMESPACE + "menuPermission", Constants.CACHE_NAMESPACE + "sysPermission",
         Constants.CACHE_NAMESPACE + "userPermission", Constants.CACHE_NAMESPACE + "rolePermission"}, allEntries = true)
@@ -132,6 +140,7 @@ public class SysAuthorizeService {
         }
     }
 
+    @Override
     public List<String> queryMenuIdsByRoleId(Long roleId) {
         List<String> resultList = InstanceUtil.newArrayList();
         List<Long> list = sysRoleMenuMapper.queryMenuIdsByRoleId(roleId);
@@ -141,6 +150,7 @@ public class SysAuthorizeService {
         return resultList;
     }
 
+    @Override
     @Transactional
     @CacheEvict(value = {Constants.CACHE_NAMESPACE + "menuPermission", Constants.CACHE_NAMESPACE + "sysPermission",
         Constants.CACHE_NAMESPACE + "userPermission", Constants.CACHE_NAMESPACE + "rolePermission"}, allEntries = true)
@@ -157,12 +167,13 @@ public class SysAuthorizeService {
         }
         for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
             if (sysRoleMenu != null && sysRoleMenu.getRoleId() != null && sysRoleMenu.getMenuId() != null
-                && "read".equals(sysRoleMenu.getPermission())) {
+                    && "read".equals(sysRoleMenu.getPermission())) {
                 sysRoleMenuMapper.insert(sysRoleMenu);
             }
         }
     }
 
+    @Override
     @Transactional
     @CacheEvict(value = {Constants.CACHE_NAMESPACE + "menuPermission", Constants.CACHE_NAMESPACE + "sysPermission",
         Constants.CACHE_NAMESPACE + "userPermission", Constants.CACHE_NAMESPACE + "rolePermission"}, allEntries = true)
@@ -185,12 +196,13 @@ public class SysAuthorizeService {
         }
         for (SysRoleMenu sysRoleMenu : sysRoleMenus) {
             if (sysRoleMenu != null && sysRoleMenu.getRoleId() != null && sysRoleMenu.getMenuId() != null
-                && !"read".equals(sysRoleMenu.getPermission())) {
+                    && !"read".equals(sysRoleMenu.getPermission())) {
                 sysRoleMenuMapper.insert(sysRoleMenu);
             }
         }
     }
 
+    @Override
     @Cacheable(value = Constants.CACHE_NAMESPACE + "menuPermission")
     public List<SysMenu> queryAuthorizeByUserId(Long userId) {
         List<Long> menuIds = sysAuthorizeMapper.getAuthorize(userId);
@@ -227,30 +239,36 @@ public class SysAuthorizeService {
         return menus;
     }
 
+    @Override
     @Cacheable(Constants.CACHE_NAMESPACE + "sysPermission")
     public List<String> queryPermissionByUserId(Long userId) {
         return sysAuthorizeMapper.queryPermissionByUserId(userId);
     }
 
+    @Override
     @Cacheable(Constants.CACHE_NAMESPACE + "userPermission")
     public List<String> queryUserPermission(Long userId) {
         return sysUserMenuMapper.queryPermission(userId);
     }
 
+    @Override
     @Cacheable(Constants.CACHE_NAMESPACE + "rolePermission")
     public List<String> queryRolePermission(Long roleId) {
         return sysRoleMenuMapper.queryPermission(roleId);
     }
 
+    @Override
     public List<SysMenu> queryMenusPermission() {
         return sysAuthorizeMapper.queryMenusPermission();
     }
 
+    @Override
     public List<Map<String, Object>> queryUserPermissions(SysUserMenu sysUserMenu) {
         List<Map<String, Object>> list = sysUserMenuMapper.queryPermissions(sysUserMenu.getUserId());
         return list;
     }
 
+    @Override
     public List<Map<String, Object>> queryRolePermissions(SysRoleMenu sysRoleMenu) {
         List<Map<String, Object>> list = sysRoleMenuMapper.queryPermissions(sysRoleMenu.getRoleId());
         return list;

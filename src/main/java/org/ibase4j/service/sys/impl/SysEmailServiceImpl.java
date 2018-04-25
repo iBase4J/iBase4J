@@ -1,7 +1,8 @@
-package org.ibase4j.service.sys;
+package org.ibase4j.service.sys.impl;
 
 import org.ibase4j.mapper.sys.SysEmailMapper;
 import org.ibase4j.model.sys.SysEmail;
+import org.ibase4j.service.sys.ISysEmailService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,6 @@ import top.ibase4j.core.base.BaseService;
  */
 @Service
 @CacheConfig(cacheNames = "sysEmail")
-public class SysEmailService extends BaseService<SysEmail, SysEmailMapper> {
+public class SysEmailServiceImpl extends BaseService<SysEmail, SysEmailMapper> implements ISysEmailService {
 
 }
