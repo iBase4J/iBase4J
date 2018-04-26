@@ -78,12 +78,15 @@
 
 	<repositories>
 		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/libs-milestone</url>
+			<id>spring-snapshots</id>
+			<url>http://repo.spring.io/snapshot</url>
 			<snapshots>
-				<enabled>false</enabled>
+				<enabled>true</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<url>http://repo.spring.io/milestone</url>
 		</repository>
 	</repositories>
 
@@ -194,11 +197,8 @@
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>org.redisson</groupId>
-			<artifactId>redisson</artifactId>
-			<version>${redisson.version}</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.redisson</groupId> <artifactId>redisson</artifactId> 
+			<version>${redisson.version}</version> </dependency> -->
 		<!-- 切面 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -250,11 +250,11 @@
 			<version>${log4j.version}</version>
 		</dependency>
 		<!-- -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
 			<version>${javassist.version}</version>
-		</dependency>
+		</dependency> -->
 		<!-- Dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>

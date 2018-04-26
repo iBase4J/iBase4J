@@ -34,8 +34,8 @@
 	<import resource="refer/motan.xml" />
 	<import resource="spring/redis.xml" />
 	<!-- <import resource="spring/redisson.xml" /> -->
-	<bean id="redisConnectFactory" factory-bean="jedisConfig" factory-method="redisConnectFactory"
-		c:pool-config-ref="jedisPoolConfig" />
 	<import resource="spring/mybatis.xml"/>
 	<import resource="spring/dataSource.xml"/>
+	<bean id="redisConnectFactory" factory-bean="jedisConfig"
+		factory-method="redisConnectFactory" c:pool-config-ref="jedisPoolConfig" />
 </beans>
