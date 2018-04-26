@@ -127,17 +127,11 @@
 			<artifactId>spring-jms</artifactId>
 		</dependency>
 		<!-- 中文拼音 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.belerweb</groupId>
 			<artifactId>pinyin4j</artifactId>
 			<version>${pinyin4j.version}</version>
-		</dependency>
-		<!-- 反射工具 -->
-		<dependency>
-			<groupId>org.db4j</groupId>
-			<artifactId>reflectasm</artifactId>
-			<version>1.11.4-2</version>
-		</dependency>
+		</dependency> -->
 		<!-- -->
 		<dependency>
 			<groupId>io.swagger</groupId>
@@ -145,7 +139,7 @@
 			<version>${swagger.version}</version>
 		</dependency>
 		<!-- 二维码 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
 			<version>${zxing.version}</version>
@@ -154,6 +148,6 @@
 			<groupId>com.google.zxing</groupId>
 			<artifactId>javase</artifactId>
 			<version>${zxing.version}</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 </project>

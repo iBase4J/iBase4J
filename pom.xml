@@ -108,12 +108,15 @@
 	</profiles>
 	<repositories>
 		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/libs-milestone</url>
+			<id>spring-snapshots</id>
+			<url>http://repo.spring.io/snapshot</url>
 			<snapshots>
-				<enabled>false</enabled>
+				<enabled>true</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<url>http://repo.spring.io/milestone</url>
 		</repository>
 	</repositories>
 
@@ -260,17 +263,6 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-1.2-api</artifactId>
 		</dependency>
-		<!-- -->
-		<dependency>
-			<groupId>org.javassist</groupId>
-			<artifactId>javassist</artifactId>
-			<version>${javassist.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.jms</groupId>
-			<artifactId>jms</artifactId>
-			<version>1.1</version>
-		</dependency>
 		<!-- Dubbo -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -369,10 +361,8 @@
 			</exclusions>
 		</dependency>
 		<!-- activemq -->
-		<!-- <dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-spring</artifactId>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.apache.activemq</groupId> <artifactId>activemq-spring</artifactId> 
+			</dependency> -->
 		<!-- jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

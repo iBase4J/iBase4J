@@ -53,14 +53,8 @@
 			<artifactId>shiro-spring</artifactId>
 			<version>${shiro.version}</version>
 		</dependency>
-		<!-- JSTL标签类 -->
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
 		<!-- excel -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>net.sourceforge.jexcelapi</groupId>
 			<artifactId>jxl</artifactId>
 			<version>${jxl.version}</version>
@@ -85,7 +79,7 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>${poi.version}</version>
-		</dependency>
+		</dependency> -->
 		<!-- 文件图片处理 -->
 		<dependency>
 			<groupId>net.coobird</groupId>
@@ -98,11 +92,11 @@
 			<version>${jsch.version}</version>
 		</dependency>
 		<!-- 中文拼音 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.belerweb</groupId>
 			<artifactId>pinyin4j</artifactId>
 			<version>${pinyin4j.version}</version>
-		</dependency>
+		</dependency> -->
 		<!-- swagger -->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -113,12 +107,6 @@
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${springfox.version}</version>
-		</dependency>
-		<!--  -->
-		<dependency>
-		    <groupId>cz.mallat.uasparser</groupId>
-		    <artifactId>uasparser</artifactId>
-		    <version>0.6.2</version>
 		</dependency>
 	</dependencies>
 </project>
