@@ -45,6 +45,7 @@
 		<logger name="org.quartz" level="warn" />
 		<logger name="org.redisson" level="info" />
 		<logger name="com.atomikos" level="warn" />
+		<logger name="org.apache.shiro" level="info" />
 		<logger name="com.alibaba.dubbo" level="info" />
 		<logger name="org.apache.activemq" level="info" />
 		<logger name="org.springframework" level="info" />
