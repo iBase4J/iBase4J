@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="WARN"  monitorInterval="30">
 	<properties>
-		<property name="LOG_HOME">/output/logs</property>
+		<property name="LOG_HOME">${logs.path}</property>
 		<!-- 日志备份目录 -->
 		<property name="SERVER_NAME">${module.name}</property>
 	</properties>

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.ibase4j.web;
 
@@ -33,7 +33,7 @@ import top.ibase4j.core.util.UploadUtil;
 
 /**
  * 用户管理控制器
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:12:12
  */
@@ -44,6 +44,7 @@ public class SysUserController extends BaseController<SysUser, ISysUserService> 
     @Resource
     private ISysAuthorizeService sysAuthorizeService;
 
+    @Override
     @PostMapping
     @ApiOperation(value = "修改用户信息")
     @RequiresPermissions("sys.base.user.update")
@@ -57,6 +58,7 @@ public class SysUserController extends BaseController<SysUser, ISysUserService> 
     }
 
     // 查询用户
+    @Override
     @ApiOperation(value = "查询用户")
     @RequiresPermissions("sys.base.user.read")
     @PutMapping(value = "/read/list")
@@ -75,6 +77,7 @@ public class SysUserController extends BaseController<SysUser, ISysUserService> 
     }
 
     // 用户详细信息
+    @Override
     @ApiOperation(value = "删除用户")
     @RequiresPermissions("sys.base.user.delete")
     @DeleteMapping
@@ -123,7 +126,7 @@ public class SysUserController extends BaseController<SysUser, ISysUserService> 
             param.setId(getCurrUser());
             for (int i = 0; i < fileNames.size(); i++) {
                 String filePath = UploadUtil.getUploadDir(request) + fileNames.get(i);
-                String avatar = UploadUtil.remove2DFS("sysUser", "U" + param.getId(), filePath).getRemotePath();
+                String avatar = UploadUtil.remove2FDFS("sysUser", filePath).getRemotePath();
                 param.setAvatar(avatar);
             }
             modelMap.put("data", param);
