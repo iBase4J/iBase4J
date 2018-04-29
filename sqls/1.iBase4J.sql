@@ -86,7 +86,11 @@ CREATE TABLE IF NOT EXISTS `sys_dic` (
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`),
-  UNIQUE KEY `type__code_` (`type_`,`code_`)
+  UNIQUE KEY `type__code_` (`type_`,`code_`),
+	INDEX `parent_type` (`parent_type`),
+	INDEX `type_` (`type_`),
+	INDEX `code_` (`code_`),
+	INDEX `parent_code` (`parent_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典明细表';
 
 -- 正在导出表  ibase4j.sys_dic 的数据：~43 rows (大约)
@@ -211,21 +215,35 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   `create_time` datetime NOT NULL,
   `update_by` bigint(20) DEFAULT NULL,
   `update_time` datetime NOT NULL,
-  PRIMARY KEY (`id_`)
+  PRIMARY KEY (`id_`),
+	INDEX `title_` (`title_`),
+	INDEX `request_uri` (`request_uri`),
+	INDEX `client_host` (`client_host`),
+	INDEX `create_by` (`create_by`),
+	INDEX `create_time` (`create_time`),
+	FULLTEXT INDEX `parameters_` (`parameters_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 正在导出表  ibase4j.sys_event 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_event` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sys_event` ENABLE KEYS */;
 
--- 导出  表 iteachs.sys_lock 结构
-CREATE TABLE IF NOT EXISTS `sys_lock` (
-  `key_` varchar(128) NOT NULL,
-  `name_` varchar(64) NOT NULL,
-  `expire_` datetime NOT NULL,
-  PRIMARY KEY (`key_`),               
-  KEY `expire_` (`expire_`)
-) ENGINE=InnoDB;
+DROP TABLE IF EXISTS `sys_feedback`;
+CREATE TABLE `sys_feedback` (
+	`id_` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`type_` VARCHAR(2) NULL DEFAULT NULL COMMENT '类型',
+	`user_name` VARCHAR(64) NULL DEFAULT NULL COMMENT '用户名',
+	`title_` VARCHAR(128) NULL DEFAULT NULL COMMENT '标题',
+	`content_` VARCHAR(1024) NULL DEFAULT NULL COMMENT '内容',
+	`resource_` VARCHAR(5) NULL DEFAULT NULL COMMENT '来源',
+	`enable_` TINYINT(1) NULL DEFAULT NULL COMMENT '启用状态',
+	`remark_` VARCHAR(100) NULL DEFAULT NULL COMMENT '备注',
+	`create_by` BIGINT(20) NULL DEFAULT NULL,
+	`create_time` DATETIME NULL DEFAULT NULL,
+	`update_by` BIGINT(20) NULL DEFAULT NULL,
+	`update_time` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`id_`)
+)COMMENT='反馈' COLLATE=utf8 ENGINE=InnoDB;
 
 -- 导出  表 ibase4j.sys_menu 结构
 DROP TABLE IF EXISTS `sys_menu`;
@@ -246,7 +264,9 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_`)
+  PRIMARY KEY (`id_`),
+	INDEX `menu_name` (`menu_name`),
+	INDEX `parent_id` (`parent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单';
 
 -- 导出  表 ibase4j.sys_msg 结构
@@ -363,7 +383,8 @@ CREATE TABLE IF NOT EXISTS `sys_param` (
   `create_time` datetime NOT NULL,
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL,
-  PRIMARY KEY (`id_`)
+  PRIMARY KEY (`id_`),
+	INDEX `param_key` (`param_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全局参数表';
 
 -- 正在导出表  ibase4j.sys_param 的数据：~0 rows (大约)
@@ -483,7 +504,8 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `update_time` datetime DEFAULT NULL,
   `update_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id_`),
-  UNIQUE KEY `account` (`account_`)
+  UNIQUE KEY `account` (`account_`),
+	INDEX `enable_` (`enable_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户管理';
 
 -- 正在导出表  ibase4j.sys_user 的数据：~2 rows (大约)
@@ -575,10 +597,10 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   UNIQUE KEY `group_name_task_name_start_time` (`group_name`,`task_name`,`start_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  ibase4j.task_fire_log 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `task_fire_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `task_fire_log` ENABLE KEYS */;
-
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+CREATE TABLE `sys_lock` (
+  `key_` varchar(256) NOT NULL,
+  `name_` varchar(128) NOT NULL,
+  `expire_` datetime NOT NULL,
+  PRIMARY KEY (`key_`),
+  KEY `expire_` (`expire_`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

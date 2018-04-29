@@ -10,7 +10,7 @@
 				        http://www.springframework.org/schema/jms/spring-jms-4.0.xsd">
 	<!-- 定义Queue监听器 -->
 	<jms:listener-container destination-type="queue"
-		container-type="default" connection-factory="connectionFactory"
+		container-type="default" connection-factory="jmsConnectionFactory"
 		acknowledge="auto"><!-- 可写多个监听器 -->
 		<jms:listener destination="iBase4J.emailSender" ref="sendEmailListener" />
 	</jms:listener-container>
