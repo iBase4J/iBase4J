@@ -102,7 +102,7 @@ public class TMemberController extends AppBaseController<TMember, IMemberService
         TMember user = service.queryById(member.getId());
         Assert.notNull(user, "MEMBER", member.getId());
         String filePath = UploadUtil.getUploadDir(request) + avatars.get(0);
-        String avatar = UploadUtil.remove2DFS("member", "M" + member.getId(), filePath).getRemotePath();
+        String avatar = UploadUtil.remove2FDFS("member", filePath).getRemotePath();
         member.setAvatar(avatar);
         Long userId = getCurrUser(request);
         member.setUpdateBy(userId);

@@ -33,6 +33,7 @@ import top.ibase4j.core.util.UploadUtil;
 @MotanService(interfaceClass = IMemberService.class)
 public class MemberServiceImpl extends BaseService<TMember, TMemberMapper> implements IMemberService {
 
+    @Override
     @Transactional
     public TMember update(TMember record) {
         if (record.getId() == null) {
@@ -52,8 +53,7 @@ public class MemberServiceImpl extends BaseService<TMember, TMemberMapper> imple
                     data.put("id", result.getId());
                     data.put("type", "0");
                     String qrcodeFilePath = QrcodeUtil.createQrcode(JSON.toJSONString(data), "/usr/temp");
-                    String path = UploadUtil.remove2DFS("member", result.getId().toString(), qrcodeFilePath)
-                        .getRemotePath();
+                    String path = UploadUtil.remove2FDFS("member", qrcodeFilePath).getRemotePath();
                     if (DataUtil.isNotEmpty(path)) {
                         result.setQrCode(path);
                         result = super.update(result);
@@ -64,6 +64,7 @@ public class MemberServiceImpl extends BaseService<TMember, TMemberMapper> imple
         return result;
     }
 
+    @Override
     public Member getBaseInfo(Long id) {
         TMember member = super.queryById(id);
         Member result = null;
@@ -73,6 +74,7 @@ public class MemberServiceImpl extends BaseService<TMember, TMemberMapper> imple
         return result;
     }
 
+    @Override
     public TMember getInfo(Long id) {
         TMember member = super.queryById(id);
         if (member != null) {
@@ -82,6 +84,7 @@ public class MemberServiceImpl extends BaseService<TMember, TMemberMapper> imple
         return member;
     }
 
+    @Override
     public Object updataphone(Map<String, Object> map) {
         TMember member1 = new TMember();
         member1.setIdCard((String)map.get("idCard"));
@@ -96,6 +99,7 @@ public class MemberServiceImpl extends BaseService<TMember, TMemberMapper> imple
         }
     }
 
+    @Override
     public Object authentication(Map<String, Object> map) {// 实名认证
         TMember MEMBER = new TMember();
         MEMBER.setId(Long.parseLong((String)map.get("memberId")));
