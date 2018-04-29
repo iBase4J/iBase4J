@@ -25,6 +25,7 @@
 	</parent>
 
 	<properties>
+		<logs.path>/output/logs</logs.path>
 		<module.name>${project.artifactId}</module.name>
 		<jar.dic>${project.basedir}</jar.dic>
 		<other.jar>ali*.jar</other.jar>
