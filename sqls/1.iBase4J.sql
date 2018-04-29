@@ -86,7 +86,11 @@ CREATE TABLE IF NOT EXISTS `sys_dic` (
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`),
-  UNIQUE KEY `type__code_` (`type_`,`code_`)
+  UNIQUE KEY `type__code_` (`type_`,`code_`),
+	INDEX `parent_type` (`parent_type`),
+	INDEX `type_` (`type_`),
+	INDEX `code_` (`code_`),
+	INDEX `parent_code` (`parent_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典明细表';
 
 -- 正在导出表  ibase4j.sys_dic 的数据：~43 rows (大约)
@@ -211,7 +215,13 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   `create_time` datetime NOT NULL,
   `update_by` bigint(20) DEFAULT NULL,
   `update_time` datetime NOT NULL,
-  PRIMARY KEY (`id_`)
+  PRIMARY KEY (`id_`),
+	INDEX `title_` (`title_`),
+	INDEX `request_uri` (`request_uri`),
+	INDEX `client_host` (`client_host`),
+	INDEX `create_by` (`create_by`),
+	INDEX `create_time` (`create_time`),
+	FULLTEXT INDEX `parameters_` (`parameters_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 正在导出表  ibase4j.sys_event 的数据：~0 rows (大约)
@@ -254,7 +264,9 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_`)
+  PRIMARY KEY (`id_`),
+	INDEX `menu_name` (`menu_name`),
+	INDEX `parent_id` (`parent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单';
 
 -- 导出  表 ibase4j.sys_msg 结构
@@ -371,7 +383,8 @@ CREATE TABLE IF NOT EXISTS `sys_param` (
   `create_time` datetime NOT NULL,
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL,
-  PRIMARY KEY (`id_`)
+  PRIMARY KEY (`id_`),
+	INDEX `param_key` (`param_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全局参数表';
 
 -- 正在导出表  ibase4j.sys_param 的数据：~0 rows (大约)
@@ -491,7 +504,8 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   `update_time` datetime DEFAULT NULL,
   `update_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id_`),
-  UNIQUE KEY `account` (`account_`)
+  UNIQUE KEY `account` (`account_`),
+	INDEX `enable_` (`enable_`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户管理';
 
 -- 正在导出表  ibase4j.sys_user 的数据：~2 rows (大约)
