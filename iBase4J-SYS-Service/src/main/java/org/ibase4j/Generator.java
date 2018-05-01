@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 /**
  * 代码生成 注意：不生成service接口 注意：不生成service接口 注意：不生成service接口
- * 
+ *
  * @author ShenHuaJie
  */
 public class Generator {
@@ -34,10 +34,6 @@ public class Generator {
         gc.setBaseColumnList(false);// XML columList
         gc.setOpen(false);
         gc.setAuthor("ShenHuaJie");
-        // 自定义文件命名，注意 %s 会自动填充表实体属性！
-        // gc.setMapperName("%sDao");
-        // gc.setXmlName("%sDao");
-        gc.setServiceImplName("%sService");
         mpg.setGlobalConfig(gc);
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
@@ -65,7 +61,7 @@ public class Generator {
         // 自定义 service 实现类父类
         strategy.setSuperServiceImplClass("top.ibase4j.core.base.BaseService");
         // 自定义 controller 父类
-        strategy.setSuperControllerClass("top.ibase4j.core.base.provider.BaseController");
+        strategy.setSuperControllerClass("top.ibase4j.core.base.BaseController");
         // 【实体】是否生成字段常量（默认 false）
         // public static final String ID = "test_id";
         // strategy.setEntityColumnConstant(true);
@@ -76,11 +72,10 @@ public class Generator {
         mpg.setStrategy(strategy);
         // 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
         InjectionConfig cfg = new InjectionConfig() {
+            @Override
             public void initMap() {
                 Map<String, Object> map = new HashMap<String, Object>();
-                map.put("providerClass", "IBizProvider");
-                map.put("providerClassPackage", "org.xshop.provider.IBizProvider");
-                //map.put("rpcService", false);
+                map.put("rpcService", false);
                 this.setMap(map);
             }
         };
@@ -90,9 +85,9 @@ public class Generator {
         pc.setParent("org.ibase4j");
         pc.setEntity("model");
         pc.setMapper("mapper");
-        pc.setXml("mapper.xml");
-        pc.setService("service.i");
-        pc.setServiceImpl("service");
+        pc.setXml("mapper");
+        pc.setService("service");
+        pc.setServiceImpl("service.impl");
         pc.setController("web");
         mpg.setPackageInfo(pc);
         // 放置自己项目的 src/main/resources/template 目录下, 默认名称一下可以不配置，也可以自定义模板名称
@@ -101,7 +96,7 @@ public class Generator {
         tc.setMapper("tpl/mapper.java.vm");
         tc.setXml("tpl/mapper.xml.vm");
         tc.setService("tpl/iservice.java.vm");
-        tc.setServiceImpl("tpl/service.java.vm");
+        tc.setServiceImpl("tpl/serviceImpl.java.vm");
         tc.setController("tpl/controller.java.vm");
         mpg.setTemplate(tc);
         // 执行生成
