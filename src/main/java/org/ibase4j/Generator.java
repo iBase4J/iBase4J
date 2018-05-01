@@ -14,15 +14,13 @@ import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 /**
- * 代码生成
+ * 代码生成 注意：不生成service接口 注意：不生成service接口 注意：不生成service接口
+ *
  * @author ShenHuaJie
  */
 public class Generator {
     /**
-     * 测试 run 执行
-     * <p>
-     * 配置方法查看 {@link ConfigGenerator}
-     * </p>
+     * 测试 run 执行 注意：不生成service接口 注意：不生成service接口 注意：不生成service接口
      */
     public static void main(String[] args) {
         AutoGenerator mpg = new AutoGenerator();
@@ -31,8 +29,8 @@ public class Generator {
         gc.setOutputDir("D://");
         gc.setFileOverride(true);
         gc.setActiveRecord(false);
-        gc.setEnableCache(false);// XML 二级缓存
-        gc.setBaseResultMap(true);// XML ResultMap
+        gc.setEnableCache(true);// XML 二级缓存
+        gc.setBaseResultMap(false);// XML ResultMap
         gc.setBaseColumnList(false);// XML columList
         gc.setOpen(false);
         gc.setAuthor("ShenHuaJie");
@@ -43,14 +41,15 @@ public class Generator {
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("buzhidao");
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/ibase4j?characterEncoding=utf8&serverTimezone=PRC");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/ibase4j?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false");
         mpg.setDataSource(dsc);
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
+        //strategy.setTablePrefix("t_");// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        // strategy.setInclude(new String[] { "user" }); // 需要生成的表
-        // strategy.setExclude(new String[]{""}); // 排除生成的表
-        // 自定义 model 父类
+        //strategy.setInclude(new String[]{"t_accusation"}); // 需要生成的表
+        // strategy.setExclude(new String[]{"test"}); // 排除生成的表
+        // 自定义实体父类
         strategy.setSuperEntityClass("top.ibase4j.core.base.BaseModel");
         // 自定义实体，公共字段
         strategy.setSuperEntityColumns(
@@ -62,20 +61,15 @@ public class Generator {
         // 自定义 service 实现类父类
         strategy.setSuperServiceImplClass("top.ibase4j.core.base.BaseService");
         // 自定义 controller 父类
-        strategy.setSuperControllerClass("org.iteachs.web.AbstractController");
-
+        strategy.setSuperControllerClass("top.ibase4j.core.base.BaseController");
+        // 【实体】是否生成字段常量（默认 false）
+        // public static final String ID = "test_id";
+        // strategy.setEntityColumnConstant(true);
+        // 【实体】是否为构建者模型（默认 false）
+        // public User setName(String name) {this.name = name; return this;}
+        // strategy.setEntityBuliderModel(true);
         strategy.setLogicDeleteFieldName("enable");
         mpg.setStrategy(strategy);
-        // 包配置
-        PackageConfig pc = new PackageConfig();
-        pc.setParent("org.ibase4j");
-        pc.setEntity("model.biz");
-        pc.setMapper("mapper.biz");
-        pc.setXml("mapper.xml.biz");
-        pc.setService("service.biz");
-        pc.setServiceImpl("service.biz.impl");
-        pc.setController("web.biz");
-        mpg.setPackageInfo(pc);
         // 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
         InjectionConfig cfg = new InjectionConfig() {
             @Override
@@ -86,7 +80,16 @@ public class Generator {
             }
         };
         mpg.setCfg(cfg);
-        // 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/template 下面内容修改，
+        // 包配置
+        PackageConfig pc = new PackageConfig();
+        pc.setParent("org.ibase4j");
+        pc.setEntity("model");
+        pc.setMapper("mapper");
+        pc.setXml("mapper");
+        pc.setService("service");
+        pc.setServiceImpl("service.impl");
+        pc.setController("web");
+        mpg.setPackageInfo(pc);
         // 放置自己项目的 src/main/resources/template 目录下, 默认名称一下可以不配置，也可以自定义模板名称
         TemplateConfig tc = new TemplateConfig();
         tc.setEntity("tpl/entity.java.vm");
