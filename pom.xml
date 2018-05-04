@@ -80,6 +80,8 @@
 		<session.cookie.secure>false</session.cookie.secure>
 		<jdbc.host>127.0.0.1</jdbc.host>
 		<jdbc.password>68NKG7n1mN8rErEfbag2qM==</jdbc.password>
+		<fdfs.host>http://127.0.0.1/</fdfs.host>
+		<fdfs.trackerList>127.0.0.1:22122</fdfs.trackerList>
 	</properties>
 
 	<!-- @TODO -->
@@ -93,6 +95,8 @@
 				<fastDFS.host>127.0.0.1</fastDFS.host>
 				<jdbc.host>127.0.0.1</jdbc.host>
 				<jdbc.password>68NKG7n1mN8rErEfbag2qM==</jdbc.password>
+				<fdfs.host>http://127.0.0.1/</fdfs.host>
+				<fdfs.trackerList>127.0.0.1:22122</fdfs.trackerList>
 			</properties>
 		</profile>
 		<profile>
@@ -105,6 +109,8 @@
 				<session.cookie.secure>true</session.cookie.secure>
 				<jdbc.host>127.0.0.1</jdbc.host>
 				<jdbc.password>68NKG7n1mN8rErEfbag2qM==</jdbc.password>
+				<fdfs.host>http://127.0.0.1/</fdfs.host>
+				<fdfs.trackerList>127.0.0.1:22122</fdfs.trackerList>
 			</properties>
 		</profile>
 	</profiles>
@@ -122,12 +128,7 @@
 		</repository>
 	</repositories>
 
-	<dependencies><!--FastDFS -->
-		<dependency>
-			<groupId>com.luhuiguo</groupId>
-			<artifactId>fastdfs-spring-boot-starter</artifactId>
-			<version>0.2.0</version>
-		</dependency>
+	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -223,15 +224,14 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
 		<!-- 缓存 -->
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-		</dependency>
-		<!-- 切面 -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 		<!-- alibaba工具包 -->
 		<dependency>
@@ -400,6 +400,18 @@
 			<groupId>com.belerweb</groupId>
 			<artifactId>pinyin4j</artifactId>
 			<version>${pinyin4j.version}</version>
+		</dependency>
+		<!--FastDFS -->
+		<dependency>
+			<groupId>com.luhuiguo</groupId>
+			<artifactId>fastdfs-client</artifactId>
+			<version>0.4.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
