@@ -75,6 +75,8 @@
 		<session.cookie.secure>false</session.cookie.secure>
 		<jdbc.host>127.0.0.1</jdbc.host>
 		<jdbc.password>68NKG7n1mN8rErEfbag2qM==</jdbc.password>
+		<fdfs.host>http://127.0.0.1/</fdfs.host>
+		<fdfs.trackerList>127.0.0.1:22122</fdfs.trackerList>
 	</properties>
 
 	<repositories>
@@ -388,6 +390,8 @@
 				<session.cookie.secure>false</session.cookie.secure>
 				<jdbc.host>127.0.0.1</jdbc.host>
 				<jdbc.password>68NKG7n1mN8rErEfbag2qM==</jdbc.password>
+				<fdfs.host>http://127.0.0.1/</fdfs.host>
+				<fdfs.trackerList>127.0.0.1:22122</fdfs.trackerList>
 			</properties>
 			<build>
 				<resources>
