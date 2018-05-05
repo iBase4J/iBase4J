@@ -36,6 +36,7 @@
 	<!-- <import resource="spring/redisson.xml" /> -->
 	<import resource="spring/mybatis.xml"/>
 	<import resource="spring/dataSource.xml"/>
-	<bean id="redisConnectFactory" factory-bean="jedisConfig"
-		factory-method="redisConnectFactory" c:pool-config-ref="jedisPoolConfig" />
+	<bean id="redisLockHelper" factory-bean="redisConfig"
+		factory-method="redisLockHelper"
+		c:redis-connection-factory-ref="redisConnectionFactory" />
 </beans>

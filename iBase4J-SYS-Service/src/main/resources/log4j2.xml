@@ -39,7 +39,9 @@
 	</appenders>
 
 	<loggers>
+		<logger name="io.netty" level="info" />
 		<logger name="org.slf4j" level="info" />
+		<logger name="io.lettuce" level="info" />
 		<logger name="springfox" level="error" />
 		<logger name="io.swagger" level="info" />
 		<logger name="org.quartz" level="warn" />

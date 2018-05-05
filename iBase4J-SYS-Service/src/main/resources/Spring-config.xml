@@ -37,6 +37,7 @@
 	<import resource="spring/mybatis.xml"/>
 	<!-- <import resource="spring/mq-listener.xml"/>
 	<import resource="spring/mq-sender.xml"/> -->
-	<bean id="redisConnectFactory" factory-bean="jedisConfig"
-		factory-method="redisConnectFactory" c:pool-config-ref="jedisPoolConfig" />
+	<bean id="redisLockHelper" factory-bean="redisConfig"
+		factory-method="redisLockHelper"
+		c:redis-connection-factory-ref="redisConnectionFactory" />
 </beans>

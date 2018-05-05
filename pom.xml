@@ -53,7 +53,7 @@
 		<jxl.version>2.6.12</jxl.version>
 		<xfire.version>1.2.6</xfire.version>
 		<jsch.version>0.1.54</jsch.version>
-		<jedis.version>2.9.0</jedis.version>
+		<lettuce.version>5.0.3.RELEASE</lettuce.version>
 		<zxing.version>3.3.1</zxing.version>
 		<jackson.version>2.9.3</jackson.version>
 		<zookeeper.version>3.4.11</zookeeper.version>
@@ -196,9 +196,9 @@
 		</dependency>
 		<!-- 缓存 -->
 		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>${jedis.version}</version>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
+			<version>${lettuce.version}</version>
 		</dependency>
 		<!-- <dependency> <groupId>org.redisson</groupId> <artifactId>redisson</artifactId> 
 			<version>${redisson.version}</version> </dependency> -->

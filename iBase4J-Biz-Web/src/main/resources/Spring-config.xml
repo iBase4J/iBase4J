@@ -26,8 +26,9 @@
 	<import resource="spring/motan.xml" />
 	<import resource="refer/motan.xml" />
 	<import resource="spring/redis.xml" />
-	<bean id="redisConnectFactory" factory-bean="jedisConfig" factory-method="redisConnectFactory"
-		c:pool-config-ref="jedisPoolConfig" />
+	<bean id="redisLockHelper" factory-bean="redisConfig"
+		factory-method="redisLockHelper"
+		c:redis-connection-factory-ref="redisConnectionFactory" />
 	<!-- <import resource="spring/redisson.xml" /> -->
 	<!-- 权限管理,作为APP服务端时不引用 -->
 	<!-- <import resource="spring/shiro.xml" /> -->
