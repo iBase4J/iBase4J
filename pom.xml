@@ -31,7 +31,7 @@
 		<other.jar>ali*.jar</other.jar>
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.3.0</ibase4j.version>
+		<ibase4j.version>3.3.1</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data-redis.version>2.0.5.RELEASE</spring-data-redis.version>
@@ -58,7 +58,6 @@
 		<jxl.version>2.6.12</jxl.version>
 		<xfire.version>1.2.6</xfire.version>
 		<jsch.version>0.1.54</jsch.version>
-		<jedis.version>2.9.0</jedis.version>
 		<zxing.version>3.3.1</zxing.version>
 		<jackson.version>2.9.3</jackson.version>
 		<zookeeper.version>3.4.11</zookeeper.version>
@@ -196,6 +195,10 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+		</dependency>
 		<!-- spring核心包 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -230,8 +233,8 @@
 		</dependency>
 		<!-- 缓存 -->
 		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
 		</dependency>
 		<!-- alibaba工具包 -->
 		<dependency>
@@ -255,7 +258,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>

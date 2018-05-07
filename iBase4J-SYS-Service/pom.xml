@@ -25,13 +25,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>alipay-sdk-java</artifactId>
-			<version>java20171012102412</version>
-			<scope>system</scope>
-			<systemPath>${jar.dic}/libs/alipay-sdk-java20171012102412.jar</systemPath>
-		</dependency>
-		<dependency>
 			<groupId>com.aliyuncs</groupId>
 			<artifactId>core</artifactId>
 			<version>3.3.1</version>
