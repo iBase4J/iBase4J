@@ -40,6 +40,7 @@ public class SysEmailServiceImpl extends BaseService<SysEmail, SysEmailMapper> i
         } else {
             SysEmailConfig emailConfig = emailConfigs.get(0);
             email.setHost(emailConfig.getSmtpHost());
+            email.setPort(emailConfig.getSmtpPort());
             email.setName(emailConfig.getSenderName());
             email.setFrom(emailConfig.getSenderName() + "," + emailConfig.getSenderAccount());
             email.setPassword(emailConfig.getSenderPassword());

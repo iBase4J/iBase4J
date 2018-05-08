@@ -20,22 +20,26 @@ public class SysEmailConfig extends BaseModel {
     /**
      * SMTP服务器
      */
-    @TableField(value="smtp_host")
+    @TableField(value = "smtp_host")
     private String smtpHost;
+    /** SMTP服务器端口
+     */
+    @TableField(value = "smtp_port")
+    private String smtpPort;
     /**
      * 名称
      */
-    @TableField(value="sender_name")
+    @TableField(value = "sender_name")
     private String senderName;
     /**
      * 发邮件邮箱账号
      */
-    @TableField(value="sender_account")
+    @TableField(value = "sender_account")
     private String senderAccount;
     /**
      * 发邮件邮箱密码
      */
-    @TableField(value="sender_password")
+    @TableField(value = "sender_password")
     private String senderPassword;
     /**
      * 发送邮箱鉴权
@@ -49,6 +53,14 @@ public class SysEmailConfig extends BaseModel {
 
     public void setSmtpHost(String smtpHost) {
         this.smtpHost = smtpHost;
+    }
+
+    public String getSmtpPort() {
+        return smtpPort;
+    }
+
+    public void setSmtpPort(String smtpPort) {
+        this.smtpPort = smtpPort;
     }
 
     public String getSenderName() {
