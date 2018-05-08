@@ -125,6 +125,11 @@
 			<artifactId>swagger-annotations</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
+		<!--  -->		
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+		</dependency>
 		<!-- 二维码 -->
 		<!-- <dependency>
 			<groupId>com.google.zxing</groupId>
