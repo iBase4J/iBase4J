@@ -46,6 +46,11 @@ public class SysEmailConfig extends BaseModel {
      */
     @TableField(value = "sender_password_auth")
     private String senderPasswordAuth;
+    /**
+     * 发送邮箱方式
+     */
+    @TableField(value = "is_ssl")
+    private Boolean isSSL;
 
     public String getSmtpHost() {
         return smtpHost;
@@ -93,5 +98,13 @@ public class SysEmailConfig extends BaseModel {
 
     public void setSenderPasswordAuth(String senderPasswordAuth) {
         this.senderPasswordAuth = senderPasswordAuth;
+    }
+
+    public Boolean getIsSSL() {
+        return isSSL;
+    }
+
+    public void setIsSSL(Boolean isSSL) {
+        this.isSSL = isSSL;
     }
 }
