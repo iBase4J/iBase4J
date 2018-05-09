@@ -44,7 +44,10 @@ public class SysEmailServiceImpl extends BaseService<SysEmail, SysEmailMapper> i
             email.setName(emailConfig.getSenderName());
             email.setFrom(emailConfig.getSenderName() + "," + emailConfig.getSenderAccount());
             email.setPassword(emailConfig.getSenderPassword());
-            email.setKey(emailConfig.getSenderPasswordAuth());
+            email.setUserKey(emailConfig.getSenderPasswordAuth());
+            if (emailConfig.getIsSSL() != null) {
+                email.setSSL(emailConfig.getIsSSL());
+            }
         }
         EmailUtil.sendEmail(email);
         update(record);
