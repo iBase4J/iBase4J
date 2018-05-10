@@ -51,11 +51,11 @@
 			<version>${shiro.version}</version>
 		</dependency>
 		<!-- JSTL标签类 -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
-		</dependency> -->
+		</dependency>
 		<!-- excel -->
 		<!-- <dependency>
 			<groupId>net.sourceforge.jexcelapi</groupId>
