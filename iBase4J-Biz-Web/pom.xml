@@ -42,11 +42,16 @@
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 		<!-- JSTL标签类 -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
-		</dependency> -->
+		</dependency>
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>2.1.0</version>
+		</dependency>
 		<!-- excel -->
 		<!-- <dependency>
 			<groupId>net.sourceforge.jexcelapi</groupId>
