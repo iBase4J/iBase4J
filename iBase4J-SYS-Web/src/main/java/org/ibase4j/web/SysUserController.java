@@ -126,7 +126,7 @@ public class SysUserController extends BaseController<SysUser, ISysUserService> 
             param.setId(getCurrUser());
             for (int i = 0; i < fileNames.size(); i++) {
                 String filePath = UploadUtil.getUploadDir(request) + fileNames.get(i);
-                String avatar = UploadUtil.remove2FDFS("sysUser", filePath).getRemotePath();
+                String avatar = UploadUtil.remove2FDFS(filePath).getRemotePath();
                 param.setAvatar(avatar);
             }
             modelMap.put("data", param);

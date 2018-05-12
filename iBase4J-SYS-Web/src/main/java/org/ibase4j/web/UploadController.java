@@ -86,7 +86,7 @@ public class UploadController extends AbstractController {
             List<String> resultList = InstanceUtil.newArrayList();
             for (int i = 0; i < fileNames.size(); i++) {
                 String filePath = UploadUtil.getUploadDir(request) + fileNames.get(i);
-                String file = UploadUtil.remove2FDFS("file", filePath).getRemotePath();
+                String file = UploadUtil.remove2FDFS(filePath).getRemotePath();
                 resultList.add(file);
             }
             modelMap.put("fileNames", resultList);
@@ -107,7 +107,7 @@ public class UploadController extends AbstractController {
             List<String> resultList = InstanceUtil.newArrayList();
             for (int i = 0; i < fileNames.size(); i++) {
                 String filePath = UploadUtil.getUploadDir(request) + fileNames.get(i);
-                String file = UploadUtil.remove2FDFS("image", filePath).getRemotePath();
+                String file = UploadUtil.remove2FDFS(filePath).getRemotePath();
                 resultList.add(file);
             }
             modelMap.put("fileNames", resultList);
@@ -128,7 +128,7 @@ public class UploadController extends AbstractController {
             List<String> resultList = InstanceUtil.newArrayList();
             for (int i = 0; i < fileNames.size(); i++) {
                 String filePath = UploadUtil.getUploadDir(request) + fileNames.get(i);
-                String file = UploadUtil.remove2FDFS("image", filePath).getRemotePath();
+                String file = UploadUtil.remove2FDFS(filePath).getRemotePath();
                 resultList.add(file);
             }
             modelMap.put("fileNames", resultList);
