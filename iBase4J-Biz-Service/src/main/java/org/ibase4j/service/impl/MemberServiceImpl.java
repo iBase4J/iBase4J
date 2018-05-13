@@ -53,7 +53,7 @@ public class MemberServiceImpl extends BaseService<TMember, TMemberMapper> imple
                     data.put("id", result.getId());
                     data.put("type", "0");
                     String qrcodeFilePath = QrcodeUtil.createQrcode(JSON.toJSONString(data), "/usr/temp");
-                    String path = UploadUtil.remove2FDFS("member", qrcodeFilePath).getRemotePath();
+                    String path = UploadUtil.remove2FDFS(qrcodeFilePath).getRemotePath();
                     if (DataUtil.isNotEmpty(path)) {
                         result.setQrCode(path);
                         result = super.update(result);
