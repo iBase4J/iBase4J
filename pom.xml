@@ -125,13 +125,13 @@
 			</exclusions>
 		</dependency>
 		<!-- -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>alipay-sdk-java</artifactId>
 			<version>java20171012102412</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/alipay-sdk-java20171012102412.jar</systemPath>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>com.aliyuncs</groupId>
 			<artifactId>core</artifactId>

@@ -1,7 +1,6 @@
 package org.ibase4j.core;
 
 import org.ibase4j.service.sys.ISysCacheService;
-import org.ibase4j.service.sys.ISysDicService;
 import org.ibase4j.service.sys.ISysUserService;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationEvent;
@@ -18,7 +17,6 @@ public class ServerListener extends ApplicationReadyListener {
             ConfigurableApplicationContext context = ((ApplicationReadyEvent)event).getApplicationContext();
             context.getBean(ISysCacheService.class).flush();
             context.getBean(ISysUserService.class).init();
-            context.getBean(ISysDicService.class).getAllDic();
         }
         super.onApplicationEvent(event);
     }
