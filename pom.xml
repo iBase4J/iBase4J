@@ -71,48 +71,8 @@
 		<swagger.version>1.5.17</swagger.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 		<javassist.version>3.22.0-GA</javassist.version>
-		<!-- 环境配置 -->
-		<redis.host>127.0.0.1</redis.host>
-		<redis.password></redis.password>
-		<zookeeper.address>127.0.0.1:2181</zookeeper.address>
-		<fastDFS.host>127.0.0.1</fastDFS.host>
-		<session.cookie.secure>false</session.cookie.secure>
-		<jdbc.host>127.0.0.1</jdbc.host>
-		<jdbc.password>68NKG7n1mN8rErEfbag2qM==</jdbc.password>
-		<fdfs.host>http://127.0.0.1/</fdfs.host>
-		<fdfs.trackerList>127.0.0.1:22122</fdfs.trackerList>
 	</properties>
 
-	<!-- @TODO -->
-	<profiles>
-		<profile>
-			<id>test</id>
-			<properties>
-				<redis.host>127.0.0.1</redis.host>
-				<redis.password></redis.password>
-				<zookeeper.address>127.0.0.1:2181</zookeeper.address>
-				<fastDFS.host>127.0.0.1</fastDFS.host>
-				<jdbc.host>127.0.0.1</jdbc.host>
-				<jdbc.password>68NKG7n1mN8rErEfbag2qM==</jdbc.password>
-				<fdfs.host>http://127.0.0.1/</fdfs.host>
-				<fdfs.trackerList>127.0.0.1:22122</fdfs.trackerList>
-			</properties>
-		</profile>
-		<profile>
-			<id>product</id>
-			<properties>
-				<redis.host>127.0.0.1</redis.host>
-				<redis.password></redis.password>
-				<zookeeper.address>127.0.0.1:2181</zookeeper.address>
-				<fastDFS.host>127.0.0.1</fastDFS.host>
-				<session.cookie.secure>true</session.cookie.secure>
-				<jdbc.host>127.0.0.1</jdbc.host>
-				<jdbc.password>68NKG7n1mN8rErEfbag2qM==</jdbc.password>
-				<fdfs.host>http://127.0.0.1/</fdfs.host>
-				<fdfs.trackerList>127.0.0.1:22122</fdfs.trackerList>
-			</properties>
-		</profile>
-	</profiles>
 	<repositories>
 		<repository>
 			<id>spring-snapshots</id>

@@ -600,7 +600,9 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
 CREATE TABLE `sys_lock` (
   `key_` varchar(256) NOT NULL,
   `name_` varchar(128) NOT NULL,
-  `expire_` datetime NOT NULL,
+  `expire_` int(6) NOT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`key_`),
-  KEY `expire_` (`expire_`)
+  INDEX `expire_` (`expire_`),
+  INDEX `create_time` (`create_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
