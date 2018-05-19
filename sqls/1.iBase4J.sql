@@ -600,7 +600,7 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
 CREATE TABLE `sys_lock` (
   `key_` varchar(256) NOT NULL,
   `name_` varchar(128) NOT NULL,
-  `expire_` int(6) NOT NULL,
+  `expire_second` int(6) NOT NULL,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`key_`),
   INDEX `expire_` (`expire_`),
