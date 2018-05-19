@@ -26,45 +26,46 @@
 		<module.name>${project.artifactId}</module.name>
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.3.1</ibase4j.version>
+		<ibase4j.version>3.3.2</ibase4j.version>
+		<spring-boot.version>2.0.2.RELEASE</spring-boot.version>
 		<!-- spring版本号 -->
-		<spring.version>5.0.2.RELEASE</spring.version>
-		<spring-boot.version>2.0.0.RELEASE</spring-boot.version>
-		<spring-data-redis.version>2.0.5.RELEASE</spring-data-redis.version>
+		<spring.version>5.0.6.RELEASE</spring.version>
+		<spring-data-redis.version>2.0.7.RELEASE</spring-data-redis.version>
 		<!-- 数据库 -->
-		<mysql.version>6.0.6</mysql.version>
+		<mysql.version>8.0.11</mysql.version>
 		<sharding-jdbc.version>1.4.1</sharding-jdbc.version>
 		<!-- mybatis版本号 -->
-		<mybatis.version>3.4.5</mybatis.version>
+		<mybatis.version>3.4.6</mybatis.version>
 		<mybatis-spring.version>1.3.1</mybatis-spring.version>
-		<mybatis-plus.version>2.1.9</mybatis-plus.version>
+		<mybatis-plus.version>2.3</mybatis-plus.version>
 		<!-- log4j日志文件管理包版本 -->
 		<slf4j.version>1.7.25</slf4j.version>
-		<log4j.version>2.9.1</log4j.version>
+		<log4j.version>2.11.0</log4j.version>
 		<!-- -->
-		<druid.version>1.1.6</druid.version>
-		<dubbo.version>2.5.8</dubbo.version>
-		<fastjson.version>1.2.44</fastjson.version>
-		<motan.version>1.1.0</motan.version>
+		<druid.version>1.1.9</druid.version>
+		<dubbo.version>2.6.1</dubbo.version>
+		<fastjson.version>1.2.47</fastjson.version>
+		<motan.version>1.1.1</motan.version>
 		<!-- -->
-		<mail.version>1.6.0</mail.version>
+		<lettuce.version>5.0.4.RELEASE</lettuce.version>
+		<okhttp.version>3.10.0</okhttp.version>
+		<mail.version>1.6.1</mail.version>
 		<redisson.version>3.5.5</redisson.version>
 		<poi.version>3.17</poi.version>
 		<jxl.version>2.6.12</jxl.version>
 		<xfire.version>1.2.6</xfire.version>
 		<jsch.version>0.1.54</jsch.version>
-		<lettuce.version>5.0.3.RELEASE</lettuce.version>
-		<zxing.version>3.3.1</zxing.version>
-		<jackson.version>2.9.3</jackson.version>
-		<zookeeper.version>3.4.11</zookeeper.version>
+		<zxing.version>3.3.2</zxing.version>
+		<jackson.version>2.9.5</jackson.version>
+		<zookeeper.version>3.4.12</zookeeper.version>
 		<shiro.version>1.4.0</shiro.version>
 		<quartz.version>2.3.0</quartz.version>
-		<aspectj.version>1.8.13</aspectj.version>
+		<aspectj.version>1.9.1</aspectj.version>
 		<pinyin4j.version>2.5.1</pinyin4j.version>
 		<activemq.version>5.13.3</activemq.version>
 		<jsqlparser.version>0.9.5</jsqlparser.version>
 		<springfox.version>2.6.1</springfox.version>
-		<swagger.version>1.5.17</swagger.version>
+		<swagger.version>1.5.18</swagger.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 		<javassist.version>3.22.0-GA</javassist.version>
 		<!-- 配置 -->
