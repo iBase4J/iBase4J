@@ -71,7 +71,25 @@
 		<swagger.version>1.5.17</swagger.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 		<javassist.version>3.22.0-GA</javassist.version>
+		<!-- 环境配置 -->
+		<spring.profiles.active>dev</spring.profiles.active>
 	</properties>
+
+	<!-- @TODO -->
+	<profiles>
+		<profile>
+			<id>test</id>
+			<properties>
+				<spring.profiles.active>test</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>product</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
 
 	<repositories>
 		<repository>
