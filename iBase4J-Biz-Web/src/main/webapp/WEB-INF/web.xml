@@ -30,19 +30,19 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter>
+		<filter-name>localeFilter</filter-name>
+		<filter-class>top.ibase4j.core.filter.LocaleFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>localeFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
 		<filter-name>csrfFilter</filter-name>
 		<filter-class>top.ibase4j.core.filter.CsrfFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>csrfFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter>
-		<filter-name>xssFilter</filter-name>
-		<filter-class>top.ibase4j.core.filter.XssFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>xssFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<listener>

@@ -12,6 +12,8 @@
 	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
 	<context:component-scan base-package="org.ibase4j.web" />
 	<mvc:annotation-driven />
+	<bean class="top.ibase4j.core.base.AdviceController" />
+	<bean class="top.ibase4j.core.support.context.RequestBodyAspect" />
 	<!-- 拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -21,10 +23,9 @@
 			<mvc:exclude-mapping path="/swagger**" />
 			<mvc:exclude-mapping path="/webjars/**" />
 			<mvc:exclude-mapping path="/configuration/**" />
-			<bean class="top.ibase4j.core.interceptor.LocaleInterceptor">
+			<bean class="top.ibase4j.core.interceptor.EventInterceptor">
 				<property name="nextInterceptor">
 					<array>
-						<bean class="top.ibase4j.core.interceptor.EventInterceptor" />
 						<bean class="top.ibase4j.core.interceptor.MaliciousRequestInterceptor">
 							<property name="minRequestIntervalTime" value="500" />
 							<property name="maxMaliciousTimes" value="0" />

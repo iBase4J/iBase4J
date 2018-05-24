@@ -43,10 +43,9 @@
 			<mvc:exclude-mapping path="/swagger**" />
 			<mvc:exclude-mapping path="/webjars/**" />
 			<mvc:exclude-mapping path="/configuration/**" />
-			<bean class="top.ibase4j.core.interceptor.LocaleInterceptor">
+			<bean class="top.ibase4j.core.interceptor.EventInterceptor">
 				<property name="nextInterceptor">
 					<array>
-						<bean class="top.ibase4j.core.interceptor.EventInterceptor" />
 						<bean class="top.ibase4j.core.interceptor.MaliciousRequestInterceptor">
 							<property name="minRequestIntervalTime" value="500" />
 							<property name="maxMaliciousTimes" value="0" />
@@ -66,6 +65,8 @@
 		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		<property name="securityManager" ref="securityManager" />
 	</bean>
+	<bean class="top.ibase4j.core.base.AdviceController" />
+	<bean class="top.ibase4j.core.support.context.RequestBodyAspect" />
 	<!-- -->
 	<mvc:view-resolvers>
 		<mvc:jsp cache-views="false" prefix="/WEB-INF/jsp/" suffix=".jsp" />
