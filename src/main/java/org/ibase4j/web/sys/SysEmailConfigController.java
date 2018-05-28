@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysEmailConfig;
-import org.ibase4j.service.sys.ISysEmailConfigService;
+import org.ibase4j.service.sys.SysEmailConfigService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,7 @@ import top.ibase4j.core.util.SecurityUtil;
 @RestController
 @Api(value = "邮件配置管理", description = "邮件配置管理")
 @RequestMapping(value = "emailConfig")
-public class SysEmailConfigController extends BaseController<SysEmailConfig, ISysEmailConfigService> {
+public class SysEmailConfigController extends BaseController<SysEmailConfig, SysEmailConfigService> {
     @ApiOperation(value = "查询邮件配置")
     @RequiresPermissions("sys.email.config.read")
     @RequestMapping(value = "/read/list", method = RequestMethod.PUT)

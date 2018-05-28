@@ -7,14 +7,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.mapper.sys.SysRoleMapper;
 import org.ibase4j.model.sys.SysDept;
 import org.ibase4j.model.sys.SysRole;
-import org.ibase4j.service.sys.ISysAuthorizeService;
-import org.ibase4j.service.sys.ISysDeptService;
-import org.ibase4j.service.sys.ISysRoleService;
+import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysDeptService;
+import org.ibase4j.service.sys.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.support.Pagination;
 
 /**
@@ -23,11 +23,11 @@ import top.ibase4j.core.support.Pagination;
  */
 @Service
 @CacheConfig(cacheNames = "sysRole")
-public class SysRoleServiceImpl extends BaseService<SysRole, SysRoleMapper> implements ISysRoleService {
+public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleMapper> implements SysRoleService {
     @Autowired
-    private ISysDeptService sysDeptService;
+    private SysDeptService sysDeptService;
     @Autowired
-    private ISysAuthorizeService sysAuthorizeService;
+    private SysAuthorizeService sysAuthorizeService;
 
     @Override
     public SysRole queryById(Long id) {

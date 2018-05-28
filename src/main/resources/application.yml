@@ -1,7 +1,7 @@
 # Tomcat
 server:
     name: iBase4J
-    port: 8099
+    port: 8088
     tomcat:
         max-threads: 1000
         min-spare-threads: 30
@@ -9,7 +9,7 @@ server:
 spring:
     # 环境 dev|test|prod
     profiles:
-        active: dev
+        active: ${spring.profiles.active}
     # jackson时间格式化
     jackson:
         time-zone: GMT+8

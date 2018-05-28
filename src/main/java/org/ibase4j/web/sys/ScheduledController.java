@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.ibase4j.web.sys;
 
@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.ibase4j.service.sys.ISchedulerService;
+import org.ibase4j.service.sys.SchedulerService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +27,7 @@ import top.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
 
 /**
  * 内存调度管理
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年4月2日 下午4:20:10
  */
@@ -36,7 +36,7 @@ import top.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
 @RequestMapping(value = "/scheduled")
 public class ScheduledController extends AbstractController {
     @Resource
-    private ISchedulerService schedulerService;
+    private SchedulerService schedulerService;
 
     @PostMapping
     @ApiOperation(value = "新增任务")

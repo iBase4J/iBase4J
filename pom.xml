@@ -20,7 +20,7 @@
 		<module.name>${project.artifactId}</module.name>
 		<!-- -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.3.2</ibase4j.version>
+		<ibase4j.version>3.4.0</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data-redis.version>2.0.5.RELEASE</spring-data-redis.version>
@@ -61,7 +61,25 @@
 		<swagger.version>1.5.17</swagger.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 		<javassist.version>3.22.0-GA</javassist.version>
+		<!-- 环境配置 -->
+		<spring.profiles.active>dev</spring.profiles.active>
 	</properties>
+
+	<!-- @TODO -->
+	<profiles>
+		<profile>
+			<id>test</id>
+			<properties>
+				<spring.profiles.active>test</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>product</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
 
 	<repositories>
 		<repository>

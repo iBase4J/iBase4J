@@ -4,14 +4,14 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.service.sys.ISysCacheService;
+import org.ibase4j.service.sys.SysCacheService;
 import org.springframework.stereotype.Service;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.util.CacheUtil;
 
 @Service
-public class SysCacheServiceImpl implements ISysCacheService {
+public class SysCacheServiceImpl implements SysCacheService {
     Logger logger = LogManager.getLogger();
 
     // 清缓存

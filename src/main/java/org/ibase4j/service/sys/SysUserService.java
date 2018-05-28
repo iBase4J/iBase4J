@@ -2,7 +2,7 @@ package org.ibase4j.service.sys;
 
 import org.ibase4j.model.sys.SysUser;
 
-import top.ibase4j.core.base.IBaseService;
+import top.ibase4j.core.base.BaseService;
 import top.ibase4j.core.support.login.ThirdPartyUser;
 
 /**
@@ -11,16 +11,16 @@ import top.ibase4j.core.support.login.ThirdPartyUser;
  * @author ShenHuaJie
  * @version 2016-08-27 22:39:42
  */
-public interface ISysUserService extends IBaseService<SysUser> {
+public interface SysUserService extends BaseService<SysUser> {
 
     /** 查询第三方帐号用户Id */
-    public Long queryUserIdByThirdParty(ThirdPartyUser param);
+    Long queryUserIdByThirdParty(ThirdPartyUser param);
 
     /** 保存第三方帐号 */
-    public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser);
+    SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser);
 
     /**
      * 加载所有用户信息
      */
-    public void init();
+    void init();
 }

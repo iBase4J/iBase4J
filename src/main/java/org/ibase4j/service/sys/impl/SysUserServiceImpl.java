@@ -10,17 +10,17 @@ import org.ibase4j.mapper.sys.SysUserThirdpartyMapper;
 import org.ibase4j.model.sys.SysDept;
 import org.ibase4j.model.sys.SysUser;
 import org.ibase4j.model.sys.SysUserThirdparty;
-import org.ibase4j.service.sys.ISysAuthorizeService;
-import org.ibase4j.service.sys.ISysDeptService;
-import org.ibase4j.service.sys.ISysDicService;
-import org.ibase4j.service.sys.ISysUserService;
+import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysDeptService;
+import org.ibase4j.service.sys.SysDicService;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.exception.BusinessException;
 import top.ibase4j.core.support.Pagination;
 import top.ibase4j.core.support.login.ThirdPartyUser;
@@ -36,15 +36,15 @@ import top.ibase4j.core.util.SecurityUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysUser")
-public class SysUserServiceImpl extends BaseService<SysUser, SysUserMapper> implements ISysUserService {
+public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> implements SysUserService {
     @Autowired
     private SysUserThirdpartyMapper thirdpartyMapper;
     @Autowired
-    private ISysDicService sysDicService;
+    private SysDicService sysDicService;
     @Autowired
-    private ISysDeptService sysDeptService;
+    private SysDeptService sysDeptService;
     @Autowired
-    private ISysAuthorizeService sysAuthorizeService;
+    private SysAuthorizeService sysAuthorizeService;
 
     @Override
     @Transactional

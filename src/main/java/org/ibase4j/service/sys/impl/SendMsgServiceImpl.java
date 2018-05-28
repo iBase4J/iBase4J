@@ -10,10 +10,10 @@ import org.apache.logging.log4j.Logger;
 import org.ibase4j.model.sys.SendMsg;
 import org.ibase4j.model.sys.SysMsg;
 import org.ibase4j.model.sys.SysMsgConfig;
-import org.ibase4j.service.sys.ISendMsgService;
-import org.ibase4j.service.sys.ISysMsgConfigService;
-import org.ibase4j.service.sys.ISysMsgService;
-import org.ibase4j.service.sys.ISysParamService;
+import org.ibase4j.service.sys.SendMsgService;
+import org.ibase4j.service.sys.SysMsgConfigService;
+import org.ibase4j.service.sys.SysMsgService;
+import org.ibase4j.service.sys.SysParamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,14 +41,14 @@ import top.ibase4j.core.util.InstanceUtil;
  * @since 2017年3月16日 下午2:38:44
  */
 @Service
-public class SendMsgServiceImpl implements ISendMsgService {
+public class SendMsgServiceImpl implements SendMsgService {
     protected Logger logger = LogManager.getLogger(getClass());
     @Autowired
-    private ISysParamService paramService;
+    private SysParamService paramService;
     @Autowired
-    private ISysMsgService msgService;
+    private SysMsgService msgService;
     @Autowired
-    private ISysMsgConfigService msgConfigService;
+    private SysMsgConfigService msgConfigService;
 
     @Override
     public void sendMsg(SendMsg sendMsg) {

@@ -6,13 +6,13 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.mapper.sys.SysDicMapper;
 import org.ibase4j.model.sys.SysDic;
-import org.ibase4j.service.sys.ISysDicService;
+import org.ibase4j.service.sys.SysDicService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import top.ibase4j.core.Constants;
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.InstanceUtil;
 
 /**
@@ -21,7 +21,7 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysDic")
-public class SysDicServiceImpl extends BaseService<SysDic, SysDicMapper> implements ISysDicService {
+public class SysDicServiceImpl extends BaseServiceImpl<SysDic, SysDicMapper> implements SysDicService {
 
     @Override
     @Cacheable(value = Constants.CACHE_NAMESPACE + "sysDics")

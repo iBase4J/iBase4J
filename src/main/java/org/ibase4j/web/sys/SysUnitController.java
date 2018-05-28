@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysUnit;
-import org.ibase4j.service.sys.ISysUnitService;
+import org.ibase4j.service.sys.SysUnitService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.BaseController;
 @RestController
 @Api(value = "单位管理", description = "单位管理")
 @RequestMapping(value = "unit")
-public class SysUnitController extends BaseController<SysUnit, ISysUnitService> {
+public class SysUnitController extends BaseController<SysUnit, SysUnitService> {
 	@ApiOperation(value = "查询单位")
 	@RequiresPermissions("sys.base.unit.read")
 	@PutMapping(value = "/read/list")

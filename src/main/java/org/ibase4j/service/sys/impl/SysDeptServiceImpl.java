@@ -2,11 +2,11 @@ package org.ibase4j.service.sys.impl;
 
 import org.ibase4j.mapper.sys.SysDeptMapper;
 import org.ibase4j.model.sys.SysDept;
-import org.ibase4j.service.sys.ISysDeptService;
+import org.ibase4j.service.sys.SysDeptService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 
 /**
  * @author ShenHuaJie
@@ -14,7 +14,7 @@ import top.ibase4j.core.base.BaseService;
  */
 @Service
 @CacheConfig(cacheNames = "sysDept")
-public class SysDeptServiceImpl extends BaseService<SysDept, SysDeptMapper> implements ISysDeptService {
+public class SysDeptServiceImpl extends BaseServiceImpl<SysDept, SysDeptMapper> implements SysDeptService {
     @Override
     public SysDept queryById(Long id) {
         SysDept sysDept = super.queryById(id);

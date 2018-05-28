@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.service.sys.ISysAuthorizeService;
-import org.ibase4j.service.sys.ISysUserService;
+import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,9 +40,9 @@ import top.ibase4j.core.util.UploadUtil;
 @RestController
 @Api(value = "用户管理", description = "用户管理")
 @RequestMapping(value = "/user")
-public class SysUserController extends BaseController<SysUser, ISysUserService> {
+public class SysUserController extends BaseController<SysUser, SysUserService> {
     @Resource
-    private ISysAuthorizeService sysAuthorizeService;
+    private SysAuthorizeService sysAuthorizeService;
 
     @Override
     @PostMapping

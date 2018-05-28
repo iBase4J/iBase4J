@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysMenu;
-import org.ibase4j.service.sys.ISysMenuService;
+import org.ibase4j.service.sys.SysMenuService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +27,7 @@ import top.ibase4j.core.base.BaseController;
 @RestController
 @Api(value = "菜单管理", description = "菜单管理")
 @RequestMapping(value = "menu")
-public class SysMenuController extends BaseController<SysMenu, ISysMenuService> {
+public class SysMenuController extends BaseController<SysMenu, SysMenuService> {
     @ApiOperation(value = "查询菜单")
     @PutMapping(value = "/read/page")
     @RequiresPermissions("sys.base.menu.read")

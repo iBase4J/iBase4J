@@ -6,14 +6,14 @@ import java.util.Map;
 
 import org.ibase4j.mapper.sys.SysSessionMapper;
 import org.ibase4j.model.sys.SysSession;
-import org.ibase4j.service.sys.ISysSessionService;
+import org.ibase4j.service.sys.SysSessionService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import top.ibase4j.core.Constants;
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.InstanceUtil;
 
@@ -23,7 +23,7 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysSession")
-public class SysSessionServiceImpl extends BaseService<SysSession, SysSessionMapper> implements ISysSessionService {
+public class SysSessionServiceImpl extends BaseServiceImpl<SysSession, SysSessionMapper> implements SysSessionService {
 
     @Override
     @CachePut

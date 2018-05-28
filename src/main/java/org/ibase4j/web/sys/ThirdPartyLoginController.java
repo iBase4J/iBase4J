@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.service.sys.ISysUserService;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +33,7 @@ import top.ibase4j.core.support.login.ThirdPartyUser;
  */
 @Controller
 @Api(value = "第三方登录接口", description = "第三方登录接口")
-public class ThirdPartyLoginController extends BaseController<SysUser, ISysUserService> {
+public class ThirdPartyLoginController extends BaseController<SysUser, SysUserService> {
     @RequestMapping("/sns")
     @ApiOperation(value = "用户登录", httpMethod = "GET")
     public void thirdLogin(HttpServletRequest request, HttpServletResponse response, @RequestParam("t") String type) {

@@ -4,21 +4,21 @@ import java.util.Map;
 
 import org.ibase4j.mapper.sys.SysEventMapper;
 import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.service.sys.ISysEventService;
-import org.ibase4j.service.sys.ISysUserService;
+import org.ibase4j.service.sys.SysEventService;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.support.Pagination;
 import top.ibase4j.model.SysEvent;
 
 @Service
 @CacheConfig(cacheNames = "sysEvent")
-public class SysEventServiceImpl extends BaseService<SysEvent, SysEventMapper> implements ISysEventService {
+public class SysEventServiceImpl extends BaseServiceImpl<SysEvent, SysEventMapper> implements SysEventService {
     @Autowired
-    private ISysUserService sysUserService;
+    private SysUserService sysUserService;
 
     @Override
     public Pagination<SysEvent> query(Map<String, Object> params) {

@@ -6,13 +6,13 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.mapper.sys.SysParamMapper;
 import org.ibase4j.model.sys.SysParam;
-import org.ibase4j.service.sys.ISysParamService;
+import org.ibase4j.service.sys.SysParamService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import top.ibase4j.core.Constants;
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.support.context.ApplicationContextHolder;
 import top.ibase4j.core.util.InstanceUtil;
 
@@ -22,7 +22,7 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysParam")
-public class SysParamServiceImpl extends BaseService<SysParam, SysParamMapper> implements ISysParamService {
+public class SysParamServiceImpl extends BaseServiceImpl<SysParam, SysParamMapper> implements SysParamService {
     @Override
     @Cacheable(value = Constants.CACHE_NAMESPACE + "sysParams")
     public Map<String, String> getAllParams() {
@@ -64,7 +64,7 @@ public class SysParamServiceImpl extends BaseService<SysParam, SysParamMapper> i
 
     @Override
     public String getValue(String key, String defaultValue) {
-        String value = ApplicationContextHolder.getBean(ISysParamService.class).getAllParams().get(key);
+        String value = ApplicationContextHolder.getBean(SysParamService.class).getAllParams().get(key);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
         }

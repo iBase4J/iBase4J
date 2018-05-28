@@ -12,9 +12,9 @@ import org.ibase4j.model.sys.SysMenu;
 import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;
 import org.ibase4j.model.sys.SysUserRole;
-import org.ibase4j.service.sys.ISysAuthorizeService;
-import org.ibase4j.service.sys.ISysDicService;
-import org.ibase4j.service.sys.ISysMenuService;
+import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysDicService;
+import org.ibase4j.service.sys.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -34,7 +34,7 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysAuthorize")
-public class SysAuthorizeServiceImpl implements ISysAuthorizeService {
+public class SysAuthorizeServiceImpl implements SysAuthorizeService {
     @Autowired
     private SysUserMenuMapper sysUserMenuMapper;
     @Autowired
@@ -44,9 +44,9 @@ public class SysAuthorizeServiceImpl implements ISysAuthorizeService {
     @Autowired
     private SysAuthorizeMapper sysAuthorizeMapper;
     @Autowired
-    private ISysMenuService sysMenuService;
+    private SysMenuService sysMenuService;
     @Autowired
-    private ISysDicService sysDicService;
+    private SysDicService sysDicService;
 
     @Override
     public List<String> queryMenuIdsByUserId(Long userId) {

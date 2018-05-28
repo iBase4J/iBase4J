@@ -21,13 +21,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.model.sys.SysSession;
 import org.ibase4j.model.sys.SysUser;
-import org.ibase4j.service.sys.ISysAuthorizeService;
-import org.ibase4j.service.sys.ISysSessionService;
-import org.ibase4j.service.sys.ISysUserService;
+import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysSessionService;
+import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import top.ibase4j.core.support.shiro.IRealm;
+import top.ibase4j.core.support.shiro.Realm;
 import top.ibase4j.core.support.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.ShiroUtil;
 
@@ -38,14 +38,14 @@ import top.ibase4j.core.util.ShiroUtil;
  * @version 2016年5月20日 下午3:44:45
  */
 @Component
-public class Realm extends AuthorizingRealm implements IRealm {
+public class AuthorizeRealm extends AuthorizingRealm implements Realm {
     private final Logger logger = LogManager.getLogger();
     @Autowired
-    private ISysAuthorizeService sysAuthorizeService;
+    private SysAuthorizeService sysAuthorizeService;
     @Autowired
-    private ISysUserService sysUserService;
+    private SysUserService sysUserService;
     @Autowired
-    private ISysSessionService sysSessionService;
+    private SysSessionService sysSessionService;
     private RedisSessionDAO sessionDAO;
 
     @Override

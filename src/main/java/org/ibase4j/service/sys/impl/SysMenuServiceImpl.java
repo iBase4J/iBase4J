@@ -7,13 +7,13 @@ import java.util.Map;
 import org.ibase4j.mapper.sys.SysMenuMapper;
 import org.ibase4j.model.sys.SysDic;
 import org.ibase4j.model.sys.SysMenu;
-import org.ibase4j.service.sys.ISysDicService;
-import org.ibase4j.service.sys.ISysMenuService;
+import org.ibase4j.service.sys.SysDicService;
+import org.ibase4j.service.sys.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.InstanceUtil;
 
 /**
@@ -22,9 +22,9 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @Service
 @CacheConfig(cacheNames = "sysMenu")
-public class SysMenuServiceImpl extends BaseService<SysMenu, SysMenuMapper> implements ISysMenuService {
+public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> implements SysMenuService {
     @Autowired
-    private ISysDicService sysDicService;
+    private SysDicService sysDicService;
 
     @Override
     public SysMenu queryById(Long id) {

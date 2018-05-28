@@ -10,8 +10,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.model.sys.SysUserMenu;
 import org.ibase4j.model.sys.SysUserRole;
-import org.ibase4j.service.sys.ISysAuthorizeService;
-import org.ibase4j.service.sys.ISysCacheService;
+import org.ibase4j.service.sys.SysAuthorizeService;
+import org.ibase4j.service.sys.SysCacheService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,9 +35,9 @@ import top.ibase4j.core.exception.IllegalParameterException;
 @Api(value = "权限管理", description = "权限管理")
 public class SysAuthorizeController extends AbstractController {
     @Resource
-    private ISysAuthorizeService authorizeService;
+    private SysAuthorizeService authorizeService;
     @Resource
-    private ISysCacheService sysCacheService;
+    private SysCacheService sysCacheService;
 
     @ApiOperation(value = "获取用户菜单编号")
     @PutMapping(value = "user/read/menu")

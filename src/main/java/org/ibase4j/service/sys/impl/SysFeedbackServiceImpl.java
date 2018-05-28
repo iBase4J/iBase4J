@@ -2,11 +2,11 @@ package org.ibase4j.service.sys.impl;
 
 import org.ibase4j.mapper.sys.SysFeedbackMapper;
 import org.ibase4j.model.sys.SysFeedback;
-import org.ibase4j.service.sys.ISysFeedbackService;
+import org.ibase4j.service.sys.SysFeedbackService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 
 /**
  * <p>
@@ -18,6 +18,7 @@ import top.ibase4j.core.base.BaseService;
  */
 @Service
 @CacheConfig(cacheNames = "SysFeedback")
-public class SysFeedbackServiceImpl extends BaseService<SysFeedback, SysFeedbackMapper> implements ISysFeedbackService {
+public class SysFeedbackServiceImpl extends BaseServiceImpl<SysFeedback, SysFeedbackMapper>
+    implements SysFeedbackService {
 
 }

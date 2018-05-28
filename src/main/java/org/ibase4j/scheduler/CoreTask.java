@@ -2,7 +2,7 @@ package org.ibase4j.scheduler;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ibase4j.service.sys.ISysSessionService;
+import org.ibase4j.service.sys.SysSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class CoreTask {
     private final Logger logger = LogManager.getLogger();
     @Autowired
-    private ISysSessionService sessionService;
+    private SysSessionService sessionService;
 
     /** 定时清除会话信息 */
     @Scheduled(cron = "0 0/5 * * * *")
