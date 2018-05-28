@@ -7,28 +7,26 @@ import java.util.Map;
 import org.ibase4j.mapper.SysMenuMapper;
 import org.ibase4j.model.SysDic;
 import org.ibase4j.model.SysMenu;
-import org.ibase4j.service.ISysDicService;
-import org.ibase4j.service.ISysMenuService;
+import org.ibase4j.service.SysDicService;
+import org.ibase4j.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.stereotype.Service;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
-
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.InstanceUtil;
 
 /**
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
+@Service
 @CacheConfig(cacheNames = "sysMenu")
-@Service(interfaceClass = ISysMenuService.class)
-@MotanService(interfaceClass = ISysMenuService.class)
-public class SysMenuServiceImpl extends BaseService<SysMenu, SysMenuMapper> implements ISysMenuService {
+public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> implements SysMenuService {
     @Autowired
-    private ISysDicService sysDicService;
+    private SysDicService sysDicService;
 
+    @Override
     public SysMenu queryById(Long id) {
         SysMenu sysMenu = super.queryById(id);
         if (sysMenu != null) {
@@ -44,6 +42,7 @@ public class SysMenuServiceImpl extends BaseService<SysMenu, SysMenuMapper> impl
         return sysMenu;
     }
 
+    @Override
     public List<SysMenu> queryList(Map<String, Object> params) {
         params.put("orderBy", "parent_id,sort_no");
         List<SysMenu> pageInfo = super.queryList(params);
@@ -83,6 +82,7 @@ public class SysMenuServiceImpl extends BaseService<SysMenu, SysMenuMapper> impl
         return resultList;
     }
 
+    @Override
     public List<Object> queryTreeList(Map<String, Object> params) {
         params.put("orderBy", "parent_id,sort_no");
         List<SysMenu> pageInfo = super.queryList(params);
@@ -140,6 +140,7 @@ public class SysMenuServiceImpl extends BaseService<SysMenu, SysMenuMapper> impl
         return resultList;
     }
 
+    @Override
     public List<Map<String, String>> getPermissions() {
         return mapper.getPermissions();
     }

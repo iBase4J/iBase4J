@@ -2,21 +2,18 @@ package org.ibase4j.service.impl;
 
 import org.ibase4j.mapper.SysNewsMapper;
 import org.ibase4j.model.SysNews;
-import org.ibase4j.service.ISysNewsService;
+import org.ibase4j.service.SysNewsService;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.stereotype.Service;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
-
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 
 /**
  * @author ShenHuaJie
  *
  */
+@Service
 @CacheConfig(cacheNames = "sysNews")
-@Service(interfaceClass = ISysNewsService.class)
-@MotanService(interfaceClass = ISysNewsService.class)
-public class SysNewsServiceImpl extends BaseService<SysNews, SysNewsMapper> implements ISysNewsService {
+public class SysNewsServiceImpl extends BaseServiceImpl<SysNews, SysNewsMapper> implements SysNewsService {
 
 }

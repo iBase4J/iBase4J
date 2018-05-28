@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysArticle;
-import org.ibase4j.service.ISysArticleService;
+import org.ibase4j.service.SysArticleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.BaseController;
  */
 @Controller
 @RequestMapping("/article")
-public class SysArticleController extends BaseController<SysArticle, ISysArticleService> {
+public class SysArticleController extends BaseController<SysArticle, SysArticleService> {
     @ApiOperation(value = "查询文章")
     @RequiresPermissions("cms.article.read")
     @PutMapping(value = "/read/list")

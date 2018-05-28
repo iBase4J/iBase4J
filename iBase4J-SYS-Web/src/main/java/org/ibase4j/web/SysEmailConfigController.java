@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysEmailConfig;
-import org.ibase4j.service.ISysEmailConfigService;
+import org.ibase4j.service.SysEmailConfigService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,15 +19,14 @@ import top.ibase4j.core.util.SecurityUtil;
 
 /**
  * 邮件配置管理控制类
- *
+ * 
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:13:31
  */
 @RestController
 @Api(value = "邮件配置管理", description = "邮件配置管理")
 @RequestMapping(value = "emailConfig")
-public class SysEmailConfigController extends BaseController<SysEmailConfig, ISysEmailConfigService> {
-    @Override
+public class SysEmailConfigController extends BaseController<SysEmailConfig, SysEmailConfigService> {
     @ApiOperation(value = "查询邮件配置")
     @RequiresPermissions("sys.email.config.read")
     @RequestMapping(value = "/read/list", method = RequestMethod.PUT)
@@ -42,7 +41,6 @@ public class SysEmailConfigController extends BaseController<SysEmailConfig, ISy
         return super.get(modelMap, param);
     }
 
-    @Override
     @ApiOperation(value = "修改邮件配置")
     @RequiresPermissions("sys.email.config.update")
     @RequestMapping(method = RequestMethod.POST)
@@ -50,15 +48,14 @@ public class SysEmailConfigController extends BaseController<SysEmailConfig, ISy
         if (param.getId() != null) {
             SysEmailConfig result = service.queryById(param.getId());
             if (param.getSenderPassword() != null && !param.getSenderPassword().equals(result.getSenderPassword())) {
-                param.setSenderPassword(SecurityUtil.encryptDes(param.getSenderPassword()));
+                param.setSenderPassword(SecurityUtil.encryptMd5(param.getSenderPassword()));
             }
         } else if (DataUtil.isNotEmpty(param.getSenderPassword())) {
-            param.setSenderPassword(SecurityUtil.encryptDes(param.getSenderPassword()));
+            param.setSenderPassword(SecurityUtil.encryptMd5(param.getSenderPassword()));
         }
         return super.update(modelMap, param);
     }
 
-    @Override
     @ApiOperation(value = "删除邮件配置")
     @RequiresPermissions("sys.email.config.delete")
     @RequestMapping(method = RequestMethod.DELETE)

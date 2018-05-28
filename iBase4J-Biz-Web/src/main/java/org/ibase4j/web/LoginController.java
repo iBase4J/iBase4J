@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.net.util.Base64;
 import org.ibase4j.model.TMember;
-import org.ibase4j.service.IMemberService;
+import org.ibase4j.service.MemberService;
 import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,14 +37,14 @@ import top.ibase4j.model.Login;
 
 /**
  * 用户登录
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:11:21
  */
 @RestController
 @RequestMapping("/app/")
 @Api(value = "APP登录注册接口", description = "APP-登录注册接口")
-public class LoginController extends AppBaseController<TMember, IMemberService> {
+public class LoginController extends AppBaseController<TMember, MemberService> {
     @PostMapping("secret.api")
     @ApiOperation(value = "APP获取私钥", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParam(name = "UUID", defaultValue = "1", paramType = "header")

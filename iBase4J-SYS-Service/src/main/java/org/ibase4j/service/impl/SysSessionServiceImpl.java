@@ -6,16 +6,14 @@ import java.util.Map;
 
 import org.ibase4j.mapper.SysSessionMapper;
 import org.ibase4j.model.SysSession;
-import org.ibase4j.service.ISysSessionService;
+import org.ibase4j.service.SysSessionService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
-
 import top.ibase4j.core.Constants;
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.InstanceUtil;
 
@@ -23,17 +21,17 @@ import top.ibase4j.core.util.InstanceUtil;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
+@Service
 @CacheConfig(cacheNames = "sysSession")
-@Service(interfaceClass = ISysSessionService.class)
-@MotanService(interfaceClass = ISysSessionService.class)
-public class SysSessionServiceImpl extends BaseService<SysSession, SysSessionMapper> implements ISysSessionService {
+public class SysSessionServiceImpl extends BaseServiceImpl<SysSession, SysSessionMapper> implements SysSessionService {
 
+    @Override
     @CachePut
     @Transactional
     public SysSession update(SysSession record) {
         if (record != null && record.getId() == null) {
             record.setUpdateTime(new Date());
-            Long id = ((SysSessionMapper)mapper).queryBySessionId(record.getSessionId());
+            Long id = mapper.queryBySessionId(record.getSessionId());
             if (id != null) {
                 mapper.updateById(record);
             } else {
@@ -47,20 +45,23 @@ public class SysSessionServiceImpl extends BaseService<SysSession, SysSessionMap
     }
 
     // 系统触发,由系统自动管理缓存
+    @Override
     public void deleteBySessionId(final SysSession sysSession) {
         if (sysSession != null) {
-            ((SysSessionMapper)mapper).deleteBySessionId(sysSession.getSessionId());
+            mapper.deleteBySessionId(sysSession.getSessionId());
         }
     }
 
+    @Override
     public List<String> querySessionIdByAccount(SysSession sysSession) {
         if (sysSession != null) {
-            return ((SysSessionMapper)mapper).querySessionIdByAccount(sysSession.getAccount());
+            return mapper.querySessionIdByAccount(sysSession.getAccount());
         }
         return null;
     }
 
     //
+    @Override
     public void cleanExpiredSessions() {
         Map<String, Object> columnMap = InstanceUtil.newHashMap();
         List<SysSession> sessions = queryList(columnMap);

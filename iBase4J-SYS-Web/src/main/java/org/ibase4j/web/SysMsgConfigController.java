@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysMsgConfig;
-import org.ibase4j.service.ISysMsgConfigService;
+import org.ibase4j.service.SysMsgConfigService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.BaseController;
  */
 @Controller
 @RequestMapping("/msgConfig")
-public class SysMsgConfigController extends BaseController<SysMsgConfig, ISysMsgConfigService> {
+public class SysMsgConfigController extends BaseController<SysMsgConfig, SysMsgConfigService> {
     @ApiOperation(value = "查询")
     @RequiresPermissions("msg.config.read")
     @PutMapping(value = "/read/list")

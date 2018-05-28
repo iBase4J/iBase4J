@@ -23,42 +23,44 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.ibase4j.model.SysSession;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.service.ISysAuthorizeService;
-import org.ibase4j.service.ISysSessionService;
-import org.ibase4j.service.ISysUserService;
+import org.ibase4j.service.SysAuthorizeService;
+import org.ibase4j.service.SysSessionService;
+import org.ibase4j.service.SysUserService;
 import org.springframework.stereotype.Component;
 
-import top.ibase4j.core.support.shiro.IRealm;
+import top.ibase4j.core.support.shiro.Realm;
 import top.ibase4j.core.support.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.SecurityUtil;
 import top.ibase4j.core.util.ShiroUtil;
 
 /**
  * 权限检查类
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:44:45
  */
 @Component
-public class Realm extends AuthorizingRealm implements IRealm {
+public class AuthorizeRealm extends AuthorizingRealm implements Realm {
     private final Logger logger = LogManager.getLogger();
     @Resource
-    private ISysAuthorizeService sysAuthorizeService;
+    private SysAuthorizeService sysAuthorizeService;
     @Resource
-    private ISysUserService sysUserService;
+    private SysUserService sysUserService;
     @Resource
-    private ISysSessionService sysSessionService;
+    private SysSessionService sysSessionService;
 
     private RedisSessionDAO sessionDAO;
 
+    @Override
     public void setSessionDAO(RedisSessionDAO sessionDAO) {
         this.sessionDAO = sessionDAO;
     }
 
     // 权限
+    @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Long userId = (Long)ShiroUtil.getCurrentUser();
+        Long userId = ShiroUtil.getCurrentUser();
         List<?> list = sysAuthorizeService.queryPermissionByUserId(userId);
         for (Object permission : list) {
             if (StringUtils.isNotBlank((String)permission)) {
@@ -72,8 +74,9 @@ public class Realm extends AuthorizingRealm implements IRealm {
     }
 
     // 登录验证
+    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
-        throws AuthenticationException {
+            throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken)authcToken;
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("enable", 1);

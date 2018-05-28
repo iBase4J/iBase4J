@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysNews;
-import org.ibase4j.service.ISysNewsService;
+import org.ibase4j.service.SysNewsService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +26,7 @@ import top.ibase4j.core.base.BaseController;
 @RestController
 @Api(value = "新闻管理", description = "新闻管理")
 @RequestMapping(value = "news")
-public class SysNewsController extends BaseController<SysNews, ISysNewsService> {
+public class SysNewsController extends BaseController<SysNews, SysNewsService> {
 	@ApiOperation(value = "查询新闻")
 	@RequiresPermissions("sys.cms.news.read")
 	@PutMapping(value = "/read/list")

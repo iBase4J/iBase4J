@@ -6,7 +6,7 @@ import java.util.Map;
 import org.ibase4j.bean.Member;
 import org.ibase4j.mapper.TMemberMapper;
 import org.ibase4j.model.TMember;
-import org.ibase4j.service.IMemberService;
+import org.ibase4j.service.MemberService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +14,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.DataUtil;
 import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.QrcodeUtil;
@@ -29,9 +29,9 @@ import top.ibase4j.core.util.UploadUtil;
  * @since 2017-10-12
  */
 @CacheConfig(cacheNames = "member")
-@Service(interfaceClass = IMemberService.class)
-@MotanService(interfaceClass = IMemberService.class)
-public class MemberServiceImpl extends BaseService<TMember, TMemberMapper> implements IMemberService {
+@Service(interfaceClass = MemberService.class)
+@MotanService(interfaceClass = MemberService.class)
+public class MemberServiceImpl extends BaseServiceImpl<TMember, TMemberMapper> implements MemberService {
 
     @Override
     @Transactional

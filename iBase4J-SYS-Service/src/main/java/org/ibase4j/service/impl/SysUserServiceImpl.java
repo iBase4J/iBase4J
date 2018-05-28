@@ -10,19 +10,17 @@ import org.ibase4j.mapper.SysUserThirdpartyMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.model.SysUserThirdparty;
-import org.ibase4j.service.ISysAuthorizeService;
-import org.ibase4j.service.ISysDeptService;
-import org.ibase4j.service.ISysDicService;
-import org.ibase4j.service.ISysUserService;
+import org.ibase4j.service.SysAuthorizeService;
+import org.ibase4j.service.SysDeptService;
+import org.ibase4j.service.SysDicService;
+import org.ibase4j.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
-
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.exception.BusinessException;
 import top.ibase4j.core.support.Pagination;
 import top.ibase4j.core.support.login.ThirdPartyUser;
@@ -32,23 +30,23 @@ import top.ibase4j.core.util.SecurityUtil;
 
 /**
  * SysUser服务实现类
- * 
+ *
  * @author ShenHuaJie
  * @version 2016-08-27 22:39:42
  */
+@Service
 @CacheConfig(cacheNames = "sysUser")
-@Service(interfaceClass = ISysUserService.class)
-@MotanService(interfaceClass = ISysUserService.class)
-public class SysUserServiceImpl extends BaseService<SysUser, SysUserMapper> implements ISysUserService {
+public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> implements SysUserService {
     @Autowired
     private SysUserThirdpartyMapper thirdpartyMapper;
     @Autowired
-    private ISysDicService sysDicService;
+    private SysDicService sysDicService;
     @Autowired
-    private ISysDeptService sysDeptService;
+    private SysDeptService sysDeptService;
     @Autowired
-    private ISysAuthorizeService sysAuthorizeService;
+    private SysAuthorizeService sysAuthorizeService;
 
+    @Override
     @Transactional
     public SysUser update(SysUser record) {
         if (DataUtil.isEmpty(record.getPassword())) {
@@ -66,6 +64,7 @@ public class SysUserServiceImpl extends BaseService<SysUser, SysUserMapper> impl
         return super.update(record);
     }
 
+    @Override
     public SysUser queryById(Long id) {
         SysUser record = super.queryById(id);
         if (record.getDeptId() != null) {
@@ -79,6 +78,7 @@ public class SysUserServiceImpl extends BaseService<SysUser, SysUserMapper> impl
         return record;
     }
 
+    @Override
     public Pagination<SysUser> query(Map<String, Object> params) {
         Map<String, String> userTypeMap = sysDicService.queryDicByType("USERTYPE");
         Pagination<SysUser> pageInfo = super.query(params);
@@ -107,12 +107,14 @@ public class SysUserServiceImpl extends BaseService<SysUser, SysUserMapper> impl
     }
 
     /** 查询第三方帐号用户Id */
+    @Override
     @Cacheable
     public Long queryUserIdByThirdParty(ThirdPartyUser param) {
         return thirdpartyMapper.queryUserIdByThirdParty(param.getProvider(), param.getOpenid());
     }
 
     /** 保存第三方帐号 */
+    @Override
     @Transactional
     public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser) {
         SysUser sysUser = new SysUser();
@@ -135,6 +137,7 @@ public class SysUserServiceImpl extends BaseService<SysUser, SysUserMapper> impl
         return sysUser;
     }
 
+    @Override
     public void init() {
         queryList(InstanceUtil.newHashMap());
     }

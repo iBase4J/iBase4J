@@ -7,31 +7,29 @@ import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.mapper.SysRoleMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysRole;
-import org.ibase4j.service.ISysAuthorizeService;
-import org.ibase4j.service.ISysDeptService;
-import org.ibase4j.service.ISysRoleService;
+import org.ibase4j.service.SysAuthorizeService;
+import org.ibase4j.service.SysDeptService;
+import org.ibase4j.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.stereotype.Service;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
-
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.support.Pagination;
 
 /**
  * @author ShenHuaJie
  * @version 2016年5月31日 上午11:01:33
  */
+@Service
 @CacheConfig(cacheNames = "sysRole")
-@Service(interfaceClass = ISysRoleService.class)
-@MotanService(interfaceClass = ISysRoleService.class)
-public class SysRoleServiceImpl extends BaseService<SysRole, SysRoleMapper> implements ISysRoleService {
+public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleMapper> implements SysRoleService {
     @Autowired
-    private ISysDeptService sysDeptService;
+    private SysDeptService sysDeptService;
     @Autowired
-    private ISysAuthorizeService sysAuthorizeService;
+    private SysAuthorizeService sysAuthorizeService;
 
+    @Override
     public SysRole queryById(Long id) {
         SysRole sysRole = super.queryById(id);
         if (sysRole != null) {
@@ -47,6 +45,7 @@ public class SysRoleServiceImpl extends BaseService<SysRole, SysRoleMapper> impl
         return sysRole;
     }
 
+    @Override
     public Pagination<SysRole> query(Map<String, Object> params) {
         Pagination<SysRole> pageInfo = super.query(params);
         // 权限信息

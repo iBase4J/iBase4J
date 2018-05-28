@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ibase4j.model.SendMsg;
-import org.ibase4j.service.ISendMsgService;
+import org.ibase4j.service.SendMsgService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,7 +30,7 @@ import top.ibase4j.core.util.WebUtil;
 @Api(value = "APP短信接口", description = "APP-短信接口")
 public class SysMsgController extends AbstractController {
     @Resource
-    private ISendMsgService sendMsgService;
+    private SendMsgService sendMsgService;
 
     @PostMapping("msg.api")
     @ApiOperation(value = "发送短信", produces = MediaType.APPLICATION_JSON_VALUE)

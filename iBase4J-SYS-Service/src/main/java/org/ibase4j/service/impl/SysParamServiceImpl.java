@@ -6,15 +6,13 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.mapper.SysParamMapper;
 import org.ibase4j.model.SysParam;
-import org.ibase4j.service.ISysParamService;
+import org.ibase4j.service.SysParamService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
-
-import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
+import org.springframework.stereotype.Service;
 
 import top.ibase4j.core.Constants;
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.support.context.ApplicationContextHolder;
 import top.ibase4j.core.util.InstanceUtil;
 
@@ -22,10 +20,10 @@ import top.ibase4j.core.util.InstanceUtil;
  * @author ShenHuaJie
  * @version 2016年5月31日 上午11:01:33
  */
+@Service
 @CacheConfig(cacheNames = "sysParam")
-@Service(interfaceClass = ISysParamService.class)
-@MotanService(interfaceClass = ISysParamService.class)
-public class SysParamServiceImpl extends BaseService<SysParam, SysParamMapper> implements ISysParamService {
+public class SysParamServiceImpl extends BaseServiceImpl<SysParam, SysParamMapper> implements SysParamService {
+    @Override
     @Cacheable(value = Constants.CACHE_NAMESPACE + "sysParams")
     public Map<String, String> getAllParams() {
         Map<String, Object> params = InstanceUtil.newHashMap();
@@ -40,6 +38,7 @@ public class SysParamServiceImpl extends BaseService<SysParam, SysParamMapper> i
         return resultMap;
     }
 
+    @Override
     @Cacheable(value = Constants.CACHE_NAMESPACE + "sysParamName")
     public String getName(String key) {
         if (StringUtils.isBlank(key)) {
@@ -58,12 +57,14 @@ public class SysParamServiceImpl extends BaseService<SysParam, SysParamMapper> i
         return "";
     }
 
+    @Override
     public String getValue(String key) {
         return getValue(key, "");
     }
 
+    @Override
     public String getValue(String key, String defaultValue) {
-        String value = ApplicationContextHolder.getBean(ISysParamService.class).getAllParams().get(key);
+        String value = ApplicationContextHolder.getBean(SysParamService.class).getAllParams().get(key);
         if (StringUtils.isBlank(value)) {
             return defaultValue;
         }

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysNotice;
-import org.ibase4j.service.ISysNoticeService;
+import org.ibase4j.service.SysNoticeService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ import top.ibase4j.core.base.BaseController;
 @RestController
 @Api(value = "通知管理", description = "通知管理")
 @RequestMapping(value = "notice")
-public class SysNoticeController extends BaseController<SysNotice, ISysNoticeService> {
+public class SysNoticeController extends BaseController<SysNotice, SysNoticeService> {
 	@ApiOperation(value = "查询通知")
 	@RequiresPermissions("cms.notice.read")
 	@RequestMapping(value = "/read/list", method = RequestMethod.PUT)
