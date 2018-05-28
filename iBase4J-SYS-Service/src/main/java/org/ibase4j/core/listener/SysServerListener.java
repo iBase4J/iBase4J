@@ -2,9 +2,8 @@ package org.ibase4j.core.listener;
 
 import javax.servlet.ServletContextEvent;
 
-import org.ibase4j.service.ISysCacheService;
-import org.ibase4j.service.ISysDicService;
-import org.ibase4j.service.ISysUserService;
+import org.ibase4j.service.SysCacheService;
+import org.ibase4j.service.SysUserService;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -20,12 +19,12 @@ import top.ibase4j.core.listener.ServerListener;
 @SuppressWarnings("deprecation")
 public class SysServerListener extends ServerListener {
 
-	public void contextInitialized(ServletContextEvent contextEvent) {
+    @Override
+    public void contextInitialized(ServletContextEvent contextEvent) {
         MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
-		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
-		context.getBean(ISysCacheService.class).flush();
-		context.getBean(ISysUserService.class).init();
-		context.getBean(ISysDicService.class).getAllDic();
-		super.contextInitialized(contextEvent);
-	}
+        WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+        context.getBean(SysCacheService.class).flush();
+        context.getBean(SysUserService.class).init();
+        super.contextInitialized(contextEvent);
+    }
 }

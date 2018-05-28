@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysSession;
-import org.ibase4j.service.ISysSessionService;
+import org.ibase4j.service.SysSessionService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,7 +28,7 @@ import top.ibase4j.core.listener.SessionListener;
 @RestController
 @Api(value = "会话管理", description = "会话管理")
 @RequestMapping(value = "/session")
-public class SysSessionController extends BaseController<SysSession, ISysSessionService> {
+public class SysSessionController extends BaseController<SysSession, SysSessionService> {
     @Resource
 	private SessionListener sessionListener;
 

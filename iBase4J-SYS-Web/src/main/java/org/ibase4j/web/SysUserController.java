@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.service.ISysAuthorizeService;
-import org.ibase4j.service.ISysUserService;
+import org.ibase4j.service.SysAuthorizeService;
+import org.ibase4j.service.SysUserService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,9 +40,9 @@ import top.ibase4j.core.util.UploadUtil;
 @RestController
 @Api(value = "用户管理", description = "用户管理")
 @RequestMapping(value = "/user")
-public class SysUserController extends BaseController<SysUser, ISysUserService> {
+public class SysUserController extends BaseController<SysUser, SysUserService> {
     @Resource
-    private ISysAuthorizeService sysAuthorizeService;
+    private SysAuthorizeService sysAuthorizeService;
 
     @Override
     @PostMapping
@@ -126,7 +126,7 @@ public class SysUserController extends BaseController<SysUser, ISysUserService> 
             param.setId(getCurrUser());
             for (int i = 0; i < fileNames.size(); i++) {
                 String filePath = UploadUtil.getUploadDir(request) + fileNames.get(i);
-                String avatar = UploadUtil.remove2FDFS(filePath).getRemotePath();
+                String avatar = UploadUtil.remove2FDFS("sysUser", filePath).getRemotePath();
                 param.setAvatar(avatar);
             }
             modelMap.put("data", param);

@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.service.ISysUserService;
+import org.ibase4j.service.SysUserService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +34,7 @@ import top.ibase4j.model.Login;
  */
 @RestController
 @Api(value = "登录接口", description = "登录接口")
-public class LoginController extends BaseController<SysUser, ISysUserService> {
+public class LoginController extends BaseController<SysUser, SysUserService> {
 
     // 登录
     @ApiOperation(value = "用户登录")

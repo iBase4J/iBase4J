@@ -5,13 +5,13 @@ import java.util.Map;
 import org.ibase4j.bean.Member;
 import org.ibase4j.model.TMember;
 
-import top.ibase4j.core.base.IBaseService;
+import top.ibase4j.core.base.BaseService;
 
 /**
  * @author ShenHuaJie
  * @since 2018年4月24日 上午10:45:11
  */
-public interface IMemberService extends IBaseService<TMember> {
+public interface MemberService extends BaseService<TMember> {
     public Member getBaseInfo(Long id);
 
     public TMember getInfo(Long id);

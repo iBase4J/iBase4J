@@ -2,13 +2,11 @@ package org.ibase4j.service.impl;
 
 import org.ibase4j.mapper.SysFeedbackMapper;
 import org.ibase4j.model.SysFeedback;
-import org.ibase4j.service.ISysFeedbackService;
+import org.ibase4j.service.SysFeedbackService;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.stereotype.Service;
 
-import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
-
-import top.ibase4j.core.base.BaseService;
+import top.ibase4j.core.base.BaseServiceImpl;
 
 /**
  * <p>
@@ -18,9 +16,9 @@ import top.ibase4j.core.base.BaseService;
  * @author ShenHuaJie
  * @since 2017-03-12
  */
+@Service
 @CacheConfig(cacheNames = "SysFeedback")
-@Service(interfaceClass = ISysFeedbackService.class)
-@MotanService(interfaceClass = ISysFeedbackService.class)
-public class SysFeedbackServiceImpl extends BaseService<SysFeedback, SysFeedbackMapper> implements ISysFeedbackService {
+public class SysFeedbackServiceImpl extends BaseServiceImpl<SysFeedback, SysFeedbackMapper>
+    implements SysFeedbackService {
 
 }

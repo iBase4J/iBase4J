@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ibase4j.model.SysDic;
-import org.ibase4j.service.ISysDicService;
+import org.ibase4j.service.SysDicService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,14 +20,14 @@ import top.ibase4j.core.util.WebUtil;
 
 /**
  * 字典管理
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:14:34
  */
 @Controller
 @Api(value = "字典管理", description = "APP-字典接口")
 @RequestMapping(value = "/app/dic/")
-public class SysDicController extends AppBaseController<SysDic, ISysDicService> {
+public class SysDicController extends AppBaseController<SysDic, SysDicService> {
     @ApiOperation(value = "查询字典项", produces = MediaType.APPLICATION_JSON_VALUE, response = SysDic.class)
     @RequestMapping(value = "query.api", method = {RequestMethod.GET, RequestMethod.POST})
     public Object queryList(HttpServletRequest request, String type) {

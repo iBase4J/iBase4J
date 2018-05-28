@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.bean.Member;
 import org.ibase4j.model.MemberPhoto;
 import org.ibase4j.model.TMember;
-import org.ibase4j.service.IMemberService;
+import org.ibase4j.service.MemberService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -41,7 +41,7 @@ import top.ibase4j.model.Login;
 @Controller
 @RequestMapping("/app/member/")
 @Api(value = "会员管理接口", description = "APP-个人中心-个人信息管理接口")
-public class TMemberController extends AppBaseController<TMember, IMemberService> {
+public class TMemberController extends AppBaseController<TMember, MemberService> {
     @ApiOperation(value = "获取个人基本信息", produces = MediaType.APPLICATION_JSON_VALUE, response = TMember.class)
     @RequestMapping(value = "getUserBaseInfo.api", method = {RequestMethod.GET, RequestMethod.POST})
     public Object getBaseInfo(HttpServletRequest request, String id) {
