@@ -15,8 +15,8 @@ import org.ibase4j.service.SysMsgConfigService;
 import org.ibase4j.service.SysMsgService;
 import org.ibase4j.service.SysParamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
@@ -28,6 +28,7 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.Constants.MSGCHKTYPE;
 import top.ibase4j.core.util.CacheUtil;
@@ -40,7 +41,8 @@ import top.ibase4j.core.util.InstanceUtil;
  * @author ShenHuaJie
  * @since 2017年3月16日 下午2:38:44
  */
-@Service
+@Service(interfaceClass = SendMsgService.class)
+@MotanService(interfaceClass = SendMsgService.class)
 public class SendMsgServiceImpl implements SendMsgService {
     protected Logger logger = LogManager.getLogger(getClass());
     @Autowired

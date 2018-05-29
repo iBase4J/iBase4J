@@ -8,14 +8,17 @@ import org.ibase4j.service.SysEventService;
 import org.ibase4j.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.stereotype.Service;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.support.Pagination;
 import top.ibase4j.model.SysEvent;
 
-@Service
 @CacheConfig(cacheNames = "sysEvent")
+@Service(interfaceClass = SysEventService.class)
+@MotanService(interfaceClass = SysEventService.class)
 public class SysEventServiceImpl extends BaseServiceImpl<SysEvent, SysEventMapper> implements SysEventService {
     @Autowired
     private SysUserService sysUserService;

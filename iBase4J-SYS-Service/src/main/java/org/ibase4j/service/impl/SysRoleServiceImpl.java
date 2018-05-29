@@ -12,7 +12,9 @@ import org.ibase4j.service.SysDeptService;
 import org.ibase4j.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.stereotype.Service;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.support.Pagination;
@@ -21,8 +23,9 @@ import top.ibase4j.core.support.Pagination;
  * @author ShenHuaJie
  * @version 2016年5月31日 上午11:01:33
  */
-@Service
 @CacheConfig(cacheNames = "sysRole")
+@Service(interfaceClass = SysRoleService.class)
+@MotanService(interfaceClass = SysRoleService.class)
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleMapper> implements SysRoleService {
     @Autowired
     private SysDeptService sysDeptService;
