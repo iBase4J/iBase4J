@@ -9,7 +9,9 @@ import org.ibase4j.model.SysParam;
 import org.ibase4j.service.SysParamService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.base.BaseServiceImpl;
@@ -20,8 +22,9 @@ import top.ibase4j.core.util.InstanceUtil;
  * @author ShenHuaJie
  * @version 2016年5月31日 上午11:01:33
  */
-@Service
 @CacheConfig(cacheNames = "sysParam")
+@Service(interfaceClass = SysParamService.class)
+@MotanService(interfaceClass = SysParamService.class)
 public class SysParamServiceImpl extends BaseServiceImpl<SysParam, SysParamMapper> implements SysParamService {
     @Override
     @Cacheable(value = Constants.CACHE_NAMESPACE + "sysParams")

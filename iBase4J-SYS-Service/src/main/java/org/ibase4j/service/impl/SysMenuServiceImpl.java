@@ -11,7 +11,9 @@ import org.ibase4j.service.SysDicService;
 import org.ibase4j.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.stereotype.Service;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.InstanceUtil;
@@ -20,8 +22,9 @@ import top.ibase4j.core.util.InstanceUtil;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-@Service
 @CacheConfig(cacheNames = "sysMenu")
+@Service(interfaceClass = SysMenuService.class)
+@MotanService(interfaceClass = SysMenuService.class)
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> implements SysMenuService {
     @Autowired
     private SysDicService sysDicService;

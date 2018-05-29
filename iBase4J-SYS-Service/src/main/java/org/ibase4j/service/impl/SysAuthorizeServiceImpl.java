@@ -19,11 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.util.InstanceUtil;
@@ -32,8 +33,9 @@ import top.ibase4j.core.util.InstanceUtil;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:19:19
  */
-@Service
 @CacheConfig(cacheNames = "sysAuthorize")
+@Service(interfaceClass = SysAuthorizeService.class)
+@MotanService(interfaceClass = SysAuthorizeService.class)
 public class SysAuthorizeServiceImpl implements SysAuthorizeService {
     @Autowired
     private SysUserMenuMapper sysUserMenuMapper;

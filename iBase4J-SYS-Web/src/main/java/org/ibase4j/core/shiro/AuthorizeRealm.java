@@ -39,7 +39,7 @@ import top.ibase4j.core.util.ShiroUtil;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:44:45
  */
-@Component
+@Component("realm")
 public class AuthorizeRealm extends AuthorizingRealm implements Realm {
     private final Logger logger = LogManager.getLogger();
     @Resource

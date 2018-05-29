@@ -17,8 +17,10 @@ import org.ibase4j.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.dubbo.config.annotation.Service;
+import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.exception.BusinessException;
@@ -34,8 +36,9 @@ import top.ibase4j.core.util.SecurityUtil;
  * @author ShenHuaJie
  * @version 2016-08-27 22:39:42
  */
-@Service
 @CacheConfig(cacheNames = "sysUser")
+@Service(interfaceClass = SysUserService.class)
+@MotanService(interfaceClass = SysUserService.class)
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> implements SysUserService {
     @Autowired
     private SysUserThirdpartyMapper thirdpartyMapper;

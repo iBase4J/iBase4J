@@ -21,10 +21,10 @@ public class SysServerListener extends ServerListener {
 
     @Override
     public void contextInitialized(ServletContextEvent contextEvent) {
-        MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
         WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
         context.getBean(SysCacheService.class).flush();
         context.getBean(SysUserService.class).init();
+        MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
         super.contextInitialized(contextEvent);
     }
 }
