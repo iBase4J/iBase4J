@@ -9,49 +9,49 @@
    		http://api.weibo.com/schema/motan
    		http://api.weibo.com/schema/motan.xsd">
 	<!-- SYS -->
-	<motan:referer id="schedulerService" interface="org.ibase4j.service.ISchedulerService"
+	<motan:referer id="schedulerService" interface="org.ibase4j.service.SchedulerService"
 		check="false" />
-	<motan:referer id="sendMsgService" interface="org.ibase4j.service.ISendMsgService"
+	<motan:referer id="sendMsgService" interface="org.ibase4j.service.SendMsgService"
 		check="false" />
-	<motan:referer id="sysArticleService" interface="org.ibase4j.service.ISysArticleService"
+	<motan:referer id="sysArticleService" interface="org.ibase4j.service.SysArticleService"
 		check="false" />
-	<motan:referer id="sysAuthorizeService" interface="org.ibase4j.service.ISysAuthorizeService"
+	<motan:referer id="sysAuthorizeService" interface="org.ibase4j.service.SysAuthorizeService"
 		check="false" />
-	<motan:referer id="sysCacheService" interface="org.ibase4j.service.ISysCacheService"
+	<motan:referer id="sysCacheService" interface="org.ibase4j.service.SysCacheService"
 		check="false" />
-	<motan:referer id="sysDeptService" interface="org.ibase4j.service.ISysDeptService"
+	<motan:referer id="sysDeptService" interface="org.ibase4j.service.SysDeptService"
 		check="false" />
-	<motan:referer id="sysDicService" interface="org.ibase4j.service.ISysDicService"
+	<motan:referer id="sysDicService" interface="org.ibase4j.service.SysDicService"
 		check="false" />
-	<motan:referer id="sysEmailConfigService" interface="org.ibase4j.service.ISysEmailConfigService"
+	<motan:referer id="sysEmailConfigService" interface="org.ibase4j.service.SysEmailConfigService"
 		check="false" />
-	<motan:referer id="sysEmailService" interface="org.ibase4j.service.ISysEmailService"
+	<motan:referer id="sysEmailService" interface="org.ibase4j.service.SysEmailService"
 		check="false" />
-	<motan:referer id="sysEmailTemplateService" interface="org.ibase4j.service.ISysEmailTemplateService"
+	<motan:referer id="sysEmailTemplateService" interface="org.ibase4j.service.SysEmailTemplateService"
 		check="false" />
-	<motan:referer id="sysEventService" interface="org.ibase4j.service.ISysEventService"
+	<motan:referer id="sysEventService" interface="org.ibase4j.service.SysEventService"
 		check="false" />
-	<motan:referer id="sysFeedbackService" interface="org.ibase4j.service.ISysFeedbackService"
+	<motan:referer id="sysFeedbackService" interface="org.ibase4j.service.SysFeedbackService"
 		check="false" />
-	<motan:referer id="sysMenuService" interface="org.ibase4j.service.ISysMenuService"
+	<motan:referer id="sysMenuService" interface="org.ibase4j.service.SysMenuService"
 		check="false" />
-	<motan:referer id="sysMsgConfigService" interface="org.ibase4j.service.ISysMsgConfigService"
+	<motan:referer id="sysMsgConfigService" interface="org.ibase4j.service.SysMsgConfigService"
 		check="false" />
-	<motan:referer id="sysMsgService" interface="org.ibase4j.service.ISysMsgService"
+	<motan:referer id="sysMsgService" interface="org.ibase4j.service.SysMsgService"
 		check="false" />
-	<motan:referer id="sysNewsService" interface="org.ibase4j.service.ISysNewsService"
+	<motan:referer id="sysNewsService" interface="org.ibase4j.service.SysNewsService"
 		check="false" />
-	<motan:referer id="sysNoticeService" interface="org.ibase4j.service.ISysNoticeService"
+	<motan:referer id="sysNoticeService" interface="org.ibase4j.service.SysNoticeService"
 		check="false" />
-	<motan:referer id="sysParamService" interface="org.ibase4j.service.ISysParamService"
+	<motan:referer id="sysParamService" interface="org.ibase4j.service.SysParamService"
 		check="false" />
-	<motan:referer id="sysRoleService" interface="org.ibase4j.service.ISysRoleService"
+	<motan:referer id="sysRoleService" interface="org.ibase4j.service.SysRoleService"
 		check="false" />
-	<motan:referer id="sysSessionService" interface="org.ibase4j.service.ISysSessionService"
+	<motan:referer id="sysSessionService" interface="org.ibase4j.service.SysSessionService"
 		check="false" />
-	<motan:referer id="sysUnitService" interface="org.ibase4j.service.ISysUnitService"
+	<motan:referer id="sysUnitService" interface="org.ibase4j.service.SysUnitService"
 		check="false" />
-	<motan:referer id="sysUserService" interface="org.ibase4j.service.ISysUserService"
+	<motan:referer id="sysUserService" interface="org.ibase4j.service.SysUserService"
 		check="false" />
 	<!-- Biz -->
 </beans>

@@ -9,51 +9,51 @@
 		http://code.alibabatech.com/schema/dubbo
 		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	<!-- SYS -->
-	<dubbo:reference id="schedulerService" interface="org.ibase4j.service.ISchedulerService"
+	<dubbo:reference id="schedulerService" interface="org.ibase4j.service.SchedulerService"
 		check="false" />
-	<dubbo:reference id="sendMsgService" interface="org.ibase4j.service.ISendMsgService"
+	<dubbo:reference id="sendMsgService" interface="org.ibase4j.service.SendMsgService"
 		check="false" />
-	<dubbo:reference id="sysArticleService" interface="org.ibase4j.service.ISysArticleService"
+	<dubbo:reference id="sysArticleService" interface="org.ibase4j.service.SysArticleService"
 		check="false" />
-	<dubbo:reference id="sysAuthorizeService" interface="org.ibase4j.service.ISysAuthorizeService"
+	<dubbo:reference id="sysAuthorizeService" interface="org.ibase4j.service.SysAuthorizeService"
 		check="false" />
-	<dubbo:reference id="sysCacheService" interface="org.ibase4j.service.ISysCacheService"
+	<dubbo:reference id="sysCacheService" interface="org.ibase4j.service.SysCacheService"
 		check="false" />
-	<dubbo:reference id="sysDeptService" interface="org.ibase4j.service.ISysDeptService"
+	<dubbo:reference id="sysDeptService" interface="org.ibase4j.service.SysDeptService"
 		check="false" />
-	<dubbo:reference id="sysDicService" interface="org.ibase4j.service.ISysDicService"
+	<dubbo:reference id="sysDicService" interface="org.ibase4j.service.SysDicService"
 		check="false" />
-	<dubbo:reference id="sysEmailConfigService" interface="org.ibase4j.service.ISysEmailConfigService"
+	<dubbo:reference id="sysEmailConfigService" interface="org.ibase4j.service.SysEmailConfigService"
 		check="false" />
-	<dubbo:reference id="sysEmailService" interface="org.ibase4j.service.ISysEmailService"
+	<dubbo:reference id="sysEmailService" interface="org.ibase4j.service.SysEmailService"
 		check="false" />
-	<dubbo:reference id="sysEmailTemplateService" interface="org.ibase4j.service.ISysEmailTemplateService"
+	<dubbo:reference id="sysEmailTemplateService" interface="org.ibase4j.service.SysEmailTemplateService"
 		check="false" />
-	<dubbo:reference id="sysEventService" interface="org.ibase4j.service.ISysEventService"
+	<dubbo:reference id="sysEventService" interface="org.ibase4j.service.SysEventService"
 		check="false" />
-	<dubbo:reference id="sysFeedbackService" interface="org.ibase4j.service.ISysFeedbackService"
+	<dubbo:reference id="sysFeedbackService" interface="org.ibase4j.service.SysFeedbackService"
 		check="false" />
-	<dubbo:reference id="sysMenuService" interface="org.ibase4j.service.ISysMenuService"
+	<dubbo:reference id="sysMenuService" interface="org.ibase4j.service.SysMenuService"
 		check="false" />
-	<dubbo:reference id="sysMsgConfigService" interface="org.ibase4j.service.ISysMsgConfigService"
+	<dubbo:reference id="sysMsgConfigService" interface="org.ibase4j.service.SysMsgConfigService"
 		check="false" />
-	<dubbo:reference id="sysMsgService" interface="org.ibase4j.service.ISysMsgService"
+	<dubbo:reference id="sysMsgService" interface="org.ibase4j.service.SysMsgService"
 		check="false" />
-	<dubbo:reference id="sysNewsService" interface="org.ibase4j.service.ISysNewsService"
+	<dubbo:reference id="sysNewsService" interface="org.ibase4j.service.SysNewsService"
 		check="false" />
-	<dubbo:reference id="sysNoticeService" interface="org.ibase4j.service.ISysNoticeService"
+	<dubbo:reference id="sysNoticeService" interface="org.ibase4j.service.SysNoticeService"
 		check="false" />
-	<dubbo:reference id="sysParamService" interface="org.ibase4j.service.ISysParamService"
+	<dubbo:reference id="sysParamService" interface="org.ibase4j.service.SysParamService"
 		check="false" />
-	<dubbo:reference id="sysRoleService" interface="org.ibase4j.service.ISysRoleService"
+	<dubbo:reference id="sysRoleService" interface="org.ibase4j.service.SysRoleService"
 		check="false" />
-	<dubbo:reference id="sysSessionService" interface="org.ibase4j.service.ISysSessionService"
+	<dubbo:reference id="sysSessionService" interface="org.ibase4j.service.SysSessionService"
 		check="false" />
-	<dubbo:reference id="sysUnitService" interface="org.ibase4j.service.ISysUnitService"
+	<dubbo:reference id="sysUnitService" interface="org.ibase4j.service.SysUnitService"
 		check="false" />
-	<dubbo:reference id="sysUserService" interface="org.ibase4j.service.ISysUserService"
+	<dubbo:reference id="sysUserService" interface="org.ibase4j.service.SysUserService"
 		check="false" />
 	<!-- Biz -->
-	<dubbo:reference id="memberService" interface="org.ibase4j.service.IMemberService"
+	<dubbo:reference id="memberService" interface="org.ibase4j.service.MemberService"
 		check="false" />
 </beans>
