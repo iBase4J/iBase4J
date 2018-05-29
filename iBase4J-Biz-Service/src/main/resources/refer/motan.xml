@@ -9,9 +9,9 @@
    		http://api.weibo.com/schema/motan
    		http://api.weibo.com/schema/motan.xsd">
 	<!-- SYS -->
-	<motan:referer id="sysDicService" interface="org.ibase4j.service.ISysDicService"
+	<motan:referer id="sysDicService" interface="org.ibase4j.service.SysDicService"
 		check="false" />
-	<motan:referer id="sysParamService" interface="org.ibase4j.service.ISysParamService"
+	<motan:referer id="sysParamService" interface="org.ibase4j.service.SysParamService"
 		check="false" />
 
 </beans>

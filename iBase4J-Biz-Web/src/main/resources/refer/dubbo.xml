@@ -9,23 +9,23 @@
 		http://code.alibabatech.com/schema/dubbo
 		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	<!-- SYS -->
-	<dubbo:reference id="sendMsgService" interface="org.ibase4j.service.ISendMsgService"
+	<dubbo:reference id="sendMsgService" interface="org.ibase4j.service.SendMsgService"
 		check="false" />
-	<dubbo:reference id="sysArticleService" interface="org.ibase4j.service.ISysArticleService"
+	<dubbo:reference id="sysArticleService" interface="org.ibase4j.service.SysArticleService"
 		check="false" />
-	<dubbo:reference id="sysFeedbackService" interface="org.ibase4j.service.ISysFeedbackService"
+	<dubbo:reference id="sysFeedbackService" interface="org.ibase4j.service.SysFeedbackService"
 		check="false" />
-	<dubbo:reference id="sysDicService" interface="org.ibase4j.service.ISysDicService"
+	<dubbo:reference id="sysDicService" interface="org.ibase4j.service.SysDicService"
 		check="false" />
-	<dubbo:reference id="sysEventService" interface="org.ibase4j.service.ISysEventService"
+	<dubbo:reference id="sysEventService" interface="org.ibase4j.service.SysEventService"
 		check="false" />
-	<dubbo:reference id="sysParamService" interface="org.ibase4j.service.ISysParamService"
+	<dubbo:reference id="sysParamService" interface="org.ibase4j.service.SysParamService"
 		check="false" />
-	<dubbo:reference id="sysMsgService" interface="org.ibase4j.service.ISysMsgService"
+	<dubbo:reference id="sysMsgService" interface="org.ibase4j.service.SysMsgService"
 		check="false" />
-	<dubbo:reference id="sysNewsService" interface="org.ibase4j.service.ISysNewsService"
+	<dubbo:reference id="sysNewsService" interface="org.ibase4j.service.SysNewsService"
 		check="false" />
 	<!--  -->
-	<dubbo:reference id="memberService" interface="org.ibase4j.service.IMemberService"
+	<dubbo:reference id="memberService" interface="org.ibase4j.service.MemberService"
 		check="false" />
 </beans>

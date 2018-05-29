@@ -9,9 +9,9 @@
 		http://code.alibabatech.com/schema/dubbo
 		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	<!-- SYS -->
-	<dubbo:reference id="sysDicService" interface="org.ibase4j.service.ISysDicService"
+	<dubbo:reference id="sysDicService" interface="org.ibase4j.service.SysDicService"
 		check="false" />
-	<dubbo:reference id="sysParamService" interface="org.ibase4j.service.ISysParamService"
+	<dubbo:reference id="sysParamService" interface="org.ibase4j.service.SysParamService"
 		check="false" />
 	<!--  -->
 </beans>
