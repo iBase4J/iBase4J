@@ -25,5 +25,7 @@
 		check="false" />
 	<motan:referer id="sysParamService" interface="org.ibase4j.service.SysParamService"
 		check="false" />
-
+	<!--  -->
+	<motan:referer id="memberService" interface="org.ibase4j.service.MemberService"
+		check="false" />
 </beans>
