@@ -10,17 +10,17 @@
     <!-- 引入属性配置文件 -->
 	<bean class="top.ibase4j.core.support.context.PropertyPlaceholder">
 		<property name="locations">
-			<list>
+			<array>
 				<value>classpath:config/jdbc.properties</value>
 				<value>classpath*:config/system.properties</value>
-			</list>
+			</array>
 		</property>
 		<property name="decryptProperties">
-			<array>
+			<list>
 				<!-- 需要解密的配置 -->
 				<value>druid.reader.password</value>
 				<value>druid.writer.password</value>
-			</array>
+			</list>
 		</property>
 	</bean>
 	<!-- 扫描注解 -->
