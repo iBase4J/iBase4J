@@ -20,7 +20,7 @@
 		<module.name>${project.artifactId}</module.name>
 		<!-- -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.4.1</ibase4j.version>
+		<ibase4j.version>3.4.2</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-data-redis.version>2.0.5.RELEASE</spring-data-redis.version>
