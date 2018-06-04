@@ -21,10 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import top.ibase4j.core.base.BaseServiceImpl;
-import top.ibase4j.core.exception.BusinessException;
 import top.ibase4j.core.support.Pagination;
 import top.ibase4j.core.support.login.ThirdPartyUser;
-import top.ibase4j.core.util.DataUtil;
 import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.SecurityUtil;
 
@@ -45,24 +43,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     private SysDeptService sysDeptService;
     @Autowired
     private SysAuthorizeService sysAuthorizeService;
-
-    @Override
-    @Transactional
-    public SysUser update(SysUser record) {
-        if (DataUtil.isEmpty(record.getPassword())) {
-            record.setPassword(null);
-        } else {
-            record.setPassword(SecurityUtil.encryptPassword(record.getPassword()));
-        }
-        if (DataUtil.isNotEmpty(record.getOldPassword())) {
-            SysUser sysUser = super.queryById(record.getId());
-            String encryptPassword = SecurityUtil.encryptPassword(record.getOldPassword());
-            if (!sysUser.getPassword().equals(encryptPassword)) {
-                throw new BusinessException("原密码错误.");
-            }
-        }
-        return super.update(record);
-    }
 
     @Override
     public SysUser queryById(Long id) {
