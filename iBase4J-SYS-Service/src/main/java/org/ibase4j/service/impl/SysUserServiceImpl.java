@@ -50,24 +50,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     private SysAuthorizeService sysAuthorizeService;
 
     @Override
-    @Transactional
-    public SysUser update(SysUser record) {
-        if (DataUtil.isEmpty(record.getPassword())) {
-            record.setPassword(null);
-        } else {
-            record.setPassword(SecurityUtil.encryptPassword(record.getPassword()));
-        }
-        if (DataUtil.isNotEmpty(record.getOldPassword())) {
-            SysUser sysUser = super.queryById(record.getId());
-            String encryptPassword = SecurityUtil.encryptPassword(record.getOldPassword());
-            if (!sysUser.getPassword().equals(encryptPassword)) {
-                throw new BusinessException("原密码错误.");
-            }
-        }
-        return super.update(record);
-    }
-
-    @Override
     public SysUser queryById(Long id) {
         SysUser record = super.queryById(id);
         if (record.getDeptId() != null) {
