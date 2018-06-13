@@ -32,12 +32,10 @@
 	<!-- <import resource="spring/dubbo.xml" /> -->
 	<import resource="spring/motan.xml" />
 	<import resource="spring/redis.xml" />
+	<import resource="spring/redisson.xml" />
 	<import resource="spring/dataSource.xml"/>
 	<import resource="spring/scheduler.xml"/>
 	<import resource="spring/mybatis.xml"/>
 	<!-- <import resource="spring/mq-listener.xml"/>
 	<import resource="spring/mq-sender.xml"/> -->
-	<bean id="redisLockHelper" factory-bean="redisConfig"
-		factory-method="redisLockHelper"
-		c:redis-connection-factory-ref="redisConnectionFactory" />
 </beans>
