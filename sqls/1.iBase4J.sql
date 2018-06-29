@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `sys_article` (
   `update_by` bigint(20) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章';
+) ENGINE=InnoDB COMMENT='文章';
 
 -- 正在导出表  ibase4j.sys_article 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_article` DISABLE KEYS */;
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `sys_dept` (
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门';
+) ENGINE=InnoDB COMMENT='部门';
 
 -- 正在导出表  ibase4j.sys_dept 的数据：~3 rows (大约)
 /*!40000 ALTER TABLE `sys_dept` DISABLE KEYS */;
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `sys_dic` (
 	INDEX `type_` (`type_`),
 	INDEX `code_` (`code_`),
 	INDEX `parent_code` (`parent_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据字典明细表';
+) ENGINE=InnoDB COMMENT='数据字典明细表';
 
 -- 正在导出表  ibase4j.sys_dic 的数据：~43 rows (大约)
 /*!40000 ALTER TABLE `sys_dic` DISABLE KEYS */;
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `sys_email` (
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件表';
+) ENGINE=InnoDB COMMENT='邮件表';
 
 -- 正在导出表  ibase4j.sys_email 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_email` DISABLE KEYS */;
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `sys_email_config` (
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件配置表';
+) ENGINE=InnoDB COMMENT='邮件配置表';
 
 -- 正在导出表  ibase4j.sys_email_config 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_email_config` DISABLE KEYS */;
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `sys_email_template` (
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='邮件模版表';
+) ENGINE=InnoDB COMMENT='邮件模版表';
 
 -- 正在导出表  ibase4j.sys_email_template 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_email_template` DISABLE KEYS */;
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
 	INDEX `create_by` (`create_by`),
 	INDEX `create_time` (`create_time`),
 	FULLTEXT INDEX `parameters_` (`parameters_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB;
 
 -- 正在导出表  ibase4j.sys_event 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_event` DISABLE KEYS */;
@@ -267,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `sys_menu` (
   PRIMARY KEY (`id_`),
 	INDEX `menu_name` (`menu_name`),
 	INDEX `parent_id` (`parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单';
+) ENGINE=InnoDB COMMENT='菜单';
 
 -- 导出  表 ibase4j.sys_msg 结构
 DROP TABLE IF EXISTS `sys_msg`;
@@ -285,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `sys_msg` (
   `update_by` bigint(20) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='短信';
+) ENGINE=InnoDB COMMENT='短信';
 
 -- 正在导出表  ibase4j.sys_msg 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_msg` DISABLE KEYS */;
@@ -312,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `sys_msg_config` (
   `update_by` bigint(20) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB;
 
 -- 正在导出表  ibase4j.sys_msg_config 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_msg_config` DISABLE KEYS */;
@@ -339,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `sys_news` (
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='新闻表';
+) ENGINE=InnoDB COMMENT='新闻表';
 
 -- 正在导出表  ibase4j.sys_news 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_news` DISABLE KEYS */;
@@ -364,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `sys_notice` (
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='通知公告表';
+) ENGINE=InnoDB COMMENT='通知公告表';
 
 -- 正在导出表  ibase4j.sys_notice 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_notice` DISABLE KEYS */;
@@ -385,7 +385,7 @@ CREATE TABLE IF NOT EXISTS `sys_param` (
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`),
 	INDEX `param_key` (`param_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全局参数表';
+) ENGINE=InnoDB COMMENT='全局参数表';
 
 -- 正在导出表  ibase4j.sys_param 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_param` DISABLE KEYS */;
@@ -405,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `sys_role` (
   `update_by` bigint(20) NOT NULL,
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色信息表';
+) ENGINE=InnoDB COMMENT='角色信息表';
 
 -- 正在导出表  ibase4j.sys_role 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_role` DISABLE KEYS */;
@@ -428,7 +428,7 @@ CREATE TABLE IF NOT EXISTS `sys_role_menu` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `sys_role_menu_key1` (`role_id`,`menu_id`,`permission_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色授权表';
+) ENGINE=InnoDB COMMENT='角色授权表';
 
 -- 导出  表 ibase4j.sys_session 结构
 DROP TABLE IF EXISTS `sys_session`;
@@ -445,7 +445,7 @@ CREATE TABLE IF NOT EXISTS `sys_session` (
   `update_time` datetime NOT NULL,
   `update_by` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会话管理';
+) ENGINE=InnoDB COMMENT='会话管理';
 
 -- 正在导出表  ibase4j.sys_session 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_session` DISABLE KEYS */;
@@ -467,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `sys_unit` (
   `update_time` datetime NOT NULL,
   `update_by` bigint(20) NOT NULL,
   PRIMARY KEY (`id_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='单位表';
+) ENGINE=InnoDB COMMENT='单位表';
 
 -- 正在导出表  ibase4j.sys_unit 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_unit` DISABLE KEYS */;
@@ -506,7 +506,7 @@ CREATE TABLE IF NOT EXISTS `sys_user` (
   PRIMARY KEY (`id_`),
   UNIQUE KEY `account` (`account_`),
 	INDEX `enable_` (`enable_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户管理';
+) ENGINE=InnoDB COMMENT='用户管理';
 
 -- 正在导出表  ibase4j.sys_user 的数据：~2 rows (大约)
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
@@ -530,7 +530,7 @@ CREATE TABLE IF NOT EXISTS `sys_user_menu` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `sys_user_menu_key1` (`user_id`,`menu_id`,`permission_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户授权表';
+) ENGINE=InnoDB COMMENT='用户授权表';
 
 -- 正在导出表  ibase4j.sys_user_menu 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_user_menu` DISABLE KEYS */;
@@ -552,7 +552,7 @@ CREATE TABLE IF NOT EXISTS `sys_user_role` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `user_id_role_id` (`user_id`,`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户授权表';
+) ENGINE=InnoDB COMMENT='用户授权表';
 
 -- 正在导出表  ibase4j.sys_user_role 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_user_role` DISABLE KEYS */;
@@ -575,7 +575,7 @@ CREATE TABLE IF NOT EXISTS `sys_user_thirdparty` (
   `update_time` datetime NOT NULL,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `user_id_provider__open_id` (`user_id`,`provider_`,`open_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='第三方用户';
+) ENGINE=InnoDB COMMENT='第三方用户';
 
 -- 正在导出表  ibase4j.sys_user_thirdparty 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `sys_user_thirdparty` DISABLE KEYS */;
@@ -595,7 +595,7 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
   `fire_info` text,
   PRIMARY KEY (`id_`),
   UNIQUE KEY `group_name_task_name_start_time` (`group_name`,`task_name`,`start_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB;
 
 CREATE TABLE `sys_lock` (
   `key_` varchar(256) NOT NULL,
@@ -603,6 +603,6 @@ CREATE TABLE `sys_lock` (
   `expire_second` int(6) NOT NULL,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`key_`),
-  INDEX `expire_` (`expire_`),
+  INDEX `expire_second` (`expire_second`),
   INDEX `create_time` (`create_time`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB;
