@@ -21,7 +21,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.1.RELEASE</version>
+		<version>2.0.3.RELEASE</version>
 	</parent>
 
 	<properties>
@@ -31,10 +31,10 @@
 		<other.jar>ali*.jar</other.jar>
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.4.4</ibase4j.version>
+		<ibase4j.version>3.4.5</ibase4j.version>
 		<!-- spring版本号 -->
-		<spring.version>5.0.6.RELEASE</spring.version>
-		<spring-data-redis.version>2.0.7.RELEASE</spring-data-redis.version>
+		<spring.version>5.0.7.RELEASE</spring.version>
+		<spring-data-redis.version>2.0.8.RELEASE</spring-data-redis.version>
 		<!-- 数据库 -->
 		<mysql.version>8.0.11</mysql.version>
 		<sharding-jdbc.version>1.4.1</sharding-jdbc.version>
@@ -46,8 +46,8 @@
 		<slf4j.version>1.7.25</slf4j.version>
 		<log4j.version>2.11.0</log4j.version>
 		<!-- -->
-		<druid.version>1.1.9</druid.version>
-		<dubbo.version>2.6.1</dubbo.version>
+		<druid.version>1.1.10</druid.version>
+		<dubbo.version>2.6.2</dubbo.version>
 		<fastjson.version>1.2.47</fastjson.version>
 		<motan.version>1.1.1</motan.version>
 		<!-- -->
