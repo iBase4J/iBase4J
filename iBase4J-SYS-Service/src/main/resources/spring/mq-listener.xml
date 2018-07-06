@@ -20,5 +20,5 @@
 		acknowledge="auto">可写多个监听器
 	</jms:listener-container> -->
 	<!-- 定义Queue监听器 -->
-	<bean id="sendEmailListener" class="org.ibase4j.core.support.mq.listener.SendEmailListener" />
+	<bean id="sendEmailListener" class="top.ibase4j.core.support.mq.listener.SendEmailListener" />
 </beans>

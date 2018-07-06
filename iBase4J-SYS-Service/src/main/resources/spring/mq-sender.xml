@@ -9,5 +9,5 @@
 				        http://www.springframework.org/schema/jms
 				        http://www.springframework.org/schema/jms/spring-jms-4.0.xsd">
 	<!-- 定义Queue类型邮件发送 -->
-	<bean id="emailQueueSender" class="org.ibase4j.core.support.mq.QueueSender" />
+	<bean id="emailQueueSender" class="top.ibase4j.core.support.mq.QueueSender" />
 </beans>
