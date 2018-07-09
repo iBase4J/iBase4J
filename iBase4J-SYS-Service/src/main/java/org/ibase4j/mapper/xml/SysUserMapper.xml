@@ -51,6 +51,9 @@
 			<if test="cm.updateBy != null and cm.updateBy != ''">
 				 and update_by = #{cm.updateBy}
 			</if>
+			<if test="cm.permission != null">
+				and user_type != '3'
+			</if>
 			<if test="cm.keyword != null">
 				and (account_ like CONCAT('%',#{cm.keyword},'%') or user_name like CONCAT('%',#{cm.keyword},'%') or phone_ like CONCAT('%',#{cm.keyword},'%'))
 			</if>

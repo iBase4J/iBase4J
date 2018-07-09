@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.exception.BusinessException;
 
 /**
  * 字典管理
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:14:34
  */
@@ -27,40 +28,50 @@ import top.ibase4j.core.base.BaseController;
 @Api(value = "字典管理", description = "字典管理")
 @RequestMapping(value = "/dic")
 public class SysDicController extends BaseController<SysDic, SysDicService> {
-	@ApiOperation(value = "查询字典项")
-	@RequiresPermissions("sys.base.dic.read")
-	@PutMapping(value = "/read/page")
-	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		param.put("orderBy", "type_,sort_no");
-		return super.query(modelMap, param);
-	}
+    @Override
+    @ApiOperation(value = "查询字典项")
+    @RequiresPermissions("sys.base.dic.read")
+    @PutMapping(value = "/read/page")
+    public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        param.put("orderBy", "type_,sort_no");
+        return super.query(modelMap, param);
+    }
 
-	@ApiOperation(value = "查询字典项")
-	@RequiresPermissions("sys.base.dic.read")
-	@PutMapping(value = "/read/list")
-	public Object queryList(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		param.put("orderBy", "type_,sort_no");
-		return super.queryList(modelMap, param);
-	}
+    @Override
+    @ApiOperation(value = "查询字典项")
+    @RequiresPermissions("sys.base.dic.read")
+    @PutMapping(value = "/read/list")
+    public Object queryList(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        param.put("orderBy", "type_,sort_no");
+        return super.queryList(modelMap, param);
+    }
 
-	@ApiOperation(value = "字典项详情")
-	@RequiresPermissions("sys.base.dic.read")
-	@PutMapping(value = "/read/detail")
-	public Object get(ModelMap modelMap, @RequestBody SysDic param) {
-		return super.get(modelMap, param);
-	}
+    @ApiOperation(value = "字典项详情")
+    @RequiresPermissions("sys.base.dic.read")
+    @PutMapping(value = "/read/detail")
+    public Object get(ModelMap modelMap, @RequestBody SysDic param) {
+        return super.get(modelMap, param);
+    }
 
-	@PostMapping
-	@ApiOperation(value = "修改字典项")
-	@RequiresPermissions("sys.base.dic.update")
-	public Object update(ModelMap modelMap, @RequestBody SysDic param) {
-		return super.update(modelMap, param);
-	}
+    @Override
+    @PostMapping
+    @ApiOperation(value = "修改字典项")
+    @RequiresPermissions("sys.base.dic.update")
+    public Object update(ModelMap modelMap, @RequestBody SysDic param) {
+        if (param.getId() != null) {
+            SysDic result = service.queryById(param.getId());
+            if ("0".equals(result.getEditable())) {
+                throw new BusinessException("不允许修改系统内置字典项");
+            }
+        }
+        return super.update(modelMap, param);
+    }
 
-	@DeleteMapping
-	@ApiOperation(value = "删除字典项")
-	@RequiresPermissions("sys.base.dic.delete")
-	public Object delete(ModelMap modelMap, @RequestBody SysDic param) {
-		return super.delete(modelMap, param);
-	}
+    @Override
+    @DeleteMapping
+    @ApiOperation(value = "删除字典项")
+    @RequiresPermissions("sys.base.dic.delete")
+    public Object delete(ModelMap modelMap, @RequestBody SysDic param) {
+        return super.delete(modelMap, param);
+    }
 }

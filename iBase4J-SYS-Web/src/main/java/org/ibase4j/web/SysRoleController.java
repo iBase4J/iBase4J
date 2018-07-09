@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.exception.BusinessException;
 
 /**
  * 角色管理
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:15:43
  */
@@ -27,38 +28,47 @@ import top.ibase4j.core.base.BaseController;
 @Api(value = "角色管理", description = "角色管理")
 @RequestMapping(value = "role")
 public class SysRoleController extends BaseController<SysRole, SysRoleService> {
-	@ApiOperation(value = "查询角色")
-	@RequiresPermissions("sys.base.role.read")
-	@PutMapping(value = "/read/page")
-	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		return super.query(modelMap, param);
-	}
+    @Override
+    @ApiOperation(value = "查询角色")
+    @RequiresPermissions("sys.base.role.read")
+    @PutMapping(value = "/read/page")
+    public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        return super.query(modelMap, param);
+    }
 
-	@ApiOperation(value = "查询角色")
-	@RequiresPermissions("sys.base.role.read")
-	@PutMapping(value = "/read/list")
-	public Object list(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		return super.queryList(modelMap, param);
-	}
+    @ApiOperation(value = "查询角色")
+    @RequiresPermissions("sys.base.role.read")
+    @PutMapping(value = "/read/list")
+    public Object list(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        return super.queryList(modelMap, param);
+    }
 
-	@ApiOperation(value = "角色详情")
-	@RequiresPermissions("sys.base.role.read")
-	@PutMapping(value = "/read/detail")
-	public Object get(ModelMap modelMap, @RequestBody SysRole param) {
-		return super.get(modelMap, param);
-	}
+    @ApiOperation(value = "角色详情")
+    @RequiresPermissions("sys.base.role.read")
+    @PutMapping(value = "/read/detail")
+    public Object get(ModelMap modelMap, @RequestBody SysRole param) {
+        return super.get(modelMap, param);
+    }
 
-	@PostMapping
-	@ApiOperation(value = "修改角色")
-	@RequiresPermissions("sys.base.role.update")
-	public Object update(ModelMap modelMap, @RequestBody SysRole param) {
-		return super.update(modelMap, param);
-	}
+    @Override
+    @PostMapping
+    @ApiOperation(value = "修改角色")
+    @RequiresPermissions("sys.base.role.update")
+    public Object update(ModelMap modelMap, @RequestBody SysRole param) {
+        if (param.getId() != null) {
+            SysRole result = service.queryById(param.getId());
+            if ("3".equals(result.getRoleType())) {
+                throw new BusinessException("不允许修改系统内置角色");
+            }
+        }
+        return super.update(modelMap, param);
+    }
 
-	@DeleteMapping
-	@ApiOperation(value = "删除角色")
-	@RequiresPermissions("sys.base.role.delete")
-	public Object delete(ModelMap modelMap, @RequestBody SysRole param) {
-		return super.delete(modelMap, param);
-	}
+    @Override
+    @DeleteMapping
+    @ApiOperation(value = "删除角色")
+    @RequiresPermissions("sys.base.role.delete")
+    public Object delete(ModelMap modelMap, @RequestBody SysRole param) {
+        return super.delete(modelMap, param);
+    }
 }

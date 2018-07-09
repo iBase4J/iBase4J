@@ -11,6 +11,9 @@
 			<if test="cm.keyword != null">
 				and role_name like CONCAT('%',#{cm.keyword},'%')
 			</if>
+			<if test="cm.permission != null">
+				and role_type != '3'
+			</if>
 		</where>
 	</select>
 </mapper>
