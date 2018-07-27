@@ -27,7 +27,7 @@
 		<module.name>${project.artifactId}</module.name>
 		<!-- 编码 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.4.5</ibase4j.version>
+		<ibase4j.version>3.4.6</ibase4j.version>
 		<spring-boot.version>2.0.2.RELEASE</spring-boot.version>
 		<!-- spring版本号 -->
 		<spring.version>5.0.6.RELEASE</spring.version>

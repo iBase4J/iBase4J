@@ -11,7 +11,7 @@
 	where user_id=#{userId}
   </select>
   <select id="queryPermission" resultType="java.lang.String">
-		select CONCAT(menu_name,'(', GROUP_CONCAT(code_text), ')')
+		select CONCAT(menu_name,'(', GROUP_CONCAT(code_text), ')') c
 		from
 		sys_user_menu rm
 		join sys_menu m on rm.menu_id=m.id_
@@ -22,6 +22,18 @@
 			</if>
 		</where>
 		group by menu_name
-		order by menu_id
+		union
+		select CONCAT(menu_name,'(', GROUP_CONCAT(code_text), ')') c
+		from sys_role_menu rm
+		join sys_user_role ur on rm.role_id=ur.role_id
+		join sys_menu m on rm.menu_id=m.id_
+		join sys_dic d on rm.permission_=d.code_ and d.type_='CRUD'
+		<where>
+			<if test="userId != null">
+				ur.user_id=#{userId}
+			</if>
+		</where>
+		group by menu_name
+		order by c
 	</select>
 </mapper>
