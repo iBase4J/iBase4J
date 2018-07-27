@@ -20,15 +20,15 @@ import top.ibase4j.core.Constants;
 import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.exception.LoginException;
 import top.ibase4j.core.support.Assert;
-import top.ibase4j.core.support.HttpCode;
 import top.ibase4j.core.support.context.Resources;
+import top.ibase4j.core.support.http.HttpCode;
 import top.ibase4j.core.support.login.LoginHelper;
 import top.ibase4j.core.util.SecurityUtil;
 import top.ibase4j.model.Login;
 
 /**
  * 用户登录
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:11:21
  */

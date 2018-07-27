@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.AbstractController;
-import top.ibase4j.core.support.HttpCode;
+import top.ibase4j.core.support.http.HttpCode;
 import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.UploadUtil;
 

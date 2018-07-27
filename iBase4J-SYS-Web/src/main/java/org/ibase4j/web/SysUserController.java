@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.exception.BusinessException;
 import top.ibase4j.core.support.Assert;
-import top.ibase4j.core.support.HttpCode;
+import top.ibase4j.core.support.http.HttpCode;
 import top.ibase4j.core.util.SecurityUtil;
 import top.ibase4j.core.util.UploadUtil;
 

@@ -202,10 +202,12 @@ CREATE TABLE IF NOT EXISTS `sys_email_template` (
 DROP TABLE IF EXISTS `sys_event`;
 CREATE TABLE IF NOT EXISTS `sys_event` (
   `id_` bigint(20) NOT NULL AUTO_INCREMENT,
-  `title_` varchar(50) DEFAULT NULL,
-  `request_uri` varchar(50) DEFAULT NULL,
+  `user_name` varchar(64) DEFAULT NULL,
+  `user_phone` varchar(20) DEFAULT NULL,
+  `title_` varchar(64) DEFAULT NULL,
+  `request_uri` varchar(64) DEFAULT NULL,
   `parameters_` LONGTEXT DEFAULT NULL,
-  `method_` varchar(20) DEFAULT NULL,
+  `method_` varchar(8) DEFAULT NULL,
   `client_host` varchar(50) DEFAULT NULL,
   `user_agent` varchar(300) DEFAULT NULL,
   `status_` int(3) DEFAULT NULL,
@@ -218,7 +220,8 @@ CREATE TABLE IF NOT EXISTS `sys_event` (
   PRIMARY KEY (`id_`),
 	INDEX `title_` (`title_`),
 	INDEX `request_uri` (`request_uri`),
-	INDEX `client_host` (`client_host`),
+	INDEX `user_name` (`user_name`),
+	INDEX `user_phone` (`user_phone`),
 	INDEX `create_by` (`create_by`),
 	INDEX `create_time` (`create_time`),
 	FULLTEXT INDEX `parameters_` (`parameters_`)

@@ -1,39 +1,35 @@
 package org.ibase4j.web;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.net.util.Base64;
 import org.ibase4j.model.TMember;
 import org.ibase4j.service.MemberService;
 import org.springframework.http.MediaType;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.Constants.MSGCHKTYPE;
 import top.ibase4j.core.base.AppBaseController;
 import top.ibase4j.core.exception.LoginException;
 import top.ibase4j.core.support.Assert;
-import top.ibase4j.core.support.context.Resources;
-import top.ibase4j.core.support.security.coder.RSACoder;
+import top.ibase4j.core.support.security.coder.HmacCoder;
 import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.DataUtil;
 import top.ibase4j.core.util.InstanceUtil;
 import top.ibase4j.core.util.PropertiesUtil;
-import top.ibase4j.core.util.TokenUtil;
-import top.ibase4j.core.util.WebUtil;
-import top.ibase4j.model.Login;
+import top.ibase4j.core.util.SecurityUtil;
 
 /**
  * 用户登录
@@ -45,92 +41,107 @@ import top.ibase4j.model.Login;
 @RequestMapping("/app/")
 @Api(value = "APP登录注册接口", description = "APP-登录注册接口")
 public class LoginController extends AppBaseController<TMember, MemberService> {
-    @PostMapping("secret.api")
-    @ApiOperation(value = "APP获取私钥", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiImplicitParam(name = "UUID", defaultValue = "1", paramType = "header")
-    public Object getSecret(HttpServletRequest request, HttpServletResponse response) {
-        String uuid = request.getHeader("UUID");
-        org.springframework.util.Assert.notNull(uuid, "非法操作.");
-        try {
-            Map<String, Object> keyMap = RSACoder.initKey();
-            String privateKey = Base64.encodeBase64String(RSACoder.getPrivateKey(keyMap));
-            String publicKey = Base64.encodeBase64String(RSACoder.getPublicKey(keyMap));
-            logger.info("Private key: " + privateKey);
-            logger.info("Public key: " + publicKey);
-            CacheUtil.getCache().set(Constants.SYSTEM_CACHE_NAMESPACE + "SIGN:" + uuid, publicKey, 60 * 60 * 24 * 10);
-            return setSuccessModelMap(privateKey);
-        } catch (Exception e) {
-            throw new RuntimeException("获取密钥失败");
+    @PostMapping("reginit.api")
+    @ApiOperation(value = "注册", produces = MediaType.APPLICATION_JSON_VALUE, notes = "" + "使用手机号+验证码进行注册或登录\n"
+            + "注册接口需要以下五个参数：\n" + "1. UUID(header): 客户端生成的唯一ID，用作用户令牌，服务端用之识别用户，验证权限，每接口必传\n"
+            + "2. sign: 请求参数的RSA签名(通过/app/secret.api获取RSA私钥)，用于防止请求参数被第三方拦截篡改，每接口必传。签名算法查看密钥接口\n"
+            + "3. account: 用户名，目前只支持手机号\n" + "4. password: 密码\n" + "5. authCode: 手机短信验证码(通过/app/msg.api发送短信验证码)\n"
+            + "注意：所有接口都需要传UUID和sign参数，UUID用作令牌，sign用作签名", response = TMember.class)
+    public Object register(@RequestHeader("UUID") @ApiParam(value = "客户端生成的唯一ID", required = true) String uuid,
+        @RequestParam @ApiParam(value = "手机号", required = true) String account,
+        @RequestParam @ApiParam(value = "密码", required = true) String password,
+        @RequestParam @ApiParam(value = "手机验证码", required = true) String authCode) throws Exception {
+        String authCodeOnServer = (String)CacheUtil.getCache().get(MSGCHKTYPE.REGISTER + account);
+        if (!authCode.equals(authCodeOnServer)) {
+            logger.warn(account + "=" + authCode + "-" + authCodeOnServer);
+            throw new IllegalArgumentException("手机验证码错误");
+        }
+
+        Map<String, Object> params = InstanceUtil.newHashMap("loginKey", account);
+        List<TMember> members = service.queryList(params);
+        TMember member = members.isEmpty() ? null : members.get(0);
+
+        if (member == null) {
+            TMember param = new TMember();
+            param.setPhone(account);
+            param.setPassword(SecurityUtil.encryptPassword(password));
+            param.setAvatar(PropertiesUtil.getString("ui.file.uri.prefix") + "extends/img/dftAvatar.png");
+            service.update(param);
+            return setSuccessModelMap();
+        } else {
+            throw new IllegalArgumentException("手机号已注册.");
         }
     }
 
     @PostMapping("login.api")
-    @ApiOperation(value = "APP会员登录", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object login(Login user, HttpServletRequest request, HttpServletResponse response) {
-        String uuid = request.getHeader("UUID");
-        org.springframework.util.Assert.notNull(uuid, "非法操作.");
-        user = WebUtil.getParameter(request, Login.class);
-        Assert.notNull(user.getAccount(), "ACCOUNT");
-        Assert.notNull(user.getPassword(), "PASSWORD");
+    @ApiOperation(value = "登录", produces = MediaType.APPLICATION_JSON_VALUE, notes = "" + "使用手机号+密码登录\n"
+            + "登录接口需要以下四个参数：\n" + "1. UUID(header): 客户端生成的唯一ID，用作用户令牌，服务端用之识别用户，验证权限，每接口必传\n"
+            + "2. sign: 请求参数的RSA签名(通过/app/secret.api获取RSA私钥)，用于防止请求参数被第三方拦截篡改，每接口必传。签名算法查看密钥接口\n"
+            + "3. account: 用户名，目前只支持手机号\n" + "4. password: 密码\n"
+            + "注意：所有接口都需要传UUID和sign参数，UUID用作令牌，sign用作签名", response = TMember.class)
+    public Object login(@RequestHeader("UUID") @ApiParam(value = "客户端生成的唯一ID", required = true) String uuid,
+        @RequestHeader(required = false) @ApiParam("微信ID，暂不支持") String openId,
+        @RequestHeader(required = false) @ApiParam("极光推送ID，暂不支持") String registrationId,
+        @RequestParam @ApiParam(value = "手机号", required = true) String account,
+        @RequestParam @ApiParam(value = "密码", required = true) String password) {
+        Map<String, Object> params = InstanceUtil.newHashMap("enable", 1);
+        params.put("loginKey", account);
+        List<TMember> members = service.queryList(params);
+        TMember member = members.isEmpty() ? null : members.get(0);
 
-        String password = (String)CacheUtil.getCache().get(MSGCHKTYPE.LOGIN + user.getAccount());
-        if (user.getPassword().equals(password)) { // 检查验证码
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("enable", 1);
-            params.put("loginKey", user.getAccount()); // 登录帐号/手机号/邮箱
-            List<?> list = service.queryList(params);
-            TMember member = null;
-            if (list.size() == 1) {
-                member = (TMember)list.get(0);
-                // String oldUuid = StringUtils.defaultIfBlank(member.getUuid(), "");
-                if (StringUtils.isNotBlank(member.getUuid())) {
-                    TokenUtil.delToken(member.getUuid());
-                }
+        if (member == null) {
+            throw new LoginException("手机号或密码错误.");
+        } else {
+            if (SecurityUtil.encryptPassword(password).equals(member.getPassword())) {
+                // if (member.getRegistrationId() != null) {
+                // if (registrationId != null && !registrationId.equals(member.getRegistrationId())) {
+                // member.setRegistrationId(registrationId);
+                // String content = "帐号[" + account + "]在别的设备登录";
+                // HashMap<String, String> hashMap = new HashMap<String, String>();
+                // hashMap.put("type", "3");
+                // String equipment = member.getRegistrationId().substring(2, 3);
+                // try {
+                // if ("0".equals(equipment)) {
+                // jpushHelper.sendNotificationAndroid("登录通知", content, hashMap,
+                // member.getRegistrationId());
+                // } else {
+                // jpushHelper.sendNotificationIOS("登录通知", content, hashMap, member.getRegistrationId());
+                // }
+                // } catch (Exception e) {
+                // logger.info(ExceptionUtil.getStackTraceAsString(e));
+                // }
+                // }
+                // } else {
+                // member.setRegistrationId(registrationId);
+                // }
+                // if (openId != null) {
+                // member.setWxOpenId(openId);
+                // }
                 member.setIsOnline(1);
-                member.setUuid(uuid);
+
                 service.update(member);
 
-                try {
-                    /* RongCloud rongCloud = RongCloud.getInstance(getSysParam("APP-KEY"), getSysParam("APP-SECRET"));
-                     * Map<String, Object> extraMap = InstanceUtil.newHashMap();
-                     * extraMap.put("type", SYSTEMPUBLISH.LGN);
-                     * extraMap.put("memberId", member.getId());
-                     * extraMap.put("oldUuid", oldUuid);
-                     * extraMap.put("systemTime", DateUtil.getDateTime());
-                     * String extra = JSON.toJSONString(extraMap);
-                     * String msg = "帐号[" + user.getAccount() + "]在别的设备登录";
-                     * CodeSuccessResult messageResult = rongCloud.message.publishSystem(Constants.SYSTEM_ID,
-                     * new String[]{member.getId().toString()}, new TxtMessage(msg, extra), "登录通知", "登录通知", 0, 0);
-                     * logger.info("== " + messageResult.toString()); */
-                } catch (Exception e) {
-                    logger.error("", e);
-                }
-            } else {
-                TMember param = new TMember();
-                param.setPhone(user.getAccount());
-                param.setAvatar(PropertiesUtil.getString("ui.file.uri.prefix") + "extends/img/dftAvatar.png");
-                param.setIsOnline(1);
-                param.setUuid(uuid);
-                member = service.update(param);
+                String token = SecurityUtil.initHmacKey(HmacCoder.MD5);
+                String tokenKey = SecurityUtil.encryptMd5(token);
+                CacheUtil.getCache().set(Constants.TOKEN_KEY + tokenKey, "1",
+                    PropertiesUtil.getInt("APP-TOKEN-EXPIRE", 60 * 60 * 24 * 5));
+                member.setToken(token);
                 member.setPassword(null);
+                return setSuccessModelMap(member);
+            } else {
+                throw new LoginException("手机号或密码错误.");
             }
-            request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
-            TokenUtil.setTokenInfo(uuid, member.getId().toString());
-            ModelMap modelMap = new ModelMap();
-            Map<String, Object> result = InstanceUtil.newHashMap("userInfo", member);
-            return setSuccessModelMap(modelMap, result);
         }
-        request.setAttribute("msg", "[" + user.getAccount() + "]登录失败.");
-        throw new LoginException(Resources.getMessage("LOGIN_FAIL"));
     }
 
     @PostMapping("logout.api")
     @ApiOperation(value = "APP会员登出", produces = MediaType.APPLICATION_JSON_VALUE)
     public Object logout(HttpServletRequest request) {
-        String token = request.getHeader("UUID");
+        String token = request.getHeader("token");
         Assert.notNull(token, "ACCOUNT");
         if (StringUtils.isNotBlank(token)) {
-            TokenUtil.delToken(token);
+            String tokenKey = SecurityUtil.encryptMd5(token);
+            CacheUtil.getCache().del(Constants.TOKEN_KEY + tokenKey);
         }
         Long id = getCurrUser(request);
         if (DataUtil.isNotEmpty(id)) {
@@ -143,20 +154,31 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
         return setSuccessModelMap(modelMap);
     }
 
-    @PostMapping("chkAccount.api")
-    @ApiOperation(value = "检查手机号/帐号/邮箱是否存在", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object chkAccount(Login user, HttpServletRequest request, HttpServletResponse response) {
-        user = WebUtil.getParameter(request, Login.class);
-        Assert.notNull(user.getAccount(), "ACCOUNT");
-
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("loginKey", user.getAccount()); // 登录帐号/手机号/邮箱
-        List<?> pageInfo = service.queryList(params);
-
-        ModelMap modelMap = new ModelMap();
-        if (pageInfo.size() > 1) {
-            return setSuccessModelMap(modelMap, InstanceUtil.newHashMap("exists", 1));
+    @PostMapping("updatePwd.api")
+    @ApiOperation(value = "修改密码", produces = MediaType.APPLICATION_JSON_VALUE, notes = "" + "接口需要以下五个参数：\n"
+            + "1. UUID(header): 客户端生成的唯一ID，用作用户令牌，服务端用之识别用户，验证权限，每接口必传\n"
+            + "2. sign: 请求参数的RSA签名(通过/app/secret.api获取RSA私钥)，用于防止请求参数被第三方拦截篡改，每接口必传。签名算法查看密钥接口\n"
+            + "3. account: 用户名，目前只支持手机号\n" + "4. password: 密码\n" + "5. authCode: 手机短信验证码(通过/app/msg.api发送短信验证码)\n"
+            + "注意：所有接口都需要传UUID和sign参数，UUID用作令牌，sign用作签名", response = TMember.class)
+    public Object updatePwd(@RequestHeader("UUID") @ApiParam(value = "客户端生成的唯一ID", required = true) String uuid,
+        @RequestParam @ApiParam(value = "手机号", required = true) String account,
+        @RequestParam @ApiParam(value = "密码", required = true) String password,
+        @RequestParam @ApiParam(value = "手机验证码", required = true) String authCode) throws Exception {
+        String authCodeOnServer = (String)CacheUtil.getCache().get(MSGCHKTYPE.CHGPWD + account);
+        if (!authCode.equals(authCodeOnServer)) {
+            throw new IllegalArgumentException("手机验证码错误");
         }
-        return setSuccessModelMap(modelMap, InstanceUtil.newHashMap("exists", 0));
+
+        Map<String, Object> params = InstanceUtil.newHashMap("loginKey", account);
+        List<?> members = service.queryList(params);
+        TMember member = members.isEmpty() ? null : (TMember)members.get(0);
+
+        if (member == null) {
+            throw new IllegalArgumentException("手机号还没有注册.");
+        } else {
+            member.setPassword(SecurityUtil.encryptPassword(password));
+            service.update(member);
+            return setSuccessModelMap();
+        }
     }
 }
