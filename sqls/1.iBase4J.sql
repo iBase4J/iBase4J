@@ -246,7 +246,7 @@ CREATE TABLE `sys_feedback` (
 	`update_by` BIGINT(20) NULL DEFAULT NULL,
 	`update_time` DATETIME NULL DEFAULT NULL,
 	PRIMARY KEY (`id_`)
-)COMMENT='反馈' COLLATE=utf8 ENGINE=InnoDB;
+)COMMENT='反馈' ENGINE=InnoDB;
 
 -- 导出  表 ibase4j.sys_menu 结构
 DROP TABLE IF EXISTS `sys_menu`;

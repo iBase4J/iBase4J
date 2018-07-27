@@ -37,4 +37,4 @@ CREATE TABLE IF NOT EXISTS `t_member` (
   UNIQUE KEY `email_` (`email_`),
   UNIQUE KEY `user_name` (`user_name`),
   KEY `sex_` (`sex_`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员';
+) ENGINE=InnoDB DEFAULT COMMENT='会员';
