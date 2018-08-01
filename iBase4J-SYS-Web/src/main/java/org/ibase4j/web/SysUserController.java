@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
-import top.ibase4j.core.exception.BusinessException;
 import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.http.HttpCode;
 import top.ibase4j.core.util.SecurityUtil;
@@ -52,12 +51,6 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
     public Object update(ModelMap modelMap, @RequestBody SysUser param) {
         Assert.isNotBlank(param.getAccount(), "ACCOUNT");
         Assert.length(param.getAccount(), 3, 15, "ACCOUNT");
-        if (param.getId() != null) {
-            SysUser result = service.queryById(param.getId());
-            if ("3".equals(result.getUserType())) {
-                throw new BusinessException("不允许修改系统内置用户");
-            }
-        }
         if (param.getEnable() == null) {
             param.setEnable(0);
         }

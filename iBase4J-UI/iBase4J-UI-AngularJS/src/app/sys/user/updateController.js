@@ -46,6 +46,7 @@
             var m = $scope.record;
             if(m){
                 $scope.isDisabled = true;//提交disabled
+                m.password && (m.password = hex_md5(m.password));
                 $.ajax({
                 	type: 'POST',
     				url : '/user',

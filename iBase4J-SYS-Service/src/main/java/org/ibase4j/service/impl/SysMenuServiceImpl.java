@@ -91,8 +91,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> 
                     List<Map<String, Object>> dicMaps = InstanceUtil.newArrayList();
                     for (SysDic sysDic : sysDics) {
                         if (!"read".equals(sysDic.getCode())) {
-                            if ("add".equals(sysDic.getCode()) || "update".equals(sysDic.getCode())
-                                    || "delete".equals(sysDic.getCode())
+                            if ("update".equals(sysDic.getCode()) || "delete".equals(sysDic.getCode())
                                     || "sys.task.scheduled".equals(sysMenu.getPermission())) {
                                 Map<String, Object> dicMap = InstanceUtil.transBean2Map(sysDic);
                                 dicMap.put("id", "D" + sysDic.getId());

@@ -1,5 +1,8 @@
 package org.ibase4j.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.ibase4j.mapper.SysDeptMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.service.SysDeptService;
@@ -19,18 +22,20 @@ import top.ibase4j.core.base.BaseServiceImpl;
 @MotanService(interfaceClass = SysDeptService.class)
 public class SysDeptServiceImpl extends BaseServiceImpl<SysDept, SysDeptMapper> implements SysDeptService {
     @Override
-    public SysDept queryById(Long id) {
-        SysDept sysDept = super.queryById(id);
-        if (sysDept != null) {
-            if (sysDept.getParentId() != null) {
-                SysDept parent = super.queryById(sysDept.getParentId());
-                if (parent != null) {
-                    sysDept.setParentName(parent.getDeptName());
-                } else {
-                    sysDept.setParentId(null);
+    public List<SysDept> queryList(Map<String, Object> params) {
+        List<SysDept> page = super.queryList(params);
+        for (SysDept sysDept : page) {
+            if (sysDept != null) {
+                if (sysDept.getParentId() != null) {
+                    SysDept parent = super.queryById(sysDept.getParentId());
+                    if (parent != null) {
+                        sysDept.setParentName(parent.getDeptName());
+                    } else {
+                        sysDept.setParentId(null);
+                    }
                 }
             }
         }
-        return sysDept;
+        return page;
     }
 }
