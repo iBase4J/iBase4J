@@ -7,15 +7,15 @@ import org.springframework.context.annotation.ImportResource;
 import top.ibase4j.core.config.RpcConfig;
 
 public class ReferConfig {
-	@Configuration
-	@Conditional(RpcConfig.EnableDubbo.class)
-	@ImportResource("classpath:refer/dubbo.xml")
-	static class DubboReferConfig {
-	}
+    @Configuration
+    @Conditional(RpcConfig.EnableDubboReference.class)
+    @ImportResource("classpath:refer/dubbo.xml")
+    static class DubboReferConfig {
+    }
 
-	@Configuration
-	@Conditional(RpcConfig.EnableMotan.class)
-	@ImportResource("classpath:refer/motan.xml")
-	static class MotanReferConfig {
-	}
+    @Configuration
+    @Conditional(RpcConfig.EnableMotan.class)
+    @ImportResource("classpath:refer/motan.xml")
+    static class MotanReferConfig {
+    }
 }
