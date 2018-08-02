@@ -27,8 +27,10 @@ import org.ibase4j.service.sys.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import top.ibase4j.core.support.http.SessionUser;
 import top.ibase4j.core.support.shiro.Realm;
 import top.ibase4j.core.support.shiro.RedisSessionDAO;
+import top.ibase4j.core.util.SecurityUtil;
 import top.ibase4j.core.util.ShiroUtil;
 
 /**
@@ -57,7 +59,7 @@ public class AuthorizeRealm extends AuthorizingRealm implements Realm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Long userId = ShiroUtil.getCurrentUser();
+        Long userId = ShiroUtil.getCurrentUser().getId();
         List<?> list = sysAuthorizeService.queryPermissionByUserId(userId);
         for (Object permission : list) {
             if (StringUtils.isNotBlank((String)permission)) {
@@ -85,10 +87,10 @@ public class AuthorizeRealm extends AuthorizingRealm implements Realm {
             for (int i = 0; i < token.getPassword().length; i++) {
                 sb.append(token.getPassword()[i]);
             }
-            if (user.getPassword().equals(sb.toString())) {
-                ShiroUtil.saveCurrentUser(user.getId());
+            if (user.getPassword().equals(SecurityUtil.encryptPassword(sb.toString()))) {
+                ShiroUtil.saveCurrentUser(new SessionUser(user.getId(), user.getUserName(), user.getPhone()));
                 saveSession(user.getAccount(), token.getHost());
-                AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(),
+                AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), sb.toString(),
                     user.getUserName());
                 return authcInfo;
             }

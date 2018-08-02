@@ -89,7 +89,7 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
     @ApiOperation(value = "当前用户信息")
     @GetMapping(value = "/read/promission")
     public Object promission(ModelMap modelMap) {
-        Long id = getCurrUser();
+        Long id = getCurrUser().getId();
         SysUser sysUser = service.queryById(id);
         sysUser.setPassword(null);
         modelMap.put("user", sysUser);
@@ -102,7 +102,7 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
     @ApiOperation(value = "当前用户信息")
     @GetMapping(value = "/read/current")
     public Object current(ModelMap modelMap) {
-        SysUser result = service.queryById(getCurrUser());
+        SysUser result = service.queryById(getCurrUser().getId());
         result.setPassword(null);
         return setSuccessModelMap(modelMap, result);
     }
@@ -110,7 +110,7 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
     @ApiOperation(value = "修改个人信息")
     @PostMapping(value = "/update/person")
     public Object updatePerson(ModelMap modelMap, @RequestBody SysUser param) {
-        param.setId(getCurrUser());
+        param.setId(getCurrUser().getId());
         param.setPassword(null);
         Assert.isNotBlank(param.getAccount(), "ACCOUNT");
         Assert.length(param.getAccount(), 3, 15, "ACCOUNT");
@@ -123,7 +123,7 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
         List<String> fileNames = UploadUtil.uploadImageData(request);
         if (fileNames.size() > 0) {
             SysUser param = new SysUser();
-            param.setId(getCurrUser());
+            param.setId(getCurrUser().getId());
             for (int i = 0; i < fileNames.size(); i++) {
                 String filePath = UploadUtil.getUploadDir(request) + fileNames.get(i);
                 String avatar = UploadUtil.remove2FDFS("sysUser", filePath).getRemotePath();
@@ -145,7 +145,7 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
         Assert.isNotBlank(param.getOldPassword(), "OLDPASSWORD");
         Assert.isNotBlank(param.getPassword(), "PASSWORD");
         String encryptPassword = SecurityUtil.encryptPassword(param.getOldPassword());
-        SysUser sysUser = service.queryById(getCurrUser());
+        SysUser sysUser = service.queryById(getCurrUser().getId());
         Assert.notNull(sysUser, "USER", param.getId());
         if (!sysUser.getPassword().equals(encryptPassword)) {
             throw new UnauthorizedException("原密码错误.");

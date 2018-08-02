@@ -27,7 +27,7 @@ import top.ibase4j.core.exception.IllegalParameterException;
 
 /**
  * 权限管理
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:14:05
  */
@@ -52,11 +52,11 @@ public class SysAuthorizeController extends AbstractController {
     @RequiresPermissions("sys.permisson.userMenu.update")
     public Object userMenu(ModelMap modelMap, @RequestBody List<SysUserMenu> list) {
         Long userId = null;
-        Long currentUserId = getCurrUser();
+        Long currentUserId = getCurrUser().getId();
         for (SysUserMenu sysUserMenu : list) {
             if (sysUserMenu.getUserId() != null) {
                 if (userId != null && sysUserMenu.getUserId() != null
-                    && userId.longValue() != sysUserMenu.getUserId()) {
+                        && userId.longValue() != sysUserMenu.getUserId()) {
                     throw new IllegalParameterException("参数错误.");
                 }
                 userId = sysUserMenu.getUserId();
@@ -83,11 +83,11 @@ public class SysAuthorizeController extends AbstractController {
     @RequiresPermissions("sys.permisson.userRole.update")
     public Object userRole(ModelMap modelMap, @RequestBody List<SysUserRole> list) {
         Long userId = null;
-        Long currentUserId = getCurrUser();
+        Long currentUserId = getCurrUser().getId();
         for (SysUserRole sysUserRole : list) {
             if (sysUserRole.getUserId() != null) {
                 if (userId != null && sysUserRole.getUserId() != null
-                    && userId.longValue() != sysUserRole.getUserId()) {
+                        && userId.longValue() != sysUserRole.getUserId()) {
                     throw new IllegalParameterException("参数错误.");
                 }
                 userId = sysUserRole.getUserId();
@@ -114,11 +114,11 @@ public class SysAuthorizeController extends AbstractController {
     @RequiresPermissions("sys.permisson.roleMenu.update")
     public Object roleMenu(ModelMap modelMap, @RequestBody List<SysRoleMenu> list) {
         Long roleId = null;
-        Long userId = getCurrUser();
+        Long userId = getCurrUser().getId();
         for (SysRoleMenu sysRoleMenu : list) {
             if (sysRoleMenu.getRoleId() != null) {
                 if (roleId != null && sysRoleMenu.getRoleId() != null
-                    && roleId.longValue() != sysRoleMenu.getRoleId()) {
+                        && roleId.longValue() != sysRoleMenu.getRoleId()) {
                     throw new IllegalParameterException("参数错误.");
                 }
                 roleId = sysRoleMenu.getRoleId();
@@ -145,11 +145,11 @@ public class SysAuthorizeController extends AbstractController {
     @RequiresPermissions("sys.permisson.user.update")
     public Object updateUserPermission(ModelMap modelMap, @RequestBody List<SysUserMenu> list) {
         Long userId = null;
-        Long currentUserId = getCurrUser();
+        Long currentUserId = getCurrUser().getId();
         for (SysUserMenu sysUserMenu : list) {
             if (sysUserMenu.getUserId() != null) {
                 if (userId != null && sysUserMenu.getUserId() != null
-                    && userId.longValue() != sysUserMenu.getUserId()) {
+                        && userId.longValue() != sysUserMenu.getUserId()) {
                     throw new IllegalParameterException("参数错误.");
                 }
                 userId = sysUserMenu.getUserId();
@@ -176,11 +176,11 @@ public class SysAuthorizeController extends AbstractController {
     @RequiresPermissions("sys.permisson.role.update")
     public Object updateRolePermission(ModelMap modelMap, @RequestBody List<SysRoleMenu> list) {
         Long roleId = null;
-        Long userId = getCurrUser();
+        Long userId = getCurrUser().getId();
         for (SysRoleMenu sysRoleMenu : list) {
             if (sysRoleMenu.getRoleId() != null) {
                 if (roleId != null && sysRoleMenu.getRoleId() != null
-                    && roleId.longValue() != sysRoleMenu.getRoleId()) {
+                        && roleId.longValue() != sysRoleMenu.getRoleId()) {
                     throw new IllegalParameterException("参数错误.");
                 }
                 roleId = sysRoleMenu.getRoleId();
