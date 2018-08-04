@@ -601,7 +601,7 @@ CREATE TABLE IF NOT EXISTS `task_fire_log` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE `sys_lock` (
-  `key_` varchar(256) NOT NULL,
+  `key_` varchar(128) NOT NULL,
   `name_` varchar(128) NOT NULL,
   `expire_second` int(6) NOT NULL,
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
