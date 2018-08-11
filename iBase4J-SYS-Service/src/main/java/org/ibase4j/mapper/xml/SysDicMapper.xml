@@ -8,6 +8,9 @@
 			<if test="cm.type != null and cm.type != ''">
 			and type_=#{cm.type}
 			</if>
+			<if test="cm.code != null and cm.code != ''">
+			and code_=#{cm.code}
+			</if>
 			<if test="cm.parentType != null and cm.parentType != ''">
 			and parent_type=#{cm.parentType}
 			</if>

@@ -16,4 +16,6 @@ public interface SysDicService extends BaseService<SysDic> {
     Map<String, String> queryDicByTypeMap(Map<String, Object> params);
 
     Map<String, String> queryDicByType(String key);
+
+    String getText(String parentType, String parentCode, String type, String code);
 }
