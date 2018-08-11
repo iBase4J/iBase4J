@@ -83,4 +83,16 @@ public class SysDicServiceImpl extends BaseServiceImpl<SysDic, SysDicMapper> imp
         }
         return list.get(0).getCodeText();
     }
+
+    @Override
+    @Cacheable(value = Constants.CACHE_NAMESPACE + "sysDics")
+    public List<SysDic> getDics(String parentType, String parentCode, String type) {
+        Map<String, Object> map = InstanceUtil.newHashMap();
+        map.put("type", type);
+        map.put("parentType", parentType);
+        map.put("parentCode", parentCode);
+        map.put("orderBy", "type_,sort_no");
+        List<SysDic> list = queryList(map);
+        return list;
+    }
 }

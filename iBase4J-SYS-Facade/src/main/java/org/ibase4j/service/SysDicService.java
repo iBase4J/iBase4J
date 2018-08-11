@@ -1,5 +1,6 @@
 package org.ibase4j.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.model.SysDic;
@@ -18,4 +19,6 @@ public interface SysDicService extends BaseService<SysDic> {
     Map<String, String> queryDicByType(String key);
 
     String getText(String parentType, String parentCode, String type, String code);
+
+    List<SysDic> getDics(String parentType, String parentCode, String type);
 }
