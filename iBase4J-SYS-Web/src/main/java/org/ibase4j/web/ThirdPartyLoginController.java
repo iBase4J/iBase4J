@@ -24,10 +24,11 @@ import top.ibase4j.core.support.context.Resources;
 import top.ibase4j.core.support.login.LoginHelper;
 import top.ibase4j.core.support.login.ThirdPartyLoginHelper;
 import top.ibase4j.core.support.login.ThirdPartyUser;
+import top.ibase4j.model.Login;
 
 /**
  * 第三方登录控制类
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:12:56
  */
@@ -144,11 +145,11 @@ public class ThirdPartyLoginController extends BaseController<SysUser, SysUserSe
                     // 跳转到登录成功界面
                     modelMap.put("retUrl", Resources.THIRDPARTY.getString("third_login_success"));
                 } else {// 如果未获取到OpenID
-                        // 跳转到登录成功界面
+                    // 跳转到登录成功界面
                     modelMap.put("retUrl", "-1");
                 }
             } else {// 如果没有返回令牌，则直接返回到登录页面
-                    // 跳转到登录成功界面
+                // 跳转到登录成功界面
                 modelMap.put("retUrl", "-1");
             }
         } catch (Exception e) {
@@ -171,7 +172,7 @@ public class ThirdPartyLoginController extends BaseController<SysUser, SysUserSe
             sysUser = service.queryById(param.getId());
         }
         String clientIp = (String)request.getSession().getAttribute(Constants.USER_IP);
-        LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp);
+        LoginHelper.login(new Login(sysUser.getAccount(), sysUser.getPassword(), false), clientIp);
     }
 
     private String getRedirectUrl(HttpServletRequest request, String type) {
@@ -180,12 +181,12 @@ public class ThirdPartyLoginController extends BaseController<SysUser, SysUserSe
         url = Resources.THIRDPARTY.getString("authorizeURL_" + type);
         if ("wx".equals(type)) {
             url = url + "?appid=" + Resources.THIRDPARTY.getString("app_id_" + type) + "&redirect_uri=http://" + host
-                + Resources.THIRDPARTY.getString("redirect_url_" + type) + "&response_type=code&scope="
-                + Resources.THIRDPARTY.getString("scope_" + type) + "&state=fhmj";
+                    + Resources.THIRDPARTY.getString("redirect_url_" + type) + "&response_type=code&scope="
+                    + Resources.THIRDPARTY.getString("scope_" + type) + "&state=fhmj";
         } else {
             url = url + "?client_id=" + Resources.THIRDPARTY.getString("app_id_" + type) + "&response_type=code&scope="
-                + Resources.THIRDPARTY.getString("scope_" + type) + "&redirect_uri=http://" + host
-                + Resources.THIRDPARTY.getString("redirect_url_" + type);
+                    + Resources.THIRDPARTY.getString("scope_" + type) + "&redirect_uri=http://" + host
+                    + Resources.THIRDPARTY.getString("redirect_url_" + type);
         }
         return url;
     }

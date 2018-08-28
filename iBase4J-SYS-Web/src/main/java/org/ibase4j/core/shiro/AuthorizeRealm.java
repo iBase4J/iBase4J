@@ -32,7 +32,6 @@ import top.ibase4j.core.support.http.SessionUser;
 import top.ibase4j.core.support.shiro.Realm;
 import top.ibase4j.core.support.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.SecurityUtil;
-import top.ibase4j.core.util.ShiroUtil;
 
 /**
  * 权限检查类
@@ -61,7 +60,7 @@ public class AuthorizeRealm extends AuthorizingRealm implements Realm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        SessionUser user = ShiroUtil.getCurrentUser();
+        SessionUser user = (SessionUser)principals.getPrimaryPrincipal();
         List<?> list = sysAuthorizeService.queryPermissionByUserId(user.getId());
         for (Object permission : list) {
             if (StringUtils.isNotBlank((String)permission)) {
@@ -90,9 +89,9 @@ public class AuthorizeRealm extends AuthorizingRealm implements Realm {
                 sb.append(token.getPassword()[i]);
             }
             if (user.getPassword().equals(SecurityUtil.encryptPassword(sb.toString()))) {
-                ShiroUtil.saveCurrentUser(new SessionUser(user.getId(), user.getUserName(), user.getPhone()));
+                SessionUser sessionUser = new SessionUser(user.getId(), user.getUserName(), user.getPhone());
                 saveSession(user.getAccount(), token.getHost());
-                AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), sb.toString(),
+                AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(sessionUser, sb.toString(),
                     user.getUserName());
                 return authcInfo;
             }
