@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,14 +26,12 @@ import org.ibase4j.model.sys.SysUser;
 import org.ibase4j.service.sys.SysAuthorizeService;
 import org.ibase4j.service.sys.SysSessionService;
 import org.ibase4j.service.sys.SysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import top.ibase4j.core.support.http.SessionUser;
 import top.ibase4j.core.support.shiro.Realm;
 import top.ibase4j.core.support.shiro.RedisSessionDAO;
 import top.ibase4j.core.util.SecurityUtil;
-import top.ibase4j.core.util.ShiroUtil;
 
 /**
  * 权限检查类
@@ -42,12 +42,13 @@ import top.ibase4j.core.util.ShiroUtil;
 @Component
 public class AuthorizeRealm extends AuthorizingRealm implements Realm {
     private final Logger logger = LogManager.getLogger();
-    @Autowired
+    @Resource
     private SysAuthorizeService sysAuthorizeService;
-    @Autowired
+    @Resource
     private SysUserService sysUserService;
-    @Autowired
+    @Resource
     private SysSessionService sysSessionService;
+
     private RedisSessionDAO sessionDAO;
 
     @Override
@@ -59,8 +60,8 @@ public class AuthorizeRealm extends AuthorizingRealm implements Realm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Long userId = ShiroUtil.getCurrentUser().getId();
-        List<?> list = sysAuthorizeService.queryPermissionByUserId(userId);
+        SessionUser user = (SessionUser)principals.getPrimaryPrincipal();
+        List<?> list = sysAuthorizeService.queryPermissionByUserId(user.getId());
         for (Object permission : list) {
             if (StringUtils.isNotBlank((String)permission)) {
                 // 添加基于Permission的权限信息
@@ -88,9 +89,10 @@ public class AuthorizeRealm extends AuthorizingRealm implements Realm {
                 sb.append(token.getPassword()[i]);
             }
             if (user.getPassword().equals(SecurityUtil.encryptPassword(sb.toString()))) {
-                ShiroUtil.saveCurrentUser(new SessionUser(user.getId(), user.getUserName(), user.getPhone()));
+                SessionUser sessionUser = new SessionUser(user.getId(), user.getUserName(), user.getPhone(),
+                    token.isRememberMe());
                 saveSession(user.getAccount(), token.getHost());
-                AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getAccount(), sb.toString(),
+                AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(sessionUser, sb.toString(),
                     user.getUserName());
                 return authcInfo;
             }

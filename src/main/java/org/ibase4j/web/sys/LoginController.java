@@ -28,7 +28,7 @@ import top.ibase4j.model.Login;
 
 /**
  * 用户登录
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:11:21
  */
@@ -44,7 +44,7 @@ public class LoginController extends BaseController<SysUser, SysUserService> {
         Assert.notNull(user.getAccount(), "ACCOUNT");
         Assert.notNull(user.getPassword(), "PASSWORD");
         String clientIp = (String)request.getSession().getAttribute(Constants.USER_IP);
-        if (LoginHelper.login(user.getAccount(), user.getPassword(), clientIp)) {
+        if (LoginHelper.login(user, clientIp)) {
             request.setAttribute("msg", "[" + user.getAccount() + "]登录成功.");
             return setSuccessModelMap(modelMap);
         }
@@ -69,7 +69,7 @@ public class LoginController extends BaseController<SysUser, SysUserService> {
         sysUser.setPassword(SecurityUtil.encryptPassword(sysUser.getPassword()));
         service.update(sysUser);
         String clientIp = (String)request.getSession().getAttribute(Constants.USER_IP);
-        if (LoginHelper.login(sysUser.getAccount(), sysUser.getPassword(), clientIp)) {
+        if (LoginHelper.login(new Login(sysUser.getAccount(), sysUser.getPassword(), false), clientIp)) {
             return setSuccessModelMap(modelMap);
         }
         throw new IllegalArgumentException(Resources.getMessage("LOGIN_FAIL"));
