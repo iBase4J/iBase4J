@@ -89,7 +89,8 @@ public class AuthorizeRealm extends AuthorizingRealm implements Realm {
                 sb.append(token.getPassword()[i]);
             }
             if (user.getPassword().equals(SecurityUtil.encryptPassword(sb.toString()))) {
-                SessionUser sessionUser = new SessionUser(user.getId(), user.getUserName(), user.getPhone());
+                SessionUser sessionUser = new SessionUser(user.getId(), user.getUserName(), user.getPhone(),
+                    token.isRememberMe());
                 saveSession(user.getAccount(), token.getHost());
                 AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(sessionUser, sb.toString(),
                     user.getUserName());
