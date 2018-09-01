@@ -5,13 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.mapper.sys.SysMenuMapper;
+import org.ibase4j.mapper.sys.SysRoleMenuMapper;
 import org.ibase4j.model.sys.SysDic;
 import org.ibase4j.model.sys.SysMenu;
+import org.ibase4j.model.sys.SysRoleMenu;
 import org.ibase4j.service.sys.SysDicService;
 import org.ibase4j.service.sys.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.InstanceUtil;
@@ -25,6 +30,8 @@ import top.ibase4j.core.util.InstanceUtil;
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> implements SysMenuService {
     @Autowired
     private SysDicService sysDicService;
+    @Autowired
+    private SysRoleMenuMapper sysRoleMenuMapper;
 
     @Override
     public SysMenu queryById(Long id) {
@@ -111,5 +118,12 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> 
     @Override
     public List<Map<String, String>> getPermissions() {
         return mapper.getPermissions();
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        super.delete(id);
+        sysRoleMenuMapper.delete(new EntityWrapper<SysRoleMenu>(new SysRoleMenu().setMenuId(id)));
     }
 }
