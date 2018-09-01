@@ -6,9 +6,11 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.mapper.SysUserMapper;
+import org.ibase4j.mapper.SysUserRoleMapper;
 import org.ibase4j.mapper.SysUserThirdpartyMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysUser;
+import org.ibase4j.model.SysUserRole;
 import org.ibase4j.model.SysUserThirdparty;
 import org.ibase4j.service.SysAuthorizeService;
 import org.ibase4j.service.SysDeptService;
@@ -20,6 +22,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
@@ -48,6 +51,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     private SysDeptService sysDeptService;
     @Autowired
     private SysAuthorizeService sysAuthorizeService;
+    @Autowired
+    private SysUserRoleMapper sysUserRoleMapper;
 
     @Override
     @Transactional
@@ -107,6 +112,13 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
             }
         }
         return pageInfo;
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        super.delete(id);
+        sysUserRoleMapper.delete(new EntityWrapper<SysUserRole>(new SysUserRole().setUserId(id)));
     }
 
     /** 查询第三方帐号用户Id */

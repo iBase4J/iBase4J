@@ -5,15 +5,21 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.mapper.SysRoleMapper;
+import org.ibase4j.mapper.SysRoleMenuMapper;
+import org.ibase4j.mapper.SysUserRoleMapper;
 import org.ibase4j.model.SysDept;
 import org.ibase4j.model.SysRole;
+import org.ibase4j.model.SysRoleMenu;
+import org.ibase4j.model.SysUserRole;
 import org.ibase4j.service.SysAuthorizeService;
 import org.ibase4j.service.SysDeptService;
 import org.ibase4j.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
@@ -31,6 +37,10 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleMapper> 
     private SysDeptService sysDeptService;
     @Autowired
     private SysAuthorizeService sysAuthorizeService;
+    @Autowired
+    private SysUserRoleMapper sysUserRoleMapper;
+    @Autowired
+    private SysRoleMenuMapper sysRoleMenuMapper;
 
     @Override
     public SysRole queryById(Long id) {
@@ -69,5 +79,13 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleMapper> 
             }
         }
         return pageInfo;
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        super.delete(id);
+        sysUserRoleMapper.delete(new EntityWrapper<SysUserRole>(new SysUserRole().setRoleId(id)));
+        sysRoleMenuMapper.delete(new EntityWrapper<SysRoleMenu>(new SysRoleMenu().setMenuId(id)));
     }
 }

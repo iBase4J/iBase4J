@@ -5,14 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.ibase4j.mapper.SysMenuMapper;
+import org.ibase4j.mapper.SysRoleMenuMapper;
 import org.ibase4j.model.SysDic;
 import org.ibase4j.model.SysMenu;
+import org.ibase4j.model.SysRoleMenu;
 import org.ibase4j.service.SysDicService;
 import org.ibase4j.service.SysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
@@ -28,6 +32,8 @@ import top.ibase4j.core.util.InstanceUtil;
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> implements SysMenuService {
     @Autowired
     private SysDicService sysDicService;
+    @Autowired
+    private SysRoleMenuMapper sysRoleMenuMapper;
 
     @Override
     public SysMenu queryById(Long id) {
@@ -83,7 +89,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> 
         List<SysMenu> menuList = queryList(params);
         Map<String, Object> dicParam = InstanceUtil.newHashMap();
         dicParam.put("type", "CRUD");
-        dicParam.put("orderBy", "sort_no");
+        dicParam.put("orderBy", "sort_no asc");
         List<SysDic> sysDics = sysDicService.queryList(dicParam);
         List<Object> resultList = InstanceUtil.newArrayList();
         resultList.addAll(menuList);
@@ -113,5 +119,12 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> 
     @Override
     public List<Map<String, String>> getPermissions() {
         return mapper.getPermissions();
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        super.delete(id);
+        sysRoleMenuMapper.delete(new EntityWrapper<SysRoleMenu>(new SysRoleMenu().setMenuId(id)));
     }
 }
