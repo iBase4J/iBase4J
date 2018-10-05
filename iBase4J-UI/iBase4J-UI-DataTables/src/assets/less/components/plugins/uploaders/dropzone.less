@@ -1,0 +1,357 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Dropzone file uploader
+ *
+ *  Open source library that provides drag’n’drop file uploads with image previews
+ *
+ *  Version: 1.2
+ *  Latest update: Mar 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Layout
+// ------------------------------
+
+.dropzone {
+	position: relative;
+	border: 3px dashed @gray-lighter;
+	min-height: 250px;
+	border-radius: @border-radius-small;
+	background-color: #fcfcfc;
+	padding: 5px;
+
+	// Clickable wrapper
+	&.dz-clickable {
+	  	&,
+	  	.dz-message,
+	  	.dz-message span {
+		  	cursor: pointer;
+	  	}
+
+	  	* {
+			cursor: default;
+	  	}
+	}
+
+	// Message
+	.dz-message {
+		.opacity(1);
+	}
+	&.dz-started .dz-message {
+		display: none;
+	}
+
+	// Drag hover border and bg color
+	&.dz-drag-hover {
+		border-color: fade(#000, 15%);
+		background: fade(#000, 4%);
+	}
+
+	// Inside sidebar
+	.sidebar & {
+		min-height: 190px;
+		text-align: center;
+		border-width: 2px;
+
+		.dz-default.dz-message {
+			&:before {
+				font-size: (@icon-font-size * 4);
+				width: (@icon-font-size * 4);
+				height: (@icon-font-size * 4);
+				margin-left: -(@icon-font-size * 2);
+				top: 50px;
+			}
+
+			span {
+				font-size: @font-size-h6;
+			}
+
+			> span {
+				margin-top: 130px;
+			}
+		}
+	}
+
+	@media (min-width: @screen-sm) {
+		min-height: 320px;
+	}
+}
+
+
+// Messages
+// ------------------------------
+
+.dropzone {
+
+	// Default styles
+	.dz-default {
+		&.dz-message {
+			@dz-message-height: 230px;
+			position: absolute;
+			height: @dz-message-height;
+			width: 100%;
+			margin-top: -(@dz-message-height / 2);
+			top: 50%;
+			left: 0;
+			padding: @panel-body-padding;
+			text-align: center;
+			border-radius: @border-radius-large;
+			.opacity(1);
+			.transition(opacity 0.3s ease-in-out);
+
+			// Icon
+			&:before {
+				content: '\ea0e';
+				font-family: 'icomoon';
+				font-size: (@icon-font-size * 4);
+				position: absolute;
+				top: (@icon-font-size * 3);
+				width: (@icon-font-size * 4);
+				height: (@icon-font-size * 4);
+				display: inline-block;
+				left: 50%;
+				margin-left: -(@icon-font-size * 2);
+				line-height: 1;
+				z-index: 2;
+				color: #ddd;
+				text-indent: 0;
+				font-weight: normal;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+
+			// Text label
+			span {
+				font-size: @font-size-h6;
+				color: #bbb;
+				text-align: center;
+				margin-top: 140px;
+				display: block;
+				font-weight: 500;
+				text-shadow: 0 1px 1px #fff;
+
+				> span {
+					margin-top: 2px;
+					display: block;
+					color: #ccc;
+					font-size: @font-size-h6;
+				}
+			}
+
+			// Responsive styles
+			@media (min-width: @screen-sm) {
+				&:before {
+					font-size: (@icon-font-size * 5);
+					top: (@icon-font-size * 3);
+					width: (@icon-font-size * 5);
+					height: (@icon-font-size * 5);
+					margin-left: -(@icon-font-size * 2);
+				}
+
+				span {
+					font-size: @font-size-h4;
+					margin-top: 130px;
+				}
+			}
+		}
+	}
+
+	// On files drag
+	&.dz-drag-hover .dz-message {
+		.opacity(0.15);
+	}
+	&.dz-started .dz-message {
+		display: block;
+		.opacity(0);
+	}
+}
+
+
+// Preview
+// ------------------------------
+
+.dropzone,
+.dropzone-previews {
+	.dz-preview {
+		background-color: #fff;
+		position: relative;
+		display: inline-block;
+		margin: 10px;
+		vertical-align: top;
+		border: 1px solid @panel-default-border;
+		padding: 8px;
+		border-radius: @border-radius-small;
+
+		// Hide thumbnail in file preview
+		&.dz-file-preview [data-dz-thumbnail] {
+			display: none;
+		}
+
+		// Details
+		.dz-details {
+			width: 140px;
+			position: relative;
+			background-color: #fafafa;
+			padding: 8px;
+			margin-bottom: 25px;
+
+			.dz-filename {
+				overflow: hidden;
+				height: 100%;
+			}
+
+			img {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 140px;
+				height: 140px;
+			}
+
+			.dz-size {
+				position: absolute;
+				bottom: -26px;
+				left: 0;
+			}
+		}
+		&:hover {
+			.dz-details img {
+				display: none;
+			}
+		}
+
+		// Marks
+		.dz-error-mark,
+		.dz-success-mark {
+			display: none;
+			position: absolute;
+			z-index: 9;
+			right: 8px;
+
+			&:after {
+				font-family: 'icomoon';
+				display: block;
+				position: absolute;
+				right: 0;
+				bottom: 3px;
+				font-size: @font-size-small;
+				line-height: 1;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+
+			span,
+			svg {
+				display: none;
+			}
+		}
+		.dz-error-mark {
+			color: @brand-danger;
+
+			&:after {
+				content: '\ed6a';
+			}
+		}
+		.dz-success-mark {
+			color: @brand-success;
+
+			&:after {
+				content: '\ed6e';
+			}
+		}
+
+		// Error and success marks
+		&.dz-error .dz-error-mark,
+		&.dz-success .dz-success-mark {
+			display: block;
+			.opacity(1);
+		}
+
+		// Uploading progress
+		.dz-progress {
+			position: absolute;
+			top: 118px;
+			left: 8px;
+			right: 8px;
+			height: 4px;
+			background-color: @gray-lighter;
+			display: none;
+			border-radius: @border-radius-small;
+
+			.dz-upload {
+				display: block;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				width: 0%;
+				height: 100%;
+				background-color: @brand-info;
+				.transition(width 0.3s ease-in-out);
+			}
+		}
+		&.dz-processing .dz-progress {
+			display: block;
+		}
+		&.dz-success {
+			.dz-progress {
+				display: block;
+				.opacity(0);
+				.transition(opacity 0.4s ease-in-out);
+			}
+		}
+
+		// Error message
+		.dz-error-message {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: fade(#f5f5f5, 80%);
+			margin: 8px;
+			padding: 8px;
+			color: @brand-danger;
+			max-width: 100%;
+			z-index: 5;
+			.opacity(0);
+			.transition(opacity 0.3s ease-in-out);
+		}
+		&.dz-error {
+			&:hover .dz-error-message {
+				display: block;
+				.opacity(1);
+			}
+
+			.dz-progress .dz-upload {
+				background: @brand-danger;
+			}
+		}
+
+		// Image preview
+		&.dz-image-preview:hover {
+			.dz-details img {
+				display: block;
+				.opacity(0.1);
+			}
+		}
+
+		// Remove button
+		a.dz-remove {
+			background-color: #fafafa;
+			border-radius: @border-radius-small;
+			border: 1px solid @gray-lighter;
+			display: block;
+			padding: 5px;
+			text-align: center;
+			color: @text-muted;
+			margin-top: 35px;
+			cursor: pointer;
+
+			&:hover {
+				color: @text-color;
+				background-color: #f5f5f5;
+			}
+		}
+	}
+}

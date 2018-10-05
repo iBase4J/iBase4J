@@ -1,0 +1,6 @@
+.form-group div[class*=col-lg-]:not(.control-label)+div[class*=col-lg-] {
+	margin-top: 0px !important;
+}
+legend {
+    font-size: 16px !important;
+}

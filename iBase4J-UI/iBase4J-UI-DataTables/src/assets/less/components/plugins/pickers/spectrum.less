@@ -1,0 +1,634 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Spectrum color picker
+*
+*  Flexible and powerful jQuery colorpicker library
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base styles
+// ------------------------------
+
+// Base
+.sp-sat,
+.sp-val,
+.sp-top-inner,
+.sp-color,
+.sp-hue,
+.sp-clear-enabled .sp-clear,
+.sp-preview-inner,
+.sp-alpha-inner,
+.sp-thumb-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+// Hide containers by default
+.sp-container.sp-input-disabled .sp-input-container,
+.sp-container.sp-buttons-disabled .sp-button-container,
+.sp-container.sp-palette-buttons-disabled .sp-palette-button-container,
+.sp-palette-only .sp-picker-container,
+.sp-palette-disabled .sp-palette-container,
+.sp-initial-disabled .sp-initial {
+    display: none;
+}
+.sp-hidden {
+    display: none!important;
+}
+.sp-cf {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+// Elements
+.sp-preview,
+.sp-alpha,
+.sp-thumb-el {
+    position: relative;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==);
+}
+
+// Previews
+.sp-preview-inner,
+.sp-alpha-inner,
+.sp-thumb-inner {
+    display: block;
+}
+
+// Picker and palette containers
+.sp-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    z-index: @zindex-dropdown;
+    background-color: @dropdown-bg;
+    border: 1px solid @dropdown-border;
+    border-radius: @border-radius-base;
+    overflow: hidden;
+    .box-sizing(content-box);
+    .box-shadow(0 1px 3px fade(#000, 10%));
+
+    &.sp-flat {
+        position: relative;
+        overflow-x: auto;
+        max-width: 100%;
+        white-space: nowrap
+    }
+}
+.sp-picker-container,
+.sp-palette-container {
+    display: block;
+    white-space: nowrap;
+    vertical-align: top;
+    position: relative;
+    padding: 10px;
+    padding-bottom: 300px;
+    margin-bottom: -290px;
+
+    @media (min-width: @screen-sm) {
+        display: inline-block;
+    }
+}
+.sp-picker-container {
+    width: 220px;
+}
+
+// Disable user selection
+.sp-container,
+.sp-replacer,
+.sp-preview,
+.sp-dragger,
+.sp-slider,
+.sp-alpha,
+.sp-clear,
+.sp-alpha-handle,
+.sp-container.sp-dragging .sp-input,
+.sp-container button  {
+    .user-select(none);
+}
+
+
+
+// Picker elements
+// ------------------------------
+
+// Colors and hue areas
+.sp-top {
+    position: relative;
+    width: 100%;
+    display: block;
+}
+.sp-color {
+    right: 20%;
+}
+.sp-hue {
+    left: 85%;
+    height: 100%;
+}
+.sp-clear-enabled .sp-hue {
+    top: 40px;
+    height: 75%;
+}
+.sp-fill {
+    padding-top: 80%;
+}
+
+// Alpha
+.sp-alpha-enabled {
+    .sp-top {
+        margin-bottom: 26px;
+    }
+
+    .sp-alpha {
+        display: block;
+    }
+}
+.sp-alpha-handle {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 5px;
+    left: 50%;
+    cursor: pointer;
+    border: 1px solid @gray-light;
+    background-color: #fff;
+    border-radius: @border-radius-large;
+}
+.sp-alpha {
+    display: none;
+    position: absolute;
+    bottom: -16px;
+    right: 0;
+    left: 0;
+    height: 6px;
+}
+
+// Clear
+.sp-clear {
+    display: none;
+}
+.sp-clear-display {
+    cursor: pointer;
+
+    // Icon
+    &:after {
+        content: '\ee6e';
+        display: block;
+        font-family: 'icomoon';
+        font-size: @icon-font-size;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        line-height: 30px;
+    }
+
+    // Hide icon in previews
+    .sp-preview &:after,
+    .sp-initial &:after {
+        content: none;
+    }
+}
+.sp-clear-enabled .sp-clear {
+    display: block;
+    left: 85%;
+    height: 30px;
+    text-align: center;
+    color: #999;
+    .box-shadow(0 0 0 1px #ddd inset);
+}
+
+// Input
+.sp-input-container {
+    margin-top: 10px;
+
+    .sp-initial-disabled & {
+        width: 100%;
+    }
+}
+.sp-input {
+    border: 1px solid @input-border;
+    padding: @padding-base-vertical @padding-base-horizontal;
+    width: 100%;
+    background-color: @input-bg;
+    border-radius: @input-border-radius;
+    outline: 0;
+    color: @input-color;
+}
+
+// Initial
+.sp-initial {
+    margin-top: 10px;
+
+    span {
+        width: 50%;
+        height: 25px;
+        display: block;
+        float: left;
+
+        .sp-thumb-inner {
+            height: 25px;
+            width: 100%;
+            display: block;
+        }
+    }
+}
+
+// Dragger and slider
+.sp-dragger {
+    height: 5px;
+    width: 5px;
+    border: 1px solid #fff;
+    background-color: #333;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.sp-slider {
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    height: 4px;
+    left: -2px;
+    right: -2px;
+    border: 1px solid @gray-light;
+    background-color: #fff;
+    border-radius: @border-radius-base;
+}
+
+
+
+// Color preview
+// ------------------------------
+
+// Replacer (the little preview div that shows up instead of the <input>)
+.sp-replacer {
+    overflow: hidden;
+    cursor: pointer;
+    padding: 5px;
+    display: inline-block;
+    border: 1px solid @input-border;
+    background-color: #fafafa;
+    vertical-align: middle;
+    border-radius: @input-border-radius;
+
+    // States
+    &:hover,
+    &.sp-active {
+        border-color: darken(@input-border, 10%);
+        color: @text-color;
+
+        .sp-dd {
+            color: @text-color;
+        }
+    }
+
+    // Custom color replacer
+    &[class*=bg-] {
+        &,
+        &:hover,
+        &:focus {
+            border-color: transparent;
+        }
+
+        .sp-dd {
+            color: #fff;
+        }
+
+        &.sp-active .sp-dd {
+            color: #fff;
+        }
+    }
+}
+
+// Disabled state
+.sp-replacer {
+    &.sp-disabled {
+        cursor: default;
+        .opacity(0.8);
+
+        &:not([class*=bg-]) {
+            &:hover,
+            &:focus {
+                border-color: @input-border;
+            }
+        }
+
+        .sp-dd,
+        &[class*=bg-] .sp-dd {
+            color: @text-muted;
+        }
+    }
+}
+
+// Color preview
+.sp-preview {
+    position: relative;
+    width: 26px;
+    height: 24px;
+    margin-right: 5px;
+    float: left;
+    z-index: 0;
+
+    .sp-preview-inner,
+    .sp-clear-display {
+        .box-shadow(0 0 0 1px fade(#000, 5%));
+    }
+
+    .sp-replacer[class*=bg-] & {
+        .sp-preview-inner {
+            .box-shadow(0 0 0 1px fade(#000, 50%));
+        }
+    }
+}
+
+// Arrow
+.sp-dd {
+    float: left;
+    font-size: 0;
+    position: relative;
+    margin: 3px 1px;
+    color: @gray-light;
+
+    // Arrow icon
+    &:after {
+        content: '\e9c5';
+        display: block;
+        font-family: 'icomoon';
+        font-size: @icon-font-size;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+
+
+// Gradients
+// ------------------------------
+
+// Gradients for hue, saturation and value instead of images.  Not pretty... but it works
+.sp-sat {
+    background-image: -webkit-gradient(linear,  0 0, 100% 0, from(#FFF), to(rgba(204, 154, 129, 0)));
+    background-image: -webkit-linear-gradient(left, #FFF, rgba(204, 154, 129, 0));
+    background-image: -moz-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
+    background-image: -o-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
+    background-image: -ms-linear-gradient(left, #fff, rgba(204, 154, 129, 0));
+    background-image: linear-gradient(to right, #fff, rgba(204, 154, 129, 0));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr=#FFFFFFFF, endColorstr=#00CC9A81)";
+    filter : progid:DXImageTransform.Microsoft.gradient(GradientType = 1, startColorstr='#FFFFFFFF', endColorstr='#00CC9A81');
+    .box-shadow(0 0 0 1px #ccc inset);
+}
+.sp-val {
+    background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#000000), to(rgba(204, 154, 129, 0)));
+    background-image: -webkit-linear-gradient(bottom, #000000, rgba(204, 154, 129, 0));
+    background-image: -moz-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
+    background-image: -o-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
+    background-image: -ms-linear-gradient(bottom, #000, rgba(204, 154, 129, 0));
+    background-image: linear-gradient(to top, #000, rgba(204, 154, 129, 0));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00CC9A81, endColorstr=#FF000000)";
+    filter : progid:DXImageTransform.Microsoft.gradient(startColorstr='#00CC9A81', endColorstr='#FF000000');
+}
+.sp-hue {
+    background: -moz-linear-gradient(top, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+    background: -ms-linear-gradient(top, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+    background: -o-linear-gradient(top, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#ff0000), color-stop(0.17, #ffff00), color-stop(0.33, #00ff00), color-stop(0.5, #00ffff), color-stop(0.67, #0000ff), color-stop(0.83, #ff00ff), to(#ff0000));
+    background: -webkit-linear-gradient(top, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+    background: linear-gradient(to bottom, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+}
+
+
+//
+// IE filters do not support multiple color stops.
+// Generate 6 divs, line them up, and do two color gradients for each.
+// Yes, really.
+//
+
+.sp-1 {
+    height: 17%;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0000', endColorstr='#ffff00');
+}
+.sp-2 {
+    height: 16%;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffff00', endColorstr='#00ff00');
+}
+.sp-3 {
+    height: 17%;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ff00', endColorstr='#00ffff');
+}
+.sp-4 {
+    height: 17%;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffff', endColorstr='#0000ff');
+}
+.sp-5 {
+    height: 16%;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0000ff', endColorstr='#ff00ff');
+}
+.sp-6 {
+    height: 17%;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff00ff', endColorstr='#ff0000');
+}
+
+
+
+// Color palettes
+// ------------------------------
+
+// Basic styles
+.sp-palette {
+    max-width: 220px;
+}
+.sp-palette-container {
+    .sp-palette-only & {
+        border: 0;
+    }
+
+    @media (min-width: @screen-sm) {
+        border-right: 1px solid @dropdown-border;
+    }
+}
+
+// Palette thumbs
+.sp-thumb-el {
+    position: relative;
+
+    .sp-palette & {
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+    }
+
+    // Add 1px inner semi-transparent border
+    .sp-thumb-inner {
+        .box-shadow(0 0 0 1px fade(#000, 10%) inset);
+
+        &:hover {
+            .box-shadow(0 0 0 1px fade(#000, 25%) inset);
+        }
+    }
+
+    .sp-palette & {
+        width: 16px;
+        height: 16px;
+
+        + .sp-thumb-el {
+            margin-left: 5px;
+        }
+
+        &.sp-thumb-active {
+            .box-shadow(0 0 0 2px fade(#000, 10%) inset);
+
+            .sp-thumb-inner {
+                .box-shadow(0 0 0 1px fade(#000, 25%) inset);
+            }
+        }
+    }
+}
+
+// Adding checkmark to the active thumb
+.sp-palette {
+    .sp-thumb-active {
+        &.sp-thumb-dark,
+        &.sp-thumb-light {
+            .sp-thumb-inner {
+                &:after {
+                    content: '\e600';
+                    display: block;
+                    font-family: 'icomoon';
+                    font-size: @icon-font-size;
+                    line-height: 1;
+                    color: #fff;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                }
+            }
+        }
+
+        &.sp-thumb-light .sp-thumb-inner:after {
+            color: @text-color;
+        }
+    }
+}
+
+// Thumbnail row
+.sp-palette-row {
+    font-size: 0;
+
+    & + .sp-palette-row {
+        margin-top: 5px;
+    }
+
+    &:empty {
+        margin-top: 0;
+    }
+}
+
+
+
+// Picker buttons
+// ------------------------------
+
+// Button base
+.sp-cancel,
+.sp-choose,
+.sp-palette-toggle {
+    border: 0;
+    border-radius: @border-radius-small;
+    padding: @padding-small-vertical @padding-small-horizontal;
+    float: left;
+    width: 48%;
+    text-align: center;
+    outline: 0;
+}
+
+// Button containers
+.sp-palette-button-container,
+.sp-button-container {
+    margin-top: 10px;
+    text-align: center;
+
+    // In colored container
+    .sp-container[class*=bg-] & {
+        a,
+        button {
+            background-color: fade(#000, 25%);
+            color: #fff;
+            border-color: transparent;
+        }
+    }
+}
+
+// Button states
+.sp-cancel,
+.sp-palette-toggle {
+    border: 1px solid transparent;
+
+    // Hover state
+    &:hover,
+    &:focus {
+        .box-shadow(0 0 0 100px fade(#000, 1%) inset);
+    }
+
+    // Active state
+    &:active {
+        .box-shadow(0 0 0 100px fade(#000, 3%) inset);
+    }
+}
+
+// Choose button
+.sp-choose {
+    border: 1px solid transparent;
+
+    // Hover state
+    &:hover,
+    &:focus {
+        .box-shadow(0 0 0 100px fade(#000, 5%) inset);
+    }
+
+    // Active state
+    &:active {
+        .box-shadow(0 0 0 100px fade(#000, 10%) inset);
+    }
+
+}
+
+// Cancel and palette toggle buttons
+.sp-cancel,
+.sp-palette-toggle {
+    color: @btn-default-color;
+    margin-right: 5px;
+    background-color: @btn-default-bg;
+    margin-right: 4%;
+    border-color: @btn-default-border;
+
+    &:hover,
+    &:focus {
+        color: @btn-default-color;
+    }
+}
+.sp-palette-toggle {
+    margin-right: 0;
+    width: auto;
+    float: none;
+}
+
+// Choose button
+.sp-choose {
+    color: #fff;
+    background-color: @color-slate-500;
+}

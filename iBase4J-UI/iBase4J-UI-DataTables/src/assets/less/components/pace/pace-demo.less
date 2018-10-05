@@ -1,0 +1,369 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Progress bars
+ *
+ *  Static demo of Pace themes. For demonstration purposes only. DO NOT use it in live project
+ *
+ *  Version: 1.0
+ *  Latest update: Mar 2, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Dark squares for pace themes
+// ------------------------------
+
+.pace-demo {
+  display: inline-block;
+  background-color: @color-slate-800;
+  border-radius: @border-radius-base;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  vertical-align: middle;
+  padding: @panel-body-padding;
+  position: relative;
+
+  .pace_progress {
+    display: none;
+  }
+}
+
+
+// Xbox Mini theme
+// ------------------------------
+
+.theme_xbox_xs {
+  position: relative;
+  width: 44px;
+  height: 44px;
+
+  // Activity
+  .pace_activity {
+    width: 44px;
+    height: 44px;
+    .animation(rotation 1.5s ease-in-out infinite);
+
+    &,
+    &:before,
+    &:after {
+      border-radius: 50%;
+      border: 1px solid transparent;
+      border-top-color: #fff;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      .animation(rotation 2s ease-in-out infinite);
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      .animation(rotation 1s ease-in-out infinite);
+    }
+  }
+}
+
+// Add % text
+.theme_xbox_with_text span {
+  display: block;
+  margin-top: 7px;
+  color: #fff;
+}
+
+
+// Xbox Small theme
+// ------------------------------
+
+.theme_xbox_sm {
+  &:extend(.theme_xbox_xs all);
+
+  .pace_activity {
+    &,
+    &:before,
+    &:after {
+      border-width: 2px;
+    }
+
+  }
+}
+
+
+// Xbox theme
+// ------------------------------
+
+.theme_xbox {
+  &:extend(.theme_xbox_xs all);
+
+  .pace_activity {
+    &,
+    &:before,
+    &:after {
+      border-width: 3px;
+    }
+  }
+}
+
+
+// Perspective theme
+// ------------------------------
+
+.theme_perspective {
+  pointer-events: none;
+  .user-select (none);
+  width: 30px;
+  height: 30px;
+
+  .pace_activity {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #fff;
+    .animation(perspective 1.2s infinite ease-in-out);
+  }
+}
+
+@keyframes perspective {
+  0% { transform: perspective(120px); }
+  50% { transform: perspective(120px) rotateY(180deg); }
+  100% { transform: perspective(120px) rotateY(180deg) rotateX(180deg); }
+}
+
+@-webkit-keyframes perspective {
+  0% { -webkit-transform: perspective(120px); }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg); }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg); }
+}
+
+@-moz-keyframes perspective {
+  0% { -moz-transform: perspective(120px); }
+  50% { -moz-transform: perspective(120px) rotateY(180deg); }
+  100% { -moz-transform: perspective(120px) rotateY(180deg) rotateX(180deg); }
+}
+
+.theme_perspective_with_text span {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 100%;
+  color: #fff;
+}
+
+
+// Squares theme
+// ------------------------------
+
+.theme_squares {
+  width: 30px;
+  height: 30px;
+
+  // Activity
+  .pace_activity {
+    &:before,
+    &:after {
+      position: absolute;
+      content: "";
+      border: 2px solid #fff;
+      width: 20px;
+      height: 20px;
+      margin-left: -10px;
+      margin-top: 5px;
+    }
+
+    &:before {
+      width: 30px;
+      height: 30px;
+      margin-left: -15px;
+      margin-top: 0;
+      .animation(rotation_reverse 2s linear infinite);
+    }
+
+    &:after {
+      .animation(rotation 2s linear infinite);
+    }
+  }
+}
+
+// Text
+.theme_squares_with_text span {
+  &:extend(.theme_perspective_with_text span);
+}
+
+
+// Tail theme
+// ------------------------------
+
+.theme_tail {
+  width: 30px;
+  height: 30px;
+
+  // Activity
+  .pace_activity {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 3px solid transparent;
+    border-left-color: #ffffff;
+    .animation(rotation 1.1s infinite linear);
+  }
+}
+
+// Text
+.theme_tail_with_text span {
+  &:extend(.theme_perspective_with_text span);
+}
+
+
+// Circle tail theme
+// ------------------------------
+
+.theme_tail_circle {
+  width: 30px;
+  height: 30px;
+
+  // Activity
+  .pace_activity {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 3px solid fade(#000, 10%);
+    border-left-color: #ffffff;
+    .animation (rotation 1.1s infinite linear);
+  }
+}
+
+
+// Corners theme
+// ------------------------------
+
+.theme_corners {
+  height: 30px;
+  width: 30px;
+
+  // Activity
+  .pace_activity {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-top: 9px;
+    margin-bottom: 3px;
+    background-color: #fff;
+    border-radius: 10px;
+    .animation(corners 1.5s ease infinite);
+  }
+}
+
+@keyframes corners {
+    0% { transform: rotate(0deg); }
+    50% { transform: scale(1.5) rotate(180deg); border-radius: 0; }
+    100% { transform: rotate(360deg); }
+}
+
+@-webkit-keyframes corners {
+    0% { -webkit-transform: rotate(0deg); }
+    50% { -webkit-transform: scale(2) rotate(180deg); border-radius: 0; }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@-moz-keyframes corners {
+    0% { -moz-transform: rotate(0deg); }
+    50% { -moz-transform: scale(2) rotate(180deg); border-radius: 0; }
+    100% { -moz-transform: rotate(360deg); }
+}
+
+// Text
+.theme_corners_with_text span {
+  &:extend(.theme_perspective_with_text span);
+}
+
+
+// Radar theme
+// ------------------------------
+
+.theme_radar {
+  width: 30px;
+  height: 30px;
+
+  // Activity
+  .pace_activity {
+    display: inline-block;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: #fff;
+    border-bottom-color: #fff;
+    .animation(rotation 1.1s infinite linear);
+  }
+}
+
+// Text
+.theme_radar_with_text span {
+  &:extend(.theme_perspective_with_text span);
+}
+
+
+// Bar theme
+// ------------------------------
+
+.theme_bar {
+  position: relative;
+  width: 200px;
+  height: 6px;
+  background-color: fade(#000, 40%);
+  border-radius: 100px;
+  .box-shadow (0 0 5px fade(#fff, 10%));
+
+  .pace_progress {
+    max-width: 198px;
+    display: block;
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    height: 4px;
+    background: #3FCF96;
+    color: #fff;
+    line-height: 32px;
+    border-radius: 100px;
+  }
+}
+
+
+// Bar Small theme
+// ------------------------------
+
+.theme_bar_sm {
+  &:extend(.theme_bar all);
+  height: 5px;
+
+  .pace_progress {
+    height: 3px;
+  }
+}
+
+
+// Bar Mini theme
+// ------------------------------
+
+.theme_bar_xs {
+  &:extend(.theme_bar all);
+  height: 4px;
+
+  .pace_progress {
+    height: 2px;
+  }
+}

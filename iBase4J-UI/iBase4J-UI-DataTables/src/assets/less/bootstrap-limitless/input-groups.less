@@ -1,0 +1,107 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Input groups component
+*
+*  Overrides for input groups bootstrap component
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base
+// -------------------------
+
+.input-group {
+
+    // Make icon to be always on top
+    .form-control-feedback {
+        z-index: 3;
+    }
+}
+
+// Sizing options
+// -------------------------
+
+// XLarge size
+.input-group-xlg > .form-control,
+.input-group-xlg > .input-group-addon,
+.input-group-xlg > .input-group-btn > .btn {
+    height: @input-height-xlarge;
+    padding: @padding-xlarge-vertical @padding-xlarge-horizontal;
+    font-size: @font-size-xlarge;
+    line-height: @line-height-xlarge;
+}
+
+// Mini size
+.input-group-xs > .form-control,
+.input-group-xs > .input-group-addon,
+.input-group-xs > .input-group-btn > .btn {
+    height: @input-height-mini;
+    padding: @padding-xs-vertical @padding-xs-horizontal;
+    font-size: @font-size-small;
+    line-height: @line-height-small;
+}
+
+
+// Transparent input group
+// -------------------------
+
+.input-group-transparent {
+    .input-group-addon {
+        background-color: transparent;
+        border-color: transparent;
+        padding: 0;
+    }
+
+    .form-control {
+        background-color: transparent;
+        border-color: transparent;
+        cursor: pointer;
+        width: auto;
+        padding: 0;
+
+        &:hover,
+        &:focus {
+            border-color: transparent;
+        }
+    }
+}
+
+
+// Text input groups
+// -------------------------
+.input-group-addon {
+
+    // Icon
+    > i {
+        display: block;
+        top: 0;
+    }
+
+    // Checkbox, radio
+    .checker,
+    .choice {
+        display: block;
+        margin-top: ((@line-height-computed - @checkbox-size) / 2);
+    }
+
+    // Sizing
+    &.input-xlg {
+        padding: (@padding-large-vertical + 2) @padding-large-horizontal;
+        font-size: @font-size-large;
+        border-radius: @border-radius-base;
+    }
+    &.input-xs {
+        padding: @padding-xs-vertical @padding-xs-horizontal;
+        font-size: @font-size-base;
+        border-radius: @border-radius-small;
+    }
+    &.input-sm {
+        font-size: @font-size-base;
+    }
+    &.input-lg {
+        border-radius: @border-radius-base;
+    }
+}

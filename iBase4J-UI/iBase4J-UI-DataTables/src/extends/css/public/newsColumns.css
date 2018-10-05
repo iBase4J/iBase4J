@@ -1,0 +1,16 @@
+.datatable-header .btn {
+    margin-right: 20px;
+    position: relative;
+    top: -3px;
+}
+.datatable-header .btn i{
+    margin-right: 5px;
+    position: relative;
+    top: -3px;
+}
+table td label{
+    margin-bottom: 0;
+}
+.newsColumnsDelete .modal-dialog{
+    margin-top: 20%;
+}

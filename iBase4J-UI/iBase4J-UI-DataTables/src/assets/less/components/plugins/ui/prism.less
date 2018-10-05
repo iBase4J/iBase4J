@@ -1,0 +1,208 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Prism
+ *
+ *  Lightweight, extensible syntax highlighter
+ *
+ *  Version: 1.0
+ *  Latest update: May 10, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+// Base
+code,
+pre {
+	&[class*="language-"] {
+		text-shadow: 0 1px #fff;
+		word-break: normal;
+		line-height: 1.5;
+		direction: ltr;
+
+		@media print {
+			text-shadow: none;
+		}
+	}
+
+}
+
+// Token colors
+.token {
+	&.comment,
+	&.prolog,
+	&.doctype,
+	&.cdata,
+	&.punctuation {
+		color: #999;
+	}
+
+	&.property,
+	&.tag,
+	&.boolean,
+	&.number,
+	&.constant,
+	&.symbol {
+		color: #905;
+	}
+
+	&.selector,
+	&.attr-name,
+	&.string,
+	&.builtin {
+		color: #690;
+	}
+
+	&.operator,
+	&.entity,
+	&.url,
+	.language-css &.string,
+	.style &.string,
+	&.variable {
+		color: #a67f59;
+		background: hsla(0,0%,100%,.5);
+	}
+
+	&.atrule,
+	&.attr-value,
+	&.keyword {
+		color: #07a;
+	}
+
+	&.function {
+		color: #DD4A68;
+	}
+
+	&.regex,
+	&.important {
+		color: #e90;
+	}
+
+	&.important {
+		font-weight: bold;
+	}
+
+	&.entity {
+		cursor: help;
+	}
+}
+
+.namespace {
+	.opacity(0.7);
+}
+
+// Line highlight
+.line-highlight {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-top: @content-padding-large;
+	background: fade(#85ee95, 12%);  
+	pointer-events: none;
+	white-space: pre;
+	line-height: inherit;
+
+	&:before,
+	&:after {
+		content: attr(data-start);
+		position: absolute;
+		top: 0px;
+		left: 10px;
+		padding: 2px;
+		text-align: center;
+		font-size: 10px;
+		color: @text-muted;
+	}
+
+	&[data-end]:after {
+		content: attr(data-end);
+		top: auto;
+		bottom: 0;
+	}
+}
+
+// Line numbers
+.line-numbers {
+	pre& {
+		position: relative;
+		padding-left: 50px;
+		counter-reset: linenumber;
+
+		> code {
+			position: relative;
+		}
+	}
+
+	.line-numbers-rows {
+		position: absolute;
+		pointer-events: none;
+		top: 0;
+		font-size: 100%;
+		left: -50px;
+		width: 36px; // works for line-numbers below 1000 lines
+		letter-spacing: -1px;
+		border-right: 1px solid #999;
+		.user-select(none);
+
+		> span {
+			pointer-events: none;
+			display: block;
+			counter-increment: linenumber;
+
+			&:before {
+				content: counter(linenumber);
+				color: @text-muted;
+				display: block;
+				padding-right: 10px;
+				text-align: right;
+			}
+		}
+	}
+}
+
+// Code blocks
+pre {
+	&[class*="language-"] {
+		overflow: auto;
+		position: relative;
+		border-left-width: 3px;
+		border-left-color: @brand-primary;
+	    background-color: #fdfdfd;
+	    background-image: -webkit-linear-gradient(transparent 50%, fade(@color-primary-700, 2.5%) 50%);
+	    background-image: -moz-linear-gradient(transparent 50%, fade(@color-primary-700, 2.5%) 50%);
+	    background-image: -ms-linear-gradient(transparent 50%, fade(@color-primary-700, 2.5%) 50%);
+	    background-image: -o-linear-gradient(transparent 50%, fade(@color-primary-700, 2.5%) 50%);
+	    background-image: linear-gradient(transparent 50%, fade(@color-primary-700, 2.5%) 50%);
+	    background-size: 3em 3em;
+	    background-origin: content-box;
+		.border-left-radius(0);
+
+		> code[data-language] {
+			display: block;
+
+			&:before {
+				content: attr(data-language);
+				background-color: #f8f8f8;
+				display: inline-block;
+				position: absolute;
+				top: 0px;
+				right: 0px;
+				font-size: @font-size-mini;
+				border-radius: 0 0 0 2px;
+				padding: 4px 8px;
+				text-shadow: none;
+				color: @text-color;
+				border-left: 1px solid #ddd;
+				border-bottom: 1px solid #ddd;
+			}
+		}
+
+		&.line-numbers > code[data-language]:before {
+			top: -15px;
+			right: -15px;
+		}
+	}
+
+	&[data-line] {
+		position: relative;
+		padding-left: 36px;
+	}
+}

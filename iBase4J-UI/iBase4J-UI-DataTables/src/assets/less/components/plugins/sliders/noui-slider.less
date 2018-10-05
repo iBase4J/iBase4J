@@ -1,0 +1,567 @@
+/* ------------------------------------------------------------------------------
+*
+*  # NoUI slider
+*
+*  Styles for NoUI range slider plugin
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Functional styling
+// ------------------------------
+
+// Container
+.noUi-target {
+    border-radius: 100px;
+    position: relative;
+    direction: ltr;
+    .box-shadow(inset 0 1px 1px fade(#000, 10%));
+
+    &,
+    & * {
+        .user-select(none);
+    }
+}
+
+// Base
+.noUi-base {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+// Slider origin
+.noUi-origin {
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border-radius: 100px;
+}
+
+// Inherit cursor
+.noUi-state-drag * {
+    cursor: inherit !important;
+}
+
+// Background
+.noUi-background {
+    background-color: @gray-lighter;
+    .box-shadow(inset 0 1px 1px fade(#000, 10%));
+}
+
+// Connector
+.noUi-connect {
+    background-color: @color-slate-500;
+}
+
+// Disabled state
+[disabled] {
+
+    // Background
+    .noUI-background {
+        .opacity(0.75);
+    }
+
+    // Handle
+    .noUi-handle {
+        cursor: @cursor-disabled;
+    }
+}
+
+
+// Orientations
+// ------------------------------
+
+// Horizontal orientation
+.noUi-horizontal {
+    height: @slider-base-size;
+
+    .noUi-handle {
+        top: -(@slider-base-size * 1.5) + (@slider-base-size / 2);
+        left: -(@slider-base-size * 1.5);
+    }
+
+    &.noUi-extended {
+        padding: 0 @content-padding-base;
+
+        .noUi-origin  {
+            right: -(@content-padding-base);
+        }
+    }
+
+    // If has pips
+    &.has-pips {
+        margin-bottom: 35px;
+    }
+}
+
+// Vertical orientation
+.noUi-vertical {
+    display: inline-block;
+    width: @slider-base-size;
+    height: 150px;
+
+    & + & {
+        margin-left: @content-padding-large;
+    }
+
+    .noUi-handle {
+        top: -(@slider-base-size * 1.5);
+        left: -(@slider-base-size * 1.5) + (@slider-base-size / 2);
+    }
+
+    &.noUi-extended {
+        padding: @content-padding-base 0;
+
+        .noUi-origin  {
+            bottom: -(@content-padding-base);
+        }
+    }
+
+    // If has pips
+    &.has-pips {
+        margin-right: 35px;
+    }
+}
+
+
+// Handles and cursors
+// ------------------------------
+
+// Draggable
+.noUi-dragable {
+    cursor: w-resize;
+
+    .noUi-vertical & {
+        cursor: n-resize;
+    }
+}
+
+// Handle
+.noUi-handle {
+    width: (@slider-base-size * 3);
+    height: (@slider-base-size * 3);
+    background-color: #fcfcfc;
+    cursor: pointer;
+    top: -(@slider-base-size);
+    position: relative;
+    z-index: 1;
+    border-radius: 50%;
+    border: 1px solid #bbb;
+
+    .noUi-stacking & {
+        z-index: 10; // this class is applied to the lower origin when its values is > 50%
+    }
+
+    // Inner circle
+    &:after {
+        content: '';
+        display: inline-block;
+        width: @slider-base-size;
+        height: @slider-base-size;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -(@slider-base-size / 2);
+        margin-left: -(@slider-base-size / 2);
+        background-color: @color-slate-600;
+        border-radius: 50%;
+    }
+
+    // Hover state
+    &:hover,
+    &:focus {
+        background-color: #f8f8f8;
+
+        // Mute circle
+        &:after {
+            .opacity(0.9);
+        }
+    }
+
+    // Active state
+    &:active {
+        background-color: #fefefe;
+
+        // Mute circle
+        &:after {
+            .opacity(0.9);
+        }
+    }
+}
+
+// White handle
+.noui-slider-white .noUi-handle:after {
+    content: none;
+}
+
+
+// Sizing
+// ------------------------------
+
+// Large
+.noui-slider-lg {
+
+    // Handle
+    .noUi-handle {
+        width: (@slider-large-size * 3);
+        height: (@slider-large-size * 3);
+        top: -(@slider-large-size);
+
+        // Inner circle
+        &:after {
+            width: @slider-large-size;
+            height: @slider-large-size;
+            margin-top: -(@slider-large-size / 2);
+            margin-left: -(@slider-large-size / 2);
+        }
+    }
+
+    // Horizontal
+    &.noUi-horizontal {
+        height: @slider-large-size;
+
+        .noUi-handle {
+            left: -(@slider-large-size * 1.5);
+        }
+    }
+
+    // Vertical
+    &.noUi-vertical {
+        width: @slider-large-size;
+
+        .noUi-handle {
+            top: -(@slider-large-size * 1.5);
+            left: -(@slider-large-size * 1.5) + (@slider-large-size / 2);
+        }
+    }
+}
+
+// Small and mini have the same handle size
+.noui-slider-sm,
+.noui-slider-xs {
+
+    // Handle
+    .noUi-handle {
+        width: (@slider-small-size * 3);
+        height: (@slider-small-size * 3);
+        top: -(@slider-small-size);
+
+        // Inner circle
+        &:after {
+            width: @slider-small-size;
+            height: @slider-small-size;
+            margin-top: -(@slider-small-size / 2);
+            margin-left: -(@slider-small-size / 2);
+        }
+    }
+}
+
+// Small
+.noui-slider-sm {
+
+    // Horizontal
+    &.noUi-horizontal {
+        height: @slider-small-size;
+
+        .noUi-handle {
+            top: -(@slider-small-size * 1.5) + (@slider-small-size / 2);
+            left: -(@slider-small-size * 1.5);
+        }
+    }
+
+    // Vertical
+    &.noUi-vertical {
+        width: @slider-small-size;
+
+        .noUi-handle {
+            top: -(@slider-small-size * 1.5);
+            left: -(@slider-small-size * 1.5) + (@slider-small-size / 2);
+        }
+    }
+}
+
+// Mini
+.noui-slider-xs {
+
+    // Horizontal
+    &.noUi-horizontal {
+        height: @slider-mini-size;
+
+        .noUi-handle {
+            top: -(@slider-small-size * 1.5) + (@slider-mini-size / 2);
+            left: -(@slider-small-size * 1.5);
+        }
+    }
+
+    // Vertical
+    &.noUi-vertical {
+        width: @slider-mini-size;
+
+        .noUi-handle {
+            top: -(@slider-small-size * 1.5);
+            left: -(@slider-small-size * 1.5) + (@slider-mini-size / 2);
+        }
+    }
+}
+
+
+// Solid slider handle
+// ------------------------------
+
+.noui-slider-solid {
+
+    // Handle
+    .noUi-handle {
+        background-color: @gray-light;
+        border-color: @gray-light;
+        .box-shadow(none);
+
+        // Inner circle
+        &:after {
+            background-color: #fff;
+            .transition(opacity ease-in-out 0.2s);
+        }
+
+        // Change circle opacity on hover
+        &:hover,
+        &:focus {
+            &:after {
+                .opacity(0.75);
+            }
+        }
+    }
+
+    // Handle colors
+    &.noui-slider-primary .noUi-handle {
+        background-color: @brand-primary;
+        border-color: @brand-primary;
+    }
+
+    &.noui-slider-danger .noUi-handle {
+        background-color: @brand-danger;
+        border-color: @brand-danger;
+    }
+
+    &.noui-slider-success .noUi-handle {
+        background-color: @brand-success;
+        border-color: @brand-success;
+    }
+
+    &.noui-slider-warning .noUi-handle {
+        background-color: @brand-warning;
+        border-color: @brand-warning;
+    }
+
+    &.noui-slider-info .noUi-handle {
+        background-color: @brand-info;
+        border-color: @brand-info;
+    }
+}
+
+
+// Contextual colors
+// ------------------------------
+
+// Primary
+.noui-slider-primary {
+    .noUi-connect,
+    &.noUi-connect {
+        background-color: @brand-primary;
+    }
+}
+
+// Danger
+.noui-slider-danger {
+    .noUi-connect,
+    &.noUi-connect {
+        background-color: @brand-danger;
+    }
+}
+
+// Success
+.noui-slider-success {
+    .noUi-connect,
+    &.noUi-connect {
+        background-color: @brand-success;
+    }
+}
+
+// Warning
+.noui-slider-warning {
+    .noUi-connect,
+    &.noUi-connect {
+        background-color: @brand-warning;
+    }
+}
+
+// Info
+.noui-slider-info {
+    .noUi-connect,
+    &.noUi-connect {
+        background-color: @brand-info;
+    }
+}
+
+
+// Tooltip
+// ------------------------------
+
+.noUi-tooltip {
+    display: none;
+    position: absolute;
+    border-radius: @border-radius-base;
+    background: @gray-dark;
+    color: #fff;
+    top: -43px;
+    padding: @padding-base-vertical @padding-base-horizontal;
+    left: 50%;
+    margin-left: -27px;
+    text-align: center;
+    font-size: @font-size-small;
+    width: 54px;
+
+    &:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border: 5px solid transparent;
+        border-top-color: @gray-dark;
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        margin-left: -5px;
+    }
+
+    .noUi-handle:hover & {
+        display: block;
+    }
+}
+
+
+// Pips
+// ------------------------------
+
+// Base
+.noUi-pips {
+    position: absolute;
+    color: @text-muted;
+}
+
+
+//
+// Values base
+//
+
+// Default
+.noUi-value {
+    width: 40px;
+    position: absolute;
+    text-align: center;
+    font-size: @font-size-mini;
+}
+
+// Sub
+.noUi-value-sub {
+    color: #ccc;
+    font-size: @font-size-mini;
+}
+
+
+//
+// Markings base
+//
+
+.noUi-marker {
+    position: absolute;
+    background-color: #ccc;
+}
+
+
+//
+// Horizontal layout
+//
+
+// Pips
+.noUi-pips-horizontal {
+    padding-top: 10px;
+    height: 35px;
+    top: 100%;
+    left: 0;
+    width: 100%;
+}
+
+// Values
+.noUi-value-horizontal {
+    margin-left: -20px;
+    padding-top: 15px;
+
+    &.noUi-value-sub {
+        padding-top: 10px;
+    }
+}
+
+// Markers
+.noUi-marker-horizontal {
+
+    // Default marker
+    &.noUi-marker {
+        width: 1px;
+        height: 3px;
+    }
+
+    // Sub marker
+    &.noUi-marker-sub {
+        height: 6px;
+    }
+
+    // Large marker
+    &.noUi-marker-large {
+        height: 10px;
+    }
+}
+
+
+//
+// Vertical layout
+//
+
+// Pips
+.noUi-pips-vertical {
+    padding-left: 10px;
+    height: 100%;
+    top: 0;
+    left: 100%;
+}
+
+// Values
+.noUi-value-vertical {
+    width: 15px;
+    margin-left: 15px;
+    margin-top: -6px;
+}
+
+// Markers
+.noUi-marker-vertical {
+
+    // Default marker
+    &.noUi-marker {
+        width: 3px;
+        height: 1px;
+    }
+
+    // Sub marker
+    &.noUi-marker-sub {
+        width: 6px;
+    }
+
+    // Large marker
+    &.noUi-marker-large {
+        width: 10px;
+    }
+}

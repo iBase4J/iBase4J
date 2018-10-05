@@ -1,0 +1,798 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Select2 selects
+*
+*  Styles for select2.js - custom select plugin
+*
+*  Version: 1.3
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Select base
+// ------------------------------
+
+.select2-container {
+    outline: 0;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+}
+
+
+// Single select
+// ------------------------------
+
+.select2-selection--single {
+    cursor: pointer;
+    outline: 0;
+    display: block;
+    height: @input-height-base;
+    padding: @padding-base-vertical 0;
+    line-height: @line-height-base;
+    position: relative;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    border-radius: @input-border-radius;
+    .user-select(none);
+
+    // Darken on hover
+    &:hover,
+    &:focus,
+    .select2-container--open & {
+        .box-shadow(0 0 0 100px fade(#000, 1%) inset);
+    }
+
+    // Allow custom background color
+    &:not([class*=bg-]) {
+        background-color: @input-bg;
+        color: @text-color;
+
+        // Allow custom border color
+        &:not([class*=border-]) {
+            border-color: @input-border;
+        }
+    }
+
+    // Apply darker hover color
+    &[class*=bg-] {
+        &:hover,
+        &:focus,
+        .select2-container--open & {
+            .box-shadow(0 0 0 100px fade(#000, 2.5%) inset);
+        }
+
+        // Placeholder
+        .select2-selection__placeholder {
+            color: #fff;
+
+            // In disabled mode
+            .select2-container--disabled & {
+                color: fade(#fff, 75%);
+            }
+        }
+    }
+
+    // Result text
+    .select2-selection__rendered {
+        display: block;
+        padding-left: @padding-base-horizontal;
+        padding-right: ((@padding-base-horizontal * 2) + @padding-base-vertical);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        // Icons
+        > i {
+            margin-right: @content-padding-small;
+        }
+    }
+
+    // Clear selection button
+    .select2-selection__clear {
+        position: relative;
+        cursor: pointer;
+        float: right;
+        font-size: 0;
+        line-height: 1;
+        margin-top: ((@line-height-computed - @icon-font-size) / 2);
+        margin-left: 5px;
+        .opacity(0.75);
+
+        // Add hover state effect
+        &:hover {
+            .opacity(1);
+        }
+
+        // Cross icon
+        &:after {
+            content: '\ed6b';
+            font-family: 'icomoon';
+            display: inline-block;
+            font-size: @icon-font-size;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    }
+
+    // Placeholder
+    .select2-selection__placeholder {
+        color: @text-muted;
+    }
+
+    // Dropdown arrow
+    .select2-selection__arrow {
+
+        // Arrow icon
+        &:after {
+            content: '\e9c5';
+            font-family: 'Icomoon';
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            right: @padding-base-horizontal;
+            margin-top: -(@icon-font-size / 2);
+            font-size: @icon-font-size;
+            line-height: 1;
+            color: inherit;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        // Change icon when menu is opened
+        .select2-container--open &:after {
+            content: '\e9c6';
+        }
+
+        // Hide default arrow
+        b {
+            display: none;
+        }
+    }
+
+    // Disabled menu
+    .select2-container--disabled & {
+        cursor: @cursor-disabled;
+        .box-shadow(none);
+
+        // Disabled state for container
+        &:not([class*=bg-]) {
+            background-color: @input-bg-disabled;
+            color: @gray-light;
+        }
+
+        // Disabled state for custom colored container
+        &[class*=bg-] {
+            .box-shadow(0 0 0 100px fade(#fff, 25%) inset);
+        }
+
+        // Hide clear button
+        .select2-selection__clear {
+            display: none;
+        }
+    }
+}
+
+
+
+// Multiple select
+// ------------------------------
+
+.select2-selection--multiple {
+    display: block;
+    border: 1px solid transparent;
+    border-radius: @input-border-radius;
+    cursor: text;
+    outline: 0;
+    .user-select(none);
+
+    // Allow custom background color
+    &:not([class*=bg-]) {
+        background-color: @input-bg;
+
+        // Allow custom border color
+        &:not([class*=border-]) {
+            border-color: @input-border;
+        }
+    }
+
+    // Result text
+    .select2-selection__rendered {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        list-style: none;
+        margin: 0;
+        padding: 0 @tags-spacing @tags-spacing @tags-spacing;
+        width: 100%;
+    }
+
+    // Placeholder
+    .select2-selection__placeholder {
+        color: @text-muted;
+    }
+
+    // Disabled multiselect
+    .select2-container--disabled & {
+
+        // Disabled state for container
+        &:not([class*=bg-]) {
+            background-color: @input-bg-disabled;
+            color: @gray-light;
+        }
+
+        // Disabled state for custom colored container
+        &[class*=bg-] {
+            .box-shadow(0 0 0 100px fade(#fff, 25%) inset);
+
+            .select2-selection__choice {
+                .opacity(0.9);
+            }
+        }
+
+        // Apply disabled cursor for all elements
+        &,
+        .select2-selection__choice,
+        .select2-search__field {
+            cursor: @cursor-disabled;
+        }
+    }
+
+    // Choices
+    .select2-selection__choice {
+        background-color: @color-slate-700;
+        color: #fff;
+        border-radius: @border-radius-base;
+        cursor: default;
+        float: left;
+        margin-right: @tags-spacing;
+        margin-top: @tags-spacing;
+        padding: @padding-base-vertical @padding-base-horizontal;
+
+        // Icons
+        > i {
+            margin-right: @content-padding-small;
+        }
+
+        // Remover
+        .select2-selection__choice__remove {
+            cursor: pointer;
+            float: right;
+            font-size: @font-size-large;
+            margin-top: ((@line-height-computed - @font-size-large) / 2);
+            line-height: 1;
+            margin-left: @element-horizontal-spacing;
+            .opacity(0.75);
+
+            // Highlight on hover
+            &:hover {
+                .opacity(1);
+            }
+        }
+
+        // Disable choice
+        .select2-container--disabled & {
+            .opacity(0.6);
+
+            // Hide remover
+            .select2-selection__choice__remove {
+                display: none;
+            }
+        }
+    }
+
+    // Search
+    .select2-search--inline {
+        float: left;
+
+        // Search field
+        .select2-search__field {
+            font-size: 100%;
+            margin-top: @tags-spacing;
+            padding: @padding-base-vertical 0;
+            background-color: transparent;
+            border: 0;
+            outline: 0;
+            margin-left: @padding-base-vertical;
+            -webkit-appearance: textfield;
+
+            // Cancel button
+            &::-webkit-search-cancel-button {
+                -webkit-appearance: none;
+            }
+        }
+    }
+}
+
+
+
+// Select results
+// ------------------------------
+
+// Dropdown
+.select2-dropdown {
+    background-color: @dropdown-bg;
+    color: @dropdown-link-color;
+    border: 1px solid @dropdown-border;
+    border-radius: @border-radius-base;
+    display: block;
+    position: absolute;
+    left: -100000px;
+    width: 100%;
+    z-index: 9999;
+    .box-shadow(0 1px 3px fade(#000, 10%));
+}
+
+
+// Results container
+.select2-results {
+    display: block;
+}
+
+
+// Options list
+.select2-results__options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    // Add scrollbar to first level list
+    .select2-results > & {
+        padding-bottom: @list-spacing;
+        max-height: 250px;
+        overflow-y: auto;
+
+        // Add top spacing if search is hidden
+        .select2-search--hide + & {
+            padding-top: @list-spacing;
+        }
+    }
+
+    .select2-results:first-child > & {
+        padding-top: @list-spacing;
+    }
+}
+
+
+// Option
+.select2-results__option {
+    padding: @padding-base-vertical @padding-base-horizontal;
+    cursor: pointer;
+    .user-select(none);
+
+    // Add 1px gap between options
+    & + & {
+        margin-top: 1px;
+    }
+
+    // Icons
+    i {
+        margin-right: @content-padding-small;
+
+        // Do not display empty icon
+        &.icon-undefined {
+            display: none;
+        }
+    }
+
+    // Option group
+    &[role=group] {
+        padding: 0;
+    }
+
+    // Highlighted option (hover state)
+    &.select2-results__option--highlighted {
+        background-color: @dropdown-link-hover-bg;
+    }
+
+    // Disabled option
+    &[aria-disabled=true] {
+        color: @text-muted;
+        cursor: @cursor-disabled;
+
+        // In colored menu
+        .select2-dropdown[class*=bg-] & {
+            color: fade(#fff, 60%);
+        }
+    }
+
+    // Selected option
+    &[aria-selected=true] {
+        background-color: @dropdown-link-active-bg;
+        color: #fff; 
+    }
+
+    // Add double horizontal spacing for nested options
+    .select2-results__options--nested > & {
+        padding-left: (@padding-base-horizontal * 2);
+        padding-right: (@padding-base-horizontal * 2);
+    }
+}
+
+
+// Option group title
+.select2-results__group {
+    display: block;
+    padding: @padding-base-vertical @padding-base-horizontal;
+    font-size: @font-size-mini;
+    line-height: @line-height-mini;
+    text-transform: uppercase;
+    cursor: default;
+    margin-top: @list-spacing;
+    margin-bottom: @list-spacing;
+
+    // Remove top spacing from the first group title
+    .select2-results__option:first-child > & {
+        margin-top: 0;
+    }
+}
+
+
+//
+// Messages
+//
+
+// Results
+.select2-results__message {
+    color: @text-muted;
+    cursor: default;
+
+    // Mute if in colored dropdown
+    .select2-dropdown[class*=bg-] & {
+        color: fade(#fff, 75%);
+    }
+}
+
+// Loading
+.select2-results__option.loading-results {
+    padding-top: 0;
+
+    // Add extra top spacing
+    + .select2-results__option {
+        margin-top: @list-spacing;
+    }
+}
+
+// Load more for infinite scroll
+.select2-results__option--load-more {
+    text-align: center;
+    margin-top: @list-spacing;
+    cursor: default;
+}
+
+
+//
+// Opened dropdown
+//
+
+.select2-container--open {
+
+    // Dropdown
+    .select2-dropdown {
+        left: 0;
+    }
+
+    // If opened above
+    .select2-dropdown--above {
+        border-bottom: 0;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        // Add border for colored menu
+        &[class*=bg-] {
+            border-bottom: 1px solid fade(#fff, 20%);
+        }
+    }
+    &.select2-container--above {
+        .select2-selection--single,
+        .select2-selection--multiple {
+            .border-top-radius(0);
+        }
+    }
+
+    // If opened below
+    .select2-dropdown--below {
+        border-top: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+
+        // Add border for colored menu
+        &[class*=bg-] {
+            border-top: 1px solid fade(#fff, 20%);
+        }
+    }
+    &.select2-container--below {
+        .select2-selection--single,
+        .select2-selection--multiple {
+            .border-bottom-radius(0);
+        }
+    }
+}
+
+
+//
+// Search inside dropdown
+//
+
+.select2-search--dropdown {
+    display: block;
+    position: relative;
+    padding: @padding-base-horizontal;
+
+    // Add search icon
+    &:after {
+        content: '\e98e';
+        font-family: 'icomoon';
+        position: absolute;
+        top: 50%;
+        left: (@padding-base-horizontal * 2);
+        color: inherit;
+        display: block;
+        font-size: @font-size-small;
+        margin-top: -(@font-size-small / 2);
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        .opacity(0.6);
+    }
+
+    // Remove top spacing from the results message
+    + .select2-results .select2-results__message:first-child {
+        padding-top: 0;
+    }
+
+    // Search field
+    .select2-search__field {
+        height: @input-height-base;
+        padding: @padding-base-vertical @padding-base-horizontal;
+        padding-left: ((@padding-base-horizontal * 2) + @font-size-small);
+        border-radius: @input-border-radius;
+        border: 1px solid @input-border;
+        outline: 0;
+        width: 100%;
+
+        // Cancel button
+        &::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+    }
+
+    // Hidden search field
+    &.select2-search--hide {
+        display: none;
+    }
+}
+
+
+
+// Optional sizing
+// ------------------------------
+
+// Large
+.select-lg {
+
+    // Single
+    &.select2-selection--single {
+        height: @input-height-large;
+        padding: @padding-large-vertical 0;
+        font-size: @font-size-large;
+
+        .select2-selection__rendered {
+            padding-left: @padding-large-horizontal;
+            padding-right: ((@padding-large-horizontal * 2) + 4);
+        }
+
+        .select2-selection__arrow:after {
+            right: @padding-large-horizontal;
+        }
+    }
+
+    // Multiple
+    &.select2-selection--multiple {
+        .select2-selection__choice {
+            padding: @padding-large-vertical @padding-large-horizontal;
+            font-size: @font-size-large;
+        }
+
+        .select2-search--inline .select2-search__field {
+            padding: @padding-large-vertical 0;
+            font-size: @font-size-large;
+        }
+    }
+}
+
+// Small
+.select-sm {
+
+    // Single
+    &.select2-selection--single {
+        height: @input-height-small;
+        padding: @padding-small-vertical 0;
+        font-size: @font-size-small;
+        line-height: @line-height-small;
+
+        .select2-selection__rendered {
+            padding-left: @padding-small-horizontal;
+            padding-right: ((@padding-small-horizontal * 2) + 4);
+        }
+
+        .select2-selection__arrow:after {
+            right: @padding-small-horizontal;
+        }
+    }
+
+    // Multiple
+    &.select2-selection--multiple {
+        .select2-selection__choice {
+            padding: @padding-small-vertical @padding-small-horizontal;
+            font-size: @font-size-small;
+            line-height: @line-height-small;
+        }
+
+        .select2-search--inline .select2-search__field {
+            padding: @padding-small-vertical 0;
+        }
+    }
+}
+
+// Mini
+.select-xs {
+
+    // Single
+    &.select2-selection--single {
+        height: @input-height-mini;
+        padding: @padding-xs-vertical 0;
+        font-size: @font-size-small;
+        line-height: @line-height-small;
+
+        .select2-selection__rendered {
+            padding-left: @padding-xs-horizontal;
+            padding-right: ((@padding-xs-horizontal * 2) + 4);
+        }
+
+        .select2-selection__arrow:after {
+            right: @padding-xs-horizontal;
+        }
+    }
+
+    // Multiple
+    &.select2-selection--multiple {
+        .select2-selection__choice {
+            padding: @padding-xs-vertical @padding-xs-horizontal;
+            font-size: @font-size-small;
+            line-height: @line-height-small;
+        }
+
+        .select2-search--inline .select2-search__field {
+            padding: @padding-xs-vertical 0;
+            font-size: @font-size-small;
+            line-height: @line-height-small;
+        }
+    }
+}
+
+
+
+// Custom colors
+// ------------------------------
+
+// Multiple selection choices
+.select2-selection--multiple[class*=bg-] {
+    .select2-selection__choice {
+        background-color: fade(#000, 25%);
+    }
+}
+
+
+// Dropdown menu
+.select2-dropdown[class*=bg-] {
+    
+    // Search field
+    .select2-search--dropdown .select2-search__field {
+        background-color: fade(#000, 20%);
+        border-color: transparent;
+        color: #fff;
+    }
+
+    // Selected item
+    .select2-results__option[aria-selected=true] {
+        background-color: fade(#000, 20%);
+    }
+
+    // Hovered item
+    .select2-results__option--highlighted {
+        background-color: fade(#000, 10%);
+    }
+}
+
+
+
+// Misc
+// ------------------------------
+
+// Mask
+.select2-close-mask {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-height: 100%;
+    min-width: 100%;
+    height: auto;
+    width: auto;
+    z-index: 99;
+    background-color: #fff;
+    .opacity(0);
+}
+
+// Accessible
+.select2-hidden-accessible {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: fixed !important;
+    width: 1px !important;
+}
+
+
+
+// Loading remote data example demo
+// ------------------------------
+
+// Results
+.select2-result-repository {
+    padding-top: @padding-base-vertical;
+    padding-bottom: @padding-base-vertical;
+}
+
+// Avatar
+.select2-result-repository__avatar {
+    float: left;
+    width: 60px;
+    margin-right: @content-padding-base;
+
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: 100px;
+    }
+}
+
+// Meta
+.select2-result-repository__meta {
+    margin-left: 70px;
+}
+
+// Title
+.select2-result-repository__title {
+    font-weight: 500;
+    word-wrap: break-word;
+    margin-bottom: 2px;
+}
+
+// Data
+.select2-result-repository__forks,
+.select2-result-repository__stargazers,
+.select2-result-repository__watchers {
+    display: inline-block;
+    font-size: @font-size-small;
+}
+
+// Description
+.select2-result-repository__description {
+    font-size: @font-size-small;
+}
+
+// Add spacing for data
+.select2-result-repository__forks,
+.select2-result-repository__stargazers {
+    margin-right: @content-padding-base;
+}

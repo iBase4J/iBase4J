@@ -1,0 +1,33 @@
+
+.department, .role {
+    position: relative;
+}
+
+.department .departmentContent, .role .roleContent {
+    display: none;
+    position: absolute;
+    overflow-y: auto;
+    z-index: 999;
+    border: 1px solid #ddd;
+    max-height: 300px;
+    background-color: #fff;
+}
+
+.status {
+    display: inline-block !important;
+    margin-left: 76px;
+    position: relative;
+}
+
+.status-text {
+    position: absolute;
+    left: -54px;
+    top: 8px;
+}
+.status .selectboxit-container .selectboxit{
+    width: 111.86px;
+}
+.status .selectboxit-list {
+    min-width: 111.86px;
+    padding: 0;
+}

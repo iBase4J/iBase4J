@@ -1,0 +1,3586 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Custom color system
+*
+*  Custom color system styles, includes background, border and text colors
+*
+*  Version: 1.1
+*  Latest update: Oct 20, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Import color variables
+@import "palette.less";
+
+
+// Background colors
+// ------------------------------
+
+// Basic colors
+.bg {
+
+    // Primary
+    &-primary {
+        background-color: @color-primary-500;
+        border-color: @color-primary-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-primary-300;
+            border-color: @color-primary-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-primary-400;
+            border-color: @color-primary-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-primary-600;
+            border-color: @color-primary-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-primary-700;
+            border-color: @color-primary-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-primary-800;
+            border-color: @color-primary-800;
+            color: #fff;
+        }
+    }
+
+    // Danger
+    &-danger {
+        background-color: @color-danger-500;
+        border-color: @color-danger-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-danger-300;
+            border-color: @color-danger-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-danger-400;
+            border-color: @color-danger-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-danger-600;
+            border-color: @color-danger-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-danger-700;
+            border-color: @color-danger-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-danger-800;
+            border-color: @color-danger-800;
+            color: #fff;
+        }
+    }
+
+    // Success
+    &-success {
+        background-color: @color-success-500;
+        border-color: @color-success-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-success-300;
+            border-color: @color-success-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-success-400;
+            border-color: @color-success-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-success-600;
+            border-color: @color-success-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-success-700;
+            border-color: @color-success-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-success-800;
+            border-color: @color-success-800;
+            color: #fff;
+        }
+    }
+
+    // Warning
+    &-warning {
+        background-color: @color-warning-500;
+        border-color: @color-warning-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-warning-300;
+            border-color: @color-warning-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-warning-400;
+            border-color: @color-warning-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-warning-600;
+            border-color: @color-warning-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-warning-700;
+            border-color: @color-warning-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-warning-800;
+            border-color: @color-warning-800;
+            color: #fff;
+        }
+    }
+
+    // Info
+    &-info {
+        background-color: @color-info-500;
+        border-color: @color-info-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-info-300;
+            border-color: @color-info-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-info-400;
+            border-color: @color-info-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-info-600;
+            border-color: @color-info-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-info-700;
+            border-color: @color-info-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-info-800;
+            border-color: @color-info-800;
+            color: #fff;
+        }
+    }
+
+    // Pink
+    &-pink {
+        background-color: @color-pink-500;
+        border-color: @color-pink-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-pink-300;
+            border-color: @color-pink-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-pink-400;
+            border-color: @color-pink-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-pink-600;
+            border-color: @color-pink-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-pink-700;
+            border-color: @color-pink-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-pink-800;
+            border-color: @color-pink-800;
+            color: #fff;
+        }
+    }
+
+    // Violet
+    &-violet {
+        background-color: @color-violet-500;
+        border-color: @color-violet-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-violet-300;
+            border-color: @color-violet-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-violet-400;
+            border-color: @color-violet-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-violet-600;
+            border-color: @color-violet-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-violet-700;
+            border-color: @color-violet-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-violet-800;
+            border-color: @color-violet-800;
+            color: #fff;
+        }
+    }
+
+    // Purple
+    &-purple {
+        background-color: @color-purple-500;
+        border-color: @color-purple-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-purple-300;
+            border-color: @color-purple-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-purple-400;
+            border-color: @color-purple-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-purple-600;
+            border-color: @color-purple-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-purple-700;
+            border-color: @color-purple-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-purple-800;
+            border-color: @color-purple-800;
+            color: #fff;
+        }
+    }
+
+    // Indigo
+    &-indigo {
+        background-color: @color-indigo-500;
+        border-color: @color-indigo-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-indigo-300;
+            border-color: @color-indigo-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-indigo-400;
+            border-color: @color-indigo-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-indigo-600;
+            border-color: @color-indigo-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-indigo-700;
+            border-color: @color-indigo-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-indigo-800;
+            border-color: @color-indigo-800;
+            color: #fff;
+        }
+    }
+
+    // Blue
+    &-blue {
+        background-color: @color-blue-500;
+        border-color: @color-blue-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-blue-300;
+            border-color: @color-blue-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-blue-400;
+            border-color: @color-blue-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-blue-600;
+            border-color: @color-blue-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-blue-700;
+            border-color: @color-blue-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-blue-800;
+            border-color: @color-blue-800;
+            color: #fff;
+        }
+    }
+
+    // Teal
+    &-teal {
+        background-color: @color-teal-500;
+        border-color: @color-teal-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-teal-300;
+            border-color: @color-teal-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-teal-400;
+            border-color: @color-teal-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-teal-600;
+            border-color: @color-teal-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-teal-700;
+            border-color: @color-teal-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-teal-800;
+            border-color: @color-teal-800;
+            color: #fff;
+        }
+    }
+
+    // Green
+    &-green {
+        background-color: @color-green-500;
+        border-color: @color-green-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-green-300;
+            border-color: @color-green-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-green-400;
+            border-color: @color-green-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-green-600;
+            border-color: @color-green-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-green-700;
+            border-color: @color-green-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-green-800;
+            border-color: @color-green-800;
+            color: #fff;
+        }
+    }
+
+    // Orange
+    &-orange {
+        background-color: @color-orange-500;
+        border-color: @color-orange-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-orange-300;
+            border-color: @color-orange-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-orange-400;
+            border-color: @color-orange-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-orange-600;
+            border-color: @color-orange-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-orange-700;
+            border-color: @color-orange-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-orange-800;
+            border-color: @color-orange-800;
+            color: #fff;
+        }
+    }
+
+    // Brown
+    &-brown {
+        background-color: @color-brown-500;
+        border-color: @color-brown-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-brown-300;
+            border-color: @color-brown-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-brown-400;
+            border-color: @color-brown-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-brown-600;
+            border-color: @color-brown-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-brown-700;
+            border-color: @color-brown-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-brown-800;
+            border-color: @color-brown-800;
+            color: #fff;
+        }
+    }
+
+    // Grey
+    &-grey {
+        background-color: @color-grey-500;
+        border-color: @color-grey-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-grey-300;
+            border-color: @color-grey-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-grey-400;
+            border-color: @color-grey-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-grey-600;
+            border-color: @color-grey-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-grey-700;
+            border-color: @color-grey-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-grey-800;
+            border-color: @color-grey-800;
+            color: #fff;
+        }
+    }
+
+    // Slate
+    &-slate {
+        background-color: @color-slate-500;
+        border-color: @color-slate-500;
+        color: #fff;
+
+        &-300 {
+            background-color: @color-slate-300;
+            border-color: @color-slate-300;
+            color: #fff;
+        }
+
+        &-400 {
+            background-color: @color-slate-400;
+            border-color: @color-slate-400;
+            color: #fff;
+        }
+
+        &-600 {
+            background-color: @color-slate-600;
+            border-color: @color-slate-600;
+            color: #fff;
+        }
+
+        &-700 {
+            background-color: @color-slate-700;
+            border-color: @color-slate-700;
+            color: #fff;
+        }
+
+        &-800 {
+            background-color: @color-slate-800;
+            border-color: @color-slate-800;
+            color: #fff;
+        }
+    }
+
+    // White
+    &-white {
+        background-color: #fff;
+        color: @text-color;
+    }
+}
+
+// Alpha colors
+.alpha {
+
+    // Primary
+    &-primary {
+        background-color: @color-primary-50;
+        border-color: @color-primary-600;
+    }
+
+    // Danger
+    &-danger {
+        background-color: @color-danger-50;
+        border-color: @color-danger-600;
+    }
+
+    // Success
+    &-success {
+        background-color: @color-success-50;
+        border-color: @color-success-600;
+    }
+
+    // Warning
+    &-warning {
+        background-color: @color-warning-50;
+        border-color: @color-warning-600;
+    }
+
+    // Info
+    &-info {
+        background-color: @color-info-50;
+        border-color: @color-info-600;
+    }
+
+    // Pink
+    &-pink {
+        background-color: @color-pink-50;
+        border-color: @color-pink-600;
+    }
+
+    // Violet
+    &-violet {
+        background-color: @color-violet-50;
+        border-color: @color-violet-600;
+    }
+
+    // Purple
+    &-purple {
+        background-color: @color-purple-50;
+        border-color: @color-purple-600;
+    }
+
+    // Indino
+    &-indigo {
+        background-color: @color-indigo-50;
+        border-color: @color-indigo-600;
+    }
+
+    // Blue
+    &-blue {
+        background-color: @color-blue-50;
+        border-color: @color-blue-600;
+    }
+
+    // Teal
+    &-teal {
+        background-color: @color-teal-50;
+        border-color: @color-teal-600;
+    }
+
+    // Green
+    &-green {
+        background-color: @color-green-50;
+        border-color: @color-green-600;
+    }
+
+    // Orange
+    &-orange {
+        background-color: @color-orange-50;
+        border-color: @color-orange-600;
+    }
+
+    // Brown
+    &-brown {
+        background-color: @color-brown-50;
+        border-color: @color-brown-600;
+    }
+
+    // Grey
+    &-grey {
+        background-color: @color-grey-50;
+        border-color: @color-grey-600;
+    }
+
+    // Slate
+    &-slate {
+        background-color: @color-slate-50;
+        border-color: @color-slate-600;
+    }
+}
+
+
+// Single border colors
+// ------------------------------
+
+.border {
+
+    // Primary
+    &-primary {
+        border-color: @color-primary-500;
+
+        &-300 {
+            border-color: @color-primary-300;
+        }
+
+        &-400 {
+            border-color: @color-primary-400;
+        }
+
+        &-600 {
+            border-color: @color-primary-600;
+        }
+
+        &-700 {
+            border-color: @color-primary-700;
+        }
+
+        &-800 {
+            border-color: @color-primary-800;
+        }
+    }
+
+    // Danger
+    &-danger {
+        border-color: @color-danger-500;
+
+        &-300 {
+            border-color: @color-danger-300;
+        }
+
+        &-400 {
+            border-color: @color-danger-400;
+        }
+
+        &-600 {
+            border-color: @color-danger-600;
+        }
+
+        &-700 {
+            border-color: @color-danger-700;
+        }
+
+        &-800 {
+            border-color: @color-danger-800;
+        }
+    }
+
+    // Success
+    &-success {
+        border-color: @color-success-500;
+
+        &-300 {
+            border-color: @color-success-300;
+        }
+
+        &-400 {
+            border-color: @color-success-400;
+        }
+
+        &-600 {
+            border-color: @color-success-600;
+        }
+
+        &-700 {
+            border-color: @color-success-700;
+        }
+
+        &-800 {
+            border-color: @color-success-800;
+        }
+    }
+
+    // Warning
+    &-warning {
+        border-color: @color-warning-500;
+
+        &-300 {
+            border-color: @color-warning-300;
+        }
+
+        &-400 {
+            border-color: @color-warning-400;
+        }
+
+        &-600 {
+            border-color: @color-warning-600;
+        }
+
+        &-700 {
+            border-color: @color-warning-700;
+        }
+
+        &-800 {
+            border-color: @color-warning-800;
+        }
+    }
+
+    // Info
+    &-info {
+        border-color: @color-info-500;
+
+        &-300 {
+            border-color: @color-info-300;
+        }
+
+        &-400 {
+            border-color: @color-info-400;
+        }
+
+        &-600 {
+            border-color: @color-info-600;
+        }
+
+        &-700 {
+            border-color: @color-info-700;
+        }
+
+        &-800 {
+            border-color: @color-info-800;
+        }
+    }
+
+    // Pink
+    &-pink {
+        border-color: @color-pink-500;
+
+        &-300 {
+            border-color: @color-pink-300;
+        }
+
+        &-400 {
+            border-color: @color-pink-400;
+        }
+
+        &-600 {
+            border-color: @color-pink-600;
+        }
+
+        &-700 {
+            border-color: @color-pink-700;
+        }
+
+        &-800 {
+            border-color: @color-pink-800;
+        }
+    }
+
+    // Violet
+    &-violet {
+        border-color: @color-violet-500;
+
+        &-300 {
+            border-color: @color-violet-300;
+        }
+
+        &-400 {
+            border-color: @color-violet-400;
+        }
+
+        &-600 {
+            border-color: @color-violet-600;
+        }
+
+        &-700 {
+            border-color: @color-violet-700;
+        }
+
+        &-800 {
+            border-color: @color-violet-800;
+        }
+    }
+
+    // Purple
+    &-purple {
+        border-color: @color-purple-500;
+
+        &-300 {
+            border-color: @color-purple-300;
+        }
+
+        &-400 {
+            border-color: @color-purple-400;
+        }
+
+        &-600 {
+            border-color: @color-purple-600;
+        }
+
+        &-700 {
+            border-color: @color-purple-700;
+        }
+
+        &-800 {
+            border-color: @color-purple-800;
+        }
+    }
+
+    // Indino
+    &-indigo {
+        border-color: @color-indigo-500;
+
+        &-300 {
+            border-color: @color-indigo-300;
+        }
+
+        &-400 {
+            border-color: @color-indigo-400;
+        }
+
+        &-600 {
+            border-color: @color-indigo-600;
+        }
+
+        &-700 {
+            border-color: @color-indigo-700;
+        }
+
+        &-800 {
+            border-color: @color-indigo-800;
+        }
+    }
+
+    // Blue
+    &-blue {
+        border-color: @color-blue-500;
+
+        &-300 {
+            border-color: @color-blue-300;
+        }
+
+        &-400 {
+            border-color: @color-blue-400;
+        }
+
+        &-600 {
+            border-color: @color-blue-600;
+        }
+
+        &-700 {
+            border-color: @color-blue-700;
+        }
+
+        &-800 {
+            border-color: @color-blue-800;
+        }
+    }
+
+    // Teal
+    &-teal {
+        border-color: @color-teal-500;
+
+        &-300 {
+            border-color: @color-teal-300;
+        }
+
+        &-400 {
+            border-color: @color-teal-400;
+        }
+
+        &-600 {
+            border-color: @color-teal-600;
+        }
+
+        &-700 {
+            border-color: @color-teal-700;
+        }
+
+        &-800 {
+            border-color: @color-teal-800;
+        }
+    }
+
+    // Green
+    &-green {
+        border-color: @color-green-500;
+
+        &-300 {
+            border-color: @color-green-300;
+        }
+
+        &-400 {
+            border-color: @color-green-400;
+        }
+
+        &-600 {
+            border-color: @color-green-600;
+        }
+
+        &-700 {
+            border-color: @color-green-700;
+        }
+
+        &-800 {
+            border-color: @color-green-800;
+        }
+    }
+
+    // Orange
+    &-orange {
+        border-color: @color-orange-500;
+
+        &-300 {
+            border-color: @color-orange-300;
+        }
+
+        &-400 {
+            border-color: @color-orange-400;
+        }
+
+        &-600 {
+            border-color: @color-orange-600;
+        }
+
+        &-700 {
+            border-color: @color-orange-700;
+        }
+
+        &-800 {
+            border-color: @color-orange-800;
+        }
+    }
+
+    // Brown
+    &-brown {
+        border-color: @color-brown-500;
+
+        &-300 {
+            border-color: @color-brown-300;
+        }
+
+        &-400 {
+            border-color: @color-brown-400;
+        }
+
+        &-600 {
+            border-color: @color-brown-600;
+        }
+
+        &-700 {
+            border-color: @color-brown-700;
+        }
+
+        &-800 {
+            border-color: @color-brown-800;
+        }
+    }
+
+    // Grey
+    &-grey {
+        border-color: @color-grey-500;
+
+        &-300 {
+            border-color: @color-grey-300;
+        }
+
+        &-400 {
+            border-color: @color-grey-400;
+        }
+
+        &-600 {
+            border-color: @color-grey-600;
+        }
+
+        &-700 {
+            border-color: @color-grey-700;
+        }
+
+        &-800 {
+            border-color: @color-grey-800;
+        }
+    }
+
+    // Slate
+    &-slate {
+        border-color: @color-slate-500;
+
+        &-300 {
+            border-color: @color-slate-300;
+        }
+
+        &-400 {
+            border-color: @color-slate-400;
+        }
+
+        &-600 {
+            border-color: @color-slate-600;
+        }
+
+        &-700 {
+            border-color: @color-slate-700;
+        }
+
+        &-800 {
+            border-color: @color-slate-800;
+        }
+    }
+
+    // White
+    &-white {
+        border-color: #fff;
+    }
+
+    // Default grey
+    &-default {
+        border-color: @panel-default-border;
+    }
+}
+
+
+// Separate border colors
+// ------------------------------
+
+// Top
+.border-top {
+
+    // Primary
+    &-primary {
+        border-top-color: @color-primary-500;
+
+        &-300 {
+            border-top-color: @color-primary-300;
+        }
+
+        &-400 {
+            border-top-color: @color-primary-400;
+        }
+
+        &-600 {
+            border-top-color: @color-primary-600;
+        }
+
+        &-700 {
+            border-top-color: @color-primary-700;
+        }
+
+        &-800 {
+            border-top-color: @color-primary-800;
+        }
+    }
+
+    // Danger
+    &-danger {
+        border-top-color: @color-danger-500;
+
+        &-300 {
+            border-top-color: @color-danger-300;
+        }
+
+        &-400 {
+            border-top-color: @color-danger-400;
+        }
+
+        &-600 {
+            border-top-color: @color-danger-600;
+        }
+
+        &-700 {
+            border-top-color: @color-danger-700;
+        }
+
+        &-800 {
+            border-top-color: @color-danger-800;
+        }
+    }
+
+    // Success
+    &-success {
+        border-top-color: @color-success-500;
+
+        &-300 {
+            border-top-color: @color-success-300;
+        }
+
+        &-400 {
+            border-top-color: @color-success-400;
+        }
+
+        &-600 {
+            border-top-color: @color-success-600;
+        }
+
+        &-700 {
+            border-top-color: @color-success-700;
+        }
+
+        &-800 {
+            border-top-color: @color-success-800;
+        }
+    }
+
+    // Warning
+    &-warning {
+        border-top-color: @color-warning-500;
+
+        &-300 {
+            border-top-color: @color-warning-300;
+        }
+
+        &-400 {
+            border-top-color: @color-warning-400;
+        }
+
+        &-600 {
+            border-top-color: @color-warning-600;
+        }
+
+        &-700 {
+            border-top-color: @color-warning-700;
+        }
+
+        &-800 {
+            border-top-color: @color-warning-800;
+        }
+    }
+
+    // Info
+    &-info {
+        border-top-color: @color-info-500;
+
+        &-300 {
+            border-top-color: @color-info-300;
+        }
+
+        &-400 {
+            border-top-color: @color-info-400;
+        }
+
+        &-600 {
+            border-top-color: @color-info-600;
+        }
+
+        &-700 {
+            border-top-color: @color-info-700;
+        }
+
+        &-800 {
+            border-top-color: @color-info-800;
+        }
+    }
+
+    // Pink
+    &-pink {
+        border-top-color: @color-pink-500;
+
+        &-300 {
+            border-top-color: @color-pink-300;
+        }
+
+        &-400 {
+            border-top-color: @color-pink-400;
+        }
+
+        &-600 {
+            border-top-color: @color-pink-600;
+        }
+
+        &-700 {
+            border-top-color: @color-pink-700;
+        }
+
+        &-800 {
+            border-top-color: @color-pink-800;
+        }
+    }
+
+    // Violet
+    &-violet {
+        border-top-color: @color-violet-500;
+
+        &-300 {
+            border-top-color: @color-violet-300;
+        }
+
+        &-400 {
+            border-top-color: @color-violet-400;
+        }
+
+        &-600 {
+            border-top-color: @color-violet-600;
+        }
+
+        &-700 {
+            border-top-color: @color-violet-700;
+        }
+
+        &-800 {
+            border-top-color: @color-violet-800;
+        }
+    }
+
+    // Purple
+    &-purple {
+        border-top-color: @color-purple-500;
+
+        &-300 {
+            border-top-color: @color-purple-300;
+        }
+
+        &-400 {
+            border-top-color: @color-purple-400;
+        }
+
+        &-600 {
+            border-top-color: @color-purple-600;
+        }
+
+        &-700 {
+            border-top-color: @color-purple-700;
+        }
+
+        &-800 {
+            border-top-color: @color-purple-800;
+        }
+    }
+
+    // Indino
+    &-indigo {
+        border-top-color: @color-indigo-500;
+
+        &-300 {
+            border-top-color: @color-indigo-300;
+        }
+
+        &-400 {
+            border-top-color: @color-indigo-400;
+        }
+
+        &-600 {
+            border-top-color: @color-indigo-600;
+        }
+
+        &-700 {
+            border-top-color: @color-indigo-700;
+        }
+
+        &-800 {
+            border-top-color: @color-indigo-800;
+        }
+    }
+
+    // Blue
+    &-blue {
+        border-top-color: @color-blue-500;
+
+        &-300 {
+            border-top-color: @color-blue-300;
+        }
+
+        &-400 {
+            border-top-color: @color-blue-400;
+        }
+
+        &-600 {
+            border-top-color: @color-blue-600;
+        }
+
+        &-700 {
+            border-top-color: @color-blue-700;
+        }
+
+        &-800 {
+            border-top-color: @color-blue-800;
+        }
+    }
+
+    // Teal
+    &-teal {
+        border-top-color: @color-teal-500;
+
+        &-300 {
+            border-top-color: @color-teal-300;
+        }
+
+        &-400 {
+            border-top-color: @color-teal-400;
+        }
+
+        &-600 {
+            border-top-color: @color-teal-600;
+        }
+
+        &-700 {
+            border-top-color: @color-teal-700;
+        }
+
+        &-800 {
+            border-top-color: @color-teal-800;
+        }
+    }
+
+    // Green
+    &-green {
+        border-top-color: @color-green-500;
+
+        &-300 {
+            border-top-color: @color-green-300;
+        }
+
+        &-400 {
+            border-top-color: @color-green-400;
+        }
+
+        &-600 {
+            border-top-color: @color-green-600;
+        }
+
+        &-700 {
+            border-top-color: @color-green-700;
+        }
+
+        &-800 {
+            border-top-color: @color-green-800;
+        }
+    }
+
+    // Orange
+    &-orange {
+        border-top-color: @color-orange-500;
+
+        &-300 {
+            border-top-color: @color-orange-300;
+        }
+
+        &-400 {
+            border-top-color: @color-orange-400;
+        }
+
+        &-600 {
+            border-top-color: @color-orange-600;
+        }
+
+        &-700 {
+            border-top-color: @color-orange-700;
+        }
+
+        &-800 {
+            border-top-color: @color-orange-800;
+        }
+    }
+
+    // Brown
+    &-brown {
+        border-top-color: @color-brown-500;
+
+        &-300 {
+            border-top-color: @color-brown-300;
+        }
+
+        &-400 {
+            border-top-color: @color-brown-400;
+        }
+
+        &-600 {
+            border-top-color: @color-brown-600;
+        }
+
+        &-700 {
+            border-top-color: @color-brown-700;
+        }
+
+        &-800 {
+            border-top-color: @color-brown-800;
+        }
+    }
+
+    // Grey
+    &-grey {
+        border-top-color: @color-grey-500;
+
+        &-300 {
+            border-top-color: @color-grey-300;
+        }
+
+        &-400 {
+            border-top-color: @color-grey-400;
+        }
+
+        &-600 {
+            border-top-color: @color-grey-600;
+        }
+
+        &-700 {
+            border-top-color: @color-grey-700;
+        }
+
+        &-800 {
+            border-top-color: @color-grey-800;
+        }
+    }
+
+    // Slate
+    &-slate {
+        border-top-color: @color-slate-500;
+
+        &-300 {
+            border-top-color: @color-slate-300;
+        }
+
+        &-400 {
+            border-top-color: @color-slate-400;
+        }
+
+        &-600 {
+            border-top-color: @color-slate-600;
+        }
+
+        &-700 {
+            border-top-color: @color-slate-700;
+        }
+
+        &-800 {
+            border-top-color: @color-slate-800;
+        }
+    }
+
+    // White
+    &-white {
+        border-top-color: #fff;
+    }
+}
+
+// Bottom
+.border-bottom {
+
+    // Primary
+    &-primary {
+        border-bottom-color: @color-primary-500;
+
+        &-300 {
+            border-bottom-color: @color-primary-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-primary-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-primary-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-primary-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-primary-800;
+        }
+    }
+
+    // Danger
+    &-danger {
+        border-bottom-color: @color-danger-500;
+
+        &-300 {
+            border-bottom-color: @color-danger-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-danger-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-danger-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-danger-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-danger-800;
+        }
+    }
+
+    // Success
+    &-success {
+        border-bottom-color: @color-success-500;
+
+        &-300 {
+            border-bottom-color: @color-success-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-success-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-success-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-success-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-success-800;
+        }
+    }
+
+    // Warning
+    &-warning {
+        border-bottom-color: @color-warning-500;
+
+        &-300 {
+            border-bottom-color: @color-warning-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-warning-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-warning-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-warning-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-warning-800;
+        }
+    }
+
+    // Info
+    &-info {
+        border-bottom-color: @color-info-500;
+
+        &-300 {
+            border-bottom-color: @color-info-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-info-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-info-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-info-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-info-800;
+        }
+    }
+
+    // Pink
+    &-pink {
+        border-bottom-color: @color-pink-500;
+
+        &-300 {
+            border-bottom-color: @color-pink-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-pink-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-pink-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-pink-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-pink-800;
+        }
+    }
+
+    // Violet
+    &-violet {
+        border-bottom-color: @color-violet-500;
+
+        &-300 {
+            border-bottom-color: @color-violet-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-violet-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-violet-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-violet-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-violet-800;
+        }
+    }
+
+    // Purple
+    &-purple {
+        border-bottom-color: @color-purple-500;
+
+        &-300 {
+            border-bottom-color: @color-purple-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-purple-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-purple-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-purple-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-purple-800;
+        }
+    }
+
+    // Indino
+    &-indigo {
+        border-bottom-color: @color-indigo-500;
+
+        &-300 {
+            border-bottom-color: @color-indigo-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-indigo-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-indigo-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-indigo-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-indigo-800;
+        }
+    }
+
+    // Blue
+    &-blue {
+        border-bottom-color: @color-blue-500;
+
+        &-300 {
+            border-bottom-color: @color-blue-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-blue-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-blue-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-blue-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-blue-800;
+        }
+    }
+
+    // Teal
+    &-teal {
+        border-bottom-color: @color-teal-500;
+
+        &-300 {
+            border-bottom-color: @color-teal-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-teal-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-teal-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-teal-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-teal-800;
+        }
+    }
+
+    // Green
+    &-green {
+        border-bottom-color: @color-green-500;
+
+        &-300 {
+            border-bottom-color: @color-green-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-green-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-green-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-green-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-green-800;
+        }
+    }
+
+    // Orange
+    &-orange {
+        border-bottom-color: @color-orange-500;
+
+        &-300 {
+            border-bottom-color: @color-orange-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-orange-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-orange-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-orange-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-orange-800;
+        }
+    }
+
+    // Brown
+    &-brown {
+        border-bottom-color: @color-brown-500;
+
+        &-300 {
+            border-bottom-color: @color-brown-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-brown-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-brown-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-brown-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-brown-800;
+        }
+    }
+
+    // Grey
+    &-grey {
+        border-bottom-color: @color-grey-500;
+
+        &-300 {
+            border-bottom-color: @color-grey-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-grey-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-grey-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-grey-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-grey-800;
+        }
+    }
+
+    // Slate
+    &-slate {
+        border-bottom-color: @color-slate-500;
+
+        &-300 {
+            border-bottom-color: @color-slate-300;
+        }
+
+        &-400 {
+            border-bottom-color: @color-slate-400;
+        }
+
+        &-600 {
+            border-bottom-color: @color-slate-600;
+        }
+
+        &-700 {
+            border-bottom-color: @color-slate-700;
+        }
+
+        &-800 {
+            border-bottom-color: @color-slate-800;
+        }
+    }
+
+    // White
+    &-white {
+        border-bottom-color: #fff;
+    }
+}
+
+// Left
+.border-left {
+
+    // Primary
+    &-primary {
+        border-left-color: @color-primary-500;
+
+        &-300 {
+            border-left-color: @color-primary-300;
+        }
+
+        &-400 {
+            border-left-color: @color-primary-400;
+        }
+
+        &-600 {
+            border-left-color: @color-primary-600;
+        }
+
+        &-700 {
+            border-left-color: @color-primary-700;
+        }
+
+        &-800 {
+            border-left-color: @color-primary-800;
+        }
+    }
+
+    // Danger
+    &-danger {
+        border-left-color: @color-danger-500;
+
+        &-300 {
+            border-left-color: @color-danger-300;
+        }
+
+        &-400 {
+            border-left-color: @color-danger-400;
+        }
+
+        &-600 {
+            border-left-color: @color-danger-600;
+        }
+
+        &-700 {
+            border-left-color: @color-danger-700;
+        }
+
+        &-800 {
+            border-left-color: @color-danger-800;
+        }
+    }
+
+    // Success
+    &-success {
+        border-left-color: @color-success-500;
+
+        &-300 {
+            border-left-color: @color-success-300;
+        }
+
+        &-400 {
+            border-left-color: @color-success-400;
+        }
+
+        &-600 {
+            border-left-color: @color-success-600;
+        }
+
+        &-700 {
+            border-left-color: @color-success-700;
+        }
+
+        &-800 {
+            border-left-color: @color-success-800;
+        }
+    }
+
+    // Warning
+    &-warning {
+        border-left-color: @color-warning-500;
+
+        &-300 {
+            border-left-color: @color-warning-300;
+        }
+
+        &-400 {
+            border-left-color: @color-warning-400;
+        }
+
+        &-600 {
+            border-left-color: @color-warning-600;
+        }
+
+        &-700 {
+            border-left-color: @color-warning-700;
+        }
+
+        &-800 {
+            border-left-color: @color-warning-800;
+        }
+    }
+
+    // Info
+    &-info {
+        border-left-color: @color-info-500;
+
+        &-300 {
+            border-left-color: @color-info-300;
+        }
+
+        &-400 {
+            border-left-color: @color-info-400;
+        }
+
+        &-600 {
+            border-left-color: @color-info-600;
+        }
+
+        &-700 {
+            border-left-color: @color-info-700;
+        }
+
+        &-800 {
+            border-left-color: @color-info-800;
+        }
+    }
+
+    // Pink
+    &-pink {
+        border-left-color: @color-pink-500;
+
+        &-300 {
+            border-left-color: @color-pink-300;
+        }
+
+        &-400 {
+            border-left-color: @color-pink-400;
+        }
+
+        &-600 {
+            border-left-color: @color-pink-600;
+        }
+
+        &-700 {
+            border-left-color: @color-pink-700;
+        }
+
+        &-800 {
+            border-left-color: @color-pink-800;
+        }
+    }
+
+    // Violet
+    &-violet {
+        border-left-color: @color-violet-500;
+
+        &-300 {
+            border-left-color: @color-violet-300;
+        }
+
+        &-400 {
+            border-left-color: @color-violet-400;
+        }
+
+        &-600 {
+            border-left-color: @color-violet-600;
+        }
+
+        &-700 {
+            border-left-color: @color-violet-700;
+        }
+
+        &-800 {
+            border-left-color: @color-violet-800;
+        }
+    }
+
+    // Purple
+    &-purple {
+        border-left-color: @color-purple-500;
+
+        &-300 {
+            border-left-color: @color-purple-300;
+        }
+
+        &-400 {
+            border-left-color: @color-purple-400;
+        }
+
+        &-600 {
+            border-left-color: @color-purple-600;
+        }
+
+        &-700 {
+            border-left-color: @color-purple-700;
+        }
+
+        &-800 {
+            border-left-color: @color-purple-800;
+        }
+    }
+
+    // Indino
+    &-indigo {
+        border-left-color: @color-indigo-500;
+
+        &-300 {
+            border-left-color: @color-indigo-300;
+        }
+
+        &-400 {
+            border-left-color: @color-indigo-400;
+        }
+
+        &-600 {
+            border-left-color: @color-indigo-600;
+        }
+
+        &-700 {
+            border-left-color: @color-indigo-700;
+        }
+
+        &-800 {
+            border-left-color: @color-indigo-800;
+        }
+    }
+
+    // Blue
+    &-blue {
+        border-left-color: @color-blue-500;
+
+        &-300 {
+            border-left-color: @color-blue-300;
+        }
+
+        &-400 {
+            border-left-color: @color-blue-400;
+        }
+
+        &-600 {
+            border-left-color: @color-blue-600;
+        }
+
+        &-700 {
+            border-left-color: @color-blue-700;
+        }
+
+        &-800 {
+            border-left-color: @color-blue-800;
+        }
+    }
+
+    // Teal
+    &-teal {
+        border-left-color: @color-teal-500;
+
+        &-300 {
+            border-left-color: @color-teal-300;
+        }
+
+        &-400 {
+            border-left-color: @color-teal-400;
+        }
+
+        &-600 {
+            border-left-color: @color-teal-600;
+        }
+
+        &-700 {
+            border-left-color: @color-teal-700;
+        }
+
+        &-800 {
+            border-left-color: @color-teal-800;
+        }
+    }
+
+    // Green
+    &-green {
+        border-left-color: @color-green-500;
+
+        &-300 {
+            border-left-color: @color-green-300;
+        }
+
+        &-400 {
+            border-left-color: @color-green-400;
+        }
+
+        &-600 {
+            border-left-color: @color-green-600;
+        }
+
+        &-700 {
+            border-left-color: @color-green-700;
+        }
+
+        &-800 {
+            border-left-color: @color-green-800;
+        }
+    }
+
+    // Orange
+    &-orange {
+        border-left-color: @color-orange-500;
+
+        &-300 {
+            border-left-color: @color-orange-300;
+        }
+
+        &-400 {
+            border-left-color: @color-orange-400;
+        }
+
+        &-600 {
+            border-left-color: @color-orange-600;
+        }
+
+        &-700 {
+            border-left-color: @color-orange-700;
+        }
+
+        &-800 {
+            border-left-color: @color-orange-800;
+        }
+    }
+
+    // Brown
+    &-brown {
+        border-left-color: @color-brown-500;
+
+        &-300 {
+            border-left-color: @color-brown-300;
+        }
+
+        &-400 {
+            border-left-color: @color-brown-400;
+        }
+
+        &-600 {
+            border-left-color: @color-brown-600;
+        }
+
+        &-700 {
+            border-left-color: @color-brown-700;
+        }
+
+        &-800 {
+            border-left-color: @color-brown-800;
+        }
+    }
+
+    // Grey
+    &-grey {
+        border-left-color: @color-grey-500;
+
+        &-300 {
+            border-left-color: @color-grey-300;
+        }
+
+        &-400 {
+            border-left-color: @color-grey-400;
+        }
+
+        &-600 {
+            border-left-color: @color-grey-600;
+        }
+
+        &-700 {
+            border-left-color: @color-grey-700;
+        }
+
+        &-800 {
+            border-left-color: @color-grey-800;
+        }
+    }
+
+    // Slate
+    &-slate {
+        border-left-color: @color-slate-500;
+
+        &-300 {
+            border-left-color: @color-slate-300;
+        }
+
+        &-400 {
+            border-left-color: @color-slate-400;
+        }
+
+        &-600 {
+            border-left-color: @color-slate-600;
+        }
+
+        &-700 {
+            border-left-color: @color-slate-700;
+        }
+
+        &-800 {
+            border-left-color: @color-slate-800;
+        }
+    }
+
+    // White
+    &-white {
+        border-left-color: #fff;
+    }
+}
+
+// Right
+.border-right {
+
+    // Primary
+    &-primary {
+        border-right-color: @color-primary-500;
+
+        &-300 {
+            border-right-color: @color-primary-300;
+        }
+
+        &-400 {
+            border-right-color: @color-primary-400;
+        }
+
+        &-600 {
+            border-right-color: @color-primary-600;
+        }
+
+        &-700 {
+            border-right-color: @color-primary-700;
+        }
+
+        &-800 {
+            border-right-color: @color-primary-800;
+        }
+    }
+
+    // Danger
+    &-danger {
+        border-right-color: @color-danger-500;
+
+        &-300 {
+            border-right-color: @color-danger-300;
+        }
+
+        &-400 {
+            border-right-color: @color-danger-400;
+        }
+
+        &-600 {
+            border-right-color: @color-danger-600;
+        }
+
+        &-700 {
+            border-right-color: @color-danger-700;
+        }
+
+        &-800 {
+            border-right-color: @color-danger-800;
+        }
+    }
+
+    // Success
+    &-success {
+        border-right-color: @color-success-500;
+
+        &-300 {
+            border-right-color: @color-success-300;
+        }
+
+        &-400 {
+            border-right-color: @color-success-400;
+        }
+
+        &-600 {
+            border-right-color: @color-success-600;
+        }
+
+        &-700 {
+            border-right-color: @color-success-700;
+        }
+
+        &-800 {
+            border-right-color: @color-success-800;
+        }
+    }
+
+    // Warning
+    &-warning {
+        border-right-color: @color-warning-500;
+
+        &-300 {
+            border-right-color: @color-warning-300;
+        }
+
+        &-400 {
+            border-right-color: @color-warning-400;
+        }
+
+        &-600 {
+            border-right-color: @color-warning-600;
+        }
+
+        &-700 {
+            border-right-color: @color-warning-700;
+        }
+
+        &-800 {
+            border-right-color: @color-warning-800;
+        }
+    }
+
+    // Info
+    &-info {
+        border-right-color: @color-info-500;
+
+        &-300 {
+            border-right-color: @color-info-300;
+        }
+
+        &-400 {
+            border-right-color: @color-info-400;
+        }
+
+        &-600 {
+            border-right-color: @color-info-600;
+        }
+
+        &-700 {
+            border-right-color: @color-info-700;
+        }
+
+        &-800 {
+            border-right-color: @color-info-800;
+        }
+    }
+
+    // Pink
+    &-pink {
+        border-right-color: @color-pink-500;
+
+        &-300 {
+            border-right-color: @color-pink-300;
+        }
+
+        &-400 {
+            border-right-color: @color-pink-400;
+        }
+
+        &-600 {
+            border-right-color: @color-pink-600;
+        }
+
+        &-700 {
+            border-right-color: @color-pink-700;
+        }
+
+        &-800 {
+            border-right-color: @color-pink-800;
+        }
+    }
+
+    // Violet
+    &-violet {
+        border-right-color: @color-violet-500;
+
+        &-300 {
+            border-right-color: @color-violet-300;
+        }
+
+        &-400 {
+            border-right-color: @color-violet-400;
+        }
+
+        &-600 {
+            border-right-color: @color-violet-600;
+        }
+
+        &-700 {
+            border-right-color: @color-violet-700;
+        }
+
+        &-800 {
+            border-right-color: @color-violet-800;
+        }
+    }
+
+    // Purple
+    &-purple {
+        border-right-color: @color-purple-500;
+
+        &-300 {
+            border-right-color: @color-purple-300;
+        }
+
+        &-400 {
+            border-right-color: @color-purple-400;
+        }
+
+        &-600 {
+            border-right-color: @color-purple-600;
+        }
+
+        &-700 {
+            border-right-color: @color-purple-700;
+        }
+
+        &-800 {
+            border-right-color: @color-purple-800;
+        }
+    }
+
+    // Indino
+    &-indigo {
+        border-right-color: @color-indigo-500;
+
+        &-300 {
+            border-right-color: @color-indigo-300;
+        }
+
+        &-400 {
+            border-right-color: @color-indigo-400;
+        }
+
+        &-600 {
+            border-right-color: @color-indigo-600;
+        }
+
+        &-700 {
+            border-right-color: @color-indigo-700;
+        }
+
+        &-800 {
+            border-right-color: @color-indigo-800;
+        }
+    }
+
+    // Blue
+    &-blue {
+        border-right-color: @color-blue-500;
+
+        &-300 {
+            border-right-color: @color-blue-300;
+        }
+
+        &-400 {
+            border-right-color: @color-blue-400;
+        }
+
+        &-600 {
+            border-right-color: @color-blue-600;
+        }
+
+        &-700 {
+            border-right-color: @color-blue-700;
+        }
+
+        &-800 {
+            border-right-color: @color-blue-800;
+        }
+    }
+
+    // Teal
+    &-teal {
+        border-right-color: @color-teal-500;
+
+        &-300 {
+            border-right-color: @color-teal-300;
+        }
+
+        &-400 {
+            border-right-color: @color-teal-400;
+        }
+
+        &-600 {
+            border-right-color: @color-teal-600;
+        }
+
+        &-700 {
+            border-right-color: @color-teal-700;
+        }
+
+        &-800 {
+            border-right-color: @color-teal-800;
+        }
+    }
+
+    // Green
+    &-green {
+        border-right-color: @color-green-500;
+
+        &-300 {
+            border-right-color: @color-green-300;
+        }
+
+        &-400 {
+            border-right-color: @color-green-400;
+        }
+
+        &-600 {
+            border-right-color: @color-green-600;
+        }
+
+        &-700 {
+            border-right-color: @color-green-700;
+        }
+
+        &-800 {
+            border-right-color: @color-green-800;
+        }
+    }
+
+    // Orange
+    &-orange {
+        border-right-color: @color-orange-500;
+
+        &-300 {
+            border-right-color: @color-orange-300;
+        }
+
+        &-400 {
+            border-right-color: @color-orange-400;
+        }
+
+        &-600 {
+            border-right-color: @color-orange-600;
+        }
+
+        &-700 {
+            border-right-color: @color-orange-700;
+        }
+
+        &-800 {
+            border-right-color: @color-orange-800;
+        }
+    }
+
+    // Brown
+    &-brown {
+        border-right-color: @color-brown-500;
+
+        &-300 {
+            border-right-color: @color-brown-300;
+        }
+
+        &-400 {
+            border-right-color: @color-brown-400;
+        }
+
+        &-600 {
+            border-right-color: @color-brown-600;
+        }
+
+        &-700 {
+            border-right-color: @color-brown-700;
+        }
+
+        &-800 {
+            border-right-color: @color-brown-800;
+        }
+    }
+
+    // Grey
+    &-grey {
+        border-right-color: @color-grey-500;
+
+        &-300 {
+            border-right-color: @color-grey-300;
+        }
+
+        &-400 {
+            border-right-color: @color-grey-400;
+        }
+
+        &-600 {
+            border-right-color: @color-grey-600;
+        }
+
+        &-700 {
+            border-right-color: @color-grey-700;
+        }
+
+        &-800 {
+            border-right-color: @color-grey-800;
+        }
+    }
+
+    // Slate
+    &-slate {
+        border-right-color: @color-slate-500;
+
+        &-300 {
+            border-right-color: @color-slate-300;
+        }
+
+        &-400 {
+            border-right-color: @color-slate-400;
+        }
+
+        &-600 {
+            border-right-color: @color-slate-600;
+        }
+
+        &-700 {
+            border-right-color: @color-slate-700;
+        }
+
+        &-800 {
+            border-right-color: @color-slate-800;
+        }
+    }
+
+    // White
+    &-white {
+        border-right-color: #fff;
+    }
+}
+
+
+// Text colors
+// ------------------------------
+
+.text {
+
+    // Primary
+    &-primary {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-primary-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-primary-500!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-primary-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-primary-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-primary-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-primary-800!important;
+            }
+        }
+    }
+
+    // Danger
+    &-danger {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-danger-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-danger-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-danger-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-danger-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-danger-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-danger-800!important;
+            }
+        }
+    }
+
+    // Success
+    &-success {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-success-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-success-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-success-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-success-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-success-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-success-800!important;
+            }
+        }
+    }
+
+    // Warning
+    &-warning {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-warning-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-warning-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-warning-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-warning-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-warning-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-warning-800!important;
+            }
+        }
+    }
+
+    // Info
+    &-info {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-info-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-info-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-info-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-info-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-info-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-info-800!important;
+            }
+        }
+    }
+
+    // Pink
+    &-pink {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-pink-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-pink-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-pink-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-pink-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-pink-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-pink-800!important;
+            }
+        }
+    }
+
+    // Violet
+    &-violet {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-violet-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-violet-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-violet-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-violet-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-violet-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-violet-800!important;
+            }
+        }
+    }
+
+    // Purple
+    &-purple {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-purple-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-purple-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-purple-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-purple-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-purple-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-purple-800!important;
+            }
+        }
+    }
+
+    // Indino
+    &-indigo {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-indigo-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-indigo-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-indigo-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-indigo-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-indigo-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-indigo-800!important;
+            }
+        }
+    }
+
+    // Blue
+    &-blue {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-blue-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-blue-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-blue-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-blue-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-blue-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-blue-800!important;
+            }
+        }
+    }
+
+    // Teal
+    &-teal {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-teal-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-teal-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-teal-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-teal-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-teal-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-teal-800!important;
+            }
+        }
+    }
+
+    // Green
+    &-green {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-green-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-green-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-green-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-green-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-green-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-green-800!important;
+            }
+        }
+    }
+
+    // Orange
+    &-orange {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-orange-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-orange-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-orange-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-orange-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-orange-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-orange-800!important;
+            }
+        }
+    }
+
+    // Brown
+    &-brown {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-brown-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-brown-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-brown-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-brown-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-brown-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-brown-800!important;
+            }
+        }
+    }
+
+    // Grey
+    &-grey {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-grey-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-grey-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-grey-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-grey-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-grey-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-grey-800!important;
+            }
+        }
+    }
+
+    // Slate
+    &-slate {
+        &,
+        &:hover,
+        &:focus {
+            color: @color-slate-500!important;
+        }
+
+        &-300 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-slate-300!important;
+            }
+        }
+
+        &-400 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-slate-400!important;
+            }
+        }
+
+        &-600 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-slate-600!important;
+            }
+        }
+
+        &-700 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-slate-700!important;
+            }
+        }
+
+        &-800 {
+            &,
+            &:hover,
+            &:focus {
+                color: @color-slate-800!important;
+            }
+        }
+    }
+
+    // White
+    &-white {
+        &,
+        &:hover,
+        &:focus {
+            color: #fff!important;
+        }
+    }
+
+    // Default
+    &-default {
+        &,
+        &:hover,
+        &:focus {
+            color: @text-color!important;
+        }
+    }
+}

@@ -1,0 +1,294 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Demo styles
+*
+*  Styles used for demostration purposes only
+*
+*  Version: 1.1
+*  Latest update: Nov 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// jQuery UI
+// ------------------------------
+
+// Draggable
+.jqueryui-demo-container {
+    font-size: 0;
+}
+.jqueryui-demo-element {
+    width: 90px;
+    height: 90px;
+    border-radius: 100px;
+    background-color: #fafafa;
+    border: 2px dashed #ddd;
+    color: @color-grey-500;
+    font-size: @font-size-small;
+    vertical-align: middle;
+    margin: auto;
+    position: relative;
+    z-index: 10;
+
+    & + & {
+        margin: @line-height-computed auto 0 auto;
+    }
+
+    > span {
+        position: absolute;
+        top: 50%;
+        margin-top: -(@line-height-computed / 2);
+        left: 0;
+        right: 0;
+    }
+
+    @media (min-width: @screen-sm-min) {
+        display: inline-block;
+
+        & + & {
+            margin: 0 0 0 @grid-gutter-width;
+        }
+    }
+}
+
+// Selectable
+.selectable-demo-list {
+    list-style: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+
+    > .ui-sortable-handle,
+    > .ui-selectee {
+        padding: (@padding-base-vertical - 1) @padding-base-horizontal;
+        background-color: #fcfcfc;
+        border: 1px solid #ddd;
+        border-radius: @border-radius-small;
+        cursor: pointer;
+        color: @color-grey-500;
+        font-size: @font-size-small;
+
+        &.ui-selecting {
+            background-color: @color-blue-400;
+            border-color: @color-blue-600;
+            color: #fff;
+        }
+
+        &.ui-selected {
+            background-color: @color-blue-500;
+            border-color: @color-blue-700;
+            color: #fff;
+        }
+    }
+
+    > li + li {
+        margin-top: 5px;
+    }
+
+    > .ui-sortable-helper:first-child + li {
+        margin-top: 0;
+    }
+}
+
+// Sortable hand;e
+.ui-handle-excluded {
+    &:extend(.selectable-demo-list > .ui-sortable-handle);
+}
+
+// Selectable
+.selectable-demo-connected {
+    & + & {
+        margin-top: @line-height-computed;
+
+        @media (min-width: @screen-sm-min) {
+            margin-top: 0;
+            margin-left: @grid-gutter-width;
+        }
+    }
+}
+
+// Droppable
+.droppable-demo-target {
+    width: 110px;
+    height: 110px;
+    background-color: @color-primary-50;
+    border-color: @color-primary-500;
+    color: @color-primary-800;
+    z-index: 9;
+}
+.droppable-demo-drop {
+    background-color: @color-success-50;
+    border-color: @color-success-500;
+    color: @color-success-800;
+}
+
+
+// Color palette
+// ------------------------------
+
+.demo-color {
+    height: 150px;
+    position: relative;
+    .border-top-radius(@border-radius-base);
+
+    > span {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        padding: 6px;
+        background-color: fade(#000, 20%);
+        font-size: @font-size-small;
+        color: #fff;
+    }
+}
+
+
+// Page loader overlay
+// ------------------------------
+
+.overlay-demo {
+    display: inline-block;
+    background-color: #333;
+    border-radius: @border-radius-base;
+}
+.overlay-demo-light {
+    background-color: @body-bg;
+}
+
+
+// Icons showcase
+// ------------------------------
+
+.glyphs > div {
+    padding: @padding-base-vertical @padding-base-horizontal;
+    cursor: pointer;
+
+    // Icon
+    > i {
+        margin-right: 10px;
+        width: 1em;
+        text-align: center;
+    }
+
+    // Hover state
+    &:hover {
+        background-color: @color-teal-500;
+        color: #fff;
+        border-radius: @border-radius-small;
+
+        span {
+            color: #fff;
+        }
+    }
+}
+
+
+// Grid demo
+// ------------------------------
+
+.grid-demo [class*="col-"] > div:not(.row) {
+    margin-bottom: @line-height-computed;
+    padding: 10px;
+    text-align: center;
+    background-color: #F7F7FC;
+    border: 1px solid #ddd;
+    color: @text-color;
+}
+
+
+// Velocity animations box
+// ------------------------------
+
+.demo-velocity-box {
+    padding: 12px 15px;
+    margin-bottom: @line-height-computed;
+    position: relative;
+    border: 1px solid #ccc;
+    text-align: center;
+    background-color: #fcfcfc;
+    border-radius: @border-radius-base;
+    .box-shadow(0 0 0 0 @brand-primary);
+
+    > span {
+        float: left;
+    }
+
+    span {
+        vertical-align: middle;
+    }
+
+    // List with icons
+    .icons-list {
+        float: right;
+        margin-top: 2px;
+
+        a {
+            .opacity(0.8);
+
+            &:hover {
+                .opacity(1);
+            }
+        }
+    }
+}
+
+
+// BlockUI growl notification
+// ------------------------------
+
+// Base
+.blockui-growl {
+    display: none;
+    text-align: left;
+    padding: 15px;
+    background-color: @color-slate-700;
+    color: #fff;
+    border-radius: @border-radius-base;
+
+    h6 {
+        margin-top: 2px;
+        margin-bottom: 8px;
+    }
+}
+
+// Message
+.blockui-message {
+    display: none;
+    background-color: @color-slate-700;
+    color: #fff;
+    border-radius: @border-radius-base;
+    padding: 15px 15px 10px 15px;
+
+    > i {
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+
+// Containers
+.multiple-messages-container,
+.blockui-animation-container {
+    display: none;
+}
+.blockui-animation-container {
+    background-color: #555;
+    padding: 10px;
+    line-height: 1;
+    border-radius: @border-radius-base;
+}
+
+
+// Tag inputs results
+// ------------------------------
+
+.val-demo {
+    display: block;
+    margin-top: @line-height-computed;
+
+    > span {
+        font-weight: 500;
+    }
+}

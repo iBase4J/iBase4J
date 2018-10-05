@@ -1,0 +1,46 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Invoice template
+ *
+ *  General styles for invoice, mainly responsive setup
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Details list placement and alignment
+@media (min-width: @screen-sm) {
+    .invoice-details,
+    .invoice-payment-details > li span {
+        float: right;
+        text-align: right;
+    }
+}
+
+// Remove bottom margin from all lists
+.invoice-grid {
+	ul,
+	ol {
+		margin-bottom: 0;
+	}
+}
+
+// Invoice grid
+@media (max-width: @screen-xs-max) {
+
+    // Align all text to left
+    .invoice-grid {
+
+        // Remove right alignment
+        .text-right {
+            text-align: inherit;
+        }
+
+        // Add vertical spacing to columns
+        [class*=col-] + [class*=col-] {
+            margin-top: @line-height-computed;
+        }
+    }
+}

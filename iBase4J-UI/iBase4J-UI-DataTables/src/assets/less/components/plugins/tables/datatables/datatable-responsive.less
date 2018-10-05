@@ -1,0 +1,151 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Responsive extension
+*
+*  Optimise the table's layout for different screen sizes through the dynamic 
+*  insertion and removal of columns from the table
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Layouts
+// ------------------------------
+
+// Inline details row
+.dtr-inline {
+    &.collapsed tbody {
+        tr {
+            td,
+            th {
+                &:before {
+                    margin-right: 10px;
+                }
+
+                &:first-child {
+                    position: relative;
+                    cursor: pointer;
+                    white-space: nowrap;
+
+                    &.dataTables_empty:before {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Column details row
+.dtr-column {
+    tbody {
+        td,
+        th {
+            &.control {
+                position: relative;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
+// Expand/collapse icons
+// ------------------------------
+
+.dtr-inline.collapsed tbody tr td:first-child:before,
+.dtr-inline.collapsed tbody tr th:first-child:before,
+.dtr-column tbody tr td.control:before,
+.dtr-column tbody tr th.control:before {
+    content: '\e9e4';
+    font-family: 'icomoon';
+    display: inline-block;
+    font-size: @icon-font-size;
+    width: @icon-font-size;
+    line-height: 1;
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.dataTable.dtr-inline.collapsed tbody tr.parent td:first-child:before,
+.dataTable.dtr-inline.collapsed tbody tr.parent th:first-child:before,
+.dataTable.dtr-column tbody tr.parent td.control:before,
+.dataTable.dtr-column tbody tr.parent th.control:before {
+    content: '\e9e7';
+}
+.dtr-inline.collapsed tbody tr.child td:before {
+    display: none;
+}
+
+
+// Child rows with details
+// ------------------------------
+
+.dataTable {
+    tr {
+
+        // Child row
+        &.child {
+            &:hover {
+                background-color: transparent;
+            }
+
+            .dtr-title {
+                display: table-cell;
+                font-weight: 500;
+                padding-right: 40px;
+            }
+
+            .dtr-data {
+                display: table-cell;
+                padding: 8px 0;
+            }
+        }
+
+        // Child cell
+        td.child {
+            white-space: normal;
+            position: relative;
+
+            > ul {
+                display: table;
+                table-layout: fixed;
+                width: 100%;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+
+                > li {
+                    display: table-row;
+                }
+            }
+        }
+    }
+}
+
+
+// Responsive stuff
+// ------------------------------
+
+// Make dropdown menus full width
+@media (max-width: @screen-xs) {
+    .dataTable tr td.child > ul > li {
+        .dropdown,
+        .dropup,
+        .btn-group {
+            position: static;
+        }
+
+        .dropdown-menu {
+            left: 0;
+            right: 0;
+            border-radius: 0;
+            border-width: 1px 0;
+        }
+    }
+}
+

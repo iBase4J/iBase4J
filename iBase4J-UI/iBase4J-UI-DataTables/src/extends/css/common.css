@@ -1,0 +1,263 @@
+/*公共样式*/
+footer.text-muted {
+	position: fixed;
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
+    background-color: #FFF;
+}
+
+body {
+    font-family: "Microsoft YaHei";
+}
+.ztree li span.button.root_close {
+    background-position: -126px -23px;
+}
+.ztree li span.button.root_open {
+    background-position: -106px -23px;
+}
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+	background-color: #F5F5F5;
+}
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+	background-color: #555;
+}
+textarea {
+    resize: none;
+}
+
+table tbody td span {
+    cursor: pointer;
+}
+
+a, a:hover, a:focus {
+    color: #333;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+/*左侧导航效果*/
+.navigation > li > ul li:last-child {
+    padding-bottom: 0;
+}
+
+.navigation > li > ul li:first-child {
+    padding-top: 0;
+}
+
+.navigation-main li > ul, .navigation-main ul > li > a {
+    position: relative;
+}
+
+.navigation-main li > ul:before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 28px;
+    top: 20px;
+    bottom: 20px;
+    border-left: 1px solid #425668;
+}
+
+.navigation-main > li > ul > li > ul:before {
+    left: 55px;
+}
+
+.navigation-main > li > ul > li > ul > li > ul:before {
+    left: 80px;
+}
+
+.navigation-main ul > li > a:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px !important;
+    left: 24px;
+    top: 17px;
+    background-color: #425668;
+    z-index: 2;
+}
+
+.navigation-main > li > ul > li > ul > li > a:before {
+    left: 51px;
+}
+
+.navigation-main > li > ul > li > ul > li > ul > li > a:before {
+    left: 76px;
+}
+.navigation>li:nth-child(2),.navigation>li:nth-child(3),.navigation>li:nth-child(4),
+.navigation>li:nth-child(5),.navigation>li:nth-child(6){
+    
+}
+/*搜索框样式*/
+.has-feedback.search {
+    top: 8px;
+}
+
+.search.has-feedback .form-control {
+    height: 30px;
+    line-height: 30px;
+    min-width: 220px;
+}
+
+.search .form-control-feedback {
+    height: 30px;
+    line-height: 30px;
+}
+
+/*必填项标识*/
+.control-label .text-danger {
+    /* margin-left: 2px; */
+}
+
+/*弹窗样式*/
+.modal .modal-dialog {
+    margin-top: 120px;
+}
+
+.modal-header {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header .close {
+    top: 30%;
+}
+
+.modal-body .deleteText {
+    font-size: 16px;
+}
+
+#timedTaskDelete .modal-dialog {
+    margin-top: 20%;
+}
+
+/*信息提示*/
+.tooltip-inner {
+    white-space: nowrap;
+}
+
+.tooltip.top {
+    left: -17px !important;
+}
+
+/*条件搜索框*/
+.dataTables_filter input {
+    min-width: 200px;
+}
+
+.dataTables_filter .add-btn {
+    margin-right: 20px;
+    position: relative;
+    top: -3px;
+}
+
+.dataTables_filter .add-btn i {
+    margin-right: 5px;
+    position: relative;
+    top: -3px;
+}
+
+.selectboxit-container .selectboxit-options{
+    padding: 0;
+}
+
+.ztree {
+    padding: 5px;
+}
+
+.ztree li a, .ztree li a.curSelectedNode {
+    display: inline-block;
+    height: 26px;
+    line-height: 26px;
+}
+
+.ztree li a.curSelectedNode {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.ztree li span {
+    font-size: 14px;
+}
+
+.tree-editable {
+    padding: 10px;
+}
+
+.ztree li span.button.add, .ztree li span.button.edit, .ztree li span.button.remove {
+    vertical-align: middle;
+}
+
+.saveSet{
+    margin-bottom: 10px;
+}
+
+.saveSet i{
+    margin-right: 5px;
+    position: relative;
+    top:-2px;
+}
+
+/*日期插件*/
+.datepicker.dropdown-menu {
+    z-index: 1099;
+}
+.validation-error-label, .validation-valid-label {
+	margin-bottom:0px;
+}
+/* 加载中 */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 99999;
+}
+.loading_bg {
+    background-color: #000;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    -moz-opacity: 0.5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+}
+.loading_mean {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    margin-top: -25px;
+    left: 50%;
+    margin-left: -25px;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 7px;
+}

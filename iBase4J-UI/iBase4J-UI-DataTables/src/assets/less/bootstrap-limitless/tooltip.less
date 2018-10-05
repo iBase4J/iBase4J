@@ -1,0 +1,38 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Tooltips component
+*
+*  Overrides for tooltips bootstrap component
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base class
+.tooltip {
+    font-size: @font-size-base;
+    line-height: @line-height-base;
+
+    // Custom color
+    [class*=bg-] {
+        border-radius: @border-radius-base;
+
+        > .tooltip-inner {
+            background-color: inherit;
+        }
+    }
+
+    // Inherit arrow color
+    &.top [class*=bg-] .tooltip-arrow { border-top-color: inherit; }
+    &.right [class*=bg-] .tooltip-arrow { border-right-color: inherit; }
+    &.bottom [class*=bg-] .tooltip-arrow { border-bottom-color: inherit; }
+    &.left [class*=bg-] .tooltip-arrow { border-left-color: inherit; }
+}
+
+
+// Wrapper for the tooltip content
+.tooltip-inner {
+    padding: @padding-base-vertical @padding-base-horizontal;
+}

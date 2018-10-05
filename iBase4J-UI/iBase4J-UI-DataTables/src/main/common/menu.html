@@ -1,0 +1,42 @@
+<div class="sidebar-content">
+	<!-- 用户菜单 -->
+	<div class="sidebar-user">
+	    <div class="category-content">
+	        <div class="media"><!-- /assets/images/placeholder.jpg -->
+	            <a href="/main/admin/modifyHead.html" class="media-left" target="workspace">
+	            	<img :src="user.avatar" class="img-circle img-sm avatar" alt="修改头像">
+	            </a>
+	            <div class="media-body">
+	                <span class="media-heading text-bold">您好，{{user.userName}}</span>
+	                <div id="showtimes"></div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<!-- /用户菜单 -->
+	
+	<!-- 左侧导航 -->
+	<div class="sidebar-category sidebar-category-visible">
+	    <div class="category-content no-padding">
+	        <ul class="navigation navigation-main navigation-accordion">
+	            <!-- Main -->
+	            <li v-for="menu in menus" :class="menu.className">
+	            	<a :href="menu.request" target="workspace">
+	            		<i :class="menu.iconcls"></i> <span>{{menu.menuName}}</span>
+	            	</a>
+	            	<ul v-if="notEmpty(menu.menuBeans)">
+	                    <li v-for="rm in menu.menuBeans" :class="rm.className">
+	                        <a :href="rm.request" target="workspace">{{rm.menuName}}</a>
+	                        <ul v-if="notEmpty(rm.menuBeans)">
+	                            <li v-for="irm in rm.menuBeans" :class="irm.className">
+	                            	<a :href="irm.request" target="workspace">{{irm.menuName}}</a>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                  </ul>
+	            </li>
+	        </ul>
+	    </div>
+	</div>
+	<!-- /左侧导航 -->
+</div>

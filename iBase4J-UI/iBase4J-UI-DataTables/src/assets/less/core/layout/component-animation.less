@@ -1,0 +1,116 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Utilites
+*
+*  Additional animations, transitions, transforms and other utilities
+*
+*  Version: 1.0
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Components animation
+// ------------------------------
+
+// Disable transitions on page load
+.no-transitions * {
+	.transition(none)!important;
+}
+
+// Animate all
+.btn,
+.navbar-link,
+.nav-tabs > li > a,
+.nav-tabs > li > a:after,
+.nav-pills > li > a,
+.nav li > a > .label,
+.nav li > a > .badge,
+.breadcrumb > li > a,
+.breadcrumb-elements > li > a,
+.tt-suggestion,
+.tokenfield .token,
+.selectboxit-btn,
+.bootstrap-select .btn-default,
+.select2-results__option,
+.select2-selection__choice__remove,
+.dropdown-menu > li > a,
+.dropdown-menu > li > label,
+.wizard .actions a,
+.checker span:after,
+.choice span:after,
+.selectboxit-option-anchor,
+.dt-autofill-list ul li,
+.dt-autofill-button .btn,
+.dataTable .select-checkbox:before,
+.dataTable .select-checkbox:after,
+.pika-button,
+.sp-input,
+.navbar-nav > li > a,
+.dropdown-content-footer a,
+.icons-list > li > a,
+.picker__nav--prev,
+.picker__nav--next,
+.multiselect.btn-default,
+.list-group-item,
+.pagination > li > a,
+.pagination > li > span,
+.pager > li > a,
+.pager > li > span,
+.datepicker-dropdown .day,
+a.label,
+a.badge,
+.ui-datepicker-buttonpane > button,
+.ui-button,
+.ui-menu-item,
+.ui-selectmenu-button,
+.ui-datepicker a,
+.media-link,
+.menu-list li > a,
+.plupload_file_action > a,
+.dataTables_paginate .paginate_button,
+.dataTables_filter input,
+.dt-button,
+.picker__list-item,
+.picker__day,
+.picker__footer,
+.sp-replacer,
+.sp-cancel,
+.sp-choose,
+.sp-palette-toggle,
+.daterangepicker td,
+.daterangepicker th,
+.noUi-handle,
+.fc-button,
+.plupload_button,
+.picker__footer button,
+.picker__list button,
+.AnyTime-btn,
+.plupload_filelist li,
+.password-indicator-group.input-group-addon,
+.password-indicator-label-absolute,
+.select2-selection--single:not([class*=bg-]),
+.select2-selection--multiple:not([class*=bg-]) .select2-selection__choice,
+.bootstrap-select.btn-group .dropdown-menu > li > a .check-mark {
+    .transition(all ease-in-out 0.15s);
+}
+
+// Opacity
+.close,
+.tag [data-role="remove"] {
+    .transition(opacity ease-in-out 0.15s);
+}
+
+// Border color
+.checker span {
+    .transition(border-color ease-in-out 0.15s);
+}
+
+// Background color
+.table tr,
+.table th,
+.table td,
+.htContextMenu td,
+.ranges ul li {
+    .transition(background-color ease-in-out 0.15s);
+}

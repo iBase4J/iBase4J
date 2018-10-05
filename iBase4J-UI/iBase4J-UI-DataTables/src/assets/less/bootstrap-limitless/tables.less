@@ -1,0 +1,439 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Tables component
+*
+*  Overrides for tables bootstrap component
+*
+*  Version: 1.1
+*  Latest update: Oct 20, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base class
+// -------------------------
+
+// All table headers are semi-bold
+th {
+    font-weight: 500;
+}
+
+// Table base
+.table {
+    margin-bottom: 0;
+
+    // Cells
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            > th,
+            > td {
+                vertical-align: middle;
+            }
+        }
+    }
+
+    // Lighten border in colored tables or panels
+    .panel[class*=bg-] &,
+    &[class*=bg-] {
+        > thead,
+        > tbody,
+        > tfoot {
+            > tr {
+                > th,
+                > td {
+                    border-color: fade(#fff, 20%);
+                }
+            }
+        }
+    }
+    tr {
+        &[class*=bg-] {
+            > td,
+            > th {
+                border-color: #fff;
+            }
+        }
+
+        > td[class*=bg-],
+        > th[class*=bg-] {
+            border-color: #fff;
+        }
+    }
+
+
+    // Custom header bottom border color
+    > thead {
+        > tr[class*=border-bottom-] {
+            > th,
+            > td {
+                border-bottom-color: inherit;
+            }
+        }
+    }
+
+    // Custom body and footer bottom border color
+    > tbody,
+    > tfoot {
+        > tr[class*=border-top-] {
+            > th,
+            > td {
+                border-top-color: inherit;
+            }
+        }
+    }
+
+    // Darker border colors for thead and tfoot
+    > thead > tr > th {
+        border-bottom: 1px solid @table-border-highlight;
+    }
+    > tfoot > tr > th {
+        border-top: 1px solid @table-border-highlight;
+    }
+
+    // Nesting
+    .table {
+        background-color: @panel-bg;
+    }
+}
+
+// Add top border in multiple table rows
+.table:not(.table-bordered):not(.table-framed) {
+    .table-responsive + .table-responsive > &,
+    & + & {
+        border-top: 1px solid @table-border-color;
+    }
+}
+
+// Remove doubled top border if no thead
+.panel-body {
+    + .table,
+    + .table-responsive > .table {
+        > tbody:first-child > tr:first-child {
+            > td,
+            > th {
+                border-top: 0;
+            }
+        }
+    }
+}
+
+// Inside modal dialog body
+.modal-body {
+    + .table-responsive > .table,
+    + .table {
+        border-bottom: 1px solid @table-border-color;
+    }
+
+    // Table responsive div container
+    + .table-responsive {
+        border: 0;
+    }
+}
+
+// Apply white color to top borders in solid panels
+.panel[class*=bg-] {
+    > .panel-body {
+        + .table,
+        + .table-responsive {
+            border-color: #fff;
+        }
+    }
+}
+
+
+
+// Table borders
+// -------------------------
+
+// Solid border
+.table {
+    > thead > tr {
+        &.border-solid {
+            > th,
+            > td {
+                border-bottom-width: 2px;
+            }
+        }
+    }
+
+    > tbody > tr,
+    > tfoot > tr {
+        &.border-solid {
+            > td,
+            > th {
+                border-top-width: 2px;
+            }
+        }
+    }
+}
+
+.table-bordered {
+    > thead > tr {
+        &.border-solid:first-child {
+            > th,
+            > td {
+                border-bottom-width: 2px;
+            }
+        }
+    }
+}
+
+
+// Double border
+.table {
+    > thead > tr {
+        &.border-double {
+            > th,
+            > td {
+                border-bottom-width: 3px;
+                border-bottom-style: double;
+            }
+        }
+    }
+
+    > tbody > tr,
+    > tfoot > tr {
+        &.border-double {
+            > td,
+            > th {
+                border-top-width: 3px;
+                border-top-style: double;
+            }
+        }
+    }
+}
+
+.table-bordered {
+    > thead > tr.border-double:first-child {
+        > th,
+        > td {
+            border-bottom-width: 3px;
+            border-bottom-style: double;
+        }
+    }
+}
+
+
+// Dashed border
+.table {
+    > tbody > tr {
+        &.border-dashed {
+            > td,
+            > th {
+                border-top-style: dashed;
+            }
+        }
+    }
+}
+
+
+// Framed table
+.table-framed {
+    &,
+    .panel > &,
+    .panel > .table-responsive > & {
+        border: 1px solid @table-border-color;
+    }
+
+    // Hide border on mobile
+    @media screen and (max-width: @screen-xs-max) {
+        .table-responsive > & {
+            border: 0;
+        }
+    }
+}
+
+
+// Borderless table
+.table-borderless {
+    > tbody {
+        > tr {
+            > td,
+            > th {
+                border: 0;
+            }
+        }
+    }
+}
+
+
+// Columned table
+.table-columned {
+    > tbody,
+    > tfoot {
+        > tr {
+            > td,
+            > th {
+                border: 0;
+                border-left: 1px solid @table-border-color;
+
+                &:first-child {
+                    border-left: 0;
+                }
+            }
+        }
+    }
+
+    > thead {
+        > tr {
+            > th,
+            > td {
+                border-left: 1px solid @table-border-color;
+
+                &:first-child {
+                    border-left: 0;
+                }
+            }
+        }
+    }
+}
+
+
+
+// Table sizing
+// -------------------------
+
+// XLarge
+.table-xlg {
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            > th,
+            > td {
+                padding: @table-xlarge-cell-padding;
+            }
+        }
+    }
+}
+
+// Large
+.table-lg {
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            > th,
+            > td {
+                padding: @table-large-cell-padding;
+            }
+        }
+    }
+}
+
+// Small
+.table-sm {
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            > th,
+            > td {
+                padding: @table-small-cell-padding;
+            }
+        }
+    }
+}
+
+// Mini
+.table-xs {
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            > th,
+            > td {
+                padding: @table-mini-cell-padding;
+            }
+        }
+    }
+}
+
+// Extra mini
+.table-xxs {
+    > thead,
+    > tbody,
+    > tfoot {
+        > tr {
+            > th,
+            > td {
+                padding: @table-micro-cell-padding;
+            }
+        }
+    }
+}
+
+
+
+// Bordered table
+// -------------------------
+
+.table-bordered {
+    tr:first-child {
+        > td,
+        > th {
+            border-top-color: @table-border-highlight;
+        }
+    }
+
+    // Inside colored table elements
+    tr[class*=bg-] > th,
+    tr[class*=bg-] > td,
+    tr > th[class*=bg-],
+    tr > td[class*=bg-] {
+        border-color: #fff;
+    }
+}
+
+
+
+// Striped table
+// -------------------------
+
+.table-striped {
+    .panel[class*=bg-] & > tbody > tr:nth-child(odd),
+    &[class*=bg-] > tbody > tr:nth-child(odd) {
+        background-color: fade(#000, 5%);
+    }
+}
+
+
+
+// Hover table
+// -------------------------
+
+.table-hover {
+
+    // Inherit bg color on hover
+    > tbody > tr:hover {
+        > th,
+        > td {
+            background-color: inherit;
+        }
+    }
+
+    // Inside colored tables
+    .panel[class*=bg-] & > tbody > tr:hover,
+    &[class*=bg-] > tbody > tr:hover {
+        background-color: fade(#000, 10%);
+    }
+}
+
+
+
+// Table backgrounds
+// -------------------------
+
+// Change active bg color in colored panel and table
+.panel[class*=bg-] .panel-body > .table,
+.panel[class*=bg-] .panel-body > .table-responsive > .table,
+.table[class*=bg-] {
+    .active > th,
+    .active > td,
+    th.active,
+    td.active {
+        background-color: fade(#000, 15%);
+    }
+}

@@ -1,0 +1,55 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Wells component
+*
+*  Overrides for wells bootstrap component
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base class
+// -------------------------
+
+.well {
+    margin-bottom: 0;
+    padding: @panel-body-padding;
+    .box-shadow(none);
+
+    // White background
+    &-white {
+        background-color: #fff;
+    }
+
+    // Border radius fix
+    &[class*=border-top-] {
+        .border-top-radius(0);
+    }
+    &[class*=border-bottom-] {
+        .border-bottom-radius(0);
+    }
+    &[class*=border-left-] {
+        .border-left-radius(0);
+    }
+    &[class*=border-right-] {
+        .border-right-radius(0);
+    }
+}
+
+
+// Sizes
+// -------------------------
+
+// Large
+.well-lg {
+    padding: (@panel-body-padding + 5);
+    border-radius: @border-radius-base;
+}
+
+// Small
+.well-sm {
+    padding: (@panel-body-padding - 5);
+    border-radius: @border-radius-base;
+}

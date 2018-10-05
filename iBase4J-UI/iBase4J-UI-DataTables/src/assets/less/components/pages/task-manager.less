@@ -1,0 +1,120 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Task manager
+ *
+ *  Styles related to task manager - detailed task, list and grid
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Timer
+// ------------------------------
+
+// Weekdays list
+.timer-weekdays {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+
+	> li {
+		display: inline-block;
+		margin: 2px 0;
+
+		> a {
+			display: block;
+			margin: 0 1px;
+		}
+	}
+
+	// Change default label color
+	.label-default {
+		background-color: #ccc;
+		border-color: #ccc;
+
+		&:hover,
+		&:focus {
+			border-color: @label-default-bg;
+		}
+	}
+}
+
+// Timer itself
+.timer {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+
+	> li {
+		font-size: (@font-size-h2 * 2);
+		text-align: center;
+		display: inline-block;
+		color: @color-grey-700;
+		font-weight: 300;
+
+		// Double dots
+		&.dots {
+			font-size: @font-size-h1;
+			vertical-align: top;
+			padding: (@font-size-h1 / 1.5) 0;
+		}
+
+		// Subtitle
+		> span {
+			display: block;
+			font-size: @font-size-base;
+		}
+	}
+}
+
+
+// List with task details
+// ------------------------------
+
+.task-details {
+	float: right;
+	margin: 0;
+
+	@media (max-width: @screen-sm-max) {
+	    float: none;
+	    margin-top: 15px;
+	    list-style: none;
+	    padding: 0;
+
+	    > li {
+		    float: left;
+		    position: relative;
+		    padding-right: 20px;
+		    margin-top: 0;
+
+		    &:before {
+			    content: '•';
+			    position: absolute;
+			    right: 8px;
+			    color: #999;
+		    }
+
+		    &:last-child:before {
+		    	content: none;
+		    }
+	    }
+	}
+
+	@media (max-width: @screen-xs-max) {
+		> li {
+			float: none;
+
+			&:before {
+				content: none;
+			}
+
+			+ li {
+				margin-top: 10px;
+			}
+		}
+	}
+}

@@ -1,0 +1,53 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Fixed Header extension
+*
+*  This extension lets your users quickly determine what each column refers to
+*  rather than needing to scroll back to the top of the table.
+*
+*  Version: 1.0
+*  Latest update: Nov 9, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Headers
+.fixedHeader-floating,
+.fixedHeader-locked {
+    background-color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+// Floating header
+.fixedHeader-floating {
+    position: fixed;
+
+    // Remove top border if multiple tables
+    .fixedHeader-floating + &,
+    .fixedHeader-locked + & {
+        border-top: 0!important;
+    }
+
+    // Hide on mobile
+    @media(max-width: @screen-xs-max) {
+        display: none;
+    }
+}
+
+// Locked header
+.fixedHeader-locked {
+    position: absolute;
+
+    // Hide on mobile
+    @media(max-width: @screen-xs-max) {
+        display: none;
+    }
+}
+
+// Hide headers on print
+@media print {
+    table.fixedHeader-floating {
+        display: none;
+    }
+}

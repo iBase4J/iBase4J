@@ -1,0 +1,203 @@
+/* ------------------------------------------------------------------------------
+*
+*  # WYSIHTML5 editor
+*
+*  An open source rich text editor based on HTML5 technology
+*
+*  Version: 1.2
+*  Latest update: Jun 8, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ----------------------------------------
+
+// Base
+.wysihtml5 {
+    max-height: 450px;
+    resize: vertical;
+    background-color: #fff;
+    overflow: auto;
+    padding: @content-padding-large;
+    outline: 0;
+}
+
+// Editor area
+.wysihtml5-editor {
+    border-width: 0;
+    padding: 0;
+}
+
+// Container
+.wysihtml5-sandbox {
+    width: 100%!important;
+}
+
+// Modals
+.bootstrap-wysihtml5-insert-link-modal,
+.bootstrap-wysihtml5-insert-image-modal {
+    .modal-dialog {
+        width: 566px;
+    }
+}
+
+
+// Toolbar
+// ----------------------------------------
+
+// Base
+.wysihtml5-toolbar {
+    margin: 0;
+    padding: @content-padding-base @content-padding-large;
+    padding-bottom: 0;
+    display: block;
+    background-color: @panel-footer-bg;
+    border: 1px solid @panel-default-border;
+    border-bottom: 0;
+    .border-top-radius(@border-radius-base);
+
+    // List item
+    > li {
+        display: inline-block;
+        list-style: none;
+        margin: 0 @content-padding-base @content-padding-base 0;
+    }
+
+    // Dropdown menu
+    .dropdown-menu {
+        max-height: 200px;
+        overflow-y: auto;
+
+        // Color select
+        .color-select {
+            > li > a {
+                &:hover,
+                &:focus {
+                    background-color: @dropdown-link-hover-bg;
+                    color: @text-color;
+                }
+            }
+        }
+
+        // Hide dropdown if disabled
+        .wysihtml5-commands-disabled & {
+            display: none !important;
+        }
+    }
+
+    // Dropdown icon/caret
+    .dropdown-toggle {
+        > [class*=icon-] {
+            margin-right: @element-horizontal-spacing;
+        }
+
+        // Caret
+        .caret {
+            margin-left: @element-horizontal-spacing;
+        }
+    }
+
+
+    // Link styles
+    a {
+        &[data-wysihtml5-command=bold] {
+            font-weight: bold;
+        }
+        &[data-wysihtml5-command=italic] {
+            font-style: italic;
+        }
+        &[data-wysihtml5-command=underline] {
+            text-decoration: underline;
+        }
+        &.btn.wysihtml5-command-active {
+            .box-shadow(inset 0 1px 2px fade(#000, 10%));
+        }
+        &.wysihtml5-colors-title {
+            padding-left: (@icon-font-size + (@padding-base-horizontal * 2));
+        }
+    }
+
+
+    //
+    // Colors
+    //
+
+    // Color indicator
+    .wysihtml5-colors {
+        display: block;
+        width: @icon-font-size;
+        height: @icon-font-size;
+        position: absolute;
+        pointer-events: none;
+        left: @padding-base-horizontal;
+        top: (((@padding-base-vertical + 1) * 2) + @line-height-computed - @icon-font-size) / 2;
+        border-radius: 100px;
+    }
+
+    // Color commands
+    div[data-wysihtml5-command-value="black"] { background: black !important }
+    div[data-wysihtml5-command-value="silver"] { background: silver !important }
+    div[data-wysihtml5-command-value="gray"] { background: gray !important }
+    div[data-wysihtml5-command-value="maroon"] { background: maroon !important }
+    div[data-wysihtml5-command-value="red"] { background: red !important }
+    div[data-wysihtml5-command-value="purple"] { background: purple !important }
+    div[data-wysihtml5-command-value="green"] { background: green !important }
+    div[data-wysihtml5-command-value="olive"] { background: olive !important }
+    div[data-wysihtml5-command-value="navy"] { background: navy !important }
+    div[data-wysihtml5-command-value="blue"] { background: blue !important }
+    div[data-wysihtml5-command-value="orange"] { background: orange !important }
+}
+
+// Define colors
+.wysiwyg-color-black {
+    color: black;
+}
+.wysiwyg-color-silver {
+    color: silver;
+}
+.wysiwyg-color-gray {
+    color: gray;
+}
+.wysiwyg-color-white {
+    color: white;
+}
+.wysiwyg-color-maroon {
+    color: maroon;
+}
+.wysiwyg-color-red {
+    color: red;
+}
+.wysiwyg-color-purple {
+    color: purple;
+}
+.wysiwyg-color-fuchsia {
+    color: fuchsia;
+}
+.wysiwyg-color-green {
+    color: green;
+}
+.wysiwyg-color-lime {
+    color: lime;
+}
+.wysiwyg-color-olive {
+    color: olive;
+}
+.wysiwyg-color-yellow {
+    color: yellow;
+}
+.wysiwyg-color-navy {
+    color: navy;
+}
+.wysiwyg-color-blue {
+    color: blue;
+}
+.wysiwyg-color-teal {
+    color: teal;
+}
+.wysiwyg-color-aqua {
+    color: aqua;
+}
+.wysiwyg-color-orange {
+    color: orange;
+}

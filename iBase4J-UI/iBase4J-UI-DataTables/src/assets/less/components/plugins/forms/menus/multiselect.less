@@ -1,0 +1,270 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Bootstrap multiselect
+*
+*  Styles for multiselect.js - custom multiple select plugin
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.multiselect {
+    width: 100%;
+    min-width: 100%;
+    text-align: left;
+    padding-left: @padding-base-horizontal;
+    padding-right: ((@padding-base-horizontal * 2) + 5);
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    // Default button overrides
+    &.btn-default {
+        &,
+        &.disabled {
+            background-color: @input-bg;
+            border-color: @input-border;
+        }
+
+        &:active,
+        .btn-group.open & {
+            border-color: @input-border;
+        }
+    }
+
+    // Caret
+    .caret {
+        position: absolute;
+        top: 50%;
+        right: @padding-base-horizontal;
+        margin-top: -(@icon-font-size / 2);
+        width: @icon-font-size;
+        text-align: right;
+    }
+
+
+    //
+    // Make it as an input instead of button
+    //
+
+    // Large
+    &.btn-lg {
+        padding-left: @padding-large-horizontal;
+        padding-right: (@padding-large-horizontal * 2);
+
+        .caret {
+            right: @padding-large-horizontal;
+        }
+    }
+
+    // Small
+    &.btn-sm {
+        padding-left: @padding-small-horizontal;
+        padding-right: (@padding-small-horizontal * 2);
+
+        .caret {
+            right: @padding-small-horizontal;
+        }
+    }
+
+    // Mini
+    &.btn-xs {
+        padding-left: @padding-xs-horizontal;
+        padding-right: (@padding-xs-horizontal * 2);
+
+        .caret {
+            right: @padding-xs-horizontal;
+        }
+    }
+}
+
+
+// Container
+// ------------------------------
+
+.multiselect-container {
+    min-width: 180px;
+    max-height: 250px;
+    overflow-y: auto;
+
+    > li {
+        padding: 0;
+
+        // Links
+        > a {
+            padding: 0;
+
+            // Label
+            > label {
+                margin: 0;
+                height: 100%;
+                cursor: pointer;
+                padding: (@padding-base-vertical + 1) @padding-base-horizontal;
+                padding-left: (@padding-base-horizontal + @checkbox-size + 10);
+
+                // Inside navbar form
+                .navbar-form & {
+                    display: block;
+                }
+            }
+
+            // Checkboxes and radios
+            .checker,
+            .choice {
+                top: 50%;
+                margin-top: -(@checkbox-size / 2);
+                left: @padding-base-horizontal;
+            }
+
+            // Select all link
+            &.multiselect-all label {
+                font-weight: 500;
+            }
+        }
+
+        // Disabled item
+        &.disabled > a {
+            background-color: transparent;
+
+            > label {
+                cursor: @cursor-disabled;
+            }
+        }
+
+        // Optgroup title
+        &.multiselect-group {
+            > label,
+            &.active > label {
+                margin: 0;
+                padding: (@padding-base-vertical + 1) @content-padding-base;
+                font-size: @font-size-mini;
+                line-height: @line-height-mini;
+                color: @text-muted;
+                text-transform: uppercase;
+                margin-top: (@list-spacing * 2);
+                background-color: transparent;
+                cursor: default;
+            }
+
+            // Disabled color
+            &.disabled {
+                color: @text-muted;
+            }
+
+            // First item
+            &:first-child {
+                > label,
+                &.active > label {
+                    margin-top: @list-spacing;
+                }
+            }
+
+            // Clickable group
+            &.multiselect-group-clickable > label {
+                cursor: pointer;
+            }
+
+            // Disabled group
+            &.disabled {
+                &,
+                &:hover,
+                &:focus {
+                    label {
+                        background-color: transparent;
+                        cursor: @cursor-disabled;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// Width sizing
+// ------------------------------
+
+// Full width
+.multi-select-full > .btn-group {
+    width: 100%;
+
+    .multiselect-container {
+        width: inherit;
+    }
+}
+
+// Fixed width
+.multi-select-fixed > .btn-group > .btn {
+    width: 250px;
+}
+
+// Auto width
+.multi-select-auto > .btn-group > .btn {
+    width: auto;
+}
+
+
+// Misc
+// ------------------------------
+
+// Border color
+div[class*=border-] > .btn-group {
+    border-color: inherit;
+    > .multiselect {
+        border-color: inherit;
+    }
+}
+
+// Filter
+li.multiselect-filter {
+    position: relative;
+    padding: (@padding-base-horizontal - @list-spacing) @padding-base-horizontal;
+    margin-bottom: (@padding-base-horizontal - @list-spacing);
+
+    // Center icon vertically
+    i {
+        font-size: @font-size-small;
+        position: absolute;
+        left: (@padding-base-horizontal * 2);
+        top: 50%;
+        margin-top: -(@font-size-small / 2);
+        .opacity(0.5);
+    }
+
+    // Input horizontal padding
+    .form-control {
+        padding-left: (@padding-base-horizontal * 3);
+    }
+}
+
+// Remove left rounded corners
+.input-group-btn,
+.input-group-addon {
+    & + .multi-select-full,
+    & + .multi-select-auto,
+    & + .multi-select-fixed,
+    & + .btn-group {
+        .multiselect:first-child {
+            .border-left-radius(0);
+        }
+    }
+}
+
+// Button group styles
+.btn-group-multiselect {
+    width: 100%;
+
+    .btn {
+        float: none;
+    }
+
+    .multiselect {
+        min-width: 0;
+    }
+}
+.btn-group > .btn-group:nth-child(2) > .multiselect.btn {
+    .border-left-radius(@border-radius-small);
+}

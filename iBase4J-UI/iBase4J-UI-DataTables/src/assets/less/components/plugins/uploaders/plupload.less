@@ -1,0 +1,400 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Plupload multiple file uploader
+*
+*  Multi runtime single and multiple file uploader
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Layout
+// ------------------------------
+
+// Wrapper
+.plupload_wrapper {
+	width: 100%;
+	border: 2px dashed @panel-default-border;
+	border-radius: @border-radius-base;
+
+	.panel > div > & {
+		border: 0;
+	}
+	.panel.panel-flat > div > & {
+		border-top: 1px solid @panel-default-border;
+	}
+}
+
+// Common icon styles
+.plupload_header:after,
+.plupload_filelist:empty:before,
+.plupload_filelist li.plupload_droptext:before,
+.plupload_file_action:after,
+.plupload_delete a:after,
+.plupload_failed a:after,
+.plupload_done a:after {
+	font-family: 'icomoon';
+	display: inline-block;
+	font-size: @icon-font-size;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+// Header (hidden by default)
+.plupload_header {
+	display: none;
+	position: relative;
+	background-color: @color-info-700;
+	margin: -1px -1px 0 -1px;
+	.border-top-radius(@border-radius-base);
+
+	&:after {
+		content: '\ec78';
+		color: #fff;
+		font-size: (@icon-font-size * 2);
+		position: absolute;
+		top: 50%;
+		left: @content-padding-large;
+		margin-top: -(@icon-font-size);
+	}
+}
+.plupload_header_content {
+	padding: @content-padding-base @content-padding-large;
+	padding-left: ((@content-padding-large * 2 ) + (@icon-font-size * 2));
+	color: #fff;
+}
+.plupload_header_title {
+	font-size: @font-size-h6;
+	font-weight: 500;
+}
+.plupload_header_text {
+	font-size: @font-size-mini;
+	line-height: @line-height-mini;
+}
+
+// Helpers
+.plupload_clear,
+.plupload_clearer {
+	clear: both;
+}
+.plupload_clearer,
+.plupload_progress_bar {
+	display: block;
+	font-size: 0;
+	line-height: 0;
+}
+
+
+// Buttons
+// ------------------------------
+
+// Action buttons
+.plupload_button { 
+	display: inline-block;
+	color: #fff;
+	background-color: @brand-primary;
+	border: 1px solid transparent;
+	padding: @padding-small-vertical @padding-small-horizontal;
+	border-radius: @border-radius-small;
+	margin-right: 5px;
+
+	// Hover state
+	&:hover,
+	&:focus {
+		color: #fff;
+		.box-shadow(0 0 0 100px fade(#000, 5%) inset);
+	}
+
+	// Active state
+	&:active {
+		.box-shadow(0 0 0 100px fade(#000, 10%) inset);
+	}
+}
+
+// Disabled button
+a.plupload_disabled {
+	&,
+	&:hover,
+	&:focus {
+		color: @text-muted;
+		box-shadow: none;
+		border-color: #ddd; 
+		background: #fcfcfc; 
+		cursor: default;
+		.box-shadow(none);
+	}
+}
+
+// Start upload button
+.plupload_start {
+	background-color: @color-teal-400;
+}
+
+
+// File list
+// ------------------------------
+
+// Itself
+.plupload_filelist {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	// Scrollable area
+	.plupload_scroll & {
+		height: 250px;
+		background: #fff;
+		overflow-y: auto;
+
+		@media (max-width: @screen-xs-max) {
+			height: 200px;
+		}
+	}
+
+	// List item
+	li {
+		padding: 12px @content-padding-large;
+		background-color: #fff;
+
+		&:hover {
+			background-color: @dropdown-link-hover-bg;
+		}
+
+		&.plupload_droptext:hover {
+			background-color: transparent;
+		}
+	}
+
+	// Add background icon with text
+	&:empty,
+	li.plupload_droptext {
+		position: relative;
+		height: 250px;
+		text-align: center;
+		background-color: transparent;
+		text-indent: -99999px;
+
+		// Icon
+		&:before {
+			content: '\ea0e';
+			font-size: (@icon-font-size * 5);
+			padding-top: 65px;
+			position: absolute;
+			top: 0;
+			width: (@icon-font-size * 5);
+			height: (@icon-font-size * 5);
+			left: 50%;
+			margin-left: -(@icon-font-size * 2.5);
+			z-index: 2;
+			color: #ddd;
+			text-indent: 0;
+			font-weight: normal;
+		}
+
+		// Text label
+		&:after {
+			content: 'Drag files to upload';
+			font-size: @font-size-h4;
+			position: absolute;
+			top: 50%;
+			padding-top: 145px;
+			left: 50%;
+			margin: -100px 0 0 -150px;
+			width: 300px;
+			height: 200px;
+			color: #bbb;
+			text-indent: 0;
+		}
+
+		@media (max-width: @screen-xs-max) {
+			height: 200px;
+
+			&:before,
+			&:after {
+				width: 100%;
+				height: 200px;
+				left: 0;
+				margin: 0;
+				top: 0;
+			}
+
+			&:before {
+				font-size: (@icon-font-size * 4);
+				padding-top: 40px;
+			}
+
+			&:after {
+				font-size: @font-size-h5;
+				border-width: 3px 0;
+				padding-top: 120px;
+			}
+		}
+	}
+	&:empty:after {
+		content: 'Add files to upload';
+	}
+}
+
+// Header
+.plupload_filelist_header {
+	padding: @content-padding-base @content-padding-large;
+
+	.plupload_file_name,
+	.plupload_file_size,
+	.plupload_file_status,
+	.plupload_file_action {
+	  font-weight: 500;
+	}
+}
+
+// Footer
+.plupload_filelist_footer {
+	padding: @content-padding-base @content-padding-large;
+
+	.plupload_file_size,
+	.plupload_file_status,
+	.plupload_upload_status { 
+	  padding: @padding-base-vertical 0;
+	  font-weight: 500;
+	}
+
+	@media (max-width: @screen-xs-max) {
+		.plupload_file_action, 
+		.plupload_file_status, 
+		.plupload_file_size, 
+		.plupload_progress { 
+			display: none; 
+		}
+	}
+}
+
+
+// Indicators
+// ------------------------------
+
+// File action indicator
+.plupload_file_action {
+	position: relative;
+	float: right;
+	margin-left: 30px;
+	margin-top: 2px;
+	color: @gray-light;
+	width: @icon-font-size;
+	height: @icon-font-size;
+
+	* {
+		display: none;
+	}
+
+	// Add icon to the header and footer
+	&:after {
+		content: '\ec67';
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+
+	// Extra margin at the bottom because of the buttons
+	.plupload_filelist_footer & {
+		margin-top: 9px;
+	}
+
+	// Remove icons in the file list
+	.plupload_filelist &:after {
+		content: none;
+	}
+
+	// Delete button
+	.plupload_delete & {
+		> a {
+			color: @text-color;
+			line-height: 1;
+			.opacity(0.5);
+
+			&:hover {
+				.opacity(1);
+			}
+		}
+	}
+}
+
+// Uploading indicator
+.plupload_uploading {
+	background-color: @color-success-50; 
+}
+
+// Delete button
+.plupload_delete a:after {
+	content: '\ed6b';
+}
+
+// Failed indicator
+.plupload_failed a {
+	color: @brand-danger;
+	cursor: default;
+
+	&:after {
+		content: '\e9cf';
+	}
+}
+
+// Done indicator
+.plupload_done {
+  color: @gray-light;
+
+	a {
+		color: @color-teal-300;
+		cursor: default;
+
+		&:after {
+			content: '\e9db';
+		}
+	}
+}
+
+// Progress indicators
+.plupload_progress,
+.plupload_upload_status {
+	display: none;
+}
+.plupload_progress_container {
+	margin-top: 14px;
+	background-color: @gray-lighter;
+}
+.plupload_progress_bar {
+	width: 0px;
+	height: 4px;
+	background: @color-teal-300;
+	border-radius: @border-radius-large;
+}
+
+
+// Responsive styles
+// ------------------------------
+
+@media (min-width: @screen-sm) {
+	.plupload_file_name {
+		float: left;
+		overflow: hidden;
+
+		.plupload_filelist & {
+			width: 205px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	}
+	.plupload_file_size,
+	.plupload_file_status,
+	.plupload_progress {
+		float: right;
+		width: 80px;
+	}
+	.plupload_file_size,
+	.plupload_file_status,
+	.plupload_file_action {
+		text-align: right;
+	}
+}

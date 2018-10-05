@@ -1,0 +1,511 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Daterange picker
+ *
+ *  Date range picker component for Bootstrap
+ *
+ *  Version: 1.2
+ *  Latest update: Mar 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.daterangepicker {
+    position: absolute;
+    left: 0;
+    margin-top: 5px;
+    width: auto;
+    padding: 0;
+
+    // Override default dropdown styles
+    &.dropdown-menu {
+        max-width: none;
+        background-color: transparent;
+        border: 0;
+        z-index: @zindex-dropdown;
+        .box-shadow(none);
+    }
+
+    // Dropup
+    &.dropup {
+        margin-top: -(@list-spacing);
+    }
+
+    // Align containers
+    .ranges,
+    .calendar {
+        float: left;
+    }
+
+    // Display calendars on left side
+    &.opensleft {
+        .calendars {
+            float: left;
+        }
+    }
+
+    // Display calendars on right side
+    &.opensright {
+        .calendars {
+            float: right;
+        }
+    }
+
+    // And remove floats in single picker
+    &.single {
+        .calendar {
+            float: none;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        // Hide range menu
+        .ranges {
+            display: none;
+        }
+    }
+
+    // Display calendars
+    &.show-calendar .calendar {
+        display: block;
+    }
+
+    // Calendar
+    .calendar {
+        display: none;
+        background-color: @dropdown-bg;
+        border: 1px solid @dropdown-border;
+        border-radius: @border-radius-base;
+        margin: @list-spacing;
+        padding: (@list-spacing * 2);
+        .box-shadow(0 1px 3px fade(#000, 10%));
+    }
+}
+
+
+// Table
+// ------------------------------
+
+.daterangepicker {
+
+    // Table defaults
+    table {
+        width: 100%;
+        margin: 0;
+
+        tbody {
+            th,
+            td {
+                cursor: pointer;
+            }
+        }
+    }
+
+    // Cells
+    th,
+    td {
+        white-space: nowrap;
+        text-align: center;
+
+        &.week {
+            font-size: 80%;
+            color: #ccc;
+        }
+    }
+
+    // Header
+    th {
+        color: @text-muted;
+        font-weight: normal;
+        font-size: @font-size-small;
+
+        // Icons
+        > i {
+            top: 0;
+        }
+
+        // Arrow buttons
+        &.prev,
+        &.next {
+            cursor: pointer;
+        }
+
+        // Available dates
+        &.available {
+            &:hover,
+            &:focus {
+                color: @text-color;
+            }
+        }
+    }
+
+    // Table content cells
+    td {
+
+        // Available days
+        &.available {
+            &:hover,
+            &:focus {
+                background-color: @dropdown-link-hover-bg;
+            }
+        }
+
+        // Inactive days
+        &.off,
+        &.disabled {
+            color: #ccc;
+        }
+
+        // Disabled days
+        &.disabled {
+            cursor: @cursor-disabled;
+        }
+
+        // Highlight dates in range
+        &.in-range {
+            background-color: @dropdown-link-hover-bg;
+        }
+
+        // Active date
+        &.active {
+            &,
+            &:hover,
+            &:focus {
+                background-color: @color-teal-400;
+                color: #fff;
+                border-radius: @border-radius-base;
+            }
+        }
+    }
+
+    // Override default condensed styles
+    .table-condensed {
+        tr > th,
+        tr > td {
+            padding: @padding-xs-horizontal;
+            line-height: 1;
+        }
+
+        // Add extra top padding to day names
+        thead tr:last-child th {
+            padding-top: (@list-spacing * 2);
+        }
+
+        // Month heading
+        .month {
+            font-size: @font-size-h6;
+            line-height: 1;
+            color: @text-color;
+            padding-top: @content-padding-base;
+            padding-bottom: @content-padding-base;
+            font-weight: 400;
+        }
+    }
+}
+
+
+// Elements
+// ------------------------------
+
+.daterangepicker {
+
+    // Selects
+    select {
+        display: inline-block;
+
+        &.monthselect {
+            margin-right: 2%;
+            width: 56%;
+        }
+
+        &.yearselect {
+            width: 40%;
+        }
+
+        &.hourselect,
+        &.minuteselect,
+        &.secondselect,
+        &.ampmselect {
+            width: 60px;
+            padding-left: 0;
+            padding-right: 0;
+            margin-bottom: 0;
+        }
+    }
+
+    // Text inputs
+    .daterangepicker_input {
+        position: relative;
+
+        // Calendar icons
+        i {
+            position: absolute;
+            right: @padding-small-horizontal;
+            top: auto;
+            bottom: ((@input-height-base - @icon-font-size) / 2);
+            color: @text-muted;
+        }
+
+        // Add right padding for inputs
+        input {
+            padding-left: @padding-small-horizontal;
+            padding-right: (@padding-small-horizontal + @icon-font-size + @padding-base-vertical);
+        }
+    }
+
+    // Time picker
+    .calendar-time {
+        text-align: center;
+        margin: @padding-base-horizontal 0;
+
+        // Disabled state
+        select.disabled {
+            color: #ccc;
+            cursor: @cursor-disabled;
+        }
+    }
+}
+
+
+// Ranges dropdown
+// ------------------------------
+
+.ranges {
+    background-color: @dropdown-bg;
+    position: relative;
+    border: 1px solid @dropdown-border;
+    border-radius: @border-radius-base;
+    width: 200px;
+    margin-top: @list-spacing;
+    .box-shadow(0 1px 3px fade(#000, 10%));
+
+    // Remove left margin if on right side
+    .opensright & {
+        margin-left: 0;
+    }
+
+    // Remove left margin if on left side
+    .opensleft & {
+        margin-right: 0;
+    }
+
+    // List with links
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: @list-spacing 0;
+
+        // Add top border
+        & + .daterangepicker-inputs {
+            border-top: 1px solid @dropdown-divider-bg;
+        }
+
+        // List item
+        li {
+            color: @text-color;
+            padding: (@padding-base-vertical + 1) @padding-base-horizontal;
+            cursor: pointer;
+            margin-top: 1px;
+
+            &:first-child {
+                margin-top: 0;
+            }
+
+            // Hover bg color
+            &:hover,
+            &:focus {
+                background-color: @dropdown-link-hover-bg;
+            }
+
+            // Active item color
+            &.active {
+                color: @dropdown-link-active-color;
+                background-color: @color-teal-400;
+            }
+        }
+    }
+
+    // Text inputs
+    .daterangepicker-inputs {
+        padding: @padding-base-horizontal;
+        padding-top: @padding-base-horizontal + @list-spacing; // we need to match menu vertical spacing
+
+        // Inputs container
+        .daterangepicker_input {
+
+            // Add top margin to the second field
+            & + .daterangepicker_input {
+                margin-top: @padding-base-horizontal + @list-spacing;;
+            }
+
+            // Text label
+            > span {
+                display: block;
+                font-size: @font-size-small;
+                margin-bottom: @padding-base-vertical;
+                color: @text-muted;
+            }
+        }
+
+        // Add top divider
+        & + .range_inputs {
+            border-top: 1px solid @dropdown-divider-bg;
+        }
+    }
+
+    // Buttons area
+    .range_inputs {
+        padding: @padding-base-horizontal;
+
+        // Buttons
+        .btn {
+            display: block;
+            width: 100%;
+        }
+        .btn + .btn {
+            margin-top: @padding-base-horizontal;
+        }
+    }
+
+
+    // Setup mobile view
+    @media (min-width: @screen-sm) {
+        margin: @list-spacing;
+    }
+}
+
+
+// Custom ranges layout
+// ------------------------------
+
+// Container
+.daterange-custom {
+    cursor: pointer;
+
+    // Clearing floats
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    // Labels and badges
+    .label,
+    .badge {
+        margin: 4px 0 0 @element-horizontal-spacing;
+        vertical-align: top;
+    }
+    .label-icon {
+        margin-top: 0;
+        margin-right: 5px;
+    }
+}
+
+// Layout
+.daterange-custom-display {
+    display: inline-block;
+    position: relative;
+    padding-left: (@icon-font-size + 5);
+    line-height: 1;
+
+    // Arrow icon
+    &:after {
+        content: '\e9c9';
+        font-family: 'icomoon';
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        margin-top: -(@icon-font-size / 2);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        .transition(all ease-in-out 0.2s);
+
+        // Rotate if open/closed
+        .daterange-custom.is-opened & {
+            .rotate(180deg);
+        }
+    }
+
+    // Date number
+    > i {
+        display: inline-block;
+        font-size: 28px;
+        font-weight: normal;
+        font-style: normal;
+        letter-spacing: @heading-letter-spacing;
+    }
+
+    // Date details
+    b {
+        display: inline-block;
+        margin-left: 4px;
+        font-weight: 400;
+
+        // Month/year
+        > i {
+            font-size: @font-size-mini;
+            display: block;
+            line-height: @font-size-small;
+            text-transform: uppercase;
+            font-style: normal;
+            font-weight: 400;
+        }
+    }
+
+    // Line divider
+    em {
+        line-height: 30px;
+        vertical-align: top;
+        margin: 0 4px;
+    }
+}
+
+
+// Setup mobile view
+// ------------------------------
+
+@media (max-width: @screen-sm) {
+
+    // Layout
+    .opensleft,
+    .opensright {
+        left: 0!important;
+        right: 0;
+
+        // Stack calendars container
+        .calendars {
+            float: none;
+        }
+
+        // Stack elements
+        .daterangepicker& {
+            .ranges,
+            .calendar,
+            .calendars {
+                float: none;
+            }
+        }
+    }
+
+    // Elements
+    .daterangepicker {
+        width: 100%;
+        padding-left: @grid-gutter-width;
+        padding-right: @grid-gutter-width;
+
+        // Remove side margin from calendars
+        .calendar {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        // Make ranges full width
+        .ranges {
+            width: 100%;
+        }
+    }
+}

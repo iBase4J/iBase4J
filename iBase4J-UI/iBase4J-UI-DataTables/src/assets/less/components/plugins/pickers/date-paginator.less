@@ -1,0 +1,128 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Date paginator
+ *
+ *  A jQuery plugin which adds date selection to the Bootstrap pagination component
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.datepaginator {
+	height: 72px;
+	text-align: center;
+}
+.datepaginator-sm {
+	height: 68px;
+}
+.datepaginator-lg {
+	height: 76px;
+}
+
+
+// Pagination styling
+// ------------------------------
+
+.datepaginator {
+	.pagination {
+		white-space: nowrap;
+
+		// List items
+		> li {
+			display: inline-block;
+
+			// All links
+			> a {
+				min-width: auto;
+				text-align: center;
+				border-radius: @border-radius-base;
+				margin-left: 0;
+				border: 0;
+			}
+
+			// Square corners
+			.dp-nav-square-edges {
+				border-radius: 0;
+			}
+
+			// Day off
+			.dp-off {
+				background-color: #fafafa;
+			}
+
+			// No select
+			.dp-no-select {
+				color: #ccc;
+				background-color: #fafafa;
+
+				&:hover {
+					background-color: #fafafa;
+				}
+			}
+
+			// Calendar
+			#dp-calendar {
+				position: absolute;
+				right: 6px;
+				top: 6px;
+			}
+
+			// Nav arrows
+			> .dp-nav {
+				height: 72px;
+				padding: 29px 0;
+				width: 38px;
+				line-height: 1;
+				border-radius: @border-radius-base;
+			}
+			> a.dp-nav-sm {
+				height: 68px;
+				padding: 27px 0;
+			}
+			> a.dp-nav-lg {
+				height: 76px;
+				padding: 31px 0;
+			}
+
+			// Items
+			> a.dp-item {
+				height: 72px;
+				padding: 15px 0;
+				width: 35px;
+			}
+
+			> a.dp-item-sm {
+				height: 68px;
+				padding: 13px 0;
+			}
+			> a.dp-item-lg {
+				height: 76px;
+				padding: 17px 0;
+			}
+
+			// Dates highlight
+			> .dp-today {
+				&,
+				&:hover,
+				&:focus {
+					background-color: @brand-primary;
+					color: #fff;
+				}
+			}
+			> .dp-selected {
+				&,
+				&:hover,
+				&:focus {
+					background-color: @color-teal-400;
+					color: #fff;
+					width: 140px;
+				}
+			}
+		}
+	}
+}

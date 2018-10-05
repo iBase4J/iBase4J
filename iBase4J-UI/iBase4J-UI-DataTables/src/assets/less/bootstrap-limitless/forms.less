@@ -1,0 +1,658 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Form related components
+*
+*  Overrides for bootstrap form related components
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+/* Form controls
+----------------------------------*/
+
+// Normalize non-controls
+// -------------------------
+
+// Legend
+legend {
+    font-size: @font-size-small;
+    padding-top: (@line-height-computed / 2);
+    padding-bottom: (@line-height-computed / 2);
+    text-transform: uppercase;
+
+    // Remove top padding in first items
+    fieldset:first-child & {
+        &:first-child {
+            padding-top: 0;
+        }
+    }
+
+    // Control arrow
+    .control-arrow {
+        float: right;
+        color: @text-muted;
+
+        &:hover {
+            color: @text-color;
+        }
+    }
+}
+
+// Label
+label {
+    margin-bottom: @padding-base-vertical;
+    font-weight: 400;
+}
+
+
+// Normalize form controls
+// -------------------------
+
+// Multiple select
+select[multiple],
+select[size] {
+    height: 200px;
+    padding: @padding-base-vertical;
+
+    // Option
+    option {
+        padding: @padding-base-vertical @padding-base-horizontal;
+        border-radius: @input-border-radius;
+
+        + option {
+            margin-top: 1px;
+        }
+    }
+}
+
+// Focus for file, radio, and checkbox
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+    outline: 0;
+}
+
+
+// Common form controls
+// -------------------------
+
+.form-control {
+    .box-shadow(none);
+
+    // Remove outline and shadow on focus
+    &:focus {
+        outline: 0;
+        .box-shadow(none);
+    }
+    &[class*=bg-]:focus {
+        border-color: transparent;
+    }
+
+    // Placeholder in colored input
+    &[class*=bg-] {
+        .placeholder(@input-placeholder-light);
+    }
+}
+
+
+// Form controls options
+// -------------------------
+
+// Rounded input
+.input-rounded {
+    border-radius: 100px;
+}
+
+// Roundless input
+.input-roundless {
+    border-radius: 0;
+}
+
+// Transparent input
+.form-control-unstyled {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+}
+
+// Remove inputs shadow in mobile browsers 
+input[type="text"],
+input[type="password"],
+input[type="search"],
+input[type="email"],
+input[type="number"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="url"],
+input[type="tel"],
+textarea {
+    -webkit-appearance: none;
+}
+
+
+
+/* Form components
+----------------------------------*/
+
+// Form groups
+// -------------------------
+
+.form-group {
+    margin-bottom: @form-group-margin-bottom;
+    position: relative;
+
+    // Form group nesting
+    .form-group {
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    // Vertical spacing for stacked columns
+    //
+    // When nested form groups stack, add top margin for each column, except first.
+    @media (max-width: @screen-sm-max) {
+        div[class*="col-md-"]:not(.control-label) + div[class*="col-md-"] {
+            margin-top: @form-group-margin-bottom;
+        }
+    }
+    @media (max-width: @screen-md-max) {
+        div[class*="col-lg-"]:not(.control-label) + div[class*="col-lg-"] {
+            margin-top: @form-group-margin-bottom;
+        }
+    }
+    @media (max-width: @screen-xs-max) {
+        div[class*="col-sm-"]:not(.control-label) + div[class*="col-sm-"] {
+            margin-top: @form-group-margin-bottom;
+        }
+    }
+}
+
+
+// Floating labels
+// -------------------------
+
+.form-group-material {
+
+    // Labels
+    > .control-label {
+        position: relative;
+        top: @padding-base-vertical;
+        .opacity(0);
+
+        // Top spacing for contextual icon
+        ~ .form-control-feedback {
+            top: (@line-height-computed + @padding-base-vertical);
+        }
+    }
+
+    // Display label
+    > .control-label.is-visible {
+        top: 0;
+        .opacity(1);
+    }
+
+    // Label animation
+    > .control-label.animate {
+        .transition(all linear 0.1s);
+    }
+}
+
+
+// Checkboxes and radios
+// -------------------------
+
+// Containers
+.radio,
+.checkbox {
+
+    // Make them vertically centered depending on the base input height
+    margin-top: ((@input-height-base - @line-height-computed) / 2);
+    margin-bottom: ((@input-height-base - @line-height-computed) / 2);
+
+    // Inner label element
+    label {
+        padding-left: (@checkbox-size + @content-padding-small);
+    }
+}
+
+// Checkbox and radio inputs
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+    margin-left: 0;
+    left: 0;
+}
+
+// Siblings
+.radio + .radio,
+.checkbox + .checkbox {
+    margin-top: 0;
+}
+
+// Radios and checkboxes on same line
+.radio-inline,
+.checkbox-inline {
+    position: relative;
+    padding-left: (@checkbox-size + @content-padding-small);
+}
+
+
+//
+// Right position
+//
+
+// Radio
+.radio-right {
+    &.radio-inline,
+    label {
+        padding-left: 0;
+        padding-right: (@checkbox-size + @content-padding-small);
+    }
+
+    input[type="radio"] {
+        left: auto;
+        right: 0;
+    }
+}
+
+// Checkbox
+.checkbox-right:extend(.radio-right all) {
+    &.checkbox-inline,
+    label {
+        &:extend(.radio-right.radio-inline);
+    }
+    input[type="checkbox"] {
+        &:extend(.radio-right input[type="radio"]);
+    }
+}
+
+// Inline siblings
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
+    margin-left: @content-padding-base;
+}
+
+// Disabled state
+.radio,
+.checkbox {
+    &,
+    &-inline {
+        &.disabled,
+        fieldset[disabled] & {
+            color: @gray-light;
+        }
+    }
+}
+
+
+
+/* Form control sizing
+----------------------------------*/
+
+// The `.form-group-* form-control` variations are sadly duplicated to avoid the
+// issue documented in https://github.com/twbs/bootstrap/issues/15074.
+
+// XLarge
+.input-xlg {
+    .input-size(@input-height-xlarge; @padding-xlarge-vertical; @padding-xlarge-horizontal; @font-size-xlarge; @line-height-xlarge; @input-border-radius-large);
+}
+.form-group-xlg {
+    .form-control {
+        .input-size(@input-height-xlarge; @padding-xlarge-vertical; @padding-xlarge-horizontal; @font-size-xlarge; @line-height-xlarge; @input-border-radius-large);
+    }
+    .form-control-static {
+        height: @input-height-xlarge;
+        min-height: (@line-height-computed + @font-size-xlarge);
+        padding: @padding-xlarge-vertical @padding-xlarge-horizontal;
+        font-size: @font-size-xlarge;
+        line-height: @line-height-xlarge;
+    }
+}
+
+// Mini
+.input-xs {
+    .input-size(@input-height-mini; @padding-xs-vertical; @padding-xs-horizontal; @font-size-small; @line-height-small; @input-border-radius-small);
+}
+.form-group-xs {
+    .form-control {
+        .input-size(@input-height-mini; @padding-xs-vertical; @padding-xs-horizontal; @font-size-small; @line-height-small; @input-border-radius-small);
+    }
+    .form-control-static {
+        height: @input-height-mini;
+        min-height: (@line-height-computed + @font-size-small);
+        padding: @padding-xs-vertical @padding-xs-horizontal;
+        font-size: @font-size-small;
+        line-height: @line-height-small;
+    }
+}
+
+
+
+/* Form helpers
+----------------------------------*/
+
+// Form control feedback states
+// -------------------------
+
+// Default right icon position
+.has-feedback {
+
+    // Ensure icons don't overlap text
+    .form-control {
+        padding-right: @input-height-base;
+
+        &.input-xlg {
+            padding-right: @input-height-xlarge;
+        }
+
+        &.input-lg {
+            padding-right: @input-height-large;
+        }
+
+        &.input-sm {
+            padding-right: @input-height-small;
+        }
+
+        &.input-xs {
+            padding-right: @input-height-mini;
+        }
+    }
+}
+
+// Feedback icon
+.form-control-feedback {
+    width: @input-height-base + 2;
+    color: @input-color;
+    z-index: 3;
+
+    // Change color if comes after colored input
+    input[class*=bg-] + & {
+        color: #fff;
+    }
+}
+
+// Left icon position
+.has-feedback-left {
+    .form-control {
+        padding-right: @padding-base-horizontal;
+        padding-left: @input-height-base;
+
+        &.input-xlg {
+            padding-right: @padding-xlarge-vertical;
+            padding-left: @input-height-xlarge;
+        }
+
+        &.input-lg {
+            padding-right: @padding-large-horizontal;
+            padding-left: @input-height-large;
+        }
+
+        &.input-sm {
+            padding-right: @padding-small-horizontal;
+            padding-left: @input-height-small;
+        }
+
+        &.input-xs {
+            padding-right: @padding-xs-horizontal;
+            padding-left: @input-height-mini;
+        }
+    }
+    .form-control-feedback {
+        right: auto;
+        left: 0;
+    }
+}
+
+
+//
+// Sizing
+//
+
+// XLarge
+.input-xlg + .form-control-feedback,
+.form-group-xlg > .form-control-feedback {
+    width: @input-height-xlarge + 2;
+    height: @input-height-xlarge;
+    line-height: @input-height-xlarge;
+}
+
+// Large
+.input-lg + .form-control-feedback,
+.form-group-lg > .form-control-feedback {
+    width: @input-height-large + 2;
+}
+
+// Small
+.input-sm + .form-control-feedback,
+.form-group-sm > .form-control-feedback {
+    width: @input-height-small + 2;
+}
+
+// Mini
+.input-xs + .form-control-feedback,
+.form-group-xs > .form-control-feedback {
+    width: @input-height-mini + 2;
+    height: @input-height-mini;
+    line-height: @input-height-mini;
+}
+
+
+//
+// Feedback states
+//
+
+.has-success,
+.has-warning,
+.has-error {
+    .form-control:focus {
+        .box-shadow(none);
+    }
+}
+
+
+
+// Help text
+// -------------------------
+
+// Block helpers
+.help-block {
+    color: @text-muted;
+    font-size: @font-size-small;
+    margin-top: @padding-base-vertical;
+    margin-bottom: @padding-base-vertical;
+}
+
+// Inline helpers
+.help-inline {
+    display: inline-block;
+    color: @text-muted;
+    font-size: @font-size-small;
+    margin-top: (@padding-base-vertical + 1);
+    margin-bottom: (@padding-base-vertical + 1);
+
+    // Remove gutter if inside column
+    .form-horizontal .form-group > div[class*="col-"] + & {
+        margin-left: (@grid-gutter-width / 2);
+        margin-right: (@grid-gutter-width / 2);
+    }
+
+    // Inline help works only on large screens
+    @media (min-width: @screen-md) {
+        display: inline-block;
+        margin-top: (@padding-base-vertical + 1);
+        margin-bottom: (@padding-base-vertical + 1);
+        vertical-align: top;
+
+        // Inline text helper
+        &:not(.label) {
+            color: @text-muted
+        }
+
+        // In large group
+        .form-group-lg & {
+            margin-top: (@padding-large-vertical + 1);
+        }
+
+        // In small group
+        .form-group-sm & {
+            margin-top: (@padding-small-vertical + 1);
+        }
+
+        // In mini group
+        .form-group-xs & {
+            margin-top: (@padding-xs-vertical + 1);
+        }
+    }
+}
+
+
+
+/* Form layouts
+----------------------------------*/
+
+// Inline forms
+// -------------------------
+
+.form-inline {
+    @media (min-width: @screen-sm-min) {
+
+        // Inline-block all the things for "inline"
+        .form-group {
+            & + .form-group {
+                margin-left: @content-padding-base;
+            }
+
+            // Label setup
+            > label {
+                margin-right: @element-horizontal-spacing;
+                position: relative;
+                top: 1px;
+            }
+        }
+    }
+}
+
+
+// Horizontal forms
+// -------------------------
+
+.form-horizontal {
+
+    // Make form groups behave like rows
+    .form-group {
+
+        // Nesting
+        .form-group {
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
+    // Control label
+    @media (min-width: @screen-sm-min) {
+        .control-label {
+            padding-bottom: @padding-base-vertical;
+            padding-top: 0;
+
+            &:not(.text-right) {
+                text-align: left;
+            }
+        }
+    }
+
+    // Bottom padding for stacked control labels
+    .control-label {
+        @media (min-width: @screen-xs) {
+            &[class*=col-xs-] {
+                padding-top: (@padding-base-vertical + 1);
+            }
+        }
+
+        @media (min-width: @screen-md) {
+            &[class*=col-md-] {
+                padding-top: (@padding-base-vertical + 1);
+            }
+        }
+
+        @media (min-width: @screen-sm) {
+            &[class*=col-sm-] {
+                padding-top: (@padding-base-vertical + 1);
+            }
+        }
+
+        @media (min-width: @screen-lg) {
+            &[class*=col-lg-] {
+                padding-top: (@padding-base-vertical + 1);
+            }
+        }
+    }
+
+    // Validation state icons
+    .has-feedback {
+        > .form-control-feedback {
+            right: 0;
+        }
+    }
+    .has-feedback-left {
+        .form-control-feedback {
+            right: auto;
+            left: (@grid-gutter-width / 2);
+        }
+
+        > .form-control-feedback {
+            left: 0;
+        }
+    }
+
+
+    //
+    // Form group sizes
+    //
+
+    // XLarge
+    .form-group-xlg {
+        @media (min-width: @screen-sm-min) {
+            .control-label {
+                font-size: @font-size-xlarge;
+                padding-top: (@padding-xlarge-vertical + 1);
+            }
+        }
+    }
+
+    // Large
+    .form-group-lg {
+        @media (min-width: @screen-sm-min) {
+            .control-label {
+                padding-top: (@padding-large-vertical + 1);
+            }
+        }
+    }
+
+    // Small
+    .form-group-sm {
+        @media (min-width: @screen-sm-min) {
+            .control-label {
+                padding-top: (@padding-small-vertical + 1);
+            }
+        }
+    }
+
+    // Mini
+    .form-group-xs {
+        @media (min-width: @screen-sm-min) {
+            .control-label {
+                font-size: @font-size-small;
+                padding-top: (@padding-xs-vertical + 1);
+            }
+        }
+    }
+}

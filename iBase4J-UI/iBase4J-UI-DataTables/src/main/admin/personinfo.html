@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-store">
+	<meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>香巴林卡智慧景区平台</title>
+
+    <!-- 全局样式 -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="../../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/colors.css" rel="stylesheet" type="text/css">
+    <!-- /全局样式 -->
+
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="../../extends/dep/ztree/css/metro.css">
+    <link href="../../extends/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../extends/css/admin/user.css" rel="stylesheet" type="text/css">
+    <!-- /自定义样式 -->
+
+    <!-- js核心库 -->
+    <script type="text/javascript" src="../../assets/js/core/libraries/vue.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /js核心库 -->
+
+    <!-- js主题库 -->
+    <script type="text/javascript" src="../../assets/js/plugins/ui/moment/moment.min.js"></script>
+
+    <script type="text/javascript" src="../../assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/validation/additional_methods.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/switch.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/jquery.formautofill.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/bootbox.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/app.js"></script>
+    <!-- /js主题库 -->
+
+    <!-- js自定义 -->
+    <script src="../../extends/dep/ztree/js/jquery.ztree.all-3.5.min.js"></script>
+    <script src="../../extends/js/common.js"></script>
+    <script src="../../extends/dep/datetime/js/bootstrap-datepicker.js"></script>
+    <script src="../../assets/js/pages/form_validation.js"></script>
+    <script src="../../extends/js/admin/personinfo.js"></script>
+    <!-- /js自定义 -->
+</head>
+
+<body>
+<!-- 页面容器 -->
+<div class="page-container">
+    <!-- 页面内容 -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-default border-bottom-lg border-bottom-teal">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-bold">首页</span> - 控制台</h4>
+                    </div>
+
+                </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb">
+                        <li><a href="/main/welcome.html"><i class="icon-home2 position-left"></i>首页</a></li>
+                        <li class="active">控制台</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /page header -->
+
+
+            <!-- Content area -->
+            <div class="content">
+                <!-- Dashboard content -->
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!-- Basic legend -->
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">个人资料</h5>
+                                <div class="heading-elements">
+                                    <ul class="icons-list">
+                                        <li><a data-action="reload" data-fnReload="refreshData"></a></li>
+                                        <li><a data-action="collapse"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="tabbable">
+                                    <ul class="nav nav-tabs nav-tabs-highlight">
+                                        <li class="active">
+                                            <a href="#personal-data" data-toggle="tab" aria-expanded="true">个人资料</a>
+                                        </li>
+                                        <li>
+                                            <a href="#contact-way" data-toggle="tab" aria-expanded="false">联系方式</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="personal-data">
+                                            <form class="form-horizontal form-validate-jquery" id="personalData" action="#">
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">帐号</label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                                        <input type="text" name="account" class="form-control" placeholder="请输入帐号" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">工号</label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                                        <input type="text" name="basic" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">姓名</label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                        				<input type="text" name="userName" class="form-control" placeholder="请输入用户账号">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">性别</label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                                        <div class="radio-inline">
+                                                            <label>
+                                                                <div class="choice-inline">
+				                                                    <span>
+				                                                        <input type="radio" name="sex" class="styled" value="1">
+				                                                    </span>
+                                                                </div>
+                                                                男
+                                                            </label>
+                                                        </div>
+                                                        <div class="radio-inline">
+                                                            <label>
+                                                                <div class="choice-inline">
+				                                                    <span>
+				                                                        <input type="radio" name="sex" class="styled" value="2">
+				                                                    </span>
+                                                                </div>
+                                                                女
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+				                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">
+				                                    	<span class="text-danger">*</span>出生日期
+				                                    </label>
+				                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+				                                        <div class="input-group">
+				                                            <input type="text" name="birthDay" class="form-control date-picker"
+				                                                   placeholder="请输入出生日期">
+				                                            <span class="input-group-addon"><i class="icon-calendar22"></i></span>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                                
+				                                <div class="form-group">
+				                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">详细住址</label>
+				                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+				                                        <input type="text" name="address" class="form-control" placeholder="请输入详细地址">
+				                                    </div>
+				                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">部门<span
+				                                            class="text-danger">*</span></label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10 department">
+                                                        <div class="input-group departmentBtn">
+				                                            <input type="hidden" name="deptId" class="departmentValue">
+				                                            <input type="text" class="form-control departmentName" placeholder="请选择部门" readonly>
+				                                            <span class="input-group-addon"><i class="icon-search4"></i></span>
+				                                        </div>
+				
+				                                        <div class="departmentContent col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				                                            <ul id="departmentTree" class="ztree col-xs-12 col-sm-12 col-md-12 col-lg-12"></ul>
+				                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">职位</label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                        				<input type="position" name="position" class="form-control" placeholder="请输入职位名称">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">自我介绍</label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                        				<textarea rows="5" cols="5" name="remark" class="form-control" placeholder="请输入备注描述信息"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="text-right">
+                                                        <button type="button" class="btn btn-primary submit">提交<i
+                                                                class="icon-arrow-right14 position-right"></i></button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane" id="contact-way">
+                                            <form class="form-horizontal form-validate-jquery" id="contactWay" action="#">
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">
+                                                    	<span class="text-danger">*</span>电话
+                                                    </label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                        				<input type="text" name="phone" class="form-control" placeholder="请输入手机号码">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">
+                                                    	<span class="text-danger">*</span>邮箱
+                                                    </label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                        				<input type="text" name="email" class="form-control" placeholder="请输入邮箱地址">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">微信</label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                        				<input type="text" name="weixin" class="form-control" placeholder="请输入微信号">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1 text-right">QQ</label>
+                                                    <div class="col-xs-8 col-sm-9 col-md-10 col-lg-10">
+                                        				<input type="text" name="qq" class="form-control" placeholder="请输入QQ号">
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="text-right">
+                                                        <button type="button" class="btn btn-primary submit">提交<i
+                                                                class="icon-arrow-right14 position-right"></i></button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /dashboard content -->
+				<!-- Footer -->
+	            <div class="footer text-muted" v-html="footer"></div>
+	            <!-- /footer -->
+
+            </div>
+            <!-- /content area -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /页面内容 -->
+
+</div>
+<!-- /页面容器 -->
+</body>
+</html>

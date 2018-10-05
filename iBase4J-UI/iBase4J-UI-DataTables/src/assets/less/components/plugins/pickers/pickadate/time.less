@@ -1,0 +1,107 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Pick-a-date - Time picker
+*
+*  The mobile-friendly, responsive, and lightweight jQuery date & time input picker
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base
+// ------------------------------
+
+// Container size
+.picker--time {
+    min-width: 256px;
+    max-width: 320px;
+}
+
+// Remove padding from picker box
+.picker--time .picker__box {
+    padding: 0;
+}
+
+
+// List of items
+// ------------------------------
+
+// Items list
+.picker__list {
+    list-style: none;
+    padding: @list-spacing 0;
+    margin: 0;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+// The times on the clock.
+.picker__list-item {
+    position: relative;
+    padding: @padding-base-vertical @padding-base-horizontal;
+
+    &:hover,
+    &:focus {
+        cursor: pointer;
+        background-color: @dropdown-link-hover-bg;
+        z-index: 10;
+    }
+}
+
+// The clear button
+.picker--time .picker__button--clear {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: @padding-small-vertical @padding-small-horizontal;
+    background-color: @btn-default-bg;
+    margin-top: 1px;
+    outline: 0;
+    border: 0;
+    border-top: 1px solid @gray-lighter;
+    text-align: center;
+    margin-bottom: -(@list-spacing);
+    margin-top: @list-spacing;
+
+    &:hover,
+    &:focus {
+        background-color: @dropdown-link-hover-bg;
+    }
+}
+
+
+// States
+// ------------------------------
+
+// Highlighted and hovered/focused time
+.picker__list-item--highlighted {
+    z-index: 10;
+}
+.picker__list-item--highlighted,
+.picker__list-item--highlighted:hover,
+.picker--focused .picker__list-item--highlighted {
+    cursor: pointer;
+    color: #fff;
+    background-color: @color-teal-400;
+}
+
+// Selected and hovered/focused time
+.picker__list-item--selected,
+.picker__list-item--selected:hover,
+.picker--focused .picker__list-item--selected {
+    background-color: @color-teal-400;
+    color: #fff;
+    z-index: 10;
+}
+
+// Disabled time
+.picker__list-item--disabled,
+.picker__list-item--disabled:hover,
+.picker--focused .picker__list-item--disabled {
+    background-color: #fafafa;
+    color: @text-muted;
+    cursor: @cursor-disabled;
+    z-index: auto;
+}

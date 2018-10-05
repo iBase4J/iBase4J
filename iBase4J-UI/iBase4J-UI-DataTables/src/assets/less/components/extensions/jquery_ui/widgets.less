@@ -1,0 +1,1733 @@
+/* ------------------------------------------------------------------------------
+*
+*  # jQuery UI Widgets
+*
+*  Styles for jQuery UI widgets
+*
+*  Version: 1.2
+*  Latest update: Aug 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Accordion
+// -------------------------
+
+// Base
+.ui-accordion {
+
+	// Header
+	.ui-accordion-header {
+		display: block;
+		cursor: pointer;
+		margin: 0;
+		outline: 0;
+		position: relative;
+		background-color: @panel-bg;
+		padding: @panel-heading-padding;
+		border: 1px solid @panel-default-border;
+		margin-top: 5px;
+		border-radius: @panel-border-radius;
+
+		// Remove top margin from the first item
+		&:first-child {
+			margin-top: 0;
+		}
+
+		// Border radius correction
+		&.ui-accordion-header-active {
+			.border-bottom-radius(0);
+		}
+
+		// Icons
+		.ui-accordion-header-icon {
+			position: absolute;
+			top: 50%;
+			right: @content-padding-large;
+			margin-top: -(@icon-font-size / 2);
+
+			// Iconll
+			&:before {
+				content: '\e9b8';
+		        font-family: 'Icomoon';
+		        display: block;
+		        width: @icon-font-size;
+		        font-size: @icon-font-size;
+		        line-height: 1;
+		        -webkit-font-smoothing: antialiased;
+		        -moz-osx-font-smoothing: grayscale;
+			}
+		}
+	}
+
+	// Change icon in active header
+	.ui-accordion-header-active {
+		.ui-accordion-header-icon:before {
+			content: '\e9b7';
+		}
+	}
+
+	// Icons
+	.ui-accordion-icons {
+		padding-right: (@content-padding-large + @content-padding-small + @icon-font-size);
+	}
+
+	// Content
+	.ui-accordion-content {
+		padding: @panel-body-padding;
+		background-color: @panel-bg;
+		border: 1px solid @panel-default-border;
+		border-top: 0;
+		overflow: auto;
+		.border-bottom-radius(@panel-border-radius);
+	}
+}
+
+// Sortable vertical spacing
+.accordion-sortable-group {
+	& + & {
+		margin-top: 5px;
+	}
+}
+
+
+
+// Autocomplete
+// -------------------------
+
+// Base
+.ui-autocomplete { 
+	position: absolute;
+	display: none;
+	padding: @list-spacing 0;
+	z-index: @zindex-dropdown;
+	max-height: 250px;
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	// Category title
+	.ui-autocomplete-category {
+		padding: (@padding-base-vertical + 1) @padding-base-horizontal;
+		font-size: @font-size-mini;
+		line-height: @line-height-mini;
+		text-transform: uppercase;
+		font-weight: 700;
+		margin-top: 2px;
+		margin-bottom: 2px;
+
+		// Optgroup items have double horizontal spacing
+		~ .ui-menu-item {
+			padding-left: (@padding-base-horizontal * 2);
+		}
+	}
+}
+
+// Animated processing icon
+.ui-autocomplete-processing:after { 
+    content: '\eb51';
+    font-family: 'Icomoon';
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    right: @padding-base-horizontal;
+    width: @icon-font-size;
+    text-align: right;
+    margin-top: -(@icon-font-size / 2);
+    font-size: @icon-font-size;
+    line-height: 1;
+    color: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    .animation(rotation 1s linear infinite);
+}
+
+// Inside input group, remove border and border radius from the last element
+.input-group {
+	.ui-autocomplete-input {
+		+ .input-group-btn,
+		+ .input-addon {
+			> .btn {
+				border-left: 0;
+				.border-left-radius(0);
+			}
+		}
+	}
+}
+
+
+
+// Buttons
+// -------------------------
+
+// Base
+.ui-button {
+	display: inline-block;
+	position: relative;
+	touch-action: manipulation;
+	margin-bottom: 0;
+	padding: @padding-base-vertical @padding-base-horizontal;
+	border-radius: @border-radius-base;
+	cursor: pointer;
+	vertical-align: middle;
+	text-align: center;
+	background-color: @btn-default-bg;
+	border: 1px solid @btn-default-border;
+	color: @btn-default-color;
+
+	// Hover and focus states
+	&.ui-state-hover,
+	&.ui-state-focus {
+		color: @btn-default-color;
+		.box-shadow(0 0 0 100px fade(#000, 1%) inset);
+	}
+
+	// Active state
+	&.ui-state-active {
+		.box-shadow(0 0 0 100px fade(#000, 3%) inset);
+	}
+
+	// Disabled
+	&.ui-state-disabled {
+		cursor: @cursor-disabled;
+		.opacity(.65);
+		.box-shadow(none);
+	}
+
+	// Colored button
+	&[class*=bg-] {
+		&.ui-state-hover,
+		&.ui-state-focus {
+			color: #fff;
+			.box-shadow(0 0 0 100px fade(#000, 5%) inset);
+		}
+		&.ui-state-active {
+			.box-shadow(0 0 0 100px fade(#000, 10%) inset);
+		}
+	}
+
+	// Transparent button
+	&.ui-button-link {
+		background-color: transparent;
+		border-color: transparent;
+
+		// Change link color on hover and focus
+		&.ui-state-hover,
+		&.ui-state-focus {
+			color: @link-hover-color;
+		}
+
+		// Remove box shadow
+		&.ui-state-hover,
+		&.ui-state-focus,
+		&.ui-state-active {
+			.box-shadow(none);
+		}
+	}
+
+	// Reset extra padding in Firefox
+	&::-moz-focus-inner {
+		border: 0;
+		padding: 0;
+	}
+}
+
+
+//
+// Buttons with icons
+//
+
+// Primary icon
+.ui-button-icon-primary {
+	.ui-button-text-icon-primary &,
+	.ui-button-text-icons &,
+	.ui-button-icons-only {
+		margin-right: @element-horizontal-spacing;
+	}
+}
+
+// Secondary icon
+.ui-button-icon-secondary {
+	.ui-button-text-icon-secondary &,
+	.ui-button-text-icons &,
+	.ui-button-icons-only & {
+		margin-left: @element-horizontal-spacing;
+	}
+}
+
+// Icon only
+.ui-button-icon-only {
+    padding-left: ((@line-height-computed - @icon-font-size + @padding-base-vertical - 1) - 1);
+    padding-right: ((@line-height-computed - @icon-font-size + @padding-base-vertical - 1) - 1);
+}
+
+// Hide text in button with icons only
+.ui-button-text {
+	.ui-button-icon-only &,
+	.ui-button-icons-only & {
+		display: none;
+	}
+}
+
+
+//
+// Button sets
+//
+
+// Base
+.ui-buttonset {
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+
+	// Child buttons
+	.ui-button {
+		border-radius: 0;
+		margin-left: -1px;
+		float: left;
+	}
+
+	// Remove left margin for first childs
+	.ui-button:first-child,
+	.ui-helper-hidden-accessible:first-child + .ui-button {
+		margin-left: 0;
+	}
+
+	// Add border radius for the first button
+	.ui-button:first-child,
+	.ui-helper-hidden-accessible:first-child + .ui-button:not(:last-child) {
+		.border-left-radius(@border-radius-base);
+	}
+
+	// Add border radius for the last button
+	.ui-button:last-child {
+		.border-right-radius(@border-radius-base);
+	}
+}
+
+// Split button
+.ui-buttonset-split {
+	position: relative;
+	display: inline-block;
+
+	> ul {
+		position: absolute;
+		text-align: left;
+		min-width: 180px;
+	}
+}
+
+
+
+// Datepicker
+// ------------------------------
+
+// Base
+.ui-datepicker {
+	min-width: 270px;
+	background-color: @dropdown-bg;
+	padding: (@list-spacing * 2);
+	display: none;
+	border: 1px solid @dropdown-border;
+	border-radius: @border-radius-base;
+	z-index: 190;
+    .box-shadow(0 1px 3px fade(#000, 10%));
+
+	// Make it flexible in sidebar
+	.sidebar & {
+		min-width: 0;
+	}
+
+
+	// Header
+	// ------------------------------
+
+	// Base
+	.ui-datepicker-header {
+		position: relative;
+	}
+
+	// Title
+	.ui-datepicker-title {
+		margin: 0 40px;
+        padding-top: @content-padding-base;
+        padding-bottom: @content-padding-base;
+		font-size: @font-size-h6;
+		text-align: center;
+		line-height: 1;
+
+		// Show month
+		.ui-datepicker-month {
+			font-weight: 500;
+		}
+
+		// Show year
+		.ui-datepicker-year {
+			font-size: @font-size-small;
+			color: @text-muted;
+			margin-left: 5px;
+		}
+
+		// Date select
+		select {
+			outline: 0;
+			height: (@icon-font-size + (@padding-base-vertical * 2));
+			border-color: @input-border;
+
+			&.ui-datepicker-month,
+			&.ui-datepicker-year {
+				width: 48%;
+				font-size: @font-size-base;
+				font-weight: 400;
+				color: @text-color;
+			}
+		}
+	}
+
+
+	// Nav buttons
+	// ------------------------------
+
+	// Base
+	.ui-datepicker-prev,
+	.ui-datepicker-next {
+		position: absolute;
+		top: 50%;
+		margin-top: -((@icon-font-size / 2) + @padding-base-vertical);
+		line-height: 1;
+		color: @text-color;
+		padding: @padding-base-vertical;
+		border-radius: @border-radius-small;
+
+		// Icon base
+		&:after {
+			font-family: 'icomoon';
+			display: block;
+			font-size: @icon-font-size;
+			width: @icon-font-size;
+			text-align: center;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		// Hide text
+		span {
+			display: none;
+		}
+	}
+
+	// Prev button icon
+	.ui-datepicker-prev {
+		left: 0;
+
+		&:after {
+			content: '\e9c8';
+		}
+	}
+
+	// Next btn icon
+	.ui-datepicker-next {
+		right: 0;
+
+		&:after {
+			content: '\e9cb';
+		}
+	}
+
+	// Hover state
+	.ui-datepicker-prev-hover,
+	.ui-datepicker-next-hover {
+		background-color: @dropdown-link-hover-bg;
+	}
+
+
+	// Components
+	// ------------------------------
+
+	// Table
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 0;
+
+		// Header cells
+		th {
+			text-align: center;
+			font-weight: 400;
+			border: 0;
+			padding-top: @content-padding-small;
+			padding-bottom: @content-padding-small;
+			font-size: @font-size-small;
+			color: @text-muted;
+		}
+
+		// Body cells
+		td {
+			border: 0;
+			padding: 1px;
+			position: relative;
+
+			// Day element
+			span,
+			a {
+				display: block;
+				padding: 6px;
+				text-align: center;
+				text-decoration: none;
+				border-radius: @border-radius-base;
+				color: @text-color;
+				min-width: 34px;
+			}
+
+			// Hover state
+			.ui-state-hover {
+				background-color: @dropdown-link-hover-bg;
+			}
+
+			&.ui-state-disabled span {
+				color: #ccc;
+			}
+
+			// Week column
+			&.ui-datepicker-week-col {
+				padding: 6px;
+				color: @text-muted;
+			}
+
+			// Active day
+			&.ui-datepicker-current-day .ui-state-active {
+				background-color: @color-teal-400;
+				color: #fff;
+			}
+
+			// Today
+			&.ui-datepicker-today .ui-state-highlight {
+				background-color: @brand-primary;
+				color: #fff;
+
+				&:after {
+				  content: "";
+				  position: absolute;
+				  top: 3px;
+				  right: 3px;
+				  width: 0;
+				  height: 0;
+				  border-top: 6px solid #fff;
+				  border-left: 6px solid transparent;
+				}
+			}
+
+			a.ui-priority-secondary {
+				.opacity(0.6);
+			}
+		}
+	}
+
+	// Button panel
+	.ui-datepicker-buttonpane {
+		button {
+			float: right;
+			border: 1px solid @btn-default-border;
+			background-color: @btn-default-bg;
+			font-weight: 400;
+			margin-top: (@list-spacing * 2);
+			cursor: pointer;
+			padding: @padding-base-vertical @padding-base-horizontal;
+			width: auto;
+			overflow: visible;
+			outline: 0;
+			border-radius: @border-radius-base;
+
+			// Hover state
+			&.ui-state-hover {
+				.box-shadow(0 0 0 100px fade(#000, 1%) inset);
+			}
+
+			// Current date
+			&.ui-datepicker-current {
+				float: left;
+			}
+
+			// Active state
+			&:active {
+				.box-shadow(0 0 0 100px fade(#000, 3%) inset);
+			}
+		}
+	}
+
+	// Multiple calendars
+	&.ui-datepicker-multi {
+		width: auto!important;
+	}
+}
+
+// Inline datepicker
+.datepicker-inline {
+	width: 264px;
+	max-width: 100%;
+	overflow-x: auto;
+
+	.full-width&,
+	.sidebar &,
+	.popover & {
+		width: 100%;
+	}
+}
+
+// Trigger
+.ui-datepicker-trigger {
+	position: absolute;
+	top: 4px;
+	right: 5px;
+	z-index: 4;
+	padding: 6px;
+	cursor: pointer;
+}
+
+// Clearfix
+.ui-datepicker-row-break {
+	clear: both;
+	width: 100%;
+	font-size: 0;
+}
+
+// Multiple datepickers
+.ui-datepicker-multi {
+	.ui-datepicker-group {
+		float: left;
+
+		+ .ui-datepicker-group {
+			padding-left: 15px;
+		}
+	}
+
+	.ui-datepicker-group-last {
+		.ui-datepicker-header {
+			border-left-width: 0;
+		}
+	}
+
+	.ui-datepicker-buttonpane {
+		clear: left;
+	}
+}
+.ui-datepicker-multi-2 .ui-datepicker-group {
+	width: 46%;
+}
+.ui-datepicker-multi-3 .ui-datepicker-group {
+	width: 33.3%;
+}
+.ui-datepicker-multi-4 .ui-datepicker-group {
+	width: 25%;
+}
+
+
+
+// Dialog
+// ------------------------------
+
+// Base
+.ui-dialog {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: @modal-content-bg;
+    border-radius: @border-radius-base;
+	border: 1px solid @modal-content-border-color;
+	outline: 0;
+	overflow: hidden;
+    .box-shadow(0 1px 4px rgba(0,0,0,.2));
+
+    // Make it full width on mobiles
+    @media (max-width: @screen-xs-max) {
+	    width: 90%!important;
+    }
+}
+
+
+//
+// Dialog header
+//
+
+// Header
+.ui-dialog-titlebar {
+	position: relative;
+	padding: @modal-title-padding;
+	padding-bottom: 0;
+
+	// Draggable cursor
+	.ui-draggable & {
+		cursor: move;
+	}
+}
+
+// Title
+.ui-dialog-title {
+	float: left;
+	font-size: @font-size-h6;
+	white-space: nowrap;
+	width: 90%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+// Close button
+.ui-dialog-titlebar-close {
+	position: absolute;
+	background-color: transparent;
+	border: 0;
+	right: @content-padding-large;
+	top: 50%;
+	padding: 0;
+	margin-top: ((@line-height-computed - @icon-font-size) / 2);
+
+	// Cross icon
+	&:after {
+		content: '\ed6b';
+        font-family: 'Icomoon';
+        display: block;
+        width: @icon-font-size;
+        font-size: @icon-font-size;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+	}
+
+
+	// Remove default button shadows
+	&.ui-state-hover,
+	&.ui-state-focus {
+		.box-shadow(none);
+	}
+}
+
+
+//
+// Dialog content
+//
+
+// Content itself
+.ui-dialog-content {
+	position: relative;
+	border: 0;
+	padding: @modal-inner-padding;
+	background: none;
+	overflow: auto;
+
+	// Remove bottom margin from last childs
+	.form-group:last-child,
+	p:last-child {
+		margin-bottom: 0;
+	}
+}
+
+// Buttons
+.ui-dialog-buttonpane {
+	padding: @modal-inner-padding;
+	padding-top: 0;
+
+	.ui-dialog-buttonset {
+		float: right;
+	}
+
+	button + button {
+		margin-left: 5px;
+		cursor: pointer;
+	}
+}
+
+
+
+// Menu
+// ------------------------------
+
+// Base
+.ui-menu {
+	list-style: none;
+	padding: @list-spacing 0;
+	margin: 0;
+	display: block;
+	outline: none;
+	min-width: 180px;
+	white-space: nowrap;
+	background-color: @dropdown-bg;
+	border: 1px solid @input-border;
+	border-radius: @border-radius-base;
+	z-index: @zindex-dropdown;
+    .box-shadow(0 1px 3px fade(#000, 10%));
+
+	// Nested menu
+	.ui-menu {
+		position: absolute;
+		top: -(@list-spacing + 1)!important;
+	}
+
+	// Menu item
+	.ui-menu-item {
+		position: relative;
+		margin: 0;
+		cursor: pointer;
+		padding: (@padding-base-vertical + 1) @content-padding-base;
+		min-height: 0;
+		outline: 0;
+
+		// Links
+		> a {
+			display: block;
+			color: @text-color;
+		}
+
+		// Icons
+		> i {
+			margin-right: @element-horizontal-spacing;
+		}
+
+        // Submenu arrow icon
+		> .ui-menu-icon {
+            position: absolute;
+            top: 50%;
+            margin-top: -(@icon-font-size / 2);
+            right: @content-padding-base;
+
+			&:after {
+	            content: '\e9c7';
+	            font-family: 'icomoon';
+	            font-size: @icon-font-size;
+	            font-weight: 400;
+	            line-height: 1;
+	            -webkit-font-smoothing: antialiased;
+	            -moz-osx-font-smoothing: grayscale;
+	            .opacity(0.8);
+	        }
+		}
+
+		// Disabled state
+		&.ui-state-disabled {
+			&,
+			a {
+				color: @text-muted;
+				cursor: @cursor-disabled;
+			}
+		}
+	}
+
+	// Header
+	.ui-menu-header {
+		padding: (@padding-base-vertical + 1) @content-padding-base;
+		font-size: @font-size-mini;
+		line-height: @line-height-mini;
+		text-transform: uppercase;
+		color: @text-muted;
+	    margin-top: @list-spacing;
+
+	    // Highlighted header
+	    &.highlight {
+	        margin-top: 0;
+	        background-color: @dropdown-annotation-bg;
+	        color: @gray-light;
+
+	        // ... but remove from the first one
+	        &:first-child {
+	            margin-top: 0;
+	        }
+	    }
+	}
+    .ui-menu-item + .highlight,
+    .highlight + .ui-menu-item {
+        margin-top: @list-spacing;
+    }
+
+    // Icons
+    .ui-menu-item > a,
+    .ui-menu-header {
+		> i[class*=icon-] {
+			margin-top: ((@line-height-computed - @icon-font-size) / 2);
+			float: left;
+			margin-right: @content-padding-small;
+			top: 0;
+
+			// Right icon
+			&.pull-right {
+				margin-right: 0;
+				margin-left: @content-padding-small;
+			}
+		}
+    }
+
+	// Divider
+	.ui-menu-divider {
+		margin: @list-spacing 0;
+		height: 0;
+		font-size: 0;
+		line-height: 0;
+		border-top: 1px solid @dropdown-divider-bg;
+	}
+
+	// States
+	.ui-state-focus,
+	.ui-state-active {
+	    color: @dropdown-link-hover-color;
+	    background-color: @dropdown-link-hover-bg;
+	}
+
+	// Disabled state
+	&.ui-state-disabled {
+		&,
+		.ui-menu-item,
+		a {
+			color: @text-muted;
+			cursor: @cursor-disabled;
+		}
+	}
+}
+
+
+
+// Progress bar
+// ------------------------------
+
+// Base
+.ui-progressbar {
+    height: @progress-base-height;
+	overflow: hidden;
+	position: relative;
+	background-color: @progress-bg;
+	border-radius: @progress-border-radius;
+    .box-shadow(inset 0 1px 1px fade(#000, 10%));
+}
+
+// Value
+.ui-progressbar-value {
+	float: left;
+	width: 0%;
+	height: 100%;
+	background-color: @progress-bar-bg;
+	color: #fff;
+	overflow: hidden;
+	.transition(width .6s ease);
+}
+
+// Overlay
+.ui-progressbar-value,
+.ui-progressbar-overlay {
+	height: 100%;
+	background-size: 40px 40px;
+}
+
+// Stripes
+.ui-progressbar-striped {
+	.ui-progressbar-value,
+	.ui-progressbar-overlay {
+		#gradient > .striped();
+	}
+}
+
+// Stripes for overlay
+.ui-progressbar-overlay {
+	#gradient > .striped();
+}
+
+// Animated stripes
+.ui-progressbar-active .ui-progressbar-value,
+.ui-progressbar-overlay {
+	.animation(progress-bar-stripes 2s linear infinite);
+}
+
+// Remove stripes in indeterminate mode
+.ui-progressbar-indeterminate .ui-progressbar-value {
+	background-image: none;
+}
+
+
+
+// Select menu
+// ------------------------------
+
+// Base
+.ui-selectmenu-menu {
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+
+	// Set max width for menu
+	.ui-menu {
+		max-height: 250px;
+		overflow-y: auto;
+		overflow-x: hidden;
+
+		// Optgroups
+		.ui-selectmenu-optgroup {
+			font-size: @font-size-mini;
+			font-weight: 700;
+			line-height: @line-height-mini;
+			padding: @padding-base-vertical @padding-base-horizontal;
+			margin: 2px 0;
+			text-transform: uppercase;
+			height: auto;
+			border: 0;
+
+			// Add double horizontal padding for items
+			~ .ui-menu-item {
+				padding-left: (@padding-base-horizontal * 2);
+			}
+		}
+	}
+}
+
+// Display if opened
+.ui-selectmenu-open {
+	display: block;
+}
+
+// Select button
+.ui-selectmenu-button {
+	display: inline-block;
+	position: relative;
+	text-decoration: none;
+	cursor: pointer;
+	height: @input-height-base;
+	padding: @padding-base-vertical @padding-base-horizontal;
+	padding-right: ((@padding-base-horizontal * 2) + @content-padding-small);
+	background-color: @input-bg;
+	border: 1px solid @input-border;
+	border-radius: @input-border-radius;
+	outline: 0;
+
+	// Darken on hover and focus
+	&.ui-state-hover,
+	&.ui-state-focus {
+		.box-shadow(0 0 0 100px fade(#000, 1%) inset);
+	}
+
+	// Down arrow
+	&:after {
+        content: '\e9c5';
+        font-family: 'Icomoon';
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        right: @padding-base-horizontal;
+        text-align: right;
+        margin-top: -(@icon-font-size / 2);
+        font-size: @icon-font-size;
+        line-height: 1;
+        color: inherit;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+	}
+
+	// Button text
+	.ui-selectmenu-text {
+		display: block;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+// Disabled menu
+.ui-selectmenu-disabled {
+    cursor: @cursor-disabled;
+    background-color: @input-bg-disabled;
+    color: @gray-light;
+
+	&.ui-state-hover,
+	&.ui-state-focus {
+		.box-shadow(none);
+	}
+}
+
+
+//
+// Optional sizing to match form controls
+//
+
+// Large
+.ui-selectmenu-lg {
+	.ui-selectmenu-button {
+		height: @input-height-large;
+
+		.ui-selectmenu-text {
+			padding: @padding-large-vertical @padding-large-horizontal;
+			padding-right: ((@padding-large-horizontal * 2) + @content-padding-small);
+		}
+	}
+}
+
+// Small
+.ui-selectmenu-sm {
+	.ui-selectmenu-button {
+		height: @input-height-small;
+
+		.ui-selectmenu-text {
+			padding: @padding-small-vertical @padding-base-horizontal;
+			padding-right: ((@padding-small-horizontal * 2) + @content-padding-small);
+			font-size: @font-size-small;
+			line-height: @line-height-small;
+		}
+	}
+}
+
+// Mini
+.ui-selectmenu-xs {
+	.ui-selectmenu-button {
+		height: @input-height-mini;
+
+		.ui-selectmenu-text {
+			padding: @padding-xs-vertical @padding-xs-horizontal;
+			padding-right: ((@padding-xs-horizontal * 2) + @content-padding-small);
+			font-size: @font-size-small;
+			line-height: @line-height-small;
+		}
+	}
+}
+
+
+//
+// Images
+//
+
+.ui-selectmenu-images {
+
+	// Image base
+	.ui-menu-item > span {
+		display: inline-block;
+		margin-right: @content-padding-small;
+		border-radius: @border-radius-small;
+		width: @line-height-computed;
+		height: @line-height-computed;
+		background-size: @line-height-computed @line-height-computed;
+		float: left;
+	}
+
+	// Demo images, replace with your own
+	.demo-img-amazon {
+		background: url('../images/brands/amazon.png') no-repeat;
+	}
+	.demo-img-youtube {
+		background: url('../images/brands/youtube.png') no-repeat;
+	}
+	.demo-img-twitter {
+		background: url('../images/brands/twitter.png') no-repeat;
+	}
+	.demo-img-bing {
+		background: url('../images/brands/bing.png') no-repeat;
+	}
+	.demo-img-spotify {
+		background: url('../images/brands/spotify.png') no-repeat;
+	}
+}
+
+
+
+// Sliders
+// ------------------------------
+
+.ui-slider {
+	position: relative;
+	text-align: left;
+	background-color: @gray-lighter;
+	border-radius: 100px;
+	.box-shadow(inset 0 1px 1px fade(#000, 10%));
+
+	// Handle
+	.ui-slider-handle {
+		position: absolute;
+		z-index: 2;
+		width: (@slider-base-size * 3);
+		height: (@slider-base-size * 3);
+		cursor: pointer;
+		border-radius: 50%;
+		background-color: #fcfcfc;
+		border: 1px solid #bbb;
+		outline: 0;
+
+		// Hover color
+		&.ui-state-hover,
+		&.ui-state-focus {
+			background-color: #f8f8f8;
+
+	        // Mute circle
+	        &:after {
+	            .opacity(0.9);
+	        }
+		}
+
+		// Active color
+		&.ui-state-active {
+			background-color: #fefefe;
+
+	        // Mute circle
+	        &:after {
+	            .opacity(0.9);
+	        }
+		}
+
+		// Inner circle
+		&:after {
+		    content: '';
+		    display: inline-block;
+		    width: @slider-base-size;
+		    height: @slider-base-size;
+		    position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    margin-top: -(@slider-base-size / 2);
+		    margin-left: -(@slider-base-size / 2);
+		    background-color: @color-slate-600;
+		    border-radius: 50%;
+		}
+	}
+
+	// Range
+	.ui-slider-range {
+		position: absolute;
+		z-index: 1;
+		display: block;
+		border: 0;
+		background-color: @color-slate-500;
+		border-radius: 100px;
+	}
+
+	// Disabled state
+	&.ui-slider-disabled {
+		.opacity(0.6);
+	}
+}
+
+
+//
+// Orientations
+//
+
+// Horizontal
+.ui-slider-horizontal {
+	height: @slider-base-size;
+
+	// Handle
+	.ui-slider-handle {
+	    top: -(@slider-base-size * 1.5) + (@slider-base-size / 2);
+	    margin-left: -(@slider-base-size * 1.5);
+	}
+
+	// Ranges
+	.ui-slider-range {
+		top: 0;
+		height: 100%;
+	}
+	.ui-slider-range-min {
+		left: 0;
+	}
+	.ui-slider-range-max {
+		right: 0;
+	}
+}
+
+// Vertical
+.ui-slider-vertical {
+	width: @slider-base-size;
+	height: 150px;
+	display: inline-block;
+	margin: 0 10px;
+
+	// Handle
+	.ui-slider-handle {
+	    left: -(@slider-base-size * 1.5) + (@slider-base-size / 2);
+		margin-bottom: -(@slider-base-size * 1.5);
+	}
+
+	// Ranges
+	.ui-slider-range {
+		left: 0;
+		width: 100%;
+	}
+	.ui-slider-range-min {
+		bottom: 0;
+	}
+	.ui-slider-range-max {
+		top: 0;
+	}
+}
+
+
+//
+// Handles
+//
+
+// Slider with solid handle
+.ui-slider-solid {
+	.ui-slider-handle {
+		background-color: @gray-light;
+		border-color: @gray-light;
+		.box-shadow(none);
+
+		&:after {
+			background-color: #fff;
+			.transition(opacity ease-in-out 0.2s);
+		}
+
+		&.ui-state-hover:after,
+		&.ui-state-active:after {
+			background-color: #fff;
+			.opacity(0.75);
+		}
+	}
+}
+
+// White handle
+.ui-handle-white .ui-slider-handle:after {
+	content: none;
+}
+
+
+//
+// Sizing
+//
+
+// Large
+.ui-slider-lg {
+
+	// Handle
+	.ui-slider-handle {
+	    width: (@slider-large-size * 3);
+	    height: (@slider-large-size * 3);
+
+	    // Inner circle
+	    &:after {
+	      width: @slider-large-size;
+	      height: @slider-large-size;
+	      margin-top: -(@slider-large-size / 2);
+	      margin-left: -(@slider-large-size / 2);
+	    }
+	}
+
+	// In horizontal orientation
+	&.ui-slider-horizontal {
+		height: @slider-large-size;
+
+		.ui-slider-handle {
+		    top: -(@slider-large-size * 1.5) + (@slider-large-size / 2);
+		    margin-left: -(@slider-large-size * 1.5);
+		}
+	}
+
+	// In vertical orientation
+	&.ui-slider-vertical {
+		width: @slider-large-size;
+
+		.ui-slider-handle {
+		    left: -(@slider-large-size * 1.5) + (@slider-large-size / 2);
+		    margin-bottom: -(@slider-large-size * 1.5);
+		}
+	}
+}
+
+// Small and mini have the same handle size
+.ui-slider-sm,
+.ui-slider-xs {
+	.ui-slider-handle {
+	    width: (@slider-small-size * 3);
+	    height: (@slider-small-size * 3);
+
+	    // Inner circle
+	    &:after {
+	      width: @slider-small-size;
+	      height: @slider-small-size;
+	      margin-top: -(@slider-small-size / 2);
+	      margin-left: -(@slider-small-size / 2);
+	    }
+	}
+}
+
+// Small
+.ui-slider-sm {
+
+	// In horizontal orientation
+	&.ui-slider-horizontal {
+		height: @slider-small-size;
+
+		.ui-slider-handle {
+		    top: -(@slider-small-size * 1.5) + (@slider-small-size / 2);
+		    margin-left: -(@slider-small-size * 1.5);
+	  }
+	}
+
+	// In vertical orientation
+	&.ui-slider-vertical {
+		width: @slider-small-size;
+
+		.ui-slider-handle {
+		    left: -(@slider-small-size * 1.5) + (@slider-small-size / 2);
+		    margin-bottom: -(@slider-small-size * 1.5);
+		}
+	}
+}
+
+// Mini
+.ui-slider-xs {
+
+	// In horizontal orientation
+	&.ui-slider-horizontal {
+		height: @slider-mini-size;
+
+		.ui-slider-handle {
+		    top: -(@slider-small-size * 1.5) + (@slider-mini-size / 2);
+		    margin-left: -(@slider-small-size * 1.5);
+		}
+	}
+
+	// In vertical orientation
+	&.ui-slider-vertical {
+		width: @slider-mini-size;
+
+		.ui-slider-handle {
+		    left: -(@slider-small-size * 1.5) + (@slider-mini-size / 2);
+		    margin-bottom: -(@slider-small-size * 1.5);
+		}
+	}
+}
+
+
+//
+// Contextual colors
+//
+
+.ui-slider-primary .ui-slider-range,
+.ui-slider-solid.ui-slider-primary .ui-slider-handle {
+	background-color: @brand-primary;
+	border-color: @brand-primary;
+}
+.ui-slider-danger .ui-slider-range,
+.ui-slider-solid.ui-slider-danger .ui-slider-handle {
+	background-color: @brand-danger;
+	border-color: @brand-danger;
+}
+.ui-slider-success .ui-slider-range,
+.ui-slider-solid.ui-slider-success .ui-slider-handle {
+	background-color: @brand-success;
+	border-color: @brand-success;
+}
+.ui-slider-warning .ui-slider-range,
+.ui-slider-solid.ui-slider-warning .ui-slider-handle {
+	background-color: @brand-warning;
+	border-color: @brand-warning;
+}
+.ui-slider-info .ui-slider-range,
+.ui-slider-solid.ui-slider-info .ui-slider-handle {
+	background-color: @brand-info;
+	border-color: @brand-info;
+}
+
+
+
+// Spinner
+// ------------------------------
+
+// Base
+.ui-spinner {
+	position: relative;
+	display: table;
+}
+
+// Input
+.ui-spinner-input {
+	padding-right: (@padding-base-vertical * 2) + @icon-font-size;
+	display: table-cell;
+	width: 100%;
+	border-radius: @input-border-radius 0 0 @input-border-radius;
+	border-right: 0;
+}
+
+
+//
+// Buttons
+//
+
+// Button base
+.ui-spinner-button {
+	font-size: 0;
+	color: @text-color;
+	cursor: pointer;
+	background-color: @input-bg;
+	border: 1px solid @input-border;
+	border-radius: 0;
+	display: table-cell;
+	width: 1%;
+	padding: 0 @padding-base-vertical;
+
+	// Button icons base
+	&:after {
+        font-family: 'Icomoon';
+        display: inline-block;
+        width: @icon-font-size;
+        font-size: @icon-font-size;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+	}
+
+	// Remove left border from 2ns button
+	& + & {
+		border-left: 0;
+	}
+
+	// Hide button text
+	.ui-button-text {
+		display: none;
+	}
+
+	// Hover/focus states
+	&.ui-state-hover,
+	&.ui-state-focus {
+		color: @text-color;
+	}
+
+	// Disabled state
+	&.ui-state-disabled {
+		background-color: @input-bg-disabled;
+		color: @text-muted;
+		cursor: @cursor-disabled;
+		.box-shadow(none);
+	}
+}
+
+// Up button icon
+.ui-spinner-up {
+	&:after {
+		content: '\e9f7';
+	}
+}
+
+// Down button icon
+.ui-spinner-down {
+	&:after {
+		content: '\e9e2';
+	}
+	.border-right-radius(@input-border-radius);
+}
+
+
+
+// Tabs
+// ------------------------------
+
+.ui-tabs {
+	position: relative;
+
+	// Tabs navigation
+	.ui-tabs-nav {
+		margin-bottom: @line-height-computed;
+		border-bottom: 1px solid @nav-tabs-border-color;
+
+		// Items
+		li {
+			list-style: none;
+			position: relative;
+			padding: 0;
+			white-space: nowrap;
+			margin-bottom: -1px;
+
+		    // Setup desktop view
+		    @media (min-width: @screen-sm-min) {
+	            float: left;
+		    }
+		}
+
+		// Links
+		.ui-tabs-anchor {
+			display: block;
+			color: @color-grey-400;
+			padding: @nav-link-padding;
+			border: 1px solid transparent;
+			border-top-width: 2px;
+		}
+
+		// Hover/focus states
+		.ui-state-hover,
+		.ui-state-focus {
+			.ui-tabs-anchor:not(.ui-state-disabled) {
+				color: @text-color;
+			}
+		}
+
+		// Active item
+		.ui-tabs-active {
+			.ui-tabs-anchor {
+		        color: @nav-tabs-active-link-hover-color;
+		        background-color: @nav-tabs-active-link-hover-bg;
+		        cursor: default;
+		        border-color: @brand-primary @nav-tabs-active-link-hover-border-color transparent;
+		    }
+		}
+
+		// Disabled item
+		.ui-state-disabled {
+			color: @nav-disabled-link-color;
+			cursor: @cursor-disabled;
+			.opacity(0.75);
+		}
+
+		// Add bottom border and bg to sortable helper
+		.ui-sortable-helper:not(.ui-tabs-active) {
+			.ui-tabs-anchor {
+				background-color: #fff;
+				border-bottom-color: @nav-tabs-border-color;
+			}
+		}
+
+
+	    // Setup mobile view
+	    @media (max-width: @screen-xs-max) {
+	        border-bottom: 0;
+	        position: relative;
+	        background-color: #fff;
+	        padding: @list-spacing 0;
+	        border: 1px solid @panel-default-border;
+	        border-radius: @border-radius-base;
+
+	        // Tab nav item
+	        li {
+	            margin-bottom: 0;
+
+	            // Add 1px spacing between items
+	            & + li {
+	                margin-top: 1px;
+	            }
+	        }
+
+	        // Add permanent link styles
+	        .ui-tabs-anchor {
+	            border-width: 0 0 0 2px;
+	            border-left-color: transparent;
+	        }
+
+	        // Background color for hover/focus states
+	        .ui-state-hover,
+	        .ui-state-focus {
+	        	.ui-tabs-anchor {
+	        		background-color: @nav-tabs-mobile-link-hover-bg;
+	        	}
+	        }
+
+	        // Left border and bg colors for active link
+	        .ui-state-active {
+	        	.ui-tabs-anchor {
+	                border-left-color: @brand-primary;
+	                background-color: @nav-tabs-mobile-link-active-bg;
+	        	}
+	        }
+
+	        // Add text header to the tabs section
+	        &:before {
+	            content: 'Contents';
+	            color: inherit;
+	            font-size: @font-size-small;
+	            line-height: @line-height-small;
+	            font-weight: 500;
+	            margin-top: (@content-padding-base - @list-spacing);
+	            margin-left: @content-padding-base;
+	            margin-bottom: @content-padding-base;
+	            text-transform: uppercase;
+	            .opacity(0.5);
+	        }
+	    }
+	}
+
+	// Display tabs panel
+	.ui-tabs-panel {
+		display: block;
+	}
+}
+
+
+
+// Tooltip
+// ------------------------------
+
+.ui-tooltip {
+	position: absolute;
+	z-index: @zindex-tooltip;
+	max-width: @tooltip-max-width;
+	padding: 3px 8px;
+	color: @tooltip-color;
+	text-align: center;
+	background-color: @tooltip-bg;
+	border-radius: @border-radius-base;
+}
+
+
+
+// Misc
+// ------------------------------
+
+// Overlay
+.ui-widget-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: @modal-backdrop-bg;
+	.opacity(@modal-backdrop-opacity);
+}
+
+//
+// Layout helpers
+//
+
+// Hide element
+.ui-helper-hidden {
+	display: none;
+}
+
+// Accessible element
+.ui-helper-hidden-accessible {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+// Reset
+.ui-helper-reset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	list-style: none;
+}
+
+// Clearfix
+.ui-helper-clearfix {
+	&:before,
+	&:after {
+		content: "";
+		display: table;
+		border-collapse: collapse;
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+// iFrame fix
+.ui-helper-zfix {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: absolute;
+	.opacity(0);
+}
+
+// Overlay z-index
+.ui-front {
+	z-index: @zindex-modal-background;
+}

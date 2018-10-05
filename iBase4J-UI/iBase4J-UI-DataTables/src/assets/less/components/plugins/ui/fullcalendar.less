@@ -1,0 +1,994 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # FullCalendar
+ *
+ *  A JavaScript event calendar. Customizable and open source
+ *
+ *  Version: 1.2
+ *  Latest update: Mar 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Layout
+// ------------------------------
+
+// Container
+.fc {
+	direction: ltr;
+	text-align: left;
+}
+
+// Calendar view
+.fc-view {
+	> table {
+		min-width: @screen-sm;
+	}
+}
+
+// Events container
+.fc-events-container {
+	background-color: #fcfcfc;
+	border: 1px solid @panel-inner-border;
+	padding: 10px;
+	border-radius: @border-radius-base;
+
+	.fc-event {
+		margin: 0;
+		padding: 4px @padding-small-horizontal;
+
+		+ .fc-event {
+			margin-top: 10px;
+		}
+	}
+}
+
+
+// Colors
+// ------------------------------
+
+// Default theme
+.fc-unthemed {
+	th,
+	td,
+	hr,
+	thead,
+	tbody,
+	.fc-row,
+	.fc-popover {
+		border-color: @panel-default-border;
+	}
+
+	// Change bottom border color
+	thead,
+	thead td,
+	thead th {
+		border-bottom-color: @table-border-highlight;
+	}
+
+	// Horizontal rule
+	hr {
+		background-color: #f5f5f5;
+	}
+
+	// Popover
+	.fc-popover {
+		background-color: #fff;
+		border-radius: @border-radius-base;
+
+		.fc-header {
+			background-color: #f5f5f5;
+		}
+	}
+
+	// Highlight today's date
+	.fc-today {
+		background-color: @color-success-50;
+	}
+}
+
+// When user is selecting cells
+.fc-highlight { 
+	background-color: #e5e5e5;
+	.opacity(0.3);
+}
+
+// Default look for background events
+.fc-bgevent {
+	background-color: @color-success-300;
+	.opacity(0.3);
+}
+
+// Default look for non-business-hours areas
+.fc-nonbusiness {
+	background-color: #ccc;
+}
+
+
+// Icons
+// ------------------------------
+
+// Icon base
+.fc-icon {
+	display: block;
+
+	// Icon base
+	&:after {
+		display: inline-block;
+		font-family: "icomoon";
+		line-height: 1;
+		font-size: @icon-font-size;
+		vertical-align: middle;
+		position: relative;
+		top: -1px;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+}
+
+// Arrow icons
+.fc-icon-left-single-arrow:after {
+	content: "\e9c0";
+}
+.fc-icon-right-single-arrow:after {
+	content: "\e9c3";
+}
+.fc-icon-left-double-arrow:after {
+	content: "\000AB";
+}
+.fc-icon-right-double-arrow:after {
+	content: "\000BB";
+}
+
+// X icon
+.fc-icon-x:after {
+	content: "\ed6b";
+	font-size: @font-size-small;
+	display: block;
+}
+
+
+// Buttons
+// ------------------------------
+
+// Base, identical to .btn-default
+.fc-button {
+	margin: 0;
+	border: 1px solid @btn-default-border;
+	padding: @padding-base-vertical @padding-base-horizontal;
+	white-space: nowrap;
+	cursor: pointer;
+	outline: 0;
+
+	// Firefox has an annoying inner border
+	&::-moz-focus-inner {
+		margin: 0;
+		padding: 0;
+	}
+}
+
+
+//
+// Button states
+//
+
+// Default
+.fc-state-default {
+	border: 1px solid @btn-default-border;
+	background-color: @btn-default-bg;
+
+	&.fc-corner-left {
+		.border-left-radius(@border-radius-base);
+	}
+
+	&.fc-corner-right {
+		.border-right-radius(@border-radius-base);
+	}
+}
+
+// Hover
+.fc-state-hover {
+	background-color: #f8f8f8;
+}
+
+// Active
+.fc-state-down,
+.fc-state-active {
+	background-color: #f5f5f5;
+
+	.fc-button& {
+		border-color: @btn-default-border;
+		.box-shadow(0 1px 3px fade(#000, 5%) inset);
+	}
+}
+
+// Disabled
+.fc-state-disabled {
+	color: @text-muted;
+	cursor: @cursor-disabled;
+	.opacity(0.65);
+	.box-shadow(none);
+}
+
+
+//
+// Button groups
+//
+
+.fc-button-group {
+	display: inline-block;
+
+	.fc & {
+		> * {
+			float: left;
+			margin: 0 0 0 -1px;
+		}
+
+		> :first-child {
+			margin-left: 0;
+		}
+	}
+}
+
+
+// Popover
+// ------------------------------
+
+.fc-popover {
+	position: absolute;
+	border: 1px solid @panel-default-border;
+	.box-shadow(0 1px 5px fade(#000, 5%));
+
+	// Header
+	.fc-header {
+		padding: 10px;
+
+		.fc-close {
+			cursor: pointer;
+		}
+	}
+	.fc-ltr & {
+		.fc-header {
+			.fc-title {
+				float: left;
+			}
+
+			.fc-close {
+				float: right;
+			}
+		}
+	}
+
+	// Unthemed
+	.fc-unthemed & {
+		.fc-header .fc-close {
+			margin-top: 2px;
+			.opacity(0.6);
+
+			&:hover {
+				.opacity(1);
+			}
+		}
+	}
+}
+
+
+// Misc reusable components
+// ------------------------------
+
+.fc hr {
+	height: 0;
+	margin: 0;
+	padding: 0 0 2px; // height is unreliable across browsers, so use padding
+	border-style: solid;
+	border-width: 1px 0;
+}
+
+// Clear helper
+.fc-clear {
+	clear: both;
+}
+
+.fc-bg,
+.fc-bgevent-skeleton,
+.fc-highlight-skeleton,
+.fc-helper-skeleton {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.fc-bg {
+	bottom: 0; // strech bg to bottom edge
+
+	table {
+		height: 100%; // strech bg to bottom edge
+	}
+}
+
+
+// Tables
+// ------------------------------
+
+.fc {
+	table {
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+
+	th,
+	td {
+		border-style: solid;
+		border-width: 1px;
+		padding: 0;
+		vertical-align: top;
+	}
+
+	th {
+		padding: @table-cell-padding;
+		font-weight: 500;
+		text-align: center;
+	}
+
+	td.fc-today {
+		border-style: double; // overcome neighboring borders
+	}
+}
+
+
+// Fake table rows
+// ------------------------------
+
+.fc-row {
+	border-style: solid;
+	border-width: 0;
+	position: relative;
+
+	table {
+		border-left: 0 hidden transparent;
+		border-right: 0 hidden transparent;
+		border-bottom: 0 hidden transparent; 
+	}
+
+	&:first-child table {
+		border-top: 0 hidden transparent; // no top border on first row
+	}
+}
+
+
+// Day row
+// ------------------------------
+
+.fc-row {
+	.fc-bg {
+		z-index: 1;
+	}
+
+	// Highlighting cells & background event skeleton
+	.fc-bgevent-skeleton,
+	.fc-highlight-skeleton {
+		bottom: 0;
+
+		table {
+			height: 100%;
+		}
+
+		td {
+			border-color: transparent;
+			border: 0;
+		}
+	}
+	.fc-bgevent-skeleton {
+		z-index: 2;
+	}
+	.fc-highlight-skeleton {
+		z-index: 3;
+	}
+
+	// Row content
+	.fc-content-skeleton,
+	.fc-helper-skeleton {
+		td {
+			background: none;
+			border-color: transparent;
+			border-bottom: 0;
+		}
+
+		// Cells with events inside (so NOT the day number cell)
+		tbody td {
+			border-top: 0;
+		}
+	}
+	.fc-content-skeleton {
+		position: relative;
+		z-index: 4;
+	}
+	.fc-helper-skeleton {
+		z-index: 5;
+	}
+}
+
+
+// Scrolling container
+// ------------------------------
+
+.fc-scroller {
+	overflow-y: scroll;
+	overflow-x: hidden;
+
+	// We expect an immediate inner element
+	> * {
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+	}
+}
+
+
+// Global event styles
+// ------------------------------
+
+.fc-event {
+	position: relative; // for resize handle and other inner positioning
+	display: block; // make the <a> tag block
+	border: 1px solid @color-blue-600; // default BORDER color
+	background-color: @color-blue-600; // default BACKGROUND color
+	font-weight: normal;
+	border-radius: @border-radius-small;
+
+	&,
+	&:hover {
+		color: #fff; // default TEXT color
+		text-decoration: none; // if <a> has an href
+	}
+
+	// Give events with links and draggable events a hand mouse pointer
+	&[href],
+	&.fc-draggable {
+		cursor: pointer;
+	}
+}
+
+// Override an event's custom cursor
+.fc-not-allowed {
+	&,
+	.fc-event {
+		cursor: @cursor-disabled;
+	}
+}
+
+
+// DayGrid events
+// ------------------------------
+
+.fc-day-grid-event {
+	margin: 0 5px 5px 5px;
+	padding: 4px 8px;
+
+	// force events to be one-line tall
+	> .fc-content {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	// make the time semibold
+	.fc-time {
+		font-weight: 500;
+	}
+
+	// resize handle
+	.fc-resizer {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 7px;
+	}
+
+	// LTR
+	.fc-ltr & {
+		.fc-resizer {
+			right: -3px;
+			cursor: e-resize;
+		}
+	}
+
+	@media (min-width: @screen-lg-min) {
+		> .fc-content {
+			background-color: inherit;
+		}
+
+		.fc-time {
+			float: right;
+			padding-left: 5px;
+			display: inline-block;
+			z-index: 2;
+			position: relative;
+			background-color: inherit;
+		}
+
+		.fc-title {
+			z-index: 1;
+			position: relative;
+		}
+	}
+}
+
+
+// Event limiting
+// ------------------------------
+
+// "More" link
+a.fc-more {
+	margin: 1px 5px;
+	background-color: #fafafa;
+	display: block;
+	padding: 5px;
+	text-align: center;
+	border-radius: @border-radius-base;
+	color: @gray-light;
+	font-size: @font-size-small;
+
+	&:hover {
+		background-color: #f5f5f5;
+		color: @text-color;
+	}
+}
+
+// Rows and cells that are hidden because of a "more" link
+.fc-limited {
+	display: none;
+}
+
+// Popover that appears when "more" link is clicked
+.fc-day-grid .fc-row {
+	z-index: 1;
+}
+.fc-more-popover {
+	z-index: 2;
+	width: 220px;
+
+	.fc-event-container {
+		padding: 10px 5px;
+	}
+}
+
+
+// Toolbar
+// ------------------------------
+
+.fc-toolbar {
+	text-align: center;
+	margin-bottom: @line-height-computed;
+
+	// Title text
+	h2 {
+		margin: 5px 0;
+		font-size: @font-size-h5;
+	}
+
+	// Left
+	.fc-left {
+		float: left;
+		width: 33%;
+	}
+
+	// Right
+	.fc-right {
+		float: right;
+		width: 33%;
+
+		.fc-button-group {
+			float: right;
+		}
+	}
+
+	// Left/right buttons
+	.fc-left,
+	.fc-right {
+		> .fc-button {
+			margin-left: 10px;
+		}
+	}
+
+	// Center
+	.fc-center {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	// The things within each left/right/center section
+	> * {
+		> * {
+			float: left;
+		}
+
+		// The first thing within each left/center/right section
+		> :first-child {
+			margin-left: 0;
+		}
+	}
+
+	// Button layering (for border precedence)
+	button {
+		position: relative;
+
+		&:focus {
+			z-index: 5;
+		}
+	}
+
+	// States
+	.fc-state-hover,
+	.ui-state-hover {
+		z-index: 2;
+	}
+	.fc-state-down {
+		z-index: 3;
+	}
+	.fc-state-active,
+	.ui-state-active {
+		z-index: 4;
+	}
+}
+
+
+// View structure
+// ------------------------------
+
+.fc-view-container {
+	border-left: 1px solid @panel-default-border;
+	border-right: 1px solid @panel-default-border;
+	overflow: auto;
+	max-width: 100%;
+
+	// Remove borders from table cells
+	.fc-view > table {
+
+		// Right border
+		th,
+		td {
+			border-right-width: 0;
+		}
+
+		// Left border from first cell
+		tr:first-child {
+			th:first-child,
+			td:first-child {
+				border-left-width: 0;
+			}
+		}
+	}
+
+	// Change box sizing
+	* {
+		&,
+		&:before,
+		&:after {
+			.box-sizing(content-box);
+		}
+	}
+}
+
+// Scope positioning and z-index's
+.fc-view {
+	&,
+	> table {
+		position: relative;
+		z-index: 1;
+	}
+} 
+
+
+// BasicView
+// ------------------------------
+
+// Day row structure
+.fc-basicWeek-view,
+.fc-basicDay-view {
+	.fc-content-skeleton {
+		padding-top: 5px;
+		padding-bottom: 10px;
+	}
+}
+
+// Rows
+.fc-basic-view tbody .fc-row {
+	min-height: 100px; // ensure that all rows are at least this tall
+	min-width: 100px;
+}
+
+// A "rigid" row will take up a constant amount of height
+// because content-skeleton is absolute
+.fc-row.fc-rigid {
+	overflow: hidden;
+
+	.fc-content-skeleton {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+	}
+}
+
+// Week and day number styling
+.fc-basic-view {
+
+	// Week and day
+	.fc-week-number,
+	.fc-day-number {
+		padding: 10px;
+	}
+
+	// Week number only
+	.fc-week-number {
+		text-align: center;
+
+		span {
+			display: inline-block;
+			min-width: 1.25em;
+		}
+	}
+
+	// Day number only
+	.fc-day-number {
+		text-align: right;
+
+		&.fc-other-month {
+			.opacity(0.3);
+		}
+	}
+}
+
+
+// AgendaView all-day area
+// ------------------------------
+
+.fc-agenda-view {
+	.fc-day-grid {
+		position: relative;
+		z-index: 2;
+
+		.fc-row {
+			min-height: 3em;
+
+			.fc-content-skeleton {
+				padding-top: 5px;
+				padding-bottom: 0;
+			}
+		}
+	}
+}
+
+
+// TimeGrid axis
+// ------------------------------
+
+.fc-axis {
+	text-align: right;
+
+	.fc & {
+		vertical-align: middle;
+		padding: 10px;
+		white-space: nowrap;
+	}
+}
+
+
+// TimeGrid structure
+// ------------------------------
+
+.fc-time-grid-container,
+.fc-time-grid {
+	position: relative;
+	z-index: 1;
+}
+
+.fc-time-grid {
+	min-height: 100%;
+
+	table {
+		border: 0 hidden transparent;
+	}
+
+	> .fc-bg {
+		z-index: 1;
+	}
+
+	.fc-slats,
+	> hr {
+		position: relative;
+		z-index: 2;
+	}
+
+	.fc-bgevent-skeleton,
+	.fc-content-skeleton {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+	}
+	.fc-bgevent-skeleton {
+		z-index: 3;
+	}
+	.fc-highlight-skeleton {
+		z-index: 4;
+	}
+	.fc-content-skeleton {
+		z-index: 5;
+	}
+	.fc-helper-skeleton {
+		z-index: 6;
+	}
+}
+
+
+// TimeGrid slats
+// ------------------------------
+
+.fc-slats {
+	td {
+		border-bottom: 0;
+	}
+
+	.fc-minor td {
+		border-top-style: dotted;
+	}
+}
+
+
+// TimeGrid highlighting slots
+// ------------------------------
+
+.fc-time-grid {
+	.fc-highlight-container {
+		position: relative;
+	}
+
+	.fc-highlight {
+		position: absolute;
+		left: 0;
+		right: 0;
+	}
+}
+
+
+// TimeGrid event containment
+// ------------------------------
+
+.fc-time-grid {
+	.fc-event-container,
+	.fc-bgevent-container {
+		position: relative;
+	}
+
+	.fc-event,
+	.fc-bgevent {
+		position: absolute;
+		z-index: 1;
+		margin: 5px;
+		padding: 10px;
+		min-height: 45px;
+		.box-shadow(0 0 0 1px #fff);
+	}
+
+	.fc-bgevent {
+		left: 0;
+		right: 0;
+	}
+}
+
+
+// TimeGrid event styling
+// ------------------------------
+
+.fc-time-grid-event {
+	overflow: hidden;
+
+	// Events that are continuing from another day
+	&.fc-not-start { 
+		border-top-width: 0;
+		padding-top: 1px;
+		.border-top-radius(0);
+	}
+	&.fc-not-end {
+		border-bottom-width: 0;
+		padding-bottom: 1px;
+		.border-bottom-radius(0);
+	}
+
+	// Contains the time and title, but no bg and resizer
+	> .fc-content {
+		position: relative;
+		z-index: 2;
+	}
+
+	// Time font weight
+	.fc-time {
+		font-weight: 500;
+	}
+
+	// Short mode, where time and title are on the same line
+	&.fc-short {
+		.fc-content {
+			white-space: nowrap;
+		}
+
+		.fc-time,
+		.fc-title {
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		.fc-time {
+			&:before {
+				content: attr(data-start);
+			}
+			&:after {
+				content: "\000A0-\000A0";
+			}
+
+			span {
+				display: none;
+			}
+		}
+		.fc-title {
+			font-size: .85em;
+			padding: 0;
+		}
+	}
+
+	// Resizer
+	.fc-resizer {
+		position: absolute;
+		z-index: 3;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 8px;
+		overflow: hidden;
+		line-height: 10px;
+		font-size: @font-size-small;
+		font-family: monospace;
+		text-align: center;
+		cursor: s-resize;
+		background-color: fade(#000, 5%);
+		padding: 1px;
+
+		&:hover {
+			background-color: fade(#000, 10%);
+		}
+
+		&:after {
+			content: "=";
+		}
+	}
+}
+
+
+// Responsive stuff
+// ------------------------------
+
+@media (max-width: @screen-xs-max) {
+	.fc-toolbar {
+		.fc-left,
+		.fc-left > .fc-button,
+		.fc-right,
+		.fc-right > .fc-button,
+		.fc-left .fc-button-group,
+		.fc-right .fc-button-group {
+			float: none;
+			width: auto;
+			vertical-align: top;
+		}
+
+		.fc-left,
+		.fc-right {
+			display: block;
+			margin-bottom: 10px;
+		}
+	}
+}

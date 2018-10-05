@@ -1,0 +1,22 @@
+.department {
+    padding: 20px;
+    overflow-y: auto;
+}
+.departmentAdd,.departmentEdit{
+    display: none;
+}
+.unitTreeAdd,.unitTreeEdit,.deptTreeAdd,.deptTreeEdit {
+    padding: 5px;
+}
+.unitAdd,.unitEdit,.deptAdd,.deptEdit{
+    position: relative;
+}
+.unitAdd .unitAddContent,.unitEdit .unitEditContent,.deptAddContent,.deptEditContent{
+    display: none;
+    position: absolute;
+    overflow-y: auto;
+    z-index: 999;
+    border: 1px solid #ddd;
+    max-height: 300px;
+    background-color: #fff;
+}

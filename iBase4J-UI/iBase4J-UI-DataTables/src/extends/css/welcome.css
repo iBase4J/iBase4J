@@ -1,0 +1,67 @@
+.task-stat .panel-body {
+    min-height: 120px;
+}
+
+.task-stat .num {
+    font-size: 20px;
+}
+
+.task-stat .heading-elements button {
+    width: 90px;
+    height: 90px;
+}
+
+.task-stat .heading-elements button i {
+    font-size: 50px;
+}
+
+.subblock {
+    height: 400px;
+}
+
+.subblock .content {
+    height: 100%;
+    background: #fff;
+    padding: 20px;
+}
+
+.subblock .content .title {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    margin: 0 25px;
+    border-bottom: solid #919191 2px;
+    color: #666;
+    font-size: 24px
+}
+
+.gtasks {
+    height: 532px;
+}
+
+.gtasks-list {
+    padding: 20px;;
+    color: #999999;
+    overflow-y: auto;
+}
+
+.gtasks-list li {
+    line-height: 40px;
+    border-bottom: 1px solid #F1F1F1;
+}
+
+.gtasks-list li a {
+    color: #999999;
+}
+
+.department-head {
+    padding: 18px 25px;
+}
+
+.department-head, .department-head a {
+    color: #999999;
+    font-size: 16px;
+}
+
+.department-head li {
+    line-height: 60px;
+}

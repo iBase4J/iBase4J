@@ -1,0 +1,48 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Error pages
+ *
+ *  Styles for error and offline pages
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Default title
+.error-title { 
+	color: #fff; 
+	font-size: 200px; 
+	line-height: 1; 
+	margin-top: @line-height-computed;
+	margin-bottom: (@line-height-computed * 2); 
+	font-weight: 300; 
+	text-stroke: 1px transparent; 
+	display: block; 
+	text-shadow: 0 1px 0 #ccc,
+				 0 2px 0 #c9c9c9,
+				 0 3px 0 #bbb,
+				 0 4px 0 #b9b9b9,
+				 0 5px 0 #aaa,
+				 0 6px 1px fade(#000, 10%),
+				 0 0 5px fade(#000, 10%),
+				 0 1px 3px fade(#000, 30%),
+				 0 3px 5px fade(#000, 20%),
+				 0 5px 10px fade(#000, 25%),
+				 0 10px 10px fade(#000, 20%),
+				 0 20px 20px fade(#000, 15%);
+
+	@media (max-width: @screen-xs-max) {
+		font-size: 130px;
+	}
+}
+
+// Title in offline page
+.offline-title { 
+	font-size: 160px; 
+
+	@media (max-width: @screen-xs-max) {
+		font-size: 90px; 
+	}
+}

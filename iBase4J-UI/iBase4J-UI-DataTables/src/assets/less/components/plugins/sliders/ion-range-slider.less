@@ -1,0 +1,319 @@
+/* ------------------------------------------------------------------------------
+*
+*  # ION Range Slider
+*
+*  Styles for ION range slider plugin
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Functional styling
+// ------------------------------
+
+// Base
+.irs {
+    position: relative;
+    display: block;
+    height: @tooltip-arrow-width + (@padding-xs-vertical * 2) + @font-size-mini + (@slider-base-size * 3) + @slider-base-size;
+    -webkit-touch-callout: none;
+    .user-select(none);
+}
+
+// Hide original input
+.irs-hidden-input {
+    position: absolute !important;
+    display: block !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    outline: none !important;
+    z-index: -9999 !important;
+    background: none !important;
+    border-style: solid !important;
+    border-color: transparent !important;
+}
+
+
+//
+// Background line
+//
+
+// Base
+.irs-line {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    outline: none;
+    height: @slider-base-size;
+    top: @tooltip-arrow-width + (@padding-xs-vertical * 3) + @font-size-mini + (@slider-base-size);
+    background-color: @gray-lighter;
+    border-radius: 100px;
+}
+
+// It consists of 3 parts
+.irs-line-left,
+.irs-line-mid,
+.irs-line-right {
+    position: absolute;
+    display: block;
+    top: 0;
+}
+
+// Left
+.irs-line-left {
+    left: 0;
+    width: 11%;
+}
+
+// Middle
+.irs-line-mid {
+    left: 9%;
+    width: 82%;
+}
+
+// And right
+.irs-line-right {
+    right: 0;
+    width: 11%;
+}
+
+
+//
+// Colored bar
+//
+
+// Base
+.irs-bar {
+    position: absolute;
+    display: block;
+    top: @tooltip-arrow-width + (@padding-xs-vertical * 3) + @font-size-mini + (@slider-base-size);
+    left: 0;
+    width: 0;
+    height: @slider-base-size;
+    background-color: @color-blue-500;
+    border-radius: 100px;
+}
+
+// Edge
+.irs-bar-edge {
+    position: absolute;
+    display: block;
+    top: 25px;
+    left: 0;
+    height: 12px;
+    width: 9px;
+}
+
+// Shadow for highlight disabled range
+.irs-shadow {
+    position: absolute;
+    display: none;
+    top: @tooltip-arrow-width + (@padding-xs-vertical * 3) + @font-size-mini + (@slider-base-size);
+    left: 0;
+    width: 0;
+    height: @slider-base-size;
+    background-color: @text-color;
+    border-radius: 100px;
+    .opacity(0.25);
+}
+
+
+
+//
+// Handles
+//
+
+// Base
+.irs-slider {
+    position: absolute;
+    display: block;
+    width: (@slider-base-size * 3);
+    height: (@slider-base-size * 3);
+    background-color: #fcfcfc;
+    border: 1px solid #bbb;
+    cursor: pointer;
+    top: (@tooltip-arrow-width + (@padding-xs-vertical * 3) + @font-size-mini + (@slider-base-size) - (((@slider-base-size * 3) - @slider-base-size) / 2));
+    border-radius: 100px;
+    cursor: pointer;
+    z-index: 1;
+
+    // Small circle
+    &:after {
+        content: '';
+        display: inline-block;
+        width: @slider-base-size;
+        height: @slider-base-size;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -(@slider-base-size / 2);
+        margin-left: -(@slider-base-size / 2);
+        background-color: @color-grey-600;
+        border-radius: 100px;
+    }
+
+    // Hover state
+    &:hover,
+    &:focus {
+        background-color: #f7f7f7;
+    }
+
+    // Active state
+    &:active {
+        background-color: #fafafa;
+    }
+
+    // The last one is on top of the first one
+    &.type_last {
+        z-index: 2;
+    }
+}
+
+
+
+//
+// Tooltips
+//
+
+// Base
+.irs-min,
+.irs-max,
+.irs-from,
+.irs-to,
+.irs-single {
+    position: absolute;
+    display: block;
+    cursor: default;
+}
+
+// Minimum and maximum labels
+.irs-min,
+.irs-max {
+    color: @text-muted;
+    font-size: @font-size-mini;
+    line-height: 1;
+    top: 0;
+    padding: @padding-xs-vertical;
+    background-color: @gray-lighter;
+    border-radius: @border-radius-small;
+}
+.irs-min {
+    left: 0;
+}
+.irs-max {
+    right: 0;
+}
+
+// Handle tooltips
+.irs-from,
+.irs-to,
+.irs-single {
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    color: #fff;
+    font-size: @font-size-mini;
+    line-height: 1;
+    padding: @padding-xs-vertical;
+    top: 0;
+    background-color: @tooltip-bg;
+    border-radius: @border-radius-small;
+
+    // Tooltip arrow
+    &:after {
+        content: "";
+        position: absolute;
+        display: block;
+        bottom: -(@tooltip-arrow-width * 2);
+        left: 50%;
+        width: 0; height: 0;
+        margin-left: -(@tooltip-arrow-width);
+        overflow: hidden;
+        border: @tooltip-arrow-width solid transparent;
+        border-top-color: @tooltip-bg;
+    }
+}
+
+
+//
+// The grid
+//
+
+// Base
+.irs-grid {
+    position: absolute;
+    display: none;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 24px;
+}
+
+// If slider has grid
+.irs-with-grid {
+    height: 75px;
+
+    // Display grid
+    .irs-grid {
+        display: block;
+    }
+}
+
+// Marker
+.irs-grid-pol {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 8px;
+    background-color: @text-muted;
+
+    // Sub marker
+    &.small {
+        height: 4px;
+    }
+}
+
+// Text label
+.irs-grid-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    white-space: nowrap;
+    text-align: center;
+    font-size: @font-size-mini;
+    color: @text-muted;
+    line-height: 1;
+    padding: 0 3px;
+}
+
+
+//
+// Disabled state
+//
+
+// Disabled mask
+.irs-disable-mask {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: -1%;
+    width: 102%;
+    height: 100%;
+    cursor: default;
+    background: transparent;
+    z-index: 2;
+}
+
+// Mute slider if disabled
+.irs-disabled {
+    .opacity(0.6);
+}

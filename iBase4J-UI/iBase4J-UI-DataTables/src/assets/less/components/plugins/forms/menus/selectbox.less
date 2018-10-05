@@ -1,0 +1,398 @@
+/* ------------------------------------------------------------------------------
+*
+*  # SelectBoxIt
+*
+*  Styles for selectbox.js - custom select boxes plugin
+*
+*  Version: 1.2
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+/* # Core
+-------------------------------------------------- */
+
+// SelectBoxIt container
+.selectboxit-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    border-radius: @border-radius-base;
+
+    // All children elements
+    * {
+        -webkit-touch-callout: none;
+        outline: 0;
+        white-space: nowrap;
+        .user-select(none);
+    }
+
+    // Button
+    .selectboxit {
+        width: 100%;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+
+        // Remove outline
+        &:focus {
+            outline: 0;
+        }
+    }
+
+    span,
+    .selectboxit-options a {
+        display: block;
+    }
+
+    // Options list
+    .selectboxit-options {
+        width: 100%;
+        max-height: 250px;
+        padding: @list-spacing 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        z-index: 999;
+        text-align: left;
+    }
+}
+
+// Disabled mouse interaction
+.selectboxit.selectboxit-disabled,
+.selectboxit-options .selectboxit-disabled {
+    &,
+    &:hover,
+    &:focus {
+        cursor: @cursor-disabled;
+        .box-shadow(none);
+        .opacity(0.65);
+    }
+}
+
+// Hide original select
+.selectboxit-rendering {
+    display: inline-block !important;
+    visibility: visible !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+}
+
+// Dropdown menu
+.selectboxit-list {
+    background-color: @dropdown-bg;
+    border: 1px solid @dropdown-border;
+    margin: 2px 0 0;
+    width: 100%;
+    min-width: 200px;
+    list-style: none;
+    position: absolute;
+    cursor: pointer;
+    display: none;
+    border-radius: @border-radius-base;
+    .box-shadow(0 1px 3px fade(#000, 10%));
+
+    // Link
+    .selectboxit-option-anchor {
+        color: @dropdown-link-color;
+    }
+
+    // Focused link
+    > .selectboxit-focus > .selectboxit-option-anchor {
+        display: block;
+        background-color: @dropdown-link-hover-bg;
+        color: @dropdown-link-hover-color;
+    }
+
+    // Selected link
+    > .selectboxit-selected > .selectboxit-option-anchor {
+        background-color: @dropdown-link-active-bg;
+        color: @dropdown-link-active-color;
+    }
+
+    // Disabled link
+    > .selectboxit-disabled > .selectboxit-option-anchor {
+        color: @dropdown-link-disabled-color;
+        cursor: @cursor-disabled;
+    }
+
+    // Custom border color
+    .selectbox-container[class*=border-] > & {
+        border-color: inherit;
+    }
+
+    // Solid color
+    .selectbox-container[class*=bg-] > & {
+        background-color: inherit;
+        border-color: inherit;
+
+        .selectboxit-option-anchor {
+            color: #fff;
+        }
+
+        > .selectboxit-focus .selectboxit-option-anchor {
+            background-color: fade(#000, 10%);
+        }
+    }
+}
+
+
+// Buttons
+// ------------------------------
+
+// Button
+.selectboxit-btn {
+    background-color: @input-bg;
+    border: 1px solid @input-border;
+    color: @input-color;
+    border-radius: @input-border-radius;
+    height: @input-height-base;
+    padding: @padding-base-vertical @padding-base-horizontal;
+    padding-right: ((@padding-base-horizontal * 2) + 5);
+
+    // When hovered
+    &:hover {
+        .box-shadow(0 0 0 100px fade(#000, 1%) inset);
+    }
+
+    // When opened
+    &.selectboxit-open,
+    &:focus {
+        .box-shadow(0 0 0 100px fade(#000, 3%) inset);
+    }
+
+    // Inherit colors if custom bg color
+    .selectboxit-container[class*=bg-] & {
+        background-color: inherit;
+        border-color: inherit;
+        color: inherit;
+    }
+
+    // Inherit border color if custom bg color
+    .selectboxit-container[class*=border-] & {
+        border-color: inherit;
+    }
+
+    // Darken on hover and focus
+    &[class*=bg-],
+    .selectboxit-container[class*=bg-] & {
+        &:hover {
+            .box-shadow(0 0 0 100px fade(#000, 5%) inset);
+        }
+
+        &.selectboxit-open,
+        &:focus {
+            .box-shadow(0 0 0 100px fade(#000, 10%) inset);
+        }
+    }
+}
+
+// Inside input group
+.input-group {
+    .selectboxit-container {
+
+        // Remove border radius
+        > .selectboxit-btn {
+            border-radius: 0;
+        }
+
+        // Add side border radius to the first child
+        &:last-child > .selectboxit-btn {
+            .border-right-radius(@input-border-radius);
+        }
+    }
+
+    // Add side border radius to the simulated last child
+    > select:first-child + .selectboxit-container > .selectboxit-btn {
+        .border-left-radius(@input-border-radius);
+    }
+}
+
+// Button text
+.selectboxit-text {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float: left;
+}
+
+// Arrow
+.selectboxit-default-arrow {
+    position: relative;
+    font-style: normal;
+
+    &:after {
+        content: '\e9c5';
+        display: block;
+        font-family: 'icomoon';
+        font-size: @icon-font-size;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .selectboxit-open &:after {
+        content: '\e9c6';
+    }
+}
+
+
+// Options
+// ------------------------------
+
+// Individual option
+.selectboxit-option {
+    margin: 0;
+    list-style-type: none;
+
+    .selectboxit-option-anchor{
+        padding: @padding-base-vertical @padding-base-horizontal;
+    }
+}
+
+// Optgroup header
+.selectboxit-optgroup-header {
+    margin: 0;
+    list-style-type: none;
+    padding: @padding-base-vertical @padding-base-horizontal;
+    font-weight: 700;
+    color: @text-color;
+    font-size: @font-size-mini;
+    line-height: @line-height-mini;
+    text-transform: uppercase;
+
+    &:hover {
+        cursor: default;
+    }
+}
+
+// Optgroup option
+.selectboxit-optgroup-option .selectboxit-option-anchor {
+    padding-left: (@padding-base-horizontal * 2);
+    padding-right: (@padding-base-horizontal * 2);
+}
+
+// Dropdown arrow container
+.selectboxit-arrow-container {
+    position: absolute;
+    top: 50%;
+    width: @icon-font-size;
+    right: @padding-base-horizontal;
+    margin-top: -(@icon-font-size / 2);
+    text-align: right;
+    line-height: 1;
+
+    // Remove top edge from arrow
+    .selectboxit-arrow {
+        &[class*=icon-] {
+            top: 0;
+        }
+    }
+
+    // Caret
+    .caret {
+        &:after {
+            text-align: right;
+        }
+    }
+}
+
+// Dropdown individual option icon positioning
+.selectboxit-option-icon-container {
+    float: left;
+
+    // Icon
+    > [class*=icon-] {
+        margin-right: @content-padding-small;
+        width: auto;
+    }
+
+    // Image
+    .selectboxit-option-icon-url {
+        height: @line-height-computed;
+        width: @line-height-computed;
+        background-size: @line-height-computed @line-height-computed;
+        border-radius: 100px;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: block;
+    }
+}
+
+// Options border radius
+.selectboxit-option-first {
+    .border-top-radius(@border-radius-base - 1);
+}
+.selectboxit-optgroup-header + .selectboxit-option-first {
+    .border-top-radius(0);
+}
+.selectboxit-option-last {
+    .border-bottom-radius(@border-radius-base - 1);
+}
+
+
+
+/* # Sizing
+-------------------------------------------------- */
+
+// Horizontal
+// ------------------------------
+
+// Fixed width
+.selectbox-fixed {
+    & + .selectboxit-container,
+    & + .selectboxit-options {
+        width: 250px;
+    }
+}
+
+// Auto width
+.selectbox-auto {
+    & + .selectboxit-container,
+    & + .selectboxit-options {
+        width: auto;
+    }
+}
+
+
+// Vertical
+// ------------------------------
+
+// Large
+.selectbox-lg + .selectboxit-container .selectboxit {
+    padding: @padding-large-vertical @padding-large-horizontal;
+    padding-right: (@padding-large-horizontal * 2);
+    height: @input-height-large;
+    font-size: @font-size-large;
+
+    .selectboxit-arrow-container {
+        right: @padding-large-horizontal;
+    }
+}
+
+// Small
+.selectbox-sm + .selectboxit-container .selectboxit {
+    padding: @padding-small-vertical @padding-small-horizontal;
+    padding-right: (@padding-small-horizontal * 2);
+    height: @input-height-small;
+
+    .selectboxit-arrow-container {
+        right: @padding-small-horizontal;
+    }
+}
+
+// Mini
+.selectbox-xs + .selectboxit-container .selectboxit {
+    padding: @padding-xs-vertical @padding-xs-horizontal;
+    padding-right: ((@padding-xs-horizontal * 2) + 5);
+    height: @input-height-mini;
+    font-size: @font-size-small;
+    line-height: @line-height-small;
+
+    .selectboxit-arrow-container {
+        right: @padding-xs-horizontal;
+    }
+}

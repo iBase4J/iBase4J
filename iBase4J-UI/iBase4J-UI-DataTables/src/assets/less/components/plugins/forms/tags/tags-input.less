@@ -1,0 +1,101 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Bootstrap tags input
+*
+*  Styles for tagsinput.js - tags input for Bootstrap
+*
+*  Version: 1.2
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.bootstrap-tagsinput {
+    background-color: @input-bg;
+    border: 1px solid @input-border;
+    display: inline-block;
+    padding: 0 0 @tags-spacing 0;
+    vertical-align: middle;
+    border-radius: @input-border-radius;
+    width: 100%;
+
+    // Input field
+    input {
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+        padding: (@padding-base-vertical - @tags-spacing) @padding-small-horizontal;
+        margin-top: @tags-spacing;
+        margin-left: @tags-spacing;
+        width: auto !important;
+        min-width: 100px;
+        font-size: @font-size-small;
+        line-height: @line-height-small;
+        .box-shadow(none);
+
+        &:focus {
+            border: none;
+            box-shadow: none;
+        }
+    }
+
+    // Twitter typeahead adaptation
+    .twitter-typeahead {
+        width: auto;
+    }
+    .tt-dropdown-menu {
+        margin-top: 5px;
+        min-width: 200px;
+    }
+
+    // Tag
+    .tag {
+        margin: @tags-spacing 0 0 @tags-spacing;
+        border: 0;
+        border-radius: @border-radius-small;
+        padding: @padding-xs-vertical @padding-small-horizontal;
+        padding-right: ((@padding-small-horizontal * 2) + (@icon-font-size / 2));
+        float: left;
+        font-size: @font-size-small;
+        line-height: @line-height-small;
+        font-weight: 400;
+        text-transform: none;
+        position: relative;
+
+        // Skip tokens with custom background color
+        &:not([class*=bg-]) {
+            background-color: @color-slate-600;
+            color: #fff;
+        }
+
+        // Remove button
+        [data-role="remove"] {
+            cursor: pointer;
+            color: inherit;
+            position: absolute;
+            top: 50%;
+            right: @padding-small-horizontal;
+            line-height: 1;
+            margin-top: -(@font-size-mini / 2);
+            .opacity(0.7);
+
+            &:hover {
+                .opacity(1);
+            }
+
+            // Icon
+            &:after {
+                content: '\ed6a';
+                font-family: 'icomoon';
+                display: block;
+                font-size: @font-size-mini;
+                color: #fff;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
+    }
+}

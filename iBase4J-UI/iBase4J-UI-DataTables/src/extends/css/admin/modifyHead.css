@@ -1,0 +1,73 @@
+.panel-body h5.current-picture {
+    margin: 0;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.panel-white > .panel-heading {
+    border-bottom-width: 2px;
+}
+
+.panel-body {
+    padding-bottom: 50px;
+}
+
+.modal-content {
+    border: 1px solid #e5e5e5;
+    box-shadow: none;
+}
+
+.avatar-view {
+    width: auto;
+    height: auto;
+    position: relative;
+}
+
+.avatar-btns {
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.avatar-btns .btn-group span, .avatar-btns .icon-floppy-disk {
+    margin-right: 8px;
+}
+
+.avatar-btns .btn-group .btn {
+    border-right: 1px solid #009688;
+    font-size: 15px;
+}
+
+.avatar-btns .btn-group:last-child .btn {
+    border-right: 0;
+    border-radius: 0 3px 3px 0;
+}
+
+.avatar-btns .btn-group:first-child .btn {
+    border-radius: 3px 0 0 3px;
+}
+
+.avatar-btns .btn-group {
+    margin-right: 0;
+}
+
+.btn-group .btn + .btn, .input-group-btn .btn + .btn, .btn-group .btn + .btn-group, .input-group-btn .btn + .btn-group, .btn-group .btn-group + .btn, .input-group-btn .btn-group + .btn, .btn-group .btn-group + .btn-group, .input-group-btn .btn-group + .btn-group {
+    margin-left: 0;
+}
+
+.avatar-upload .avatar-input {
+    display: none;
+}
+
+.avatar-upload .picture-format {
+    margin-top: 10px;
+    margin-left: 114px;
+}
+
+.modal-header {
+    border-bottom-width: 2px;
+    padding: 10px;
+}
+
+.modal-header .close {
+    top: 30%;
+}

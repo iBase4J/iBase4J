@@ -1,0 +1,576 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Dropdown menu component
+*
+*  Overrides for dropdown menu bootstrap component
+*
+*  Version: 1.2
+*  Latest update: Aug 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base
+// -------------------------
+
+// Dropdown arrow/caret, full override
+.caret {
+    font-style: normal;
+    font-weight: normal;
+    border: 0;
+    margin: 0;
+    width: auto;
+    height: auto;
+    text-align: center;
+    margin-top: -1px;
+
+    // Arrow icon
+    &:after {
+        content: '\e9c5';
+        font-family: 'icomoon';
+        display: block;
+        font-size: @icon-font-size;
+        width: @icon-font-size;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+// The dropdown menu (ul)
+.dropdown-menu {
+    min-width: 180px;
+    padding: @list-spacing 0;
+    color: @text-color;
+    .box-shadow(0 1px 3px fade(#000, 10%));
+
+    // Dividers (basically an hr) within the dropdown
+    .divider {
+        margin: @list-spacing 0;
+    }
+
+    // Menu item
+    > li {
+        position: relative;
+        margin-bottom: 1px;
+
+        // Last item
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    // Links within the dropdown menu
+    > li > a {
+        padding: (@padding-base-vertical + 1) @content-padding-base;
+        outline: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    // Elements
+    > li > a,
+    > .dropdown-header {
+
+        // Icons and images
+        > i,
+        > img {
+            margin-right: @padding-base-horizontal;
+            float: left;
+            margin-top: ((@line-height-computed - @icon-font-size) / 2);
+            top: 0;
+
+            // Right aligned icons
+            &.pull-right {
+                margin-right: 0;
+                margin-left: @padding-base-horizontal;
+            }
+        }
+
+        // Labels and badges
+        > .label,
+        > .badge {
+            float: left;
+            margin-right: @padding-base-horizontal;
+
+            &.pull-right {
+                margin-right: 0;
+                margin-left: @padding-base-horizontal;
+            }
+        }
+
+        // Image thumbs
+        > img {
+            max-height: @icon-font-size;
+        }
+    }
+}
+
+
+// Checkboxes and radios
+// -------------------------
+
+// Hover/Focus state for labels
+.dropdown-menu {
+
+    // Hover/focus states
+    > li > label {
+        &:hover,
+        &:focus {
+            text-decoration: none;
+            color: @dropdown-link-hover-color;
+            background-color: @dropdown-link-hover-bg;
+        }
+    }
+
+    // Active state
+    > .active > label {
+        &,
+        &:hover,
+        &:focus {
+            color: @dropdown-link-active-color;
+            outline: 0;
+            background-color: @dropdown-link-active-bg;
+        }
+    }
+}
+
+// Disabled state for labels
+.dropdown-menu > .disabled {
+    > label {
+        &,
+        &:hover,
+        &:focus {
+            background-color: transparent;
+            color: @dropdown-link-disabled-color;
+        }
+    }
+}
+
+// Checkboxes and radios
+.dropdown-menu {
+    > li {
+
+        // Label instead of link
+        > label {
+            padding: (@padding-base-vertical + 1) @content-padding-base;
+            padding-left: (@content-padding-base + @content-padding-small + @checkbox-size);
+            display: block;
+            cursor: pointer;
+
+            // Positioning
+            .checker,
+            .choice,
+            > input[type=checkbox],
+            > input[type=radio] {
+                left: @content-padding-base;
+                top: auto;
+                margin-top: ((@line-height-computed - @checkbox-size) / 2);
+            }
+        }
+
+        // Remove top margin
+        &.checkbox,
+        &.radio {
+            margin-top: 0;
+        }
+
+        // Right checkbox position
+        &.checkbox-right > label {
+            padding-left: @content-padding-base;
+            padding-right: (@content-padding-base + @content-padding-small + @checkbox-size);
+
+            .checker,
+            > input[type=checkbox] {
+                left: auto;
+                right: @content-padding-base;
+            }
+        }
+
+        // Right radio position
+        &.radio-right > label {
+            &:extend(.dropdown-menu > li.checkbox-right > label);
+
+            .choice,
+            > input[type=radio] {
+                left: auto;
+                right: @content-padding-base;
+            }
+        }
+    }
+}
+
+// Switchery toggles
+.dropdown-menu {
+    > .checkbox-switchery {
+
+        // Set left spacing
+        > label > .switchery {
+            left: @content-padding-base;
+        }
+
+        // Set right spacing
+        &.checkbox-right[class*=switchery-] {
+            > label {
+                padding-left: @content-padding-base;
+
+                > .switchery {
+                    left: auto;
+                    right: @content-padding-base;
+                }
+            }
+        }
+
+        // Small size
+        &.switchery-sm {
+            margin-bottom: 0;
+
+            > label {
+                padding-left: (((@switchery-small-size + 1) * 2) + (@content-padding-base * 2));
+            }
+        }
+
+        // Mini size
+        &.switchery-xs {
+            margin-bottom: 0;
+
+            > label {
+                padding-left: (((@switchery-mini-size + 1) * 2) + (@content-padding-base * 2));
+            }
+        }
+
+        // Right position
+        &.checkbox-right {
+
+            // Small
+            &.switchery-sm {
+                > label {
+                    padding-right: (((@switchery-small-size + 1) * 2) + (@content-padding-base * 2));
+                }
+            }
+
+            // Mini
+            &.switchery-xs {
+                > label {
+                    padding-right: (((@switchery-mini-size + 1) * 2) + (@content-padding-base * 2));
+                }
+            }
+        }
+    }
+}
+
+
+// Disabled state
+// -------------------------
+
+.dropdown-menu > .disabled {
+    .badge,
+    .label,
+    img {
+        .opacity(0.8);
+    }
+}
+
+
+// Solid color dropdown menu
+// -------------------------
+
+.dropdown-menu[class*=bg-] {
+
+    // Links and labels
+    > li {
+        > a,
+        > label {
+            color: #fff;
+
+            &:hover,
+            &:focus {
+                background-color: fade(#000, 10%);
+            }
+
+            // Make badge/label white
+            > .label,
+            > .badge {
+                color: @text-color;
+                background-color: #fff;
+                border-color: #fff;
+            }
+        }
+    }
+
+    // Active state
+    > .active > a,
+    > .active > label {
+        &,
+        &:hover,
+        &:focus {
+            background-color: fade(#000, 20%);
+        }
+    }
+
+    // Disabled state
+    > .disabled > a,
+    > .disabled > label {
+        &,
+        &:hover,
+        &:focus {
+            background-color: transparent;
+            color: fade(#fff, 60%);
+        }
+    }
+
+    // Dropdown header
+    > .dropdown-header {
+        color: fade(#fff, 60%);
+
+        &.highlight {
+            background-color: fade(#000, 10%);
+        }
+    }
+
+    // Divider
+    .divider {
+        background-color: fade(#fff, 40%);
+    }
+}
+
+
+// Optional sizing
+// -------------------------
+
+// Large
+.dropdown-menu-lg {
+    > li > a {
+        padding-top: @padding-large-vertical;
+        padding-bottom: @padding-large-vertical;
+        font-size: @font-size-large;
+        line-height: @line-height-large;
+    }
+}
+
+// Small
+.dropdown-menu-sm {
+    > li > a {
+        padding-top: @padding-small-vertical;
+        padding-bottom: @padding-small-vertical;
+        font-size: @font-size-small;
+        line-height: @line-height-small;
+    }
+}
+
+// Mini
+.dropdown-menu-xs {
+    > li > a {
+        padding-top: @padding-xs-vertical;
+        padding-bottom: @padding-xs-vertical;
+        font-size: @font-size-small;
+        line-height: @line-height-small;
+    }
+}
+
+
+// Dropdown submenu
+// -------------------------
+
+.dropdown-menu {
+
+    // Basic functionality
+    > .dropdown-submenu {
+
+        // Link
+        > a {
+            padding-right: ((@content-padding-base * 2) + (@icon-font-size / 2));
+            position: relative;
+
+            // Arrow icon
+            &:after {
+                content: '\e9c7';
+                font-family: 'icomoon';
+                position: absolute;
+                top: 50%;
+                margin-top: -(@icon-font-size / 2);
+                right: @content-padding-base;
+                font-size: @icon-font-size;
+                font-weight: 400;
+                line-height: 1;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                .opacity(0.8);
+            }
+        }
+
+        // Hover/focus states
+        &:hover,
+        &:focus {
+            > a {
+                background-color: @dropdown-link-hover-bg;
+
+                &:after {
+                    .opacity(1);
+                }
+            }
+        }
+
+        // Active submenu item
+        &.active > a {
+            background-color: @dropdown-link-active-bg;
+            color: @dropdown-link-active-color;
+        }
+
+        // Display submenu on hover
+        &:hover > .dropdown-menu {
+            @media(min-width: @grid-float-breakpoint) {
+                display: block;
+            }
+        }
+
+        // Hide submenu if parent is disabled
+        &.disabled {
+            > .dropdown-menu {
+                display: none;
+            }
+
+            > a {
+                background-color: transparent;
+            }
+        }
+
+        // Submenu position
+        > .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -(@list-spacing + 1); // List spacing  + 1px border
+
+            // Reverse in dropdown and bottom navbars
+            .dropup &,
+            .navbar-fixed-bottom .dropdown & {
+                top: auto;
+                bottom: 0;
+                margin-top: 0;
+                margin-bottom: -(@list-spacing + 1); // List spacing  + 1px border
+            }
+        }
+
+        // Left submenu position
+        &.dropdown-submenu-left > .dropdown-menu {
+            left: auto;
+            right: 100%;
+        }
+
+        // Submenu dropup
+        .dropup &,
+        .dropup& {
+            > .dropdown-menu {
+                top: auto;
+                bottom: 0;
+                margin-top: 0;
+                margin-bottom: -(@list-spacing + 1);
+            }
+        }
+
+        // Make submenu levels stacked on mobile
+        @media (max-width: @screen-xs-max) {
+            position: static;
+
+            // Change arrow icon direction
+            > a:after {
+                content: '\e9c5';
+            }
+
+            // Make them stacked
+            &,
+            &.dropdown-submenu-left {
+                .dropdown-menu {
+                    position: relative;
+                    left: 0;
+                    right: 0;
+                    float: none;
+                    border-width: 0;
+                    border-color: fade(#000, 10%);
+                    box-shadow: none;
+                    min-width: 100%;
+                    margin: 0;
+
+                    // Second level
+                    > li {
+                        > a {
+                            padding-left: (@content-padding-base * 2);
+                        }
+
+                        // Third level
+                        > ul > li {
+                            > a {
+                                padding-left: (@content-padding-base * 3);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Background color for submenu link states
+    &[class*=bg-] > .dropdown-submenu {
+        &:hover > a,
+        &:focus > a {
+            background-color: fade(#000, 10%);
+        }
+
+        // Remove bg color in disabled links
+        &.disabled {
+            &:hover > a,
+            &:focus > a {
+                background-color: transparent;
+            }
+        }
+    }
+}
+
+
+// Dropdown header
+// -------------------------
+
+.dropdown-header {
+    padding: (@padding-base-vertical + 1) @content-padding-base;
+    font-size: @font-size-mini;
+    line-height: @line-height-mini;
+    color: @text-muted;
+    text-transform: uppercase;
+    margin-top: @list-spacing;
+
+    // Highlighted header
+    &.highlight {
+        margin-top: 0;
+        background-color: @dropdown-annotation-bg;
+        color: @gray-light;
+
+        // Add top spacing
+        li + &,
+        & + li {
+            margin-top: @list-spacing;
+        }
+
+        // ... but remove from the first one
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+}
+
+
+// General dropup
+// -------------------------
+
+.dropup,
+.navbar-fixed-bottom .dropdown {
+
+    // Reverse the caret
+    .caret {
+        border: 0;
+
+        // Icon
+        &:after {
+            content: '\e9c6';
+        }
+    }
+}

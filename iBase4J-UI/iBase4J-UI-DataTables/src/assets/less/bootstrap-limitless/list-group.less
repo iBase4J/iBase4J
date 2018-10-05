@@ -1,0 +1,149 @@
+/* ------------------------------------------------------------------------------
+*
+*  # List groups component
+*
+*  Overrides for list groups bootstrap component
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Basic styling
+// -------------------------
+
+// Base
+.list-group {
+    list-style: none;
+    margin-bottom: 0;
+    border: 1px solid @list-group-border;
+    padding: @list-spacing 0;
+    border-radius: @border-radius-base;
+}
+
+
+// Individual list items
+// -------------------------
+
+.list-group-item {
+    background-color: transparent;
+    padding: @content-padding-small @content-padding-large;
+    border: 0;
+}
+
+// Disabled state
+.list-group-item {
+    &.disabled,
+    &.disabled:hover,
+    &.disabled:focus {
+
+        // Lower opacity
+        .label,
+        .badge {
+            .opacity(0.75);
+        }
+    }
+}
+
+// List group divider
+.list-group-divider {
+    height: 1px;
+    display: block;
+    background-color: lighten(@list-group-border, 3%);
+    margin-top: @list-spacing;
+    margin-bottom: @list-spacing;
+}
+
+// List group header
+.list-group-header {
+    padding: @padding-base-vertical @content-padding-large;
+    font-size: @font-size-mini;
+    line-height: @line-height-mini;
+    color: @text-muted;
+    text-transform: uppercase;
+
+    &:first-child {
+        margin-top: @list-spacing;
+    }
+
+    .list-group-item + &,
+    .list-group-divider + & {
+        margin-top: (@list-spacing * 2);
+    }
+}
+
+// Icons, labels and badges
+.list-group-item,
+.list-group-header {
+    > i {
+        margin-right: @element-horizontal-spacing;
+
+        &.pull-right {
+            margin-right: 0;
+            margin-left: @element-horizontal-spacing;
+            margin-top: (((@line-height-computed - @icon-font-size) / 2) + 1);
+        }
+    }
+}
+
+
+// Custom content options
+// -------------------------
+
+.list-group-item-heading {
+    margin-top: @list-spacing;
+    margin-bottom: @list-spacing;
+}
+.list-group-item-text {
+    line-height: @line-height-base;
+    margin-bottom: @list-spacing;
+}
+
+
+// Contextual variants
+// -------------------------
+
+// Success
+.list-group-item-variant(success; @state-success-bg; @state-success-text);
+.list-group-item-success {
+    &,
+    a&,
+    a&:hover,
+    a&:focus {
+        color: darken(@color-success-800, 10%);
+    }
+}
+
+// Info
+.list-group-item-variant(info; @state-primary-bg; @state-primary-text);
+.list-group-item-info {
+    &,
+    a&,
+    a&:hover,
+    a&:focus {
+        color: darken(@color-primary-800, 10%);
+    }
+}
+
+// Warning
+.list-group-item-variant(warning; @state-warning-bg; @state-warning-text);
+.list-group-item-warning {
+    &,
+    a&,
+    a&:hover,
+    a&:focus {
+        color: darken(@color-warning-800, 10%);
+    }
+}
+
+// Danger
+.list-group-item-variant(danger; @state-danger-bg; @state-danger-text);
+.list-group-item-danger {
+    &,
+    a&,
+    a&:hover,
+    a&:focus {
+        color: darken(@color-danger-800, 10%);
+    }
+}

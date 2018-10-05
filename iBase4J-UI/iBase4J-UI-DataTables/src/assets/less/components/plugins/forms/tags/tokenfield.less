@@ -1,0 +1,239 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Tokenfield for Bootstrap
+*
+*  Styles for tokenfield.js - Advanced tagging/tokenizing plugin for Bootstrap
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base
+// ------------------------------
+
+.tokenfield {
+    height: auto;
+
+    // Remove default .form-control styling
+    &.form-control {
+        height: auto;
+        padding: 0 0 @tags-spacing 0;
+    }
+
+    // Clear floating
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    // Token
+    .token {
+        margin: @tags-spacing 0 0 @tags-spacing;
+        cursor: default;
+        float: left;
+        position: relative;
+        border-radius: @border-radius-small;
+
+        // Skip tokens with custom background color
+        &:not([class*=bg-]) {
+            background-color: @tags-bg;
+            color: @tags-color;
+
+            // Change background on hover
+            &:hover,
+            &:focus {
+                background-color: @tags-hover-bg;
+                color: @tags-hover-color;
+            }
+        }
+
+        // Invalid
+        &.invalid {
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-radius: 0;
+            border-bottom: 1px dotted @brand-danger;
+
+            &.active {
+                background-color: @gray-lighter;
+                border: 1px solid @gray-lighter;
+            }
+        }
+
+        // Tag text
+        .token-label {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: @padding-xs-vertical @padding-small-horizontal;
+            padding-right: ((@padding-small-horizontal * 2) + (@icon-font-size / 2));
+            font-size: @font-size-small;
+            line-height: @line-height-small;
+        }
+
+        // Close button
+        > .close {
+            font-size: 0;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            color: inherit;
+            right: @padding-small-horizontal;
+            line-height: 1;
+            margin-top: -(@font-size-mini / 2);
+
+            // Icon
+            &:after {
+                content: '\ed6a';
+                font-family: 'icomoon';
+                display: block;
+                font-size: @font-size-mini;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            // Hover action
+            &:hover {
+                .opacity(1);
+            }
+        }
+    }
+
+
+    //
+    // Input field
+    //
+
+    // Make typeahead input auto width
+    .twitter-typeahead {
+        width: auto;
+    }
+
+    // Input field
+    .token-input {
+        direction: ltr;
+        background: none;
+        width: 90px!important;
+        max-width: 50%;
+        min-width: 60px;
+        padding: (@padding-base-vertical - @tags-spacing) @padding-small-horizontal;
+        margin-top: @tags-spacing;
+        margin-left: @tags-spacing;
+        font-size: @font-size-small;
+        line-height: @line-height-small;
+        border: 0;
+        outline: 0;
+    }
+
+
+    //
+    // States
+    //
+
+    // Readonly
+    &.readonly .token {
+        .token-label {
+            padding-right: @padding-small-horizontal;
+        }
+
+        // Hide close button in readonly
+        .close {
+            display: none;
+        }
+    }
+
+    // Disabled
+    &.disabled {
+        cursor: @cursor-disabled;
+        
+        // Token style
+        .token {
+
+            // Mute tokens
+            &,
+            .close {
+                .opacity(0.5);
+            }
+
+            // Revert default background on hover
+            &:hover,
+            &:focus {
+                background-color: @tags-bg;
+                color: @tags-color;
+            }
+        }
+
+        // Add disabled cursor
+        &,
+        .token-input,
+        .token,
+        .token .close {
+            cursor: @cursor-disabled;
+        }
+    }
+}
+
+
+
+// Sizing
+// ------------------------------
+
+// Large
+.input-group-lg,
+.tokenfield.input-lg {
+
+    // Tag look
+    .token > .token-label,
+    .token > span,
+    .token-input {
+        font-size: @font-size-base;
+        line-height: @line-height-computed;
+        padding: (@padding-large-vertical - @tags-spacing) @padding-base-horizontal;
+    }
+
+    // Right spacing for close button
+    .token > .token-label,
+    .token > span {
+        padding-right: ((@padding-base-horizontal * 1.5) + @font-size-mini);
+    }
+
+    // Close button
+    .token > .close {
+        right: @padding-base-horizontal;
+    }
+
+    // Readonly
+    &.readonly .token > .token-label {
+        padding-right: @padding-base-horizontal;
+    }
+}
+
+// Small
+.input-group-sm,
+.tokenfield.input-sm {
+
+    // Tags
+    .token > .token-label,
+    .token > span {
+        padding: (@padding-small-vertical - @tags-spacing) @padding-small-horizontal;
+        padding-right: ((@padding-small-horizontal * 1.5) + @font-size-mini);
+    }
+
+    // Input
+    .token-input {
+        padding: (@padding-small-vertical - @tags-spacing) @padding-small-horizontal;
+    }
+
+    // Close button
+    .token > .close {
+        right: @padding-small-horizontal;
+    }
+
+    // Readonly
+    &.readonly .token > .token-label {
+        padding-right: @padding-small-horizontal;
+    }
+}

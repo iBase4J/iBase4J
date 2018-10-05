@@ -1,0 +1,52 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Vector maps
+ *
+ *  Vector map container, tooltip and zooming
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Container
+.vector-map-container {
+    height: 500px;
+}
+
+// Map tooltip
+.jvectormap-label {
+    position: absolute;
+    display: none;
+    border-radius: @border-radius-small;
+    background-color: @tooltip-bg;
+    color: @tooltip-color;
+    padding: @padding-base-vertical @padding-base-horizontal;
+}
+
+// Zoom buttons
+.jvectormap-zoomin,
+.jvectormap-zoomout {
+    position: absolute;
+    left: 10px;
+    border-radius: @border-radius-small;
+    padding: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: @icon-font-size;
+    font-weight: 300;
+    line-height: 10px;
+    background-color: @color-slate-800;
+    text-align: center;
+
+    &:hover {
+        background-color: @color-slate-700;
+    }
+}
+.jvectormap-zoomin {
+    top: 10px;
+}
+.jvectormap-zoomout {
+    top: 40px;
+}

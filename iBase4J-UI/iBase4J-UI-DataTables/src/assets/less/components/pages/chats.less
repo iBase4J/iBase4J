@@ -1,0 +1,177 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Chat layouts
+ *
+ *  Conversation chat styles - layouts, chat elements, colors, options
+ *
+ *  Version: 1.1
+ *  Latest update: Oct 20, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Base
+// ------------------------------
+
+// Set scrollbar to the long chat list
+.chat-list,
+.chat-stacked {
+    max-height: 520px; 
+    overflow: auto; 
+}
+
+
+// Message list
+// ------------------------------
+
+.chat-list {
+
+    // Make equal horizontal spacing
+    .media-left {
+        padding-right: @content-padding-large;
+    }
+    .media-right {
+        padding-left: @content-padding-large;
+    }
+
+    // Message body
+    .media-content {
+        position: relative;
+        padding: 10px 12px;
+        width: auto;
+        border-radius: @border-radius-base;
+        display: inline-block;
+
+        // Set default bg color
+        &:not([class*=bg-]) {
+            background-color: #f5f5f5;
+            border-color: #f5f5f5;
+        }
+
+        // Icons
+        > i {
+            top: 0;
+            margin: 2px;
+        }
+    }
+
+    // Reversed message body
+    .reversed {
+        .media-content {
+            text-align: left;
+            color: #fff;
+
+            // Set default bg color
+            &:not([class*=bg-]) {
+                background-color: @color-primary-400;
+                border-color: @color-primary-400;
+            }
+
+            > a {
+                color: #fff;
+            }
+        }
+
+        // Change text alignment
+        .media-body {
+            text-align: right;
+        }
+    }
+
+    // Date step
+    .date-step.media {
+        text-align: center;
+        margin-left: 0;
+        margin-right: 0;
+        color: #999;
+    }
+
+    // Message image thumbnails
+    .chat-thumbs img {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        max-height: 100px;
+        height: auto;
+        max-width: 100%;
+        display: inline-block;
+        border-radius: @border-radius-base;
+    }
+
+    // Add arrows
+    .media-content:before,
+    .reversed .media-content:before {
+        content: '';
+        left: -5px;
+        top: 15px;
+        position: absolute;
+        margin-left: 0;
+    }
+    .media-content:before {
+        border-top: 5px solid transparent;
+        border-right: 5px solid;
+        border-right-color: inherit;
+        border-bottom: 5px solid transparent;
+    }
+    .reversed .media-content:before {
+        left: auto;
+        right: -5px;
+        border-right: 0;
+        border-top: 5px solid transparent;
+        border-left: 5px solid;
+        border-left-color: inherit;
+        border-bottom: 5px solid transparent;
+    }
+
+    // Set side padding for message bodies
+    @media (min-width: @screen-sm) {
+        .media {
+            margin-right: 20%;
+
+            &.reversed {
+                margin-right: 0;
+                margin-left: 20%;
+            }
+        }
+    }
+}
+
+
+// Inversed message list
+// ------------------------------
+
+.chat-list-inverse {
+    .media-content {
+        &:not([class*=bg-]) {
+            color: #fff;
+            background-color: @color-primary-400;
+            border-color: @color-primary-400;
+        }
+
+        &:before {
+            border-right: 0;
+            border-top: 5px solid transparent;
+            border-right: 5px solid @color-primary-400;
+            border-bottom: 5px solid transparent;
+        }
+
+        > a {
+            color: #fff;
+        }
+    }
+
+    // Reversed message
+    .reversed {
+        .media-content {
+            &:not([class*=bg-]) {
+                background-color: #f5f5f5;
+                color: inherit;
+            }
+
+            &:before {
+                border-top: 5px solid transparent;
+                border-left: 5px solid #f5f5f5;
+                border-bottom: 5px solid transparent;
+            }
+        }
+    }
+}

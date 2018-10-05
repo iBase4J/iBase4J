@@ -1,0 +1,315 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Anytime picker
+*
+*  jQuery datepicker/timepicker and a Date/String parse/format utility
+*
+*  Version: 1.2
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Base
+.AnyTime-pkr {
+    text-align: center;
+
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .AnyTime-date {
+        float: left;
+
+        & + .AnyTime-time {
+            margin-left: 50px;
+            float: left;
+        }
+    }
+}
+
+// Dropdown container
+.AnyTime-win {
+    padding: (@list-spacing * 2);
+    background-color: @dropdown-bg;
+    border: 1px solid @dropdown-border;
+    display: inline-block;
+    border-radius: @border-radius-base;
+    z-index: 10;
+    .box-shadow(0 1px 3px fade(#000, 10%));
+}
+
+// Clock
+.AnyTime-cloak {
+    position: absolute;
+    .opacity(0.7);
+}
+
+// Title
+.AnyTime-hdr {
+    font-size: @font-size-h6;
+    margin: @content-padding-base @content-padding-small;
+    line-height: 1;
+}
+
+// Close button
+.AnyTime-x-btn {
+    display: none;
+    font-size: 0;
+    cursor: pointer;
+    float: right;
+    border-radius: @border-radius-small;
+    .opacity(0.6);
+
+    &:hover {
+        .opacity(1);
+    }
+
+    // Icon
+    &:after {
+        content: '\ed6b';
+        font-family: 'icomoon';
+        font-size: @icon-font-size;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+// Label
+.AnyTime-lbl {
+    font-size: @font-size-base;
+    margin-bottom: 10px;
+    font-weight: 500;
+    margin-top: 25px;
+
+    &:first-child {
+        margin-top: @list-spacing;
+    }
+}
+
+
+// Highlight item colors
+// ------------------------------
+
+// Years
+.AnyTime-yrs {
+    .ui-state-highlight {
+        &,
+        &:hover {
+            background-color: @brand-danger;
+            color: #fff;
+        }
+    }
+}
+
+// Months
+.AnyTime-mons {
+    .ui-state-highlight {
+        &,
+        &:hover {
+            background-color: @color-teal-400;
+            color: #fff;
+        }
+    }
+}
+
+// Time
+.AnyTime-time {
+    .ui-state-highlight {
+        &,
+        &:hover {
+            background-color: @color-slate-500;
+            color: #fff;
+        }
+    }
+}
+
+// Calendar
+.AnyTime-dom-table,
+.AnyTime-body-yr-selector {
+    .ui-state-highlight {
+        &,
+        &:hover {
+            background-color: @brand-primary;
+            color: #fff;
+        }
+    }
+}
+
+
+// Periods
+// ------------------------------
+
+// Years
+.AnyTime-yrs-past-btn,
+.AnyTime-yrs-ahead-btn {
+    display: inline-block;
+}
+.AnyTime-yr-prior-btn,
+.AnyTime-yr-cur-btn,
+.AnyTime-yr-next-btn {
+    display: inline-block;
+    min-width: 50px;
+}
+
+// Months
+.AnyTime-mons:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+// Date calendar
+// ------------------------------
+
+// Table
+.AnyTime-dom-table {
+    width: 100%;
+}
+
+// Week days
+.AnyTime-pkr th.AnyTime-dow {
+    color: @text-muted;
+    font-size: @font-size-small;
+    padding: @padding-base-vertical;
+    font-weight: 400;
+}
+
+// Buttons
+.AnyTime-mon-btn {
+    float: left;
+}
+.AnyTime-mon7-btn {
+    clear: left;
+}
+.AnyTime-dom-btn:hover {
+    background-color: @dropdown-link-hover-bg;
+}
+.AnyTime-dom-btn-empty {
+    display: none;
+}
+
+// Make elements inline
+.AnyTime-time,
+.AnyTime-hrs-am,
+.AnyTime-hrs-pm,
+.AnyTime-mins-tens,
+.AnyTime-mins-ones,
+.AnyTime-secs-tens,
+.AnyTime-secs-ones,
+.AnyTime-hrs,
+.AnyTime-mins,
+.AnyTime-secs,
+.AnyTime-offs {
+    display: inline-block;
+}
+
+// Button
+.AnyTime-btn {
+    padding: @padding-base-vertical @padding-base-horizontal;
+    cursor: pointer;
+    border-radius: @border-radius-small;
+
+    &:hover {
+        background-color: @dropdown-link-hover-bg;
+    }
+}
+
+
+// Time
+// ------------------------------
+
+// Time buttons
+.AnyTime-hr-btn,
+.AnyTime-min-ten-btn,
+.AnyTime-min-one-btn,
+.AnyTime-sec-ten-btn,
+.AnyTime-sec-one-btn {
+    min-width: 40px;
+}
+
+.AnyTime-hrs-pm,
+.AnyTime-mins-ones,
+.AnyTime-secs-ones {
+    margin-left: 2px;
+}
+.AnyTime-mins-tens,
+.AnyTime-secs-tens {
+    margin-left: 20px;
+}
+
+// Off buttons
+.AnyTime-off-cur-btn {
+    display: inline-block;
+    overflow: hidden;
+}
+.AnyTime-off-select-btn {
+    display: inline-block;
+    vertical-align: top;
+}
+.AnyTime-off-selector {
+    margin: 10px;
+    position: absolute;
+}
+.AnyTime-body-off-selector {
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: nowrap
+}
+.AnyTime-off-off-btn {
+    text-align: left;
+}
+
+
+// Year and era
+// ------------------------------
+
+// Year selector
+.AnyTime-yr-selector {
+    position: absolute;
+    width: 90%;
+}
+.AnyTime-body-yr-selector {
+    margin: 0;
+}
+.AnyTime-yr-mil,
+.AnyTime-yr-cent,
+.AnyTime-yr-dec,
+.AnyTime-yr-yr,
+.AnyTime-yr-era {
+    display: inline-block;
+    vertical-align: top;
+    width: 20%;
+}
+
+// Era button
+.AnyTime-era-btn {
+    margin-left: 10px;
+}
+
+
+// Media queries
+@media (max-width: @screen-sm) {
+    .AnyTime-pkr .AnyTime-date {
+        float: none;
+    }
+
+    .AnyTime-mon-btn {
+        float: none;
+        display: inline-block;
+    }
+
+    .AnyTime-date + .AnyTime-time {
+        margin-left: 0;
+        margin-top: 25px;
+        float: none;
+    }
+}

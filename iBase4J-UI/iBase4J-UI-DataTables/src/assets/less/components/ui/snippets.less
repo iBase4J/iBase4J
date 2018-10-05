@@ -1,0 +1,35 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Snippets
+*
+*  Custom snippets set
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Progress list
+// ------------------------------
+
+.progress-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    > li {
+        + li {
+            margin-top: @line-height-computed;
+        }
+
+        > label {
+            display: block;
+        }
+
+        span {
+            float: right;
+            display: block;
+        }
+    }
+}

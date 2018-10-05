@@ -1,0 +1,134 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # jGrowl notifications
+ *
+ *  Styles for jgrowl.min.js - an unobtrusive notification system for web applications
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Base
+.jGrowl {
+	z-index: 2001;
+	position: absolute;
+
+	body > & {
+		position: fixed;
+	}
+
+
+	//
+	// Positions
+	//
+
+	// Top
+	&.top-left {
+		left: @grid-gutter-width;
+		top: @grid-gutter-width;
+	}
+	&.top-center {
+		left: 50%;
+		top: @grid-gutter-width;
+		margin-left: -150px;
+	}
+	&.top-right {
+		right: @grid-gutter-width;
+		top: @grid-gutter-width;
+	}
+
+	// Center
+	&.center {
+		top: 40%;
+		width: 300px;
+		left: 50%;
+		margin-left: -150px;
+		margin-top: -35px;
+
+		.jGrowl-notification,
+		.jGrowl-closer {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+
+	// Bottom
+	&.bottom-left {
+		left: @grid-gutter-width;
+		bottom: @grid-gutter-width;
+	}
+	&.bottom-center {
+		left: 50%;
+		bottom: @grid-gutter-width;
+		margin-left: -150px;
+	}
+	&.bottom-right {
+		right: @grid-gutter-width;
+		bottom: @grid-gutter-width;
+	}
+
+	// Hide on print
+	@media print {
+		display: none;
+	}
+}
+
+// Notification styles
+.jGrowl-notification {
+	margin-bottom: (@line-height-computed / 2);
+	width: 300px;
+	text-align: left;
+	display: none;
+
+	// Header
+	.jGrowl-header {
+		font-size: @font-size-h6;
+		margin-bottom: 5px;
+
+		&:empty {
+			margin: 0;
+		}
+	}
+
+	// Close button
+	.jGrowl-close {
+		font-weight: @close-font-weight;
+		background: none;
+		border: 0;
+		font-size: @font-size-h5;
+		cursor: pointer;
+		line-height: 1;
+		padding: 0;
+		float: right;
+		color: inherit;
+		outline: 0;
+		margin-left: 10px;
+		.opacity(.75);
+
+		&:hover {
+			.opacity(1);
+		}
+	}
+}
+
+// "Close all" closer
+.jGrowl-closer {
+	padding: 5px 0;
+	cursor: pointer;
+	margin-top: 5px;
+	text-align: center;
+	background-color: #fff;
+	width: 300px;
+	border-radius: @border-radius-base;
+	border: 1px solid #ddd;
+	color: @gray-light;
+
+	.alert-rounded + & {
+		border-radius: @border-radius-large;
+	}
+}

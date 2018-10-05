@@ -1,0 +1,58 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Search
+ *
+ *  Styles for search results and input
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Add light grey color to input inside panel
+.panel .main-search input[type=text] {
+	background-color: @color-grey-50;
+}
+
+// Result details bottom spacing
+.search-results-list {
+	.list-inline {
+		margin-bottom: 5px;
+	}
+}
+
+// Related searches list
+.related-searches {
+	margin-top: @line-height-computed;
+	margin-bottom: @line-height-computed;
+	padding: @panel-body-padding;
+	border-top: 1px solid @gray-lighter;
+	border-bottom: 1px solid @gray-lighter;
+}
+
+// Results
+.website-search-results {
+	padding: @line-height-computed;
+	padding-bottom: 0;
+	border-bottom: 1px solid @gray-lighter;
+}
+
+// Media preview size
+.media-preview {
+	width: auto;
+	height: auto;
+	max-width: none;
+	max-height: 90px;
+}
+
+// Search option buttons, below search field
+@media (max-width: @screen-xs-max) {
+	.search-option-buttons {
+		text-align: center;
+
+		> .text-right {
+			text-align: inherit;
+		}
+	}
+}

@@ -1,0 +1,117 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Utilites
+*
+*  Additional animations, transitions, transforms and other utilities
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Rotation
+// ------------------------------
+
+// Basic direction
+.rotate-45 {
+    .rotate(45deg);
+}
+.rotate-90 {
+    .rotate(90deg);
+}
+.rotate-180 {
+    .rotate(180deg);
+}
+
+// Inversed
+.rotate-45-inverse {
+    .rotate(-45deg);
+}
+.rotate-90-inverse {
+    .rotate(-90deg);
+}
+.rotate-180-inverse {
+    .rotate(-180deg);
+}
+
+
+// Spinner animation
+// ------------------------------
+
+// Default
+.spinner {
+    display: inline-block;
+    .animation(rotation 1s linear infinite);
+}
+
+// Reversed
+.spinner-reverse {
+    display: inline-block;
+    .animation(rotation_reverse 1s linear infinite);
+}
+
+
+// Animations
+// ------------------------------
+
+// Default rotation
+@-webkit-keyframes rotation {
+    0% {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(360deg);}
+}
+@-moz-keyframes rotation {
+    0% {-moz-transform: rotate(0deg);}
+    100% {-moz-transform: rotate(360deg);}
+}
+@-ms-keyframes rotation {
+    0% {-ms-transform: rotate(0deg);}
+    100% {-ms-transform: rotate(360deg);}
+}
+@-o-keyframes rotation {
+    0% {-o-transform: rotate(0deg);}
+    100% {-o-transform: rotate(360deg);}
+}
+@keyframes rotation {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
+// Inversed rotation
+@-webkit-keyframes rotation_reverse {
+    0% {-webkit-transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(-360deg);}
+}
+@-moz-keyframes rotation_reverse {
+    0% {-moz-transform: rotate(0deg);}
+    100% {-moz-transform: rotate(-360deg);}
+}
+@-ms-keyframes rotation_reverse {
+    0% {-ms-transform: rotate(0deg);}
+    100% {-ms-transform: rotate(-360deg);}
+}
+@-o-keyframes rotation_reverse {
+    0% {-o-transform: rotate(0deg);}
+    100% {-o-transform: rotate(-360deg);}
+}
+@keyframes rotation_reverse {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(-360deg);}
+}
+
+@-webkit-keyframes bounceIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-webkit-keyframes bounceOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

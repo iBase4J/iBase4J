@@ -1,0 +1,64 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Scaffolding
+*
+*  Overrides for bootstrap scaffolding
+*
+*  Version: 1.3
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// HTML and BODY height reset
+html {
+    height: 100%;
+}
+body {
+    position: relative;
+    min-height: 100%;
+}
+
+
+// Links
+a {
+    cursor: pointer;
+
+    // Remove outline on focus
+    &:focus {
+        outline: 0;
+    }
+}
+
+// Figures
+figure {
+    position: relative;
+}
+figcaption {
+    position: absolute;
+    bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    width: 100%;
+    color: #fff;
+    padding: 10px 15px;
+    z-index: 2;
+    background-color: fade(#000, 70%);
+    .transition(all ease-in-out 0.2s);
+
+    figure:hover & {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+// Rounded corners
+.img-rounded {
+    border-radius: @border-radius-base;
+}
+
+// Horizontal rules
+.hr-condensed {
+    margin-top: (@line-height-computed / 2);
+    margin-bottom: (@line-height-computed / 2);
+}

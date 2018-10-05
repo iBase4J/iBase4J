@@ -1,0 +1,501 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Fancytree
+*
+*  Tree plugin for jQuery with support for persistence, keyboard, checkboxes,
+*  tables (grid), drag'n'drop, and lazy loading
+*
+*  Version: 1.1
+*  Latest update: Jul 5, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+/* # Core
+-------------------------------------------------- */
+
+// Container
+.fancytree-container {
+    list-style: none;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+    position: relative;
+
+    // Remove outline on focus
+    &:focus {
+        outline: 0;
+    }
+
+    // List
+    ul {
+        list-style: none;
+        padding: 0 0 0 @content-padding-large;
+        margin: 0;
+
+        // Add 1px margin to items
+        li {
+            margin-top: 1px;
+        }
+    }
+
+    // Disabled state
+    .ui-fancytree-disabled & {
+        .opacity(0.6);
+    }
+}
+
+// Disabled state
+.ui-fancytree-disabled {
+    .fancytree-container,
+    .fancytree-title,
+    .fancytree-expander {
+        cursor: @cursor-disabled;
+    }
+
+    .fancytree-treefocus .fancytree-selected .fancytree-title {
+        background-color: #f5f5f5;
+        color: @text-color;
+    }
+}
+
+// Helper
+.ui-helper-hidden {
+    display: none;
+}
+
+// Give icons common base
+.fancytree-expander:after,
+.fancytree-icon:after,
+.fancytree-checkbox:after,
+.fancytree-drag-helper-img:after,
+.fancytree-drop-before:after,
+.fancytree-drop-after:after,
+.fancytree-loading .fancytree-expander:after,
+.fancytree-statusnode-wait .fancytree-icon:after {
+    font-family: 'icomoon';
+    display: inline-block;
+    font-size: @icon-font-size;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+// Common icon definitions
+// ------------------------------
+
+.fancytree-icon,
+.fancytree-checkbox,
+.fancytree-custom-icon {
+    margin-top: 5px;
+    float: left;
+}
+
+// Checkboxes
+.fancytree-checkbox {
+    margin: 4px 10px 0 2px;
+}
+
+// Used by iconclass option
+.fancytree-custom-icon {
+    display: inline-block;
+}
+
+// Used by 'icon' node option
+img.fancytree-icon {
+    width: @icon-font-size;
+    height: @icon-font-size;
+    margin-left: 3px;
+    margin-top: 3px;
+    vertical-align: top;
+    border-style: none;
+}
+
+
+
+//
+// Expander icon
+//
+// Prefix: fancytree-exp-
+// 1st character: 'e': expanded, 'c': collapsed, 'n': no children
+// 2nd character (optional): 'd': lazy (Delayed)
+// 3rd character (optional): 'l': Last sibling
+// ----------------------------------------
+
+// Icons
+.fancytree-expander {
+    cursor: pointer;
+    float: left;
+    margin-top: 5px;
+    width: @icon-font-size;
+    line-height: 1;
+
+    .fancytree-exp-c &:after {
+        content: '\e9c7';
+    }
+    .fancytree-exp-cl &:after {
+        content: '\e9c7';
+    }
+    .fancytree-exp-cd &:after,
+    .fancytree-exp-cdl &:after {
+        content: '\e9c7';
+    }
+    .fancytree-exp-e &:after,
+    .fancytree-exp-ed &:after {
+        content: '\e9c5';
+    }
+    .fancytree-exp-el &:after,
+    .fancytree-exp-edl &:after {
+        content: '\e9c5';
+    }
+}
+
+// Status node icons
+.fancytree-statusnode-error .fancytree-icon:after {
+    content: '\ed63';
+}
+
+// Loading icon
+.fancytree-loading .fancytree-expander,
+.fancytree-statusnode-wait .fancytree-icon {
+    margin-left: auto;
+    margin-right: auto;
+    width: @icon-font-size;
+    height: @icon-font-size;
+    display: inline-block;
+    text-align: center;
+
+    &:after {
+        content: '\ed6c';
+        .transition(all 0.15s ease-in-out);
+    }
+}
+
+
+
+//
+// # Node type icon
+//
+// Prefix: fancytree-ico-
+// 1st character: 'e': expanded, 'c': collapsed,
+// 2nd character (optional): 'f': folder
+// ----------------------------------------
+
+// Base
+.fancytree-icon {
+    display: inline-block;
+    width: @icon-font-size;
+    height: @icon-font-size;
+}
+
+
+// Documents
+// ----------------------------------------
+
+// Icons
+.fancytree-ico-c,
+.fancytree-ico-e {
+    .fancytree-icon:after {
+        content: '\ea1a';
+    }
+}
+
+// With children
+.fancytree-has-children {
+    &.fancytree-ico-c .fancytree-icon:after {
+        content: '\ea0f';
+    }
+
+    &.fancytree-ico-e .fancytree-icon:after {
+        content: '\ea11';
+    }
+}
+
+
+// Folders
+// ----------------------------------------
+
+// Icons
+.fancytree-ico-cf,
+.fancytree-ico-ef {
+    .fancytree-icon:after {
+        content: '\ea3d';
+    }
+}
+
+// With children
+.fancytree-has-children {
+    &.fancytree-ico-cf .fancytree-icon:after {
+        content: '\ea41';
+    }
+
+    &.fancytree-ico-ef .fancytree-icon:after {
+        content: '\ea43';
+    }
+}
+
+
+// Checkbox icon
+// ----------------------------------------
+
+.fancytree-checkbox {
+
+    // Base
+    width: @checkbox-size;
+    height: @checkbox-size;
+    border: @checkbox-border-width solid @color-grey-500;
+    display: block;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    border-radius: @border-radius-small;
+
+    // Add icons
+    &:after,
+    .fancytree-partsel.fancytree-selected &:after {
+        content: "\e600";
+        margin-top: -(@checkbox-border-width / 2);
+        margin-left: -(@checkbox-border-width / 2);
+        display: none;
+    }
+
+    // Grey square in hierarchical select
+    .fancytree-partsel > &:after {
+        content: "";
+        width: (@checkbox-size - 10);
+        height: (@checkbox-size - 10);
+        display: none;
+        background-color: @color-grey-400;
+        margin: ((@checkbox-size - (@checkbox-size - 10)) / 2) - @checkbox-border-width;
+    }
+    .fancytree-partsel.fancytree-selected &:after {
+        background-color: transparent;
+        width: auto;
+        height: auto;
+    }
+    .fancytree-selected &:after,
+    .fancytree-partsel &:after,
+    .fancytree-partsel.fancytree-selected &:after {
+        display: block;
+    }
+
+    // Radio (single select imitation)
+    .fancytree-radio & {
+        border-radius: 100%;
+
+        &:after {
+            content: '';
+            width: (@checkbox-size - 10);
+            height: (@checkbox-size - 10);
+            background-color: @color-grey-400;
+            margin: ((@checkbox-size - (@checkbox-size - 10)) / 2) - @checkbox-border-width;
+            border-radius: 100px;
+        }
+    }
+}
+
+
+
+/* # Other styles
+-------------------------------------------------- */
+
+// Drag'n'drop support
+// ----------------------------------------
+
+// Helper
+.fancytree-drag-helper {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 4px 5px;
+    .opacity(0.8);
+}
+
+// Drag helper image
+.fancytree-drag-helper-img {
+    &:after {
+        position: absolute;
+        top: 50%;
+        margin-top: -((@icon-font-size / 2) + 1);
+        right: -(@icon-font-size + @content-padding-small);
+    }
+
+    // If accept
+    .fancytree-drop-accept &:after {
+        content: '\ee73';
+        color: @color-success-500;
+    }
+
+    // If reject
+    .fancytree-drop-reject &:after {
+        content: '\ed63';
+        color: @color-danger-500;
+    }
+}
+
+// Marker icon
+#fancytree-drop-marker {
+    &.fancytree-drop-before,
+    &.fancytree-drop-after {
+        width: 200px;
+        border-top: 1px solid @text-color;
+        position: absolute!important;
+    }
+}
+
+// Source node while dragging
+.fancytree-drag-source {
+    background-color: @panel-default-border;
+
+    .fancytree.title {
+        color: @text-color;
+    }
+}
+
+// Target node while dragging cursor is over it
+.fancytree-drop-target.fancytree-drop-accept a {
+    background-color: @brand-primary !important;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+
+// Styles specific to this skin
+// ----------------------------------------
+
+// Node
+.fancytree-node {
+    display: inherit;
+    width: 100%;
+    position: relative;
+}
+
+// Title
+.fancytree-title {
+    border: 0;
+    padding: 4px 6px;
+    border-radius: @border-radius-small;
+    margin-left: 4px;
+    display: inline-block;
+    cursor: pointer;
+
+    > input {
+        border: 0;
+        outline: 0;
+        padding: 0;
+        background-color: transparent;
+    }
+
+    // Selected title
+    .fancytree-selected & {
+        background-color: @panel-default-border;
+        color: @text-color;
+    }
+
+    // Title when focused
+    .fancytree-treefocus .fancytree-selected & {
+        background-color: @brand-primary;
+        color: #fff;
+    }
+
+    // Active title
+    .fancytree-active & {
+        background-color: @panel-default-border;
+    }
+}
+
+// Inside dark sidebar
+.sidebar:not(.sidebar-default) {
+    .fancytree-selected .fancytree-title,
+    .fancytree-active .fancytree-title {
+        background-color: fade(#fff, 20%);
+        color: #fff;
+    }
+
+    .fancytree-treefocus .fancytree-selected .fancytree-title {
+        background-color: @brand-primary;
+        color: #fff;
+    }
+}
+
+
+// Table extension
+// ----------------------------------------
+
+.fancytree-ext-table {
+
+    // Node
+    .fancytree-node {
+        display: inline-block;
+        width: auto;
+    }
+
+    // Title
+    .fancytree-title {
+        display: inline;
+    }
+
+    // Container
+    &.fancytree-container {
+        white-space: normal;
+    }
+
+    // Icons
+    .fancytree-expander,
+    .fancytree-icon,
+    .fancytree-custom-icon {
+        margin-top: 1px;
+    }
+
+    // Checkboxes
+    .fancytree-checkbox {
+        margin: 0 auto;
+        float: none;
+    }
+
+    // Additional checkboxes
+    .checker {
+        display: block;
+        margin: 0 auto;
+    }
+
+    // Rows
+    tbody tr {
+        td:first-child {
+            text-align: center;
+        }
+
+        &.fancytree-focused {
+            background-color: #f5f5f5;
+        }
+        &.fancytree-active {
+            background-color: #f5f5f5;
+        }
+        &.fancytree-selected {
+            background-color: @brand-primary;
+            color: #fff;
+
+            .fancytree-checkbox {
+                color: #fff;
+                border-color: #fff;
+            }
+
+            .checker span {
+                border-color: #fff;
+                color: #fff;
+            }
+        }
+    }
+}
+
+
+// Child Counter extension
+// ----------------------------------------
+
+.fancytree-ext-childcounter .fancytree-childcounter {
+    position: absolute;
+    right: 0;
+    top: 4px;
+    color: @text-muted;
+}

@@ -1,0 +1,393 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Alpaca forms
+*
+*  Alpaca provides the easiest way to generate interactive HTML5 forms for web applications
+*
+*  Version: 1.1
+*  Latest update: Jul 4, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Added to outer field elements to hide them
+.alpaca-hidden {
+    display: none;
+}
+
+// Make multiselect full width
+.alpaca-field-select .multiselect-container {
+    width: 100%;
+}
+
+// If input has error
+.has-error {
+
+    // Override text color if menu has error
+    .multiselect-container > .active .checkbox {
+        color: #fff;
+    }
+
+    // Change background color in active items
+    .btn-group.open .multiselect.btn,
+    .multiselect.btn-default:active {
+        color: @color-warning-800;
+        border-color: @color-warning-800;
+    }
+
+}
+
+// Disabled fields
+.alpaca-disabled {
+    .checkbox label,
+    .checkbox .switchery,
+    .radio label,
+    .radio .switchery {
+        cursor: @cursor-disabled;
+        color: @text-muted;
+    }
+}
+
+// Added to fields that have run through validation and are invalid
+.alpaca-invalid {
+    .form-control {
+        color: @color-warning-800;
+    }
+}
+
+// General purpose HTML clear
+.alpaca-clear {
+    clear: both;
+}
+
+// Right alignment
+.alpaca-float-right {
+    float: right;
+}
+
+
+// Icons
+// ------------------------------
+
+// Override glyphicon icons
+.alpaca-field {
+    .glyphicon {
+        font-family: 'icomoon';
+        font-size: @icon-font-size;
+        vertical-align: middle;
+        top: -1px;
+        display: inline-block;
+        margin-right: @element-horizontal-spacing
+    }
+
+    // Info icon
+    .glyphicon-info-sign:before {
+        content: '\e9ba';
+    }
+
+    // Error icon
+    &.has-error .glyphicon-info-sign:before,
+    .glyphicon-exclamation-sign:before {
+        content: '\ed63';
+    }
+}
+
+// Required asterisk
+.alpaca-icon-required {
+    font-family: @font-family-base;
+    float: right;
+    margin-right: 0;
+    margin-left: 5px;
+
+    &:before {
+        content: '*';
+    }
+}
+
+
+// Editor fields
+// ------------------------------
+
+// Base
+.alpaca-controlfield-editor {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border: 1px #ccc solid;
+
+    // Element
+    .control-field-editor-el {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0
+    }
+}
+
+
+// Ace editor
+// ------------------------------
+
+.ace_editor {
+    border: 1px solid rgb(204, 204, 204);
+}
+
+
+// CKEditor
+// ------------------------------
+
+.alpaca-field-ckeditor.alpaca-invalid > .cke {
+    border-color: @color-warning-800;
+}
+
+
+// Option tree
+// ------------------------------
+
+.alpaca-field-optiontree {
+
+    // Add left spacing to input field
+    .optiontree + .form-control {
+        margin-left: @content-padding-small;
+    }
+
+    // Horizontal layout
+    &.optiontree-horizontal {
+
+        // Tree
+        .optiontree {
+            display: inline-block;
+
+            // Selector
+            .optiontree-selector {
+                display: inline-block;
+                margin-top: 2px;
+                margin-bottom: 2px;
+
+                // Hide empty container
+                &:empty {
+                    display: none;
+                }
+
+                // Extra horizontal spacing
+                + .optiontree-selector {
+                    margin-left: @content-padding-small;
+                }
+            }
+        }
+
+        // Input
+         input {
+            display: inline-block;
+            width: auto;
+        }
+
+        // Label
+         label {
+            display: block;
+        }
+    }
+}
+
+
+// Controls
+// ------------------------------
+
+// Disabled mode
+.alpaca-field-radio {
+    &.disabled {
+        .alpaca-control.radio {
+            color: grey;
+
+            label {
+                cursor: inherit;
+            }
+        }
+    }
+}
+
+// Controls
+.alpaca-control {
+    &.radio {
+        min-height: inherit;
+        height: inherit;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-left: 10px;
+    }
+}
+
+
+//
+// Multiselect
+//
+
+// If error
+.has-error .multiselect {
+    border-color: @color-warning-800;
+    color: @color-warning-800;
+}
+
+
+//
+// Labels
+//
+.alpaca-container-label {
+    margin-top: @line-height-computed;
+
+    legend& {
+        margin-top: 0px;
+    }
+}
+
+
+//
+// Toolbar
+//
+
+// Base
+.alpaca-array-toolbar {
+    margin-bottom: (@line-height-computed / 2);
+}
+
+// Action bar
+.alpaca-array-actionbar {
+    overflow: hidden;
+
+    // Top
+    &.alpaca-array-actionbar-top {
+        padding-bottom: (@line-height-computed / 2);
+    }
+
+    // Bottom
+    &.alpaca-array-actionbar-bottom {
+        padding-top: (@line-height-computed / 2);
+    }
+
+    // Stretch
+    &,
+    &.btn-group {
+        width: 100%;
+    }
+}
+
+// Field objects
+.alpaca-field-object,
+.alpaca-field-array {
+    border: 1px #eee solid;
+    border-radius: @border-radius-base;
+    padding: @content-padding-small;
+
+    // Remove border
+    .alpaca-top,
+    .alpaca-top .alpaca-container {
+        border: 0;
+    }
+}
+.alpaca-container {
+    border: 0px;
+}
+
+// Heading
+.alpaca-display h3 {
+    margin-top: 0;
+}
+
+
+//
+// Containers
+//
+
+// Add top spacing
+.alpaca-control-buttons-container {
+    margin-top: (@line-height-computed / 2);
+}
+
+// Remove border from field object
+.alpaca-container-item > .alpaca-container > .alpaca-field-object {
+    border: 0;
+}
+
+// Buttons container in form
+.alpaca-form-buttons-container {
+    margin-top: @line-height-computed;
+    text-align: right;
+}
+
+// Remove horizontal spacing from form group
+.alpaca-container > .form-group {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+// Hidden field
+.alpaca-field-hidden {
+    display: none;
+}
+
+// First item
+.alpaca-container-item:not(:first-child) {
+    margin-top: (@line-height-computed / 2);
+}
+
+// Last item
+.alpaca-container .alpaca-container-item:last-child {
+    margin-bottom: 0;
+}
+
+// Select
+.alpaca-field-select .btn-group {
+    width: 100%;
+}
+
+
+//
+// Fields
+//
+
+.alpaca-field {
+
+    // Upload field
+    &.alpaca-field-upload {
+
+        // Active zone
+        .fileupload-active-zone {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        // Download
+        .template-download TD.error,
+        .template-upload TD.error {
+            color: @color-warning-800;
+            word-break: break-all;
+        }
+    }
+
+    // Address
+    &.alpaca-field-address .alpaca-field-address-mapcanvas {
+        height: 250px;
+    }
+
+    // Image
+    &.alpaca-field-image .alpaca-image-display {
+        margin-top: 20px;
+    }
+}
+
+
+//
+// Max length
+//
+
+.alpaca-field-text-max-length-indicator {
+    font-size: @font-size-small;
+    margin-top: @padding-base-vertical;
+    margin-bottom: @padding-base-vertical;
+}

@@ -1,0 +1,748 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Main typography
+*
+*  Main typography overrides, including custom content
+*
+*  Version: 1.2
+*  Latest update: Nov 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Headings
+// -------------------------
+
+// All headings
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    letter-spacing: @heading-letter-spacing;
+
+    // Labels/badges
+    > .label,
+    > .badge {
+        vertical-align: middle;
+        margin-top: -2px;
+
+        &.pull-right {
+            margin-top: 3px;
+        }
+    }
+
+    small {
+        font-size: @font-size-base;
+
+        &.display-block {
+            margin-top: 3px;
+        }
+    }
+}
+
+
+// Large headings
+h1, h2, h3,
+.h1, .h2, .h3 {
+    > [class*=icon-] {
+        top: -2px;
+    }
+
+    // Small font size
+    small {
+        font-size: @font-size-base;
+    }
+}
+
+
+// Heading with divider
+.heading-divided {
+    margin-bottom: (@line-height-computed - 5);
+    padding-bottom: (@line-height-computed / 2);
+    border-bottom: 1px solid @panel-default-border;
+}
+
+
+
+// Emphasis & misc
+// -------------------------
+
+// Remove outlines
+a,
+button,
+input,
+textarea {
+    outline: 0;
+}
+
+
+// Mark element
+mark,
+.mark {
+    background-color: @text-color;
+    padding: 2px 6px;
+    color: #fff;
+    border-radius: @border-radius-small;
+}
+
+
+// SVG sizing
+svg {
+    display: block;
+
+    // Inline
+    .svg-inline & {
+        display: inline-block;
+    }
+
+    // Centered object
+    .svg-center & {
+        margin: auto;
+    }
+}
+
+
+// Large circle icon
+.letter-icon {
+    width: @icon-font-size;
+    display: block;
+}
+
+
+// Content divider
+.content-divider {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+
+    // Text container
+    > span {
+        background-color: @body-bg;
+        display: inline-block;
+        padding-left: @padding-base-horizontal;
+        padding-right: @padding-base-horizontal;
+
+        // Change bg color if inside panel
+        .panel &,
+        .tab-content-bordered &,
+        .modal & {
+            background-color: @panel-bg;
+        }
+
+        // Add line
+        &:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 1px;
+            background-color: #ddd;
+            width: 100%;
+            z-index: -1;
+        }
+    }
+}
+
+
+// Styled icon
+.icon-object {
+    border-radius: 50%;
+    text-align: center;
+    margin: 10px;
+    border-width: 3px;
+    border-style: solid;
+    padding: @content-padding-large;
+    display: inline-block;
+
+    // Icon size
+    > i {
+        font-size: (@icon-font-size * 2);
+        top: 0;
+    }
+}
+
+
+// Image thumbnail preview
+.img-preview {
+    max-height: 70px;
+}
+
+
+// Video container
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+
+    iframe,
+    object,
+    embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+// Status mark
+.status-mark {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px solid;
+
+    .dropdown-menu > .active & {
+        background-color: #fff;
+        border-color: #fff;
+    }
+}
+
+
+//
+// Extra horizontal spacing for elements
+//
+
+// Left
+.position-left {
+    margin-right: @element-horizontal-spacing;
+}
+
+// Right
+.position-right {
+    margin-left: @element-horizontal-spacing;
+}
+
+
+
+// Contextual backgrounds
+// -------------------------
+
+.bg-primary {
+    a&:hover,
+    a&:focus {
+        background-color: @brand-primary;
+    }
+}
+
+.bg-success {
+    color: #fff;
+    .bg-variant(@brand-success);
+
+    a&:hover,
+    a&:focus {
+        background-color: @brand-success;
+    }
+}
+
+.bg-info {
+    color: #fff;
+    .bg-variant(@brand-info);
+
+    a&:hover,
+    a&:focus {
+        background-color: @brand-info;
+    }
+}
+
+.bg-warning {
+    color: #fff;
+    .bg-variant(@brand-warning);
+
+    a&:hover,
+    a&:focus {
+        background-color: @brand-warning;
+    }
+}
+
+.bg-danger {
+    color: #fff;
+    .bg-variant(@brand-danger);
+
+    a&:hover,
+    a&:focus {
+        background-color: @brand-danger;
+    }
+}
+
+
+
+// Page header
+// -------------------------
+
+// Base
+.page-header {
+    margin: 0;
+    padding: 0;
+    border-bottom-width: 0;
+
+    // Setup desktop view
+    @media (min-width: @grid-float-breakpoint) {
+        .heading-elements.collapse {
+            display: block;
+            visibility: visible;
+        }
+    }
+}
+
+// Dark page header
+.page-header-inverse {
+    background-color: @page-header-inverse-bg;
+    color: #fff;
+    margin-bottom: @line-height-computed;
+
+    // Change color of small element
+    .page-title small {
+        color: fade(#fff, 50%);
+    }
+
+    // Breadcrumbs
+    > .breadcrumb,
+    .page-header-content .breadcrumb {
+
+        // Links
+        > li > a,
+        > li + li:before {
+            color: fade(#fff, 90%);
+        }
+
+        // Hovered links
+        > li > a:hover,
+        > li > a:focus {
+            color: #fff;
+            .opacity(1);
+        }
+
+        // Active item
+        > .active {
+            color: fade(#fff, 50%);
+        }
+    }
+
+    // Icon addons color
+    .form-control-feedback,
+    .input-group-addon {
+        color: fade(#fff, 75%);
+    }
+
+    // Text links
+    .heading-text > a {
+        color: #fff;
+    }
+
+    // Input fields
+    .form-control {
+        border-bottom-color: fade(#fff, 30%);
+        color: #fff;
+        .placeholder(fade(@input-placeholder-light, 75%));
+
+        // Focused
+        &:focus {
+            border-bottom-color: #fff;
+            .box-shadow(0 1px 0 #fff);
+        }
+    }
+    
+    // Cover image
+    &.has-cover {
+        background: url(../images/login_cover.jpg); // feel free to change
+        background-size: cover;
+    }
+}
+
+// White page header
+.page-header-default {
+    background-color: @page-header-default-bg;
+    margin-bottom: @line-height-computed;
+    .box-shadow(0 1px 0 0 @navbar-default-border);
+    
+    // Cover image
+    &.has-cover {
+        background: url(../images/backgrounds/seamless.png); // feel free to change
+    }
+}
+
+// Page title
+.page-title {
+    padding: 32px (@grid-gutter-width + @icon-font-size) 32px 0;
+    display: block;
+    position: relative;
+
+    // Subtitle
+    small {
+        margin-left: (@grid-gutter-width / 2);
+        display: inline-block;
+
+        &:before {
+            content: '/';
+            margin-right: ((@grid-gutter-width / 2) + 5);
+        }
+
+        &.display-block {
+            margin-left: 0;
+            display: block;
+            
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    // Add left spacing to align with text
+    i ~ small.display-block {
+        margin-left: (@icon-font-size + (@grid-gutter-width / 2) + 5);
+    }
+
+
+    //
+    // Change page header size by changing title vertical spacing
+    //
+
+    // Large
+    .page-header-lg & {
+        padding-top: (32px) + 5;
+        padding-bottom: (32px) + 5;
+    }
+
+    // Small
+    .page-header-sm & {
+        padding-top: (32px) - 5;
+        padding-bottom: (32px) - 5;
+    }
+
+    // Mini
+    .page-header-xs & {
+        padding-top: (32px) - 10;
+        padding-bottom: (32px) - 10;
+    }
+
+
+    // Remove margin from headings
+    h1, h2, h3, h4, h5, h6 {
+        margin: 0;
+    }
+
+    // Remove right padding on desktop
+    @media (min-width: @grid-float-breakpoint) {
+        padding-right: 0;
+    }
+}
+
+// Content itself
+.page-header-content {
+    position: relative;
+    background-color: inherit;
+    padding: 0 @grid-gutter-width;  
+
+    // With custom colored bottom border
+    &[class*=border-bottom-] + .breadcrumb-line {
+        border-top: 0;
+    }
+}
+
+
+
+// Text styling
+// -------------------------
+
+// Font weights
+.text-black {
+    font-weight: 900;
+}
+.text-bold {
+    font-weight: 700;
+}
+.text-semibold {
+    font-weight: 500;
+}
+.text-regular {
+    font-weight: 400;
+}
+.text-light {
+    font-weight: 300;
+}
+.text-thin {
+    font-weight: 100;
+}
+
+
+// Font style
+.text-italic {
+    font-style: italic;
+}
+.text-highlight {
+    padding: 4px 6px;
+}
+
+
+// Font size
+.text-size-large {
+    font-size: @font-size-large;
+}
+.text-size-base {
+    font-size: @font-size-base;
+}
+.text-size-small {
+    font-size: @font-size-small;
+}
+.text-size-mini {
+    font-size: @font-size-small - 1;
+}
+
+
+
+// Lists
+// -------------------------
+
+// Unordered and Ordered lists
+ul,
+ol {
+    padding-left: 25px;
+}
+
+
+
+// List options
+// -------------------------
+
+// Custom list class
+.list {
+
+    // Add vertical spacing to the list items
+    > li {
+        &,
+        .list > li {
+            margin-top: @padding-base-vertical;
+        }
+
+        // Remove top margin from the first list item
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+
+    //
+    // Additional sizing
+    //
+
+    // Condensed list
+    &-condensed {
+        > li {
+            &,
+            .list > li {
+                margin-top: (@padding-base-vertical - 4);
+            }
+        }
+    }
+
+    // Extended list
+    &-extended {
+        > li {
+            &,
+            .list > li {
+                margin-top: (@padding-base-vertical + 4);
+            }
+        }
+    }
+}
+
+
+// List item styling
+ul {
+    &.list-square {
+        list-style-type: square;
+    }
+
+    &.list-circle {
+        list-style-type: circle;
+    }
+}
+
+
+// Inline turns list items into inline-block
+.list-inline {
+    margin-left: 0;
+    font-size: 0;
+
+    // List item
+    > li {
+        padding-left: 0;
+        padding-right: @content-padding-large;
+        font-size: @font-size-base;
+
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+
+
+    //
+    // Additional sizing
+    //
+
+    // Condensed
+    &-condensed {
+        > li {
+            padding-right: @content-padding-small;
+        }
+    }
+
+    // Separate
+    &-separate {
+        > li {
+            padding-right: @content-padding-large;
+            position: relative;
+
+            // Bullet
+            &:before {
+                content: '\2022';
+                position: absolute;
+                right: ((@content-padding-large / 2) - 2);
+                color: #ccc;
+                top: 1px;
+            }
+
+            // Remove bullet from the last child list item
+            &:last-child:before {
+                content: none;
+            }
+        }
+    }
+}
+
+// List with icons
+.list-icons {
+    padding-left: 0;
+
+    li {
+        list-style: none;
+
+        i {
+            margin-right: @element-horizontal-spacing;
+        }
+    }
+}
+
+
+
+// Icons list
+// ------------------------------
+
+// Horizontal icons list
+.icons-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: 1;
+    font-size: 0;
+
+    // List item
+    > li {
+        position: relative;
+        display: inline-block;
+        margin-left: 5px;
+        font-size: @font-size-base;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        // Link
+        > a {
+            color: inherit;
+            display: block;
+            .opacity(1);
+
+            &:hover,
+            &:focus {
+                .opacity(0.75);
+            }
+
+            // Remove top edge spacing from iton
+            > i {
+                top: 0;
+            }
+
+            // Caret
+            > .caret {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    // Extended list item spacing
+    &-extended > li {
+        margin-left: 10px;
+    }
+}
+
+
+
+// Description Lists
+// -------------------------
+
+dl {
+    margin-bottom: 0;
+}
+dt {
+    margin-bottom: 5px;
+    font-weight: 500;
+
+    dd + & {
+        margin-top: @line-height-computed;
+    }
+}
+
+// Horizontal description lists
+.dl-horizontal dt {
+    @media (min-width: @screen-sm-min) {
+        + dd {
+            margin-top: @line-height-computed;
+        }
+
+        &:first-child + dd {
+            margin-top: 0;
+        }
+    }
+}
+
+
+
+// Blockquotes
+// -------------------------
+
+// Basic styles
+blockquote {
+    margin: 0;
+
+    // Image
+    img {
+        height: 42px;
+        float: left;
+        margin-right: @content-padding-large;
+
+        &.pull-right {
+            margin-right: 0;
+            margin-left: @content-padding-large;
+        }
+    }
+
+    // Footer and small texts
+    footer,
+    small,
+    .small {
+        font-size: @font-size-base;
+        margin-top: @padding-base-vertical;
+        display: block;
+    }
+}
+
+
+// Opposite alignment of blockquote
+.blockquote-reverse,
+blockquote.pull-right {
+    padding-right: @line-height-computed;
+}

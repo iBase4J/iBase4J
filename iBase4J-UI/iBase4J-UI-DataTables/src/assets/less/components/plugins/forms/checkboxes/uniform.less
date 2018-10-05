@@ -1,0 +1,440 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Uniform form inputs plugin
+*
+*  Styles for uniform.min.js - form components styling
+*
+*  Version: 1.2
+*  Latest update: Aug 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Checkbox
+// ------------------------------
+
+// Base
+.checker {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	vertical-align: middle;
+
+	// Set general size
+	&,
+	span,
+	input {
+		width: @checkbox-size;
+		height: @checkbox-size;
+	}
+
+	// Checkbox setup
+	span {
+		color: @color-slate-700;
+		border: @checkbox-border-width solid @color-slate-500;
+		display: inline-block;
+		text-align: center;
+		position: relative;
+		border-radius: @border-radius-small;
+
+		// Checkmark icon
+		&:after {
+			content: "\e600";
+			font-family: 'icomoon';
+			font-size: @icon-font-size;
+			line-height: 1;
+			position: absolute;
+			top: (@checkbox-size - @icon-font-size - (@checkbox-border-width * 2)) / 2;
+			left: (@checkbox-size - @icon-font-size - (@checkbox-border-width * 2)) / 2;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			.opacity(0);
+		}
+
+		// Checked style
+		&.checked {
+			&:after {
+				.opacity(1);
+			}
+		}
+	}
+
+	// Hide original checkbox
+	input[type=checkbox] {
+		border: none;
+		background: none;
+		display: -moz-inline-box;
+		display: inline-block;
+		margin: 0;
+		vertical-align: top;
+		cursor: pointer;
+		position: absolute;
+		top: -(@checkbox-border-width);
+		left: -(@checkbox-border-width);
+		z-index: 2;
+		.opacity(0);
+	}
+
+
+	//
+	// Posiitons
+	//
+
+	// Left checkbox
+	.checkbox &,
+	.checkbox-inline & {
+		position: absolute;
+		top: ((@line-height-computed - @checkbox-size) / 2);
+		left: 0;
+	}
+
+	// Horizontal form correction
+	.form-horizontal .checkbox &,
+	.form-horizontal .checkbox-inline & {
+		top: ((@padding-base-vertical + 1) + (@line-height-computed / 2) - (@checkbox-size / 2));
+	}
+
+	// Right checkbox
+	.checkbox-right & {
+		left: auto;
+		right: 0;
+	}
+
+
+	//
+	// States
+	//
+
+	// Disabled
+	&.disabled {
+		.opacity(0.5);
+
+		// Disable cursor
+		&,
+		input[type=checkbox] {
+			cursor: @cursor-disabled;
+		}
+
+		// When label is clicked
+		.checkbox > label:active &,
+		.checkbox-inline:active & {
+			span:after {
+				.opacity(0);
+			}
+
+			span.checked:after {
+				.opacity(1);
+			}
+		}
+	}
+
+
+	//
+	// Custom colors
+	//
+
+	&[class*=border-] {
+
+		// Inherit colors
+		span {
+			border-color: inherit;
+			color: inherit;
+		}
+	}
+}
+
+// Update checker colors in dropdown variations
+.dropdown-menu > .active:not(.disabled),
+.dropdown-menu[class*=bg-],
+.page-header-inverse .form-group > .checkbox,
+.page-header-inverse .form-group > .checkbox-inline,
+.navbar-inverse .navbar-form .form-group > .checkbox,
+.navbar-inverse .navbar-form .form-group > .checkbox-inline,
+.sidebar:not(.sidebar-default) .checkbox,
+.sidebar:not(.sidebar-default) .checkbox-inline {
+	.checker {
+		span {
+			border-color: #fff;
+			color: #fff;
+		}
+	}
+}
+
+
+
+// Radio
+// ------------------------------
+
+// Base
+.choice {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	vertical-align: middle;
+	border-radius: 100%;
+
+	// Set general size
+	&,
+	span,
+	input {
+		width: @checkbox-size;
+		height: @checkbox-size;
+	}
+
+	// Radio setup
+	span {
+		border: @checkbox-border-width solid @color-slate-500;
+		display: -moz-inline-box;
+		display: inline-block;
+		border-radius: 100%;
+		text-align: center;
+		position: relative;
+
+		// Add colored circle
+		&:after {
+			content: "";
+			position: absolute;
+			top: ((@checkbox-size / 2) - @checkbox-border-width - ((@checkbox-size - 10) / 2));
+			left: ((@checkbox-size / 2) - @checkbox-border-width - ((@checkbox-size - 10) / 2));
+			border: ((@checkbox-size - 10) / 2) solid;
+			border-color: inherit;
+			width: 0;
+			height: 0;
+			border-radius: 100%;
+			.opacity(0);
+		}
+
+		// Checked style
+		&.checked {
+			&:after {
+				.opacity(1);
+			}
+		}
+	}
+
+	// Hide radio
+	input[type=radio] {
+		&:extend(.checker input[type=checkbox]);
+	}
+
+
+	//
+	// Posiitons
+	//
+
+	// Left radio
+	.radio &,
+	.radio-inline & {
+		position: absolute;
+		top: ((@line-height-computed - @checkbox-size) / 2);
+		left: 0;
+	}
+
+	// Horizontal form correction
+	.form-horizontal .radio &,
+	.form-horizontal .radio-inline & {
+		top: ((@padding-base-vertical + 1) + (@line-height-computed / 2) - (@checkbox-size / 2));
+	}
+
+	// Right radio
+	.radio-right & {
+		left: auto;
+		right: 0;
+	}
+
+
+	//
+	// States
+	//
+
+	// Disabled
+	&.disabled {
+		.opacity(0.5);
+
+		// Disable cursor
+		&,
+		input[type=radio] {
+			cursor: @cursor-disabled;
+		}
+
+		// When label is clicked
+		.radio > label:active &,
+		.radio-inline:active & {
+			span:after {
+				.opacity(0);
+			}
+
+			span.checked:after {
+				.opacity(1);
+			}
+		}
+	}
+
+
+	//
+	// Custom colors
+	//
+
+	&[class*=border-] {
+		span {
+			border-color: inherit;
+
+			&:after {
+				border-color: inherit;
+			}
+		}
+	}
+}
+
+// Update checker colors in dropdown variations
+.dropdown-menu > .active,
+.dropdown-menu[class*=bg-],
+.page-header-inverse .form-group > .radio,
+.page-header-inverse .form-group > .radio-inline,
+.navbar-inverse .navbar-form .form-group > .radio,
+.navbar-inverse .navbar-form .form-group > .radio-inline,
+.sidebar:not(.sidebar-default) .radio,
+.sidebar:not(.sidebar-default) .radio-inline {
+	.choice {
+		span {
+			border-color: #fff;
+		}
+	}
+}
+
+
+
+// File fileinput
+// ------------------------------
+
+// Base
+.uploader {
+	width: 100%;
+	position: relative;
+	display: table;
+
+	// File name text
+	.filename {
+		color: @gray-light;
+		height: @input-height-base;
+		padding: @padding-base-vertical @padding-base-horizontal;
+		cursor: pointer;
+		width: 100%;
+		display: table-cell;
+		cursor: default;
+		border: 1px solid @input-border;
+		border-right: 0;
+		background-color: @input-bg;
+		text-align: left;
+		word-break: break-word;
+		.border-left-radius(@input-border-radius);
+	}
+
+	// Action button
+	.action {
+		display: table-cell;
+		cursor: pointer;
+		z-index: 1;
+		border-radius: 0;
+		.border-right-radius(@input-border-radius);
+
+		// If normal button
+		&.btn {
+			margin-top: 0;
+		}
+	}
+
+	// Hover state
+	&:hover,
+	&:focus {
+		.action {
+			.box-shadow(0 0 0 100px fade(#000, 5%) inset);
+		}
+		.action.btn-default {
+			.box-shadow(0 0 0 100px fade(#000, 1%) inset);
+		}
+	}
+
+    // Active state
+	&:active {
+		.action {
+			.box-shadow(0 0 0 100px fade(#000, 10%) inset);
+		}
+		.action.btn-default {
+			.box-shadow(0 0 0 100px fade(#000, 3%) inset);
+		}
+	}
+
+	// Hide file input
+	input[type=file] {
+		width: 100%;
+		margin-top: 0;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		height: @input-height-base;
+		border: 0;
+		cursor: pointer;
+		z-index: 10;
+		.opacity(0);
+	}
+
+	// Disabled state
+	&.disabled {
+		.filename {
+			background-color: @input-bg-disabled;
+			cursor: @cursor-disabled;
+		}
+	}
+}
+
+
+//
+// Sizing
+//
+
+// Large
+.uploader-lg {
+	input[type=file],
+	.action,
+	.filename {
+		height: @input-height-large;
+	}
+
+	.filename {
+		padding: @padding-large-vertical @padding-large-horizontal;
+		font-size: @font-size-large;
+		line-height: @line-height-large;
+	}
+}
+
+// Small
+.uploader-sm {
+	input[type=file],
+	.action,
+	.filename {
+		height: @input-height-small;
+	}
+
+	.filename {
+		padding: @padding-small-vertical @padding-small-horizontal;
+		font-size: @font-size-small;
+		line-height: @line-height-small;
+	}
+}
+
+// Mini
+.uploader-xs {
+	input[type=file],
+	.action,
+	.filename {
+		height: @input-height-mini;
+	}
+
+	.filename {
+		padding: @padding-xs-vertical @padding-xs-horizontal;
+		font-size: @font-size-small;
+		line-height: @line-height-small;
+	}
+}

@@ -1,0 +1,121 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Pace. Xbox theme
+ *
+ *  Xbox css spinner theme for Pace. Mini size
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Preloader template. Default dark background
+// ------------------------------
+
+.preloader,
+.preloader-light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: @color-slate-800; // Change it to any suitable dark color
+  z-index: 9000; 
+  .opacity(0.9);
+}
+
+// Light background
+.preloader-light {
+  background-color: #fff; /* Change it to any suitable light color */
+}
+
+// Change colors for the light version. Feel free to change colors
+.pace-light {
+  .pace-activity {
+    &,
+    &:before,
+    &:after {
+      border-top-color: @color-slate-800;
+    }
+  }
+
+  .pace-progress:after {
+    color: @color-slate-800;
+  }
+}
+
+
+// Pace theme styles
+// ------------------------------
+
+// Base
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+  .user-select(none);
+
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  margin-top: -22px;
+  z-index: 9999;
+}
+
+// Activity
+.pace-activity {
+  width: 44px;
+  height: 44px;
+  .animation(rotation 1.5s ease-in-out infinite);
+
+  &,
+  &:before,
+  &:after {
+    border-radius: 50%;
+    border: 1px solid transparent;
+    border-top-color: #fff;
+  }
+
+  &:before {
+    content: "";
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    .animation(rotation 2s ease-in-out infinite);
+  }
+
+  &:after {
+    content: "";
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    .animation(rotation 1s ease-in-out infinite);
+  }
+}
+
+// Hide inactive
+.pace-inactive {
+  display: none;
+}
+
+
+// Uncomment code below to show loader text with indicator
+
+/*
+.pace-progress:after {
+  content: attr(data-progress-text);
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  color: #FFF;
+  position: absolute;
+  top: 50px;
+}
+*/

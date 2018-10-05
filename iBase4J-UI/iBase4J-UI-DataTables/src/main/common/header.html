@@ -1,0 +1,155 @@
+<!-- 顶部导航栏-->
+<div class="navbar-header">
+    <a class="navbar-brand"><img src="/assets/images/3.png" alt=""></a>
+
+    <ul class="nav navbar-nav visible-xs-block">
+        <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+        <li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>
+    </ul>
+</div>
+
+<div class="navbar-collapse collapse" id="navbar-mobile">
+    <ul class="nav navbar-nav">
+        <li>
+            <a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a>
+        </li>
+        <li>
+            <form class="heading-form" action="#">
+                <div class="form-group">
+                    <div class="has-feedback search">
+                        <input type="search" class="form-control" id="allSearch" placeholder="搜索">
+                        <div class="form-control-feedback">
+                            <i class="icon-search4 text-size-small text-muted"></i>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-bell3"></i>
+                <span class="visible-xs-inline-block position-right">信息公告</span>
+                <span class="badge bg-danger">5</span>
+            </a>
+
+            <div class="dropdown-menu dropdown-content">
+                <div class="dropdown-content-heading ">
+                    <label class="text-bold">信息公告</label>
+
+                    <ul class="icons-list">
+                        <li><a href="#"><i class="icon-sync"></i></a></li>
+                    </ul>
+                </div>
+
+                <ul class="media-list dropdown-content-body width-350">
+                    <li class="media ">
+                        <div class="media-left">
+                            <a href="#"
+                               class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-sm"><i
+                                    class="icon-git-pull-request"></i></a>
+                        </div>
+
+                        <div class="media-body">
+                            Drop the IE <a href="#">specific hacks</a> for temporal inputs
+                            <div class="media-annotation">4 minutes ago</div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="dropdown-content-footer">
+                    <a href="#" data-popup="tooltip" title="All activity"><i class="icon-menu display-block"></i></a>
+                </div>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-bubbles4"></i>
+                <span class="visible-xs-inline-block position-right">提醒信息</span>
+                <span class="badge bg-primary">3</span>
+            </a>
+
+            <div class="dropdown-menu dropdown-content width-350">
+                <div class="dropdown-content-heading">
+                    <label class="text-bold">提醒信息</label>
+                    <ul class="icons-list">
+                        <li><a href="#"><i class="icon-compose"></i></a></li>
+                    </ul>
+                </div>
+
+                <ul class="media-list dropdown-content-body">
+                    <li class="media">
+                        <div class="media-left"><img src="/assets/images/placeholder.jpg" class="img-circle img-sm"
+                                                     alt=""></div>
+                        <div class="media-body">
+                            <a href="#" class="media-heading">
+                                <span class="text-semibold">Jeremy Victorino</span>
+                                <span class="media-annotation pull-right">22:48</span>
+                            </a>
+
+                            <span class="text-muted">But that would be extremely strained and suspicious...</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="dropdown-content-footer">
+                    <a href="#" data-popup="tooltip" title="All messages"><i
+                            class="icon-menu display-block"></i></a>
+                </div>
+            </div>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                <i class="icon-calendar"></i>
+                <span class="visible-xs-inline-block position-right">待办任务</span>
+                <span class="badge bg-success">3</span>
+            </a>
+
+            <div class="dropdown-menu dropdown-content width-350">
+                <div class="dropdown-content-heading">
+                    <label class="text-bold">待办任务</label>
+                    <ul class="icons-list">
+                        <li><a><i class="icon-compose"></i></a></li>
+                    </ul>
+                </div>
+
+                <ul class="media-list dropdown-content-body">
+                    <li class="media">
+                        <div class="media-left"><img src="/assets/images/placeholder.jpg" class="img-circle img-sm"
+                                                     alt=""></div>
+                        <div class="media-body">
+                            <a class="media-heading">
+                                <span class="text-semibold">Jeremy Victorino</span>
+                                <span class="media-annotation pull-right">22:48</span>
+                            </a>
+
+                            <span class="text-muted">But that would be extremely strained and suspicious...</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="dropdown-content-footer">
+                    <a data-popup="tooltip" title="All messages"><i
+                            class="icon-menu display-block"></i></a>
+                </div>
+            </div>
+
+        <li class="dropdown dropdown-user">
+            <a class="dropdown-toggle" data-toggle="dropdown">
+                <img :src="user.avatar" :alt="user.userName" class="avatar">
+                <span class="text-bold">{{user.userName}}</span>
+                <i class="caret"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li><a href="/main/admin/personinfo.html" target="workspace"><i class="icon-user-plus"></i> 个人资料</a></li>
+                <li><a href="/main/admin/passwordform.html" target="workspace"><i class="icon-lock2"></i> 修改密码</a></li>
+                <li><a href="/main/admin/modifyHead.html" target="workspace"><i class="icon-image2"></i> 修改头像</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:void" id="logout"><i class="icon-switch2"></i> 退出</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- /顶部导航栏 -->

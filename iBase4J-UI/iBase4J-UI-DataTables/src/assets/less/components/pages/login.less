@@ -1,0 +1,117 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Login and related forms
+ *
+ *  Styles related to user login - logins, registration, password revovery, unlock etc.
+ *
+ *  Version: 1.2
+ *  Latest update: Mar 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Cover image
+.login-cover {
+    background: url('../images/login_cover.jpg') no-repeat;
+    background-size: cover;
+}
+
+
+// Login container
+.login-container {
+
+    // Page container
+    .page-container {
+        padding-top: (@line-height-computed * 2);
+        position: static;
+
+        // Add fixed width
+        .login-form {
+            width: 320px;
+
+            // Thumbnail
+            .thumb {
+                margin: 0 auto @line-height-computed auto;
+            }
+        }
+
+        // Add vertical margin
+        .login-form,
+        .registration-form {
+            margin: 0 auto @line-height-computed auto;
+
+            // Make it full width on mobile
+            @media (max-width: @screen-xs) {
+                width: 100%;
+            }
+        }
+
+        // Tabs
+        .nav-tabs.nav-justified {
+            margin-bottom: 0;
+
+            // Nav items
+            > li {
+
+                // Links
+                > a {
+                    border-top: 0!important;
+                    padding-left: @content-padding-base;
+                    padding-right: @content-padding-base;
+                    background-color: #f5f5f5;
+                }
+
+                // Remove left border in first item
+                &:first-child > a {
+                    border-left: 0;
+                    border-radius: @border-radius-base 0 0 0;
+                }
+
+                // Remove right border in last item
+                &:last-child > a {
+                    border-right: 0;
+                    border-radius: 0 @border-radius-base 0 0;
+                }
+
+                // Active state
+                &.active > a {
+                    background-color: transparent;
+                }
+            }
+
+            // Mobile view
+            @media (max-width: @screen-xs-max) {
+                padding: 0;
+                border-width: 0 0 1px 0;
+                border-radius: 0;
+
+                // Remove defalt text label
+                &:before {
+                    content: none;
+                }
+
+                // Remove left borders
+                > li > a {
+                    border-width: 0!important;
+                }
+            }
+        }
+    }
+    
+    // Footer
+    .footer {
+        left: 0;
+        right: 0;
+    }
+}
+
+
+// Responsive login options
+@media (max-width: @screen-xs-max) {
+    .login-options {
+        &,
+        .text-right {
+            text-align: center;
+        }
+    }
+}

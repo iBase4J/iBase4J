@@ -1,0 +1,64 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Headroom
+ *
+ *  Hide BS navbar component on page scroll
+ *
+ *  Version: 1.1
+ *  Latest update: Mar 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Common styles
+// ------------------------------
+
+// Base
+.headroom {
+	@headroom-transition: top 0.2s ease-in-out, bottom 0.2s ease-in-out;
+	.transition(@headroom-transition);
+}
+
+// Top position
+.navbar {
+	&.headroom-top-pinned {
+		top: 0;
+	}
+	&.headroom-top-unpinned {
+		top: -(@navbar-height + 2);
+		.box-shadow(none);
+
+		// Sizes
+		.navbar-lg& {
+			top: -(@navbar-height-large + 2);
+		}
+		.navbar-sm& {
+			top: -(@navbar-height-small + 2);
+		}
+		.navbar-xs& {
+			top: -(@navbar-height-mini + 2);
+		}
+	}
+}
+
+// Bottom position
+.navbar {
+	&.headroom-bottom-pinned {
+		bottom: -(@navbar-height + 2);
+		.box-shadow(none);
+
+		// Sizes
+		.navbar-lg& {
+			bottom: -(@navbar-height-large + 2);
+		}
+		.navbar-sm& {
+			bottom: -(@navbar-height-small + 2);
+		}
+		.navbar-xs& {
+			bottom: -(@navbar-height-mini + 2);
+		}
+	}
+	&.headroom-bottom-unpinned {
+		bottom:  0;
+	}
+}

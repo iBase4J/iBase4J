@@ -1,0 +1,178 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Pagination (multiple pages) component
+*
+*  Overrides for pagination bootstrap component
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Basic styles
+// -------------------------
+
+.pagination {
+    margin-top: 0;
+    margin-bottom: -6px;
+
+    // Pagination nav item
+    > li {
+
+        // Links
+        > a,
+        > span {
+            min-width: @input-height-base;
+            text-align: center;
+        }
+    }
+
+    // Rounded corners
+    &.pagination-rounded {
+        > li {
+            &:first-child {
+                > a,
+                > span {
+                    .border-left-radius(100px);
+                }
+            }
+            &:last-child {
+                > a,
+                > span {
+                    .border-right-radius(100px);
+                }
+            }
+        }
+    }
+}
+
+
+// Pagination styles
+// -------------------------
+
+// Flat pagination
+.pagination-flat {
+    > li > a,
+    > li > span {
+        margin-left: 1px;
+        border-radius: @border-radius-base;
+        min-width: @input-height-base;
+        background-color: transparent;
+
+        // Remove border
+        &,
+        &:hover,
+        &:focus {
+            border-color: transparent;
+        }
+    }
+
+    // Active state
+    > .active > a,
+    > .active > span {
+        &,
+        &:hover,
+        &:focus {
+            border-color: transparent;
+        }
+    }
+
+    // Disabled state
+    > .disabled {
+        > span,
+        > span:hover,
+        > span:focus,
+        > a,
+        > a:hover,
+        > a:focus {
+            border-color: transparent;
+        }
+    }
+
+    // Rounded corners
+    &.pagination-rounded {
+        > li > a,
+        > li > span {
+            border-radius: 100px;
+        }
+    }
+
+    // Set min width for pagination links
+    &.pagination-lg {
+        > li > a,
+        > li > span {
+            min-width: @input-height-large;
+        }
+    }
+    &.pagination-sm {
+        > li > a,
+        > li > span {
+            min-width: @input-height-small;
+        }
+    }
+    &.pagination-xs {
+        > li > a,
+        > li > span {
+            min-width: @input-height-mini;
+        }
+    }
+}
+
+// Separated pagination
+.pagination-separated {
+    > li > a,
+    > li > span {
+        margin-left: 2px;
+    }
+}
+
+
+// Sizing
+// -------------------------
+
+// Large
+.pagination-lg {
+    > li {
+        > a,
+        > span {
+            min-width: @input-height-large;
+        }
+
+        // Border radius
+        &:first-child {
+            > a,
+            > span {
+                .border-left-radius(@border-radius-base);
+            }
+        }
+        &:last-child {
+            > a,
+            > span {
+                .border-right-radius(@border-radius-base);
+            }
+        }
+    }
+}
+
+// Small
+.pagination-sm {
+    > li {
+        > a,
+        > span {
+            min-width: @input-height-small;
+        }
+    }
+}
+
+// Mini
+.pagination-xs {
+    .pagination-size(@padding-xs-vertical; @padding-xs-horizontal; @font-size-small; @line-height-small; @border-radius-base);
+    
+    > li {
+        > a,
+        > span {
+            min-width: @input-height-mini;
+        }
+    }
+}

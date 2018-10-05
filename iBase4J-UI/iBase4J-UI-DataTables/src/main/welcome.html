@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-store">
+	<meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>香巴林卡智慧景区平台</title>
+
+    <!-- 全局样式 -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/core.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/components.min.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/colors.min.css" rel="stylesheet" type="text/css">
+    <!-- /全局样式 -->
+
+    <!-- 自定义样式 -->
+    <link href="../extends/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../extends/css/welcome.css" rel="stylesheet" type="text/css">
+    <!-- /自定义样式 -->
+
+    <!-- js核心库 -->
+    <script type="text/javascript" src="../assets/js/core/libraries/vue.min.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="../assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="../assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /js核心库 -->
+
+    <!-- js主题库 -->
+    <script type="text/javascript" src="../assets/js/core/app.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/visualization/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="../assets/js/plugins/notifications/bootbox.min.js"></script>
+    <!-- /js主题库 -->
+
+    <!-- js自定义 -->
+    <script type="text/javascript" src="../extends/js/common.js"></script>
+    <script type="text/javascript" src="../extends/js/welcome.js"></script>
+    <!-- /js自定义 -->
+</head>
+
+<body>
+<!-- 页面容器 -->
+<div class="page-container">
+    <!-- 页面内容-->
+    <!-- Page content -->
+    <div class="page-content">
+		<!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-default border-bottom-lg border-bottom-teal"
+                 style="border-top: 1px solid #ddd; border-left: 1px solid #ddd; border-right: 1px solid #ddd;">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-bold">首页</span> - 控制面板</h4>
+                    </div>
+
+                </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb">
+                        <li><a href="index.html"><i class="icon-home2 position-left"></i>首页</a></li>
+                        <li class="active">控制面板</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /page header -->
+
+
+            <!-- Content area -->
+            <div class="content">
+
+                <!-- Dashboard content -->
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-7 col-md-9">
+                            <!-- Traffic sources -->
+                            <div class="subblock panel panel-flat">
+                                <div class="content" id="mainChart"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-6 task-stat">
+                                    <!-- Members online -->
+                                    <div class="panel bg-blue-400">
+                                        <div class="panel-body">
+                                            <div class="heading-elements">
+                                                <button class="btn bg-blue-700  btn-rounded btn-icon btn-lg">
+                                                    <i class="icon-coin-dollar"></i>
+                                                </button>
+                                            </div>
+
+                                            <h3 class="no-margin">新增商机</h3>
+                                            <span class="num">128</span>
+                                        </div>
+                                    </div>
+                                    <!-- /members online -->
+
+                                </div>
+
+                                <div class="col-lg-3  col-sm-6 task-stat">
+
+                                    <!-- Current server load -->
+                                    <div class="panel bg-teal-400">
+                                        <div class="panel-body">
+                                            <div class="heading-elements">
+                                                <button class="btn bg-teal-700  btn-rounded btn-icon btn-lg">
+                                                    <i class="icon-users4"></i>
+                                                </button>
+                                            </div>
+                                            <h3 class="no-margin">新增客户</h3>
+                                            <span class="num">228</span>
+                                        </div>
+                                    </div>
+                                    <!-- /current server load -->
+
+                                </div>
+
+                                <div class="col-lg-3  col-sm-6 task-stat">
+                                    <div class="panel bg-warning-400">
+                                        <div class="panel-body">
+                                            <div class="heading-elements">
+                                                <button class="btn bg-warning-700  btn-rounded btn-icon btn-lg">
+                                                    <i class="icon-file-text"></i>
+                                                </button>
+                                            </div>
+                                            <h3 class="no-margin">新增订单</h3>
+                                            <span class="num">1888</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3  col-sm-6 task-stat">
+
+                                    <!-- Today's revenue -->
+                                    <div class="panel bg-pink-400">
+                                        <div class="panel-body">
+                                            <div class="heading-elements">
+                                                <button class="btn bg-pink-700  btn-rounded btn-icon btn-lg">
+                                                    <i class="icon-coins"></i>
+                                                </button>
+                                            </div>
+                                            <h3 class="no-margin">利润总额</h3>
+                                            <span class="num">16888.00</span>
+                                        </div>
+                                    </div>
+                                    <!-- /today's revenue -->
+
+                                </div>
+                            </div>
+                            <div class="col-md-7 no-padding-left">
+                                <div class="panel panel-flat subblock">
+                                    <div id="echart1" class="content"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 no-padding-right">
+                                <div class="panel panel-white subblock">
+                                    <div class="panel-heading">
+                                        <h6 class="panel-title">部门负责人</h6>
+                                        <div class="heading-elements">
+                                            <ul class="icons-list">
+                                                <li><a data-action="collapse"></a></li>
+                                                <li><a data-action="reload"></a></li>
+                                                <li><a data-action="close"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="department-head">
+                                        <ul>
+                                            <li>
+                                                <a href="#" class="col-md-4">
+                                                    李好运
+                                                </a>
+                                                <span class="text-center">市场部</span>
+                                                <span class="pull-right">13657797718</span>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="col-md-4">
+                                                    李好运
+                                                </a>
+                                                <span class="text-center">市场部</span>
+                                                <span class="pull-right">13657977128</span>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="col-md-4">
+                                                    李好运
+                                                </a>
+                                                <span class="text-center">市场部</span>
+                                                <span class="pull-right">13657797712</span>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="col-md-4">
+                                                    李好运
+                                                </a>
+                                                <span class="text-center">市场部</span>
+                                                <span class="pull-right">13657797712</span>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="col-md-4">
+                                                    李好运
+                                                </a>
+                                                <span class="text-center">市场部</span>
+                                                <span class="pull-right">13657797712</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-5 col-md-3">
+                            <!-- 客户区域分布 -->
+                            <div class="panel panel-flat subblock">
+                                <div class="content" id="echart2"></div>
+                            </div>
+                            <!-- /客户区域分布 -->
+                            <!-- 待办任务 -->
+                            <div class="panel panel-white gtasks">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">待办任务</h6>
+                                    <div class="heading-elements">
+                                        <ul class="icons-list">
+                                            <li><a data-action="collapse"></a></li>
+                                            <li><a data-action="reload"></a></li>
+                                            <li><a data-action="close"></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="gtasks-list">
+                                    <ul>
+                                        <li>
+                                            <span class="">[审批]</span>
+                                            <a href="#">
+                                                李好运的报销申请
+                                            </a>
+                                            <span class="pull-right">2016-06-28</span>
+                                        </li>
+                                        <li>
+                                            <span class="">[审批]</span>
+                                            <a href="#">
+                                                李好运的报销申请
+                                            </a>
+                                            <span class="pull-right">2016-06-28</span>
+                                        </li>
+                                        <li>
+                                            <span class="">[审批]</span>
+                                            <a href="#">
+                                                李好运的报销申请
+                                            </a>
+                                            <span class="pull-right">2016-06-28</span>
+                                        </li>
+                                        <li>
+                                            <span class="">[审批]</span>
+                                            <a href="#">
+                                                李好运的报销申请
+                                            </a>
+                                            <span class="pull-right">2016-06-28</span>
+                                        </li>
+                                        <li>
+                                            <span class="">[审批]</span>
+                                            <a href="#">
+                                                李好运的报销申请
+                                            </a>
+                                            <span class="pull-right">2016-06-28</span>
+                                        </li>
+                                        <li>
+                                            <span class="">[审批]</span>
+                                            <a href="#">
+                                                李好运的报销申请
+                                            </a>
+                                            <span class="pull-right">2016-06-28</span>
+                                        </li>
+                                        <li>
+                                            <span class="">[审批]</span>
+                                            <a href="#">
+                                                李好运的报销申请
+                                            </a>
+                                            <span class="pull-right">2016-06-28</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /待办任务-->
+                        </div>
+                    </div>
+                    <!-- /dashboard content -->
+
+                    <!-- Footer -->
+	                <div class="footer text-muted" v-html="footer"></div>
+	                 <!-- /footer -->
+
+                </div>
+                <!-- /content area -->
+
+            </div>
+            <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+    </div>
+</div>
+</body>

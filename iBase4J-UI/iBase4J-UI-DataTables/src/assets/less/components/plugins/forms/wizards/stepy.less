@@ -1,0 +1,190 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Stepy wizard
+*
+*  jQuery plugin which generates a customizable wizard from form fieldsets
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.stepy-step {
+    padding: @content-padding-large;
+    padding-top: 0;
+}
+
+
+// Header
+// ------------------------------
+
+.stepy-header {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+
+    // Add top border if inside flat panel
+    .panel-flat > & {
+        border-top: 1px solid @panel-default-border;
+    }
+
+    // Nav list item
+    li {
+        cursor: pointer;
+        display: table-cell;
+        vertical-align: top;
+        width: auto;
+        padding: @content-padding-large 0;
+        text-align: center;
+        position: relative;
+
+        // Step nav text label
+        span {
+            display: block;
+            margin-top: 10px;
+            color: @text-muted;
+        }
+
+        // Line indicator
+        &:before,
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 43px;
+            width: 50%;
+            height: 2px;
+            background-color: @brand-info;
+            z-index: 9;
+        }
+        &:before {
+            left: 0;
+        }
+        &:after {
+            right: 0;
+        }
+        &:first-child:before,
+        &:last-child:after {
+            content: none;
+        }
+
+        // Number indicator
+        div {
+            background-color: @brand-info;
+            font-size: 0;
+            position: relative;
+            color: #fff;
+            margin-left: auto;
+            margin-right: auto;
+            width: 38px;
+            height: 38px;
+            border: 2px solid @brand-info;
+            z-index: 10;
+            line-height: 34px;
+            text-align: center;
+            border-radius: 50%;
+
+            // Icon
+            &:after {
+                content: '\ed6c';
+                font-family: 'icomoon';
+                display: inline-block;
+                font-size: @icon-font-size;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                line-height: 34px;
+                .transition(all 0.15s ease-in-out);
+            }
+        }
+
+        // Active step
+        &.stepy-active {
+            &:after,
+            ~ li:before,
+            ~ li:after {
+                background-color: #f5f5f5;
+            }
+
+            ~ li div {
+                border-color: @gray-lighter;
+                background-color: #fff;
+                color: #ccc;
+                font-size: 14px;
+
+                &:after {
+                    content: none;
+                }
+            }
+
+            // Icon container
+            div {
+                cursor: auto;
+                border-color: @brand-info;
+                background-color: #fff;
+                color: @brand-info;
+
+                &:after {
+                    content: '\e913';
+                }
+            }
+
+            // Text label
+            span {
+                color: @text-color;
+            }
+        }
+    }
+
+
+    // Media queries
+    @media (max-width: @screen-sm) {
+        margin-bottom: @line-height-computed;
+
+        // List item
+        li {
+            display: block;
+            float: left;
+            width: 50%;
+            padding-bottom: 0;
+
+            &:first-child:before,
+            &:last-child:after {
+                content: '';
+            }
+            &.stepy-active:last-child:after {
+                background-color: @brand-info;
+            }
+        }
+    }
+
+    @media (max-width: @screen-xs) {
+
+        // List item
+        li {
+            width: 100%;
+
+            &.stepy-active:after {
+                background-color: @brand-info;
+            }
+        }
+    }
+}
+
+
+// Pagination
+// ------------------------------
+
+.stepy-navigator {
+    text-align: right;
+
+    .btn + .btn {
+        margin-left: 5px;
+    }
+}

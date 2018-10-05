@@ -1,0 +1,93 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Pace. Circle tail theme
+ *
+ *  Circle tail css spinner theme for Pace.
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Preloader template. Default dark background
+// ------------------------------
+
+.preloader,
+.preloader-light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: @color-slate-800; // Change it to any suitable dark color
+  z-index: 9000; 
+  .opacity(0.9);
+}
+
+// Light background
+.preloader-light {
+  background-color: #fff; /* Change it to any suitable light color */
+}
+
+// Change colors for the light version. Feel free to change colors
+.pace-light {
+  .pace-activity {
+    border-color: fade(#000, 10%);
+    border-left-color: @color-slate-800;
+    color: @color-slate-800;
+  }
+  .pace-progress:after {
+    color: @color-slate-800;
+  }
+}
+
+
+// Pace theme styles
+// ------------------------------
+
+// Base
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+  .user-select(none);
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  margin-left: -15px;
+  z-index: 9999;
+}
+
+// Activity
+.pace-activity {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  border: 3px solid fade(#fff, 10%);
+  border-left-color: #fff;
+  .animation(rotation 1.1s infinite linear);
+}
+
+// Hide inactive
+.pace-inactive {
+  display: none;
+}
+
+
+// Uncomment code below to show loader text with indicator
+
+/*
+.pace-progress:after {
+  content: attr(data-progress-text);
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  color: #FFF;
+  position: absolute;
+  top: 42px;
+}
+*/

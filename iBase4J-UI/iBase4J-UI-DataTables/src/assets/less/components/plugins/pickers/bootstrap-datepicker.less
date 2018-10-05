@@ -1,0 +1,189 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Datepicker for Bootstrap
+ *
+ *  Styles for bootstrap datepicker. Comes as a part of datepaginator.js plugin
+ *
+ *  Version: 1.2
+ *  Latest update: Mar 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.datepicker {
+	> div {
+		display: none;
+	}
+
+	// Dropdown menu
+	&.datepicker-dropdown {
+		top: 0;
+		left: 0;
+		margin: 0;
+		padding: (@list-spacing * 2);
+	}
+}
+
+
+// Datepicker table
+// ------------------------------
+
+.datepicker {
+
+	// Main table
+	table {
+		margin: 0;
+
+		// Table items
+		tr td {
+			&.day:hover {
+				background-color: @dropdown-link-hover-bg;
+				cursor: pointer;
+			}
+
+			&.old,
+			&.new {
+				color: @text-muted;
+			}
+
+			// Disabled
+			&.disabled {
+				&,
+				&:hover {
+					background-color: transparent;
+					color: @text-muted;
+					cursor: default;
+				}
+			}
+
+			// Today
+			&.today {
+				&,
+				&.disabled {
+					&,
+					&:hover {
+						background-color: @dropdown-link-hover-bg;
+					}
+				}
+			}
+
+			// Date range
+			&.range {
+				&,
+				&.disabled {
+					&,
+					&:hover {
+						background-color: @dropdown-link-hover-bg;
+						border-radius: 0;
+					}
+				}
+
+				&.today {
+					&,
+					&.disabled,
+					&.active {
+						&,
+						&:hover {
+							background-color: @dropdown-link-hover-bg;
+						}
+					}
+				}
+			}
+
+			// Active date
+			&.active,
+			span.active {
+				&,
+				&.disabled {
+					&,
+					&:hover {
+						background-color: @color-teal-400;
+						color: #fff;
+					}
+				}
+			}
+
+			// Year and month selection
+			span {
+				display: block;
+				width: 31%;
+				padding: @padding-base-vertical @padding-base-horizontal;
+				float: left;
+				margin: 1%;
+				cursor: pointer;
+				border-radius: @border-radius-base;
+
+				// Hover state
+				&:hover {
+					background-color: @dropdown-link-hover-bg;
+				}
+
+				// Disabled state
+				&.disabled {
+					&,
+					&:hover {
+						background-color: transparent;
+						color: @text-muted;
+						cursor: default;
+					}
+				}
+
+				&.old,
+				&.new {
+					color: @text-muted;
+				}
+			}
+		}
+
+		// Switch
+		th.datepicker-switch {
+			font-size: @font-size-h6;
+			font-weight: 400;
+		}
+		thead tr:first-child th,
+		tfoot tr th {
+			cursor: pointer;
+			padding-top: @content-padding-base;
+			padding-bottom: @content-padding-base;
+			line-height: 1;
+		}
+		.cw {
+			width: 16px;
+			padding: 0 2px 0 5px;
+			vertical-align: middle;
+		}
+		thead tr:first-child th.cw {
+			cursor: default;
+			background-color: transparent;
+		}
+	}
+
+	// Table styles
+	.table-condensed {
+		td,
+		th {
+			text-align: center;
+			padding: @content-padding-small;
+			border-radius: @border-radius-base;
+			border: 0;
+			line-height: 1;
+		}
+
+		// Days of the week
+		th.dow {
+			padding-top: (@list-spacing * 2);
+			color: @text-muted;
+		}
+	}
+
+	// If table is striped
+	.table-striped & table tr {
+		th,
+		td {
+			background-color: transparent;
+		}
+	}
+}

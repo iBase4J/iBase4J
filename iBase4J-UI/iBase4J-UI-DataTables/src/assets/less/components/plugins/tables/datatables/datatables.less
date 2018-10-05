@@ -1,0 +1,577 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Datatables library
+ *
+ *  Add advanced interaction controls to any HTML table
+ *
+ *  Version: 1.2
+ *  Latest update: Mar 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Base
+// ------------------------------
+
+// Table container
+.dataTable {
+	margin: 0;
+	max-width: none;
+	border-collapse: separate;
+
+	// Header
+	thead {
+		th,
+		td {
+			outline: 0;
+			position: relative;
+		}
+
+		// Add hand cursor to sortable cells
+		.sorting_asc,
+		.sorting_desc,
+		.sorting {
+			cursor: pointer;
+		}
+
+		// Add right space to avoid text overlap over arrow
+		.sorting,
+		.sorting_asc,
+		.sorting_desc,
+		.sorting_asc_disabled,
+		.sorting_desc_disabled {
+			padding-right: (@content-padding-large * 2);
+		}
+
+
+		// Add sorting icon base
+		.sorting:before,
+		.sorting:after,
+		.sorting_asc:after,
+		.sorting_desc:after,
+		.sorting_asc_disabled:after,
+		.sorting_desc_disabled:after {
+			content: '';
+			font-family: 'icomoon';
+			position: absolute;
+			top: 50%;
+			right: @content-padding-large;
+			font-size: @font-size-small;
+			margin-top: -(@font-size-small / 2);
+			display: inline-block;
+			line-height: 1;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		// Icons
+		.sorting {
+			&:before {
+				content: '\e9c1';
+				margin-top: -2px;
+				color: @text-muted;
+			}
+			&:after {
+				content: '\e9c2';
+				margin-top: -10px;
+				color: @text-muted;
+			}
+		}
+		.sorting_asc:after {
+			content: '\e9c2';
+		}
+		.sorting_desc:after {
+			content: '\e9c1';
+		}
+		.sorting_asc_disabled:after {
+			content: '\e9c2';
+			color: #ccc;
+		}
+		.sorting_desc_disabled:after {
+			content: '\e9c1';
+			color: #ccc;
+		}
+	}
+
+	// Body
+	tbody {
+
+		// Remove top border in first row
+		> tr:first-child {
+			> th,
+			> td {
+				border-top: 0;
+			}
+		}
+
+		// Remove top border from thead by default
+	    + thead,
+	    + tfoot + thead {
+	        > tr:first-child {
+	            > th,
+	            > td {
+	                border-top: 0;
+	            }
+	        }
+	    }
+	}
+
+	// Center text in empty table
+	.dataTables_empty {
+		text-align: center;
+	}
+
+	// Collapse borders in bordered table
+	&.table-bordered {
+		border-collapse: collapse;
+	}
+}
+
+// Wrapper
+.dataTables_wrapper {
+	position: relative;
+	clear: both;
+
+	// Clearfix
+	&:after {
+		visibility: hidden;
+		display: block;
+		content: "";
+		clear: both;
+		height: 0;
+	}
+
+	// Remove top border from bordered table
+	.table-bordered {
+		border-top: 0;
+	}
+
+	// Add top border if panel body comes after wrapper
+	+ .panel-body {
+		border-top: 1px solid @table-border-color;
+	}
+}
+
+// Processing indicator
+.dataTables_processing {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	height: 40px;
+	margin-left: -50%;
+	margin-top: -25px;
+	padding-top: 20px;
+	text-align: center;
+	background-color: #fff;
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(25%, rgba(255, 255, 255, 0.9)), color-stop(75%, rgba(255, 255, 255, 0.9)), color-stop(100%, rgba(255, 255, 255, 0)));
+	background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
+	background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
+	background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
+	background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
+	background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 25%, rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 0) 100%);
+}
+
+
+// Header and footer
+// ------------------------------
+
+// Common
+.datatable-header,
+.datatable-footer {
+	padding: @line-height-computed @content-padding-large 0 @content-padding-large;
+
+	// Clearing floats
+	&:after {
+		content: ""; 
+		display: table; 
+		clear: both; 
+	}
+
+	// Remove left margin from the first item
+	> div:first-child {
+		margin-left: 0;
+	}
+
+	// Remove horizontal spacing if inside panel body
+	.panel-body & {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+// Header
+.datatable-header {
+	border-bottom: 1px solid @table-border-color;
+}
+
+// Footer
+.datatable-footer {
+	border-top: 1px solid @table-border-highlight;
+}
+
+
+// Controls
+// ------------------------------
+
+// Length menu
+.dataTables_length {
+	float: right;
+	display: inline-block;
+	margin: 0 0 @line-height-computed @content-padding-large;
+
+	// Text label
+	> label {
+		margin-bottom: 0;
+
+		// Text, excluding select2 container
+		> span:first-child {
+			float: left;
+			margin: (@padding-base-vertical + 1) @content-padding-base;
+			margin-left: 0;
+		}
+	}
+
+	// Left display option
+	.length-left & {
+		float: left;
+	}
+
+	// Adjust Select2 menu
+	.select2-container {
+		width: auto;
+	}
+	.select2-choice {
+		min-width: 60px;
+	}
+}
+
+// Filter
+.dataTables_filter {
+	position: relative;
+	display: block;
+	float: left;
+	margin: 0 0 @line-height-computed @content-padding-large;
+
+	// Text label
+	> label {
+		margin-bottom: 0;
+		position: relative;
+
+		// Add search icon
+		&:after {
+			content: "\e98e";
+			font-family: 'icomoon';
+			font-size: @font-size-small;
+			display: inline-block;
+			position: absolute;
+			top: 50%;
+			right: @padding-base-horizontal;
+			margin-top: -(@font-size-small / 2);
+			color: @text-muted;
+			line-height: 1;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		// Text spacing
+		> span {
+			float: left;
+			margin: (@padding-base-vertical + 1) @content-padding-base;
+			margin-left: 0;
+		}
+	}
+
+	// Filter input
+	input {
+		outline: 0;
+		width: 200px;
+		height: @input-height-base;
+		padding: @padding-base-vertical @padding-base-horizontal;
+		padding-right: ((@padding-base-horizontal * 2) + @font-size-small);
+		font-size: @font-size-base;
+		line-height: @line-height-base;
+		color: @input-color;
+		background-color: @input-bg;
+		border: 1px solid @input-border;
+		border-radius: @input-border-radius;
+	}
+
+	// Right display option
+	.filter-right & {
+		float: right;
+	}
+}
+
+// Info
+.dataTables_info {
+	float: left;
+	padding: (@padding-base-vertical + 1) 0;
+	margin-bottom: @line-height-computed;
+
+	.info-right & {
+		float: right;
+	}
+}
+
+// Pagination common styles
+.dataTables_paginate {
+	float: right;
+	text-align: right;
+	margin: 0 0 @line-height-computed @content-padding-large;
+
+	// Button
+	.paginate_button {
+		display: inline-block;
+		padding: @padding-base-vertical;
+		min-width: @input-height-base;
+		margin-left: 2px;
+		text-align: center;
+		text-decoration: none;
+		cursor: pointer;
+		color: @text-color;
+		border: 1px solid transparent;
+		border-radius: @border-radius-base;
+
+		// First item
+		&:first-child {
+			margin-left: 0;
+		}
+
+		// Hover state
+		&:hover,
+		&:focus {
+			background-color: @pagination-hover-bg;
+		}
+
+		// Current active state
+		&.current {
+			&,
+			&:hover,
+			&:focus {
+				color: #fff;
+				background-color: @color-slate-700;
+			}
+		}
+
+		// Disabled state
+		&.disabled {
+			&,
+			&:hover,
+			&:focus {
+				cursor: default;
+				background-color: @pagination-disabled-bg;
+				color: @pagination-disabled-color;
+			}
+		}
+	}
+
+	// Simple paginate
+	&.paging_simple .paginate_button {
+		padding-left: @padding-base-horizontal;
+		padding-right: @padding-base-horizontal;
+	}
+
+	// Left display option
+	.paginate-left & {
+		float: left;
+	}
+}
+
+// Simple pagination style
+.paging_simple {
+	.paginate_button {
+		&:hover,
+		&:focus {
+			color: #fff;
+			background-color: @color-slate-700;
+		}
+	}
+}
+
+
+// Scrollable table
+// ------------------------------
+
+.dataTables_scroll {
+	clear: both;
+
+	// Scrolling header
+	.dataTables_scrollHead {
+		table {
+			border-bottom: 0;
+		}
+
+		th,
+		td {
+			white-space: nowrap;
+		}
+	}
+
+	// Scrolling body
+	.dataTables_scrollBody {
+		-webkit-overflow-scrolling: touch;
+
+		table {
+			border-bottom: 0;
+
+			thead th[class*=sorting] {
+				&:before,
+				&:after {
+					content: none;
+				}
+			}
+
+			tbody tr:first-child > td {
+				border-top: 0;
+			}
+		}
+
+		th,
+		td {
+			white-space: nowrap;
+
+			> .dataTables_sizing {
+				height: 0;
+				overflow: hidden;
+				margin: 0;
+				padding: 0;
+			}
+		}
+	}
+}
+
+
+// Table inside panels
+// ------------------------------
+
+// Inside panel body
+.panel-body {
+	+ .dataTables_wrapper,
+	+ * > .dataTables_wrapper {
+		border-top: 1px solid @panel-default-border;
+	}
+
+	> .dataTables_wrapper {
+		.datatable-footer {
+			border-top: 0;
+			
+			.dataTables_length,
+			.dataTables_filter,
+			.dataTables_info,
+			.dataTables_paginate {
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+// Inside flat panel
+.panel-flat > .panel-heading + .dataTables_wrapper {
+	> .datatable-header {
+		padding-top: 0;
+	}
+}
+
+// Bordered table inside panel
+.panel > .dataTables_wrapper .table-bordered {
+	border: 0;
+
+	> thead,
+	> tbody,
+	> tfoot {
+		> tr {
+			> td,
+			> th {
+				&:first-child {
+					border-left: 0;
+				}
+
+				&:last-child {
+					border-right: 0;
+				}
+			}
+		}
+	}
+
+	> tbody > tr:last-child {
+		> th,
+		> td {
+			border-bottom: 0;
+		}
+	}
+}
+
+
+// Responsive style additions
+// ------------------------------
+
+// Simple responsive setup
+.datatable-scroll-lg,
+.datatable-scroll,
+.datatable-scroll-sm {
+  min-height: .01%;
+}
+
+// Scroller
+.datatable-scroll-wrap {
+	width: 100%;
+	min-height: .01%;
+	overflow-x: auto;
+}
+
+@media (max-width: @screen-xs-max) {
+	.datatable-scroll-sm {
+		width: 100%;
+		overflow-x: scroll;
+
+		th,
+		td {
+			white-space: nowrap;
+		}
+	}
+}
+@media (max-width: @screen-sm-max) {
+	.datatable-scroll {
+		width: 100%;
+		overflow-x: scroll;
+
+		th,
+		td {
+			white-space: nowrap;
+		}
+	}
+}
+@media (max-width: @screen-md-max) {
+	.datatable-scroll-lg {
+		width: 100%;
+		overflow-x: scroll;
+
+		th,
+		td {
+			white-space: nowrap;
+		}
+	}
+}
+
+// Common media queries
+@media (max-width: @screen-xs-max) {
+	.dataTables_info,
+	.dataTables_paginate,
+	.dataTables_length,
+	.dataTables_filter,
+	.DTTT_container,
+	.ColVis {
+		float: none!important;
+		text-align: center;
+		margin-left: 0;
+	}
+	.dataTables_info,
+	.dataTables_paginate {
+		margin-top: 0;
+	}
+
+	.datatable-header {
+		text-align: center;
+	}
+}

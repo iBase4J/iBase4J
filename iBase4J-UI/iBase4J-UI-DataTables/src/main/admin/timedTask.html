@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>香巴林卡智慧景区平台---定时任务</title>
+
+    <!-- 全局样式 -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="../../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/colors.css" rel="stylesheet" type="text/css">
+    <!-- /全局样式 -->
+
+    <!-- 自定义样式 -->
+    <link href="../../extends/dep/ztree/css/metro.css" rel="stylesheet"  type="text/css">
+    <link href="../../extends/dep/jquery-treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css">
+    <link href="../../extends/dep/jquery-treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css">
+    <link href="../../extends/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../extends/css/admin/timedTask.css" rel="stylesheet" type="text/css">
+    <!-- /自定义样式 -->
+
+    <!-- js核心库-->
+    <script type="text/javascript" src="../../assets/js/core/libraries/vue.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/blockui.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/bootbox.min.js"></script>
+    <!-- /js核心库 -->
+
+    <!-- js主题库 -->
+    <script type="text/javascript" src="../../assets/js/core/libraries/jquery_ui/core.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/extensions/select.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/validation/additional_methods.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/switchery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/switch.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/selectboxit.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/jquery.formautofill.min.js"></script>
+
+    <script type="text/javascript" src="../../assets/js/core/app.js"></script>
+    <!-- /js主题库 -->
+
+    <!-- js自定义 -->
+    <script type="text/javascript" src="../../extends/js/common.js"></script>
+    <script type="text/javascript" src="../../assets/js/pages/form_input_groups.js"></script>
+    <script type="text/javascript" src="../../assets/js/pages/form_validation.js"></script>
+    <script type="text/javascript" src="../../extends/dep/ztree/js/jquery.ztree.all-3.5.min.js"></script>
+    <script type="text/javascript" src="../../extends/js/admin/timedTask.js"></script>
+    <!-- /js自定义 -->
+</head>
+
+<body>
+<!-- 页面容器-->
+<div class="page-container">
+    <!-- 页面内容 -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Page header -->
+            <div class="page-header page-header-default border-bottom-lg border-bottom-teal">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-bold">系统管理</span> - 调度管理</h4>
+                    </div>
+                </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb">
+                        <li><a href="/main/welcome.html"><i class="icon-home2 position-left"></i>首页</a></li>
+                        <li>系统管理</li>
+                        <li>调度中心</li>
+                        <li class="active">调度管理</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /page header -->
+
+            <!-- Content area -->
+            <div class="content">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                            <i class="icon-alarm position-left"></i>定时任务</h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="reload" data-fnReload="refreshData"></a></li>
+                                <li><a data-action="collapse"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 operate-btn">
+                        <div class="add-left col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <button class="btn bg-teal" data-toggle="modal" data-target=".timedTaskAdd">
+                                <i class="icon-plus2"></i>新增
+                            </button>
+                        </div>
+                        <div class="edit-right col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <button class="btn bg-danger-400 pull-right" data-operate="delete">
+                                <i class="icon-trash"></i>删除
+                            </button>
+                            <button class="btn bg-primary-400 pull-right" data-toggle="modal" data-target=".timedTaskEdit" data-operate="edit">
+                                <i class="icon-pencil7"></i>编辑
+                            </button>
+                            <button class="btn pull-right" data-operate="stop">
+                                <i class="icon-cross3"></i>暂停
+                            </button>
+                            <button class="btn pull-right bg-success-600" data-operate="start">
+                                <i class="icon-spinner3"></i>启动
+                            </button>
+                            <button class="btn bg-teal pull-right" data-operate="run">
+                                <i class="icon-spinner4"></i>运行
+                            </button>
+                        </div>
+                    </div>
+
+                    <table class="table  table-bordered text-center timedTask-list" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center">所属系统</th>
+                                <th class="text-center">名称</th>
+                                <th class="text-center">执行代码</th>
+                                <th class="text-center">频率</th>
+		                        <th class="text-center">运行时间</th>
+		                        <th class="text-center">最后运行</th>
+                                <th class="text-center">状态</th>
+                                <th class="text-center">提醒给</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- Footer -->
+	            <div class="footer text-muted" v-html="footer"></div>
+	            <!-- /footer -->
+
+            </div>
+            <!-- /content area -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /页面内容 -->
+
+    <!--新增-->
+    <div class="modal fade timedTaskAdd">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h5 class="modal-title">新增</h5>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-horizontal" action="#" id="timedTaskAdd">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                所属系统
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="targetSystem" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                <span class="text-danger">*</span>执行对象
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="targetObject" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                <span class="text-danger">*</span>执行方法
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="targetMethod" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                <span class="text-danger">*</span>执行类型
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <select class="form-control selectbox" name="jobType">
+	                        		<option value="statefulJob" >单行(阻塞)</option>
+	                        		<option value="job">并行(非阻塞)</option>
+	                        	</select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                               <span class="text-danger">*</span> 执行器类型
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+	                        	<select class="form-control selectbox" name="taskType">
+	                        		<option value="LOCAL" >本地(LOCAL)</option>
+	                        		<option value="DUBBO">远程(DUBBO)</option>
+	                        	</select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                <span class="text-danger">*</span>频率
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="taskCron" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">说明</label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="taskDesc" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right">通知给</label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 personnelAdd">
+                                <div class="input-group personnelAddBtn">
+                                	<input type="hidden" name="contactEmail" class="personnelAddValue">
+                                    <input type="text" name="contactName" class="form-control personnelAddName" placeholder="请选择" readonly>
+                                    <span class="input-group-addon"><i class="icon-search4"></i></span>
+                                </div>
+                                <div class="personnelAddContent col-lg-12">
+                                    <ul id='personnelAddTree' class="ztree col-lg-12"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary submit">确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--编辑-->
+    <div class="modal fade timedTaskEdit">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h5 class="modal-title">编辑</h5>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-horizontal" action="#" id="timedTaskEdit">
+                        <input type="hidden" name="taskGroup" class="form-control">
+                        <input type="hidden" name="taskName" class="form-control">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                所属系统
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="targetSystem" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                <span class="text-danger">*</span>执行对象
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="targetObject" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                <span class="text-danger">*</span>执行方法
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="targetMethod" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                               <span class="text-danger">*</span> 执行类型
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <select class="form-control selectbox" name="jobType">
+	                        		<option value="statefulJob" >单行(阻塞)</option>
+	                        		<option value="job">并行(非阻塞)</option>
+	                        	</select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                <span class="text-danger">*</span>执行器类型
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+	                        	<select class="form-control selectbox" name="taskType">
+	                        		<option value="LOCAL" >本地(LOCAL)</option>
+	                        		<option value="DUBBO">远程(DUBBO)</option>
+	                        	</select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                <span class="text-danger">*</span>频率
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="taskCron" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">说明</label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="taskDesc" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right">通知给</label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 personnelEdit">
+                                <div class="input-group personnelEditBtn">
+                                	<input type="hidden" name="contactEmail" class="personnelEditValue">
+                                    <input type="text" name="contactName" class="form-control personnelEditName" placeholder="请选择" readonly>
+                                    <span class="input-group-addon"><i class="icon-search4"></i></span>
+                                </div>
+                                <div class="personnelEditContent col-lg-12">
+                                    <ul id='personnelEditTree' class="ztree col-lg-12"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary submit">确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /页面容器 -->
+</body>
+</html>

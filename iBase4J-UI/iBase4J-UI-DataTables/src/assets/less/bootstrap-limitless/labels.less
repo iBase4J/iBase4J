@@ -1,0 +1,295 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Labels component
+*
+*  Overrides for labels bootstrap component
+*
+*  Version: 1.2
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base
+// -------------------------
+
+.label {
+    display: inline-block;
+    font-weight: 500;
+    padding: 2px 5px 1px 5px;
+    line-height: @line-height-base;
+    border: 1px solid transparent;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.1px;
+    border-radius: @border-radius-small;
+
+    // Quick fix for labels in buttons
+    .btn & {
+        top: 0;
+    }
+
+    // Account for labels in navs
+    .list-group-item.active > &,
+    .nav-pills > .active > a > &,
+    .nav-tabs-solid > .active > a > &,
+    .nav-tabs[class*=bg-] > li > a > & {
+        color: @badge-active-color;
+        background-color: @badge-active-bg;
+        border-color: @badge-active-bg;
+    }
+
+    // Stick labels to the right in list group
+    .list-group-item > & {
+        @media (min-width: @screen-sm-min) {
+            float: right;
+
+            + .label {
+                margin-right: @element-horizontal-spacing;
+            }
+        }
+    }
+}
+
+
+// Common styles for labels and badges
+// -------------------------
+
+.label,
+.badge {
+
+    // Make caret centered vertically
+    > .caret {
+        margin-top: -2px;
+    }
+
+    // Remove shadow from dropdown toggle
+    .open &.dropdown-toggle {
+        .box-shadow(none);
+    }
+
+    // Add hover state effect
+    &[href] {
+        &:hover,
+        &:focus {
+            .opacity(0.85);
+        }
+    }
+}
+
+
+// Label colors
+// -------------------------
+
+// Default
+.label-default {
+    border-color: @label-default-bg;
+    &[href] {
+        &:hover,
+        &:focus {
+            background-color: @label-default-bg;
+        }
+    }
+}
+
+// Primary
+.label-primary {
+    border-color: @label-primary-bg;
+    &[href] {
+        &:hover,
+        &:focus {
+            background-color: @label-primary-bg;
+        }
+    }
+}
+
+// Success
+.label-success {
+    border-color: @label-success-bg;
+    &[href] {
+        &:hover,
+        &:focus {
+            background-color: @label-success-bg;
+        }
+    }
+}
+
+// Info
+.label-info {
+    border-color: @label-info-bg;
+    &[href] {
+        &:hover,
+        &:focus {
+            background-color: @label-info-bg;
+        }
+    }
+}
+
+// Warning
+.label-warning {
+    border-color: @label-warning-bg;
+    &[href] {
+        &:hover,
+        &:focus {
+            background-color: @label-warning-bg;
+        }
+    }
+}
+
+// Danger
+.label-danger {
+    border-color: @label-danger-bg;
+    &[href] {
+        &:hover,
+        &:focus {
+            background-color: @label-danger-bg;
+        }
+    }
+}
+
+
+// Striped labels
+// -------------------------
+
+// Left border is default
+.label-striped {
+    background-color: #f5f5f5;
+    color: @text-color;
+    border-left-width: 2px;
+    padding: @padding-xs-vertical @padding-xs-horizontal;
+
+    // Reverse side border width
+    &.label-striped-right {
+        border-left-width: 1px;
+        border-right-width: 2px;
+    }
+
+    // Remove rounded corners
+    &,
+    &.label-icon {
+        border-radius: 0;
+    }
+
+    // Hover effect for links
+    &[href] {
+        &:hover,
+        &:focus {
+            color: @text-color;
+            background-color: @gray-lighter;
+            .box-shadow(none);
+        }
+    }
+}
+
+
+// Flat labels
+// -------------------------
+
+.label-flat {
+    background-color: transparent;
+    border-width: 2px;
+    border-radius: 0;
+    padding: 1px 4px 0 4px;
+
+    // Remove background color and shadow on hover
+    &[href] {
+        &:hover,
+        &:focus {
+            background-color: transparent;
+            .box-shadow(none);
+        }
+    }
+}
+
+
+// Labels with icon only
+// -------------------------
+
+// Base
+.label-icon {
+    padding: @padding-base-vertical;
+    border-radius: @btn-border-radius-small;
+    line-height: 1;
+
+    // Remove top edge from icon
+    > i {
+        top: 0;
+    }
+
+    &.label-flat {
+        padding: @padding-base-vertical - 1;
+    }
+}
+
+// XLarge
+.label-icon-xlg {
+    padding: @padding-xlarge-vertical;
+
+    &.label-flat {
+        padding: @padding-xlarge-vertical - 1;
+    }
+}
+
+// Large
+.label-icon-lg {
+    padding: @padding-large-vertical;
+
+    &.label-flat {
+        padding: @padding-large-vertical - 1;
+    }
+}
+
+// Small
+.label-icon-sm {
+    padding: @padding-small-vertical;
+
+    &.label-flat {
+        padding: @padding-small-vertical - 1;
+    }
+}
+
+// Mini
+.label-icon-xs {
+    padding: @padding-xs-vertical;
+
+    &.label-flat {
+        padding: @padding-xs-vertical - 1;
+    }
+}
+
+
+// Label options
+// -------------------------
+
+// Rounded
+.label-rounded {
+    border-radius: 100px;
+
+    // Add extra horizontal space to rounded labels, but not for icons
+    &:not(.label-icon) {
+        padding-left: @padding-base-vertical;
+        padding-right: @padding-base-vertical;
+    }
+}
+
+// Roundless
+.label-roundless {
+    border-radius: 0;
+}
+
+// Block level label
+.label-block {
+    display: block;
+
+    .form-control + & {
+        margin-top: @padding-base-vertical;
+    }
+    &.text-left {
+        text-align: left;
+        margin-right: 0;
+    }
+    &.text-right {
+        text-align: right;
+        margin-left: 0;
+    }
+}

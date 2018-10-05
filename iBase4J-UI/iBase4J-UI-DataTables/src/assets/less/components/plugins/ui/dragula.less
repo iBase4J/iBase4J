@@ -1,0 +1,58 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Dragula - drag and drop library
+*
+*  Styles for Dragula Drag and drop plugin
+*
+*  Version: 1.0
+*  Latest update: Nov 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    .opacity(0.8);
+
+}
+
+// Remove bottom margin from the second last item in dropdown menu
+.gu-unselectable.dropdown-menu li:nth-last-child(2) {
+    margin-bottom: 0;
+}
+
+
+// Remove borders from toolbar pills
+.nav-pills-toolbar > li.gu-mirror:not(.active) > a {
+    border: 0;
+}
+
+// Hide element
+.gu-hide {
+    display: none !important;
+}
+
+// Disable selection
+.gu-unselectable {
+    .user-select(none);
+}
+
+// Mute draggable element
+.gu-transit {
+    .opacity(0.5);
+}
+
+// Draggable handle
+.dragula-handle {
+    color: @text-muted;
+    cursor: pointer;
+
+    // Hover state
+    &:hover,
+    &:focus {
+        color: @text-color;
+    }
+}

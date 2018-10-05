@@ -1,0 +1,51 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Datatables Scroller
+*
+*  Drawing the rows required for the current display only, for fast operation
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.DTS {
+
+    // Prevent word wrap
+    tbody {
+        th,
+        td {
+            white-space: nowrap;
+        }
+    }
+
+    // Loading text
+    .DTS_Loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 200px;
+        height: 20px;
+        margin-top: -(@line-height-computed);
+        margin-left: -100px;
+        z-index: 1;
+
+        border: 1px solid #999;
+        padding: @content-padding-large 0;
+        text-align: center;
+        background-color: fade(#fff, 50%);
+    }
+
+    // Scroller areas
+    .dataTables_scrollHead,
+    .dataTables_scrollFoot {
+        background-color: #fff;
+    }
+    .dataTables_scrollBody {
+        z-index: 2;
+    }
+}

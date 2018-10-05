@@ -1,0 +1,32 @@
+/*label styling */
+.cke_pbckcode_form .cke_dialog_ui_labeled_content {
+    display        : inline-block;
+    vertical-align : middle;
+    margin-left    : 6px;
+}
+/*select styling */
+.cke_pbckcode_form .cke_dialog_ui_input_select select {
+    background-color : white;
+    border           : 1px solid #ccc;
+    border-radius    : 4px;
+    color            : #555;
+    display          : inline-block;
+    font-family      : "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size        : 12px;
+    height           : auto;
+    margin-bottom    : 0;
+    padding          : 0;
+    vertical-align   : middle;
+    width            : 110px;
+}
+
+ /* ace reset needed due to ckeditor style */
+.cke_pbckcode_ace.ace_editor * {
+    font-family : 'Monaco', 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace;
+    font-size   : 12px;
+}
+
+/*good font color on dark theme*/
+.cke_pbckcode_ace.ace_dark * {
+    color : inherit;
+}

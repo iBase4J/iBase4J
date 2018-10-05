@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>香巴林卡智慧景区平台 | 短信发送设置</title>
+
+    <!-- 全局样式 -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="../../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/colors.css" rel="stylesheet" type="text/css">
+    <!-- /全局样式 -->
+
+    <!-- 自定义样式 -->
+    <link href="../../extends/css/common.css" rel="stylesheet" type="text/css">
+    <!-- /自定义样式 -->
+
+    <!-- js核心库-->
+    <script type="text/javascript" src="../../assets/js/core/libraries/vue.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/blockui.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/bootbox.min.js"></script>
+    <!-- /js核心库 -->
+
+    <!-- js主题库 -->
+    <script type="text/javascript" src="../../assets/js/core/libraries/jquery_ui/core.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/validation/additional_methods.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/switchery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/switch.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/selectboxit.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/editors/summernote/summernote.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/ui/moment/moment.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/jquery.formautofill.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/app.js"></script>
+    <!-- /js主题库 -->
+
+    <!-- js自定义 -->
+    <script src="../../extends/js/common.js"></script>
+    <script src="../../assets/js/pages/form_input_groups.js"></script>
+    <script src="../../assets/js/pages/form_validation.js"></script>
+    <script src="../../extends/js/msg/msgConfig.js"></script>
+    <!-- /js自定义 -->
+</head>
+
+<body>
+<!-- 页面容器-->
+<div class="page-container">
+    <!-- 页面内容 -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Page header -->
+            <div class="page-header page-header-default border-bottom-lg border-bottom-teal">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-bold">公共信息</span> - 短信发送设置</h4>
+                    </div>
+                </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb">
+                        <li><a href="/main/welcome.html"><i class="icon-home2 position-left"></i>首页</a></li>
+                        <li>公共信息</li>
+                        <li class="active">短信发送设置</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /page header -->
+
+            <!-- Content area -->
+            <div class="content">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                            <i class="icon-volume-medium position-left"></i>短信发送设置</h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+	                            <li><a data-action="reload" data-fnReload="refreshData"></a></li>
+	                            <li><a data-action="collapse"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <form class="form-horizontal" action="#" id="msgConfigEdit">
+                        	<input type="hidden" name="id" />
+                            <fieldset class="content-group">
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right"><span class="text-danger">*</span>短信平台地址：</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 no-padding">
+                                        <input type="text" name="smsPlatUrl" class="form-control" placeholder="请输入短信平台地址">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right"><span class="text-danger">*</span>短信平台帐号：</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 no-padding">
+                                        <input type="text" name="smsPlatAccount" class="form-control" placeholder="请输入短信平台帐号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right"><span class="text-danger">*</span>短信平台密码：</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 no-padding">
+                                        <input type="password" name="smsPlatPassword" class="form-control" placeholder="请输入短信平台密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right"><span class="text-danger">*</span>短信签名：</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 no-padding">
+                                        <input type="text" name="senderName" class="form-control" placeholder="请输入短信签名">
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">客户下单：</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 no-padding">
+                                    	<div class="radio-inline">
+                                            <label class="choice-inline">
+                                                 <input type="radio" name="orderIsSend" class="styled" value="1">发送短信
+                                            </label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <label class="choice-inline">
+                                               <input type="radio" name="orderIsSend" class="styled" value="0">不发送短信
+                                            </label>
+                                        </div>
+                                        <div>客户下订单时是否给商家发短信</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">客户付款：</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 no-padding">
+                                    	<div class="radio-inline">
+                                            <label class="choice-inline">
+                                                 <input type="radio" name="payIsSend" class="styled" value="1">发送短信
+                                            </label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <label class="choice-inline">
+                                               <input type="radio" name="payIsSend" class="styled" value="0">不发送短信
+                                            </label>
+                                        </div>
+                                       <div> 客户付款时是否给商家发短信</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">商家发货：</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 no-padding">
+                                    	<div class="radio-inline">
+                                            <label class="choice-inline">
+                                                 <input type="radio" name="sendGoodsIsSend" class="styled" value="1">发送短信
+                                            </label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <label class="choice-inline">
+                                               <input type="radio" name="sendGoodsIsSend" class="styled" value="0">不发送短信
+                                            </label>
+                                        </div>
+                                        <div>商家发货时是否给客户发短信</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">用户注册：</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 no-padding">
+                                    	<div class="radio-inline">
+                                            <label class="choice-inline">
+                                                 <input type="radio" name="registIsSend" class="styled" value="1">发送短信
+                                            </label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <label class="choice-inline">
+                                               <input type="radio" name="registIsSend" class="styled" value="0">不发送短信
+                                            </label>
+                                        </div>
+                                        <div>用户注册时是否给客户发短信</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2 text-right">收货验证码：</label>
+                                    <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 no-padding">
+                                    	<div class="radio-inline">
+                                            <label class="choice-inline">
+                                                 <input type="radio" name="adviceGoodsIsSend" class="styled" value="1">发送短信
+                                            </label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <label class="choice-inline">
+                                               <input type="radio" name="adviceGoodsIsSend" class="styled" value="0">不发送短信
+                                            </label>
+                                        </div>
+                                        <div>用户付款后是否给客户发收货验证码</div>
+                                    </div>
+                                </div>
+                                
+	                            <div class="text-right">
+	                                <button type="reset" class="btn btn-default" id="reset">重置 <i
+	                                        class="icon-reload-alt position-right"></i></button>
+	                                <button type="button" class="btn btn-primary submit">提交 <i
+	                                        class="icon-arrow-right14 position-right"></i></button>
+	                            </div>
+                             </fieldset>
+                         </form>
+                     </div>
+                </div>
+                <!-- Footer -->
+	            <div class="footer text-muted" v-html="footer"></div>
+	            <!-- /footer -->
+            </div>
+            <!-- /content area -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /页面内容 -->
+</div>
+<!-- /页面容器 -->
+</body>
+</html>

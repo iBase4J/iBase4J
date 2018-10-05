@@ -1,0 +1,31 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Columns reorder
+*
+*  Easily modify the column order of a table through drop-and-drag of column headers
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Highlight cloned header
+.DTCR_clonedTable {
+    background-color: fade(#fff, 80%);
+    z-index: 202;
+    cursor: move;
+
+    // Mute background and add border
+    th,
+    td {
+        border: 1px solid @table-border-color!important;
+    }
+}
+
+// Add colored pointer
+.DTCR_pointer {
+    width: 1px;
+    background-color: @brand-primary;
+    z-index: 201;
+}

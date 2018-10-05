@@ -1,0 +1,22 @@
+.news-columns{
+    width: 132px;
+    padding: 0;
+    margin-right: 15px;
+}
+.news-columns li a{
+    display: block;
+    padding: 12px 30px;
+    line-height: 20px;
+    width: 100%;
+    font-weight: 500;
+}
+.news-manage{
+    padding: 0;
+    width:-webkit-calc(100% - 150px);
+	width:-moz-calc(100% - 150px);
+	width:calc(100% - 150px);
+}
+.newsDelete .modal-dialog{
+    margin-top: 20%;
+}
+

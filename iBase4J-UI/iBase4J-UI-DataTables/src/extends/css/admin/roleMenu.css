@@ -1,0 +1,9 @@
+.menu-permission > tbody > tr > td:nth-child(2) {
+    text-align: left !important;
+}
+.checker, .checker span {
+    padding: 0 !important;
+}
+.content button {
+	margin-left: 10px;
+}

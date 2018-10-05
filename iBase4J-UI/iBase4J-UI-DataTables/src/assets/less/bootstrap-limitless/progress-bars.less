@@ -1,0 +1,155 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Progress bars component
+*
+*  Overrides for progress bars bootstrap component
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base class
+// -------------------------
+
+// Outer container
+.progress {
+    position: relative;
+    margin-bottom: 0;
+    height: @progress-base-height;
+    .box-shadow(inset 0 1px 1px fade(#000, 10%));
+}
+
+// Bar of progress
+.progress-bar {
+    line-height: @progress-base-height;
+    overflow: hidden;
+}
+
+// Rounded progress bars
+.progress-rounded {
+    &,
+    > .progress-bar {
+        border-radius: 100px;
+    }
+}
+
+
+// Enhanced bars
+// -------------------------
+
+.progress {
+
+    // Progress bar back text
+    .progressbar-back-text {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        font-size: @font-size-small;
+    }
+
+    // Progress bar front text
+    .progressbar-front-text {
+        display: block;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        font-size: @font-size-small;
+    }
+
+    // Right alignment
+    &.right {
+
+        // Adjust progress bar
+        .progress-bar {
+            right: 0;
+            float: right;
+        }
+
+        // Adjust text
+        .progressbar-front-text {
+            position: absolute;
+            right: 0;
+        }
+    }
+
+    // Vertical orientation
+    &.vertical {
+        width: 50px;
+        height: 100%;
+        display: inline-block;
+
+        // Add horizontal spacing
+        & + & {
+            margin-left: @content-padding-small;
+        }
+
+        // Progress bar adjustment
+        .progress-bar {
+            width: 100%;
+            height: 0;
+            .transition(height 0.6s ease);
+        }
+
+        // Bottom direction
+        &.bottom {
+            position: relative;
+
+            .progressbar-front-text {
+                position: absolute;
+                bottom: 0;
+            }
+
+            .progress-bar {
+                position: absolute;
+                bottom: 0;
+            }
+        }
+    }
+}
+
+
+// Optional sizing
+// -------------------------
+
+// Large
+.progress-lg {
+    height: @progress-large-height;
+
+    .progress-bar {
+        line-height: @progress-large-height;
+    }
+}
+
+// Small
+.progress-sm {
+    height: @progress-small-height;
+}
+
+// Mini
+.progress-xs {
+    height: @progress-mini-height;
+}
+
+// Tiny
+.progress-xxs {
+    height: @progress-tiny-height;
+}
+
+// Micro
+.progress-micro {
+    height: @progress-micro-height;
+}
+
+// Remove text in small bars 
+.progress-sm,
+.progress-xs,
+.progress-xxs,
+.progress-micro {
+    .progress-bar {
+        font-size: 0;
+    }
+}

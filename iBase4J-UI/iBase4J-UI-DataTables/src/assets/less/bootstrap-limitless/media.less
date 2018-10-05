@@ -1,0 +1,252 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Media list component
+*
+*  Overrides for media list bootstrap component
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Basic styling
+// -------------------------
+
+// Media base
+.media {
+    margin-top: @line-height-computed;
+    position: relative;
+}
+
+// Override hidden overflow
+.media,
+.media-body {
+    overflow: visible;
+}
+
+// Enable absolute positioning
+.media-left,
+.media-right,
+.media-body {
+    position: relative;
+}
+
+// Reset margins on headings for tighter default spacing
+.media-heading {
+    margin-bottom: 2px;
+    display: block;
+}
+
+// Media list variation
+.media-list {
+    margin-bottom: 0;
+}
+
+
+// Set left/right horizontal spacing
+// -------------------------
+
+// Left
+.media-right,
+.media > .pull-right {
+    padding-left: @content-padding-large;
+}
+
+// Right
+.media-left,
+.media > .pull-left {
+    padding-right: @content-padding-large;
+}
+
+
+// Make media element stacked on mobile
+// -------------------------
+
+@media (max-width: @screen-xs-max) {
+    .stack-media-on-mobile {
+        text-align: center;
+
+        .media-annotation {
+            display: block;
+
+            &.dotted:not(.pull-right):before {
+                content: none;
+                margin: 0;
+            }
+        }
+
+        .media-heading .media-annotation {
+            margin-left: 0;
+            margin-right: 0;
+            padding-bottom: 5px;
+        }
+
+        .media-left,
+        .media-right,
+        .media-body {
+            display: block;
+            width: auto;
+            padding-left: 0;
+            padding-right: 0;
+
+            img {
+                width: 100%;
+                height: auto;
+                max-height: none;
+            }
+        }
+
+        .media-body,
+        .media-right {
+            margin-top: @content-padding-base;
+        }
+
+        .media-heading {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+
+// Media elements
+// -------------------------
+
+// Image size
+.media-left,
+.media-right,
+.thumbnail .media {
+    img:not(.media-preview) {
+        width: 40px;
+        height: 40px;
+        max-width: none;
+    }
+}
+
+// Badge
+.media-badge {
+    position: absolute;
+    left: -10px;
+    top: -2px;
+
+    // Add 2px border for better visual separation
+    &,
+    &[class*=bg-] {
+        border: 2px solid;
+    }
+
+    // Remove that border in navbar on mobile
+    @media (max-width: @grid-float-breakpoint-max) {
+        .navbar-inverse & {
+            border: 0;
+            top: 0;
+        }
+    }
+}
+
+// Annotation
+.media-annotation {
+    color: @text-muted;
+    font-size: @font-size-small;
+    line-height: @line-height-small;
+    font-weight: 400;
+
+    // Inside media heading
+    .media-heading & {
+        margin-left: @element-horizontal-spacing;
+    }
+
+    // Icon
+    i {
+        font-size: @font-size-base;
+    }
+
+    // Add bullet to the annotation
+    &.dotted:not(.pull-right):before {
+        content: '•';
+        margin-right: (@element-horizontal-spacing + 3);
+    }
+}
+
+// Media header
+.media-header {
+    white-space: nowrap;
+    margin-top: @line-height-computed;
+    font-weight: 500;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+
+// Layouts
+// -------------------------
+
+// Bordered list
+.media-list-bordered {
+    > li {
+        border-top: 1px solid @gray-lighter;
+        padding-top: @content-padding-base;
+        margin-top: @content-padding-base;
+
+        &:first-child {
+            padding-top: 0;
+            border-top-width: 0;
+        }
+    }
+
+    &.media-list-linked .media-header {
+        margin-bottom: @content-padding-base;
+    }
+}
+
+// Linked list
+.media-list-linked {
+
+    // Remove spacing
+    .media {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    // Link itself
+    .media-link {
+        display: block;
+        padding: @content-padding-base @content-padding-large;
+        color: @text-color;
+
+        &:hover,
+            &:focus {
+                background-color: #fafafa;
+                color: @text-color;
+            }
+        }
+
+        // Update header
+        .media-header {
+            padding-left: @content-padding-large;
+            padding-right: @content-padding-large;
+            margin-top: @content-padding-small;
+            margin-bottom: @content-padding-small;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+
+        // First item top border
+        &.media-list-bordered {
+            > li:first-child {
+                border-top-width: 1px;
+            }
+
+            > .media-header {
+            margin-top: 0;
+
+            &:first-child {
+                border-top-width: 0;
+            }
+        }
+    }
+}

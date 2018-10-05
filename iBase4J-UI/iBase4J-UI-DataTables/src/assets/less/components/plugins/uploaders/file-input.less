@@ -1,0 +1,569 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Bootstrap file input
+ *
+ *  File input styling for Bootstrap 3.0
+ *
+ *  Version: 1.3
+ *  Latest update: Aug 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Core styles
+// ------------------------------
+
+// Base
+.file-input {
+
+	// Remove red border and shadow from input with error
+	&.has-error {
+		.form-control {
+			border-color: @input-border;
+			outline: 0;
+			.box-shadow(none);
+		}
+	}
+
+	// Add horizontal spacing to icons on desktops
+	@media (min-width: @screen-sm-min) {
+		.btn > [class*=icon-],
+		.btn > .glyphicon {
+			margin-right: 5px;
+		}
+	}
+}
+
+// File object
+.file-object {
+    margin: 0 0 -(@list-spacing) 0;
+    padding: 0;
+}
+
+
+
+// File input styling
+// ------------------------------
+
+// Browse button
+.btn-file {
+    position: relative;
+    overflow: hidden;
+
+    // Hide original input
+	input[type=file] {
+	    position: absolute;
+	    top: 0;
+	    right: 0;
+	    min-width: 100%;
+	    min-height: 100%;
+	    text-align: right;
+	    opacity: 0;
+	    background: none repeat scroll 0 0 transparent;
+	    cursor: inherit;
+	    display: block;
+	}
+}
+
+// Caption name
+.file-caption-name {
+    display: inline-block;
+    overflow: hidden;
+    word-break: break-all;
+
+    // Add spacing between icon and text
+	[class*=icon-],
+	.glyphicon {
+		margin-right: @element-horizontal-spacing;
+	}
+
+	// Display empty caption text as a placeholder
+	.file-input-new & {
+		color: @text-muted;
+
+		// And hide icon
+		> [class*=icon-],
+		> .glyphicon {
+			display: none;
+		}
+	}
+}
+
+// Error message
+.file-error-message {
+	position: relative;
+    background-color: #f2dede;
+    color: #a94442;
+    text-align: center;
+    border-radius: @border-radius-base;
+    padding: 10px;
+    margin: 0 5px 5px 5px;
+
+    // Top spacing correction if inside drop zone
+    .file-drop-zone & {
+    	margin-top: 5px;
+    }
+
+    // Close button
+	.close {
+	    margin-top: 1px;
+	    color: #a94442;
+	}
+
+	// List of errors
+	pre,
+	ul {
+	    margin: @list-spacing 0;
+	    text-align: left;
+	}
+}
+
+// Disabled caption
+.file-caption-disabled {
+    background-color: @input-bg-disabled;
+    cursor: @cursor-disabled;
+
+    // Change text color
+    .file-caption-name {
+    	color: #ccc;
+    }
+}
+
+
+//
+// Preview
+//
+
+// Preview modal
+.file-preview-detail-modal {
+    text-align: left;
+}
+
+// File preview container
+.file-preview {
+	border-radius: @border-radius-small;
+	border: 1px solid @panel-default-border;
+	width: 100%;
+	margin-bottom: @line-height-computed;
+	position: relative;
+	text-align: center;
+
+	// Close button
+	> .close {
+	    font-weight: 400;
+	    font-size: @font-size-h5;
+	    opacity: 1;
+	    position: absolute;
+	    top: 0;
+	    right: 0;
+	    background-color: #fff;
+	    padding: 8px;
+	    line-height: 0.6;
+	    border-radius: @border-radius-base;
+	    color: @color-grey-700;
+		.opacity(1);
+	}
+}
+
+// Thumbnail frame
+.file-preview-frame {
+    margin: @padding-base-vertical;
+    margin-right: 0;
+    height: 160px;
+    display: table;
+    float: left;
+    vertical-align: middle;
+
+    // Inside drop zone
+    .file-drop-zone & {
+    	border: 1px solid @panel-inner-border;
+    	border-radius: @border-radius-base;
+    }
+}
+
+// Thumbnail image
+.file-preview-image {
+    height: 160px;
+    vertical-align: middle;
+    border-radius: @border-radius-base;
+
+    // Prevent image overflow
+	@media (max-width: @screen-xs-max) {
+		max-width: 100%;
+	}
+}
+
+// Preview text
+.file-preview-text {
+    text-align: left;
+    width: 160px;
+    margin-bottom: 2px;
+    color: #428bca;
+    background-color: #fff;
+    overflow-x: hidden;
+}
+
+// Other files preview
+.file-preview-other {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 160px;
+    height: 160px;
+
+    // Override for preview icon, use Icomoon instead
+    &:after {
+		content: "\ea0c";
+		font-family: "icomoon";
+		display: block;
+		font-size: @icon-font-size * 4;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+    }
+
+    // Hide glyphicon icon
+    .glyphicon {
+    	display: none;
+    }
+}
+
+// Status
+.file-preview-status {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	color: @text-color;
+	background-color: fade(#fafafa, 80%);
+	border-top: 1px solid @panel-default-border;
+	padding: @padding-base-vertical @padding-base-horizontal;
+	font-size: @font-size-small;
+	line-height: @line-height-small;
+	color: @text-color!important;
+
+	// Collapse if empty
+	&:empty {
+		padding: 0;
+		background-color: transparent;
+		border: 0;
+	}
+}
+
+
+//
+// Loading indicator
+//
+
+// Give it minimum height
+.file-thumb-loading {
+	min-height: (@icon-font-size * 2) + (@content-padding-large * 2) + ((@padding-base-vertical * 2) + @line-height-computed + 1);
+}
+
+// Loading icon
+.file-thumb-loading,
+.file-uploading {
+
+	// Background
+	&:before {
+		content: "";
+		display: inline-block;
+		background-color: @color-slate-900;
+		width: (@icon-font-size * 2);
+		height: (@icon-font-size * 2);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -(((@icon-font-size * 2) + ((@padding-base-vertical * 2) + @line-height-computed + 1)) / 2) 0 0 -(@icon-font-size);
+		border-radius: @border-radius-base;
+		.box-shadow(0 1px 5px fade(#fff, 50%));
+	}
+
+	// Icon itself
+	&:after {
+		content: "\eb55";
+		font-family: "icomoon";
+		display: inline-block;
+		position: absolute;
+		color: #fff;
+		top: 50%;
+		left: 50%;
+		margin: -((@icon-font-size + ((@padding-base-vertical * 2) + @line-height-computed + 1)) / 2) 0 0 -(@icon-font-size / 2);
+		font-size: @icon-font-size;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		.animation(rotation 1s linear infinite);
+	}
+}
+
+// Indicator
+.file-upload-indicator {
+    padding-top: @padding-xs-vertical + 1;
+    padding-bottom: @padding-xs-vertical + 1;
+    cursor: default;
+    text-align: left;
+    padding-left: (@padding-base-vertical + 1);
+}
+
+
+//
+// Default elements visibility
+//
+
+// Standard upload
+.file-input-new {
+	.file-preview,
+	.close,
+	.glyphicon-file,
+	.fileinput-remove-button,
+	.fileinput-upload-button {
+		display: none;
+	}
+}
+
+// Ajax upload
+.file-input-ajax-new {
+	.fileinput-remove-button,
+	.fileinput-upload-button,
+	.fileinput-remove,
+	.file-caption-name > [class*=icon-],
+	.file-caption-name > .glyphicon {
+	    display: none;
+	}
+}
+
+
+
+// AJAX upload styling
+// ------------------------------
+
+// File actions
+.file-actions {
+    margin-top: 5px;
+    border-top: 1px solid @gray-lighter;
+
+    // Remove horizontal spacing from icons
+    .btn > [class*=icon-],
+    .btn > .glyphicon {
+    	margin-right: 0;
+    }
+}
+
+// Buttons position
+.file-footer-buttons {
+    float: right;
+}
+
+// Caption
+.file-footer-caption {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 160px;
+    text-align: center;
+    font-size: @font-size-mini;
+    padding: 12px 7px 7px 7px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Preview error
+.file-preview-error {
+	.opacity(0.65);
+	.box-shadow(none);
+}
+
+
+//
+// Dropzone
+//
+
+// Base
+.file-drop-zone {
+    border: 1px dashed @panel-default-border;
+    border-radius: @border-radius-base;
+    height: 100%;
+    vertical-align: middle;
+    margin: 5px;
+    padding: 5px;
+}
+
+// Text title
+.file-drop-zone-title {
+    color: @text-muted;
+    font-size: @font-size-h3;
+    font-weight: 300;
+    padding: 85px 10px;
+}
+
+// Highlight file
+.file-highlighted {
+    border-color: #ccc;
+    background-color: #fafafa;
+}
+
+
+//
+// Progress
+//
+
+// Thumbnail progress
+.file-thumb-progress {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    right: 0;
+
+    // Progress bars
+	.progress,
+	.progress-bar {
+	    height: 5px;
+	    border-radius: 0;
+	    font-size: 0;
+	}
+}
+
+// Thumb footer
+.file-thumbnail-footer {
+    position: relative;
+}
+
+// IE 10 fix
+.btn-file ::-ms-browse {
+    width: 100%;
+    height: 100%;
+}
+
+
+//
+// Fullscreen modal
+//
+
+.file-zoom-fullscreen {
+	&.modal {
+	    position: fixed;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;
+	}
+
+	.modal-dialog {
+	    position: fixed;
+	    margin: 0;
+	    width: 100%;
+	    height: 100%;
+	    padding: 0;
+	}
+
+	.modal-content {
+	    border-radius: 0;
+	    .box-shadow(none);
+	}
+
+	.modal-body {
+	    overflow-y: auto;
+	}
+}
+
+
+//
+// Zoom
+//
+
+// Dialog
+.file-zoom-dialog {
+
+	// Navigate buttons
+	.btn-navigate {
+	    position: absolute;
+	    top: 50%;
+	    margin-top: -((floor(@font-size-h6 * @line-height-base) + @content-padding-large) - @icon-font-size);
+	    padding: 0;
+	    border: 0;
+	    background: transparent;
+	    outline: none;
+	    color: #fff;
+	    .opacity(0.7);
+
+	    // Icons
+	    > i {
+	    	display: block;
+	    	font-size: (@icon-font-size * 2);
+	    }
+
+	    // Hover state
+		&:not([disabled]):hover,
+		&:not([disabled]):focus {
+		    outline: none;
+		    .box-shadow(none);
+		    .opacity(0.5);
+		}
+
+		// Disabled state
+		&[disabled] {
+		    .opacity(0.3);
+		}
+	}
+
+	// Left button
+	.btn-prev {
+	    left: -((@icon-font-size * 2) + 10);
+	}
+
+	// Right button
+	.btn-next {
+	    right: -((@icon-font-size * 2) + 10);
+	}
+
+	// Floating buttons
+	.floating-buttons {
+	    position: absolute;
+	    top: @content-padding-large;
+	    right: @content-padding-large;
+	    background-color: @modal-content-bg;
+	    border-radius: 0 0 0 @border-radius-base;
+
+	    // Add padding
+	    &:not(:empty) {
+		    padding: 0 0 @content-padding-large @content-padding-large;
+	    }
+
+	    // Add z-index to buttons
+	    &,
+	    .btn {
+	    	z-index: 3000;
+	    }
+	}
+}
+
+// Actions
+.kv-zoom-actions {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    margin-top: -(@content-padding-large - (((@padding-xs-vertical * 2) + @icon-font-size + 2)) / 2);
+}
+
+// Content
+.file-zoom-content {
+    height: 480px;
+    text-align: center;
+}
+
+
+//
+// Drag
+//
+
+.file-drag-handle {
+    margin-right: 2px;
+    float: left;
+    cursor: move;
+    cursor: -webkit-grabbing;
+
+    &:hover {
+    	.opacity(0.7);
+    }
+}

@@ -1,0 +1,28 @@
+.dataTables_filter .add-btn {
+    margin-right: 20px;
+    position: relative;
+    top: -3px;
+}
+.dataTables_filter .add-btn i{
+    margin-right: 5px;
+    position: relative;
+    top: -3px;
+}
+.status {
+    display: inline-block !important;
+    margin-left: 76px;
+    position: relative;
+}
+
+.status-text {
+    position: absolute;
+    left: -54px;
+    top: 8px;
+}
+.status .selectboxit-container .selectboxit{
+    width: 111.86px;
+}
+.status .selectboxit-list {
+    min-width: 111.86px;
+    padding: 0;
+}

@@ -1,0 +1,7 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Floating button
+*
+* ---------------------------------------------------------------------------- */
+
+$(function(){!function(a,b){"use strict";function c(a,b){for(var c=0,d=a.length;d>c;c++)i=a[c].querySelector("."+r),i.addEventListener(b,f,!1)}function d(a){for(var b=0,c=a.length;c>b;b++)a[b].setAttribute(n,l),a[b].setAttribute(o,q)}function e(a){return b.querySelectorAll("["+n+'="'+a+'"]')}function f(a){for(j=a.target;j&&!j.getAttribute(n);)if(j=j.parentNode,!j)return;k=j.getAttribute(o)===p?q:p,j.setAttribute(o,k)}var g,h,i,j,k,l="click",m="hover",n="data-fab-toggle",o="data-fab-state",p="open",q="closed",r="fab-menu-btn";a.Modernizr&&Modernizr.touch&&(h=e(m),d(h)),g=e(l),c(g,"click")}(window,document);});

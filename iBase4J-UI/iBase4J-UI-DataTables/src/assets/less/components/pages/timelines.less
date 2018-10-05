@@ -1,0 +1,459 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Timeline
+ *
+ *  Styles for timeline in 3 layouts: left, right and centered
+ *
+ *  Version: 1.1
+ *  Latest update: Dec 11, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Base
+// ------------------------------
+
+.timeline {
+	position: relative;
+	height: 100%;
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 50%;
+		margin-left: -(@timeline-line-width);
+		background-color: @timeline-line-color;
+		height: (@timeline-line-width * 2);
+		width: (@timeline-line-width * 2);
+		border-radius: 50%;
+		z-index: 1;
+	}
+
+	&:after {
+		top: auto;
+		bottom: 0;
+	}
+}
+
+
+// Container
+// ------------------------------
+
+.timeline-container {
+	position: relative;
+	padding-top: (@line-height-computed / 2);
+	margin-top: -(@line-height-computed / 2);
+	padding-bottom: 1px;
+
+	&:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 50%;
+		margin-left: -(@timeline-line-width / 2);
+		background-color: @timeline-line-color;
+		height: 100%;
+		width: @timeline-line-width;
+		z-index: -1;
+	}
+}
+
+
+// Content
+// ------------------------------
+
+// Row
+.timeline-row {
+	position: relative;
+}
+
+// Content
+.timeline-content {
+	margin-bottom: @line-height-computed;
+}
+
+
+// Date
+// ------------------------------
+
+.timeline-date {
+	text-align: center;
+	background-color: @body-bg;
+	position: relative;
+	z-index: 1;
+	padding-top: @line-height-computed;
+	padding-bottom: @line-height-computed;
+	margin-bottom: @line-height-computed;
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 50%;
+		margin-left: -(@timeline-line-width);
+		background-color: @timeline-line-color;
+		height: (@timeline-line-width * 2);
+		width: (@timeline-line-width * 2);
+		border-radius: 50%;
+		z-index: 1;
+	}
+
+	&:after {
+		top: auto;
+		bottom: 0;
+	}
+
+	.panel & {
+		background-color: @panel-bg;
+	}
+}
+
+
+// Time
+// ------------------------------
+
+.timeline-time {
+	text-align: center;
+	padding-top: @line-height-computed;
+	padding-bottom: @line-height-computed;
+	background-color: @body-bg;
+	position: relative;
+	margin-bottom: @line-height-computed;
+
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 50%;
+		margin-left: -(@timeline-line-width);
+		background-color: @timeline-line-color;
+		height: (@timeline-line-width * 2);
+		width: (@timeline-line-width * 2);
+		border-radius: 50%;
+	}
+
+	&:after {
+		top: auto;
+		bottom: 0;
+	}
+
+	.panel & {
+		background-color: @panel-bg;
+	}
+
+	span {
+		display: block;
+		color: @text-muted;
+		font-size: @font-size-small;
+
+		&:before {
+			content: '•';
+			display: inline-block;
+			margin-right: 5px;
+			position: relative;
+			top: 1px;
+		}
+	}
+
+	@media (min-width: @screen-md) {
+		&:before,
+		&:after {
+			content: none;
+		}
+	}
+}
+
+
+// Icon and image
+// ------------------------------
+
+.timeline-icon {
+	width: @timeline-icon-size;
+	height: @timeline-icon-size;
+	border-radius: 50%;
+	margin: 0 auto @line-height-computed auto;
+	background-color: #fff;
+	border: @timeline-icon-border-width solid @body-bg;
+
+	.panel & {
+		border-color: @panel-bg;
+	}
+
+	// Icon
+	div {
+		border-radius: 50%;
+		height: 100%;
+		.box-shadow(0 0 0 2px @timeline-line-color inset);
+
+		&[class*=bg-] {
+			.box-shadow(none);
+		}
+
+		> i {
+			display: block;
+			line-height: (@timeline-icon-size - (@timeline-icon-border-width * 2));
+			top: 0;
+		}
+	}
+
+	// Image
+	img {
+		width: (@timeline-icon-size - (@timeline-icon-border-width * 2));
+		height: (@timeline-icon-size - (@timeline-icon-border-width * 2));
+		border-radius: 50%;
+	}
+}
+
+
+
+@media (min-width: @screen-md) {
+
+	// Positions
+	// ------------------------------
+
+	// Center layout
+	.timeline-center {
+
+		// Row
+		.timeline-row {
+			margin-right: 50%;
+			padding-right: (@timeline-icon-size - @timeline-icon-border-width);
+		}
+
+		// Even post
+		.post-even {
+			margin-right: 0;
+			padding-right: 0;
+			margin-left: 50%;
+			padding-left: (@timeline-icon-size - @timeline-icon-border-width);
+		}
+
+		// Full width post
+		.post-full {
+			margin: 0;
+			padding: 0;
+
+			.timeline-content {
+				position: relative;
+
+				&:before,
+				&:after {
+					content: '';
+					border-style: solid;
+					border-color: @body-bg;
+					display: block;
+					position: absolute;
+					left: 0;
+					right: 0;
+				}
+
+				&:before {
+					border-width: @timeline-icon-border-width 0 0 0;
+					top: -(@timeline-icon-border-width + 1);
+				}
+
+				&:after {
+					border-width: 0 0 @timeline-icon-border-width 0;
+					bottom: -(@timeline-icon-border-width + 1);
+				}
+			}
+		}
+	}
+
+	// Left layout
+	.timeline-left {
+
+		// Vertical line
+		.timeline-container:after,
+		&:before,
+		&:after,
+		.timeline-date:before,
+		.timeline-date:after {
+			left: (@timeline-icon-size / 2);
+		}
+
+		// Content padding
+		.timeline-row,
+		.timeline-date {
+			padding-left: (@timeline-icon-size + @line-height-computed);
+		}
+	}
+
+	// Right layout
+	.timeline-right {
+
+		// Vertical line
+		.timeline-container:after,
+		&:before,
+		&:after,
+		.timeline-date:before,
+		.timeline-date:after {
+			left: auto;
+			right: (@timeline-icon-size / 2);
+			margin-left: 0;
+			margin-right: -(@timeline-line-width);
+		}
+		.timeline-container:after {
+			margin-right: -(@timeline-line-width / 2);
+		}
+
+		// Content padding
+		.timeline-row,
+		.timeline-date {
+			padding-right: (@timeline-icon-size + @line-height-computed);
+		}
+	}
+
+	// Reduce date vertical spacing in both
+	.timeline-left .timeline-date,
+	.timeline-right .timeline-date {
+		padding-top: (@line-height-computed / 2);
+		padding-bottom: (@line-height-computed / 2);
+	}
+
+
+	// Icon
+	// ------------------------------
+
+	// Base
+	.timeline-icon {
+		position: absolute;
+		top: (@line-height-computed / 2);
+
+		&:after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			margin-top: -(@timeline-line-width / 2);
+			height: @timeline-line-width;
+			width: ((@timeline-icon-size / 2) - (@timeline-icon-border-width * 2));
+			background-color: @timeline-line-color;
+			z-index: 1;
+		}
+	}
+
+	// In left layout
+	.timeline-left {
+		.timeline-icon {
+			left: 0;
+
+			&:after {
+				left: 100%;
+				margin-left: @timeline-icon-border-width;
+			}
+		}
+	}
+
+	// In right layout
+	.timeline-right {
+		.timeline-icon {
+			right: 0;
+
+			&:after {
+				right: 100%;
+				margin-right: @timeline-icon-border-width;
+			}
+		}
+	}
+
+	// In centered layout
+	.timeline-center {
+
+		// Row
+		.timeline-row {
+			&:not(.post-full) .timeline-icon {
+				left: 100%;
+				margin-left: -(@timeline-icon-size / 2);
+			}
+
+			&.post-even .timeline-icon {
+				left: auto;
+				right: 100%;
+				margin-left: 0;
+				margin-right: -(@timeline-icon-size / 2);
+			}
+		}
+
+		// Left horizontal line
+		.timeline-icon:after {
+			right: 100%;
+			margin-right: @timeline-icon-border-width;
+		}
+
+		// Right horizontal line
+		.post-even .timeline-icon:after {
+			left: 100%;
+			margin-left: @timeline-icon-border-width;
+		}
+
+		// Full width post
+		.post-full .timeline-icon {
+			position: static;
+
+			&:after {
+				content: none;
+			}
+		}
+	}
+
+
+	// Time
+	// ------------------------------
+
+	.timeline-time {
+		padding: 0;
+		text-align: inherit;
+		background-color: transparent;
+
+		&:before {
+			content: none;
+		}
+	}
+
+	// In left and right layouts
+	.timeline-left,
+	.timeline-right {
+		.timeline-time {
+			padding-top: (@line-height-computed / 2);
+			margin-bottom: (@line-height-computed);
+			padding-left: (@line-height-computed / 2);
+		}
+	}
+	.timeline-right .timeline-time {
+		text-align: right;
+		padding-left: 0;
+		padding-right: (@line-height-computed / 2);
+	}
+
+	// In center layout
+	.timeline-center {
+		.timeline-time,
+		.post-full .timeline-time {
+			position: absolute;
+			left: 100%;
+			top: ((@line-height-computed / 2) + 5);
+			width: 100%;
+			padding-left: (@timeline-icon-size - @timeline-icon-border-width);
+		}
+
+		.post-even,
+		.post-full {
+			.timeline-time {
+				left: auto;
+				right: 100%;
+				padding-left: 0;
+				padding-right: (@timeline-icon-size - @timeline-icon-border-width);
+				text-align: right;
+			}
+		}
+
+		.post-full .timeline-time {
+			right: 50%;
+			top: ((@line-height-computed / 2) - 5);
+		}
+	}
+}

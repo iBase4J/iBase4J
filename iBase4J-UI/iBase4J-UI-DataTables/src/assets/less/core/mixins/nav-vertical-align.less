@@ -1,0 +1,23 @@
+// Navbar vertical align
+//
+// Vertically center elements in the navbar.
+// Example: an element has a height of 30px, so write out `.navbar-vertical-align(30px);` to calculate the appropriate top margin.
+
+.navbar-large-vertical-align(@element-height) {
+  margin-top: ((@navbar-height-large - @element-height) / 2);
+  margin-bottom: ((@navbar-height-large - @element-height) / 2);
+}
+
+.navbar-small-vertical-align(@element-height) {
+  margin-top: ((@navbar-height-small - @element-height) / 2);
+  margin-bottom: ((@navbar-height-small - @element-height) / 2);
+}
+
+.navbar-mini-vertical-align(@element-height) {
+  margin-top: ((@navbar-height-mini - @element-height) / 2);
+  margin-bottom: ((@navbar-height-mini - @element-height) / 2);
+}
+
+
+
+

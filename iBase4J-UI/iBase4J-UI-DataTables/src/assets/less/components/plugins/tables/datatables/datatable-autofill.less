@@ -1,0 +1,133 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Autofill extension
+*
+*  Spreadsheets such as Excel and Google Docs have a very handy data duplication
+*  option of an auto fill tool
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Handle
+.dt-autofill-handle {
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    z-index: 102;
+    border: 1px solid @brand-primary;
+    background: @brand-primary;
+}
+
+// Select frame
+.dt-autofill-select {
+    position: absolute;
+    z-index: 1001;
+    background-color: @brand-primary;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, fade(#fff, 75%) 5px, fade(#fff, 75%) 10px);
+
+    // Vertical lines
+    &.top,
+    &.bottom {
+        height: 1px;
+    }
+
+    // Horizontal lines
+    &.left,
+    &.right {
+        width: 1px;
+    }
+}
+
+
+// Confirmation dialog
+.dt-autofill-list {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    margin-left: -250px;
+    background-color: @modal-content-bg;
+    border-radius: @border-radius-base;
+    border: 1px solid @modal-content-border-color;
+    z-index: @zindex-modal;
+    padding: @list-spacing 0;
+
+    // List
+    ul {
+        display: table;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+
+        // List items
+        li {
+            display: table-row;
+
+            // Highlight row on hover
+            &:hover {
+                background-color: @dropdown-link-hover-bg;
+            }
+        }
+    }
+
+    // Text label
+    .dt-autofill-question {
+        display: table-cell;
+        padding: @padding-base-vertical @content-padding-base;
+
+        // Text label input
+        input[type=number] {
+            padding: 6px;
+            width: 30px;
+            margin: -2px 0;
+        }
+    }
+
+    // Confirm button
+    .dt-autofill-button {
+        display: table-cell;
+        padding: @padding-base-vertical @content-padding-base;
+        text-align: right;
+
+        // Button itself
+        .btn {
+            padding: 3px;
+            background-color: @brand-primary;
+            color: #fff;
+            font-size: 0;
+
+            // Checkmark icon
+            &:after {
+                content: '\e9c3';
+                font-family: 'Icomoon';
+                display: block;
+                font-size: @icon-font-size;
+                width: @icon-font-size;
+                line-height: 1;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            // Mute button on hover
+            &:hover {
+                .opacity(0.85);
+            }
+        }
+    }
+}
+
+// Overlay
+.dt-autofill-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: @modal-backdrop-bg;
+    z-index: @zindex-modal-background;
+    .opacity(@modal-backdrop-opacity);
+}

@@ -1,0 +1,64 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Form wizard
+*
+*  jQuery plugin which turns a form into a multistep wizard
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Container
+.panel-flat > .ui-formwizard {
+    border-top: 1px solid @panel-inner-border;
+}
+
+// Title
+.form-wizard-title {
+    margin: 0 0 @line-height-computed 0;
+    padding-bottom: @content-padding-large;
+    border-bottom: 1px solid @panel-inner-border;
+}
+
+// Count
+.form-wizard-count {
+    float: left;
+    display: block;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid @brand-success;
+    color: @brand-success;
+    text-align: center;
+    line-height: 34px;
+    margin-right: 10px;
+}
+
+// Step
+.ui-formwizard .step {
+    padding: @content-padding-large;
+    padding-bottom: 0;
+}
+
+
+// Pagination
+// ------------------------------
+
+.form-wizard-actions {
+    text-align: right;
+    padding: @content-padding-large;
+    padding-top: 0;
+
+    .panel-body & {
+        padding: 0;
+    }
+
+    .btn + .btn {
+        margin-left: 5px;
+    }
+}

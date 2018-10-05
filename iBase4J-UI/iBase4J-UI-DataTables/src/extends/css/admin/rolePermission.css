@@ -1,0 +1,28 @@
+.menu-permission > tbody > tr > td:nth-child(2) {
+    text-align: left !important;
+}
+
+.permission {
+    position: relative;
+}
+
+.permission .permissionContent {
+    display: none;
+    position: absolute;
+    overflow-y: auto;
+    z-index: 999;
+    border: 1px solid #ddd;
+    max-height: 300px;
+    background-color: #fff;
+}
+.checker, .checker span {
+    padding: 0 !important;
+}
+
+#permissionEdit .datatable-header {
+	padding: 0 !important;
+}
+
+.content button {
+	margin-left: 10px;
+}

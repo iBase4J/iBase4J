@@ -1,0 +1,1509 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Sidebar layouts
+ *
+ *  Styles for sidebar components, main navigation and sidebar itself
+ *
+ *  Version: 1.2
+ *  Latest update: Nov 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Sidebar base
+// ------------------------------
+
+// Base
+.sidebar {
+	background-color: @sidebar-dark-bg;
+	color: #fff;
+	position: relative;
+	width: 100%;
+	display: none;
+
+	// For desktop only
+	@media (min-width: @grid-float-breakpoint) {
+		display: table-cell;
+		vertical-align: top;
+		width: @sidebar-base-width;
+	}
+
+	// Main z-index
+	&-main {
+		z-index: 99;
+	}
+
+	// Secondary z-index
+	&-secondary {
+		z-index: 98;
+	}
+
+	// Opposite z-index
+	&-opposite {
+		display: none;
+		z-index: 97;
+
+		@media (min-width: @grid-float-breakpoint) {
+			.sidebar-opposite-visible & {
+				display: table-cell;
+			}
+		}
+	}
+
+	// Add 1px border if both sidebars are dark
+	&:not(.sidebar-default) + &:not(.sidebar-default) {
+		border-left: 1px solid fade(#fff, 10%)
+	}
+}
+
+// Light sidebar
+.sidebar-default {
+	background-color: @sidebar-light-bg;
+	color: @text-color;
+	border-bottom: 1px solid @panel-default-border;
+
+	// For desktop only
+	@media (min-width: @grid-float-breakpoint) {
+		border-bottom: 0;
+		border-right: 1px solid @panel-default-border;
+
+		.content-wrapper + & {
+			border-left: 1px solid @panel-default-border;
+		}
+	}
+}
+
+// Sidebar content
+.sidebar-content {
+	position: relative;
+	padding-bottom: (@line-height-computed - @navigation-padding-base-vertical);
+}
+
+
+
+// Sidebar togglers
+// ------------------------------
+
+// Toggle sidebar visibility according to the class name
+.sidebar-all-hidden .sidebar-main,
+.sidebar-all-hidden .sidebar-secondary,
+.sidebar-main-hidden .sidebar-main,
+.sidebar-detached-hidden .sidebar-detached > .sidebar,
+.sidebar-secondary-hidden .sidebar-secondary {
+	display: none;
+}
+
+// Toggle sidebars on mobile
+@media (max-width: @grid-float-breakpoint-max) {
+	.sidebar-mobile-main .sidebar-main,
+	.sidebar-mobile-secondary .sidebar-secondary,
+	.sidebar-mobile-opposite .sidebar-opposite,
+	.sidebar-mobile-detached .sidebar-detached > .sidebar {
+		display: block;
+	}
+}
+
+
+
+// Sidebar content
+// ------------------------------
+
+// Title
+.category-title {
+	position: relative;
+	margin: 0;
+	padding: @navigation-padding-base-vertical @content-padding-large;
+	padding-right: (@content-padding-large + @content-padding-small + @icon-font-size);
+	border-bottom: 1px solid fade(#fff, 10%);
+
+	// Small titles
+	> span {
+		display: block;
+		margin-top: (@font-size-base - @font-size-mini);
+		text-transform: uppercase;
+		font-weight: 500;
+		font-size: @font-size-mini;
+		line-height: @line-height-mini;
+	}
+
+	// Single icon
+	> i {
+		position: absolute;
+		right: @content-padding-large;
+		top: 50%;
+		margin-top: -(@icon-font-size / 2);
+	}
+
+	// List of icons
+	.icons-list {
+		position: absolute;
+		right: @content-padding-large;
+		top: 50%;
+		margin-top: -(@icon-font-size / 2);
+	}
+
+	// In light sidebar
+	.sidebar-default & {
+		border-bottom-color: @panel-default-border;
+	}
+}
+
+// Content
+.category-content {
+	position: relative;
+	padding: @content-padding-large;
+}
+
+
+
+// Default sidebar navigation
+// ------------------------------
+
+// Basic nav
+.navigation {
+	margin: 0;
+	padding: (@line-height-computed / 2) 0;
+	list-style: none;
+	position: relative;
+
+	// Add top space to the nav inside category content
+	.sidebar-user + .sidebar-category & {
+		padding-top: 0;
+	}
+
+	// Hide child nav levels
+	.hidden-ul {
+	  display: none;
+	}
+
+	// All level nav items
+	li {
+		position: relative;
+
+		// Add 1px spacing between items
+		+ li {
+			margin-top: 1px;
+		}
+
+		// Add extra space for categories
+		+ .navigation-header {
+			margin-top: (@line-height-computed / 2);
+		}
+
+		// All level links
+		a {
+			color: @navigation-dark-color;
+			display: block;
+			.transition(~"background 0.15s linear, color 0.15s linear"); // Add minor animation to all level links
+
+			// Hover state
+			&:hover,
+			&:focus {
+				background-color: @navigation-dark-hover-bg;
+				color: @navigation-dark-hover-color;
+			}
+
+			// Left icons
+			> i {
+				float: left;
+				top: 0;
+				margin-top: 2px;
+				margin-right: @content-padding-base;
+				.transition(opacity 0.2s ease-in-out);
+
+				&.pull-right {
+					margin-right: 0;
+					margin-left: @content-padding-base;
+				}
+			}
+		}
+
+		// Disabled state
+		&.disabled {
+			> a {
+				&,
+				&:hover,
+				&:focus {
+					color: inherit;
+					background-color: transparent;
+					cursor: @cursor-disabled;
+					.opacity(0.3);
+				}
+			}
+		}
+
+		// Direction arrows
+		> .has-ul {
+			position: relative;
+			padding-right: (@content-padding-large + @icon-font-size);
+
+			// Arrow icons
+			&:after {
+				content: "\e9c7";
+				font-family: "icomoon";
+				font-size: @icon-font-size;
+				display: block;
+				position: absolute;
+				top: 50%;
+				margin-top: -(@icon-font-size / 2);
+				right: @content-padding-large; 
+				line-height: 1;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				.rotate(0deg);
+				.transition(-webkit-transform 0.2s ease-in-out);
+			}
+		}
+		&.active > .has-ul:after {
+		  .rotate(90deg);
+		}
+
+		// Divider
+		&.navigation-divider {
+			margin: (@line-height-computed / 2) 0;
+			height: 1px;
+			background-color: fade(#fff, 10%);
+
+			// In light sidebar
+			.sidebar-default & {
+				background-color: @gray-lighter;
+			}
+		}
+	}
+
+	// First level items
+	> li {
+
+		// Links
+		> a {
+			padding: @navigation-padding-base-vertical @navigation-padding-base-horizontal;
+			min-height: (@line-height-computed + (@navigation-padding-base-vertical * 2));
+			font-weight: 500;
+		}
+
+		// Active state links
+		&.active {
+
+			// Set color for active link
+			> a {
+				&,
+				&:hover,
+				&:focus {
+					background-color: @navigation-dark-active-bg;
+					color: @navigation-dark-active-color;
+				}
+
+				// Make all texts white
+				> [class*=text-] {
+					color: @navigation-dark-active-color;
+				}
+
+				// No color dependency - make all labela and badges white
+				.label,
+				.badge {
+					background-color: transparent;
+					border-color: transparent;
+					color: @navigation-dark-active-color;
+					.transition(background-color ease-in-out 0.2s);
+				}
+			}
+		}
+
+		// All child lists
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			background-color: fade(#000, 15%);
+			.box-shadow(0 1px 0 fade(#fff, 5%));
+
+			// Nav items
+			li {
+				a {
+					padding: @content-padding-small @content-padding-large;
+					padding-left: (@content-padding-large + @content-padding-base + @icon-font-size);
+					min-height: (@line-height-computed + @content-padding-large);				
+				}
+			}
+
+			// Nav headers
+			.navigation-header {
+				padding-left: (@content-padding-large + @content-padding-base + @icon-font-size);
+			}
+		}
+
+		// Child list
+		> ul {
+
+			// Child list items
+			> li {
+
+				// Third level
+				> ul {
+					> li > a,
+					> .navigation-header {
+						padding-left: ((@content-padding-large * 2) + @content-padding-base + @icon-font-size);
+					}
+
+					// Fourth level
+					> li > ul {
+						> li > a,
+						.navigation-header {
+							padding-left: ((@content-padding-large * 3) + @content-padding-base + @icon-font-size);
+						}
+					}
+				}
+			}
+
+			// All child list items
+			li {
+
+				// Add extra vertical space
+				&:first-child {
+					padding-top: (@line-height-computed / 2);
+				}
+				&:last-child {
+					padding-bottom: (@line-height-computed / 2);
+				}
+
+				// Active link has darker color
+				&.active {
+					> a {
+						&,
+						&:hover,
+						&:focus {
+							background-color: fade(#000, 20%);
+							color: #fff;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Navigation header
+	.navigation-header {
+		min-height: (@content-padding-small + @line-height-computed);
+		padding: @content-padding-small @content-padding-large;
+		border-bottom: 0;
+		text-transform: uppercase;
+		font-size: @font-size-mini;
+		line-height: @line-height-mini;
+
+		// Text label
+		> span {
+			display: block;
+			margin-top: (@font-size-base - @font-size-mini);
+		}
+
+		// Hide icon divider by default
+		> i {
+			display: none;
+		}
+		> i.pull-right {
+			margin-top: ((@line-height-computed - @icon-font-size) / 2);
+		}
+
+		// Text and link styles
+		&,
+		& a {
+			color: fade(#fff, 50%);
+			font-weight: 400;
+		}
+
+		// Link states and elements
+		a {
+			&:hover,
+			&:focus {
+				color: #fff;
+			}
+
+			i {
+				float: none;
+				margin: 0;
+			}
+		}
+
+		// In default sidebar
+		.sidebar-default & {
+			&,
+			a {
+				color: @text-muted;
+			}
+
+			a:hover,
+			a:focus {
+				color: @text-color;
+			}
+		}
+	}
+
+	// Scrollspy navigation
+	&.nav {
+		> .active > .hidden-ul {
+			display: block;
+		}
+
+		// Display children lists
+		@media (max-width: @grid-float-breakpoint-max) {
+			> li > .hidden-ul {
+				display: block;
+			}
+		}
+	}
+
+	// Labels and badges
+	.label,
+	.badge {
+		float: right;
+	}
+}
+
+// Navigation in light sidebar
+.sidebar-default {
+	.navigation {
+
+		// All levels
+		li {
+			> a {
+				color: @navigation-light-color;
+
+				&:hover,
+				&:focus {
+					background-color: @navigation-light-hover-bg;
+				}
+			}
+
+			// Active state
+			&.active {
+				> a {
+					&,
+					&:hover,
+					&:focus {
+						background-color: @navigation-light-active-bg;
+						color: @navigation-light-active-color;
+					}
+
+					// Make all texts dark
+					> [class*=text-] {
+						color: @navigation-light-active-color;
+					}
+				}
+			}
+
+			// Disabled state
+			&.disabled {
+				> a {
+					&,
+					&:hover,
+					&:focus {
+						background-color: transparent;
+					}
+				}
+			}
+
+			// Transparent labels
+			.label-transparent {
+				color: @text-color;
+			}
+		}
+
+		// Child levels
+		> li {
+			ul {
+				background-color: transparent;
+			}
+
+			// Active state colors
+			&.active {
+				> a {
+					&,
+					&:hover,
+					&:focus {
+						background-color: @navigation-light-active-bg;
+						color: @navigation-light-active-color;
+					}
+
+					// Make transparent labels white
+					.label-transparent {
+						color: @navigation-light-active-color;
+					}
+				}
+			}
+		}
+	}
+}
+
+
+//
+// Navigation options
+//
+
+// Navigation with right icons
+.navigation-icons-right {
+	> li {
+		> a {
+			&,
+			&.has-ul {
+				padding-right: @navigation-padding-base-horizontal;
+			}
+
+			// Reverse horizontal margin for icon
+			> i {
+				float: right;
+				margin-right: 0;
+				margin-left: @content-padding-base;
+			}
+		}
+
+		// Hide arrows
+		> a.has-ul:after,
+		&.active > .has-ul:after {
+			content: none;
+		}
+	}
+}
+
+
+// Bordered navigation
+.navigation-bordered {
+	> li {
+		border-top: 1px solid fade(#fff, 5%);
+
+		// Last item border
+		&:last-child {
+			border-bottom: 1px solid fade(#fff, 5%);
+		}
+
+		// Headers
+		&.navigation-header {
+			background-color: fade(#000, 10%);
+		}
+
+		// Remove 1px spacing
+		+ li {
+			margin-top: 0;
+		}
+
+		// Remove box shadow
+		ul {
+			.box-shadow(none);
+		}
+	}
+
+	// Remove extra space in categories
+	li + .navigation-header {
+		margin-top: 0;
+	}
+
+	// In light sidebar
+	.sidebar-default & {
+		> li {
+			border-top: 1px solid @gray-lighter;
+
+			// Darker headers background
+			&.navigation-header {
+				background-color: #fafafa;
+			}
+		}
+	}
+}
+
+
+
+// Navigation sizing
+// ------------------------------
+
+// Large
+.navigation-lg {
+	> li {
+		> a {
+			&,
+			& > span {
+				padding-top: @navigation-padding-large-vertical;
+				padding-bottom: @navigation-padding-large-vertical;
+				min-height: (@line-height-computed + (@navigation-padding-large-vertical * 2));
+			}
+		}
+
+		ul {
+			li {
+				a {
+					padding-top: @navigation-padding-large-vertical - 4;
+					padding-bottom: @navigation-padding-large-vertical - 4;
+					min-height: ((@line-height-computed + (@navigation-padding-large-vertical * 2)) - 8);
+				}
+			}
+		}
+	}
+}
+
+// Small
+.navigation-sm {
+	> li {
+		> a {
+			&,
+			& > span {
+				padding-top: @navigation-padding-small-vertical;
+				padding-bottom: @navigation-padding-small-vertical;
+				min-height: (@line-height-computed + (@navigation-padding-small-vertical * 2));
+			}
+		}
+
+		ul {
+			li {
+				a {
+					padding-top: @navigation-padding-small-vertical - 4;
+					padding-bottom: @navigation-padding-small-vertical - 4;
+					min-height: ((@line-height-computed + (@navigation-padding-small-vertical * 2)) - 8);
+				}
+			}
+		}
+	}
+}
+
+// Mini
+.navigation-xs {
+	> li {
+		> a {
+			&,
+			& > span {
+				padding-top: @navigation-padding-mini-vertical;
+				padding-bottom: @navigation-padding-mini-vertical;
+				min-height: (@line-height-computed + (@navigation-padding-mini-vertical * 2));
+			}
+		}
+
+		ul {
+			li {
+				a {
+					padding-top: @navigation-padding-mini-vertical - 2;
+					padding-bottom: @navigation-padding-mini-vertical - 2;
+					min-height: ((@line-height-computed + (@navigation-padding-mini-vertical * 2)) - 4);
+				}
+			}
+		}
+	}
+}
+
+
+
+// Sidebar layouts
+// ------------------------------
+
+//
+// Fixed sidebar
+//
+
+// Sidebar is hidden on navbar breakpoint
+@media (min-width: @grid-float-breakpoint) {
+
+	// Fixed sidebar
+	.sidebar-fixed {
+		.sidebar-content {
+			position: fixed;
+			width: @sidebar-base-width;
+			max-height: 100%;
+			overflow: auto;
+			top: @navbar-height + 2;
+			bottom: @navbar-height + 2;
+			margin-bottom: -(@navbar-height + 2);
+		}
+
+		// In mini sidebar
+		.sidebar-xs &.sidebar-main {
+			.sidebar-content {
+				width: @sidebar-mini-width;
+			}
+		}
+
+		// In light sidebar
+		&.sidebar-default .sidebar-content {
+			width: @sidebar-base-width - 1; // Exclude 1px border here
+		}
+	}
+
+	// Expanded mini sidebar
+	.sidebar-fixed-expanded {
+
+		// Works only with main sidebar
+		.sidebar-fixed.sidebar-main {
+			position: fixed;
+			display: block;
+			height: 100%;
+			z-index: (@zindex-navbar + 1);
+
+			// Sidebar content
+			.sidebar-content {
+				position: fixed;
+			}
+
+			// Mini sidebar
+			.sidebar-xs & {
+				width: @sidebar-base-width;
+			}
+		}
+
+		// Add left padding to content when expanded
+		.content-wrapper {
+			padding-left: @sidebar-mini-width;
+		}
+	}
+}
+
+// Remove top edge
+.sidebar-xs-indicator .sidebar-fixed .sidebar-content {
+	top: 0!important;
+}
+
+
+//
+// Detached sidebar
+//
+
+// Positioning
+@media (min-width: @grid-float-breakpoint) {
+
+	// If on the left side
+	.has-detached-left {
+		.container-detached {
+			float: right;
+			margin-left: -(@sidebar-base-width);
+			width: 100%;
+		}
+
+		.content-detached {
+			margin-left: (@sidebar-base-width + @grid-gutter-width);
+		}
+
+		.sidebar-detached {
+			float: left;
+		}
+	}
+
+	// If on the right side
+	.has-detached-right {
+		.container-detached {
+			float: left;
+			margin-right: -(@sidebar-base-width);
+			width: 100%;
+		}
+
+		.content-detached {
+			margin-right: (@sidebar-base-width + @grid-gutter-width);
+		}
+
+		.sidebar-detached {
+			float: right;
+
+			&.affix {
+				right: @grid-gutter-width;
+			}
+		}
+	}
+
+	// If hidden
+	.sidebar-detached-hidden {
+		.container-detached {
+			float: none;
+			margin: 0;
+		}
+
+		.content-detached {
+			margin: 0;
+		}
+
+		.sidebar-detached {
+			float: none;
+		}
+	}
+}
+
+// Basic detached sidebar
+.sidebar-detached {
+
+	// Main navigation for scrollspy 
+	.navigation.nav {
+		> .active > .hidden-ul {
+			display: block;
+		}
+
+		// Display children lists
+		@media (max-width: @grid-float-breakpoint-max) {
+			> li > .hidden-ul {
+				display: block;
+			}
+		}
+	}
+
+	// Remove fixed position on mobiles
+	&.affix {
+		position: static;
+	}
+
+
+	// Setup desktop view
+	@media (min-width: @grid-float-breakpoint) {
+		display: block;
+		position: relative;
+		margin-bottom: 0;
+
+		// Light sidebar
+		> .sidebar-default {
+			border: 1px solid @panel-default-border;
+			.box-shadow(0 1px 1px fade(#000, 5%));
+		}
+
+		// Display sidebar as a block element
+		> .sidebar {
+			margin-bottom: 0;
+			display: block;
+			border-radius: @border-radius-base;
+		}
+
+		// Add fixed position on desktops
+		&.affix {
+			position: fixed;
+			top: @line-height-computed;
+			bottom: @line-height-computed;
+			.transition(bottom ease-in-out 0.15s);
+
+			> .sidebar {
+				max-height: 100%;
+				overflow-y: auto;
+			}
+		}
+
+		// Avoid footer overlap
+		&.fixed-sidebar-space {
+			bottom: (@line-height-computed * 4);
+
+			// If footer is navbar
+			.navbar-bottom & {
+				bottom: ((@line-height-computed * 2) + @navbar-height);
+			}
+			.navbar-bottom-lg & {
+				bottom: ((@line-height-computed * 2) + @navbar-height-large);
+			}
+			.navbar-bottom-sm & {
+				bottom: ((@line-height-computed * 2) + @navbar-height-small);
+			}
+			.navbar-bottom-xs & {
+				bottom: ((@line-height-computed * 2) + @navbar-height-mini);
+			}
+		}
+
+		// Add top spacing if navbar is fixed
+		.navbar-fixed & {
+			top: (@navbar-height + (@line-height-computed * 2));
+		}
+		.navbar-fixed-lg & {
+			top: (@navbar-height-large + (@line-height-computed * 2));
+		}
+		.navbar-fixed-sm & {
+			top: (@navbar-height-small + (@line-height-computed * 2));
+		}
+		.navbar-fixed-xs & {
+			top: (@navbar-height-mini + (@line-height-computed * 2));
+		}
+	}
+}
+
+// With separate categories
+.sidebar-separate {
+	@media (min-width: @grid-float-breakpoint) {
+		background-color: transparent;
+
+		// Make categories as separate widgets
+		.sidebar-category {
+			background-color: @sidebar-dark-bg;
+			border-radius: @border-radius-base;
+			margin-bottom: @line-height-computed;
+		}
+
+		// In light sidebar
+		&.sidebar-default {
+			background-color: transparent;
+			border: 0;
+			.box-shadow(none);
+
+			// Make categories white
+			.sidebar-category {
+				background-color: @sidebar-light-bg;
+				border: 1px solid @panel-default-border;
+				.box-shadow(0 1px 1px fade(#000, 5%));
+			}
+		}
+	}
+}
+
+
+//
+// Mini sidebar
+//
+
+// Mini sidebar has smaller width only on desktops
+@media (min-width: @grid-float-breakpoint) {
+	.sidebar-xs {
+
+		// Works only in main sidebar
+		.sidebar-main {
+			width: @sidebar-mini-width;
+
+			// Categories
+			.sidebar-category {
+				display: none;
+			}
+			.sidebar-category-visible {
+				display: block;
+			}
+
+			// Category title
+			.category-title {
+				padding: 0;
+
+				// Icons
+				> i {
+					padding: ((@content-padding-small + @icon-font-size) / 2) 0;
+					float: none;
+					display: block;
+					top: 0;
+				}
+
+				// Text label
+				> span {
+					display: none;
+				}
+
+				// List of icons
+				.icons-list {
+					position: static;
+				    text-align: center;
+					margin-top: 0;
+					padding-top: @content-padding-small + ((@line-height-computed - @icon-font-size) / 2) + (@font-size-base - @font-size-mini);
+					padding-bottom: @content-padding-small + ((@line-height-computed - @icon-font-size) / 2) + (@font-size-base - @font-size-mini);
+
+
+				    // Stack items
+				    > li {
+				    	display: block;
+				    	margin-left: 0;
+
+				    	// Add vertical spacing
+				    	+ li {
+				    		margin-top: (@content-padding-large / 2);
+				    	}
+				    }
+				}
+
+				// H6 heading
+				&.h6 {
+					.icons-list {
+					    padding-top: @content-padding-large + (((@headings-line-height * @font-size-h6) - @icon-font-size) / 2);
+					    padding-bottom: @content-padding-large + (((@headings-line-height * @font-size-h6) - @icon-font-size) / 2);
+					}
+				}
+
+				// H5 heading
+				&.h5 {
+					.icons-list {
+					    padding-top: @content-padding-large + (((@headings-line-height * @font-size-h5) - @icon-font-size) / 2);
+					    padding-bottom: @content-padding-large + (((@headings-line-height * @font-size-h5) - @icon-font-size) / 2);
+					}
+				}
+			}
+
+			// Main navigation
+			.navigation {
+
+				// Navigation items
+				> li {
+					> a {
+						display: block;  
+						text-align: center;
+						padding-left: 0;
+						padding-right: 0;
+
+						// Add colored title
+						> span {
+							display: none;
+							position: absolute;
+							top: 0;
+							right: -(@sidebar-base-width);
+							background-color: @navigation-dark-active-label-bg;
+							border: 1px solid @navigation-dark-active-border;
+							padding: (@navigation-padding-base-vertical - 1) @navigation-padding-base-horizontal;
+							width: @sidebar-base-width;
+							text-align: left;
+							color: @navigation-dark-active-label-color;
+							cursor: pointer;
+							.border-right-radius(@border-radius-base);
+
+							// Label/badge
+							.label,
+							.badge {
+								background-color: transparent;
+								border-color: transparent;
+								color: @navigation-dark-active-label-color;
+								padding-left: 0;
+								padding-right: 0;
+							}
+						}
+
+						// Icon
+						> i {
+							margin: 2px 0;
+							display: block;
+							float: none;
+						}
+					}
+
+					// If has children
+					&,
+					&.active {
+						> .has-ul:after {
+							content: none;
+						}
+					}
+					.has-ul {
+						> span {
+							border-radius: 0 @border-radius-base 0 0;
+							cursor: default;
+						}
+					}
+
+					// Hide active list
+					&.active {
+						> ul {
+							display: none!important;
+						}
+					}
+
+					// Disabled state
+					&.disabled {
+						&:hover {
+							> ul,
+							> a > span {
+								display: none!important;
+							}
+						}
+					}
+
+					// Make things on hover
+					&:hover {
+
+						// Display list on hover
+						> ul {
+							display: block!important;
+						}
+
+						// Display title on hover
+						> a {
+							> span {
+								display: block;
+							}
+						}
+
+						// Keep item highlighted on hover (dark sidebar)
+						&:not(.active) > a {
+							background-color: fade(#000, 10%);
+							color: #fff;
+						}
+					}
+
+					// Children list
+					> ul {
+						position: absolute;
+						right: -(@sidebar-base-width);
+						top: @line-height-computed + 24;
+						width: @sidebar-base-width;
+						display: none;
+						background-color: @sidebar-dark-bg;
+						border-left: 1px solid fade(#fff, 10%);
+						border-radius: 0 0 @border-radius-base 0;
+
+						> li {
+							> a {
+								padding-left: @content-padding-large;
+								padding-right: @content-padding-large;
+							}
+
+							> ul > li {
+								> a {
+									padding-left: (@content-padding-large * 1.5);
+								}
+
+								> ul > li {
+									> a {
+										padding-left: (@content-padding-large * 3);
+									}
+								}
+							}
+						}
+					}
+				}
+
+				// Navigation header
+				> .navigation-header {
+					padding: 0;
+					text-align: center;
+
+					// Icons
+					> i {
+						display: block;
+						top: 0;
+						padding: ((@content-padding-small + @icon-font-size) / 2) 0;
+					}
+
+					// Hide text label
+					> span {
+						display: none;
+					}
+				}
+			}
+
+			// Sidebar user block
+			.sidebar-user {
+				.category-content {
+					padding-left: 0;
+					padding-right: 0;
+				}
+
+				.media-left,
+				.media-right {
+					padding: 0;
+					text-align: center;
+					display: block;
+
+					> img {
+						max-width: 100%;
+						height: auto!important;
+					}
+
+					> .img-sm {
+						margin-top: 1px;
+						margin-bottom: 1px;
+					}
+
+					> .img-xs {
+						margin-top: 3px;
+						margin-bottom: 3px;
+					}
+				}
+
+				// Hide main content
+				.media-body,
+				.media-right {
+					display: none;
+				}
+			}
+		}
+
+		// Navigation sizing in mini sidebar
+		.sidebar-main {
+
+			// Large
+			.navigation-lg > li > ul {
+				top: (@line-height-computed + (@navigation-padding-large-vertical * 2));
+			}
+
+			// Small
+			.navigation-sm > li > ul {
+				top: (@line-height-computed + (@navigation-padding-small-vertical * 2));
+			}
+
+			// Mini
+			.navigation-xs > li > ul {
+				top: (@line-height-computed + (@navigation-padding-mini-vertical * 2));
+			}
+		}
+
+		// Inside light sidebar
+		.sidebar-main {
+			&.sidebar-default {
+				.navigation {
+					> li {
+						> a > span {
+							background-color: @navigation-light-active-bg;
+							border-color: @navigation-light-active-border;
+							color: @navigation-light-active-label-color;
+							
+							// Label/badge
+							.label,
+							.badge {
+								color: @navigation-light-active-label-color;
+							}
+						}
+						
+						> ul {
+							background-color: @sidebar-light-bg;
+							border: 1px solid @panel-default-border;
+							border-top: 0;
+						}
+
+						// Keep item highlighted on hover (light sidebar)
+						&:hover {						
+							&:not(.active) > a {
+								background-color: @dropdown-link-hover-bg;
+								color: @text-color;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+// Sidebar components
+// ------------------------------
+
+.sidebar {
+
+	// Change columns gutter width
+	.row {
+		margin-left: -5px;
+		margin-right: -5px;
+
+		[class*=col-] {
+			padding-left: 5px;
+			padding-right: 5px;	
+		}
+	}
+
+	// Flat colorpicker
+	.sp-container {
+		@media (max-width: @grid-float-breakpoint-max) {
+			display: block;
+			width: (@sidebar-base-width - (@content-padding-large * 2));
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+	.sp-flat .sp-picker-container {
+		display: block;
+		width: (@sidebar-base-width - (@content-padding-large * 2) - 2);
+	}
+
+	// Panel group
+	.panel-group .panel {
+		border-radius: 0;
+		border-width: 0 0 1px 0;
+
+		&:first-child {
+			border-top-width: 1px;
+		}
+		& + .panel {
+			margin-top: 0;
+		}
+	}
+
+	// Bordered media list
+	.media-list-bordered {
+		> li {
+			border-top: 0;
+			border-bottom: 1px solid @gray-lighter;
+		}
+	}
+
+	// Update components for dark sidebar only
+	&:not(.sidebar-default) {
+		.media {
+
+			// Mute white color
+			.text-muted,
+			.media-annotation {
+				color: fade(#fff, 80%)
+			}
+
+			// Make links white
+			.media-left,
+			.media-body,
+			.media-right {
+				> a {
+					color: #fff;
+				}
+			}
+
+			// Change hover background color
+			.media-link {
+				&:hover,
+				&:focus {
+					background-color: fade(#000, 10%);
+				}
+			}
+
+			// Change badge border color 
+			.media-badge {
+				border-color: @sidebar-dark-bg;
+			}
+		}
+
+		.media-list-bordered {
+			> li {
+				border-color: fade(#fff, 10%);
+			}
+		}
+	}
+
+	// Sidebar thumbnails
+	.thumbnail {
+		margin-bottom: (@line-height-computed / 2);
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		.zoom-image i {
+			font-size: @icon-font-size;
+			margin-top: -(@icon-font-size / 2);
+			margin-left: -(@icon-font-size / 2);
+		}
+	}
+
+	// Checkboxes and radios
+	.sidebar-category {
+		.checkbox,
+		.radio {
+			margin-top: 0;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	// Forms
+	.form-group:last-child {
+	  margin-bottom: 0;
+	}
+}
+
+
+//
+// Tabs
+//
+
+// Basic styles
+.sidebar {
+	.nav-tabs {
+		border-width: 0 0 1px 0;
+
+		// Desktop view setup
+		@media (min-width: @grid-float-breakpoint) {
+			border-width: 1px;
+
+			> li {
+				> a {
+					border-bottom-color: fade(#fff, 10%);
+					background-color: fade(#000, 20%);
+					color: fade(#fff, 60%);
+					border-top: 0;
+					border-radius: 0;
+
+					&:hover,
+					&:focus {
+						color: #fff;
+						border-bottom-color: fade(#fff, 10%);
+					}
+				}
+			}
+
+			// Active state colors
+			> .active {
+				> a,
+				> a:hover,
+				> a:focus {
+					border-top: 0;
+					border-bottom: 0;
+					background-color: transparent;
+					border-color: fade(#fff, 10%);
+					color: #fff;
+				}
+
+				// Remove horizontal borders
+				&:first-child > a {
+					border-left-color: transparent!important;
+				}
+				&:last-child > a {
+					border-right-color: transparent!important;
+				}
+			}
+
+			// Opened dropdown link
+			> .open {
+				> a {
+					color: #fff;
+				}
+
+				&:not(.active) > a {
+					background-color: fade(#000, 20%);
+				}
+			}
+		}
+	}
+}
+
+// Tabs in default sidebar
+.sidebar-default {
+
+	// Tabs base
+	.nav-tabs {
+		@media (min-width: @grid-float-breakpoint) {
+			> li {
+				> a {
+					background-color: #fafafa;
+					border-bottom-color: @panel-default-border;
+					color: @text-muted;
+
+					&:hover,
+					&:focus {
+						color: @text-color;
+						border-bottom-color: @panel-default-border;
+					}
+				}
+			}
+
+			// Active state colors
+			> .active {
+				> a,
+				> a:hover,
+				> a:focus {
+					border-color: @panel-default-border;
+					color: @text-color;
+				}
+			}
+
+			// Opened dropdown link
+			> .open {
+				> a {
+					border-bottom-color: @panel-default-border;
+					color: @text-color;
+				}
+
+				&:not(.active) > a {
+					background-color: #fafafa;
+				}
+			}
+		}
+	}
+
+	// Fix dropdown positions because of the border in light sidebar
+	.nav-justified {
+		@media (min-width: @grid-float-breakpoint) {
+			> li:first-child {
+				.dropdown-menu:not(.dropdown-menu-right) {
+					left: -1px;
+				}
+			}
+
+			> li:last-child {
+				.dropdown-menu-right {
+					right: -1px;
+				}
+			}
+		}
+	}
+}

@@ -86,6 +86,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
 		</dependency>
+		<dependency>
+		  <groupId>com.alipay.sdk</groupId>
+		  <artifactId>alipay-sdk-java</artifactId>
+		  <version>3.3.49.ALL</version>
+		</dependency>
 		<!--  -->
 		<dependency>
 			<groupId>io.swagger</groupId>

@@ -1,0 +1,64 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Fixed columns
+*
+*  Extension that "freezes" in place the left most columns in a scrolling DataTable
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Block out what is behind the fixed column's header and footer
+.DTFC_Cloned {
+    background-color: #fff;
+    border-bottom: 0;
+
+    // Add left/right border
+    &.table {
+
+        // In left column
+        .DTFC_LeftWrapper & {
+            border-right: 1px solid @table-border-color;
+        }
+
+        // In right column
+        .DTFC_RightWrapper & {
+            border-left: 1px solid @table-border-color;
+        }
+    }
+}
+
+// Remove dublicated header arrows and borders
+.DTFC_LeftBodyWrapper,
+.DTFC_RightBodyWrapper {
+    .DTFC_Cloned {
+        thead th {
+            &:before,
+            &:after {
+                content: none;
+            }
+        }
+
+        tbody > tr:first-child {
+            > td,
+            > th {
+                border-top: 0;
+            }
+        }
+    }
+}
+
+// Block out the gap above the scrollbar on the right
+.DTFC_Blocker {
+    background-color: white;
+}
+
+// Hide cloned columns on mobile
+@media (max-width: @screen-xs-max) {
+    .DTFC_LeftWrapper,
+    .DTFC_RightWrapper {
+        display: none;
+    }
+}

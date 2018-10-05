@@ -1,0 +1,238 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Bootstrap switches
+*
+*  Styles for switch.min.js - checkbox/radio toggle switches
+*
+*  Version: 1.1
+*  Latest update: Oct 20, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.bootstrap-switch {
+    display: inline-block;
+    cursor: pointer;
+    margin-top: -2px;
+    margin-right: @element-horizontal-spacing;
+    border-radius: @border-radius-base;
+    border: 1px solid transparent;
+    position: relative;
+    text-align: left;
+    overflow: hidden;
+    vertical-align: middle;
+    .user-select(none);
+    .transition(all ease-in-out .05s);
+
+    // Container
+    .bootstrap-switch-container {
+        display: inline-block;
+        top: 0;
+        border-radius: @border-radius-base;
+        .translate3d(0, 0, 0);
+    }
+
+    // Remove outline
+    &.bootstrap-switch-focused {
+        outline: 0;
+    }
+
+    // Set base styles
+    .bootstrap-switch-handle-on,
+    .bootstrap-switch-handle-off,
+    .bootstrap-switch-label {
+        cursor: pointer;
+        display: inline-block !important;
+        height: 100%;
+        padding: @padding-base-vertical @padding-base-horizontal;
+    }
+
+    // Hide inputs
+    input[type='radio'],
+    input[type='checkbox'] {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        .opacity(0);
+
+        &.form-control {
+            height: auto;
+        }
+    }
+
+    // States
+    &.bootstrap-switch-disabled,
+    &.bootstrap-switch-readonly,
+    &.bootstrap-switch-indeterminate {
+        cursor: default !important;
+
+        .bootstrap-switch-handle-on,
+        .bootstrap-switch-handle-off,
+        .bootstrap-switch-label {
+            cursor: default !important;
+            .opacity(0.5);
+        }
+    }
+
+    // Set animation
+    &.bootstrap-switch-animate .bootstrap-switch-container {
+        .transition(margin-left 0.2s);
+    }
+
+    // Set border radiuses
+    &.bootstrap-switch-inverse {
+        .bootstrap-switch-handle-on {
+            .border-left-radius(0);
+            .border-right-radius(@border-radius-base - 1);
+        }
+        .bootstrap-switch-handle-off {
+            .border-right-radius(0);
+            .border-left-radius(@border-radius-base - 1);
+        }
+    }
+    &.bootstrap-switch-on,
+    &.bootstrap-switch-inverse.bootstrap-switch-off {
+        .bootstrap-switch-label {
+            .border-right-radius(@border-radius-base - 1);
+        }
+    }
+    &.bootstrap-switch-off,
+    &.bootstrap-switch-inverse.bootstrap-switch-on {
+        .bootstrap-switch-label {
+            .border-left-radius(@border-radius-base - 1);
+        }
+    }
+}
+
+
+
+// Handles
+// ------------------------------
+
+// Base
+.bootstrap-switch-handle-on,
+.bootstrap-switch-handle-off {
+    text-align: center;
+    z-index: 1;
+
+    // Contextual alternatives
+    &.bootstrap-switch-default {
+        color: @text-color;
+        background-color: @gray-lighter;
+    }
+    &.bootstrap-switch-primary {
+        color: #fff;
+        background-color: @brand-primary;
+    }
+    &.bootstrap-switch-danger {
+        color: #fff;
+        background-color: @brand-danger;
+    }
+    &.bootstrap-switch-success {
+        color: #fff;
+        background-color: @brand-success;
+    }
+    &.bootstrap-switch-warning {
+        color: #fff;
+        background-color: @brand-warning;
+    }
+    &.bootstrap-switch-info {
+        color: #fff;
+        background-color: @brand-info;
+    }
+}
+
+// Set border radius
+.bootstrap-switch-handle-on {
+    .border-left-radius(@border-radius-base - 1);
+}
+.bootstrap-switch-handle-off {
+    .border-right-radius(@border-radius-base - 1);
+}
+
+
+
+// Label
+// ------------------------------
+
+.bootstrap-switch-label {
+    text-align: center;
+    z-index: 100;
+    color: @text-color;
+    background-color: #fff;
+    position: relative;
+    .box-shadow(0 0 0 1px fade(#000, 10%) inset);
+
+    &:hover {
+        background-color: #fcfcfc;
+    }
+
+    &:active {
+        background-color: #fafafa;
+    }
+
+    // Add vertical lines
+    &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 3px;
+        height: 10px;
+        margin-top: -5px;
+        margin-left: -1px;
+        display: inline-block;
+        border-left: 1px solid @input-border;
+        border-right: 1px solid @input-border;
+    }
+}
+
+
+
+// Sizing
+// ------------------------------
+
+// Large
+.bootstrap-switch-large {
+    .bootstrap-switch-handle-on,
+    .bootstrap-switch-handle-off,
+    .bootstrap-switch-label {
+        padding: @padding-large-vertical @padding-large-horizontal;
+    }
+}
+
+// Mini
+.bootstrap-switch-mini {
+    .bootstrap-switch-handle-on,
+    .bootstrap-switch-handle-off,
+    .bootstrap-switch-label {
+        padding: @padding-xs-vertical @padding-xs-horizontal;
+    }
+}
+
+// Small
+.bootstrap-switch-small {
+    .bootstrap-switch-handle-on,
+    .bootstrap-switch-handle-off,
+    .bootstrap-switch-label {
+        padding: @padding-small-vertical @padding-small-horizontal;
+    }
+}
+
+
+
+// Checkbox specials
+// ------------------------------
+
+.checkbox-switch > label,
+label.checkbox-switch.checkbox-inline {
+    padding: 0;
+}
+.checkbox-switch.checkbox-right .bootstrap-switch {
+    margin-right: 0;
+    margin-left: @element-horizontal-spacing;
+}

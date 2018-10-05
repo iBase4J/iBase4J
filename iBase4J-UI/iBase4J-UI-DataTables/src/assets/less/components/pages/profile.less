@@ -1,0 +1,94 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # User profile
+ *
+ *  Styles for all user profile layouts
+ *
+ *  Version: 1.1
+ *  Latest update: Mar 6, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Cover image layout
+// ------------------------------
+
+.profile-cover {
+	position: relative;
+
+  	// Add extra spacing to navbar
+	& + .navbar {
+		margin-bottom: (@line-height-computed * 2);
+	}
+
+	// Cover details
+	.media {
+		position: absolute;
+		bottom: @line-height-computed;
+		left: @line-height-computed;
+		right: @line-height-computed;
+
+		.btn-default {
+			border-color: @btn-default-bg;
+			.box-shadow(0 0 3px fade(#000, 50%));
+		}
+	}
+
+	// Text styles
+	.media-body,
+	small {
+		color: #fff;
+		text-shadow: 0 0 3px fade(#000, 80%);
+	}
+
+	// Mobile view
+	@media (max-width: @screen-xs-max) {
+		.media {
+			text-align: center;
+			margin-top: 0;
+			bottom: auto;
+			top: (@line-height-computed * 2);
+		}
+
+		.media-left,
+		.media-right {
+			padding: 0;
+			display: block;
+			overflow-x: auto;
+		}
+
+		.media-body {
+			display: block;
+			margin-bottom: @line-height-computed;
+			width: 100%;
+
+			> h1 {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 100%;
+			}
+		}
+	}
+}
+
+// Cover image
+.profile-cover-img {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 350px;
+	.border-top-radius(@border-radius-base);
+
+	@media (max-width: @screen-xs-max) {
+		height: 320px;
+	}
+}
+
+// User thumbnail inside cover
+.media .profile-thumb img {
+	width: 100px;
+	height: 100px;
+	border: 3px solid #fff;
+	.box-shadow(0 0 3px fade(#000, 50%));
+}

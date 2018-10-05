@@ -1,0 +1,391 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Bootstrap select
+*
+*  Styles for bootstrap_select.js - custom select boxes plugin
+*
+*  Version: 1.2
+*  Latest update: Aug 20, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Base
+.bootstrap-select {
+    width: 100%;
+
+    // Button
+    > .btn {
+        width: 100%;
+        padding-right: ((@padding-base-horizontal * 2) + @content-padding-small);
+
+        // Default light button
+        &.btn-default {
+            &,
+            &.disabled {
+                background-color: @input-bg;
+                border-color: @input-border;
+            }
+
+            // When dropdown is opened
+            &:active,
+            .btn-group.open & {
+                border-color: @input-border;
+            }
+        }
+    }
+
+    // Form control
+    &.form-control {
+        padding: 0;
+        border: 0;
+
+        // Make it full width
+        &:not([class*="col-"]) {
+            width: 100%;
+        }
+    }
+
+    // Menu title
+    .popover-title {
+        font-size: @font-size-mini;
+        line-height: @line-height-mini;
+        margin: @list-spacing 0;
+        padding: @padding-base-vertical @padding-base-horizontal;
+    }
+
+    // Custom border color
+    &[class*=border-] {
+        .btn,
+        .dropdown-menu {
+            border-color: inherit;
+        }
+    }
+
+    //
+    // Width variations
+    //
+
+    &:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+        width: 220px;
+    }
+    &.fit-width {
+        width: auto !important;
+    }
+
+    //
+    // Button group
+    //
+
+    &.btn-group {
+
+        // Menu container
+        &.bs-container {
+            position: absolute;
+        }
+
+        // Base
+        &:not(.input-group-btn),
+        &[class*="col-"] {
+            float: none;
+            display: inline-block;
+            margin-left: 0;
+        }
+
+        // Dropdowns
+        &.dropdown-menu-right,
+        &[class*="col-"].dropdown-menu-right {
+            float: right;
+        }
+
+        // Disabled
+        > .disabled {
+            cursor: @cursor-disabled;
+
+            &:focus {
+                outline: 0;
+            }
+        }
+
+        // Button
+        .btn {
+
+            // Filter
+            .filter-option {
+                display: inline-block;
+                overflow: hidden;
+                width: 100%;
+                text-align: left;
+                text-overflow: ellipsis; 
+
+                > i {
+                    margin-right: @element-horizontal-spacing;
+                    float: left;
+                    margin-top: ((@line-height-computed - @icon-font-size) / 2);
+                    top: 0;
+                }
+            }
+
+            // Caret
+            .caret {
+                position: absolute;
+                top: 50%;
+                width: @icon-font-size;
+                text-align: right;
+                right: @padding-base-horizontal;
+                margin-top: -(@icon-font-size / 2);
+            }
+        }
+        &[class*="col-"] .btn {
+            width: 100%;
+        }
+
+        // Button sizes caret
+        .btn-lg > .caret {
+            right: @padding-large-horizontal;
+        }
+        .btn-sm > .caret {
+            right: @padding-small-horizontal;
+        }
+        .btn-xs > .caret {
+            right: @padding-xs-horizontal;
+        }
+
+        // Dropdown menu
+        .dropdown-menu {
+            min-width: 100%;
+
+            // Item
+            > li {
+
+                // Links
+                > a {
+
+                    // Add icon soacing
+                    [class*=icon-]:extend(.bootstrap-select.btn-group .btn .filter-option > i) {}
+
+                    // Check indicator
+                    .check-mark {
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -(@icon-font-size / 2);
+                        right: @padding-base-horizontal;
+                        margin-right: 0;
+                        color: @dropdown-link-active-color;
+                        .opacity(0);
+                    }
+
+                    // Main text
+                    .text {
+                        display: inline-block;
+                    }
+
+                    // Labels and badges
+                    > .label,
+                    > .badge {
+                        float: none;
+                    }
+
+                    // Custom option class
+                    &.special-class {
+                        &,
+                        &:hover {
+                            font-weight: 700;
+                            color: #fff;
+                            background: @brand-danger;
+                            .transition(none);
+                        }
+                    }
+                }
+
+                // Disabled links
+                &.disabled a {
+                    cursor: @cursor-disabled;
+                }
+
+                // Small inline note
+                small {
+                    padding-left: @content-padding-small;
+                }
+            }
+
+            // Active item text
+            > .selected > a {
+                background-color: @dropdown-link-active-bg;
+                color: @dropdown-link-active-color;
+
+                small {
+                    color: @dropdown-link-active-color;
+                }
+            }
+
+            // Inner content
+            &.inner {
+                position: static;
+                border: 0;
+                padding: 0;
+                margin: 0;
+                border-radius: 0;
+                .box-shadow(none);
+            }
+
+            // Bottom info
+            .notify {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                padding: @padding-base-vertical @padding-base-horizontal;
+                background-color: @dropdown-annotation-bg;
+                border-top: 1px solid @dropdown-border;
+                pointer-events: none;
+            }
+        }
+
+        // Optgroups side spacing
+        .dropdown-header ~ li > a {
+            padding-left: (@padding-base-horizontal * 2);
+        }
+
+        // If no results
+        .no-results {
+            padding: @padding-base-vertical @padding-base-horizontal;
+            background: @dropdown-annotation-bg;
+            margin-bottom: -(@list-spacing);
+            border-top: 1px solid @dropdown-border;
+        }
+
+        // Auto width
+        &.fit-width {
+            .btn {
+                .filter-option,
+                .caret {
+                    position: static;
+                }
+            }
+        }
+
+        // Show tick
+        &.show-tick .dropdown-menu > li {
+            a .text {
+                margin-right: ((@padding-base-horizontal * 2) + @icon-font-size);
+            }
+            &.selected a .check-mark {
+                .opacity(1);
+            }
+        }
+    }
+}
+
+// Inside input group
+.input-group {
+
+    // Remove border radius
+    .bootstrap-select > .btn {
+        border-radius: 0;
+    }
+
+    // Add side border radius to the first child
+    > .bs-select-hidden:first-child + .bootstrap-select > .btn,
+    > .bootstrap-select:first-child > .btn {
+        .border-left-radius(@border-radius-base);
+    }
+
+    // Add side border radius to the simulated last child
+    > .bootstrap-select:last-child > .btn {
+        .border-right-radius(@border-radius-base);
+    }
+}
+
+
+// Error
+// ------------------------------
+
+.error .bootstrap-select .btn {
+    border: 1px solid @brand-danger;
+}
+.control-group.error .bootstrap-select .dropdown-toggle {
+    border-color: @brand-danger;
+}
+
+
+// Search and action boxes
+// ------------------------------
+
+// Set paddings
+.bs-searchbox,
+.bs-actionsbox {
+    padding: (@padding-base-horizontal - @list-spacing) @padding-base-horizontal;
+    margin-bottom: (@padding-base-horizontal - @list-spacing);
+}
+
+// Search box
+.bs-searchbox {
+    position: relative;
+
+    // Add more left space for icon
+    > .form-control {
+        padding-left: @input-height-base;
+    }
+
+    // Search icon
+    &:after {
+        content: '\e98e';
+        font-family: 'icomoon';
+        position: absolute;
+        top: 50%;
+        left: (@padding-base-horizontal * 2);
+        color: inherit;
+        display: block;
+        font-size: @font-size-small;
+        margin-top: -(@font-size-small / 2);
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        .opacity(0.6);
+    }
+}
+
+// Actions box
+.bs-actionsbox {
+    float: left;
+    width: 100%;
+    position: relative;
+
+    .btn-group button {
+        width: 50%;
+    }
+
+    .bs-searchbox + & {
+        padding: 0 @padding-base-horizontal @padding-base-vertical;
+    }
+}
+
+// On mobile
+.mobile-device {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block !important;
+    width: 100%;
+    height: 100% !important;
+    opacity: 0;
+}
+select.bs-select-hidden,
+select.selectpicker {
+    display: none !important;
+}
+.bootstrap-select > select {
+    position: absolute!important;
+    bottom: 0;
+    left: 50%;
+    display: block!important;
+    width: .5px!important;
+    height: 100%!important;
+    padding: 0!important;
+    opacity: 0!important;
+    border: none;
+}

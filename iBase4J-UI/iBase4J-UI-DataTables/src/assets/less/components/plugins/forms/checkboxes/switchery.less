@@ -1,0 +1,264 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Switchery toggles
+*
+*  Styles for switchery.min.js - toggle switches
+*
+*  Version: 1.0
+*  Latest update: Mar 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.switchery {
+    background-color: #fff;
+    border: 1px solid @input-border;
+    border-radius: 100px;
+    cursor: pointer;
+    display: inline-block;
+    width: (@switchery-base-size * 2);
+    height: @switchery-base-size;
+    vertical-align: middle;
+    position: relative;
+    .box-sizing(content-box);
+
+    // Container
+    .checkbox-switchery & {
+        position: absolute;
+        left: 0;
+        margin-top: ((@line-height-computed / 2) - (@switchery-base-size / 2) - 1); // Half text height - half switchery height - 1px border
+    }
+
+    // Handle
+    > small {
+        background-color: #fff;
+        border-radius: 100px;
+        width: @switchery-base-size;
+        height: @switchery-base-size;
+        position: absolute;
+        top: 0;
+        .box-shadow(0 1px 3px fade(#000, 40%));
+    }
+}
+
+// Override BS checkbox styles
+.checkbox.checkbox-switchery {
+    margin-bottom: (@switchery-base-size - (@line-height-computed / 2) + 2);
+    padding-left: 0;
+
+    &.disabled .switchery {
+        cursor: @cursor-disabled;
+    }
+}
+
+// Remove padding if no text label
+.checkbox[class*=switchery-],
+.checkbox-inline[class*=switchery-] {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+
+// Sizing
+// ------------------------------
+
+// Large
+.switchery-lg {
+    &.checkbox-switchery {
+        margin-bottom: (@switchery-large-size - (@line-height-computed / 2) + 2);
+
+        .switchery {
+            margin-top: (@line-height-computed / 2) - (@switchery-large-size / 2) - 1;
+        }
+    }
+
+    label& {
+        margin-bottom: 0;
+    }
+
+    .switchery {
+        height: @switchery-large-size;
+        width: (@switchery-large-size * 2);
+
+        > small {
+            height: @switchery-large-size;
+            width: @switchery-large-size;
+        }
+    }
+}
+
+// Small
+.switchery-sm {
+    &.checkbox-switchery {
+        margin-bottom: (@switchery-small-size - (@line-height-computed / 2) + 2);
+
+        .switchery {
+            margin-top: (@line-height-computed / 2) - (@switchery-small-size / 2) - 1;
+        }
+    }
+
+    label& {
+        margin-bottom: 0;
+    }
+
+    .switchery {
+        height: @switchery-small-size;
+        width: (@switchery-small-size * 2);
+
+        > small {
+            height: @switchery-small-size;
+            width: @switchery-small-size;
+        }
+    }
+}
+
+// Mini
+.switchery-xs {
+    &.checkbox-switchery {
+        margin-bottom: (@switchery-mini-size - (@line-height-computed / 2) + 2);
+
+        .switchery {
+            margin-top: (@line-height-computed / 2) - (@switchery-mini-size / 2) - 1;
+        }
+    }
+
+    label& {
+        margin-bottom: 0;
+    }
+
+    .switchery {
+        height: @switchery-mini-size;
+        width: (@switchery-mini-size * 2);
+
+        > small {
+            height: @switchery-mini-size;
+            width: @switchery-mini-size;
+        }
+    }
+}
+
+
+
+// Options
+// ------------------------------
+
+// Left position
+.checkbox-switchery {
+    label,
+    label& {
+        position: relative;
+        padding-left: ((@switchery-base-size * 2) + 12);
+        margin: 0;
+        cursor: pointer;
+    }
+
+    &.switchery-lg {
+        label,
+        label& {
+            padding-left: ((@switchery-large-size * 2) + 12);
+        }
+    }
+
+    &.switchery-sm {
+        label,
+        label& {
+            padding-left: ((@switchery-small-size * 2) + 12);
+        }
+    }
+
+    &.switchery-xs {
+        label,
+        label& {
+            padding-left: ((@switchery-mini-size * 2) + 12);
+        }
+    }
+
+    &.checkbox-inline {
+        margin-bottom: 0;
+    }
+}
+
+// Right position
+.checkbox-switchery {
+    &.checkbox-right {
+        .switchery {
+            left: auto;
+            right: 0;
+        }
+
+        label,
+        label& {
+            padding-left: 0;
+            padding-right: ((@switchery-base-size * 2) + 12);
+        }
+
+        &.switchery-lg {
+            label,
+            label& {
+                padding-left: 0;
+                padding-right: ((@switchery-large-size * 2) + 12);
+            }
+        }
+
+        &.switchery-sm {
+            label,
+            label& {
+                padding-left: 0;
+                padding-right: ((@switchery-small-size * 2) + 12);
+            }
+        }
+
+        &.switchery-xs {
+            label,
+            label& {
+                padding-left: 0;
+                padding-right: ((@switchery-mini-size * 2) + 12);
+            }
+        }
+    }
+}
+
+
+//
+// Double side switch
+//
+
+.switchery-double {
+    .switchery {
+        position: relative;
+        margin-left: @element-horizontal-spacing;
+        margin-right: @element-horizontal-spacing;
+        margin-top: -7px;
+        margin-bottom: -5px;
+    }
+
+    // Remove padding
+    &.checkbox-switchery {
+        label,
+        label& {
+            padding: 0;
+        }
+    }
+
+    // Large
+    &.switchery-lg .switchery {
+        margin-top: -8px;
+        margin-bottom: -6px;
+    }
+
+    // Small
+    &.switchery-sm .switchery {
+        margin-top: -6px;
+        margin-bottom: -4px;
+    }
+
+    // Mini
+    &.switchery-xs .switchery {
+        margin-top: -5px;
+        margin-bottom: -3px;
+    }
+}

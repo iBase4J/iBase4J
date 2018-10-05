@@ -1,0 +1,51 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Boxed layout
+*
+*  Styles for main structure of content area in boxed layout
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Boxed layout base
+.layout-boxed {
+    background: url(../images/backgrounds/boxed_bg.png) repeat; // mainly for demo, use whatever you want
+
+    // Center main navbar
+    > .navbar {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    // Center page container
+    .page-container {
+        background-color: @body-bg;
+        margin-left: auto;
+        margin-right: auto;
+        min-width: 0;
+    }
+
+
+    // Set widths on different screens
+    .page-container,
+    > .navbar {
+        @media (min-width: @screen-sm-min) {
+            width: @container-sm;
+        }
+        @media (min-width: @screen-md-min) {
+            width: @container-md;
+        }
+        @media (min-width: @screen-lg-min) {
+            width: @container-lg;
+        }
+    }
+
+
+    // Change background image on retina display
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
+        background: url(../images/backgrounds/boxed_bg_retina.png) repeat;
+    }
+}

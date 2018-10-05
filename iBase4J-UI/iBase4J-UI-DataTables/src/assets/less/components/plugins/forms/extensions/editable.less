@@ -1,0 +1,328 @@
+/* ------------------------------------------------------------------------------
+*
+*  # X-editable
+*
+*  In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Base
+.editable {
+    background-color: transparent;
+
+    .form-horizontal & {
+        padding-top: (@padding-base-vertical + 1);
+        display: inline-block;
+    }
+}
+
+// Pre wrapped content
+.editable-pre-wrapped {
+    white-space: pre-wrap;
+}
+
+
+// Layout
+// ------------------------------
+
+// Form
+.editableform {
+
+    // Remove bottom spacing
+    .form-group:last-child {
+        margin-bottom: 0;
+    }
+
+    // Set min width to the input field
+    .form-control {
+        min-width: 200px;
+    }
+
+    // Checkbox, radio
+    .checkbox,
+    .radio {
+        margin-top: 0;
+        margin-bottom: 0;
+
+        > div {
+            margin-top: (@padding-base-vertical + 1);
+            margin-bottom: (@padding-base-vertical + 1);
+            position: relative;
+        }
+    }
+}
+
+// Buttons
+.editable-buttons {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: @element-horizontal-spacing;
+
+    &.editable-buttons-bottom {
+        display: block;
+        margin-top: @line-height-computed;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .editable-cancel {
+        margin-left: @element-horizontal-spacing; 
+    }
+}
+
+// Editable inputs
+.editable-input {
+    vertical-align: top; 
+    display: inline-block;
+    width: auto;
+    white-space: normal;
+
+    // Remove bottom margin from help block
+    .help-block {
+        margin-bottom: 0;
+    }
+
+    // Set fixed width to input group
+    .input-group {
+        width: 250px;
+    }
+
+    // Elastic textarea
+    .elastic {
+        height: 100px;
+    }
+}
+
+// Loading icon
+.editableform-loading {
+    width: @icon-font-size;
+    height: @icon-font-size;
+    margin: auto;
+
+    // Icon
+    &:after {
+        content: '\eb55';
+        font-family: 'icomoon';
+        font-size: @icon-font-size;
+        display: block;
+        line-height: 1;
+        margin: auto;
+        width: @icon-font-size;
+        height: @icon-font-size;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        .animation(rotation 1s ease infinite);
+    }
+}
+
+// Errors
+.editable-error {
+    color: @brand-danger;  
+}
+.editable-error-block {
+    max-width: 300px;
+    margin: @padding-base-vertical 0 0 0;
+    width: auto;
+    white-space: normal;
+}
+
+// Transition
+.editable-bg-transition {
+    color: inherit;
+    background-color: transparent;
+    .transition(background-color 0.2s ease-out);
+}
+
+
+// Clear buttons
+// ------------------------------
+
+// Date inputs clear button
+.editable-clear {
+    clear: both;
+    text-decoration: none;
+    text-align: right;
+}
+
+// Clear input button
+.editable-clear-x {
+    position: absolute;
+    right: @padding-base-horizontal - 3;
+    top: ((@input-height-base - @icon-font-size) / 2);
+    line-height: 1;
+    cursor: pointer;
+    z-index: 100;
+    .opacity(0.6);
+
+    &:hover {
+        .opacity(1);
+    }
+
+    &:after {
+        content: '\ed6b';
+        font-family: 'icomoon';
+        display: block;
+        font-size: @icon-font-size;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+
+// Links
+// ------------------------------
+
+// Link
+.editable-click {
+    &,
+    a& {
+        &,
+        &:hover {
+            border-bottom: 1px dashed @link-color;
+        }
+    }
+
+    &.editable-disabled {
+        &,
+        a& {
+            &,
+            &:hover {
+                color: @text-muted;
+                cursor: default;
+                border-bottom: 0;
+            }
+        }
+    }
+
+    .label {
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+}
+
+// Empty link
+.editable-empty {
+    &,
+    &:hover,
+    &:focus {
+        font-style: italic; 
+        color: @brand-danger;  
+    }
+
+    a& {
+        &,
+        &:hover,
+        &:focus {
+            border-bottom-color: @brand-danger;
+        }
+    }
+}
+
+
+
+// Input types
+// ------------------------------
+
+// Combodate
+.combodate {
+    white-space: nowrap;
+
+    .day,
+    .year,
+    .hour,
+    .minute {
+        min-width: 80px;
+    }
+
+    .form-control {
+        display: inline-block;
+    }
+}
+
+// Daterange
+.input-daterange {
+    input {
+        text-align: center;
+
+        &:first-child {
+            .border-left-radius(@border-radius-base);
+        }
+
+        &:last-child {
+            .border-right-radius(@border-radius-base);
+        }
+    }
+}
+
+// Address
+.editable-address {
+    display: block;
+
+    > label > span {
+        width: 70px;  
+        display: inline-block;
+        margin-bottom: @padding-base-vertical;
+    }
+}
+
+// Date
+.editable-date {
+    padding: 0; 
+    margin: 0;
+    float: left;
+}
+
+// Checklist
+.editable-checklist label {
+    white-space: nowrap;
+
+    > input[type="checkbox"] {
+        vertical-align: middle;
+        margin: 0;
+    }
+}
+
+// WYSIHTML5 editor
+.editable-wysihtml5 {
+    width: 566px; 
+    height: 250px; 
+}
+
+
+
+// Editable modes
+// ------------------------------
+
+// Editable modes
+.editable-container {
+    &.editable-popup {
+        max-width: none !important;
+    }
+
+    &.editable-inline {
+        display: inline-block; 
+        vertical-align: middle;
+        width: auto;
+
+        .editableform-loading {
+            background-position: left 5px;      
+        }
+
+        .add-on .icon-th {
+            margin-top: 3px;
+            margin-left: 1px; 
+        }
+    }
+
+    &.popover {
+        width: auto;
+        min-width: 200px;
+    }
+}

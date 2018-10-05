@@ -1,0 +1,111 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Pace. Progress bar theme
+ *
+ *  Bar css spinner theme for Pace. Small size
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Preloader template. Default dark background
+// ------------------------------
+
+.preloader,
+.preloader-light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: @color-slate-800; // Change it to any suitable dark color
+  z-index: 9000; 
+  .opacity(0.9);
+}
+
+// Light background
+.preloader-light {
+  background-color: #fff; // Change it to any suitable light color
+}
+
+// Change colors for the light version. Feel free to change colors
+.pace-light {
+  &.pace {
+    background-color: fade(#000, 80%);
+  }
+
+  .pace-progress {
+    background-color: #fff;
+
+    &:after {
+      color: @color-slate-800;
+    }
+  }
+}
+
+
+// Pace theme styles
+// ------------------------------
+
+// Base
+.pace {
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-pointer-events: none;
+  pointer-events: none;
+  position: fixed;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 200px;
+  height: 5px;
+  background-color: fade(#000, 40%);
+  z-index: 9999;
+  border-radius: 100px;
+  .user-select(none);
+  .box-shadow(0 0 5px fade(#fff, 10%));
+}
+
+// Progress
+.pace-progress {
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  max-width: 198px;
+  z-index: 9999;
+  display: block;
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  height: 3px;
+  background: @color-blue-400; /* Change it to any suitable bright color */
+  color: #fff;
+  line-height: 32px;
+  font-size: @font-size-small;
+  border-radius: 100px;
+  .transition(width 1s ease-in-out 1s linear);
+  .translate3d(0,0,0);
+}
+
+// Hide inactive
+.pace-inactive {
+  display: none;
+}
+
+
+// Uncomment code below to show loader text with indicator
+
+/*
+.pace-progress:after {
+  content: attr(data-progress-text);
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  margin-top: 5px;
+}
+*/

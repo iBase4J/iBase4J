@@ -1,0 +1,353 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Steps wizard
+*
+*  An all-in-one wizard plugin that is extremely flexible, compact and feature-rich
+*
+*  Version: 1.2
+*  Latest update: Aug 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.wizard {
+    width: 100%;
+
+    // Title
+    > .steps .current-info,
+    > .content > .title {
+        position: absolute;
+        left: -99999px;
+    }
+
+    // Wizard content
+    > .content {
+        position: relative;
+        width: auto;
+        padding: 0;
+
+        > .body {
+            padding: 0 @content-padding-large;
+        }
+
+        > iframe {
+            border: 0 none;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+
+// Steps list
+// ------------------------------
+
+.wizard {
+
+    // Steps
+    > .steps {
+        position: relative;
+        display: block;
+        width: 100%;
+
+        // Wizard nav
+        > ul {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            // Wizard nav item
+            > li {
+                display: table-cell;
+                width: auto;
+                vertical-align: top;
+                text-align: center;
+                position: relative;
+
+                // Link
+                a {
+                    position: relative;
+                    padding-top: 48px;
+                    margin-top: @line-height-computed;
+                    margin-bottom: @line-height-computed;
+                    display: block;
+                }
+
+                // Steps indicator line
+                &:before,
+                &:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 43px;
+                    width: 50%;
+                    height: 2px;
+                    background-color: @brand-info;
+                    z-index: 9;
+                }
+                &:before {
+                    left: 0;
+                }
+                &:after {
+                    right: 0;
+                }
+                &:first-child:before,
+                &:last-child:after {
+                    content: none;
+                }
+
+                // Current step
+                &.current {
+                    &:after,
+                    ~ li:before,
+                    ~ li:after {
+                        background-color: @gray-lighter;
+                    }
+
+                    // Link
+                    > a {
+                        color: @text-color;
+                        cursor: default;
+                    }
+
+                    // Icon container
+                    .number {
+                        font-size: 0;
+                        border-color: @brand-info;
+                        background-color: #fff;
+                        color: @brand-info;
+
+                        // Icon
+                        &:after {
+                            content: '\e913';
+                            font-family: 'icomoon';
+                            display: inline-block;
+                            font-size: @icon-font-size;
+                            -webkit-font-smoothing: antialiased;
+                            -moz-osx-font-smoothing: grayscale;
+                            line-height: 34px;
+                            .transition(all 0.15s ease-in-out); 
+                        }
+                    }
+                }
+
+                // Disabled
+                &.disabled {
+                    a {
+                        &,
+                        &:hover,
+                        &:focus {
+                            color: @text-muted;
+                            cursor: default;
+                        }
+                    }
+                }
+
+                // Completed step
+                &.done {
+
+                    // Link
+                    a {
+                        &,
+                        &:hover,
+                        &:focus {
+                            color: @text-muted;
+                        }
+                    }
+
+                    // Icon container
+                    .number {
+                        font-size: 0;
+                        background-color: @brand-info;
+                        border-color: @brand-info;
+                        color: #fff;
+
+                        // Icon
+                        &:after {
+                            content: '\ed6f';
+                            font-family: 'icomoon';
+                            display: inline-block;
+                            font-size: @icon-font-size;
+                            line-height: ((@icon-font-size * 2) + 2); // Double icon + 2px border
+                            -webkit-font-smoothing: antialiased;
+                            -moz-osx-font-smoothing: grayscale;
+                            .transition(all 0.15s ease-in-out); 
+                        }
+                    }
+                }
+
+                // Error
+                &.error {
+                    .number {
+                        border-color: @brand-danger;
+                        color: @brand-danger;
+                    }
+                }
+            }
+
+
+            // Media queries
+            @media (max-width: @screen-xs-max) {
+                margin-bottom: @line-height-computed;
+
+                // Nav item
+                > li {
+                    display: block;
+                    float: left;
+                    width: 50%;
+
+                    > a {
+                        margin-bottom: 0;
+                    }
+
+                    &:first-child:before,
+                    &:last-child:after {
+                        content: '';
+                    }
+
+                    &:last-child:after {
+                        background-color: @brand-info;
+                    }
+                }
+            }
+
+            @media (max-width: @screen-xs) {
+
+                // Nav item
+                > li {
+                    width: 100%;
+
+                    &.current:after {
+                        background-color: @brand-info;
+                    }
+                }
+            }
+        }
+
+        // Numbers and icons
+        .number {
+            background-color: @panel-bg;
+            color: #ccc;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            margin-left: -19px;
+            width: 38px;
+            height: 38px;
+            border: 2px solid @gray-lighter;
+            font-size: 14px;
+            border-radius: 50%;
+            z-index: 10;
+            line-height: 34px;
+            text-align: center;
+        }
+    }
+
+    // Add top border if inside flat panel
+    .panel-flat > & {
+        > .steps > ul {
+            border-top: 1px solid @panel-inner-border;
+        }
+    }
+}
+
+
+// Steps pagination
+// ------------------------------
+
+.wizard {
+
+    // Container
+    > .actions {
+        position: relative;
+        display: block;
+        text-align: right;
+        padding: @content-padding-large;
+        padding-top: 0;
+
+        // Paging list
+        > ul {
+            float: right;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            &:after {
+                content: '';
+                display: table;
+                clear: both;
+            }
+
+            // Paging item
+            > li {
+                float: left;
+
+                // Add horizontal spacing
+                & + li {
+                    margin-left: @content-padding-small;
+                }
+
+                // Button styling
+                > a {
+                    background: @brand-primary;
+                    color: #fff;
+                    display: block;
+                    padding: @padding-base-vertical @padding-base-horizontal;
+                    border-radius: @border-radius-base;
+                    border: 1px solid transparent;
+
+                    // Hover state
+                    &:hover,
+                    &:focus {
+                        .box-shadow(0 0 0 100px fade(#000, 5%) inset);
+                    }
+
+                    // Active state
+                    &:active {
+                        .box-shadow(0 0 0 100px fade(#000, 10%) inset);
+                    }
+
+                    // "Previous" button
+                    &[href="#previous"] {
+                        background-color: @btn-default-bg;
+                        color: @btn-default-color;
+                        border: 1px solid @btn-default-border;
+
+                        &:hover,
+                        &:focus {
+                            .box-shadow(0 0 0 100px fade(#000, 1%) inset);
+                        }
+
+                        &:active {
+                            .box-shadow(0 0 0 100px fade(#000, 3%) inset)
+                        }
+                    }
+                }
+
+                // Disabled button
+                &.disabled > a {
+                    &,
+                    &:hover,
+                    &:focus {
+                        color: @text-muted;
+                    }
+
+                    &[href="#previous"] {
+                        &,
+                        &:hover,
+                        &:focus {
+                            .box-shadow(none);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

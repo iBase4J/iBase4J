@@ -1,0 +1,480 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Helper classes
+*
+*  Custom helper classes
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Content helpers
+// -------------------------
+
+// Edges
+.no-edge-top {
+    top: 0;
+}
+.no-edge-bottom {
+    bottom: 0;
+}
+.no-edge-left {
+    left: 0;
+}
+.no-edge-right {
+    right: 0;
+}
+
+// Pulling elements right on different screens
+.pull-right-lg {
+    @media (min-width: @screen-lg-min) {
+        float: right;
+    }
+}
+.pull-right-md {
+    @media (min-width: @screen-md-min) {
+        float: right;
+    }
+}
+.pull-right-sm {
+    @media (min-width: @screen-sm-min) {
+        float: right;
+    }
+}
+.pull-right-xs {
+    @media (min-width: @screen-xs-min) {
+        float: right;
+    }
+}
+
+// Vertical alignment
+.valign-top {
+    vertical-align: top;
+}
+.valign-middle {
+    vertical-align: middle;
+}
+.valign-bottom {
+    vertical-align: bottom;
+}
+.valign-baseline {
+    vertical-align: baseline;
+}
+.valign-text-top {
+    vertical-align: top;
+}
+.valign-text-bottom {
+    vertical-align: text-bottom;
+}
+
+// Positions
+.position-relative {
+    position: relative;
+}
+.position-static {
+    position: static;
+}
+
+// Display elements
+.display-block,
+label.display-block {
+    display: block;
+}
+.display-inline-block {
+    display: inline-block;
+}
+
+// Cursors
+.cursor-pointer {
+    cursor: pointer;
+}
+.cursor-move {
+    cursor: move;
+}
+.cursor-default {
+    cursor: default;
+}
+
+// Overflow
+.overflow-hidden {
+    overflow: hidden;
+}
+.overflow-visible {
+    overflow: visible;
+}
+.overflow-auto {
+    overflow: auto;
+}
+
+// Content group
+.content-group-xs {
+    margin-bottom: (@line-height-computed - 10)!important;
+}
+.content-group-sm {
+    margin-bottom: (@line-height-computed - 5)!important;
+}
+.content-group {
+    margin-bottom: (@line-height-computed)!important;
+}
+.content-group-lg {
+    margin-bottom: (@line-height-computed + 10)!important;
+}
+
+
+
+// Margins
+// -------------------------
+
+// Remove margins
+.no-margin {
+    margin: 0!important;
+}
+.no-margin-top {
+    margin-top: 0!important;
+}
+.no-margin-bottom {
+    margin-bottom: 0!important;
+}
+.no-margin-left {
+    margin-left: 0!important;
+}
+.no-margin-right {
+    margin-right: 0!important;
+}
+
+
+//
+// Add margins
+//
+
+// All sides
+.m-5 {
+    margin: 5px!important;
+}
+.m-10 {
+    margin: 10px!important;
+}
+.m-15 {
+    margin: 15px!important;
+}
+.m-20 {
+    margin: 20px!important;
+}
+
+// Top
+.mt-5 {
+    margin-top: 5px!important;
+}
+.mt-10 {
+    margin-top: 10px!important;
+}
+.mt-15 {
+    margin-top: 15px!important;
+}
+.mt-20 {
+    margin-top: 20px!important;
+}
+
+// Bottom
+.mb-5 {
+    margin-bottom: 5px!important;
+}
+.mb-10 {
+    margin-bottom: 10px!important;
+}
+.mb-15 {
+    margin-bottom: 15px!important;
+}
+.mb-20 {
+    margin-bottom: 20px!important;
+}
+
+// Left
+.ml-5 {
+    margin-left: 5px!important;
+}
+.ml-10 {
+    margin-left: 10px!important;
+}
+.ml-15 {
+    margin-left: 15px!important;
+}
+.ml-20 {
+    margin-left: 20px!important;
+}
+
+// Right
+.mr-5 {
+    margin-right: 5px!important;
+}
+.mr-10 {
+    margin-right: 10px!important;
+}
+.mr-15 {
+    margin-right: 15px!important;
+}
+.mr-20 {
+    margin-right: 20px!important;
+}
+
+
+// Paddings
+// -------------------------
+
+// Remove paddings
+.no-padding {
+    padding: 0!important;
+}
+.no-padding-top {
+    padding-top: 0!important;
+}
+.no-padding-bottom {
+    padding-bottom: 0!important;
+}
+.no-padding-left {
+    padding-left: 0!important;
+}
+.no-padding-right {
+    padding-right: 0!important;
+}
+
+
+//
+// Add paddings
+//
+
+// All sides
+.p-5 {
+    padding: 5px!important;
+}
+.p-10 {
+    padding: 10px!important;
+}
+.p-15 {
+    padding: 15px!important;
+}
+.p-20 {
+    padding: 20px!important;
+}
+
+// Top
+.pt-5 {
+    padding-top: 5px!important;
+}
+.pt-10 {
+    padding-top: 10px!important;
+}
+.pt-15 {
+    padding-top: 15px!important;
+}
+.pt-20 {
+    padding-top: 20px!important;
+}
+
+// Bottom
+.pb-5 {
+    padding-bottom: 5px!important;
+}
+.pb-10 {
+    padding-bottom: 10px!important;
+}
+.pb-15 {
+    padding-bottom: 15px!important;
+}
+.pb-20 {
+    padding-bottom: 20px!important;
+}
+
+// Left
+.pl-5 {
+    padding-left: 5px!important;
+}
+.pl-10 {
+    padding-left: 10px!important;
+}
+.pl-15 {
+    padding-left: 15px!important;
+}
+.pl-20 {
+    padding-left: 20px!important;
+}
+
+// Right
+.pr-5 {
+    padding-right: 5px!important;
+}
+.pr-10 {
+    padding-right: 10px!important;
+}
+.pr-15 {
+    padding-right: 15px!important;
+}
+.pr-20 {
+    padding-right: 20px!important;
+}
+
+
+// Borders
+// -------------------------
+
+// Remove borders
+.no-border {
+    border: 0!important;
+}
+.no-border-top {
+    border-top: 0!important;
+}
+.no-border-bottom {
+    border-bottom: 0!important;
+}
+.no-border-left {
+    border-left: 0!important;
+}
+.no-border-right {
+    border-right: 0!important;
+}
+
+// Remove border radius
+.no-border-radius {
+    border-radius: 0;
+}
+.no-border-radius-top {
+    .border-top-radius(0);
+}
+.no-border-radius-bottom {
+    .border-bottom-radius(0);
+}
+.no-border-radius-left {
+    .border-left-radius(0);
+}
+.no-border-radius-right {
+    .border-right-radius(0);
+}
+
+
+// Add borders
+.border-top {
+    border-top: 1px solid;
+}
+.border-bottom {
+    border-bottom: 1px solid;
+}
+.border-left {
+    border-left: 1px solid;
+}
+.border-right {
+    border-right: 1px solid;
+}
+
+
+//
+// Border widths
+//
+
+// Large
+.border-lg {
+    border-width: 2px;
+}
+.border-top-lg {
+    border-top: 2px solid;
+}
+.border-bottom-lg {
+    border-bottom: 2px solid;
+}
+.border-left-lg {
+    border-left: 2px solid;
+}
+.border-right-lg {
+    border-right: 2px solid;
+}
+
+// XLarge
+.border-xlg {
+    border-width: 3px;
+}
+.border-top-xlg {
+    border-top: 3px solid;
+}
+.border-bottom-xlg {
+    border-bottom: 3px solid;
+}
+.border-left-xlg {
+    border-left: 3px solid;
+}
+.border-right-xlg {
+    border-right: 3px solid;
+}
+
+
+
+// Sizing
+// -------------------------
+
+//
+// Element widths
+//
+
+// Full width
+.full-width {
+    width: 100%;
+}
+
+// Fixed widths
+@media (min-width: @grid-float-breakpoint) {
+    .width-200 {
+        min-width: 200px;
+    }
+    .width-250 {
+        min-width: 250px;
+    }
+    .width-300 {
+        min-width: 300px;
+    }
+    .width-350 {
+        min-width: 350px;
+    }
+    .width-400 {
+        min-width: 400px;
+    }
+    .width-450 {
+        min-width: 450px;
+    }
+    .width-500 {
+        min-width: 500px;
+    }
+    .width-550 {
+        min-width: 550px;
+    }
+    .width-600 {
+        min-width: 600px;
+    }
+    .width-650 {
+        min-width: 650px;
+    }
+}
+
+
+//
+// Image sizing
+//
+
+// Large
+.img-lg {
+    width: 44px!important;
+    height: 44px!important;
+}
+
+// Small
+.img-sm {
+    width: 36px!important;
+    height: 36px!important;
+}
+
+// Mini
+.img-xs {
+    width: 32px!important;
+    height: 32px!important;
+}
+

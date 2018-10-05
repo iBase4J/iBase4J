@@ -1,0 +1,37 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Pace. Default theme
+ *
+ *  Minimal preloader theme, used as a default theme
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Base
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+  .user-select(none);
+
+  // Progress
+  .pace-progress {
+    background: @color-blue-300;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    width: 100%;
+    right: 100%;
+    height: 2px;
+  }
+}
+
+// Hide when done
+.pace-inactive {
+  display: none;
+}

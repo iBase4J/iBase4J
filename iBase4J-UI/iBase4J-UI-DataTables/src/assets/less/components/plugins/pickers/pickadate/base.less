@@ -1,0 +1,53 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Pick-a-date - Picker base
+*
+*  The mobile-friendly, responsive, and lightweight jQuery date & time input picker
+*
+*  Version: 1.2
+*  Latest update: Jul 5, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Picker base
+.picker {
+    width: 100%;
+    text-align: left;
+    position: absolute;
+    top: 100%;
+    margin-top: -1px;
+    z-index: 990;
+    .user-select(none);
+}
+
+// Input element
+.picker__input {
+    cursor: default;
+}
+
+// The base of the picker
+.picker__holder {
+    width: 100%;
+    overflow-y: auto;
+    position: absolute;
+    display: none;
+    background-color: @dropdown-bg;
+    border: 1px solid @dropdown-border;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    max-width: 290px;
+    max-height: 0;
+    outline: 0;
+    -webkit-overflow-scrolling: touch;
+    .border-bottom-radius(@border-radius-base);
+    .box-shadow(0 1px 3px fade(#000, 10%));
+
+    // When the picker opens
+    .picker--opened & {
+        max-height: 480px;
+        border-top-width: 1px;
+        border-bottom-width: 1px;
+        display: block;
+    }
+}

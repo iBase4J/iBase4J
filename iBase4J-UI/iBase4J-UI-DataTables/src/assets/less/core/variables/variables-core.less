@@ -1,0 +1,558 @@
+// ------------------------------------------------------------------------------
+//
+//  # Bootstrap variables overrides
+//
+//  Custom overrides of Bootstrap variables
+//
+//  Version: 1.0
+//  Latest update: May 25, 2015
+//
+// ------------------------------------------------------------------------------
+
+
+//== Colors
+//
+
+//## Gray and brand colors for use across Bootstrap.
+@gray-light:                                        lighten(@gray-base, 60%); // #999
+
+//## Brand colors for use across Bootstrap.
+@brand-primary:         							@color-primary-500;
+@brand-success:         							@color-success-500;
+@brand-info:            							@color-info-500;
+@brand-warning:         							@color-warning-500;
+@brand-danger:         								@color-danger-500;
+
+
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+//** Background color for `<body>`.
+@body-bg:               							#f5f5f5;
+
+//** Global textual link color.
+@link-color:            							@color-primary-600;
+
+//** Link hover color set via `darken()` function.
+@link-hover-color:      							darken(@link-color, 10%);
+
+//** Link hover decoration.
+@link-hover-decoration: 							none;
+
+
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+
+@font-family-sans-serif:  							"Roboto", Helvetica Neue, Helvetica, Arial, sans-serif;
+
+@font-size-base:          							13px;
+@font-size-large:         							ceil((@font-size-base * 1.075)); // ~14px
+@font-size-small:         							ceil((@font-size-base * 0.9)); // ~12px
+
+@font-size-h1:            							ceil((@font-size-base * 1.9)); // ~25px
+@font-size-h2:            							ceil((@font-size-base * 1.75)); // ~23px
+@font-size-h3:            							ceil((@font-size-base * 1.6)); // ~21px
+@font-size-h4:            							ceil((@font-size-base * 1.45)); // ~19px
+@font-size-h5:            							ceil((@font-size-base * 1.3)); // ~17px
+@font-size-h6:            							ceil((@font-size-base * 1.15)); // ~15px
+
+//** Unit-less `line-height` for use in components like buttons.
+@line-height-base:        							1.5384616; // 20/13
+
+//** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+@line-height-computed:    							floor((@font-size-base * @line-height-base)); // ~20px
+
+//** By default, this inherits from the `<body>`.
+@headings-font-weight:    							400;
+@headings-line-height:    							@line-height-base;
+
+
+
+//== Iconography
+//
+//## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
+
+//** Load fonts from this directory.
+@icon-font-path:          							"../css/icons/glyphicons/";
+
+
+
+//== Components
+//
+//## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
+
+@padding-base-vertical:     						7px;
+@padding-base-horizontal:   						12px;
+
+@padding-large-vertical:    						9px;
+@padding-large-horizontal:  						15px;
+
+@padding-small-vertical:    						6px;
+@padding-small-horizontal:  						11px;
+
+@padding-xs-vertical:       						5px;
+@padding-xs-horizontal:     						10px;
+
+@line-height-large:         						1.4285715; // 20/14
+@line-height-small:         						1.6666667; // 20/12
+
+@border-radius-base:        						3px;
+@border-radius-large:       						5px;
+@border-radius-small:       						2px;
+
+
+
+//== Tables
+//
+//## Customizes the `.table` component with basic values, each used across all table variations.
+
+//** Padding for `<th>`s and `<td>`s.
+@table-cell-padding:            					12px 20px;
+
+//** Padding for cells in `.table-condensed`.
+@table-condensed-cell-padding:  					@table-mini-cell-padding;
+
+//** Background color used for `.table-striped`.
+@table-bg-accent:               					#fcfcfc;
+
+//** Background color used for `.table-hover`.
+@table-bg-hover:                					#f8f8f8;
+
+
+
+//== Buttons
+//
+//## For each of Bootstrap's buttons, define text, background and border color.
+
+@btn-default-bg:                 					#fcfcfc;
+@btn-default-border:             					#ddd;
+
+@btn-primary-border:             					@btn-primary-bg;
+@btn-success-border:             					@btn-success-bg;
+@btn-info-border:                					@btn-info-bg;
+@btn-warning-border:             					@btn-warning-bg;
+@btn-danger-border:              					@btn-danger-bg;
+
+
+
+//== Forms
+//
+//##
+
+//** `<input disabled>` background color
+@input-bg-disabled:              					#fafafa;
+
+//** Text color for `<input>`s
+@input-color:                    					@text-color;
+
+//** `<input>` border color
+@input-border:                   					#ddd;
+
+//** Large `.form-control` border radius
+@input-border-radius-large:                         @border-radius-base;
+
+//** Border color for inputs on focus
+@input-border-focus:            					@input-border;
+
+//** Large `.form-control` height
+@input-height-large:             					(floor(@font-size-large * @line-height-large) + (@padding-large-vertical * 2) + 2);
+
+//** `.form-group` margin
+@form-group-margin-bottom:       					@line-height-computed;
+
+//** Background color for textual input addons
+@input-group-addon-bg:           					#fcfcfc;
+
+
+
+//== Dropdowns
+//
+//## Dropdown menu container and contents.
+
+//** Dropdown menu `border-color`.
+@dropdown-border:                					#ddd;
+
+//** Dropdown menu `border-color` **for IE8**.
+@dropdown-fallback-border:       					@dropdown-border;
+
+//** Hover color for dropdown links.
+@dropdown-link-hover-color:      					@dropdown-link-color;
+
+//** Text color for headers within dropdown menus.
+@dropdown-header-color:          					@text-color;
+
+
+
+//== Media queries breakpoints
+//
+//## Define the breakpoints at which your layout will change, adapting to different screen sizes.
+
+// Small screen / tablet
+//** Deprecated `@screen-sm` as of v3.0.1
+@screen-sm:                  						769px;
+
+// Medium screen / desktop
+//** Deprecated `@screen-md` as of v3.0.1
+@screen-md:                  						1025px;
+
+
+
+//== Grid system
+//
+//## Define your custom responsive grid.
+
+//** Padding between columns. Gets divided in half for the left and right.
+@grid-gutter-width:         						@line-height-computed; // Make horizontal and vertical spacing identical, feel free to change if needed
+
+
+
+//== Container sizes
+//
+//## Define the maximum width of `.container` for different screen sizes.
+
+// Small screen / tablet
+@container-tablet:             						@screen-sm;
+
+// Medium screen / desktop
+@container-desktop:            						@screen-md;
+
+// Large screen / wide desktop
+@container-large-desktop:      						@screen-lg;
+
+
+
+//== Navbar
+//
+//##
+
+// Basics of a navbar
+@navbar-height:                    					46px;
+@navbar-border-radius:             					0;
+@navbar-padding-horizontal:        					@grid-gutter-width;
+
+// Navbar colors
+@navbar-default-color:             					#555;
+@navbar-default-bg:                					#fff;
+@navbar-default-border:            					#ddd;
+
+// Navbar links
+@navbar-default-link-color:                			@navbar-default-color;
+@navbar-default-link-hover-color:          			@text-color;
+@navbar-default-link-hover-bg:             			#f8f8f8;
+@navbar-default-link-active-color:        			@navbar-default-link-hover-color;
+@navbar-default-link-active-bg:            			@navbar-default-link-hover-bg;
+@navbar-default-link-disabled-color:       			@text-muted;
+
+
+// Inverted navbar
+// Reset inverted navbar basics
+@navbar-inverse-color:                      		#fff;
+@navbar-inverse-bg:                         		@color-slate-800;
+@navbar-inverse-border:                     		@navbar-inverse-bg;
+
+// Inverted navbar links
+@navbar-inverse-link-color:                 		@navbar-inverse-color;
+@navbar-inverse-link-hover-color:           		@navbar-inverse-link-color;
+@navbar-inverse-link-hover-bg:              		fade(#000, 10%);
+
+@navbar-inverse-link-active-bg:             		fade(#000, 15%);
+@navbar-inverse-link-disabled-color:        		fade(#fff, 60%);
+
+
+
+//== Navs
+//
+//##
+
+//=== Shared nav styles
+@nav-link-padding:                          		(@padding-base-vertical + 2) @content-padding-base;
+
+
+@nav-link-hover-bg:                         		#f5f5f5;
+
+@nav-disabled-link-color:                   		@text-muted;
+@nav-disabled-link-hover-color:             		@nav-disabled-link-color;
+
+//== Tabs
+@nav-tabs-border-color:                     		@panel-default-border;
+@nav-tabs-link-hover-border-color:          		transparent;
+
+@nav-tabs-active-link-hover-bg:             		@panel-bg;
+@nav-tabs-active-link-hover-color:          		@text-color;
+@nav-tabs-active-link-hover-border-color:			@nav-tabs-border-color;
+
+@nav-tabs-justified-link-border-color:				@nav-tabs-border-color;
+@nav-tabs-justified-active-link-border-color:		@panel-bg;
+
+@nav-tabs-solid-bg:                                 #fafafa;
+@nav-tabs-solid-hover-bg:                           #f5f5f5;
+
+@nav-tabs-mobile-link-hover-bg:                     #fafafa;
+@nav-tabs-mobile-link-active-bg:                    #f5f5f5;
+
+
+
+//== Pagination
+//
+//##
+
+@pagination-color:                     				@text-color;
+
+@pagination-hover-color:               				@pagination-color;
+@pagination-hover-bg:                  				#f5f5f5;
+
+@pagination-disabled-color:            				#bbb;
+@pagination-disabled-bg:               				transparent;
+
+
+
+//== Pager
+//
+//##
+
+@pager-border-radius:                  				@border-radius-base;
+@pager-hover-bg:                       				@brand-primary;
+
+
+
+//== Form states and alerts
+//
+//## Define colors for form feedback states and, by default, alerts.
+
+@state-success-bg:               					@color-success-50;
+@state-success-text:             					@color-success-600;
+@state-success-border:          					@color-success-500;
+
+@state-info-bg:                  					@color-info-50;
+@state-info-text:                					@color-info-800;
+@state-info-border:              					@color-info-500;
+
+@state-warning-bg:               					@color-orange-50;
+@state-warning-text:            					@color-orange-800;
+@state-warning-border:           					@color-orange-500;
+
+@state-danger-bg:                					@color-warning-50;
+@state-danger-text:              					@color-warning-800;
+@state-danger-border:            					@color-warning-500;
+
+
+
+//== Tooltips
+//
+//##
+
+//** Tooltip background color
+@tooltip-bg:                  						#333;
+
+@tooltip-opacity:             						1;
+
+//** Tooltip arrow width
+@tooltip-arrow-width:         						4px;
+
+
+
+//== Popovers
+//
+//##
+
+//** Popover border color
+@popover-border-color:                				#ccc;
+
+//** Popover fallback border color
+@popover-fallback-border-color:       				@popover-border-color;
+
+//** Popover title background color
+@popover-title-bg:                    				transparent;
+
+//** Popover arrow width
+@popover-arrow-width:                 				5px;
+
+//** Popover outer arrow color
+@popover-arrow-outer-color:           				darken(@popover-border-color, 10%);
+
+
+
+//== Modals
+//
+//##
+
+//** Padding applied to the modal body
+@modal-inner-padding:            					@content-padding-large;
+
+//** Padding applied to the modal title
+@modal-title-padding:             					@modal-inner-padding;
+
+//** Modal content border color
+@modal-content-border-color:      					transparent; 
+
+//** Modal header border color
+@modal-header-border-color:       					transparent;
+
+//** Sizing
+@modal-sm:                        					400px;
+
+
+
+//== Alerts
+//
+//## Define alert colors, border radius, and padding.
+
+@alert-link-font-weight:      						500;
+
+
+
+//== Progress bars
+//
+//##
+
+//** Background color of the whole progress component
+@progress-bg:                 						@gray-lighter;
+
+
+
+//== List group
+//
+//##
+
+//** List group border radius
+@list-group-border-radius:      					0;
+
+//** Text color of disabled list items
+@list-group-disabled-color:     					@text-muted;
+
+//** Background color of disabled list items
+@list-group-disabled-bg:        					transparent;
+
+// Link
+@list-group-link-color:         					@text-color;
+
+
+
+//== Panels
+//
+//##
+
+@panel-body-padding:          						@content-padding-large;
+@panel-heading-padding:       						@content-padding-base @content-padding-large;
+@panel-footer-padding:        						@padding-base-vertical @content-padding-large;
+
+//** Border color for elements within panels
+@panel-footer-bg:             						#fcfcfc;
+@panel-default-heading-bg:    						#fcfcfc;
+
+@panel-success-text:          						#fff;
+@panel-success-border:        						@brand-success;
+@panel-success-heading-bg:    						@brand-success;
+
+@panel-info-text:             						#fff;
+@panel-info-border:           						@brand-info;
+@panel-info-heading-bg:       						@brand-info;
+
+@panel-warning-text:          						#fff;
+@panel-warning-border:        						@brand-warning;
+@panel-warning-heading-bg:    						@brand-warning;
+
+@panel-danger-text:           						#fff;
+@panel-danger-border:         						@brand-danger;
+@panel-danger-heading-bg:     						@brand-danger;
+
+
+
+//== Thumbnails
+//
+//##
+
+//** Padding around the thumbnail image
+@thumbnail-padding:           						3px;
+
+//** Thumbnail background color
+@thumbnail-bg:                						@panel-bg;
+
+
+//** Padding around the thumbnail caption
+@thumbnail-caption-padding:   						@content-padding-large;
+
+
+
+//== Wells
+//
+//##
+
+@well-bg:                     						#fdfdfd;
+@well-border:                 						@panel-default-border;
+
+
+
+//== Badges
+//
+//##
+
+//** Badge text color in active nav link
+@badge-active-color:          						@text-color;
+
+@badge-font-weight:           						500;
+@badge-line-height:           						@line-height-base;
+
+
+
+//== Breadcrumbs
+//
+//##
+
+@breadcrumb-padding-vertical:      					@content-padding-small;
+@breadcrumb-padding-horizontal:    					0;
+
+//** Breadcrumb background color
+@breadcrumb-bg:                    					transparent;
+
+//** Breadcrumb text color
+@breadcrumb-color:                 					@text-color;
+
+//** Text color of current page in the breadcrumb
+@breadcrumb-active-color:          					@text-muted;
+
+
+
+//== Close
+//
+//##
+
+@close-font-weight:           						300;
+@close-text-shadow:           						none;
+
+
+
+//== Code
+//
+//##
+
+@pre-bg:                      						#fcfcfc;
+@pre-border-color:            						#ddd;
+
+
+
+//== Type
+//
+//##
+
+//** Headings small color
+@headings-small-color:        						@text-muted;
+
+
+//** Blockquote small color
+@blockquote-small-color:      						@text-muted;
+
+//** Blockquote font size
+@blockquote-font-size:        						@font-size-base;
+
+
+//** Page header border color
+@page-header-border-color:    						#ddd;
+
+
+//** Horizontal line color.
+@hr-border:                  						#ddd;

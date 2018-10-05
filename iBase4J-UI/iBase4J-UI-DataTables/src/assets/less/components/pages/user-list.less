@@ -1,0 +1,45 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # User list
+ *
+ *  Styles for user lists - layouts, contact details etc.
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Collapsible details
+// ------------------------------
+
+.contact-details {
+    padding: @content-padding-base;
+    padding-left: (@content-padding-base * 2);
+    background-color: #fcfcfc;
+    border-top: 1px solid @gray-lighter;
+    border-bottom: 1px solid @gray-lighter;
+
+    // Remove bottom border
+    .media-list-bordered & {
+        border-bottom: 0;
+    }
+
+    // If inside panel body
+    .panel-body > .media-list & {
+        padding-left: @content-padding-base;
+        background-color: transparent;
+        margin-top: @content-padding-base;
+    }
+    .panel-body > .media-list-bordered & {
+        padding-bottom: 0;
+    }
+
+    // Remove margin from first list item
+    > ul {
+        &,
+        > li:first-child {
+            margin: 0;
+        }
+    }
+}

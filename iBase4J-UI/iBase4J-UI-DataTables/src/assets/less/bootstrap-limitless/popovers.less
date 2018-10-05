@@ -1,0 +1,83 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Popovers component
+*
+*  Overrides for popovers bootstrap component
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base class
+// -------------------------
+
+// Base
+.popover {
+    border-radius: @border-radius-base;
+    padding: 0;
+    .box-shadow(0 1px 3px fade(#000, 10%));
+}
+
+// Title
+.popover-title {
+    font-size: @font-size-small;
+    line-height: @line-height-small;
+    border: 0;
+    padding: @content-padding-base @content-padding-base 0 @content-padding-base;
+    text-transform: uppercase;
+    font-weight: 500;
+    .border-top-radius(@border-radius-base);
+
+    // Reduce size if inside colored container
+    &[class*=bg-] {
+        padding: @content-padding-small @content-padding-base;
+        margin: -1px -1px 0 -1px;
+    }
+}
+
+// Content
+.popover-content {
+    padding: @content-padding-base;
+}
+
+
+// Custom color options
+// -------------------------
+
+.popover[class*=bg-],
+.popover[class*=border-] {
+
+    // Top arrow
+    &.top > .arrow {
+        &,
+        &:after {
+            border-top-color: inherit;
+        }
+    }
+
+    // Right arrow
+    &.right > .arrow {
+        &,
+        &:after {
+            border-right-color: inherit;
+        }
+    }
+
+    // Bottom arrow
+    &.bottom > .arrow {
+        &,
+        &:after {
+            border-bottom-color: inherit;
+        }
+    }
+
+    // Left arrow
+    &.left > .arrow {
+        &,
+        &:after {
+            border-left-color: inherit;
+        }
+    }
+}

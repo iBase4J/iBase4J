@@ -1,0 +1,91 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Modals component
+*
+*  Overrides for modals bootstrap component
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Basic structure
+// -------------------------
+
+// Actual modal
+.modal-content {
+    border-radius: @border-radius-base;
+    .box-shadow(0 1px 4px rgba(0,0,0,.2));
+}
+
+// Modal header
+.modal-header {
+    position: relative;
+    padding-bottom: 0;
+
+    // With custom color
+    &[class*=bg-] {
+        padding: @panel-heading-padding;
+        .border-top-radius(@border-radius-base - 1);
+
+        .close {
+            margin-top: -((@font-size-base * 1.5) / 2);
+        }
+    }
+}
+
+// Close button
+.modal-header {
+    .modal-content[class*=bg-] & .close,
+    &[class*=bg-] .close {
+        color: #fff;
+    }
+
+    .close {
+        position: absolute;
+        right: @modal-inner-padding;
+        top: 50%;
+        margin-top: 0;
+    }
+}
+
+// Modal body
+.modal-body {
+
+    // Close button inside modal body
+    .close {
+        margin-top: 0!important;
+    }
+}
+
+// Footer (for actions)
+.modal-footer {
+    padding-top: 0;
+
+    // Fix for text alignment
+    &.text-center {
+        text-align: center;
+    }
+    &.text-left {
+        text-align: left;
+    }
+}
+
+
+// Setup for mobile
+// -------------------------
+
+// Scale up the modal
+@media (min-width: @screen-sm-min) {
+
+    // Modal sizes
+    .modal-xs {
+        width: @modal-xs;
+    }
+    .modal-full {
+        width: @modal-full;
+        margin-left: (100% - @modal-full) / 2;
+        margin-right: (100% - @modal-full) / 2;
+    }
+}

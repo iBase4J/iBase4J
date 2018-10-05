@@ -1,0 +1,261 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Thumbnails component
+*
+*  Overrides for thumbnails bootstrap component
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base class
+// -------------------------
+
+.thumbnail {
+    .box-shadow(0 1px 1px fade(#000, 5%));
+
+    // Links are block elements
+    > a {
+        display: block;
+    }
+
+    // Images
+    > img,
+    a > img {
+        width: 100%;
+    }
+
+    // Add a hover state for linked versions only
+    a&:hover,
+    a&:focus,
+    a&.active {
+        border-color: @thumbnail-border;
+    }
+
+    // Image captions
+    .caption {
+        padding: (@thumbnail-caption-padding - @thumbnail-padding);
+        padding-top: @thumbnail-caption-padding;
+
+        // Right icon insidee title
+        i.pull-right,
+        .icons-list.pull-right {
+            margin-top: (@thumbnail-caption-padding - @icon-font-size);
+        }
+
+        // Remove top margin from media heading
+        .media-heading {
+            margin-top: 0;
+
+            &:after {
+                content: '';
+                display: table;
+                clear: both;
+            }
+        }
+    }
+
+    // Remove borders if inside modal
+    .modal-dialog & {
+        border-width: 0;
+        .box-shadow(none);
+    }
+
+    // Use panel heading element as a thumbnail heading
+    > .panel-heading {
+        margin: -(@thumbnail-padding);
+        margin-bottom: 0;
+    }
+
+    // Use panel footer element as a thumbnail footer
+    .panel-footer {
+        margin: -(@thumbnail-padding);
+        margin-top: 0;
+    }
+
+    // Fix border radius if thumbnail doesn't have padding
+    &.no-padding {
+        img,
+        .thumb {
+            .border-top-radius(@border-radius-base);
+            .box-shadow(none);
+        }
+
+        // Caption padding
+        .caption {
+            padding: @panel-body-padding;
+        }
+
+        // Remove margin from header and footer
+        .panel-heading,
+        .panel-footer {
+            margin: 0;
+        }
+    }
+}
+
+
+// Thumb styling and controls
+// -------------------------
+
+// Controls appear on image
+.thumb {
+    position: relative;
+    display: block;
+
+    // Images
+    img:not(.media-preview) {
+        display: inline-block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    // Add rounded corners
+    &:not(.thumb-rounded) {
+        img {
+            border-radius: @border-radius-base;
+        }
+    }
+
+    // Zoom
+    &:hover .caption-zoom {
+        border-radius: 0;
+        .box-shadow(0 0 0 10px fade(#000, 70%));
+    }
+
+    // Offset
+    &:hover .caption-offset {
+        left: 8px;
+        top: 8px;
+    }
+
+    // Collapse
+    .caption-collapse {
+        top: 80%;
+        z-index: 10;
+        height: auto;
+
+        .thumb:hover & {
+            top: 100%;
+        }
+    }
+}
+
+// Rounded thumb
+.thumb-rounded {
+    width: 60%;
+    margin: @line-height-computed auto 0 auto;
+
+    // Make elements rounded
+    &,
+    img,
+    .caption-overflow {
+        border-radius: 50%;
+    }
+}
+
+// Display control buttons on hover
+.caption-overflow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    border-radius: @border-radius-base;
+    .opacity(0);
+    .transition(all 0.15s ease-in-out);
+
+    // Button container
+    span {
+        position: absolute;
+        top: 50%;
+        margin-top: -((@line-height-computed / 2) + @padding-base-vertical);
+        width: 100%;
+        text-align: center;
+    }
+
+    // Show on hover
+    .thumb:hover > & {
+        background-color: fade(#000, 70%);
+        visibility: visible;
+        .opacity(1);
+    }
+}
+
+// Zoom
+.zoom-image {
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .opacity(0);
+    .transition(all 0.15s ease-in-out);
+
+    // Show on hover
+    .thumb:hover & {
+        background-color: fade(#000, 60%);
+        .opacity(1);
+    }
+
+    // Rounded image
+    .img-rounded + & {
+        border-radius: @border-radius-base;
+    }
+
+    // Circle image
+    .img-circle + & {
+        border-radius: 50%;
+    }
+
+    // Icon setup
+    i {
+        font-size: (@icon-font-size * 2);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -(@icon-font-size);
+        margin-left: -(@icon-font-size);
+    }
+}
+
+// Slide
+.thumb-slide {
+    overflow: hidden;
+
+    // Add caption
+    .caption {
+        position: absolute;
+        bottom: -100%;
+        left: 0;
+        color: #fff;
+        width: 100%;
+        height: 100%;
+        background-color: fade(#000, 70%);
+        z-index: 10;
+        .transition(all 0.1s linear);
+
+        // Buttons
+        span {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            margin-top: -((@input-height-base) / 2);
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    // Show on hover
+    &:hover .caption {
+        bottom: 0;
+    }
+}

@@ -1,0 +1,587 @@
+{
+    "app": {
+        "name": "Limitless - Responsive Web Application Kit"
+    },
+
+    "nav": {
+        "category": {
+        	"main": "Main",
+        	"form": "Forms",
+        	"appearance": "Appearance",
+        	"layout": "Layout",
+            "options": "Layout options",
+        	"datavis": "Data visualization",
+        	"extensions": "Extensions",
+        	"tables": "Tables",
+        	"pages": "Page kits"
+    	},
+
+
+        "dash": {
+            "main": "Dashboard"
+        },
+
+        "page_layouts": {
+            "main": "Page layouts",
+            "fixed_navbar": "Fixed navbar",
+            "fixed_all": "Fixed navbar &amp; sidebar",
+            "fixed_native": "Fixed sidebar native scroll",
+            "hideable": "Hideable navbar",
+            "fixed_hideable": "Hideable &amp; fixed sidebar",
+            "fixed_footer": "Fixed footer",
+            "boxed_default": "Boxed with default sidebar",
+            "boxed_mini": "Boxed with mini sidebar",
+            "boxed_full": "Boxed full width"
+        },
+
+        "layouts": {
+            "main": "Layouts",
+            "current": "<span class='label bg-warning-400'>Current</span>",
+            "next": "<span class='label label-default'>Coming soon</span>",
+            "layout1": "Layout 1",
+            "layout2": "Layout 2",
+            "layout3": "Layout 3",
+            "layout4": "Layout 4",
+            "layout5": "Layout 5",
+            "layout6": "Layout 6"
+        },
+
+        "colors": {
+            "main": "Color system",
+            "primary": "Primary palette",
+            "danger": "Danger palette",
+            "success": "Success palette",
+            "warning": "Warning palette",
+            "info": "Info palette",
+            "pink": "Pink palette",
+            "violet": "Violet palette",
+            "purple": "Purple palette",
+            "indigo": "Indigo palette",
+            "blue": "Blue palette",
+            "teal": "Teal palette",
+            "green": "Green palette",
+            "orange": "Orange palette",
+            "brown": "Brown palette",
+            "grey": "Grey palette",
+            "slate": "Slate palette"
+        },
+
+        "starter": {
+            "main": "Starter kit",
+            "hnav": "Horizontal navigation",
+            "1col": "1 column",
+            "2col": "2 columns",
+            "3col": {
+                "main": "3 columns",
+                "dual": "Dual sidebars",
+                "double": "Double sidebars"
+            },
+            "4col": "4 columns",
+            "detached": {
+                "main": "Detached layout",
+                "left": "Left sidebar",
+                "right": "Right sidebar",
+                "sticky": "Sticky sidebar"
+            },
+            "boxed": "Boxed layout",
+            "fixed_main": "Fixed main navbar",
+            "fixed_secondary": "Fixed secondary navbar",
+            "fixed_both": "Both navbars fixed",
+            "fixed_layout": "Fixed layout"            
+        },
+
+        "changelog": {
+            "main": "Changelog <span class='label bg-blue-400'>1.4</span>"
+        },
+
+        "rtl": {
+            "main": "RTL version"
+        },
+
+
+        "form": {
+            "main": "Form components",
+            "basic": "Basic inputs",
+            "checkers": "Checkboxes &amp; radios",
+            "groups": "Input groups",
+            "extended": "Extended controls",
+            "labels": "Floating labels",
+            "selects": {
+                "main": "Selects",
+                "select2": "Select2 selects",
+                "multi": "Bootstrap multiselect",
+                "selectbox": "SelectBoxIt selects",
+                "bootstrap": "Bootstrap selects"
+            },
+            "tags": "Tag inputs",
+            "listboxes": "Dual Listboxes",
+            "editable": "Editable forms",
+            "validation": "Validation",
+            "grid": "Inputs grid"
+        },
+
+        "alpaca": {
+            "main": "JSON forms",
+            "basic": "Basic inputs",
+            "advanced": "Advanced inputs",
+            "controls": "Controls",
+            "tables": "Tables",
+            "editor": "CKEditor",
+            "code": "Code editor",
+            "pickers": "Pickers",
+            "media": "Maps & images",
+            "binding": "Form binding",
+            "validation": "Validation"
+        },
+
+        "wizard": {
+            "main": "Wizards",
+            "steps": "Steps wizard",
+            "toform": "Form wizard",
+            "stepy": "Stepy wizard"
+        },
+
+        "editor": {
+            "main": "Editors",
+            "summernote": "Summernote editor",
+            "ckeditor": "CKEditor",
+            "wysihtml5": "WYSIHTML5 editor",
+            "code": "Code editor"
+        },
+
+        "picker": {
+            "main": "Pickers",
+            "datetime": "Date &amp; time pickers",
+            "color": "Color pickers",
+            "location": "Location pickers"
+        },
+
+        "form_layout": {
+            "main": "Form layouts",
+            "vertical": "Vertical form",
+            "horizontal": "Horizontal form"
+        },
+
+
+        "component": {
+            "main": "Components",
+            "modals": "Modals",
+            "dropdowns": "Dropdown menus",
+            "tabs": "Tabs component",
+            "pills": "Pills component",
+            "navs": "Accordion and navs",
+            "buttons": "Buttons",
+            "pnotify": "PNotify notifications",
+            "notices": "Other notifications",
+            "popups": "Tooltips and popovers",
+            "alerts": "Alerts",
+            "pagination": "Pagination",
+            "labels": "Labels and badges",
+            "bars": "Loaders and bars",
+            "thumbs": "Thumbnails",
+            "header": "Page header",
+            "breadcrumbs": "Breadcrumbs",
+            "media": "Media objects",
+            "affix": "Affix and Scrollspy"
+        },
+
+        "appearance": {
+            "main": "Content appearance",
+            "panels": "Content panels",
+            "heading": "Panel heading elements",
+            "footer": "Panel footer elements",
+            "draggable": "Draggable panels",
+            "text": "Text styling",
+            "typo": "Typography",
+            "helpers": "Helper classes",
+            "syntax": "Syntax highlighter",
+            "grid": "Grid system"
+        },
+
+        "extra": {
+            "main": "Extra components",
+            "noui": "NoUI sliders",
+            "ion": "Ion range sliders",
+            "session": "Session timeout",
+            "idle": "Idle timeout",
+            "tree": "Dynamic tree views",
+            "context": "Context menu",
+            "fab": "Floating action buttons"
+        },
+
+        "animations": {
+            "main": "Animations",
+            "css3": "CSS3 animations",
+            "velocity": {
+                "main": "Velocity animations",
+                "basic": "Basic usage",
+                "ui": "UI pack effects",
+                "advanced": "Advanced examples"
+            }
+        },
+
+        "icons": {
+            "main": "Icons",
+            "glyphicons": "Glyphicons",
+            "icomoon": "Icomoon",
+            "fontawesome": "Font awesome"
+        },
+
+
+        "sidebar": {
+            "main": "Sidebars",
+            "default": {
+                "collapse": "Default collapsible",
+                "hide": "Default hideable"
+            },
+            "mini": {
+                "collapse": "Mini collapsible",
+                "hide": "Mini hideable"
+            },
+            "dual": {
+                "main": "Dual sidebar",
+                "base": "Dual sidebar",
+                "dcollapse": "Dual double collapse",
+                "dhide": "Dual double hide",
+                "swap": "Swap sidebars"
+            },
+            "double": {
+                "main": "Double sidebar",
+                "collapse": "Collapse main sidebar",
+                "hide": "Hide main sidebar",
+                "dfix": "Fix default width",
+                "mfix": "Fix mini width",
+                "ovisible": "Opposite sidebar visible"
+            },
+            "detached": {
+                "main": "Detached sidebar",
+                "left": "Left position",
+                "right": "Right position",
+                "custom": "Sticky (custom scroll)",
+                "native": "Sticky (native scroll)",
+                "separate": "Separate categories"
+            },
+            "hidden": "Hidden sidebar",
+            "light": "Light sidebar",
+            "components": "Sidebar components"
+        },
+
+        "vnav": {
+            "main": "Vertical navigation",
+            "collapse": "Collapsible menu",
+            "accordion": "Accordion menu",
+            "sizing": "Navigation sizing",
+            "bordered": "Bordered navigation",
+            "ricons": "Right icons",
+            "labels": "Labels and badges",
+            "disabled": "Disabled navigation links"
+        },
+
+        "hnav": {
+            "main": "Horizontal navigation",
+            "click": "Submenu on click",
+            "hover": "Submenu on hover",
+            "custom": "With custom elements",
+            "tabbed": "Tabbed navigation",
+            "disabled": "Disabled navigation links",
+            "mega": "Horizontal mega menu"
+        },
+
+        "navbar": {
+            "main": "Navbars",
+            "single": "Single navbar",
+            "multiple": {
+                "main": "Multiple navbars",
+                "nn": "Navbar + navbar",
+                "nh": "Navbar + header",
+                "hn": "Header + navbar",
+                "tb": "Top + bottom"
+            },
+            "colors": "Color options",
+            "sizing": "Sizing options",
+            "hideable": "Hide on scroll",
+            "components": "Navbar components"
+        },
+
+        "levels": {
+            "main": "Menu levels",
+            "ie": "<i class='icon-IE'></i> Second level",
+            "firefox": "<i class='icon-firefox'></i> Second level with child",
+            "chrome": "<i class='icon-chrome'></i> Second level",
+            "android": "<i class='icon-android'></i> Third level",
+            "apple": "<i class='icon-apple2'></i> Third level with child",
+            "win": "<i class='icon-windows'></i> Third level",
+            "html": "<i class='icon-html5'></i> Fourth level",
+            "css": "<i class='icon-css3'></i> Fourth level"
+        },
+
+
+        "echarts": {
+            "main": "Echarts library",
+            "line": "Lines and areas",
+            "column": "Columns and waterfalls",
+            "bar": "Bars and tornados",
+            "scatter": "Scatter charts",
+            "pie": "Pies and donuts",
+            "funnel": "Funnels and chords",
+            "other": "Candlesticks and others",
+            "combo": "Chart combinations"
+        },
+
+        "d3": {
+            "main": "D3 library",
+            "line": {
+                "basic": "Simple lines",
+                "advanced": "Advanced lines"
+            },
+            "bar": {
+                "basic": "Simple bars",
+                "advanced": "Advanced bars"
+            },
+            "pie": "Pie charts",
+            "circle": "Circle diagrams",
+            "tree": "Tree layout",
+            "other": "Other charts"
+        },
+
+        "dimple": {
+            "main": "Dimple library",
+            "line": {
+                "main": "Line charts",
+                "hor": "Horizontal orientation",
+                "ver": "Vertical orientation"
+            },
+            "bar": {
+                "main": "Bar charts",
+                "hor": "Horizontal orientation",
+                "ver": "Vertical orientation"
+            },
+            "area": {
+                "main": "Area charts",
+                "hor": "Horizontal orientation",
+                "ver": "Vertical orientation"
+            },
+            "step": {
+                "main": "Step charts",
+                "hor": "Horizontal orientation",
+                "ver": "Vertical orientation"
+            },
+            "pie": "Pie charts",
+            "ring": "Ring charts",
+            "scatter": "Scatter charts",
+            "bubble": "Bubble charts"
+        },
+
+        "c3": {
+            "main": "C3 library",
+            "line": "Lines and areas",
+            "bar": "Bars and pies",
+            "advanced": "Advanced examples",
+            "axis": "Chart axis",
+            "grid": "Grid options"
+        },
+
+        "google": {
+            "main": "Google visualization",
+            "line": "Line charts",
+            "bar": "Bar charts",
+            "pie": "Pie charts",
+            "bubble": "Bubble &amp; scatter charts",
+            "other": "Other charts"
+        },
+
+        "maps": {
+            "main": "Maps integration",
+            "gmaps": {
+                "main": "Google maps",
+                "basic": "Basics",
+                "controls": "Controls",
+                "markers": "Markers",
+                "drawings": "Map drawings",
+                "layers": "Layers"
+            },
+            "vmaps": "Vector maps"
+        },
+
+
+        "ext": {
+            "main": "Extensions",
+            "cropper": "Image cropper",
+            "blockui": "Block UI",
+            "dnd": "Drag and drop"
+        },
+
+        "jui": {
+            "main": "JQuery UI",
+            "interactions": "Interactions",
+            "forms": "Forms",
+            "components": "Components",
+            "sliders": "Sliders",
+            "nav": "Navigation"
+        },
+
+        "uploaders": {
+            "main": "File uploaders",
+            "plupload": "Plupload",
+            "bs": "Bootstrap file uploader",
+            "dropzone": "Dropzone"
+        },
+
+        "fc": {
+            "main": "Event calendars",
+            "views": "Basic views",
+            "styling": "Event styling",
+            "lang": "Language and time",
+            "advanced": "Advanced usage"
+        },
+
+        "int": {
+            "main": "Internationalization",
+            "direct": "Direct translation",
+            "qs": "Querystring parameter",
+            "oninit": "Set language on init",
+            "afterinit": "Set language after init",
+            "fallback": "Language fallback",
+            "callback": "Callbacks"
+        },
+
+
+        "btable": {
+            "main": "Basic tables",
+            "basic": "Basic examples",
+            "sizing": "Table sizing",
+            "borders": "Table borders",
+            "styling": "Table styling",
+            "elements": "Table elements"
+        },
+
+        "dtable": {
+            "main": "Data tables",
+            "basic": "Basic initialization",
+            "styling": "Basic styling",
+            "advanced": "Advanced examples",
+            "sorting": "Sorting options",
+            "api": "Using API",
+            "sources": "Data sources"
+        },
+
+        "dtext": {
+            "main": "Data tables extensions",
+            "reorder": "Columns reorder",
+            "rowreorder": "Row reorder",
+            "fixed": "Fixed columns",
+            "fixedheader": "Fixed header",
+            "autofill": "Auto fill",
+            "key": "Key table",
+            "scroller": "Scroller",
+            "select": "Select",
+            "buttons": {
+                "main": "Buttons",
+                "init": "Initialization",
+                "flash": "Flash buttons",
+                "print": "Print buttons",
+                "html5": "HTML5 buttons"
+            },
+            "visibility": "Columns visibility"
+        },
+
+        "hot": {
+            "main": "Handsontable",
+            "basic": "Basic configuration",
+            "advanced": "Advanced setup",
+            "cols": "Column features",
+            "cells": "Cell features",
+            "types": "Basic cell types",
+            "checks": "Custom & checkboxes",
+            "ac": "Autocomplete & password",
+            "search": "Search",
+            "context": "Context menu"
+        },
+
+        "tresp": {
+            "main": "Responsive options",
+            "basic": "Responsive basic tables",
+            "data": "Responsive data tables"
+        },
+
+
+        "tasks": {
+            "main": "Task manager",
+            "grid": "Task grid",
+            "list": "Task list",
+            "detailed": "Task detailed"
+        },
+
+        "invoice": {
+            "main": "Invoicing",
+            "template": "Invoice template",
+            "grid": "Invoice grid",
+            "archive": "Invoice archive"
+        },
+
+        "user": {
+            "main": "User pages",
+            "cards": "User cards",
+            "list": "User list",
+            "profile": "Simple profile",
+            "cover": "Profile with cover"
+        },
+
+        "login": {
+            "main": "Login &amp; registration",
+            "simple": "Simple login",
+            "advanced": "More login info",
+            "reg": "Simple registration",
+            "reg_advanced": "More registration info",
+            "unlock": "Unlock user",
+            "forgot": "Reset password",
+            "nonavbar": "Hide navbar",
+            "transparent": "Transparent box",
+            "bg": "Background option",
+            "validation": "With validation",
+            "tabs": "Tabbed form",
+            "modals": "Inside modals"
+        },
+
+        "timeline": {
+            "main": "Timelines",
+            "left": "Left timeline",
+            "right": "Right timeline",
+            "center": "Centered timeline"
+        },
+
+        "support": {
+            "main": "Support",
+            "chat_layouts": "Conversation layouts",
+            "chat_options": "Conversation options",
+            "base": "Knowledgebase",
+            "faq": "FAQ page"
+        },
+
+        "search": {
+            "main": "Search",
+            "basic": "Basic search results",
+            "user": "User search results",
+            "image": "Image search results",
+            "video": "Video search results"
+        },
+
+        "gallery": {
+            "main": "Gallery",
+            "grid": "Media grid",
+            "title": "Media with titles",
+            "desc": "Media with description",
+            "library": "Media library"
+        },
+
+        "error": {
+            "main": "Error pages",
+            "403": "Error 403",
+            "404": "Error 404",
+            "405": "Error 405",
+            "500": "Error 500",
+            "503": "Error 503",
+            "offline": "Offline page"
+        }
+    }
+}

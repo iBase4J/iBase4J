@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-store">
+	<meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>香巴林卡智慧景区平台</title>
+
+    <!-- 全局样式 -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="../../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/colors.css" rel="stylesheet" type="text/css">
+    <!-- /全局样式 -->
+
+    <!-- 自定义样式 -->
+    <link href="../../extends/dep/ztree/css/metro.css" rel="stylesheet"  type="text/css">
+    <link href="../../extends/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../extends/css/admin/department.css" rel="stylesheet" type="text/css">
+    <!-- /自定义样式 -->
+
+    <!-- js核心库 -->
+    <script type="text/javascript" src="../../assets/js/core/libraries/vue.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /js核心库 -->
+
+    <!-- js主题库 -->
+    <script type="text/javascript" src="../../assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/switchery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/switch.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/bootbox.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/jquery.formautofill.min.js"></script>
+
+    <script type="text/javascript" src="../../assets/js/core/app.js"></script>
+    <!-- /js主题库 -->
+
+    <!-- js自定义 -->
+    <script type="text/javascript" src="../../assets/js/pages/form_input_groups.js"></script>
+    <script type="text/javascript" src="../../extends/dep/ztree/js/jquery.ztree.all-3.5.min.js"></script>
+    <script type="text/javascript" src="../../extends/js/common.js"></script>
+    <script type="text/javascript" src="../../assets/js/pages/form_validation.js"></script>
+    <script type="text/javascript" src="../../extends/js/admin/department.js"></script>
+    <!-- /js自定义 -->
+</head>
+
+<body>
+<!-- 页面容器-->
+<div class="page-container">
+    <!-- 页面内容-->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-default border-bottom-lg border-bottom-teal">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-bold">系统管理</span> - 部门管理
+                        </h4>
+                    </div>
+
+                </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb">
+                        <li><a href="/main/welcome.html"><i class="icon-home2 position-left"></i>首页</a></li>
+                        <li>系统管理</li>
+                        <li>基础设置</li>
+                        <li class="active">部门管理</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /page header -->
+
+
+            <!-- Content area -->
+            <div class="content">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 no-padding-left departmentTree">
+                    <div class="panel panel-white">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">部门组织结构</h6>
+                            <div class="heading-elements">
+                                <ul class="icons-list">
+                                    <li><a data-action="reload" data-fnReload="refreshData"></a></li>
+                                    <li><a data-action="collapse"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="department">
+                            <ul id="departmentTree" class="ztree"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!--部门信息-->
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 departmentInfo">
+                    <!-- Basic layout-->
+                    <form action="#" class="form-horizontal" id="departmentInfo">
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">部门信息</h6>
+                                <div class="heading-elements">
+                                    <ul class="icons-list">
+                                        <li><a data-action="collapse"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right">部门名称</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 no-padding">
+                                        <input type="text" name="deptName" class="form-control departmentName" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right">上级部门</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 no-padding">
+                                        <input type="text" name="parentName" class="form-control" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">隶属单位</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9  no-padding">
+                                         <input type="text" class="form-control unitName" placeholder="请选择单位" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right">部门描述</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 no-padding">
+                                        <textarea rows="5" name="remark" class="form-control" disabled></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </form>
+                    <!-- /basic layout -->
+                </div>
+
+                <!--新增部门-->
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 departmentAdd">
+                    <!-- Basic layout-->
+                    <form action="#" class="form-horizontal" id="departmentAdd">
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">新增</h6>
+                                <div class="heading-elements">
+                                    <ul class="icons-list">
+                                        <li><a data-action="collapse"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right"><span
+                                            class="text-danger">*</span>部门名称</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 no-padding">
+                                        <input type="text" name="deptName" class="form-control departmentName"
+                                               placeholder="请输入部门名称">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right">上级部门</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 deptAdd no-padding">
+                                        <div class="input-group deptAddBtn">
+                                            <input type="hidden" name="parentId" class="deptAddValue">
+                                            <input type="text" name="parentName" class="form-control deptAddName" placeholder="请选择上级部门" readonly>
+                                            <span class="input-group-addon"><i class="icon-search4"></i></span>
+                                        </div>
+
+                                        <div class="deptAddContent col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <ul id="deptAddTree" class="ztree col-xs-12 col-sm-12 col-md-12 col-lg-12"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right"><span
+                                            class="text-danger">*</span>隶属单位</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 unitAdd no-padding">
+                                        <div class="input-group unitAddBtn">
+                                            <input type="hidden" name="unitId" class="unitAddValue">
+                                            <input type="text" name="unitName" class="form-control unitAddName" placeholder="请选择单位" readonly>
+                                            <span class="input-group-addon"><i class="icon-search4"></i></span>
+                                        </div>
+
+                                        <div class="unitAddContent col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <ul id="unitAddTree" class="ztree col-xs-12 col-sm-12 col-md-12 col-lg-12"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right">部门描述</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 no-padding">
+                                        <textarea rows="5" name="remark" class="form-control" placeholder="请输入部门描述"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-primary submit">提交 <i
+                                            class="icon-arrow-right14 position-right"></i></button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </form>
+                    <!-- /basic layout -->
+                </div>
+
+                <!--编辑部门-->
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 departmentEdit">
+                    <!-- Basic layout-->
+                    <form action="#" class="form-horizontal" id="departmentEdit">
+                        <div class="panel panel-white">
+                            <div class="panel-heading">
+                                <h6 class="panel-title">编辑</h6>
+                                <div class="heading-elements">
+                                    <ul class="icons-list">
+                                        <li><a data-action="collapse"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <input type="hidden" class="form-control" name="id">
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right"><span
+                                            class="text-danger">*</span>部门名称</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 no-padding">
+                                        <input type="text" name="deptName" class="form-control departmentName">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right">上级部门</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 deptEdit no-padding">
+                                        <div class="input-group deptEditBtn">
+                                            <input type="hidden" name="parentId" class="deptEditValue">
+                                            <input type="text" name="parentName" class="form-control deptEditName" placeholder="请选择上级部门" readonly>
+                                            <span class="input-group-addon"><i class="icon-search4"></i></span>
+                                        </div>
+
+                                        <div class="deptEditContent col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <ul id="deptEditTree" class="ztree col-xs-12 col-sm-12 col-md-12 col-lg-12"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right"><span
+                                            class="text-danger">*</span>隶属单位</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 unitEdit no-padding">
+                                        <div class="input-group unitEditBtn">
+                                            <input type="hidden" name="unitId" class="unitEditValue">
+                                            <input type="text" name="unitName" class="form-control unitEditName" placeholder="请选择单位" readonly>
+                                            <span class="input-group-addon"><i class="icon-search4"></i></span>
+                                        </div>
+
+                                        <div class="unitEditContent col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <ul id="unitEditTree" class="ztree col-xs-12 col-sm-12 col-md-12 col-lg-12"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-xs-4 col-sm-3 col-md-2 col-lg-2 control-label text-right">部门描述</label>
+                                    <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9 no-padding">
+                                        <textarea rows="5" name="remark" class="form-control"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-primary submit">提交 <i
+                                            class="icon-arrow-right14 position-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- /basic layout -->
+                </div>
+
+                <!-- Footer -->
+                <div class="footer text-muted" v-html="footer"></div>
+                 <!-- /footer -->
+
+            </div>
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+</div>
+<!-- /页面内容 -->
+</div>
+<!-- /页面容器 -->
+</body>
+</html>

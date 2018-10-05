@@ -1,0 +1,230 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Buttons extension
+*
+*  The Buttons extension for DataTables provides a common set of options, API
+*  methods and styling to display buttons that will interact with a DataTable
+*
+*  Version: 1.2
+*  Latest update: Jul 5, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Buttons base
+// ------------------------------
+
+// Full width buttons
+.dt-buttons-full {
+
+    // Container
+    .dt-buttons {
+        text-align: center;
+        float: none;
+        display: block;
+        margin: 0;
+        border-bottom: 1px solid @table-border-color;
+        padding-top: @line-height-computed;
+        padding-bottom: (@line-height-computed / 2);
+        background-color: @table-bg-accent;
+
+        > .btn {
+            margin-bottom: (@line-height-computed / 2);
+            float: none;
+        }
+    }
+}
+
+// Buttons. Default alignment is right
+.dt-buttons {
+    float: right;
+    display: inline-block;
+    margin: 0 0 @line-height-computed @content-padding-large;
+
+    // Left display option
+    .dt-buttons-left & {
+        float: left;
+    }
+
+    // Inner buttons
+    > .dt-button {
+        display: inline-block;
+    }
+
+    // Default buttons
+    > .btn {
+        border-radius: 0;
+
+        // First button
+        &:first-child {
+            .border-left-radius(@border-radius-base);
+        }
+
+        // Last button
+        &:last-child {
+            .border-right-radius(@border-radius-base);
+        }
+
+        // Add 1px spacing between buttons
+        & + .btn {
+            margin-left: -1px;
+        }
+    }
+
+    // Mobile view
+    @media screen and (max-width: 767px) {
+        float: none;
+        text-align: center;
+        display: block;
+
+        .btn {
+            float: none;
+        }
+    }
+}
+
+// Dialog
+.dt-button-info {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    margin-top: -100px;
+    margin-left: -200px;
+    padding: @modal-inner-padding;
+    background-color: #fff;
+    border: 1px solid @dropdown-border;
+    border-radius: @border-radius-base;
+    text-align: center;
+    z-index: @zindex-modal;
+    .box-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
+
+    // Heading
+    h2 {
+        margin-top: 0;
+        line-height: @modal-title-line-height;
+        font-size: @font-size-h5;
+    }
+}
+
+// Overlay
+.dt-button-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #333;
+    z-index: @zindex-dropdown - 1;
+    .opacity(0.25);
+}
+
+
+// Button collection
+// ------------------------------
+
+.dt-button-collection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: @dropdown-bg;
+    display: block;
+    z-index: @zindex-dropdown;
+    padding: @list-spacing 0;
+    overflow: hidden;
+    min-width: 180px;
+    border-radius: @border-radius-base;
+    -webkit-column-gap: 2px;
+    -moz-column-gap: 2px;
+    -ms-column-gap: 2px;
+    -o-column-gap: 2px;
+    column-gap: 2px;
+    .box-shadow(@shadow-depth2);
+
+    // Inner buttons
+    > .dt-button {
+        padding: (@padding-base-vertical + 1) @content-padding-base;
+        color: @dropdown-link-color;
+        display: block;
+        outline: 0;
+
+        // Add 1px top spacing between buttons
+        + .dt-button {
+            margin-top: 1px;
+        }
+
+        // Hover state
+        &:hover,
+        &:focus {
+            color: @dropdown-link-hover-color;
+            background-color: @dropdown-link-hover-bg;
+        }
+
+        // Active state
+        &.active {
+            color: @dropdown-link-active-color;
+            background-color: @dropdown-link-active-bg;
+        }
+    }
+
+    // Fixed centered layout
+    &.fixed {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-left: -75px;
+        padding-left: (@list-spacing - 2);
+        padding-right: (@list-spacing - 2);
+
+        // Two columns
+        &.two-column {
+            margin-left: -150px;
+        }
+
+        // Three columns
+        &.three-column {
+            margin-left: -225px;
+        }
+
+        // Four columns
+        &.four-column {
+            margin-left: -300px;
+        }
+    }
+
+    // Inner content
+    > * {
+        -webkit-column-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    // Two columns
+    &.two-column {
+        width: 300px;
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        -ms-column-count: 2;
+        -o-column-count: 2;
+        column-count: 2;
+    }
+
+    // Three columns
+    &.three-column {
+        width: 450px;
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        -ms-column-count: 3;
+        -o-column-count: 3;
+        column-count: 3;
+    }
+
+    // Four columns
+    &.four-column {
+        width: 600px;
+        -webkit-column-count: 4;
+        -moz-column-count: 4;
+        -ms-column-count: 4;
+        -o-column-count: 4;
+        column-count: 4;
+    }
+}

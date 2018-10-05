@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-store">
+	<meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>香巴林卡智慧景区平台</title>
+
+    <!-- 全局样式 -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="../../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/colors.css" rel="stylesheet" type="text/css">
+    <!-- /全局样式 -->
+
+    <!-- 自定义样式 -->
+    <link href="../../extends/css/common.css" rel="stylesheet" type="text/css">
+    <!-- /自定义样式 -->
+
+    <!-- js核心库 -->
+    <script type="text/javascript" src="../../assets/js/core/libraries/vue.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/blockui.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/bootbox.min.js"></script>
+    <!-- /js核心库 -->
+
+    <!-- js主题库 -->
+    <script type="text/javascript" src="../../assets/js/plugins/forms/validation/validate.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/validation/additional_methods.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/jquery_ui/core.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/ui/moment/moment.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/pickers/daterangepicker.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/switchery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/switch.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/inputs/touchspin.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/selectboxit.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/editors/summernote/summernote.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/jquery.formautofill.min.js"></script>
+
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/extensions/select.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/extensions/jszip/jszip.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
+
+    <script type="text/javascript" src="../../assets/js/core/app.js"></script>
+    <!-- /js主题库 -->
+
+    <!-- js自定义 -->
+    <script type="text/javascript" src="../../extends/js/common.js"></script>
+    <script type="text/javascript" src="../../assets/js/pages/form_input_groups.js"></script>
+    <script type="text/javascript" src="../../assets/js/pages/form_validation.js"></script>
+    <script type="text/javascript" src="../../extends/js/admin/dic.js"></script>
+    <!-- /js自定义 -->
+</head>
+
+<body>
+<!-- 页面容器-->
+<div class="page-container">
+    <!-- 页面内容 -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-default border-bottom-lg border-bottom-teal">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-bold">系统管理</span> - 字典管理</h4>
+                    </div>
+
+                </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb">
+                        <li><a href="/main/welcome.html"><i class="icon-home2 position-left"></i>首页</a></li>
+                        <li>系统管理</li>
+                        <li>基础设置</li>
+                        <li class="active">字典管理</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /page header -->
+
+            <!-- Content area -->
+            <div class="content">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h5 class="panel-title"><i class="icon-profile position-left"></i>字典管理</h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="reload" data-fnReload="refreshData"></a></li>
+                                <li><a data-action="collapse"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <table class="table text-center table-bordered dic-list">
+                        <thead>
+                        <tr>
+                            <th class="text-center">类型</th>
+                            <th class="text-center">选项描述</th>
+                            <th class="text-center">选项值</th>
+                            <th class="text-center">排序</th>
+                            <th class="text-center">修改时间</th>
+                            <th class="text-center ">操作</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- Footer -->
+	            <div class="footer text-muted" v-html="footer"></div>
+	            <!-- /footer -->
+            </div>
+            <!-- /content area -->
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /页面内容 -->
+    
+    
+    <div class="modal fade dicEdit">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h5 class="modal-title">新增参数</h5>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-horizontal" action="#" id="dicEdit">
+                    	<input type="hidden" name="id">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                <span class="text-danger">*</span>类型
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="type" class="form-control" placeholder="请输入类型" required="required" >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                               <span class="text-danger">*</span>选项描述
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="codeText" class="form-control" placeholder="请输入选项描述" required="required" >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                <span class="text-danger">*</span>选项值
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="code" class="form-control" placeholder="请输入选项值" required="required" >
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">排序</label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="sortNo" class="touchspin-empty" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                父类型
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="parent_type" class="form-control" placeholder="请输入父类型">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">
+                                父选项值
+                            </label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <input type="text" name="parent_code" class="form-control" placeholder="请输入父选项值">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-sm-3 col-md-2 col-lg-2 text-right">备注</label>
+                            <div class="col-xs-7 col-sm-8 col-md-9 col-lg-9">
+                                <textarea rows="5" cols="5" name="remark" class="form-control" placeholder="请输入备注"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary submit">确定</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /页面容器 -->
+</body>
+</html>

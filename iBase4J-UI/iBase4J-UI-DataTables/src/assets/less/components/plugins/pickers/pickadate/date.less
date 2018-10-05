@@ -1,0 +1,296 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Pick-a-date - Date picker
+*
+*  The mobile-friendly, responsive, and lightweight jQuery date & time input picker
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Picker box
+.picker__box {
+    padding: (@list-spacing * 2);
+}
+
+// Header
+.picker__header {
+    text-align: center;
+    position: relative;
+    font-size: @font-size-h6;
+    line-height: 1;
+    padding-top: @content-padding-base;
+    padding-bottom: @content-padding-base;
+}
+
+
+// Selectors
+// ------------------------------
+
+// Month and year labels
+.picker__month,
+.picker__year {
+    font-weight: 500;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.picker__year {
+    color: @text-muted;
+    font-size: @font-size-small;
+    font-weight: normal;
+}
+
+
+// Month and year selectors
+.picker__select--month,
+.picker__select--year {
+    border-color: @input-border;
+    height: @input-height-mini;
+    font-size: @font-size-base;
+    line-height: @line-height-small;
+    margin-left: 5px;
+    margin-right: 5px;
+    outline: 0;
+}
+.picker__select--month {
+    width: 35%;
+}
+.picker__select--year {
+    width: 22.5%;
+}
+
+
+// Navigation
+// ------------------------------
+
+// Navigation buttons
+.picker__nav--prev,
+.picker__nav--next {
+    position: absolute;
+    padding: (@icon-font-size / 2);
+    top: 50%;
+    margin-top: -(@icon-font-size);
+    border-radius: @border-radius-small;
+    line-height: 1;
+
+    &:before {
+        font-family: 'icomoon';
+        display: block;
+        font-size: @icon-font-size;
+        width: @icon-font-size;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: @dropdown-link-hover-bg;
+    }
+}
+
+// Previous button
+.picker__nav--prev {
+    left: 0;
+
+    &:before {
+        content: '\e9c8';
+    }
+}
+
+// Next button
+.picker__nav--next {
+    right: 0;
+
+    &:before {
+        content: '\e9cb'
+    }
+}
+
+// Disabled state
+.picker__nav--disabled {
+    &,
+    &:hover,
+    &:before,
+    &:before:hover {
+        cursor: default;
+        background: none;
+        border-right-color: #f5f5f5;
+        border-left-color: #f5f5f5;
+    }
+}
+
+
+// Tables
+// ------------------------------
+
+// Calendar table of dates
+.picker__table {
+    text-align: center;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+    font-size: inherit;
+    width: 100%;
+    margin-bottom: (@list-spacing * 2);
+
+    td {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+// Weekday labels
+.picker__weekday {
+    width: 14.285714286%;
+    font-size: @font-size-small;
+    text-align: center;
+    padding-bottom: @content-padding-small;
+    padding-top: (@list-spacing * 2);
+    color: @text-muted;
+    font-weight: 400;
+}
+
+// Days on the calendar
+.picker__day {
+    padding: @padding-base-vertical;
+}
+.picker__day--today {
+    position: relative;
+    background-color: @dropdown-link-hover-bg;
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 0;
+        height: 0;
+        border-top: 6px solid @color-teal-400;
+        border-left: 6px solid transparent;
+    }
+}
+
+
+// States
+// ------------------------------
+
+// Date focus
+.picker__day--outfocus {
+    color: #ccc;
+}
+.picker__day--infocus:hover,
+.picker__day--outfocus:hover {
+    cursor: pointer;
+    color: @text-color;
+    background-color: @dropdown-link-hover-bg;
+}
+
+// Highlighted date
+.picker__day--highlighted:before {
+    border-top-color: #fff;
+}
+.picker__day--highlighted,
+.picker__day--selected {
+    border-radius: @border-radius-base;
+}
+.picker__day--highlighted,
+.picker__day--highlighted:hover,
+.picker--focused .picker__day--highlighted {
+    cursor: pointer;
+    color: #fff;
+    background-color: @color-teal-400;
+}
+.picker__day--selected,
+.picker__day--selected:hover,
+.picker--focused .picker__day--selected {
+    background-color: @color-teal-400;
+    color: #fff;
+}
+
+// Disabled date
+.picker__day--disabled {
+    &,
+    &:hover {
+        background: #fafafa;
+        color: @text-muted;
+        cursor: default;
+    }
+
+    &:before {
+        border-top-color: #999;
+    }
+
+    .picker__day--highlighted & {
+        &,
+        &:hover {
+            background-color: #bbbbbb;
+        }
+    }
+}
+
+
+// Footer
+// ------------------------------
+
+// Contains the "today" and "clear" buttons
+.picker__footer {
+    text-align: center;
+
+    // Footer buttons
+    button {
+        border: 0;
+        background: #fff;
+        padding: @padding-small-vertical @padding-small-horizontal;
+        border-radius: @border-radius-base;
+        font-weight: 500;
+        cursor: pointer;
+        display: inline-block;
+
+        &:hover,
+        &:focus {
+            outline: 0;
+            background-color: @dropdown-link-hover-bg;
+        }
+
+        &:before {
+            height: 0;
+        }
+    }
+}
+
+// Buttons
+.picker__button--today:before {
+    content: '';
+    margin-right: 5px;
+    position: relative;
+    display: inline-block;
+    top: -1px;
+    width: 0;
+    border-top: 6px solid @brand-primary;
+    border-left: 6px solid transparent;
+}
+.picker__button--close:before {
+    content: '\D7';
+    display: inline-block;
+    position: relative;
+    margin-right: 5px;
+    top: 1px;
+    line-height: 1;
+    font-size: @icon-font-size;
+}
+.picker__button--clear:before {
+    content: '';
+    display: inline-block;
+    position: relative;
+    top: -3px;
+    width: 8px;
+    margin-right: 5px;
+    border-top: 2px solid @brand-danger;
+}

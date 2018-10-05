@@ -1,0 +1,49 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Key Table extension
+*
+*  KeyTable provides Excel like cell navigation on any table. Events (focus, blur,
+*  action etc) can be assigned to individual cells, columns, rows or all cells.
+*
+*  Version: 1.0
+*  Latest update: Nov 10, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Focus colors
+.dataTable {
+    th,
+    td {
+
+        // Default
+        &.focus {
+            outline: 2px solid @brand-primary;
+            outline-offset: -1px;
+        }
+
+        // Success
+        &.focus-success {
+            background-color: @color-success-50;
+            outline-color: @color-success-500;
+        }
+
+        // Info
+        &.focus-info {
+            background-color: @color-primary-50;
+            outline-color: @color-primary-500;
+        }
+
+        // Warning
+        &.focus-warning {
+            background-color: @color-warning-50;
+            outline-color: @color-warning-500;
+        }
+
+        // Danger
+        &.focus-danger {
+            background-color: @color-danger-50;
+            outline-color: @color-danger-500;
+        }
+    }
+}

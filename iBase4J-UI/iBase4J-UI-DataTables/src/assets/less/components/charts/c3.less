@@ -1,0 +1,216 @@
+/* ------------------------------------------------------------------------------
+*
+*  # C3 charts
+*
+*  Styles for C3.js visualization library
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.c3 {
+
+    // Use smaller text
+    svg {
+        font-size: @font-size-small;
+    }
+
+    // Paths and lines defaults
+    path,
+    line {
+        fill: none;
+        stroke: @text-muted;
+    }
+    path.domain {
+        shape-rendering: crispEdges;
+    }
+
+    // Disable text selection
+    text {
+        .user-select(none);
+    }
+}
+
+
+// Components
+// ------------------------------
+
+// Default shape rendering style
+.c3-legend-item-tile,
+.c3-xgrid-focus,
+.c3-ygrid,
+.c3-event-rect,
+.c3-bars path {
+    shape-rendering: crispEdges;
+}
+
+// Arcs
+.c3-chart-arc {
+    path {
+        stroke: #fff;
+    }
+
+    text {
+        fill: #fff;
+        font-size: @font-size-base;
+    }
+}
+
+// Grid
+.c3-grid {
+    line {
+        stroke: #aaa;
+    }
+
+    text {
+        fill: #aaa;
+    }
+}
+.c3-xgrid,
+.c3-ygrid {
+    stroke-dasharray: 3 3;
+}
+
+// Text on chart
+.c3-text {
+    font-weight: 500;
+
+    &.c3-empty {
+        fill: #808080;
+        font-size: 2em;
+    }
+}
+
+// Line
+.c3-line {
+    stroke-width: 2px;
+}
+
+// Area
+.c3-area {
+    stroke-width: 0;
+    .opacity(0.4);
+}
+
+// Point
+.c3-circle._expanded_ {
+    stroke-width: 1.5px;
+    stroke: #fff;
+}
+.c3-selected-circle {
+    fill: #fff;
+    stroke-width: 2px;
+}
+
+// Bar
+.c3-bar {
+    stroke-width: 0;
+
+    &._expanded_ {
+        fill-opacity: 0.75;
+    }
+}
+
+// Arc
+.c3-chart-arcs-title {
+    font-size: 1.3em;
+}
+.c3-chart-arcs {
+    .c3-chart-arcs-background {
+        fill: #e0e0e0;
+        stroke: none;
+    }
+
+    .c3-chart-arcs-gauge-unit {
+        fill: @text-color;
+        font-size: @font-size-h6;
+    }
+
+    .c3-chart-arcs-gauge-max,
+    .c3-chart-arcs-gauge-min {
+        fill: @gray-light;
+    }
+}
+.c3-chart-arc .c3-gauge-value {
+    fill: @text-color;
+    font-size: 28px;
+}
+
+// Focus
+.c3-target {
+    &.c3-focused {
+        .opacity(1);
+
+        path.c3-line,
+        path.c3-step {
+            stroke-width: 2px;
+        }
+    }
+
+    &.c3-defocused {
+        .opacity(0.3)!important;
+    }
+}
+
+// Region
+.c3-region {
+    fill: @color-slate-600;
+    fill-opacity: .1;
+}
+
+// Brush
+.c3-brush .extent {
+    fill-opacity: .1;
+}
+
+// Legend
+.c3-legend-item {
+    font-size: @font-size-small;
+}
+.c3-legend-background {
+    fill: #fff;
+    stroke: lightgray;
+    stroke-width: 1;
+    .opacity(0.75);
+}
+
+// Tooltip
+.c3-tooltip {
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #fff;
+    empty-cells: show;
+    .opacity(0.95);
+
+    th {
+        background-color: #333;
+        padding: 4px 10px;
+        text-align: center;
+        color: #fff;
+        border: 1px solid #333;
+        font-weight: 500;
+    }
+
+    td {
+        font-size: @font-size-small;
+        padding: 6px 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+
+        > span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin-right: 6px;
+        }
+
+        &.value {
+            text-align: right;
+        }
+    }
+}

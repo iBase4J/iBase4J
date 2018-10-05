@@ -1,0 +1,442 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Breadcrumb component
+*
+*  Overrides for breadcrumb bootstrap component
+*
+*  Version: 1.1
+*  Latest update: Aug 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Basic styles
+// -------------------------
+
+// Base
+.breadcrumb {
+    border-radius: 0;
+    margin-bottom: 0;
+
+    // Breadcrumb item
+    > li {
+        position: relative;
+
+        // Links
+        > a {
+            color: @breadcrumb-color;
+
+            // Mute on hover
+            &:hover,
+            &:focus {
+                .opacity(0.85);
+            }
+        }
+
+        // Icons
+        i {
+            display: inline-block;
+            font-size: @font-size-small;
+        }
+
+        // Dropdown menus
+        > .dropdown-menu {
+            margin-top: 0;
+            margin-left: 5px;
+        }
+        &:first-child > .dropdown-menu {
+            margin-left: 0;
+        }
+        > .dropdown-menu-right {
+            margin-left: 0;
+            margin-right: -10px;
+        }
+        &:hover > .dropdown-menu {
+            display: block;
+        }
+
+        // Location text
+        &.location-text {
+            margin-right: @element-horizontal-spacing;
+
+            + li {
+                &:before {
+                    content: none;
+                }
+                > .dropdown-menu {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+
+    // Setup mobile view
+    @media (max-width: @screen-xs-max) {
+
+        // Inside headings
+        .heading-elements & {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        // Disable absolute positioning
+        > li {
+            position: static;
+
+            // Make dropdown full width
+            .dropdown-menu {
+                width: 100%;
+                margin: 0;
+                border-radius: 0;
+                border-width: 1px 0;
+
+                > li {
+                    position: static;
+                }
+            }
+        }
+
+        // Submenu
+        .dropdown-submenu > .dropdown-menu {
+            position: static;
+        }
+    }
+}
+
+// Breadcrumb inside page title
+.page-title {
+    .breadcrumb {
+        float: none;
+        display: block;
+        margin: 0;
+        padding-top: 3px;
+        padding-bottom: 0;
+
+        &:first-child {
+            padding-top: 0;
+            padding-bottom: 3px;
+        }
+
+        // Add left spacing if title has icon
+        &.position-right {
+            margin-left: (@icon-font-size + @element-horizontal-spacing + 5);
+        }
+    }
+}
+
+// Transparent breadcrumb
+.page-header-content {
+
+    // Breadcrumb
+    > .breadcrumb {
+        padding-top: 0;
+        padding-bottom: (@breadcrumb-padding-vertical * 2);
+
+        &:first-child {
+            padding-bottom: 0;
+            padding-top: (@breadcrumb-padding-vertical * 2);
+        }
+    }
+}
+
+
+// Divider styles
+// -------------------------
+
+// Dash
+.breadcrumb-dash > li + li:before  {
+    content: '\2013\00a0';
+}
+
+// Arrow
+.breadcrumb-arrow > li + li:before  {
+    content: '\2192\00a0';
+}
+
+// Arrows
+.breadcrumb-arrows > li + li:before  {
+    content: '\00bb\00a0';
+}
+
+// Caret
+.breadcrumb-caret > li + li:before  {
+    content: '\203A\00a0';
+}
+
+
+// Breadcrumb line
+// -------------------------
+
+// Base
+.breadcrumb-line {
+    position: relative;
+    padding-left: @grid-gutter-width;
+    padding-right: @grid-gutter-width;
+    border-top: 1px solid @panel-default-border;
+
+    // Clearing floats
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    // Inside page header (all levels)
+    &:first-child {
+        border-top-width: 0;
+        border-bottom: 1px solid @panel-default-border;
+        
+        // Z-index fix
+        .page-header & {
+            z-index: (@zindex-navbar - 6);
+        }
+    }
+
+    // In page header
+    &:not([class*=bg-]) {
+        background-color: @page-header-default-bg;
+    }
+    
+    // After page header content
+    .page-header-content + & {
+        margin-bottom: @line-height-computed;
+        border-bottom: 1px solid @panel-default-border;
+        
+        // Remove bottom margin if inside colored header
+        .page-header-default &,
+        .page-header-inverse & {
+            margin-bottom: 0;
+        }
+        
+        // And remove bottom border in light header
+        .page-header-default & {
+            border-bottom-width: 0;
+        }
+    }
+    
+    // Darken inside white header
+    .page-header-default &:not([class*=bg-]) {
+        background-color: @panel-footer-bg;
+    }
+    
+    // Inside inversed header
+    .page-header-inverse & {
+        border-top-width: 0;
+        
+        // Remove bottom border if before title
+        &:first-child {
+            border-bottom-width: 0;
+        }
+    }
+
+    // Breadcrumb
+    .breadcrumb {
+        margin-right: ((@content-padding-base * 2) + @icon-font-size);
+
+        @media (min-width: @grid-float-breakpoint) {
+            float: left;
+            margin-right: 0;
+        }
+    }
+
+    // Z-index correction for mobiles
+    @media (max-width: @grid-float-breakpoint-max) {
+        z-index: (@zindex-navbar - 2);
+        background-color: inherit;
+    }
+}
+
+// As a component
+.breadcrumb-line-component {
+    border-radius: @border-radius-base;
+    padding-left: 0;
+    padding-right: 0;
+    
+    // Set colors
+    &:not([class*=bg-]) {
+        background-color: @panel-bg;
+        border: 1px solid @panel-default-border;
+        
+        // Inside default header
+        .page-header-default & {
+            border-width: 1px;
+        }
+        
+        // Inside inversed header
+        .page-header-inverse & {
+            border-width: 0;
+        }
+    }
+
+    // Adjust horizontal spacing of breadcrumb
+    .breadcrumb {
+        margin-left: @grid-gutter-width;
+    }
+    
+    // Inside page header
+    .page-header & {
+        margin-left: @grid-gutter-width;
+        margin-right: @grid-gutter-width;
+    }
+}
+
+// Line with custom bg color
+.breadcrumb-line[class*=bg-] {
+
+    // Inherit colors
+    a, i {
+        color: inherit;
+    }
+
+    // Breadcrumb
+    .breadcrumb {
+        > .active,
+        > li + li:before {
+            color: fade(#fff, 75%);
+        }
+    }
+}
+
+// In dark containers
+.breadcrumb-line[class*=bg-] {
+
+    // Breadcrumb elements
+    .breadcrumb-elements {
+        border-top-color: fade(#fff, 10%);
+
+        // Element items
+        > li {
+            > a {
+                color: fade(#fff, 90%);
+            }
+
+            // Highlight on hover
+            &.open > a,
+            > a:hover,
+            > a:focus {
+                color: #fff;
+            }
+        }
+    }
+}
+
+
+// Breadrumb elements
+// ------------------------------
+
+.breadcrumb-elements {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid @page-header-border-color;
+    font-size: 0;
+
+    // Clearing floats
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    // Items
+    > li {
+        display: inline-block;
+        position: static;
+        font-size: @font-size-base;
+
+        // Links
+        > a {
+            display: block;
+            padding: @breadcrumb-padding-vertical @content-padding-base;
+            color: @breadcrumb-color;
+        }
+
+        // Highlight on hover
+        &.open > a,
+        > a:hover,
+        > a:focus {
+            background-color: darken(@panel-footer-bg, 1%);
+
+            .breadcrumb-line[class*=bg-] & {
+                background-color: fade(#fff, 10%);
+            }
+        }
+    }
+
+    // Dropdown menu
+    .dropdown-menu {
+        margin-top: 0;
+        left: auto;
+        right: -1px;
+        .border-top-radius(0);
+
+        // Mobile view
+        @media (max-width: @screen-xs-max) {
+            left: -1px;
+
+            // Links
+            > li > a {
+                padding-left: @content-padding-base;
+                padding-right: @content-padding-base;
+            }
+        }
+    }
+
+    // Dropup menu
+    .dropup > .dropdown-menu {
+        margin-bottom: 0;
+        .border-bottom-radius(0);
+    }
+
+    // Collapse button
+    [data-toggle="collapse"] {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: @grid-gutter-width;
+    }
+
+    // Desktop view
+    @media (min-width: @grid-float-breakpoint) {
+        float: right;
+        text-align: inherit;
+        border-top: 0;
+
+        // Collapse
+        &.collapse {
+            display: block;
+            visibility: visible;
+        }
+
+        // Items
+        > li {
+            float: left;
+
+            &,
+            .btn-group {
+                position: relative;
+            }
+
+            .breadcrumb-line-component &:last-child > a {
+                .border-right-radius(@border-radius-base);
+            }
+        }
+
+        // Hide collapsible toggler
+        [data-toggle="collapse"] {
+            display: none;
+        }
+    }
+
+    // Mobile view
+    .breadcrumb-line:not(.breadcrumb-line-component) & {
+        @media (max-width: @grid-float-breakpoint-max) {
+            background-color: inherit;
+            margin-left: -(@grid-gutter-width);
+            margin-right: -(@grid-gutter-width);
+            padding-left: @grid-gutter-width;
+            padding-right: @grid-gutter-width;
+        }
+    }
+}

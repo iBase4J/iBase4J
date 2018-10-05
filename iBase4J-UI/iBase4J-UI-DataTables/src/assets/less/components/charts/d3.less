@@ -1,0 +1,414 @@
+/* ------------------------------------------------------------------------------
+*
+*  # D3.js library
+*
+*  Basic styles for D3.js visualization library
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Axis
+// ------------------------------
+
+// Base
+.d3-axis {
+
+    // Path
+    path {
+        fill: none;
+        stroke: @text-muted;
+        shape-rendering: crispEdges;
+    }
+
+    // Line
+    line {
+        stroke: @gray-lighter;
+        shape-rendering: crispEdges;
+    }
+
+    // Ticks
+    .tick {
+        &,
+        text {
+            font-size: @font-size-small;
+            fill: @text-color;
+        }
+    }
+}
+
+// Lighter axis text
+.d3-axis-solid {
+    path,
+    line {
+        stroke: #ccc;
+    }
+
+    // Ticks
+    .tick {
+        fill: @text-muted;
+
+        text {
+            fill: @text-muted;
+        }
+    }
+}
+
+// Stronger axis text
+.d3-axis-strong {
+    path,
+    line {
+        stroke: #ccc;
+    }
+
+    // Ticks
+    .tick {
+        fill: @text-color;
+
+        text {
+            fill: @text-color;
+        }
+    }
+}
+
+// Transparent axis
+.d3-axis-transparent {
+
+    // Hide path
+    path {
+        stroke: none;
+    }
+
+    // Hide line
+    line {
+        stroke: #e5e5e5;
+    }
+
+    // Change tick colors
+    .tick {
+        fill: @text-muted;
+
+        text {
+            fill: @text-muted;
+        }
+    }
+}
+
+
+
+// Tooltip
+// ------------------------------
+
+//
+// Basic tooltip
+//
+
+// Base
+.d3-tip {
+    position: absolute;
+    padding: (@padding-base-vertical + 1) @padding-large-horizontal;
+    border-radius: @border-radius-base;
+    background-color: @tooltip-bg;
+    color: @tooltip-color;
+    margin-bottom: -(@tooltip-arrow-width - 1);
+    font-size: @font-size-small;
+    z-index: @zindex-tooltip;
+
+    // Arrow
+    .d3-tip-arrow {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+    }
+}
+
+// Tooltip positioning
+.d3-tip {
+    &.n .d3-tip-arrow {
+        bottom: -(@tooltip-arrow-width);
+        left: 50%;
+        margin-left: -@tooltip-arrow-width;
+        border-width: @tooltip-arrow-width @tooltip-arrow-width 0;
+        border-top-color: @tooltip-arrow-color;
+    }
+    &.e .d3-tip-arrow {
+        top: 50%;
+        left: -(@tooltip-arrow-width);
+        margin-top: -@tooltip-arrow-width;
+        border-width: @tooltip-arrow-width @tooltip-arrow-width @tooltip-arrow-width 0;
+        border-right-color: @tooltip-arrow-color;
+    }
+    &.w .d3-tip-arrow {
+        top: 50%;
+        right: -(@tooltip-arrow-width);
+        margin-top: -@tooltip-arrow-width;
+        border-width: @tooltip-arrow-width 0 @tooltip-arrow-width @tooltip-arrow-width;
+        border-left-color: @tooltip-arrow-color;
+    }
+    &.s .d3-tip-arrow {
+        top: 0;
+        left: 50%;
+        margin-left: -@tooltip-arrow-width;
+        border-width: 0 @tooltip-arrow-width @tooltip-arrow-width;
+        border-bottom-color: @tooltip-arrow-color;
+    }
+}
+
+
+//
+// Venn diagram tooltip
+//
+
+// Base
+.venntooltip {
+    position: absolute;
+    text-align: center;
+    min-width: 60px;
+    white-space: nowrap;
+    background-color: @tooltip-bg;
+    color: @tooltip-color;
+    padding: @padding-base-vertical @padding-base-horizontal;
+    border-radius: @border-radius-base;
+    display: none;
+}
+
+
+
+// Chart types
+// ------------------------------
+
+// Lines
+.d3-line {
+    fill: none;
+
+    // Thin stroke
+    &-thin {
+        stroke-width: 1px;
+    }
+
+    // Medium stroke
+    &-medium {
+        stroke-width: 1.5px;
+    }
+
+    // Strong stroke
+    &-strong {
+        stroke-width: 2px;
+    }
+}
+
+
+// Line circles
+.d3-line-circle {
+    fill: none;
+    cursor: pointer;
+
+    // Thin stroke
+    &-thin {
+        stroke-width: 1px;
+    }
+
+    // Medium stroke
+    &-medium {
+        stroke-width: 1.5px;
+    }
+
+    // Strong stroke
+    &-strong {
+        stroke-width: 2px;
+    }
+}
+
+
+
+// Grid
+// ------------------------------
+
+// Basic grid
+.d3-grid {
+    .tick {
+        line {
+            stroke-width: 1px;
+            stroke: #e5e5e5;
+            shape-rendering: crispEdges;
+        }
+
+        text {
+            fill: @text-color;
+            stroke: none;
+        }
+    }
+}
+
+
+// Dashed grid
+.d3-grid-dashed {
+    .tick {
+        stroke-dasharray: 4,2;
+        stroke-width: 1px;
+        stroke: #e5e5e5;
+        shape-rendering: crispEdges;
+    }
+
+    path {
+        stroke-width: 0;
+    }
+}
+
+
+
+// Components
+// ------------------------------
+
+// Crosshair overlay
+.d3-crosshair-overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+
+
+// Bullets
+// ------------------------------
+
+//
+// Base
+//
+
+// Ticks
+.bullet-tick {
+
+    // Line styles
+    line {
+        stroke: @text-muted;
+        stroke-width: 1px;
+        shape-rendering: crispEdges;
+    }
+
+    // Text styles
+    text {
+        fill: @text-muted;
+        font-size: @font-size-small;
+    }
+}
+
+// Marker
+.bullet-marker {
+    stroke-width: 2px;
+    shape-rendering: crispEdges;
+}
+
+// Title
+.bullet-title {
+    font-size: @font-size-base;
+    font-weight: 500;
+}
+
+// Subtitle
+.bullet-subtitle {
+    fill: @text-muted;
+}
+
+
+//
+// First bullet
+//
+
+// Ranges
+.bullet-1 .bullet-range-1 {
+    fill: fade(@color-slate-500, 80%);
+}
+.bullet-1 .bullet-range-2 {
+    fill: fade(@color-slate-500, 40%);
+}
+.bullet-1 .bullet-range-3 {
+    fill: @color-slate-500;
+}
+
+// Measures
+.bullet-1 .bullet-measure-1 {
+    fill: fade(@color-slate-600, 90%);
+}
+.bullet-1 .bullet-measure-2 {
+    fill: #fff;
+}
+
+// Marker
+.bullet-1 .bullet-marker {
+    stroke: @color-slate-800;
+}
+
+
+//
+// Second bullet
+//
+
+// Ranges
+.bullet-2 .bullet-range-1 {
+    fill: fade(@color-warning-400, 60%);
+}
+.bullet-2 .bullet-range-2 {
+    fill: fade(@color-warning-400, 30%);
+}
+.bullet-2 .bullet-range-3 {
+    fill: @color-warning-400;
+}
+
+// Measures
+.bullet-2 .bullet-measure-1 {
+    fill: fade(@color-warning-600, 90%);
+}
+.bullet-2 .bullet-measure-2 {
+    fill: #fff;
+}
+
+// Marker
+.bullet-2 .bullet-marker {
+    stroke: @color-warning-800;
+}
+
+
+//
+// Third bullet
+//
+
+// Ranges
+.bullet-3 .bullet-range-1 {
+    fill: fade(@color-success-400, 70%);
+}
+.bullet-3 .bullet-range-2 {
+    fill: fade(@color-success-400, 35%);
+}
+.bullet-3 .bullet-range-3 {
+    fill: @color-success-400;
+}
+
+// Measures
+.bullet-3 .bullet-measure-1 {
+    fill: fade(@color-success-600, 90%);
+}
+.bullet-3 .bullet-measure-2 {
+    fill: #fff;
+}
+
+// Marker
+.bullet-3 .bullet-marker {
+    stroke: @color-success-800;
+}
+
+
+
+// Progress counter icon. Styles moved to
+// CSS, because IE9 drove me crazy...
+// ------------------------------
+
+.counter-icon {
+    font-size: (@icon-font-size * 2);
+    position: absolute;
+    left: 50%;
+    margin-left: -(@icon-font-size);
+}

@@ -1,0 +1,479 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Floating action buttons
+*
+*  Material design floating action button with menu
+*
+*  Version: 1.0
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Main menu
+// -------------------------
+
+// Base
+.fab-menu {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    z-index: (@zindex-navbar - 1);
+}
+
+
+//
+// Positions
+//
+
+// Absolute
+.fab-menu-absolute {
+    position: absolute;
+
+    // Affix
+    &.affix {
+        position: fixed;
+    }
+}
+
+// Fixed
+.fab-menu-fixed {
+    position: fixed;
+    z-index: @zindex-navbar-fixed;
+}
+
+
+
+// Button positions
+// -------------------------
+
+ // Top left position
+.fab-menu-top-left,
+.fab-menu-top-right, {
+    margin-top: -(@fab-main-btn-size / 2);
+    
+    &.affix {
+       top: @line-height-computed; 
+       margin-top: 0;
+    }
+
+    .content-wrapper > & {
+        top: -(@fab-main-btn-size / 2);
+    }
+    .content-wrapper > &.affix {
+        top: @line-height-computed;
+    }
+
+    .navbar-top &.affix,
+    .navbar-affixed-top &.affix {
+        top: (@navbar-height + @line-height-computed);
+    }
+
+    .navbar-top-lg &.affix,
+    .navbar-affixed-top-lg &.affix {
+        top: (@navbar-height-large + @line-height-computed);
+    }
+    .navbar-top-sm &.affix,
+    .navbar-affixed-top-sm &.affix {
+        top: (@navbar-height-small + @line-height-computed);
+    }
+    .navbar-top-xs &.affix,
+    .navbar-affixed-top-xs &.affix {
+        top: (@navbar-height-mini + @line-height-computed);
+    }
+}
+
+.fab-menu-bottom-left,
+.fab-menu-bottom-right {
+    bottom: @line-height-computed;
+    .transition(bottom ease-in-out 0.15s);
+    
+    // Keep space for footer
+    &.reached-bottom {
+        bottom: (@line-height-computed * 4);
+
+        .navbar-bottom &  {
+            bottom: (@line-height-computed * 2) + @navbar-height;
+        }
+        .navbar-bottom-lg & {
+            bottom: (@line-height-computed * 2) + @navbar-height-large;
+        }
+        .navbar-bottom-sm & {
+            bottom: (@line-height-computed * 2) + @navbar-height-small;
+        }
+        .navbar-bottom-xs & {
+            bottom: (@line-height-computed * 2) + @navbar-height-mini;
+        }
+    }
+}
+
+// Left position
+.fab-menu-top-left,
+.fab-menu-bottom-left {
+    //left: @grid-gutter-width;
+}
+
+// Top right position
+.fab-menu-top-right,
+.fab-menu-bottom-right {
+    right: @grid-gutter-width;
+}
+
+
+
+// Inner menu
+// -------------------------
+
+.fab-menu-inner {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    // Menu items
+    > li {
+        display: block;
+        position: absolute;
+        top: @fab-btn-difference;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding-top: @fab-inner-btn-spacing;
+        margin-top: -(@fab-inner-btn-spacing);
+
+        // Remove border from buttons
+        .btn {
+            border-width: 0;
+        }
+
+        // Make buttons smaller than main one
+        .btn-float {
+            padding: 0;
+            width: @fab-inner-btn-size;
+            height: @fab-inner-btn-size;
+            .box-shadow(@shadow-depth1);
+
+            // Hover state
+            &:hover,
+            &:focus {
+                .box-shadow(@shadow-depth2);
+            }
+
+            // Icon spacing
+            > i {
+                margin: (@btn-float-padding - @fab-btn-difference);
+            }
+
+            &.btn-flat {
+                > i {
+                    margin: (@btn-float-padding - @fab-btn-difference - 2);
+                }
+            }
+        }
+
+
+        //
+        // Labels, badges and status marks
+        //
+
+        // Base
+        .badge,
+        .label,
+        .status-mark {
+            position: absolute;
+
+            @media (min-width: @grid-float-breakpoint) {
+                .box-shadow(0 0 0 2px @body-bg);
+            }
+        }
+
+        // Labels and badges
+        .badge,
+        .label {
+            top: @fab-inner-btn-spacing - 4px;
+            right: -4px;
+        }
+
+        // Status marks
+        .status-mark {
+            top: @fab-inner-btn-spacing + 2px;
+            right: 2px;
+        }
+
+
+        //
+        // Change appearance in bottom position
+        //
+
+        .fab-menu-bottom-left &,
+        .fab-menu-bottom-right & {
+            padding-top: 0;
+            margin-top: 0;
+            padding-bottom: @fab-inner-btn-spacing;
+            margin-bottom: -(@fab-inner-btn-spacing);
+
+            // Labels and badges
+            .badge,
+            .label {
+                top: -4px;
+            }
+
+            // Status marks
+            .status-mark {
+                top: 2px;
+            }
+        }
+    }
+
+    // Dropdown menu
+    .dropdown-menu {
+        margin-top: 0;
+        margin-right: 10px;
+        top: (@fab-inner-btn-spacing) - (@fab-btn-difference / 2);
+        left: auto;
+        right: 100%;
+    }
+
+    // Right dropdown menu position
+    .dropdown-menu-right {
+        margin-right: 0;
+        margin-left: 10px;
+        right: auto;
+        left: 100%;
+    }
+}
+
+
+
+// Main button
+// -------------------------
+
+// Base
+.fab-menu-btn {
+    z-index: (@zindex-navbar + 1);
+    border-width: 0;
+    .box-shadow(@shadow-depth1);
+
+    // Float button overrides
+    &.btn-float {
+        padding: (@fab-main-btn-size / 2);
+
+        // Icons
+        > i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -(@icon-font-size / 2);
+            margin-left: -(@icon-font-size / 2);
+        }
+    }
+
+    // Button shadow
+    &:hover,
+    &:focus,
+    .fab-menu[data-fab-toggle="hover"]:hover &,
+    .fab-menu[data-fab-state="open"] & {
+        .box-shadow(@shadow-depth2);
+    }
+}
+
+
+//
+// Icons animation
+//
+
+// Animation
+.fab-icon-close,
+.fab-icon-open {
+    .rotate(360deg);
+    .transition(all ease-in-out 0.3s);
+
+    // Reverse rotation if active
+    .fab-menu[data-fab-toggle="hover"]:hover &,
+    .fab-menu[data-fab-state="open"] & {
+        .rotate(0deg);
+    }
+}
+
+// Open icon
+.fab-icon-open {
+    .fab-menu[data-fab-toggle="hover"]:hover &,
+    .fab-menu[data-fab-state="open"] & {
+        .opacity(0);
+    }
+}
+
+// Close icon
+.fab-icon-close {
+    .opacity(0);
+
+    // Display if active
+    .fab-menu[data-fab-toggle="hover"]:hover &,
+    .fab-menu[data-fab-state="open"] & {
+        .opacity(1);
+    }
+}
+
+
+
+// Inner menu animation
+// -------------------------
+
+// Base
+.fab-menu {
+
+    // Hide items
+    .fab-menu-inner > li {
+        visibility: hidden;
+        .opacity(0);
+        .transition(all ease-in-out 0.3s);
+
+        // Items number
+        &:nth-child(1) {
+            .transition-delay(0.05s);
+        }
+        &:nth-child(2) {
+            .transition-delay(0.1s);
+        }
+        &:nth-child(3) {
+            .transition-delay(0.15s);
+        }
+        &:nth-child(4) {
+            .transition-delay(0.2s);
+        }
+        &:nth-child(5) {
+            .transition-delay(0.25s);
+        }
+    }
+
+    // Show items
+    &[data-fab-toggle="hover"]:hover,
+    &[data-fab-state="open"] {
+        .fab-menu-inner > li {
+            visibility: visible;
+            .opacity(1);
+        }
+    }
+}
+
+// Top position
+.fab-menu-top,
+.fab-menu-top-left,
+.fab-menu-top-right {
+    &[data-fab-toggle="hover"]:hover,
+    &[data-fab-state="open"] {
+        .fab-menu-inner > li {
+            &:nth-child(1) {
+                top: (@fab-inner-btn-size + @fab-inner-btn-spacing) + (@fab-btn-difference * 2);
+                .transition-delay(0.05s);
+            }
+            &:nth-child(2) {
+                top: ((@fab-inner-btn-size + @fab-inner-btn-spacing) * 2) + (@fab-btn-difference * 2);
+                .transition-delay(0.1s);
+            }
+            &:nth-child(3) {
+                top: ((@fab-inner-btn-size + @fab-inner-btn-spacing) * 3) + (@fab-btn-difference * 2);
+                .transition-delay(0.15s);
+            }
+            &:nth-child(4) {
+                top: ((@fab-inner-btn-size + @fab-inner-btn-spacing) * 4) + (@fab-btn-difference * 2);
+                .transition-delay(0.2s);
+            }
+            &:nth-child(5) {
+                top: ((@fab-inner-btn-size + @fab-inner-btn-spacing) * 5) + (@fab-btn-difference * 2);
+                .transition-delay(0.25s);
+            }
+        }
+    }
+}
+
+// Bottom position
+.fab-menu-bottom,
+.fab-menu-bottom-left,
+.fab-menu-bottom-right {
+    &[data-fab-toggle="hover"]:hover,
+    &[data-fab-state="open"] {
+        .fab-menu-inner > li {
+            &:nth-child(1) {
+                top: -(@fab-inner-btn-size + @fab-inner-btn-spacing) + (@fab-btn-difference * 2);
+                .transition-delay(0.05s);
+            }
+            &:nth-child(2) {
+                top: -((@fab-inner-btn-size + @fab-inner-btn-spacing) * 2) + (@fab-btn-difference * 2);
+                .transition-delay(0.1s);
+            }
+            &:nth-child(3) {
+                top: -((@fab-inner-btn-size + @fab-inner-btn-spacing) * 3) + (@fab-btn-difference * 2);
+                .transition-delay(0.15s);
+            }
+            &:nth-child(4) {
+                top: -((@fab-inner-btn-size + @fab-inner-btn-spacing) * 4) + (@fab-btn-difference * 2);
+                .transition-delay(0.2s);
+            }
+            &:nth-child(5) {
+                top: -((@fab-inner-btn-size + @fab-inner-btn-spacing) * 5) + (@fab-btn-difference * 2);
+                .transition-delay(0.25s);
+            }
+        }
+    }
+}
+
+
+
+// Item labels
+// -------------------------
+
+.fab-menu-inner div[data-fab-label] {
+
+    // Base
+    &:after {
+        content: attr(data-fab-label);
+        position: absolute;
+        top: 50%;
+        margin-top: -(@padding-base-vertical);
+        right: (@fab-btn-difference + @fab-inner-btn-size + @grid-gutter-width);
+        color: @tooltip-color;
+        background-color: @tooltip-bg;
+        padding: @padding-base-vertical @padding-base-horizontal;
+        visibility: hidden;
+        border-radius: @border-radius-base;
+        .box-shadow(@shadow-depth1);
+        .opacity(0);
+        .transition(all ease-in-out 0.3s);
+
+        // Reposition them in bottom position
+        .fab-menu-bottom-left &,
+        .fab-menu-bottom-right & {
+            margin-top: -(@padding-base-vertical + @fab-inner-btn-spacing);
+        }
+    }
+
+    // Placement
+    .fab-menu-top-left &:after,
+    .fab-menu-bottom-left &:after,
+    &.fab-label-right:after {
+        right: auto;
+        left: (@fab-btn-difference + @fab-inner-btn-size + @grid-gutter-width);
+    }
+
+    // Display labels
+    .fab-menu[data-fab-toggle="hover"] &:hover:after,
+    .fab-menu[data-fab-state="open"] &:hover:after {
+        visibility: visible;
+        .opacity(1);
+    }
+
+    // Light label
+    &.fab-label-light:after {
+        background-color: @panel-bg;
+        color: @text-color;
+    }
+
+    // Always visible
+    &.fab-label-visible:after {
+        visibility: visible;
+        .opacity(1);
+    }
+}

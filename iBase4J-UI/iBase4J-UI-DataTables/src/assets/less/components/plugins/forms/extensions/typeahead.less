@@ -1,0 +1,93 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Twiter Typeahead
+ *
+ *  Styles for typeahead.bundle.min.js - input suggestion engine
+ *
+ *  Version: 1.3
+ *  Latest update: Jul 4, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.twitter-typeahead {
+	width: 100%;
+}
+
+.typeahead,
+.tt-query,
+.tt-hint {
+	outline: 0;
+}
+
+// Input field hint
+.tt-hint {
+	color: @input-color-placeholder;
+}
+
+
+// Menu
+// ------------------------------
+
+// Dropdown menu
+.tt-menu {
+	width: 100%;
+	margin-top: 1px;
+	min-width: 180px;
+	padding: @list-spacing 0;
+	background-color: @dropdown-bg;
+	border: 1px solid @dropdown-border;
+	border-radius: @border-radius-base;
+	max-height: 300px;
+	overflow-y: auto;
+	.box-shadow(0 1px 3px fade(#000, 10%));
+
+	.typeahead-scrollable & {
+		max-height: 250px;
+	}
+
+	// RTL
+	.typeahead-rtl & {
+		text-align: right;
+	}
+}
+
+// Menu item
+.tt-suggestion {
+	padding: (@padding-base-vertical + 1) @content-padding-base;
+	cursor: pointer;
+
+	// Hover state bg color
+	&:hover,
+	&:focus,
+	&.tt-cursor {
+		background-color: @dropdown-link-hover-bg;
+	}
+
+	// Double side padding in groups
+	.tt-dataset-group & {
+		padding-left: (@padding-base-horizontal * 2);
+		padding-right: (@padding-base-horizontal * 2);
+	}
+}
+
+// Heading
+.tt-heading {
+	font-size: @font-size-mini;
+	line-height: @line-height-mini;
+	padding: (@padding-base-vertical + 1) @content-padding-base;
+	text-transform: uppercase;
+	display: block;
+	font-weight: 700;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+// Add padding for empty message
+.typeahead-template .empty-message {
+	padding: (@padding-base-vertical + 1) @content-padding-base;
+	text-align: center;
+}

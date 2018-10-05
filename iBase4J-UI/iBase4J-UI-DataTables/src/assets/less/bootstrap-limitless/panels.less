@@ -1,0 +1,388 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Panels component
+*
+*  Overrides for panels bootstrap component
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base class
+// -------------------------
+
+.panel {
+    margin-bottom: @line-height-computed;
+    border-color: @panel-default-border;
+    color: @text-color;
+}
+
+
+// Solid color panels
+// -------------------------
+
+.panel[class*=bg-] {
+
+    // Panel heading
+    > .panel-heading {
+        border-color: fade(#fff, 20%);
+
+        // Inherit bg color on mobile
+        @media (max-width: @screen-xs-max) {
+            background-color: inherit;
+        }
+    }
+
+    // Panel heading in flat panel
+    &.panel-flat > .panel-heading {
+        border-bottom-color: transparent;
+    }
+
+    // Panel body inherits bg color
+    > .panel-body {
+        background-color: inherit;
+    }
+
+    // Apply white color to panel title
+    .panel-title {
+        color: #fff;
+    }
+
+    // Table border color
+    .table {
+        thead,
+        tbody {
+            td,
+            th {
+                border-color: fade(#fff, 10%);
+            }
+        }
+    }
+
+    // Inline elements color
+    .text-muted,
+    .help-block,
+    .help-inline {
+        color: fade(#fff, 80%);
+    }
+}
+
+
+// Custom border colors
+// -------------------------
+
+.panel {
+    &[class*=border-top-] {
+        .border-top-radius(0);
+    }
+
+    &[class*=border-bottom-] {
+        .border-bottom-radius(0);
+    }
+
+    &[class*=border-left-] {
+        .border-left-radius(0);
+    }
+
+    &[class*=border-right-] {
+        .border-right-radius(0);
+    }
+}
+
+
+// Panel contents
+// -------------------------
+
+.panel-body {
+    position: relative;
+
+    .panel-flat > .panel-heading + & {
+        padding-top: 0;
+    }
+}
+
+
+// Panel heading
+// -------------------------
+
+// Base class
+.panel-heading {
+    position: relative;
+    .border-top-radius(@border-radius-base);
+
+    // Bordered panel
+    .panel-bordered > & {
+        margin: 0;
+    }
+
+    // In flat panel it is higher
+    .panel-flat > & {
+        padding-top: @content-padding-large;
+        padding-bottom: @content-padding-large;
+        background-color: @panel-bg;
+
+        // Add extra vertical spacing for title
+        > .panel-title {
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
+    }
+
+    // Inherit bg color in solid color panel
+    .panel-flat[class*=bg-] > & {
+        background-color: inherit;
+    }
+
+    // Make it pixel perfect by emulating colored border
+    &[class*=bg-],
+    .panel-primary &,
+    .panel-danger &,
+    .panel-success &,
+    .panel-warning &,
+    .panel-info & {
+        margin: -1px -1px 0 -1px;
+        .border-top-radius(@border-radius-base);
+    }
+
+    // Inside white panel
+    .panel-white > & {
+        background-color: @panel-bg;
+        border-bottom-color: @panel-default-border;
+    }
+}
+
+// Panel heading title
+.panel-title {
+    position: relative;
+    font-size: @font-size-base;
+
+    // Display links as a block element
+    a& {
+        display: block;
+    }
+
+    // Title image
+    img {
+        max-height: @line-height-computed;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    // Add extra spacing between title and subtitle
+    > small:not(.display-block),
+    > .small:not(.display-block) {
+        margin-left: 5px;
+    }
+
+    // Title sizing
+    h1&,
+    .h1& {
+        font-size: @font-size-h1;
+    }
+    h2&,
+    .h2& {
+        font-size: @font-size-h2;
+    }
+    h3&,
+    .h3& {
+        font-size: @font-size-h3;
+    }
+    h4&,
+    .h4& {
+        font-size: @font-size-h4;
+    }
+    h5&,
+    .h5& {
+        font-size: @font-size-h5;
+    }
+    h6&,
+    .h6& {
+        font-size: @font-size-h6;
+    }
+}
+
+// Control buttons
+.icons-list {
+
+    // Link base
+    a[data-action] {
+        vertical-align: middle;
+        .transition(all ease-in-out 0.2s);
+
+        // Icons base
+        &:after {
+            font-family: 'icomoon';
+            font-size: @icon-font-size;
+            min-width: @icon-font-size;
+            text-align: center;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    }
+
+    // Collapse icon
+    a[data-action="collapse"]:after {
+        content: '\e9c1';
+    }
+
+    // Reload icon
+    a[data-action="reload"]:after {
+        content: '\e9fb';
+    }
+
+    // Close icon
+    a[data-action="close"]:after {
+        content: '\e9b6';
+    }
+
+    // Move icon
+    a[data-action="move"]:after {
+        content: '\e986';
+    }
+
+    // Open modal icon
+    a[data-action="modal"]:after {
+        content: '\e9eb';
+    }
+}
+
+
+// Panel footer
+// -------------------------
+
+// Base styles
+.panel-footer {
+    position: relative;
+    padding-left: 0;
+    padding-right: 0;
+    .border-bottom-radius(@border-radius-base);
+
+    // Clearing floats
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+// Transparent panel footer
+.panel-footer-transparent {
+    background-color: transparent;
+    border-top: 0;
+    padding-top: 0;
+    padding-bottom: @content-padding-large - ((@input-height-base - @line-height-computed) / 2);
+}
+
+// Condensed panel footer
+.panel-footer-condensed {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+// Bordered panel footer
+.panel-footer-bordered {
+    background-color: @panel-bg;
+    padding-right: 0;
+    margin-left: @content-padding-large;
+    margin-right: @content-padding-large;
+}
+
+
+// Collapsable panels (aka, accordion)
+// -------------------------
+
+// Panel group controls
+.panel-group-control {
+    .panel-title > a {
+        padding-left: (@icon-font-size + @content-padding-small);
+        display: inline-block;
+
+        // Collapsible icon
+        &:before {
+            content: '\e9b7';
+            font-family: 'icomoon';
+            position: absolute;
+            top: 50%;
+            margin-top: -(@icon-font-size / 2);
+            left: 0;
+            font-size: @icon-font-size;
+            font-weight: 400;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        // Change icon if collapsed
+        &.collapsed:before {
+            content: '\e9b8';
+        }
+    }
+
+    // Right controls position
+    &.panel-group-control-right {
+        .panel-title > a {
+            padding-left: 0;
+            padding-right: (@icon-font-size + @content-padding-small);
+
+            // Re-position the icon
+            &:before {
+                left: auto;
+                right: 0;
+            }
+        }
+    }
+}
+
+
+// Contextual variation overrides
+// -------------------------
+
+// Primary
+.panel-primary {
+    border-color: @panel-default-border;
+
+    &.panel-bordered {
+        border-color: @panel-primary-border;
+    }
+}
+
+// Success
+.panel-success {
+    border-color: @panel-default-border;
+
+    &.panel-bordered {
+        border-color: @panel-success-border;
+    }
+}
+
+// Info
+.panel-info {
+    border-color: @panel-default-border;
+
+    &.panel-bordered {
+        border-color: @panel-info-border;
+    }
+}
+
+// Warning
+.panel-warning {
+    border-color: @panel-default-border;
+
+    &.panel-bordered {
+        border-color: @panel-warning-border;
+    }
+}
+
+// Danger
+.panel-danger {
+    border-color: @panel-default-border;
+
+    &.panel-bordered {
+        border-color: @panel-danger-border;
+    }
+}

@@ -1,0 +1,136 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Pager component
+*
+*  Overrides for pager bootstrap component
+*
+*  Version: 1.2
+*  Latest update: Aug 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Basic styles
+// -------------------------
+
+.pager {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 0;
+
+    // Pager nav item
+    li {
+
+        // Links
+        > a,
+        > span {
+            padding: @padding-base-vertical @padding-base-horizontal;
+            color: @gray-dark;
+            font-size: @font-size-base;
+        }
+
+        // Hover/focus states
+        > a:hover,
+        > a:focus {
+            border-color: @pager-hover-bg;
+            color: #fff;
+        }
+    }
+
+    // Add space between items
+    li + li {
+        margin-left: @content-padding-small;
+    }
+
+    // Disabled state
+    .disabled {
+        > a,
+        > a:hover,
+        > a:focus,
+        > span {
+            border-color: @pager-border;
+        }
+    }
+
+    // Text alignment
+    &.text-left {
+        text-align: left;
+    }
+    &.text-right {
+        text-align: right;
+    }
+}
+
+
+// Optional sizing
+// -------------------------
+
+// Large
+.pager-lg {
+    li > a,
+    li > span {
+        padding: @padding-large-vertical @padding-large-horizontal;
+        font-size: @font-size-large;
+        line-height: @line-height-large;
+    }
+}
+
+// Small
+.pager-sm {
+    li > a,
+    li > span {
+        padding: @padding-small-vertical @padding-small-horizontal;
+        font-size: @font-size-small;
+        line-height: @line-height-small;
+    }
+}
+
+// Mini
+.pager-xs {
+    li > a,
+    li > span {
+        padding: @padding-xs-vertical @padding-xs-horizontal;
+        font-size: @font-size-small;
+        line-height: @line-height-small;
+    }
+}
+
+
+// Optional styling
+// -------------------------
+
+// Rounded pager
+.pager-rounded {
+    li > a,
+    li > span {
+        border-radius: 100px;
+    }
+}
+
+// Linked pager
+.pager-linked {
+    li {
+        > a,
+        > span {
+            border-color: transparent;
+            color: @link-color;
+        }
+
+        // Hover state
+        > a:hover,
+        > span:hover {
+            background-color: @brand-primary;
+            color: #fff;
+        }
+    }
+
+    // Disabled state
+    .disabled {
+        > a,
+        > a:hover,
+        > a:focus,
+        > span {
+            border-color: transparent;
+        }
+    }
+}

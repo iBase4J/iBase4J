@@ -1,0 +1,1949 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Handsontable library
+ *
+ *  EXCEL-LIKE SPREADSHEET FOR APPS
+ *
+ *  Version: 1.0
+ *  Latest update: Nov 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Container
+// ------------------------------
+
+// Base
+.hot-container {
+    position: relative;
+    .box-shadow(0 0 0 1px @table-border-color);
+
+    // Stretch table holder
+    .ht_master .wtHolder {
+        min-width: 100%;
+    }
+
+    // Scrollable table
+    &.has-scroll {
+        height: 300px;
+        overflow: hidden;
+    }
+
+    // Mobile view
+    @media (max-width: @screen-sm-max) {
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        // Remove holder strtching
+        .ht_master .wtHolder {
+            max-width: 100%;
+            min-width: auto;
+        }
+
+        // If no scrolling, stretch holder vertically
+        &:not(.has-scroll) .wtHolder {
+            height: 100%!important;
+        }
+    }
+}
+
+
+//
+// Bootstrap integration
+//
+
+// Striped table
+.handsontable .table-striped > tbody > tr:nth-of-type(odd) > td:not([class*=bg-]) {
+    background-color: inherit;
+}
+
+// Hover table
+.handsontable .table-hover {
+    > tbody > tr:hover > th {
+        background-color: #f5f5f5;
+    }
+}
+
+
+
+// Change cell type dropdown
+// ------------------------------
+
+// Header button
+.changeType {
+    border: 0;
+    background-color: transparent;
+    border-radius: @border-radius-small;
+    padding: 0;
+    float: right;
+    margin-right: 2px;
+    line-height: @icon-font-size;
+    margin-top: (@line-height-computed - @icon-font-size) / 2;
+
+    // Hover state
+    &:hover {
+        color: @color-grey-500;
+    }
+}
+
+// Dropdown
+.changeTypeMenu {
+    position: absolute;
+    border: 1px solid #ccc;
+    margin-top: @line-height-computed;
+    background-color: @dropdown-bg;
+    padding: @list-spacing 0;
+    display: none;
+    width: 160px;
+    z-index: @zindex-dropdown;
+
+    // Menu items
+    li {
+        list-style: none;
+        padding: @padding-base-vertical @padding-base-horizontal;
+        padding-right: ((@padding-base-horizontal + (@padding-base-horizontal / 2)) + @icon-font-size);
+        cursor: pointer;
+        position: relative;
+
+        // Hover state
+        &:hover {
+            background-color: @dropdown-link-hover-bg;
+        }
+
+        // Add checkmark icon to the active type
+        &.active:after {
+            content: '\e600';
+            font-family: 'Icomoon';
+            position: absolute;
+            right: @padding-base-horizontal;
+            top: 50%;
+            margin-top: -(@icon-font-size / 2);
+            display: inline-block;
+            font-size: @icon-font-size;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    }
+}
+
+
+
+// Core styles
+// ------------------------------
+
+// Base
+.handsontable {
+    position: relative;
+    direction: ltr;
+
+    // Hide element
+    .hide {
+        display: none;
+    }
+
+    // Relatively positioned element
+    .relative {
+        position: relative;
+    }
+
+    // Auto size
+    &.htAutoSize {
+        visibility: hidden;
+        left: -99000px;
+        position: absolute;
+        top: -99000px;
+    }
+
+    // Read only cells
+    .htDimmed {
+        color: @text-muted;
+    }
+}
+
+// Table core
+.handsontable {
+
+    // Hider
+    .wtHider {
+        width: 0;
+    }
+
+    // Spreader
+    .wtSpreader {
+        position: relative;
+        width: 0; /*must be 0, otherwise blank space appears in scroll demo after scrolling max to the right */
+        height: auto;
+    }
+
+    // Element's box sizing
+    table,
+    tbody,
+    thead,
+    td,
+    th,
+    input,
+    textarea,
+    div {
+        .box-sizing(content-box);
+    }
+
+    // Inputs trick
+    input,
+    textarea {
+        min-height: initial;
+    }
+
+    // Core table
+    .htCore {
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 0;
+        border-width: 0;
+        table-layout: fixed;
+        width: 0;
+        outline-width: 0;
+        max-width: none;
+        max-height: none;
+    }
+
+    // Column
+    col {
+        &,
+        &.rowHeader {
+            width: 50px;
+        }
+    }
+}
+
+
+
+// Table elements
+// ------------------------------
+
+.handsontable {
+
+    //
+    // Table cells base
+    //
+
+    // Common styles
+    th,
+    td {
+        border-right: 1px solid @table-border-color;
+        border-bottom: 1px solid @table-border-color;
+        height: 30px;
+        empty-cells: show;
+        position: relative;
+        padding: 0 4px;
+        overflow: hidden;
+        outline-width: 0;
+        white-space: pre-line;
+
+        // Disabled cell
+        &.disabled {
+            background-color: #fafafa;
+            color: @text-muted;
+        }
+    }
+
+    // Table headers
+    th {
+        text-align: center;
+        font-weight: normal;
+        white-space: nowrap;
+
+        // Default background color
+        &:not([class*=bg-]) {
+            background-color: #f5f5f5;
+        }
+
+        // Active cell
+        &.active {
+            background-color: darken(@table-bg-active, 4%);
+        }
+    }
+
+    // Control paddings in table head
+    thead th {
+        padding: 0;
+
+        // Text label
+        .relative {
+            padding: 2px 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    // Content cells
+    td {
+
+        // Default background color
+        &:not([class*=bg-]) {
+            background-color: #fff;
+        }
+
+        // Invalid state
+        &.htInvalid {
+            background-color: @color-danger-50 !important; // gives priority over td.area selection background
+        }
+
+        // Prevent wrapping
+        &.htNoWrap {
+            white-space: nowrap;
+        }
+
+        // Active cell
+        &.active {
+            background-color: @table-bg-active;
+        }
+
+        // Highlighted area
+        &.area {
+            background-color: #fff;
+            background: -moz-linear-gradient(top,  rgba(181,209,255,0.34) 0%, rgba(181,209,255,0.34) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(181,209,255,0.34)), color-stop(100%,rgba(181,209,255,0.34))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(181,209,255,0.34) 0%,rgba(181,209,255,0.34) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(181,209,255,0.34) 0%,rgba(181,209,255,0.34) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(181,209,255,0.34) 0%,rgba(181,209,255,0.34) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(181,209,255,0.34) 0%,rgba(181,209,255,0.34) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#57b5d1ff', endColorstr='#57b5d1ff',GradientType=0 ); /* IE6-9 */
+        }
+    }
+
+
+    //
+    // Borders
+    //
+
+    // If no frame
+    tr:first-child th.htNoFrame,
+    th:first-child.htNoFrame,
+    th.htNoFrame {
+        border-left-width: 0;
+        background-color: #fff;
+        border-color: #fff;
+    }
+
+    // Add left border to first cells
+    th:first-child,
+    td:first-of-type,
+    .htNoFrame + th,
+    .htNoFrame + td {
+        border-left: 1px solid @table-border-color;
+    }
+
+    // Add left border to headers starting from second
+    &.htRowHeaders thead tr th:nth-child(2) {
+        border-left: 1px solid @table-border-color;
+    }
+
+    // Cells in first row have top border
+    tr:first-child {
+        th,
+        td {
+            border-top: 1px solid @table-border-color;
+        }
+    }
+}
+
+
+
+// Borders control
+// ------------------------------
+
+// Remove double borders in scrollable master table
+.ht_master {
+
+    // Left borders
+    &:not(.innerBorderLeft) {
+        ~ .handsontable tbody tr th,
+        ~ .handsontable:not(.ht_clone_top) thead tr th:first-child {
+            border-right-width: 0;
+        }
+    }
+
+    // Bottom borders
+    &:not(.innerBorderTop) {
+        thead tr:last-child th,
+        thead tr.lastChild th,
+        ~ .handsontable thead tr:last-child th,
+        ~ .handsontable thead tr.lastChild th {
+            border-bottom-width: 0;
+        }
+    }
+}
+
+
+//
+// Top border
+//
+
+// Top border in first cells
+.ht_master {
+    tbody tr:first-child td {
+        border-top-color: transparent;
+    }
+}
+
+// Top cloned
+.ht_clone_top {
+    tr:first-child th,
+    tr:first-child td {
+        border-top-color: transparent;
+    }
+}
+
+// Left cloned
+.ht_clone_left,
+.ht_clone_top_left_corner {
+    thead tr:first-child th,
+    tbody tr:first-child td,
+    tbody tr:first-child th {
+        border-top-color: transparent;
+    }
+}
+
+
+//
+// Left border
+//
+
+// Left border in first cells
+.handsontable {
+    th:first-child,
+    td:first-child {
+        border-left-color: transparent;
+    }
+}
+
+
+//
+// Right border
+//
+
+// Right border in right cells
+.ht_master td:last-child,
+.ht_clone_top th:last-child,
+.ht_clone_top td:last-child {
+    border-right-color: transparent;
+}
+
+
+//
+// Bottom border
+//
+
+// Bottom border in last cells
+.ht_master,
+.ht_clone_left {
+    tbody tr:last-child th,
+    tbody tr:last-child td {
+        border-bottom-color: transparent;
+    }
+}
+
+
+//
+// Override top borders
+//
+
+// Top border if table has both row and column headers
+.htRowHeaders.htColumnHeaders {
+    .ht_clone_top_left_corner,
+    .ht_clone_left {
+        tbody tr:first-child th {
+            border-top-color: @table-border-color;
+        }
+    }
+}
+
+// Top border if only column header
+.htColumnHeaders .handsontable {
+    tr:first-child td {
+        border-top-color: @table-border-color;
+    }
+}
+
+
+
+// Plugins
+// ------------------------------
+
+//
+// Column and row mover
+//
+
+// Common styles
+.manualColumnMover,
+.manualRowMover {
+    position: fixed;
+    top: 0;
+    background-color: transparent;
+    z-index: 999;
+    cursor: move;
+}
+
+// Column mover
+.manualColumnMover {
+    left: 0;
+    width: 5px;
+    height: 32px;
+}
+
+// Row mover
+.manualRowMover {
+    left: -4px;
+    height: 5px;
+    width: 50px;
+}
+
+// Guides
+.manualColumnMoverGuide,
+.manualRowMoverGuide {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: @table-border-color;
+    display: none;
+    .opacity(0.25);
+
+    // Display when active
+    &.active {
+        display: block;
+    }
+
+    // Apply background color
+    &:hover,
+    &.active {
+        background-color: @brand-primary;
+    }
+}
+
+// Column guide height
+.manualColumnMoverGuide {
+    max-height: (400px + 4);
+}
+
+
+
+//
+// Column and row resizer
+//
+
+// Common styles
+.manualColumnResizer,
+.manualRowResizer {
+
+    // Display if active
+    &.active {
+        display: block;
+    }
+
+    // Apply background color
+    &:hover,
+    &.active {
+        background-color: @text-muted;
+    }
+}
+
+// Column resizer
+.manualColumnResizer {
+    position: fixed;
+    top: 0;
+    cursor: col-resize;
+    z-index: 110;
+    width: 5px;
+    height: 31px;
+}
+
+// Row resizer
+.manualRowResizer {
+    position: fixed;
+    left: 0;
+    cursor: row-resize;
+    z-index: 110;
+    height: 5px;
+    width: 50px;
+}
+
+// Column resizer guide
+.manualColumnResizerGuide {
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: @text-muted;
+    display: none;
+    width: 0;
+    border-right: 1px dashed @color-grey-500;
+    margin-left: 5px;
+}
+
+// Row resizer guide
+.manualRowResizerGuide {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: @text-muted;
+    display: none;
+    height: 0;
+    border-bottom: 1px dashed @color-grey-500;
+    margin-top: 5px;
+}
+
+
+
+//
+// Sorting
+//
+
+.handsontable {
+
+    // Cell with enabled sorting
+    .columnSorting {
+        position: relative;
+
+        // Make it as a link
+        &:hover {
+            cursor: pointer;
+        }
+
+        // Arrows
+        &:before,
+        &:after,
+        &.ascending:after,
+        &.descending:after {
+            font-family: 'Icomoon';
+            font-size: @font-size-small;
+            color: @text-muted;
+            position: absolute;
+            display: inline-block;
+            top: 50%;
+            margin-top: -(@font-size-small / 2);
+            right: -(@content-padding-large);
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        &:before {
+            content: '\e9c1';
+            margin-top: -((@font-size-small / 2) - 4); // Add 4px vertical gap
+        }
+        &:after {
+            content: '\e9c2';
+            margin-top: -((@font-size-small / 2) + 4); // Add 4px vertical gap
+        }
+        &.ascending {
+            &:before {
+                content: none;
+            }
+
+            &:after {
+                content: '\e9c2';
+            }
+        }
+        &.descending {
+            &:before {
+                content: none;
+            }
+
+            &:after {
+                content: '\e9c1';
+            }
+        }
+    }
+}
+
+
+
+//
+// Hidden columns
+//
+
+.handsontable {
+
+    // Headers
+    th {
+        &.beforeHiddenColumn,
+        &.afterHiddenColumn {
+            position: relative;
+
+            // Arrow
+            &:after,
+            &:before {
+                content: '\25C0';
+                color: #bbb;
+                position: absolute;
+                right: 1px;
+                top: 2px;
+                font-size: 5pt;
+            }
+        }
+
+        // Change arrow if after
+        &.afterHiddenColumn:before {
+          left: 1px;
+          top: 2px;
+          right: auto;
+          content: '\25B6';
+        }
+    }
+
+    // Hidden header
+    thead th.hiddenHeader {
+        display: none;
+    }
+
+    // Cells
+    td {
+        &.afterHiddenColumn.firstVisible {
+            border-left: 1px solid @table-border-color;
+        }
+    }
+}
+
+
+
+//
+// Border lines
+//
+
+// Base
+.wtBorder {
+    position: absolute;
+    font-size: 0;
+    z-index: 10;
+
+    // Hidden border
+    &.hidden {
+        display: none!important;
+    }
+}
+
+// Corners
+.wtBorder.corner {
+    font-size: 0;
+    cursor: crosshair;
+}
+
+// Fill border
+.htBorder.htFillBorder {
+    background-color: @color-danger-500;
+    width: 1px;
+    height: 1px;
+}
+
+
+
+//
+// Inputs
+//
+
+// Input
+.handsontableInput {
+    border:none;
+    outline-width: 0;
+    margin: 0 ;
+    padding: 1px 5px 0 5px;
+    font-family: inherit;
+    line-height: 30px;
+    font-size: inherit;
+    resize: none;
+    display: inline-block;
+    background-color: #fff;
+    .box-shadow(0 0 0 2px @color-primary-500 inset);
+}
+
+// Input holder
+.handsontableInputHolder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: @zindex-dropdown;
+}
+
+// Editor
+.htSelectEditor {
+    -webkit-appearance: menulist-button !important;
+    position: absolute;
+    width: auto;
+    outline: 0;
+    border-color: @input-border;
+    background-color: @input-bg;
+}
+
+
+
+//
+// Submenu
+//
+
+
+.handsontable .htSubmenu {
+    position: relative;
+
+    > div:after{
+        content: '\e9c7';
+        font-family: 'icomoon';
+        position: absolute;
+        top: 50%;
+        margin-top: -(@icon-font-size / 2);
+        right: @padding-base-horizontal;
+        font-size: @icon-font-size;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        .opacity(0.8);
+    }
+}
+
+
+
+//
+// Alignment classes
+//
+
+.handsontable {
+
+    // Horizontal
+    .htLeft {
+        text-align: left;
+    }
+    .htCenter {
+        text-align: center;
+    }
+    .htRight {
+        text-align: right;
+    }
+    .htJustify {
+        text-align: justify;
+    }
+
+    // Vertical
+    .htTop {
+        vertical-align: top;
+    }
+    .htMiddle {
+        vertical-align: middle;
+    }
+    .htBottom {
+        vertical-align: bottom;
+    }
+}
+
+
+
+//
+// Autocomplete
+//
+
+// Base
+.htAutocomplete {
+    padding-right: (@caret-width-base * 4) + 4;
+}
+
+// Placeholder
+.htPlaceholder {
+    color: @text-muted;
+}
+
+// Arrow
+.htAutocompleteArrow {
+    color: @text-muted;
+    cursor: default;
+    font-size: 0;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    right: @caret-width-base;
+    margin-top: -(@caret-width-base / 2);
+    display: inline-block;
+    margin-right: @caret-width-base;
+    border-top:   @caret-width-base dashed;
+    border-right: @caret-width-base solid transparent;
+    border-left:  @caret-width-base solid transparent;
+}
+
+// Hover state
+.handsontable {
+    td:hover,
+    th:hover {
+        .htAutocompleteArrow {
+            color: @text-color;
+        }
+    }
+}
+
+// Menu
+.autocompleteEditor {
+    &,
+    .wtHolder,
+    .htCore {
+        min-width: 180px;
+    }
+}
+
+
+
+//
+// Checkbox renderer
+//
+
+// Mute if no value
+.htCheckboxRendererInput.noValue {
+    .opacity(0.5);
+}
+
+// Label
+.htCheckboxRendererLabel {
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 0;
+
+    // Add right spacing
+    > .htCheckboxRendererInput {
+        margin-right: @content-padding-small;
+    }
+}
+
+
+
+//
+// Comments
+//
+
+// Cell styles
+.htCommentCell {
+    position: relative;
+
+    // Corner arrow
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-left: 6px solid transparent;
+        border-top: 6px solid red;
+    }
+}
+
+// Comment styles
+.htCommentTextArea{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: @padding-base-vertical + 1;
+    margin-top: -1px;
+    border-radius: 0 0 @border-radius-base @border-radius-base;
+    .box-shadow(0px 2px 4px fade(#000, 10%));
+}
+
+
+
+//
+// Handsontable in Handsontable
+//
+
+.handsontable .handsontable.ht_clone_top .wtHider {
+  padding: 0 0 5px 0;
+}
+
+
+
+//
+// Dropdown menu
+//
+
+.handsontable {
+
+    // Base
+    &.listbox {
+        margin: 0;
+        background-color: #fff;
+        border: 1px solid @dropdown-border;
+
+        // Table
+        .ht_master table {
+            border-collapse: separate;
+            border: 0;
+        }
+
+        // Remove borders
+        th,
+        tr:first-child th,
+        tr:last-child th,
+        tr:first-child td,
+        td {
+            border-color: transparent;
+        }
+
+        // Prevent wrapping
+        th,
+        td {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        // Read only cell
+        td.htDimmed {
+            cursor: pointer;
+            color: inherit;
+            font-style: inherit;
+        }
+
+        // Hide additional borders
+        .wtBorder {
+            visibility: hidden;
+        }
+
+        // Active and hover states
+        tr td.current,
+        tr:hover td {
+            background-color: @dropdown-link-hover-bg;
+        }
+    }
+}
+
+
+
+//
+// Cloned tables appearance
+//
+
+// Top
+.ht_clone_top {
+    z-index: 11;
+}
+
+// Left
+.ht_clone_left {
+    z-index: 12;
+}
+
+// Top left and bottom left
+.ht_clone_top_left_corner,
+.ht_clone_bottom_left_corner {
+    z-index: 13;
+}
+
+// Debug
+.ht_clone_debug {
+    z-index: 13;
+}
+
+
+
+//
+// Cloned tables overflows
+//
+
+// Common
+.ht_master,
+.ht_clone_left,
+.ht_clone_top,
+.ht_clone_bottom {
+  overflow: hidden;
+}
+
+// Holder
+.wtHolder {
+
+    // Master
+    .ht_master & {
+        overflow: auto;
+    }
+
+    // Left
+    .ht_clone_left & {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    // Top and bottom
+    .ht_clone_top &,
+    .ht_clone_bottom & {
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+}
+
+
+
+//
+// Search results
+//
+
+.handsontable td.htSearchResult {
+    background-color: @color-orange-50;
+}
+
+
+
+//
+// Cell borders
+//
+
+.htBordered {
+    border-width: 1px;
+
+    // Top
+    &.htTopBorderSolid {
+        border-top-style: solid;
+        border-top-color: #000;
+    }
+
+    // Right
+    &.htRightBorderSolid {
+        border-right-style: solid;
+        border-right-color: #000;
+    }
+
+    // Bottom
+    &.htBottomBorderSolid {
+        border-bottom-style: solid;
+        border-bottom-color: #000;
+    }
+
+    // Left
+    &.htLeftBorderSolid {
+        border-left-style: solid;
+        border-left-color: #000;
+    }
+}
+
+
+
+//
+// Collapsible button
+//
+
+// Group indicator
+.handsontable thead tr:nth-last-child(2) th.htGroupIndicatorContainer {
+    padding-bottom: 5px;
+}
+
+// Collapse button
+.htCollapseButton {
+    width: 10px;
+    height: 10px;
+    line-height: 10px;
+    text-align: center;
+    border-radius: @border-radius-base;
+    border: 1px solid #f5f5f5;
+    cursor: pointer;
+    margin-bottom: 3px;
+    position: relative;
+    .box-shadow(1px 1px 3px fade(#000, 40%));
+
+    &:after {
+        content: "";
+        height: 300%;
+        width: 1px;
+        display: block;
+        background-color: #ccc;
+        margin-left: 4px;
+        position: absolute;
+        bottom: 10px;
+    }
+
+    // Inside thead
+    thead & {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: #fff;
+
+        &:after {
+            height: 1px;
+            width: 700%;
+            right: 10px;
+            top: 4px;
+        }
+    }
+}
+
+// Expand button
+.handsontable {
+
+    // Inside heading
+    th .htExpandButton {
+        position: absolute;
+        top: 0;
+        display: none;
+        .box-shadow(1px 1px 3px fade(#000, 40%));
+
+        // Clickable
+        &.clickable {
+            display: block;
+        }
+    }
+
+    // Inside table head
+    thead th .htExpandButton {
+        top: 5px;
+    }
+}
+
+// Collapsible indicator
+.collapsibleIndicator {
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+    right: 5px;
+    border: 1px solid @text-muted;
+    line-height: 10px;
+    color: @text-color;
+    border-radius: 100px;
+    font-size: 10px;
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+    background-color: #eee;
+    .box-shadow(0 0 0 6px rgba(238,238,238,1));
+}
+
+
+
+//
+// Hidden elements
+//
+
+.handsontable {
+
+    // Hidden column
+    col.hidden {
+        width: 0!important;
+    }
+
+    // Lighten border
+    table tr th.lightRightBorder {
+        border-right: 1px solid #E6E6E6;
+    }
+
+    // Hidden row
+    tr.hidden {
+        &,
+        td,
+        th {
+            display: none;
+        }
+    }
+}
+
+
+
+//
+// Walkontable debug overlay
+//
+
+// Hidden
+.wtDebugHidden {
+    display: none;
+}
+
+// Visible
+.wtDebugVisible {
+    display: block;
+    .animation-duration(0.5s);
+    .animation-name(wtFadeInFromNone);
+}
+
+// Animation
+@keyframes wtFadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+@-webkit-keyframes wtFadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+
+
+//
+// Mobile text editor
+//
+
+// Base
+.handsontable {
+    &.mobile {
+        &,
+        .wtHolder {
+            -webkit-touch-callout:none;
+            -webkit-tap-highlight-color:rgba(0,0,0,0);
+            -webkit-overflow-scrolling: touch;
+            .user-select(none);
+        }
+    }
+}
+
+// Editor container
+.htMobileEditorContainer {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 70%;
+    height: 54pt;
+    background: #f5f5f5;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    z-index: 999;
+    -webkit-text-size-adjust: none;
+    .box-sizing(border-box);
+
+    // Active
+    &.active {
+        display: block;
+    }
+
+    // Inputs
+    .inputs {
+        position: absolute;
+        right: 210px;
+        bottom: 10px;
+        top: 10px;
+        left: 14px;
+        height: @input-height-base;
+
+        textarea {
+            font-size: @font-size-base;
+            border: 1px solid #a1a1a1;
+            -webkit-appearance: none;
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            top: 0;
+            bottom: 0;
+            padding: @padding-base-vertical;
+            .box-shadow(none);
+        }
+    }
+
+    // Cell pointer
+    .cellPointer {
+        position: absolute;
+        top: -13px;
+        height: 0;
+        width: 0;
+        left: 30px;
+
+        border-left: 13px solid transparent;
+        border-right: 13px solid transparent;
+        border-bottom: 13px solid #ebebeb;
+
+        // Hidden
+        &.hidden {
+            display: none;
+        }
+
+        // Arrow
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 2px;
+            height: 0;
+            width: 0;
+            left: -13px;
+            border-left: 13px solid transparent;
+            border-right: 13px solid transparent;
+            border-bottom: 13px solid #f5f5f5;
+        }
+    }
+
+    // Move handle
+    .moveHandle {
+        position: absolute;
+        top: 10px;
+        left: 5px;
+        width: 30px;
+        bottom: 0px;
+        cursor: move;
+        z-index: 9999;
+
+        &:after {
+            content: "..\a..\a..\a..";
+            white-space: pre;
+            line-height: 10px;
+            font-size: 20px;
+            display: inline-block;
+            margin-top: -8px;
+            color: #ebebeb;
+        }
+    }
+
+    // Position controls
+    .positionControls {
+        width: 205px;
+        position: absolute;
+        right: 5px;
+        top: 0;
+        bottom: 0;
+
+        > div {
+            width: 50px;
+            height: 100%;
+            float: left;
+
+            &:after {
+                content: " ";
+                display: block;
+                width: 15px;
+                height: 15px;
+                text-align: center;
+                line-height: 50px;
+            }
+        }
+    }
+
+
+    //
+    // Buttons
+    //
+
+    // Base
+    .leftButton:after,
+    .rightButton:after,
+    .upButton:after,
+    .downButton:after {
+        margin: 21px 0 0 21px;
+        .transform-origin(5px);
+    }
+
+    // Left button
+    .leftButton {
+        &:after {
+            border-top: 2px solid #288ffe;
+            border-left: 2px solid #288ffe;
+            .rotate(-45deg);
+        }
+
+        &:active:after {
+            border-color: #cfcfcf;
+        }
+    }
+
+    // Right button
+    .rightButton {
+        &:after {
+            border-top: 2px solid #288ffe;
+            border-left: 2px solid #288ffe;
+            .rotate(135deg);
+        }
+
+        &:active:after {
+            border-color: #cfcfcf;
+        }
+    }
+
+    // Up button
+    .upButton {
+        &:after {
+            border-top: 2px solid #288ffe;
+            border-left: 2px solid #288ffe;
+            .rotate(45deg);
+        }
+
+        &:active:after {
+            border-color: #cfcfcf;            
+        }
+    }
+
+    // Down button
+    .downButton {
+        &:after {
+            border-top: 2px solid #288ffe;
+            border-left: 2px solid #288ffe;
+            .rotate(225deg);
+        }
+
+        &:active:after {
+            border-color: #cfcfcf;
+        }
+    }
+}
+
+// Appearance
+.topLeftSelectionHandle:not(.ht_master .topLeftSelectionHandle),
+.topLeftSelectionHandle-HitArea:not(.ht_master .topLeftSelectionHandle-HitArea) {
+    z-index: 9999;
+}
+
+// Initial left/top coordinates - overwritten when actual position is set
+.topLeftSelectionHandle,
+.topLeftSelectionHandle-HitArea,
+.bottomRightSelectionHandle,
+.bottomRightSelectionHandle-HitArea {
+    left: -10000px;
+    top: -10000px;
+}
+
+
+
+//
+// Tweening
+//
+
+.handsontable {
+
+    // Hide
+    &.hide-tween {
+        .animation(opacity-hide 0.3s);
+        .animation-fill-mode(forwards);
+    }
+
+    // Show
+    &.show-tween {
+        .animation(opacity-show 0.3s);
+        .animation-fill-mode(forwards);
+    }
+}
+
+// Animation
+@-webkit-keyframes opacity-hide {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@keyframes opacity-hide {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+@-webkit-keyframes opacity-show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes opacity-show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+
+//
+// Context menu
+//
+
+.htContextMenu {
+    display: none;
+    position: absolute;
+    z-index: (@zindex-modal + 1);
+
+    // Hide inner tables
+    .ht_clone_top,
+    .ht_clone_left,
+    .ht_clone_corner,
+    .ht_clone_debug {
+        display: none;
+    }
+
+    // Table with content
+    .htCore {
+        border: 1px solid @dropdown-border;
+        background-color: #fff;
+        padding: @list-spacing 0;
+    }
+
+    // Hide borders
+    .wtBorder {
+        visibility: hidden;
+    }
+
+    // Table
+    table tbody tr {
+
+        // Cells
+        td {
+            position: relative;
+            border-width: 0;
+            padding: 0 @padding-base-horizontal;
+            cursor: pointer;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            // No border in first cell
+            &:first-child {
+                border: 0;
+            }
+
+            // Read only
+            &.htDimmed {
+                color: @text-color;
+            }
+
+            // Hover and active states
+            &.current,
+            &.zeroclipboard-is-hover {
+                background: @dropdown-link-hover-bg;
+            }
+
+            // Separator
+            &.htSeparator {
+                height: 0;
+                padding: 0;
+                background-color: transparent;
+                cursor: default;
+
+                > div {
+                    height: 1px;
+                    background-color: @dropdown-border;
+                    margin: @list-spacing 0;
+                }
+            }
+
+            // Disabled state
+            &.htDisabled {
+                color: @dropdown-link-disabled-color;
+
+                &,
+                &:hover {
+                    cursor: default;
+                }
+            }
+
+            // Selected cell
+            div span.selected {
+                position: absolute;
+                right: @padding-base-horizontal;
+                top: 50%;
+                margin-top: -(@icon-font-size / 2);
+                font-size: 0;
+                color: @color-grey-500;
+
+                // Icon indicator
+                &:after {
+                    content: '\e600';
+                    font-family: 'Icomoon';
+                    display: inline-block;
+                    font-size: @icon-font-size;
+                    line-height: 1;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                }
+            }
+        }
+
+        // Hidden row
+        &.htHidden {
+            display: none;
+        }
+    }
+
+    // Hide overflows in table holder
+    .ht_master .wtHolder {
+        overflow: hidden;
+    }
+}
+
+// Sub menu
+.htContextMenuSub_Alignment {
+    margin-top: -(@list-spacing);
+    margin-left: -1px;
+}
+
+// Display as buttons
+.global-zeroclipboard-container,
+.global-zeroclipboard-flash-bridge {
+    cursor: pointer;
+}
+
+
+
+// Pikaday datepicker
+// ------------------------------
+
+//
+// Base
+//
+
+// Single picker
+.pika-single {
+    z-index: @zindex-dropdown;
+    display: block;
+    position: relative;
+    background-color: @dropdown-bg;
+    border: 1px solid @dropdown-border;
+    .box-shadow(0 1px 3px fade(#000, 10%));
+
+    // Clearfix
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+
+    // Hide picker
+    &.is-hidden {
+        display: none;
+    }
+
+    // Bounded
+    &.is-bound {
+        position: absolute;
+    }
+}
+
+// Container
+.pika-lendar {
+    float: left;
+    max-width: 250px;
+    margin: 5px;
+}
+
+
+//
+// Header
+//
+
+// Title
+.pika-title {
+    position: relative;
+    text-align: center;
+
+    // Select
+    select {
+        cursor: pointer;
+        position: absolute;
+        z-index: (@zindex-dropdown - 1);
+        margin: 0;
+        left: 0;
+        height: @input-height-base;
+        padding: @padding-base-vertical @padding-base-horizontal;
+        .opacity(0);
+    }
+}
+
+// Title labels
+.pika-label {
+    display: inline-block;
+    position: relative;
+    z-index: @zindex-dropdown;
+    overflow: hidden;
+    margin: 0;
+    padding-top: @content-padding-base;
+    padding-bottom: @content-padding-base;
+    font-size: @font-size-h6;
+    line-height: 1;
+
+    // Style year select
+    & + & {
+        margin-left: 10px;
+        top: ((@font-size-base - @font-size-h6) / 2);
+        font-size: @font-size-base;
+        color: @text-muted;
+    }
+}
+
+
+//
+// Prev and Next navigation
+//
+
+// Base
+.pika-prev,
+.pika-next {
+    display: block;
+    position: relative;
+    border: 0;
+    padding: 5px;
+    margin: (@content-padding-base - 5) 0;
+    font-size: 0;
+    background-color: transparent;
+
+    // Icons base
+    &:after {
+        font-family: 'Icomoon';
+        display: block;
+        font-size: @icon-font-size;
+        width: @icon-font-size;
+        text-align: center;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    // Highlight on hover
+    &:hover {
+        background-color: @dropdown-link-hover-bg;
+    }
+
+    // Disabled
+    &.is-disabled {
+        cursor: default;
+        opacity: .2;
+    }
+}
+
+// Previous button
+.pika-prev {
+    float: left;
+
+    // Left arrow
+    &:after {
+        content: '\e9c8';
+    }
+}
+
+// Next button
+.pika-next {
+    float: right;
+
+    // Right arrow
+    &:after {
+        content: '\e9cb';
+    }
+}
+
+
+//
+// Table
+//
+
+// Base
+.pika-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 0;
+    table-layout: fixed;
+
+    // Set relative position to use angle arrow
+    th,
+    td {
+        position: relative;
+    }
+
+    // Day names
+    th {
+        color: @text-muted;
+        font-size: @font-size-small;
+        font-weight: 400;
+        text-align: center;
+        padding-bottom: (@line-height-computed / 2);
+    }
+
+    // Day names label
+    abbr {
+        border-bottom: 0;
+        cursor: default;
+    }
+}
+
+// Buttons inside table
+.pika-button {
+    display: block;
+    border: 0;
+    margin: 0;
+    width: 100%;
+    padding: @padding-base-vertical;
+    text-align: center;
+    border-radius: @border-radius-base;
+    background-color: transparent;
+
+    // Hover state
+    &:hover {
+        background-color: @dropdown-link-hover-bg;
+    }
+
+    // Selected and today highlights
+    .is-today & {
+        background-color: @dropdown-link-hover-bg;
+    }
+    .is-selected & {
+        color: #fff;
+        background-color: @color-teal-400;
+    }
+    .is-today &:before,
+    .is-selected &:before,
+    .is-today.is-selected &:before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 0;
+        height: 0;
+        border-top: 6px solid #fff;
+        border-left: 6px solid transparent;
+    }
+    .is-today &:before {
+        border-top-color: @color-danger-400;
+    }
+
+    // Range
+    .is-startrange &,
+    .is-endrange & {
+        color: #fff;
+        background: @color-teal-400;
+    }
+    .is-inrange & {
+        background: @dropdown-link-hover-bg;
+    }
+
+    // Disabled button
+    .is-disabled & {
+        pointer-events: none;
+        cursor: @cursor-disabled;
+        .opacity(0.5);
+    }
+}
+
+
+//
+// Others
+//
+
+// Select
+.pika-select {
+    display: inline-block;
+}
+
+// Week select
+.pika-week {
+    font-size: @font-size-mini;
+    color: @text-muted;
+}
+

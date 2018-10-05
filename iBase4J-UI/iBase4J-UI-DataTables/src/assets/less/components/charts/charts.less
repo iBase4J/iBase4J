@@ -1,0 +1,59 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Chart styling
+*
+*  Charts base - container and sizing setup
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Container
+.chart-container {
+    position: relative;
+    width: 100%;
+
+    // Add scroll
+    &.has-scroll {
+        overflow-x: scroll;
+        overflow-y: visible;
+        max-width: 100%;
+    }
+
+    // Add scroll for all charts on mobile to hide overflow
+    @media (max-width: @screen-xs-max) {
+        overflow-x: scroll;
+        overflow-y: visible;
+        max-width: 100%;
+    }
+}
+
+// Chart itself
+.chart {
+    position: relative;
+    display: block;
+    width: 100%;
+    direction: ltr;
+
+    // Give chart min width
+    &.has-minimum-width {
+        min-width: 600px;
+    }
+}
+
+// Give chart fixed height
+.has-fixed-height {
+    height: 400px;
+}
+
+// Pie charts
+.chart-pie {
+    width: 100%;
+    height: 400px;
+    min-width: 500px;
+}

@@ -1,0 +1,93 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Touchspin spinners
+*
+*  Styles for touchspin.min.js - spinner form control library
+*
+*  Version: 1.1
+*  Latest update: Oct 20, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.bootstrap-touchspin {
+
+    // Vertical buttons
+    .input-group-btn-vertical {
+        white-space: nowrap;
+        width: 1%;
+        vertical-align: middle;
+        display: table-cell;
+
+        // Button
+        > .btn {
+            height: @input-height-base;
+            line-height: @line-height-base;
+            margin-left: -1px;
+            border-radius: 0;
+        }
+
+        // Icon
+        i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -(@icon-font-size / 2);
+            margin-top: -(@icon-font-size / 2);
+            font-weight: normal;
+        }
+
+        // Arrow up
+        .bootstrap-touchspin-up {
+            border: 1px solid @input-border;
+            border-radius: 0;
+        }
+
+        // Arrow down
+        .bootstrap-touchspin-down {
+            border: 1px solid @input-border;
+            .border-right-radius(@input-border-radius);
+        }
+    }
+
+    //
+    // Sizing
+    //
+
+    // Large
+    &.input-group-lg .input-group-btn-vertical {
+        > .btn {
+            height: @input-height-large;
+            line-height: @line-height-large;
+            padding-left: @padding-large-horizontal;
+            padding-right: @padding-large-horizontal;
+        }
+    }
+
+    // Small
+    &.input-group-sm .input-group-btn-vertical {
+        > .btn {
+            height: @input-height-small;
+            line-height: @line-height-small;
+            padding-left: @padding-small-horizontal;
+            padding-right: @padding-small-horizontal;
+        }
+    }
+}
+
+
+// Elements
+// ------------------------------
+
+// Prefix
+.bootstrap-touchspin-prefix {
+    border-right: 0;
+}
+
+// Postfix
+.bootstrap-touchspin-postfix {
+    border-left: 0;
+}

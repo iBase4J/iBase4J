@@ -1,0 +1,512 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # PNotify notifications
+ *
+ *  Styles for pnotify.min.js - a flexible JavaScript notification plugin
+ *
+ *  Version: 1.1
+ *  Latest update: Mar 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+.ui-pnotify {
+    top: @line-height-computed;
+    right: @grid-gutter-width;
+    position: absolute;
+    height: auto;
+    z-index: 2;
+    border-radius: @border-radius-base;
+
+    // Related to window
+    body > & {
+    	position: fixed;
+    	z-index: 100040;
+    }
+
+	// Rounded alerts
+	&.alert-rounded > .ui-pnotify-container {
+		border-radius: 100px;
+	}
+
+	// Solid color alerts
+	&[class*=bg-] > .ui-pnotify-container {
+		background-color: inherit;
+		border-color: transparent;
+		color: #fff;
+	}
+
+	// Custom text and light background colors
+	&[class*=text-] > .ui-pnotify-container,
+	&[class*=alpha-] > .ui-pnotify-container {
+		background-color: inherit;
+		border-color: inherit;
+		color: inherit;
+	}
+
+
+	//
+	// Stack positions
+	//
+
+	// Alternate stack initial positioning
+	&.stack-top-left,
+	&.stack-bottom-left {
+	    left: @grid-gutter-width;
+	    right: auto;
+	}
+	&.stack-bottom-right,
+	&.stack-bottom-left {
+	    bottom: @line-height-computed;
+	    top: auto;
+	}
+	&.stack-modal {
+	    left: 50%;
+	    right: auto;
+	    margin-left: -150px;
+	}
+
+	// Custom stack positions
+	&.stack-custom-right {
+		top: auto;
+		left: auto;
+		bottom: 200px;
+		right: 200px;
+	}
+	&.stack-custom-left {
+		top: 200px;
+		left: 200px;
+		right: auto;
+		bottom: auto;
+	}
+	&.stack-custom-top {
+		right: 0;
+		left: 0;
+		top: 0;
+	}
+	&.stack-custom-bottom {
+		right: 0;
+		left: 0;
+		bottom: 0;
+		top: auto;
+	}
+
+
+	//
+	// Animations
+	//
+
+	// Display notification
+	&.ui-pnotify-in {
+	    display: block!important;
+	}
+
+	// Move notification
+	&.ui-pnotify-move {
+	    .transition(~"left .5s ease, top .5s ease, right .5s ease, bottom .5s ease");
+	}
+
+	// Slow fading
+	&.ui-pnotify-fade-slow {
+	    .transition(opacity linear 0.6s);
+	    .opacity(0);
+
+		&.ui-pnotify.ui-pnotify-move {
+		    .transition(~"opacity .6s linear, left .5s ease, top .5s ease, right .5s ease, bottom .5s ease");
+		}
+	}
+
+	// Normal fading
+	&.ui-pnotify-fade-normal {
+	    .transition(opacity linear 0.4s);
+	    .opacity(0);
+
+		&.ui-pnotify.ui-pnotify-move {
+		    .transition(~"opacity .4s linear, left .5s ease, top .5s ease, right .5s ease, bottom .5s ease");
+		}
+	}
+
+	// Fast fading
+	&.ui-pnotify-fade-fast {
+	    transition: opacity .2s linear;
+	    opacity: 0;
+	    .transition(opacity linear 0.2s);
+	    .opacity(0);
+
+		&.ui-pnotify.ui-pnotify-move {
+		    .transition(~"opacity .2s linear, left .5s ease, top .5s ease, right .5s ease, bottom .5s ease");
+		}
+	}
+
+	// Fading
+	&.ui-pnotify-fade-in {
+	    .opacity(1);
+	}
+}
+
+
+
+// Notification layout
+// ------------------------------
+
+// Container
+.ui-pnotify-container {
+    padding: @content-padding-base @content-padding-large;
+    height: 100%;
+    position: relative;
+    left: 0;
+    margin: 0;
+    border-radius: @border-radius-base;
+
+    // Clearing floats
+    &:after {
+		content: " ";
+		visibility: hidden;
+		display: block;
+		height: 0;
+		clear: both;
+    }
+
+	// Roundless notifications
+	&.ui-pnotify-sharp {
+	    border-radius: 0;
+	}
+}
+
+// Title
+.ui-pnotify-title {
+	display: block;
+	margin-top: 0;
+	margin-bottom: @padding-base-vertical;
+	font-size: @font-size-h6;
+}
+
+// Text
+.ui-pnotify-text {
+    display: block;
+}
+
+// Notification icon
+.ui-pnotify-icon {
+    display: block;
+    float: left;
+    line-height: 1;
+
+    > [class^=icon-] {
+	    margin-top: (@line-height-computed - @icon-font-size);
+	    margin-right: @content-padding-base;
+    }
+}
+
+// Control buttons
+.ui-pnotify-closer,
+.ui-pnotify-sticker {
+	float: right;
+	margin-left: 8px;
+	margin-top: 4px;
+	line-height: 1;
+	outline: 0;
+}
+
+
+
+// Utility classes
+// ------------------------------
+
+// Overlay
+.ui-pnotify-modal-overlay {
+    background-color: fade(#000, 50%);
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+
+    body > & {
+	    position: fixed;
+	    z-index: 100039;
+    }
+}
+
+
+
+// Notification theme
+// ------------------------------
+
+.brighttheme {
+    border: 1px solid;
+
+    .ui-pnotify[class*=bg-] > & {
+    	background-color: inherit;
+    	border-color: inherit;
+    	color: inherit;
+    }
+}
+
+
+//
+// Contextual alternatives
+//
+
+.brighttheme-notice {
+    background-color: @alert-warning-bg;
+    border-color: @alert-warning-border;
+}
+.brighttheme-info {
+    background-color: @alert-primary-bg;
+    border-color: @alert-primary-border;
+}
+.brighttheme-success {
+    background-color: @alert-success-bg;
+    border-color: @alert-success-border;
+}
+.brighttheme-error {
+    background-color: @alert-danger-bg;
+    border-color: @alert-danger-border;
+}
+
+
+//
+// Notification controls
+//
+
+// Base
+.brighttheme-icon-closer,
+.brighttheme-icon-sticker {
+    position: relative;
+    width: @icon-font-size;
+    height: @icon-font-size;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    outline: 0;
+
+    // Icons
+    &:after {
+    	content: '';
+    	font-family: 'Icomoon';
+    	font-size: 10px;
+    	display: block;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+    }
+}
+
+// Closer icon
+.brighttheme-icon-closer:after {
+    content: "\ed6a";
+}
+
+// Sticker icon
+.brighttheme-icon-sticker:after {
+    content: "\ee70";
+}
+
+// Sticked icon
+.brighttheme-icon-sticker.brighttheme-icon-stuck:after {
+	content: "\ee75";
+}
+
+
+//
+// Custom alert styles
+//
+
+// Styled alert
+.ui-pnotify[class*=alert-styled-] {
+	border-width: 0;
+	padding: 0;
+}
+
+// Left position
+.ui-pnotify.alert-styled-left {
+
+	// Border
+	.brighttheme {
+		border-left-width: (((@alert-padding * 2) + @icon-font-size) - 2);
+	}
+
+	// Icon
+	&:after {
+		left: 0;
+	}
+}
+
+// Right position
+.ui-pnotify.alert-styled-right {
+
+	// Border
+	.brighttheme {
+		border-right-width: (((@alert-padding * 2) + @icon-font-size) - 2);
+	}
+
+	// Icon
+	&:after {
+		right: 0;
+	}
+}
+
+
+//
+// Action bar
+//
+
+.brighttheme {
+
+	// Base
+	.ui-pnotify-action-bar {
+	    padding-top: @content-padding-base;
+
+	    // Inputs
+		textarea,
+		input {
+		    display: block;
+		    width: 100%;
+		    border: 1px solid @input-border;
+		    background-color: @input-bg;
+		    margin-bottom: @content-padding-base!important;
+		    color: @input-color;
+		    padding: @padding-base-vertical @padding-base-horizontal;
+
+		    // In colored background
+		    .ui-pnotify[class*=bg-] & {
+		    	border-color: #fff;
+		    	color: #fff;
+		    	.placeholder(@input-placeholder-light);
+		    }
+		}
+	}
+}
+
+
+//
+// Custom background color
+//
+
+// Inputs
+.ui-pnotify[class*=bg-] .form-control {
+	border-bottom-color: #fff;
+	color: #fff;
+	.placeholder(@input-placeholder-light);
+}
+
+
+
+// Notification history
+// ------------------------------
+
+// Container
+.ui-pnotify-history-container {
+    position: absolute;
+    top: 0;
+    right: @grid-gutter-width;
+    width: 70px;
+    border-top: none;
+    padding: 0;
+    z-index: 10000;
+    .border-top-radius(0);
+
+    // Fixed container
+	&.ui-pnotify-history-fixed {
+	    position: fixed;
+	}
+
+	// Header
+	.ui-pnotify-history-header {
+	    padding: 2px;
+	    text-align: center;
+	}
+
+	// Button
+	button {
+	    cursor: pointer;
+	    display: block;
+	    width: 100%;
+	}
+
+	// Pulldown
+	.ui-pnotify-history-pulldown {
+	    display: block;
+	    margin: 0 auto;
+	}
+}
+
+
+
+// Mobile view setup
+// ------------------------------
+
+@media (max-width: @screen-xs) {
+
+	// On mobile
+	.ui-pnotify-mobile-able {
+
+		// Notification
+	    &.ui-pnotify {
+	        position: fixed;
+	        top: 0;
+	        right: 0;
+	        left: 0;
+	        width: auto !important;
+	        -webkit-font-smoothing: antialiased;
+	        -moz-font-smoothing: antialiased;
+	        -ms-font-smoothing: antialiased;
+	        font-smoothing: antialiased;
+
+	        // Shadow
+		    .ui-pnotify-shadow {
+		        border-bottom-width: 5px;
+		        .box-shadow(none);
+		    }
+
+
+		    //
+		    // Alternate stack initial positioning
+		    //
+
+		    &.stack-top-left,
+		    &.stack-bottom-left {
+		        left: 0;
+		        right: 0;
+		    }
+		    &.stack-bottom-right,
+		    &.stack-bottom-left {
+		        left: 0;
+		        right: 0;
+		        bottom: 0;
+		        top: auto;
+
+		        // Shadow
+			    .ui-pnotify-shadow,
+			    .ui-pnotify-shadow {
+			        border-top-width: 5px;
+			        border-bottom-width: 1px;
+			    }
+		    }
+
+
+		    //
+		    // Utility classes
+		    //
+
+		    // Fade out
+			&.ui-pnotify-nonblock-fade {
+			    .opacity(0.2);
+			}
+
+			// Hide
+			&.ui-pnotify-nonblock-hide {
+			    display: none !important;
+			}
+		}
+
+	    // Container
+	    .ui-pnotify-container {
+	        border-radius: 0;
+	    }
+	}
+}

@@ -1,0 +1,34 @@
+.table > thead:first-child > tr:first-child > th{
+    border-top: 1px solid #bbb;
+}
+.operate-btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.operate-btn .add-left button {
+    margin-right: 15px;
+}
+.operate-btn .edit-right button{
+    margin-right: 15px;
+}
+.operate-btn button i {
+    margin-right: 5px;
+}
+.timedTaskDelete .modal-dialog{
+    margin-top: 20%;
+}
+.personnelTreeAdd,.personnelTreeEdit {
+    padding: 5px;
+}
+.personnelAddAdd,.personnelEdit{
+    position: relative;
+}
+.personnelContent,.personnelAdd .personnelAddContent,.personnelEdit .personnelEditContent{
+    display: none;
+    position: absolute;
+    overflow-y: auto;
+    z-index: 999;
+    border: 1px solid #ddd;
+    max-height: 300px;
+    background-color: #fff;
+}

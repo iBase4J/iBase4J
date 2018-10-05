@@ -1,0 +1,123 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Footable
+*
+*  jQuery plugin that aims to make HTML tables on smaller devices look awesome.
+*
+*  Version: 1.0
+*  Latest update: May 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Basic styling
+// ------------------------------
+
+.footable {
+    width: 100%;
+
+    // Remove user select
+    > thead > tr > th {
+        -webkit-touch-callout: none;
+        .user-select(none);
+    }
+
+    // Setup table styles
+    &.breakpoint {
+        > tbody {
+            > tr {
+                &.footable-detail-show > td {
+                    border-bottom: 0;
+                }
+
+                // Remove background color from details row
+                &.footable-row-detail:hover {
+                    background-color: transparent;
+                }
+
+                // Add pointer
+                &:hover:not(.footable-row-detail) {
+                    cursor: pointer;
+                }
+
+                // Cell with details
+                > .footable-cell-detail {
+                    background-color: @gray-lighter;
+                    border-top: 0;
+                }
+
+                // Add expand icon
+                .footable-toggle:before {
+                    content: "\e9e4";
+                    display: inline-block;  
+                    font-family: 'icomoon';
+                    font-size: @icon-font-size;
+                    vertical-align: middle;
+                    position: relative;
+                    top: -1px;
+                    line-height: 1;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    padding-right: 10px;
+                }
+
+                // Add collapse icon
+                &.footable-detail-show .footable-toggle:before {
+                    content: "\e9e7";       
+                }
+            }
+        }
+    }
+}
+
+
+// Row styling
+// ------------------------------
+
+.footable-row-detail-inner {
+display: table;
+table-layout: fixed;
+width: 100%;
+}
+.footable-row-detail-row {
+display: table-row;
+}
+.footable-row-detail-group {
+display: block;
+font-weight: 700;
+margin-top: @line-height-computed;
+margin-bottom: @padding-base-vertical;
+
+&:first-child {
+margin-top: @padding-base-vertical;
+}
+}
+.footable-row-detail-name {
+display: table-cell;
+padding-right: 40px;
+font-weight: 500;
+}
+.footable-row-detail-value {
+display: table-cell;
+padding: @padding-base-vertical 0;
+}
+
+// Make dropdown menus full width
+@media (max-width: @screen-xs) {
+.footable-row-detail-inner {
+position: relative;
+}
+
+.footable-row-detail {
+.dropdown,
+.dropup,
+.btn-group {
+position: static;
+}
+
+.dropdown-menu {
+left: 0;
+right: 0;
+}
+}
+}

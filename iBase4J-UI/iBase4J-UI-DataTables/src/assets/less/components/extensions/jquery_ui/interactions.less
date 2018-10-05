@@ -1,0 +1,260 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # jQuery UI Interactions
+ *
+ *  Separate styles for jQuery UI library. Component's interactions
+ *
+ *  Version: 1.1
+ *  Latest update: Mar 10, 2016
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Misc
+// -------------------------
+
+// Handles
+.ui-draggable-handle,
+.ui-sortable-handle {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+
+
+
+// Sortable
+// -------------------------
+
+// Base
+.ui-sortable {
+	.ui-state-disabled {
+		color: @text-muted;
+		cursor: @cursor-disabled;
+		.opacity(0.75);
+	}
+}
+
+// Placeholder
+.sortable-placeholder {
+	position: relative;
+
+	// Background
+	&:before {
+		content: '';
+		display: inline-block;
+		background-color: fade(#fff, 80%);
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		border: 1px dashed fade(#000, 20%);
+	}
+}
+
+
+//
+// Sidebar placeholder
+//
+
+// Base
+.sidebar {
+
+	// Remove horizontal borders
+	.sortable-placeholder:before {
+		border-left: 0;
+		border-right: 0;
+		background-color: fade(#000, 5%);
+	}
+}
+
+// Sidebar category as a helper
+.sidebar-category {
+	&.ui-sortable-helper {
+		background-color: fade(#000, 40%);
+
+		// Inside white sidebar
+		.sidebar-default & {
+			background-color: #fcfcfc;
+		}
+	}
+}
+
+
+//
+// Panel placeholder
+//
+
+// Panel
+.panel {
+	+ .sortable-placeholder {
+		margin-bottom: @line-height-computed;
+	}
+
+	.sortable-placeholder + & {
+		margin-top: @line-height-computed;
+	}
+}
+
+// Panel group
+.panel-group {
+	> .sortable-placeholder:before {
+		border-radius: @border-radius-base;
+	}
+
+	.panel + .sortable-placeholder {
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+
+	.sortable-placeholder + .panel {
+		margin-top: 5px;
+	}
+}
+
+
+//
+// Table placeholder
+//
+
+.table {
+
+	// Helper
+	.ui-sortable-helper {
+		width: 100%;
+		background-color: #fff;
+		display: table;
+	}
+
+	// Placeholder
+	.sortable-placeholder {
+		margin: 0;
+
+	  // Remove placeholder border
+		&:before {
+			content: none;
+		}
+	}
+
+	// Enadle absolute positioning
+	&.ui-sortable {
+		position: relative;
+	}
+}
+
+
+
+// Resizable
+// -------------------------
+
+// Base
+.ui-resizable {
+	position: relative;
+
+	&,
+	.ui-dialog-content {
+		.box-sizing(content-box);
+	}
+}
+
+// Handle
+.ui-resizable-handle {
+	position: absolute;
+	font-size: 0.1px;
+	display: block;
+	-ms-touch-action: none;
+	touch-action: none;
+
+	// Icon
+	&.ui-icon {
+		display: inline-block;
+		border-style: solid;
+		border-width: 0 0 6px 6px;
+		border-color: transparent transparent @text-color transparent;
+	}
+
+	// Hide if disabled
+	.ui-resizable-disabled &,
+	.ui-resizable-autohide & {
+		display: none;
+	}
+}
+
+// Helper
+.ui-resizable-helper {
+	border: 1px dashed #ccc;
+}
+
+// Handle positions
+.ui-resizable-n {
+	cursor: n-resize;
+	height: 7px;
+	width: 100%;
+	top: -5px;
+	left: 0;
+}
+.ui-resizable-s {
+	cursor: s-resize;
+	height: 7px;
+	width: 100%;
+	bottom: -5px;
+	left: 0;
+}
+.ui-resizable-e {
+	cursor: e-resize;
+	width: 7px;
+	right: -5px;
+	top: 0;
+	height: 100%;
+}
+.ui-resizable-w {
+	cursor: w-resize;
+	width: 7px;
+	left: -5px;
+	top: 0;
+	height: 100%;
+}
+.ui-resizable-se {
+	cursor: se-resize;
+	right: 1px;
+	bottom: 1px;
+}
+.ui-resizable-sw {
+	cursor: sw-resize;
+	width: 9px;
+	height: 9px;
+	left: -5px;
+	bottom: -5px;
+}
+.ui-resizable-nw {
+	cursor: nw-resize;
+	width: 9px;
+	height: 9px;
+	left: -5px;
+	top: -5px;
+}
+.ui-resizable-ne {
+	cursor: ne-resize;
+	width: 9px;
+	height: 9px;
+	right: -5px;
+	top: -5px;
+}
+
+
+// Selectable
+// -------------------------
+
+// Disable default behaviour
+.ui-selectable {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+
+// Selectable helper
+.ui-selectable-helper {
+	position: absolute;
+	z-index: 100;
+	border: 1px dashed @text-color;
+}
+

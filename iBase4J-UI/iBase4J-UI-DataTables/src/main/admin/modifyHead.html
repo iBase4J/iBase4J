@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-store">
+	<meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>香巴林卡智慧景区平台</title>
+
+    <!-- 全局样式-->
+    <link href="../../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/colors.css" rel="stylesheet" type="text/css">
+	<!-- /全局样式-->
+
+    <!--自定义样式-->
+    <link href="../../extends/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../extends/dep/cropper/cropper.min.css" rel="stylesheet">
+    <link href="../../extends/dep/sitelogo/sitelogo.css" rel="stylesheet">
+    <link href="../../extends/css/admin/modifyHead.css" rel="stylesheet" type="text/css">
+	<!--/自定义样式-->
+
+    <!--js核心库-->
+    <script type="text/javascript" src="../../assets/js/core/libraries/vue.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/blockui.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/bootbox.min.js"></script>
+    <!-- /js核心库-->
+
+    <!-- js主题库 -->
+    <script type="text/javascript" src="../../assets/js/plugins/media/cropper.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/app.js"></script>
+    <!-- /js主题库 -->
+
+    <!--自定义js-->
+    <script src="../../extends/js/common.js"></script>
+    <script src="../../extends/dep/sitelogo/sitelogo.js"></script>
+    <script src="../../extends/js/admin/modifyHead.js"></script>
+    <!--自定义js-->
+
+</head>
+
+<body>
+<!-- 页面容器 -->
+<div class="page-container">
+    <!-- 页面内容-->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-default ">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-bold">首页</span> - 控制台</h4>
+                    </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb">
+                        <li><a href="/main/welcome.html"><i class="icon-home2 position-left"></i>首页</a></li>
+                        <li class="active">修改头像</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /page header -->
+
+
+            <!-- Content area -->
+            <div class="content">
+                <div class="panel panel-white">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">修改头像<a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                        </h5>
+                        <div class="heading-elements">
+                            <ul class="icons-list">
+                                <li><a data-action="reload" data-fnReload="refreshData"></a></li>
+                                <li><a data-action="collapse"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                <h5 class="current-picture">当前头像</h5>
+                                <div id="crop-avatar" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="avatar-view">
+                                        <img class="img-responsive avatar" src="../../assets/images/headPortrait.jpg" alt="用户头像">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                <div id="avatar-modal">
+                                    <div class="modal-content">
+                                        <form class="avatar-form" action="/user/upload/avatar" enctype="multipart/form-data"
+                                              method="post">
+                                            <div class="modal-header border-bottom-teal">
+                                                <h5 class="modal-title" id="avatar-modal-label">上传头像</h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="avatar-body">
+                                                    <div class="avatar-upload">
+                                                        <input class="avatar-src" name="avatar_src" type="hidden">
+                                                        <input class="avatar-data" name="avatar_data" type="hidden">
+                                                        <label class="btn bg-teal-300" for="avatarInput">本地上传</label>
+                                                        <input type="file" name="avatar_file" id="avatarInput"
+                                                               class="avatar-input" accept=".jpg,.jpeg,.gif,.png" title="请选择要修改的头像">
+                                                        <div class="picture-format">
+                                                            仅支持JPG、GIF或PNG格式的图片文件，且文件大小不能超过2M。
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-7 col-sm-7 col-md-9 col-lg-9">
+                                                            <div class="avatar-wrapper"></div>
+                                                        </div>
+                                                        <div class="col-xs-5 col-sm-5 col-md-3 col-lg-3">
+                                                            <div class="avatar-preview preview-lg">
+                                                                <img class="avatar" src="../../assets/images/headPortrait.jpg">
+                                                            </div>
+                                                            <div class="avatar-preview preview-md">
+                                                                <img class="avatar" src="../../assets/images/headPortrait.jpg">
+                                                            </div>
+                                                            <div class="avatar-preview preview-sm">
+                                                                <img class="avatar" src="../../assets/images/headPortrait.jpg">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row avatar-btns">
+                                                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 form-group btn-group">
+                                                            <div class="btn-group col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding control-label">
+                                                                <button type="button"
+                                                                        class="btn bg-teal-400 form-control"
+                                                                        data-method="setDragMode"
+                                                                        data-option="move" title="Move">
+                                                                    <span class="icon-move"></span>移动
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="btn-group col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding control-label">
+                                                                <button type="button"
+                                                                        class="btn bg-teal-400 form-control"
+                                                                        data-method="zoom" data-option="0.1"
+                                                                        title="Zoom In">
+                                                                    <span class="icon-zoomin3"></span>放大
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="btn-group col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding control-label">
+                                                                <button type="button"
+                                                                        class="btn bg-teal-400 form-control"
+                                                                        data-method="zoom" data-option="-0.1"
+                                                                        title="Zoom Out">
+                                                                    <span class="icon-zoomout3"></span>缩小
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="btn-group col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding control-label">
+                                                                <button type="button"
+                                                                        class="btn btn bg-teal-400 form-control"
+                                                                        data-method="rotate"
+                                                                        data-option="-45" title="Rotate Left">
+                                                                    <span class="icon-rotate-ccw3"></span>旋转
+                                                                </button>
+                                                            </div>
+
+                                                            <div class="btn-group col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding control-label">
+                                                                <button type="button"
+                                                                        class="btn btn bg-teal-400 form-control"
+                                                                        data-method="rotate"
+                                                                        data-option="45" title="Rotate Right">
+                                                                    <span class="icon-rotate-cw3"></span>旋转
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+                                                            <button class="btn bg-teal-700 btn-block avatar-save"
+                                                                    type="submit">
+                                                                <i class="icon-floppy-disk"></i> 保存
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<!-- Footer -->
+	            <div class="footer text-muted" v-html="footer"></div>
+	            <!-- /footer -->
+            </div>
+            <!-- /content area -->
+
+        </div>
+        <!-- /main content -->
+    </div>
+    <!-- /页面内容 -->
+</div>
+<!-- /页面容器 -->
+
+</body>
+</html>

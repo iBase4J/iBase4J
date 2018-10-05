@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>香巴林卡智慧景区平台</title>
+
+    <!-- 全局样式 -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="../../assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="../../assets/css/colors.css" rel="stylesheet" type="text/css">
+    <!-- /全局样式 -->
+
+    <!-- 自定义样式 -->
+    <link href="../../extends/dep/jquery-treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css">
+    <link href="../../extends/dep/jquery-treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css">
+    <link href="../../extends/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../extends/css/admin/personalMenu.css" rel="stylesheet" type="text/css">
+    <!-- /自定义样式 -->
+
+    <!-- js核心库-->
+    <script type="text/javascript" src="../../assets/js/core/libraries/vue.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/pace.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/jquery.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/libraries/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/loaders/blockui.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/pnotify.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/notifications/bootbox.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <!-- /js核心库 -->
+
+    <!-- js主题库 -->
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/extensions/select.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/forms/selects/select2.min.js"></script>
+    <script type="text/javascript" src="../../assets/js/plugins/tables/datatables/extensions/fixed_columns.min.js"></script>
+    <script type="text/javascript" src="../../extends/dep/jquery-treetable/jquery.treetable.js"></script>
+    <script type="text/javascript" src="../../assets/js/core/app.js"></script>
+    <!-- /js主题库 -->
+
+    <!-- js自定义 -->
+    <script type="text/javascript" src="../../extends/js/common.js"></script>
+    <script type="text/javascript" src="../../extends/js/admin/personalMenu.js"></script>
+    <!-- /js自定义 -->
+</head>
+
+<body>
+<!-- 页面容器-->
+<div class="page-container">
+    <!-- 页面内容 -->
+    <div class="page-content">
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Page header -->
+            <div class="page-header page-header-default border-bottom-lg border-bottom-teal">
+                <div class="page-header-content">
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-bold">系统管理</span> - 权限管理</h4>
+                    </div>
+
+                </div>
+
+                <div class="breadcrumb-line">
+                    <ul class="breadcrumb">
+                        <li><a href="/main/welcome.html"><i class="icon-home2 position-left"></i>首页</a></li>
+                        <li>系统管理</li>
+                        <li>权限管理</li>
+                        <li class="active">人员菜单</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /page header -->
+
+
+            <!-- Content area -->
+            <div class="content">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding-left">
+                    <button class="btn bg-teal pull-right saveSet">
+                        <i class="icon-floppy-disk"></i>保存设置
+                    </button>
+                    <button class="btn bg-danger-400 pull-right reflush">
+                        <i class="icon-spinner4"></i>同步缓存
+                    </button>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 no-padding-left">
+                    <div class="panel panel-white">
+                        <div class="panel-heading">
+                            <h6 class="panel-title">用户列表</h6>
+                            <div class="heading-elements">
+                                <ul class="icons-list">
+	                                <li><a data-action="reload" data-fnReload="refreshData"></a></li>
+	                                <li><a data-action="collapse"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <table class="personnal-list table table-bordered text-center">
+                            <thead>
+                            <tr>
+                                <th class="text-center">帐号</th>
+                                <th class="text-center">姓名</th>
+                                <th class="text-center">部门</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="panel panel-white">
+                        <div class="panel-heading">
+                            <h6 class="panel-title" id="personalMenu">菜单列表</h6>
+                            <div class="heading-elements">
+                                <ul class="icons-list">
+	                                <!-- <li><a data-action="reload" data-fnReload="refreshMenuData"></a></li> -->
+                                    <li><a data-action="collapse"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <table class="menu-permission table table-bordered  text-center">
+                            <thead>
+	                            <tr>
+	                                <th class="text-center">
+	                                	<input type="checkbox" class="styled" data-action="checkAll" data-target=".menu-permission tbody tr td" />
+	                                </th>
+	                                <th>菜单名称</th>
+	                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <!-- Footer -->
+	            <div class="footer text-muted" v-html="footer"></div>
+	            <!-- /footer -->
+
+            </div>
+            <!-- /content area -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /页面内容 -->
+
+</div>
+<!-- /页面容器 -->
+</body>
+</html>

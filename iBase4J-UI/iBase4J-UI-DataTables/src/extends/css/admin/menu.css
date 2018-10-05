@@ -1,0 +1,69 @@
+.menuManage > tbody > tr > td:nth-child(1) {
+    text-align: left !important;
+}
+
+.icon-blocked {
+    color: #999999 !important;
+}
+
+.menu-operate {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.menu-add {
+    padding-left: 20px !important;
+}
+
+.menu-operate .menu-add button {
+    margin-right: 15px;
+}
+
+.menu-operate .menu-edit .bg-primary-400 {
+    margin-right: 15px;
+}
+
+.menu-operate button i {
+    margin-right: 5px;
+}
+
+.modal-header {
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header .close {
+    top: 30%;
+}
+
+.table > thead:first-child > tr:first-child > th {
+    border-top: 1px solid #bbb;
+}
+.deleteText{
+    font-size: 18px;
+}
+table.treetable span.label{
+    display: inline-block;
+    font-weight: 500;
+    padding: 2px 5px 1px 5px;
+    line-height: 1.5384616;
+    border: 1px solid transparent;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.1px;
+    border-radius: 2px;
+}
+.menuParent {
+    position: relative;
+}
+.menuParentTree {
+    padding: 5px;
+}
+.menuParent .menuParentContent {
+    display: none;
+    position: absolute;
+    overflow-y: auto;
+    z-index: 999;
+    border: 1px solid #ddd;
+    max-height: 300px;
+    background-color: #fff;
+}

@@ -1,0 +1,605 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Summernote editor
+*
+*  Super simple WYSIWYG Editor for Bootstrap framework
+*
+*  Version: 1.3
+*  Latest update: Aug 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Summernote uses its own icons
+// ----------------------------------------
+
+// Load font
+@font-face{
+    font-family:"summernote";
+    font-style:normal;
+    font-weight:normal;
+    src:url("@{summernote-font-path}/summernote.eot?ad8d7e2d177d2473aecd9b35d16211fb");
+    src:url("@{summernote-font-path}/summernote.eot?#iefix") format("embedded-opentype"),
+        url("@{summernote-font-path}/summernote.woff?ad8d7e2d177d2473aecd9b35d16211fb") format("woff"),
+        url("@{summernote-font-path}/summernote.ttf?ad8d7e2d177d2473aecd9b35d16211fb") format("truetype")
+}
+
+// Icon styles
+[class^="note-icon-"]:before,
+[class*=" note-icon-"]:before {
+    display: inline-block;
+    font: normal normal normal 14px summernote;
+    font-size: inherit;
+    text-decoration: inherit;
+    text-rendering: auto;
+    text-transform: none;
+    vertical-align: middle;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+// Icons
+.note-icon-align-center:before{content:"\f101"}
+.note-icon-align-indent:before{content:"\f102"}
+.note-icon-align-justify:before{content:"\f103"}
+.note-icon-align-left:before{content:"\f104"}
+.note-icon-align-outdent:before{content:"\f105"}
+.note-icon-align-right:before{content:"\f106"}
+.note-icon-align:before{content:"\f107"}
+.note-icon-arrows-alt:before{content:"\f108"}
+.note-icon-bold:before{content:"\f109"}
+.note-icon-caret:before{content:"\f10a";}
+.note-icon-chain-broken:before{content:"\f10b"}
+.note-icon-circle:before{content:"\f10c"}
+.note-icon-close:before{content:"\f10d"}
+.note-icon-code:before{content:"\f10e"}
+.note-icon-eraser:before{content:"\f10f"}
+.note-icon-font:before{content:"\f110"}
+.note-icon-frame:before{content:"\f111"}
+.note-icon-italic:before{content:"\f112"}
+.note-icon-link:before{content:"\f113"}
+.note-icon-magic:before{content:"\f114"}
+.note-icon-menu-check:before{content:"\f115"}
+.note-icon-minus:before{content:"\f116"}
+.note-icon-orderedlist:before{content:"\f117"}
+.note-icon-pencil:before{content:"\f118"}
+.note-icon-picture:before{content:"\f119"}
+.note-icon-question:before{content:"\f11a"}
+.note-icon-redo:before{content:"\f11b"}
+.note-icon-special-character:before{content:"\f11c"}
+.note-icon-square:before{content:"\f11d"}
+.note-icon-strikethrough:before{content:"\f11e"}
+.note-icon-subscript:before{content:"\f11f"}
+.note-icon-summernote:before{content:"\f120"}
+.note-icon-superscript:before{content:"\f121"}
+.note-icon-table:before{content:"\f122"}
+.note-icon-text-height:before{content:"\f123"}
+.note-icon-trash:before{content:"\f124"}
+.note-icon-underline:before{content:"\f125"}
+.note-icon-undo:before{content:"\f126"}
+.note-icon-unorderedlist:before{content:"\f127"}
+.note-icon-video:before{content:"\f128"}
+
+
+
+// Core
+// ----------------------------------------
+
+// Editor
+.note-editor {
+    border: 1px solid @panel-default-border;
+    border-radius: @border-radius-base;
+
+    // Droppable
+    .note-dropzone {
+        position: absolute;
+        z-index: 1;
+        display: none;
+        color: @brand-primary;
+        background-color: #fff;
+        border: 2px dashed @brand-primary;
+        pointer-events: none;
+        .opacity(0.95);
+
+        // Message
+        .note-dropzone-message {
+            display: table-cell;
+            font-size: @font-size-h1;
+            font-weight: 500;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        // Hover state
+        &.hover {
+            color: @brand-primary;
+            border: 2px dashed @brand-primary;
+        }
+    }
+    &.dragover .note-dropzone {
+        display: table;
+    }
+
+    // Toolbar
+    .note-toolbar {
+        background-color: @panel-footer-bg;
+        border-bottom: 1px solid @panel-default-border;
+        padding: @content-padding-base @content-padding-large;
+        padding-top: 0;
+        margin: 0;
+        border-radius: @border-radius-base;
+    }
+
+    // Fullscreen mode
+    &.fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1050;
+        width: 100%;
+
+        // Editable
+        .note-editable {
+            background-color: @panel-bg;
+        }
+
+        // Hide resizer
+        .note-resizebar {
+            display: none;
+        }
+    }
+
+    // Codeview mode
+    &.codeview {
+        .note-editable {
+            display: none;
+        }
+        .note-codable {
+            display: block;
+        }
+    }
+
+    // Status bar
+    .note-statusbar {
+        background-color: @panel-footer-bg;
+
+        // Resize handle
+        .note-resizebar {
+            width: 100%;
+            height: 8px;
+            cursor: s-resize;
+            border-top: 1px solid @panel-inner-border;
+
+            // Icon bar
+            .note-icon-bar {
+                width: 20px;
+                margin: 1px auto;
+                border-top: 1px solid darken(@panel-inner-border, 20%);
+            }
+        }
+    }
+
+    // Editable area
+    .note-editable {
+        padding: @content-padding-large;
+        overflow: auto;
+        outline: 0;
+        min-height: 150px;
+
+        &[contenteditable="false"] {
+            background-color: @gray-lighter;
+        }
+    }
+
+    // Code view
+    .note-codable {
+        display: none;
+        width: 100%;
+        padding: @content-padding-large;
+        margin-bottom: 0;
+        font-family: Menlo,Monaco, monospace, sans-serif;
+        color: #fff;
+        background-color: @gray-dark;
+        border: 0;
+        border-radius: 0;
+        resize: none;
+        .box-shadow(none);
+    }
+
+    // Modal title
+    .modal-title {
+        font-size: @font-size-h5;
+    }
+}
+
+// Air mode
+.note-air-editor {
+    outline: 0;
+}
+
+// Popover
+.note-popover {
+    max-width: none;
+
+    // Content
+    .popover-content {
+        padding: @content-padding-base;
+        padding-top: 0;
+        margin: 0;
+
+        a {
+            display: inline-block;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        > .btn-group:last-child {
+            margin-right: 0;
+        }
+    }
+
+    // Popover arrow
+    .arrow {
+        left: 20px;
+    }
+}
+
+
+
+// Popover/toolbar elements
+// ----------------------------------------
+
+.note-popover .popover-content,
+.note-toolbar {
+
+    // Buttons
+    > .note-btn-group {
+        margin-top: @content-padding-base;
+        margin-right: @content-padding-base;
+        margin-left: 0;
+
+        // Icon caret
+        .note-icon-caret {
+            &:before {
+                width: 9px;
+                margin-left: 2px;
+                margin-right: 2px;
+            }
+        }
+
+        // Caret spacing
+        i + .note-icon-caret {
+            margin-left: 2px;
+            margin-right: -5px;
+        }
+    }
+
+    // Style
+    .note-style {
+        h1, h2, h3, h4, h5, h6, blockquote {
+            margin: 0;
+        }
+    }
+
+    // Table
+    .note-table {
+        min-width: 0;
+
+        &.dropdown-menu {
+            padding: 10px;
+        }
+
+        // Dimension picker
+        .note-dimension-picker {
+            font-size: 18px;
+            margin-bottom: 10px;
+
+            // Mouse catcher
+            .note-dimension-picker-mousecatcher {
+                position: absolute!important;
+                z-index: 3;
+                width: 10em;
+                height: 10em;
+                cursor: pointer;
+            }
+
+            // Unhighlighted
+            .note-dimension-picker-unhighlighted {
+                position: relative!important;
+                z-index: 1;
+                width: 5em;
+                height: 5em;
+                background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASAgMAAAAroGbEAAAACVBMVEUAAIj4+Pjp6ekKlAqjAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfYAR0BKhmnaJzPAAAAG0lEQVQI12NgAAOtVatWMTCohoaGUY+EmIkEAEruEzK2J7tvAAAAAElFTkSuQmCC') repeat;
+            }
+
+            // Highlighted
+            .note-dimension-picker-highlighted {
+                position: absolute!important;
+                z-index: 2;
+                width: 1em;
+                height: 1em;
+                background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASAgMAAAAroGbEAAAACVBMVEUAAIjd6vvD2f9LKLW+AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfYAR0BKwNDEVT0AAAAG0lEQVQI12NgAAOtVatWMTCohoaGUY+EmIkEAEruEzK2J7tvAAAAAElFTkSuQmCC') repeat;
+            }
+        }
+
+        // Center the text
+        .note-dimension-display {
+            text-align: center;
+        }
+    }
+
+    // Color picker
+    .note-color {
+        .dropdown-menu {
+            min-width: 330px;
+
+            // Buttons
+            .btn-group {
+                margin: @padding-base-vertical @padding-base-horizontal;
+
+                // Title
+                .note-palette-title {
+                    margin-bottom: 10px;
+                    font-weight: 500;
+                }
+
+                // Rreset colors
+                .note-color-reset {
+                    padding: @padding-small-vertical @padding-small-horizontal;
+                    cursor: pointer;
+                    background-color: @btn-default-bg;
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+
+    // Paragraph
+    .note-para {
+        .dropdown-menu {
+            min-width: 290px;
+            padding: 10px;
+            text-align: center;
+
+            > div {
+                &:first-child {
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    // Dropdown menu
+    .dropdown-menu {
+        min-width: 90px;
+
+        &.right {
+            right: 0;
+            left: auto;
+
+            &:before {
+                right: 9px;
+                left: auto!important;
+            }
+
+            &:after {
+                right: 10px;
+                left: auto!important;
+            }
+        }
+
+        li {
+            a {
+                i {
+                    display: none;
+                }
+
+                &.checked {
+                    background-color: #f5f5f5;
+                }
+            }
+        }
+    }
+
+    // Color palette
+    .note-color-palette {
+        line-height: 1;
+
+        div {
+            .note-color-btn {
+                width: 17px;
+                height: 17px;
+                padding: 0;
+                margin: 0;
+                border: 1px solid #fff;
+
+                &:hover {
+                    border: 1px solid @gray-dark;
+                }
+            }
+        }
+    }
+}
+
+// Content
+.note-popover .popover-content {
+    > .btn-group {
+        margin-top: @content-padding-base;
+        margin-right: @content-padding-base;
+    }
+}
+
+
+
+// Dialog
+// ----------------------------------------
+
+.note-dialog {
+    > div {
+        display: none;
+    }
+
+    // Dropzone
+    .note-image-dialog .mote-dropzone {
+        min-height: 100px;
+        margin-bottom: 10px;
+        font-size: @font-size-h1;
+        color: @gray-lighter;
+        text-align: center;
+        border: 4px dashed @gray-lighter;
+    }
+
+    // Help dialog
+    .note-help-dialog {
+        color: #ccc;
+        background-color: transparent;
+        background-color: @gray-dark!important;
+        border: 0;
+        .opacity(0.9);
+
+        a {
+            color: #fff;
+        }
+
+        // Title
+        .title {
+            padding-bottom: @padding-base-vertical;
+            font-size: @font-size-h6;
+            font-weight: 500;
+            color: #fff;
+            border-bottom: 1px solid #fff;
+        }
+
+        // Modal content
+        .modal-content {
+            background-color: transparent;
+            border: 1px solid #fff;
+            border-radius: @border-radius-base;
+            .box-shadow(none);
+        }
+
+        // Close button
+        .modal-close {
+            color: @gray-light;
+            cursor: pointer;
+        }
+
+        // Shortcut layout
+        .note-shortcut-layout {
+            width: 100%;
+
+            td {
+                vertical-align: top;
+            }
+        }
+
+        // Shortcut
+        .note-shortcut {
+            margin-top: 8px;
+
+            th {
+                color: @gray-lighter;
+                text-align: left;
+            }
+
+            td:first-child {
+                min-width: 110px;
+                padding-right: 10px;
+                font-family: "Courier New";
+                color: @gray-lighter;
+                text-align: right;
+            }
+        }
+    }
+}
+
+// Display label
+.note-group-select-from-files {
+    label {
+        display: block;
+    }
+}
+
+
+
+// Handle
+// ----------------------------------------
+
+.note-handle {
+    position: relative;
+
+    // Selection
+    .note-control-selection {
+        position: absolute;
+        display: none;
+        border: 1px solid @gray-dark;
+        z-index: 10;
+
+        > div {
+            position: absolute;
+        }
+
+        // Background
+        .note-control-selection-bg {
+            width: 100%;
+            height: 100%;
+            background-color: @gray-dark;
+            .opacity(0.3);
+        }
+
+        // Control handle
+        .note-control-handle,
+        .note-control-holder,
+        .note-control-sizing {
+            width: 7px;
+            height: 7px;
+            border: 1px solid @gray-dark;
+        }
+        .note-control-sizing {
+            background-color: #fff;
+        }
+
+
+        // Control direction
+        .note-control-nw {
+            top: -5px;
+            left: -5px;
+            border-right: 0;
+            border-bottom: 0;
+        }
+        .note-control-ne {
+            top: -5px;
+            right: -5px;
+            border-bottom: 0;
+            border-left: 0;
+        }
+        .note-control-sw {
+            bottom: -5px;
+            left: -5px;
+            border-top: 0;
+            border-right: 0;
+        }
+        .note-control-se {
+            right: -5px;
+            bottom: -5px;
+            cursor: se-resize;
+        }
+
+        // Selection info
+        .note-control-selection-info {
+            right: 0;
+            bottom: 0;
+            padding: 5px;
+            margin: 5px;
+            color: #fff;
+            background-color: @gray-dark;
+            border-radius:@border-radius-base;
+            .opacity(0.7);
+        }
+    }
+}

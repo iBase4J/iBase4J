@@ -1,0 +1,89 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Select extension
+*
+*  Spreadsheets such as Excel and Google Docs have a very handy data duplication
+*  option of an auto fill tool
+*
+*  Version: 1.1
+*  Latest update: Dec 9, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Highlight selected row
+.dataTable {
+    tbody > tr {
+        &.selected,
+        > .selected {
+            background-color: @color-success-50;
+        }
+
+    }
+}
+
+// Item select
+.dataTables_wrapper {
+    .select-info,
+    .select-item {
+        margin-left: @content-padding-small;
+
+        // On mobile
+        @media (max-width: @screen-xs-max) {
+            margin-left: 0;
+            display: block;
+        }
+    }
+}
+
+
+// Checkbox
+// ------------------------------
+
+.dataTable tbody {
+
+    // Chackbox base
+    .select-checkbox {
+        position: relative;
+
+        // Checkbox icon base
+        &:before,
+        &:after {
+            display: inline-block;
+            color: @color-slate-700;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            cursor: pointer;
+        }
+
+        // Box
+        &:before {
+            content: '';
+            background-color: #fff;
+            width: @checkbox-size;
+            height: @checkbox-size;
+            margin-top: -(@checkbox-size / 2);
+            margin-left: -(@checkbox-size / 2);
+            border: @checkbox-border-width solid @color-slate-500;
+            border-radius: @border-radius-small;
+        }
+    }
+
+    // Checkmark icon
+    .selected .select-checkbox {
+        &:after {
+            content: "\e600";
+            font-family: 'icomoon';
+            font-size: @icon-font-size;
+            line-height: 1;
+            margin-top: -((@checkbox-size - @checkbox-border-width) / 2);
+            margin-left: -((@checkbox-size - @checkbox-border-width) / 2);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    }
+}

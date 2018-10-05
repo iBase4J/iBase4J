@@ -1,0 +1,65 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Form Validation
+ *
+ *  jQuery plugin for simple clientside form validation
+ *
+ *  Version: 1.0
+ *  Latest update: May 25, 2015
+ *
+ * ---------------------------------------------------------------------------- */
+
+
+// Core
+// ------------------------------
+
+// Error
+.validation-error-label,
+.validation-valid-label {
+	margin-top: @padding-base-vertical;
+	margin-bottom: @padding-base-vertical;
+	display: block;
+	color: @brand-danger;
+	position: relative;
+	padding-left: (@icon-font-size + 10);
+}
+
+// Success
+.validation-valid-label {
+	color: @brand-success;
+}
+
+
+// Labels
+// ------------------------------
+
+// Icon container
+.validation-error-label,
+.validation-valid-label {
+	&:before {
+		font-family: 'icomoon';
+		position: absolute;
+		top: ((@line-height-computed - @icon-font-size) / 2);
+		left: 0;
+		display: inline-block;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-size: @icon-font-size;
+	}
+
+	// Hide if empty
+	&:empty {
+		display: none;
+	}
+}
+
+// Error icon
+.validation-error-label:before {
+	content: '\ed63';
+}
+
+// Valid icon
+.validation-valid-label:before {
+	content: '\ee73';
+}

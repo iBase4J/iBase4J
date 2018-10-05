@@ -1,0 +1,41 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Code related components
+*
+*  Overrides for code related bootstrap components
+*
+*  Version: 1.1
+*  Latest update: Nov 25, 2015
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Inline code
+code {
+    border-radius: @border-radius-small;
+    word-wrap: break-word;
+}
+
+// User input typically entered via keyboard
+kbd {
+    font-size: @font-size-mini;
+    vertical-align: text-top;
+    .box-shadow(none);
+}
+
+// Blocks of code
+pre {
+    padding: @panel-body-padding;
+    margin: 0;
+
+    // Change tab size
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    // Remove hyphenation
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}

@@ -1,0 +1,231 @@
+/* ------------------------------------------------------------------------------
+*
+*  # Alert component
+*
+*  Overrides for alerts bootstrap component
+*
+*  Version: 1.1
+*  Latest update: Mar 10, 2016
+*
+* ---------------------------------------------------------------------------- */
+
+
+// Base
+// -------------------------
+
+.alert {
+    position: relative;
+    padding-left: (@alert-padding + 5);
+    padding-right: (@alert-padding + 5);
+
+    // Alert heading
+    .alert-heading {
+        margin-top: 0;
+        margin-bottom: 5px;
+    }
+
+    // Provide class for links that match alerts
+    .alert-link {
+        color: inherit;
+    }
+
+    // Close button
+    .close {
+        &,
+        &:hover,
+        &:focus {
+            color: inherit;
+        }
+    }
+}
+
+
+// Alternate styles
+// -------------------------
+
+// Primary - custom added
+.alert-primary {
+    .alert-variant(@alert-primary-bg; @alert-primary-border; @alert-primary-text);
+
+    &,
+    .close {
+        color: darken(@color-primary-800, 10%);
+    }
+}
+
+// Success
+.alert-success {
+    &,
+    .close {
+        color: darken(@color-success-800, 10%);
+    }
+}
+
+// Info
+.alert-info {
+    &,
+    .close {
+        color: darken(@color-info-800, 10%);
+    }
+}
+
+// Warning
+.alert-warning {
+    &,
+    .close {
+        color: darken(@color-warning-800, 10%);
+    }
+}
+
+// Danger
+.alert-danger {
+    &,
+    .close {
+        color: darken(@color-danger-800, 10%);
+    }
+}
+
+
+// Additional styling
+// -------------------------
+
+// Rounded alert
+.alert.alert-rounded {
+    border-radius: 100px;
+    padding-left: (@alert-padding + 10);
+    padding-right: (@alert-padding + 10);
+}
+
+// Alert as a component
+.alert-component {
+    &[class*=alert-styled-] {
+        background-color: #fff;
+    }
+}
+
+// Custom background color
+.alert[class*=bg-] {
+    a,
+    .alert-link {
+        color: #fff;
+    }
+}
+
+
+// Styled alerts
+// -------------------------
+
+.alert {
+
+    // Icon variations
+    &[class*=alert-styled-] {
+
+        // Icon base
+        &:after {
+            content: '\e9a2';
+            font-family: 'icomoon';
+            color: #fff;
+            width: (((@alert-padding * 2) + @icon-font-size) - 2);
+            left: -(((@alert-padding * 2) + @icon-font-size) - 2);
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            margin-top: -(@icon-font-size / 2);
+            font-size: @icon-font-size;
+            font-weight: 400;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        // Danger icon
+        &.alert-danger:after,
+        &[class*=bg-danger]:after {
+            content: '\ed64';
+        }
+
+        // Success icon
+        &.alert-success:after,
+        &[class*=bg-success]:after {
+            content: '\ed6e';
+        }
+
+        // Warning icon
+        &.alert-warning:after,
+        &[class*=bg-warning]:after {
+            content: '\e9bd';
+        }
+
+        // Info icon
+        &.alert-info:after,
+        &[class*=bg-info]:after {
+            content: '\e9b9';
+        }
+    }
+
+    // Right icon position
+    &.alert-styled-right {
+        &:after {
+            left: auto;
+            right: -(((@alert-padding * 2) + @icon-font-size) - 2);
+        }
+    }
+
+    // With custom icon
+    &.alert-styled-custom {
+        &:after {
+            content: "\e81b"; // Change icon code for custom alert
+        }
+    }
+
+    // Styled alert with left icon
+    &.alert-styled-left {
+        border-left-width: (((@alert-padding * 2) + @icon-font-size) - 2);
+
+        &[class*=bg-] {
+            border-left-color: fade(#000, 15%)!important;
+        }
+    }
+
+
+    // Styled alert with right icon
+    &.alert-styled-right {
+        border-right-width: (((@alert-padding * 2) + @icon-font-size) - 2);
+
+        &[class*=bg-] {
+            border-right-color: fade(#000, 15%)!important;
+        }
+    }
+}
+
+
+// Alert arrow
+// -------------------------
+
+.alert {
+
+    // Left arrow
+    &:not(.ui-pnotify)[class*=alert-arrow-]:before,
+    .ui-pnotify&[class*=alert-arrow-] > .brighttheme:before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        border-left: 5px solid;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left-color: inherit;
+        margin-top: -5px;
+    }
+
+    // Right arrow
+    &:not(.ui-pnotify).alert-arrow-right:before,
+    .ui-pnotify&.alert-arrow-right > .brighttheme:before {
+        left: auto;
+        right: 0;
+        border-left: 0;
+        border-right: 5px solid;
+        border-right-color: inherit;
+    }
+}
