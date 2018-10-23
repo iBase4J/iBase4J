@@ -77,7 +77,7 @@ public class SendMsgServiceImpl implements SendMsgService {
             // 初始化ascClient,暂时不支持多region
             IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", config.getSmsPlatAccount(),
                 config.getSmsPlatPassword());
-            DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Dysmsapi", config.getSmsPlatUrl());
+            DefaultProfile.addEndpoint("cn-hangzhou", "Dysmsapi", config.getSmsPlatUrl());
             IAcsClient acsClient = new DefaultAcsClient(profile);
 
             // 组装请求对象
@@ -149,7 +149,7 @@ public class SendMsgServiceImpl implements SendMsgService {
             // 初始化ascClient,暂时不支持多region
             IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", config.getSmsPlatAccount(),
                 config.getSmsPlatPassword());
-            DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", "Dyvmsapi", "dyvmsapi.aliyuncs.com");
+            DefaultProfile.addEndpoint("cn-hangzhou", "Dyvmsapi", "dyvmsapi.aliyuncs.com");
             IAcsClient acsClient = new DefaultAcsClient(profile);
 
             // 组装请求对象
