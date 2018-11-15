@@ -23,7 +23,6 @@ import top.ibase4j.core.support.Assert;
 import top.ibase4j.core.support.context.Resources;
 import top.ibase4j.core.support.http.HttpCode;
 import top.ibase4j.core.support.login.LoginHelper;
-import top.ibase4j.core.util.SecurityUtil;
 import top.ibase4j.model.Login;
 
 /**
@@ -66,7 +65,6 @@ public class LoginController extends BaseController<SysUser, SysUserService> {
     public Object regin(HttpServletRequest request, ModelMap modelMap, @RequestBody SysUser sysUser) {
         Assert.notNull(sysUser.getAccount(), "ACCOUNT");
         Assert.notNull(sysUser.getPassword(), "PASSWORD");
-        sysUser.setPassword(SecurityUtil.encryptPassword(sysUser.getPassword()));
         service.update(sysUser);
         String clientIp = (String)request.getSession().getAttribute(Constants.USER_IP);
         if (LoginHelper.login(new Login(sysUser.getAccount(), sysUser.getPassword(), false), clientIp)) {
