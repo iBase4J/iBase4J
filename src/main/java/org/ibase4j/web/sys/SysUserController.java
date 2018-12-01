@@ -61,9 +61,18 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
     @Override
     @ApiOperation(value = "查询用户")
     @RequiresPermissions("sys.base.user.read")
-    @PutMapping(value = "/read/list")
+    @PutMapping(value = "/read/page")
     public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
         return super.query(modelMap, param);
+    }
+
+    // 查询用户
+    @Override
+    @ApiOperation(value = "查询用户")
+    @RequiresPermissions("sys.base.user.read")
+    @PutMapping(value = "/read/list")
+    public Object queryList(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        return super.queryList(modelMap, param);
     }
 
     // 用户详细信息

@@ -27,31 +27,34 @@ import top.ibase4j.core.base.BaseController;
 @Controller
 @RequestMapping("/msg")
 public class SysMsgController extends BaseController<SysMsg, SysMsgService> {
-	@ApiOperation(value = "查询短信")
-	@RequiresPermissions("msg.list.read")
-	@PutMapping(value = "/read/list")
-	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		return super.query(modelMap, param);
-	}
+    @Override
+    @ApiOperation(value = "查询短信")
+    @RequiresPermissions("msg.list.read")
+    @PutMapping(value = "/read/page")
+    public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        return super.query(modelMap, param);
+    }
 
-	@ApiOperation(value = "短信详情")
-	@RequiresPermissions("msg.list.read")
-	@PutMapping(value = "/read/detail")
-	public Object get(ModelMap modelMap, @RequestBody SysMsg param) {
-		return super.get(modelMap, param);
-	}
+    @ApiOperation(value = "短信详情")
+    @RequiresPermissions("msg.list.read")
+    @PutMapping(value = "/read/detail")
+    public Object get(ModelMap modelMap, @RequestBody SysMsg param) {
+        return super.get(modelMap, param);
+    }
 
-	@PostMapping
-	@ApiOperation(value = "修改短信")
-	@RequiresPermissions("msg.list.update")
-	public Object update(ModelMap modelMap, @RequestBody SysMsg param) {
-		return super.update(modelMap, param);
-	}
+    @Override
+    @PostMapping
+    @ApiOperation(value = "修改短信")
+    @RequiresPermissions("msg.list.update")
+    public Object update(ModelMap modelMap, @RequestBody SysMsg param) {
+        return super.update(modelMap, param);
+    }
 
-	@DeleteMapping
-	@ApiOperation(value = "删除短信")
-	@RequiresPermissions("msg.list.delete")
-	public Object delete(ModelMap modelMap, @RequestBody SysMsg param) {
-		return super.delete(modelMap, param);
-	}
+    @Override
+    @DeleteMapping
+    @ApiOperation(value = "删除短信")
+    @RequiresPermissions("msg.list.delete")
+    public Object delete(ModelMap modelMap, @RequestBody SysMsg param) {
+        return super.delete(modelMap, param);
+    }
 }

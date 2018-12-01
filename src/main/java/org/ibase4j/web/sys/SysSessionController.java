@@ -21,7 +21,7 @@ import top.ibase4j.core.listener.SessionListener;
 
 /**
  * 用户会话管理
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:13:06
  */
@@ -30,22 +30,23 @@ import top.ibase4j.core.listener.SessionListener;
 @RequestMapping(value = "/session")
 public class SysSessionController extends BaseController<SysSession, SysSessionService> {
     @Resource
-	private SessionListener sessionListener;
+    private SessionListener sessionListener;
 
-	// 查询会话
-	@ApiOperation(value = "查询会话")
-	@PutMapping(value = "/read/list")
-	@RequiresPermissions("sys.base.session.read")
-	public Object get(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		Integer number = sessionListener.getAllUserNumber();
-		modelMap.put("userNumber", number); // 用户数大于会话数,有用户没有登录
-		return super.query(modelMap, param);
-	}
+    // 查询会话
+    @ApiOperation(value = "查询会话")
+    @PutMapping(value = "/read/page")
+    @RequiresPermissions("sys.base.session.read")
+    public Object get(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        Integer number = sessionListener.getAllUserNumber();
+        modelMap.put("userNumber", number); // 用户数大于会话数,有用户没有登录
+        return super.query(modelMap, param);
+    }
 
-	@DeleteMapping
-	@ApiOperation(value = "删除会话")
-	@RequiresPermissions("sys.base.session.delete")
-	public Object delete(ModelMap modelMap, @RequestBody SysSession param) {
-		return super.delete(modelMap, param);
-	}
+    @Override
+    @DeleteMapping
+    @ApiOperation(value = "删除会话")
+    @RequiresPermissions("sys.base.session.delete")
+    public Object delete(ModelMap modelMap, @RequestBody SysSession param) {
+        return super.delete(modelMap, param);
+    }
 }

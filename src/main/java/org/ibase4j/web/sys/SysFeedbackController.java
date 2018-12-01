@@ -27,31 +27,34 @@ import top.ibase4j.core.base.BaseController;
 @Controller
 @RequestMapping("/feedback")
 public class SysFeedbackController extends BaseController<SysFeedback, SysFeedbackService> {
-	@ApiOperation(value = "查询反馈")
-	@RequiresPermissions("cms.feedback.read")
-	@PutMapping(value = "/read/list")
-	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		return super.query(modelMap, param);
-	}
+    @Override
+    @ApiOperation(value = "查询反馈")
+    @RequiresPermissions("cms.feedback.read")
+    @PutMapping(value = "/read/page")
+    public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        return super.query(modelMap, param);
+    }
 
-	@ApiOperation(value = "反馈详情")
-	@RequiresPermissions("cms.feedback.read")
-	@PutMapping(value = "/read/detail")
-	public Object get(ModelMap modelMap, @RequestBody SysFeedback param) {
-		return super.get(modelMap, param);
-	}
+    @ApiOperation(value = "反馈详情")
+    @RequiresPermissions("cms.feedback.read")
+    @PutMapping(value = "/read/detail")
+    public Object get(ModelMap modelMap, @RequestBody SysFeedback param) {
+        return super.get(modelMap, param);
+    }
 
-	@PostMapping
-	@ApiOperation(value = "修改反馈")
-	@RequiresPermissions("cms.feedback.update")
-	public Object update(ModelMap modelMap, @RequestBody SysFeedback param) {
-		return super.update(modelMap, param);
-	}
+    @Override
+    @PostMapping
+    @ApiOperation(value = "修改反馈")
+    @RequiresPermissions("cms.feedback.update")
+    public Object update(ModelMap modelMap, @RequestBody SysFeedback param) {
+        return super.update(modelMap, param);
+    }
 
-	@DeleteMapping
-	@ApiOperation(value = "删除反馈")
-	@RequiresPermissions("cms.feedback.delete")
-	public Object delete(ModelMap modelMap, @RequestBody SysFeedback param) {
-		return super.delete(modelMap, param);
-	}
+    @Override
+    @DeleteMapping
+    @ApiOperation(value = "删除反馈")
+    @RequiresPermissions("cms.feedback.delete")
+    public Object delete(ModelMap modelMap, @RequestBody SysFeedback param) {
+        return super.delete(modelMap, param);
+    }
 }
