@@ -34,7 +34,7 @@ $(function () {
     // 表格初始化
     var option = {
     	target: '.feedback-list',
-    	url: '/feedback/read/list',
+    	url: '/feedback/read/page',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '留言',

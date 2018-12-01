@@ -19,7 +19,7 @@ import top.ibase4j.core.base.BaseController;
 
 /**
  * 参数管理
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:15:19
  */
@@ -27,31 +27,34 @@ import top.ibase4j.core.base.BaseController;
 @Api(value = "系统参数管理", description = "系统参数管理")
 @RequestMapping(value = "param")
 public class SysParamController extends BaseController<SysParam, SysParamService> {
-	@PutMapping(value = "/read/list")
-	@ApiOperation(value = "查询系统参数")
-	@RequiresPermissions("sys.base.param.read")
-	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		return super.query(modelMap, param);
-	}
+    @Override
+    @PutMapping(value = "/read/page")
+    @ApiOperation(value = "查询系统参数")
+    @RequiresPermissions("sys.base.param.read")
+    public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        return super.query(modelMap, param);
+    }
 
-	@PutMapping(value = "/read/detail")
-	@ApiOperation(value = "系统参数详情")
-	@RequiresPermissions("sys.base.param.read")
-	public Object get(ModelMap modelMap, @RequestBody SysParam param) {
-		return super.get(modelMap, param);
-	}
+    @PutMapping(value = "/read/detail")
+    @ApiOperation(value = "系统参数详情")
+    @RequiresPermissions("sys.base.param.read")
+    public Object get(ModelMap modelMap, @RequestBody SysParam param) {
+        return super.get(modelMap, param);
+    }
 
-	@PostMapping
-	@ApiOperation(value = "修改系统参数")
-	@RequiresPermissions("sys.base.param.update")
-	public Object update(ModelMap modelMap, @RequestBody SysParam param) {
-		return super.update(modelMap, param);
-	}
+    @Override
+    @PostMapping
+    @ApiOperation(value = "修改系统参数")
+    @RequiresPermissions("sys.base.param.update")
+    public Object update(ModelMap modelMap, @RequestBody SysParam param) {
+        return super.update(modelMap, param);
+    }
 
-	@DeleteMapping
-	@ApiOperation(value = "删除系统参数")
-	@RequiresPermissions("sys.base.param.delete")
-	public Object delete(ModelMap modelMap, @RequestBody SysParam param) {
-		return super.delete(modelMap, param);
-	}
+    @Override
+    @DeleteMapping
+    @ApiOperation(value = "删除系统参数")
+    @RequiresPermissions("sys.base.param.delete")
+    public Object delete(ModelMap modelMap, @RequestBody SysParam param) {
+        return super.delete(modelMap, param);
+    }
 }

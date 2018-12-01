@@ -2,7 +2,7 @@ $(function () {
     //人员列表
 	var option = {
     	target: '.personnal-list',
-    	url: '/user/read/list',
+    	url: '/user/read/page',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '帐号/姓名/部门',

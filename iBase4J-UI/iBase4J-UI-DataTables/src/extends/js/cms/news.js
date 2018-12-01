@@ -41,7 +41,7 @@ $(function(){
     // 表格初始化
     var option = {
     	target: '.news-list',
-    	url: '/news/read/list',
+    	url: '/news/read/page',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<a href="newsEdit.html" class="btn bg-teal add-btn"> <i class="icon-plus2"></i>新增 </a>',

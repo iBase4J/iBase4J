@@ -2,7 +2,7 @@ $(function () {
     //人员列表
 	var option = {
     	target: '.personnal-list',
-    	url: '/user/read/list',
+    	url: '/user/read/page',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '帐号/姓名/部门',
@@ -42,7 +42,7 @@ $(function () {
     // 角色
     var roleOption = {
     	target: '.personnal-role',
-    	url: '/role/read/list',
+    	url: '/role/read/page',
     	params: {keyword: ''},
     	searchable : false,
         bPaginate: false, //翻页功能

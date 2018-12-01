@@ -19,7 +19,7 @@ import top.ibase4j.core.util.SecurityUtil;
 
 /**
  * 邮件配置管理控制类
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:13:31
  */
@@ -27,9 +27,10 @@ import top.ibase4j.core.util.SecurityUtil;
 @Api(value = "邮件配置管理", description = "邮件配置管理")
 @RequestMapping(value = "emailConfig")
 public class SysEmailConfigController extends BaseController<SysEmailConfig, SysEmailConfigService> {
+    @Override
     @ApiOperation(value = "查询邮件配置")
     @RequiresPermissions("sys.email.config.read")
-    @RequestMapping(value = "/read/list", method = RequestMethod.PUT)
+    @RequestMapping(value = "/read/page", method = RequestMethod.PUT)
     public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
         return super.query(modelMap, param);
     }
@@ -41,6 +42,7 @@ public class SysEmailConfigController extends BaseController<SysEmailConfig, Sys
         return super.get(modelMap, param);
     }
 
+    @Override
     @ApiOperation(value = "修改邮件配置")
     @RequiresPermissions("sys.email.config.update")
     @RequestMapping(method = RequestMethod.POST)
@@ -56,6 +58,7 @@ public class SysEmailConfigController extends BaseController<SysEmailConfig, Sys
         return super.update(modelMap, param);
     }
 
+    @Override
     @ApiOperation(value = "删除邮件配置")
     @RequiresPermissions("sys.email.config.delete")
     @RequestMapping(method = RequestMethod.DELETE)

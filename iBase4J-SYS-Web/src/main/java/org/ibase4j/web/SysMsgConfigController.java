@@ -27,9 +27,10 @@ import top.ibase4j.core.base.BaseController;
 @Controller
 @RequestMapping("/msgConfig")
 public class SysMsgConfigController extends BaseController<SysMsgConfig, SysMsgConfigService> {
+    @Override
     @ApiOperation(value = "查询")
     @RequiresPermissions("msg.config.read")
-    @PutMapping(value = "/read/list")
+    @PutMapping(value = "/read/page")
     public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
         return super.query(modelMap, param);
     }
@@ -41,6 +42,7 @@ public class SysMsgConfigController extends BaseController<SysMsgConfig, SysMsgC
         return super.get(modelMap, param);
     }
 
+    @Override
     @PostMapping
     @ApiOperation(value = "修改")
     @RequiresPermissions("msg.config.update")
@@ -48,6 +50,7 @@ public class SysMsgConfigController extends BaseController<SysMsgConfig, SysMsgC
         return super.update(modelMap, param);
     }
 
+    @Override
     @DeleteMapping
     @ApiOperation(value = "删除")
     @RequiresPermissions("msg.config.delete")

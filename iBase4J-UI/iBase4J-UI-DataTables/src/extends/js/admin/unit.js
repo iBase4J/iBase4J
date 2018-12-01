@@ -18,7 +18,7 @@ $(function () {
     // Basic initialization
     var option = {
     	target: '.unit-list',
-    	url: '/unit/read/list',
+    	url: '/unit/read/page',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<a href="unitEdit.html" class="btn bg-teal add-btn"> <i class="icon-plus2"></i>新增 </a>',

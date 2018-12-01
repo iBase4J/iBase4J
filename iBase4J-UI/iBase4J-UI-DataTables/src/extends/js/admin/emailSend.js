@@ -17,7 +17,7 @@ $(function(){
     // 表格初始化
     var option = {
     	target: '.emailConfig-list',
-    	url: '/emailConfig/read/list',
+    	url: '/emailConfig/read/page',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<button class="btn bg-teal add-btn" data-toggle="modal" data-target=".emailSendEdit"> <i class="icon-plus2"></i>新增 </button>',

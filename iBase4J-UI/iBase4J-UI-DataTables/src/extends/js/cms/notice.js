@@ -31,7 +31,7 @@ $(function () {
     // 表格初始化
     var option = {
     	target: '.notice-list',
-    	url: '/notice/read/list',
+    	url: '/notice/read/page',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<a href="noticeEdit.html" class="btn bg-teal add-btn"> <i class="icon-plus2"></i>新增 </a>',

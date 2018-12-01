@@ -2,7 +2,7 @@ $(function(){
     //角色列表
 	var option = {
     	target: '.role-list',
-    	url: '/role/read/list',
+    	url: '/role/read/page',
     	filterHolder: '角色名/部门',
     	params: {keyword: '', permission:1},
     	searchable : true,

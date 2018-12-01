@@ -13,7 +13,7 @@ $(function(){
     // 表格初始化
     var option = {
     	target: '.param-list',
-    	url: '/param/read/list',
+    	url: '/param/read/page',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<button class="btn bg-teal add-btn" data-toggle="modal" data-target=".paramEdit"> <i class="icon-plus2"></i>新增 </button>'

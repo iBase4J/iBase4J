@@ -17,7 +17,7 @@ import top.ibase4j.model.SysEvent;
 
 /**
  * 系统日志控制类
- * 
+ *
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:13:31
  */
@@ -25,10 +25,11 @@ import top.ibase4j.model.SysEvent;
 @Api(value = "系统日志", description = "系统日志")
 @RequestMapping(value = "event")
 public class SysEventController extends BaseController<SysEvent, SysEventService> {
-	@ApiOperation(value = "查询新闻")
-	@RequiresPermissions("sys.base.event.read")
-	@PutMapping(value = "/read/list")
-	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
-		return super.query(modelMap, param);
-	}
+    @Override
+    @ApiOperation(value = "查询系统日志")
+    @RequiresPermissions("sys.base.event.read")
+    @PutMapping(value = "/read/page")
+    public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+        return super.query(modelMap, param);
+    }
 }

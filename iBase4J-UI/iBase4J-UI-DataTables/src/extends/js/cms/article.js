@@ -31,7 +31,7 @@ $(function () {
     // 表格初始化
     var option = {
     	target: '.article-list',
-    	url: '/article/read/list',
+    	url: '/article/read/page',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<a href="articleEdit.html" class="btn bg-teal add-btn"> <i class="icon-plus2"></i>新增 </a>',
