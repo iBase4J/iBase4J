@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.AbstractController;
@@ -34,9 +32,7 @@ import top.ibase4j.core.exception.IllegalParameterException;
 @RestController
 @Api(value = "权限管理", description = "权限管理")
 public class SysAuthorizeController extends AbstractController {
-    @Reference
     private SysAuthorizeService authorizeService;
-    @Reference
     private SysCacheService sysCacheService;
 
     @ApiOperation(value = "获取用户菜单编号")

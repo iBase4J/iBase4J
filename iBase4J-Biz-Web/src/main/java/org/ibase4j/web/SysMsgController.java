@@ -1,6 +1,5 @@
 package org.ibase4j.web;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ibase4j.model.SendMsg;
@@ -29,7 +28,6 @@ import top.ibase4j.core.util.WebUtil;
 @RequestMapping("/app/")
 @Api(value = "APP短信接口", description = "APP-短信接口")
 public class SysMsgController extends AbstractController {
-    @Resource
     private SendMsgService sendMsgService;
 
     @PostMapping("msg.api")

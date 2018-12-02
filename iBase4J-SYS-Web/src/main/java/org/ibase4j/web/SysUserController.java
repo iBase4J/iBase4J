@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
@@ -42,7 +40,6 @@ import top.ibase4j.core.util.UploadUtil;
 @Api(value = "用户管理", description = "用户管理")
 @RequestMapping(value = "/user")
 public class SysUserController extends BaseController<SysUser, SysUserService> {
-    @Reference
     private SysAuthorizeService sysAuthorizeService;
 
     @Override

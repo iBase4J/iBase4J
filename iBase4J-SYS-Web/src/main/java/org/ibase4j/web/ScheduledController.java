@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.AbstractController;
@@ -35,7 +33,6 @@ import top.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
 @Api(value = "调度管理", description = "调度管理")
 @RequestMapping(value = "/scheduled")
 public class ScheduledController extends AbstractController {
-    @Reference
     private SchedulerService schedulerService;
 
     @PostMapping
