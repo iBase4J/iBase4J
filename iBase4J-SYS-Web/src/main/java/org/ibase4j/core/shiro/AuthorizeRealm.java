@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +26,8 @@ import org.ibase4j.service.SysSessionService;
 import org.ibase4j.service.SysUserService;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+
 import top.ibase4j.core.support.http.SessionUser;
 import top.ibase4j.core.support.shiro.Realm;
 import top.ibase4j.core.support.shiro.RedisSessionDAO;
@@ -42,11 +42,11 @@ import top.ibase4j.core.util.SecurityUtil;
 @Component
 public class AuthorizeRealm extends AuthorizingRealm implements Realm {
     private final Logger logger = LogManager.getLogger();
-    @Resource
+    @Reference
     private SysAuthorizeService sysAuthorizeService;
-    @Resource
+    @Reference
     private SysUserService sysUserService;
-    @Resource
+    @Reference
     private SysSessionService sysSessionService;
 
     private RedisSessionDAO sessionDAO;

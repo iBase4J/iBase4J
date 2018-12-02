@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.ibase4j.mapper.SysEventMapper;
 import org.ibase4j.model.SysUser;
-import org.ibase4j.service.SysEventService;
 import org.ibase4j.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -15,6 +14,7 @@ import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.support.Pagination;
 import top.ibase4j.model.SysEvent;
+import top.ibase4j.service.SysEventService;
 
 @CacheConfig(cacheNames = "sysEvent")
 @Service(interfaceClass = SysEventService.class)

@@ -27,11 +27,6 @@ import top.ibase4j.core.util.UploadUtil;
 @Api(value = "文件上传接口", description = "文件上传接口")
 @RequestMapping(value = "/upload", method = RequestMethod.POST)
 public class UploadController extends AbstractController {
-
-    public String getService() {
-        return null;
-    }
-
     // 上传文件(支持批量)
     @RequestMapping("/temp/file")
     @ApiOperation(value = "上传文件")

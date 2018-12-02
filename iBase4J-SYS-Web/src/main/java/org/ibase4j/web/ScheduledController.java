@@ -6,8 +6,6 @@ package org.ibase4j.web;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.service.SchedulerService;
 import org.springframework.ui.ModelMap;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.dubbo.config.annotation.Reference;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,7 +35,7 @@ import top.ibase4j.core.support.scheduler.TaskScheduled.TaskType;
 @Api(value = "调度管理", description = "调度管理")
 @RequestMapping(value = "/scheduled")
 public class ScheduledController extends AbstractController {
-    @Resource
+    @Reference
     private SchedulerService schedulerService;
 
     @PostMapping

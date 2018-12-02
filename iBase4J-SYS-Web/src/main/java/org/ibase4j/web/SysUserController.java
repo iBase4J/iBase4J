@@ -6,7 +6,6 @@ package org.ibase4j.web;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authz.UnauthorizedException;
@@ -22,6 +21,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.dubbo.config.annotation.Reference;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,7 +42,7 @@ import top.ibase4j.core.util.UploadUtil;
 @Api(value = "用户管理", description = "用户管理")
 @RequestMapping(value = "/user")
 public class SysUserController extends BaseController<SysUser, SysUserService> {
-    @Resource
+    @Reference
     private SysAuthorizeService sysAuthorizeService;
 
     @Override
@@ -61,7 +62,7 @@ public class SysUserController extends BaseController<SysUser, SysUserService> {
     @Override
     @ApiOperation(value = "查询用户")
     @RequiresPermissions("sys.base.user.read")
-    @PutMapping(value = "/read/list")
+    @PutMapping(value = "/read/page")
     public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
         return super.query(modelMap, param);
     }
