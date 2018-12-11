@@ -21,5 +21,5 @@ spring:
     http:
         #上传文件大小设置
         multipart:
-            maxFileSize: 10Mb
-            maxRequestSize: 50Mb
+            maxFileSize: 10MB
+            maxRequestSize: 50MB
