@@ -20,7 +20,7 @@
 		<module.name>${project.artifactId}</module.name>
 		<!-- -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ibase4j.version>3.6.1</ibase4j.version>
+		<ibase4j.version>3.6.3</ibase4j.version>
 		<!-- spring版本号 -->
 		<spring.version>5.1.3.RELEASE</spring.version>
 		<spring-data-redis.version>2.0.8.RELEASE</spring-data-redis.version>
@@ -83,12 +83,15 @@
 
 	<repositories>
 		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/libs-milestone</url>
+			<id>aliyun-snapshots</id>
+			<url>https://maven.aliyun.com/repository/public</url>
 			<snapshots>
-				<enabled>false</enabled>
+				<enabled>true</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>aliyun-milestones</id>
+			<url>https://maven.aliyun.com/repository/public</url>
 		</repository>
 	</repositories>
 
