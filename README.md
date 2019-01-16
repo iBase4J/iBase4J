@@ -1,6 +1,8 @@
 [![License](http://img.shields.io/:license-apache-blue.svg "2.0")](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![JDK 1.8](https://img.shields.io/badge/JDK-1.8-green.svg "JDK 1.8")]()
 
+[iBase4J-common源码][]
+
 ## iBase4J项目简介
 
 - iBase4J是Java语言的分布式系统架构。 使用Spring整合开源框架。
@@ -73,5 +75,6 @@ iBase4J is released under version 2.0 of the [Apache License][].
 
 ![捐赠](http://git.oschina.net/iBase4J/iBase4J/raw/master/img/contribute.png "捐赠")
 
+[iBase4J-common源码]: https://gitee.com/iBase4J/iBase4J-Common
 [Apache License 2.0]: http://www.apache.org/licenses/LICENSE-2.0
 [Apache License]: http://www.apache.org/licenses/LICENSE-2.0
