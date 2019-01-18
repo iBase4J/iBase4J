@@ -10,7 +10,7 @@ import top.ibase4j.core.interceptor.EventInterceptor;
 import top.ibase4j.core.interceptor.TokenInterceptor;
 
 @Configuration
-@ComponentScan({"org.iteachs.web"})
+@ComponentScan({"org.ibase4j.web"})
 public class WebConfig extends WebMvcConfig {
     @Override
     @Bean

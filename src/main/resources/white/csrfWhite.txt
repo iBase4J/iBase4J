@@ -1,5 +1,5 @@
 login.html
 index.html
-main/html/
+/main/
 swagger-ui.html
 springfox-swagger-ui
