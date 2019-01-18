@@ -13,7 +13,7 @@ $(function () {
     // 表格初始化
     var option = {
     	target: '.msg-list',
-    	url: '/msg/read/page',
+    	url: '/msg/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '手机号/短信内容',

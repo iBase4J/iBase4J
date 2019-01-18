@@ -1,10 +1,8 @@
 $(function(){
 	$.ajax({
-    	type: 'PUT',
-        dataType: 'json',
-		contentType:'application/json;charset=UTF-8',
+    	type: 'GET',
  		url : '/dic/read/list',
- 		data: JSON.stringify({type: 'NEWSTYPE'}),
+ 		data: {type: 'NEWSTYPE'},
  		success : function(result) {
  			if (result.code == 200) {
  				//将获取的数据添加到select选项中
@@ -71,11 +69,9 @@ $(function(){
         if(id) {
         	$('.OPT').text('编辑');
 	        $.ajax({
-	        	type: 'PUT',
+	        	type: 'GET',
 	        	url: '/news/read/detail',
-	        	data: JSON.stringify({id: id}),
-	    		dataType: 'json',
-	    	    contentType:'application/json;charset=UTF-8',
+	        	data: {id: id},
 	    		success : function(result) {
 	    			if (result.code == 200) {
 	    				$('#newsEdit').autofill(result.data);

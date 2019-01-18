@@ -2,7 +2,7 @@ $(function () {
     //人员列表
 	var option = {
     	target: '.personnal-list',
-    	url: '/user/read/page',
+    	url: '/user/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '帐号/姓名/部门',
@@ -101,11 +101,9 @@ $(function () {
         	var userId = $(this).attr('data-tt-id');
         	$('#personalMenu').text('人员[' + $(this).attr('data-tt-name') + ']的菜单权限');
         	$.ajax({
-        		type: 'PUT',
+        		type: 'GET',
         		url: '/user/read/menu',
-    			data : JSON.stringify({userId : userId}),
-    			dataType: 'json',
-    		    contentType:'application/json;charset=UTF-8',
+    			data : {userId : userId},
     			success : function(result) {
     				if (result.code == 200) {
     					for(var i=0; i<result.rows.length;i++) {
@@ -130,9 +128,7 @@ $(function () {
         	$.ajax({
         		type: 'POST',
         		url: '/user/update/menu',
-    			data : JSON.stringify(data),
-    			dataType: 'json',
-    		    contentType:'application/json;charset=UTF-8',
+    			data : data,
     			success : function(result) {
     				if (result.code == 200) {
     					notice('保存成功.');

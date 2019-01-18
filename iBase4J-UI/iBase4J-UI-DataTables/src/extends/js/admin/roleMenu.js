@@ -2,7 +2,7 @@ $(function(){
     //角色列表
 	var option = {
     	target: '.role-list',
-    	url: '/role/read/page',
+    	url: '/role/read/list',
     	filterHolder: '角色名/部门',
     	params: {keyword: '', permission:1},
     	searchable : true,
@@ -103,11 +103,9 @@ $(function(){
         	var roleId = $(this).attr('data-tt-id');
         	$('#roleMenu').text('角色[' + $(this).attr('data-tt-name') + ']的菜单权限');
         	$.ajax({
-        		type: 'PUT',
+        		type: 'GET',
         		url: '/role/read/menu',
-    			data : JSON.stringify({roleId : roleId}),
-    			dataType: 'json',
-    		    contentType:'application/json;charset=UTF-8',
+    			data : {roleId : roleId},
     			success : function(result) {
     				if (result.httpCode == 200) {
     					for(var i=0; i<result.data.length;i++) {
@@ -146,9 +144,7 @@ $(function(){
         	$.ajax({
         		type: 'POST',
         		url: '/role/update/menu',
-    			data : JSON.stringify(data),
-    			dataType: 'json',
-    		    contentType:'application/json;charset=UTF-8',
+    			data : data,
     			success : function(result) {
     				if (result.httpCode == 200) {
     					notice('保存成功.');
@@ -167,7 +163,7 @@ $(function(){
     	$.ajax({
     		type: 'POST',
     		url: '/cache/update',
-    		data: JSON.stringify({key: 'Permission'}),
+    		data: {key: 'Permission'},
 			success : function(result) {
 				if (result.httpCode == 200) {
 					notice('同步成功.');

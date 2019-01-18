@@ -15,7 +15,7 @@ $(function(){
     	parentEle: 'department',
 		url: '/dept/read/list',
     	checkParent: true,
-		data: JSON.stringify({keyword:''}),
+		data: {keyword:''},
 		resetData: function(data) {
 		   for(var i=0;i<data.length;i++) {
 			   data[i]['open'] = true;

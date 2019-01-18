@@ -10,11 +10,9 @@ angular.module('app')
 		$scope.search = function () {
 	        $scope.loading = true;
 			$.ajax({
-				type: 'PUT',
-	            dataType: 'json',
-				contentType:'application/json;charset=UTF-8',
+				type: 'get',
 				url : '/dic/read/page',
-				data: angular.toJson($scope.param)
+				data: $scope.param
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.code == 200) {

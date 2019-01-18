@@ -2,7 +2,7 @@ $(function () {
 	//角色列表
 	var option = {
     	target: '.role-list',
-    	url: '/role/read/page',
+    	url: '/role/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '角色名/部门',
@@ -57,11 +57,9 @@ $(function () {
     function getPermissionMenu(roleId, permission) {
     	menuTree.checkAllNodes(false);
     	$.ajax({
-	    	type: 'PUT',
+	    	type: 'GET',
 			url: '/role/read/permission',
-			data : JSON.stringify({roleId : roleId, permission: permission}),
-			dataType: 'json',
-		    contentType:'application/json;charset=UTF-8',
+			data : {roleId : roleId, permission: permission},
 			success : function(result) {
 				if (result.code == 200) {
 					 var nodes = menuTree.getCheckedNodes(false);
@@ -101,9 +99,9 @@ $(function () {
     
     var menuTree;
     $.ajax({
-	   type: 'PUT',
+	   type: 'GET',
 	   url: '/menu/read/tree',
-	   data: JSON.stringify({keyword: ''}),
+	   data: {keyword: ''},
 	   success: function(result) {
 		   if(result.code == 200) {
 			   var data = result.rows;
@@ -136,9 +134,7 @@ $(function () {
         	$.ajax({
         		type: 'POST',
         		url: '/role/update/permission',
-    			data : JSON.stringify(data),
-    			dataType: 'json',
-    		    contentType:'application/json;charset=UTF-8',
+    			data : data,
     			success : function(result) {
     				if (result.code == 200) {
     					notice('保存成功.');

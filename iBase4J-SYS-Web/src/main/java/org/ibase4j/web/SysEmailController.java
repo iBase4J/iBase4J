@@ -7,9 +7,8 @@ import org.ibase4j.model.SysEmail;
 import org.ibase4j.service.SysEmailService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,15 +29,15 @@ public class SysEmailController extends BaseController<SysEmail, SysEmailService
     @Override
     @ApiOperation(value = "查询邮件")
     @RequiresPermissions("sys.email.list.read")
-    @PutMapping(value = "/read/page")
-    public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+    @GetMapping(value = "/read/page")
+    public Object query(ModelMap modelMap,  Map<String, Object> param) {
         return super.query(modelMap, param);
     }
 
     @ApiOperation(value = "邮件详情")
     @RequiresPermissions("sys.email.list.read")
-    @PutMapping(value = "/read/detail")
-    public Object get(ModelMap modelMap, @RequestBody SysEmail param) {
+    @GetMapping(value = "/read/detail")
+    public Object get(ModelMap modelMap,  SysEmail param) {
         return super.get(modelMap, param);
     }
 
@@ -46,7 +45,7 @@ public class SysEmailController extends BaseController<SysEmail, SysEmailService
     @PostMapping
     @ApiOperation(value = "修改邮件")
     @RequiresPermissions("sys.email.list.update")
-    public Object update(ModelMap modelMap, @RequestBody SysEmail param) {
+    public Object update(ModelMap modelMap,  SysEmail param) {
         return super.update(modelMap, param);
     }
 
@@ -54,7 +53,7 @@ public class SysEmailController extends BaseController<SysEmail, SysEmailService
     @DeleteMapping
     @ApiOperation(value = "删除邮件")
     @RequiresPermissions("sys.email.list.delete")
-    public Object delete(ModelMap modelMap, @RequestBody SysEmail param) {
+    public Object delete(ModelMap modelMap,  SysEmail param) {
         return super.delete(modelMap, param);
     }
 }

@@ -5,11 +5,9 @@ $(function () {
     });
     // 通知人员
     $.ajax({
- 	   type: 'PUT',
+ 	   type: 'GET',
  		url: '/user/read/list',
- 	   dataType: 'json',
- 	   data: JSON.stringify({keyword:''}),
- 	   contentType: 'application/json;charset=UTF-8',
+ 	   data: {keyword:''},
  	   success: function(result) {
  		   if(result.code == 200) {
  			   var data = result.rows;
@@ -188,15 +186,13 @@ $(function () {
     
     function operate(confirmMsg, url, type, noticeMsg) {
     	var data = JSON.parse($('tr.selected').attr('data-task'));
-		var params = JSON.stringify({taskGroup : data.taskGroup, taskName: data.taskName });
+		var params = {taskGroup : data.taskGroup, taskName: data.taskName };
     	bootbox.confirm(confirmMsg, function(result) {
 	        if (result) {
 	        	$.ajax({
 	    			type : type,
 	    			url : url,
 	    			data : params,
-	    			dataType: 'json',
-	    		    contentType:'application/json;charset=UTF-8',
 	    			success : function(result) {
 	    				if (result.code == 200) {
 	    					notice(noticeMsg);

@@ -98,7 +98,6 @@ angular.module('app')
                     userId:params[1],
                     param:value
                 },
-        		dataType:'json',
         		success:function(resData){
         			isTrue = resData.success;
         		}

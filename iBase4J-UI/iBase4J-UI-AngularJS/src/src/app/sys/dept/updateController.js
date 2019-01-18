@@ -32,10 +32,8 @@
                 $scope.isDisabled = true;//提交disabled
                 $.ajax({
                 	type: 'POST',
-    	            dataType: 'json',
-    				contentType:'application/json;charset=UTF-8',
     				url : '/dept',
-    				data: angular.toJson($scope.record)
+    				data: $scope.record
     			}).then(callback);
             }
             function callback(result) {
@@ -73,11 +71,9 @@
         function activate(id) {
 	        $scope.loading = true;
         	$.ajax({
-        		type: 'PUT',
-	            dataType: 'json',
-				contentType:'application/json;charset=UTF-8',
+        		type: 'get',
 				url : '/dept/read/detail',
-				data: angular.toJson({'id': id})
+				data: {'id': id}
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.code == 200) {

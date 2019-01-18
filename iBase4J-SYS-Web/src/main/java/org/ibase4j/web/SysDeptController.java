@@ -7,9 +7,8 @@ import org.ibase4j.model.SysDept;
 import org.ibase4j.service.SysDeptService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,36 +29,36 @@ public class SysDeptController extends BaseController<SysDept, SysDeptService> {
 
 	@ApiOperation(value = "查询部门")
 	@RequiresPermissions("sys.base.dept.read")
-	@PutMapping(value = "/read/list")
-	public Object list(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+	@GetMapping(value = "/read/list")
+	public Object list(ModelMap modelMap,  Map<String, Object> param) {
 		return super.queryList(modelMap, param);
 	}
 
 	@ApiOperation(value = "查询部门")
 	@RequiresPermissions("sys.base.dept.read")
-	@PutMapping(value = "/read/page")
-	public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+	@GetMapping(value = "/read/page")
+	public Object query(ModelMap modelMap,  Map<String, Object> param) {
 		return super.query(modelMap, param);
 	}
 
 	@ApiOperation(value = "部门详情")
 	@RequiresPermissions("sys.base.dept.read")
-	@PutMapping(value = "/read/detail")
-	public Object get(ModelMap modelMap, @RequestBody SysDept param) {
+	@GetMapping(value = "/read/detail")
+	public Object get(ModelMap modelMap,  SysDept param) {
 		return super.get(modelMap, param);
 	}
 
 	@PostMapping
 	@ApiOperation(value = "修改部门")
 	@RequiresPermissions("sys.base.dept.update")
-	public Object update(ModelMap modelMap, @RequestBody SysDept param) {
+	public Object update(ModelMap modelMap,  SysDept param) {
 		return super.update(modelMap, param);
 	}
 
 	@DeleteMapping
 	@ApiOperation(value = "删除部门")
 	@RequiresPermissions("sys.base.dept.delete")
-	public Object delete(ModelMap modelMap, @RequestBody SysDept param) {
+	public Object delete(ModelMap modelMap,  SysDept param) {
 		return super.delete(modelMap, param);
 	}
 }

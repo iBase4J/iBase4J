@@ -136,9 +136,9 @@ $(function () {
            },
            fnServerData : function(sSource, aoData, fnCallback, oSettings ) {
                $.ajax({
-                   type : 'PUT',
+                   type : 'GET',
                    url : sSource,
-                   data : JSON.stringify(aoData[aoData.length-1].value),
+                   data : aoData[aoData.length-1].value,
                    success : function(resp) {
                 	   if(resp.code == 200) {
                 		   resp.data || (resp.data = resp.rows);
@@ -211,8 +211,8 @@ $(function () {
    	window.loadData = function(url, params, callback) {
 	   $.ajax({
 			url: url,
-			type : "PUT",
-			data : params ? JSON.stringify(params) : '',
+			type : "GET",
+			data : params ? params : '',
 			success : function(result) {
 				if (result.code == 200) {
 					callback && callback(result.rows || result.data);
@@ -237,7 +237,7 @@ $(function () {
 	        	$.ajax({
 	    			type : "DELETE",
 	    			url : url,
-	    			data : JSON.stringify({id : id}),
+	    			data : {id : id},
 	    			success : function(result) {
 	    				if (result.code == 200) {
 	    					notice('删除成功.');
@@ -264,10 +264,12 @@ $(function () {
 		   if(opt.pre) {
 			   opt.pre();
 		   }
+		   var params = $(opt.form).serializeObject();
+           params.password && (params.password = hex_md5(params.password));
 		   $.ajax({
 	   			url : opt.url,
 	   			type: 'POST',
-	   			data: JSON.stringify($(opt.form).serializeObject())
+	   			data: params
 	   		}).then(function(result) {
 	 	   		if (result.code == 200) {
 					notice('保存成功.');
@@ -350,7 +352,7 @@ $(function () {
        
        if(option.url) {
            $.ajax({
-     		   type: 'PUT',
+     		   type: 'GET',
      		   url: option.url,
      		   data: option.data,
      		   success: function(result) {
@@ -425,11 +427,9 @@ $(function () {
    
    $(document).on('initSelectOption', function(e, opt) {
 		$.ajax({
-	    	type: 'PUT',
-	        dataType: 'json',
-			contentType:'application/json;charset=UTF-8',
+	    	type: 'GET',
 	 		url : '/dic/read/list',
-	 		data: JSON.stringify(opt.param),
+	 		data: opt.param,
 	 		success : function(result) {
 	 			if (result.code == 200) {
  					$.each(opt.target.split(','), function(n, v) {
@@ -453,17 +453,20 @@ $(function () {
 	 		}
 	    });
    });
+
+   try{
+	   //富文本编辑器
+	   $('.summernote').summernote({
+	       height: 300,
+	       lang: 'zh-CN',
+	       callbacks: {
+	           onImageUpload: function(files, editor, $editable) {
+	               sendFile(files, editor, $editable);
+	           }
+	       }
+	   });
+   }catch(e){}
    
-   //富文本编辑器
-   $('.summernote').summernote({
-       height: 300,
-       lang: 'zh-CN',
-       callbacks: {
-           onImageUpload: function(files, editor, $editable) {
-               sendFile(files, editor, $editable);
-           }
-       }
-   });
    // 上传图片
    window.sendFile = function(files, editor, $editable) {
 	   var data = new FormData();
@@ -475,7 +478,6 @@ $(function () {
            cache : false,
            contentType : false,
            processData : false,
-           dataType : "json",
            success: function(data) {//data是返回的hash,key之类的值，key是定义的文件名
                $('.summernote').summernote('insertImage', data.fileNames[0]);
                $('.loading').hide();

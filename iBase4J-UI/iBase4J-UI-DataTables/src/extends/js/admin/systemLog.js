@@ -13,7 +13,7 @@ $(function () {
     // 操作日志初始化
     var option = {
     	target: '.operation-log',
-    	url: '/event/read/page',
+    	url: '/event/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '操作人',

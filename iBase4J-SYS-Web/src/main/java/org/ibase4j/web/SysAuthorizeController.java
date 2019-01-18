@@ -11,9 +11,8 @@ import org.ibase4j.model.SysUserRole;
 import org.ibase4j.service.SysAuthorizeService;
 import org.ibase4j.service.SysCacheService;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,9 +35,9 @@ public class SysAuthorizeController extends AbstractController {
     private SysCacheService sysCacheService;
 
     @ApiOperation(value = "获取用户菜单编号")
-    @PutMapping(value = "user/read/menu")
+    @GetMapping(value = "user/read/menu")
     @RequiresPermissions("sys.permisson.userMenu.read")
-    public Object getUserMenu(ModelMap modelMap, @RequestBody SysUserMenu param) {
+    public Object getUserMenu(ModelMap modelMap,  SysUserMenu param) {
         List<?> menus = authorizeService.queryMenuIdsByUserId(param.getUserId());
         return setSuccessModelMap(modelMap, menus);
     }
@@ -46,7 +45,7 @@ public class SysAuthorizeController extends AbstractController {
     @ApiOperation(value = "修改用户菜单")
     @PostMapping(value = "/user/update/menu")
     @RequiresPermissions("sys.permisson.userMenu.update")
-    public Object userMenu(ModelMap modelMap, @RequestBody List<SysUserMenu> list) {
+    public Object userMenu(ModelMap modelMap,  List<SysUserMenu> list) {
         Long userId = null;
         Long currentUserId = getCurrUser().getId();
         for (SysUserMenu sysUserMenu : list) {
@@ -67,9 +66,9 @@ public class SysAuthorizeController extends AbstractController {
     }
 
     @ApiOperation(value = "获取用户角色")
-    @PutMapping(value = "user/read/role")
+    @GetMapping(value = "user/read/role")
     @RequiresPermissions("sys.permisson.userRole.read")
-    public Object getUserRole(ModelMap modelMap, @RequestBody SysUserRole param) {
+    public Object getUserRole(ModelMap modelMap,  SysUserRole param) {
         List<?> menus = authorizeService.getRolesByUserId(param.getUserId());
         return setSuccessModelMap(modelMap, menus);
     }
@@ -77,7 +76,7 @@ public class SysAuthorizeController extends AbstractController {
     @ApiOperation(value = "修改用户角色")
     @PostMapping(value = "/user/update/role")
     @RequiresPermissions("sys.permisson.userRole.update")
-    public Object userRole(ModelMap modelMap, @RequestBody List<SysUserRole> list) {
+    public Object userRole(ModelMap modelMap,  List<SysUserRole> list) {
         Long userId = null;
         Long currentUserId = getCurrUser().getId();
         for (SysUserRole sysUserRole : list) {
@@ -98,9 +97,9 @@ public class SysAuthorizeController extends AbstractController {
     }
 
     @ApiOperation(value = "获取角色菜单编号")
-    @PutMapping(value = "role/read/menu")
+    @GetMapping(value = "role/read/menu")
     @RequiresPermissions("sys.permisson.roleMenu.read")
-    public Object getRoleMenu(ModelMap modelMap, @RequestBody SysRoleMenu param) {
+    public Object getRoleMenu(ModelMap modelMap,  SysRoleMenu param) {
         List<?> menus = authorizeService.queryMenuIdsByRoleId(param.getRoleId());
         return setSuccessModelMap(modelMap, menus);
     }
@@ -108,7 +107,7 @@ public class SysAuthorizeController extends AbstractController {
     @ApiOperation(value = "修改角色菜单")
     @PostMapping(value = "/role/update/menu")
     @RequiresPermissions("sys.permisson.roleMenu.update")
-    public Object roleMenu(ModelMap modelMap, @RequestBody List<SysRoleMenu> list) {
+    public Object roleMenu(ModelMap modelMap,  List<SysRoleMenu> list) {
         Long roleId = null;
         Long userId = getCurrUser().getId();
         for (SysRoleMenu sysRoleMenu : list) {
@@ -129,9 +128,9 @@ public class SysAuthorizeController extends AbstractController {
     }
 
     @ApiOperation(value = "获取人员操作权限")
-    @PutMapping(value = "user/read/permission")
+    @GetMapping(value = "user/read/permission")
     @RequiresPermissions("sys.permisson.user.read")
-    public Object queryUserPermissions(ModelMap modelMap, @RequestBody SysUserMenu record) {
+    public Object queryUserPermissions(ModelMap modelMap,  SysUserMenu record) {
         List<?> menuIds = authorizeService.queryUserPermissions(record);
         return setSuccessModelMap(modelMap, menuIds);
     }
@@ -139,7 +138,7 @@ public class SysAuthorizeController extends AbstractController {
     @ApiOperation(value = "修改用户操作权限")
     @PostMapping(value = "/user/update/permission")
     @RequiresPermissions("sys.permisson.user.update")
-    public Object updateUserPermission(ModelMap modelMap, @RequestBody List<SysUserMenu> list) {
+    public Object updateUserPermission(ModelMap modelMap,  List<SysUserMenu> list) {
         Long userId = null;
         Long currentUserId = getCurrUser().getId();
         for (SysUserMenu sysUserMenu : list) {
@@ -160,9 +159,9 @@ public class SysAuthorizeController extends AbstractController {
     }
 
     @ApiOperation(value = "获取角色操作权限")
-    @PutMapping(value = "role/read/permission")
+    @GetMapping(value = "role/read/permission")
     @RequiresPermissions("sys.permisson.role.read")
-    public Object queryRolePermissions(ModelMap modelMap, @RequestBody SysRoleMenu record) {
+    public Object queryRolePermissions(ModelMap modelMap,  SysRoleMenu record) {
         List<?> menuIds = authorizeService.queryRolePermissions(record);
         return setSuccessModelMap(modelMap, menuIds);
     }
@@ -170,7 +169,7 @@ public class SysAuthorizeController extends AbstractController {
     @ApiOperation(value = "修改角色操作权限")
     @PostMapping(value = "/role/update/permission")
     @RequiresPermissions("sys.permisson.role.update")
-    public Object updateRolePermission(ModelMap modelMap, @RequestBody List<SysRoleMenu> list) {
+    public Object updateRolePermission(ModelMap modelMap,  List<SysRoleMenu> list) {
         Long roleId = null;
         Long userId = getCurrUser().getId();
         for (SysRoleMenu sysRoleMenu : list) {
@@ -193,7 +192,7 @@ public class SysAuthorizeController extends AbstractController {
     @ApiOperation(value = "清理缓存")
     @RequiresPermissions("sys.cache.update")
     @RequestMapping(value = "/cache/update", method = RequestMethod.POST)
-    public Object flush(ModelMap modelMap, @RequestBody Map<String, String> param) {
+    public Object flush(ModelMap modelMap,  Map<String, String> param) {
         sysCacheService.flush(param);
         return setSuccessModelMap(modelMap);
     }

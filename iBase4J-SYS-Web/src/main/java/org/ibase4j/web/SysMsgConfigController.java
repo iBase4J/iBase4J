@@ -5,13 +5,12 @@ import java.util.Map;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysMsgConfig;
 import org.ibase4j.service.SysMsgConfigService;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
@@ -24,21 +23,21 @@ import top.ibase4j.core.base.BaseController;
  * @author ShenHuaJie
  * @since 2017-03-12
  */
-@Controller
+@RestController
 @RequestMapping("/msgConfig")
 public class SysMsgConfigController extends BaseController<SysMsgConfig, SysMsgConfigService> {
     @Override
     @ApiOperation(value = "查询")
     @RequiresPermissions("msg.config.read")
-    @PutMapping(value = "/read/page")
-    public Object query(ModelMap modelMap, @RequestBody Map<String, Object> param) {
+    @GetMapping(value = "/read/page")
+    public Object query(ModelMap modelMap,  Map<String, Object> param) {
         return super.query(modelMap, param);
     }
 
     @ApiOperation(value = "详情")
     @RequiresPermissions("msg.config.read")
-    @PutMapping(value = "/read/detail")
-    public Object get(ModelMap modelMap, @RequestBody SysMsgConfig param) {
+    @GetMapping(value = "/read/detail")
+    public Object get(ModelMap modelMap,  SysMsgConfig param) {
         return super.get(modelMap, param);
     }
 
@@ -46,7 +45,7 @@ public class SysMsgConfigController extends BaseController<SysMsgConfig, SysMsgC
     @PostMapping
     @ApiOperation(value = "修改")
     @RequiresPermissions("msg.config.update")
-    public Object update(ModelMap modelMap, @RequestBody SysMsgConfig param) {
+    public Object update(ModelMap modelMap,  SysMsgConfig param) {
         return super.update(modelMap, param);
     }
 
@@ -54,7 +53,7 @@ public class SysMsgConfigController extends BaseController<SysMsgConfig, SysMsgC
     @DeleteMapping
     @ApiOperation(value = "删除")
     @RequiresPermissions("msg.config.delete")
-    public Object delete(ModelMap modelMap, @RequestBody SysMsgConfig param) {
+    public Object delete(ModelMap modelMap,  SysMsgConfig param) {
         return super.delete(modelMap, param);
     }
 }

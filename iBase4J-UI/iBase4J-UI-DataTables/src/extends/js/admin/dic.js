@@ -86,7 +86,7 @@ $(function(){
     	$.ajax({
     		type: 'POST',
     		url: '/cache/update',
-    		data: JSON.stringify({key: 'sysDic'}),
+    		data: {key: 'sysDic'},
 			success : function(result) {
 				if (result.code == 200) {
 					notice('同步成功.');
@@ -102,11 +102,9 @@ $(function(){
 function update(id) {
 	$('.modal-title').text('编辑字典');
     $.ajax({
-    	type: 'PUT',
+    	type: 'GET',
     	url: '/dic/read/detail',
-    	data: JSON.stringify({id: id}),
-		dataType: 'json',
-	    contentType:'application/json;charset=UTF-8',
+    	data: {id: id},
 		success : function(result) {
 			if (result.code == 200) {
 				$('#dicEdit').autofill(result.data);

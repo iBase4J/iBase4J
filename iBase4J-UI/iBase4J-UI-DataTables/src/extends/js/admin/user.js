@@ -15,7 +15,7 @@ $(function () {
     // Basic initialization
     var option = {
     	target: '.user-list',
-    	url: '/user/read/page',
+    	url: '/user/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<a href="userEdit.html" class="btn bg-teal add-btn"> <i class="icon-plus2"></i>新增 </a>',

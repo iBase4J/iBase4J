@@ -13,11 +13,9 @@ $(function () {
 
     var articleTypes;
     $.ajax({
-    	type: 'PUT',
-        dataType: 'json',
-		contentType:'application/json;charset=UTF-8',
+    	type: 'GET',
  		url : '/dic/read/list',
- 		data: JSON.stringify({type: 'ARTICLETYPE'}),
+ 		data: {type: 'ARTICLETYPE'},
  		success : function(result) {
  			if (result.code == 200) {
  				articleTypes = result.data;
@@ -31,7 +29,7 @@ $(function () {
     // 表格初始化
     var option = {
     	target: '.article-list',
-    	url: '/article/read/page',
+    	url: '/article/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<a href="articleEdit.html" class="btn bg-teal add-btn"> <i class="icon-plus2"></i>新增 </a>',

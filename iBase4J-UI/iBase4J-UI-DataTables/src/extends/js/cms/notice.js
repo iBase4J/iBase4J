@@ -13,11 +13,9 @@ $(function () {
 
     var noticeTypes;
     $.ajax({
-    	type: 'PUT',
-        dataType: 'json',
-		contentType:'application/json;charset=UTF-8',
+    	type: 'GET',
  		url : '/dic/read/list',
- 		data: JSON.stringify({type: 'NOTICETYPE'}),
+ 		data: {type: 'NOTICETYPE'},
  		success : function(result) {
  			if (result.code == 200) {
  				noticeTypes = result.data;
@@ -31,7 +29,7 @@ $(function () {
     // 表格初始化
     var option = {
     	target: '.notice-list',
-    	url: '/notice/read/page',
+    	url: '/notice/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<a href="noticeEdit.html" class="btn bg-teal add-btn"> <i class="icon-plus2"></i>新增 </a>',

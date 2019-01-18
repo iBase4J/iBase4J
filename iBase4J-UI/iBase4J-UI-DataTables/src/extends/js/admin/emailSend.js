@@ -17,7 +17,7 @@ $(function(){
     // 表格初始化
     var option = {
     	target: '.emailConfig-list',
-    	url: '/emailConfig/read/page',
+    	url: '/emailConfig/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<button class="btn bg-teal add-btn" data-toggle="modal" data-target=".emailSendEdit"> <i class="icon-plus2"></i>新增 </button>',
@@ -112,11 +112,9 @@ $(function(){
 function update(id) {
 	$('.modal-title').text('编辑邮件发送设置');
     $.ajax({
-    	type: 'PUT',
+    	type: 'GET',
     	url: '/emailConfig/read/detail',
-    	data: JSON.stringify({id: id}),
-		dataType: 'json',
-	    contentType:'application/json;charset=UTF-8',
+    	data: {id: id},
 		success : function(result) {
 			if (result.code == 200) {
 				$('#emailSendEdit').autofill(result.data);

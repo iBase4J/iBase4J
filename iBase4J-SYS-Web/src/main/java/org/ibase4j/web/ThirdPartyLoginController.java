@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.ibase4j.model.SysUser;
 import org.ibase4j.service.SysUserService;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -32,7 +32,7 @@ import top.ibase4j.model.Login;
  * @author ShenHuaJie
  * @version 2016年5月20日 下午3:12:56
  */
-@Controller
+@RestController
 @Api(value = "第三方登录接口", description = "第三方登录接口")
 public class ThirdPartyLoginController extends BaseController<SysUser, SysUserService> {
     @RequestMapping("/sns")

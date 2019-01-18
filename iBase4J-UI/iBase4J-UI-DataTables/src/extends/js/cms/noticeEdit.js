@@ -1,10 +1,8 @@
 $(function () {
     $.ajax({
-    	type: 'PUT',
-        dataType: 'json',
-		contentType:'application/json;charset=UTF-8',
+    	type: 'GET',
  		url : '/dic/read/list',
- 		data: JSON.stringify({type: 'NOTICETYPE'}),
+ 		data: {type: 'NOTICETYPE'},
  		success : function(result) {
  			if (result.code == 200) {
  				//将获取的数据添加到select选项中
@@ -21,11 +19,9 @@ $(function () {
         var id = localStorage.getItem('id');
         if(id) {
 	        $.ajax({
-	        	type: 'PUT',
+	        	type: 'GET',
 	        	url: '/notice/read/detail',
-	        	data: JSON.stringify({id: id}),
-	    		dataType: 'json',
-	    	    contentType:'application/json;charset=UTF-8',
+	        	data: {id: id},
 	    		success : function(result) {
 	    			if (result.code == 200) {
 	    				$('#noticeEdit').autofill(result.data);

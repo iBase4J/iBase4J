@@ -86,11 +86,9 @@ $(function () {
     var units = {};
     function initDeptTree() {
         $.ajax({
-    	   type: 'PUT',
-    	   dataType: 'json',
-    	   data: JSON.stringify({keyword:''}),
+    	   type: 'GET',
+    	   data: {keyword:''},
     	   url: '/dept/read/list',
-    	   contentType: 'application/json;charset=UTF-8',
     	   success: function(result) {
     		   if(result.code == 200) {
     			   var data = result.rows;
@@ -121,11 +119,9 @@ $(function () {
     
     //隶属单位
     $.ajax({
-	   type: 'PUT',
+	   type: 'GET',
 		url: '/unit/read/list',
-	   dataType: 'json',
-	   data: JSON.stringify({keyword:''}),
-	   contentType: 'application/json;charset=UTF-8',
+	   data: {keyword:''},
 	   success: function(result) {
 		   if(result.code == 200) {
 			   var data = result.rows;

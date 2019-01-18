@@ -19,11 +19,9 @@ $(function(){
             getData: function(){
         		var that = this;
         	    $.ajax({
-        	    	type: 'PUT',
-        	        dataType: 'json',
-        			contentType:'application/json;charset=UTF-8',
+        	    	type: 'GET',
         	 		url : '/dic/read/list',
-        	 		data: JSON.stringify({type: 'NEWSTYPE'}),
+        	 		data: {type: 'NEWSTYPE'},
         	 		success : function(result) {
         	 			if (result.code == 200) {
         	 				vm.newsTypes = newsTypes = result.rows;
@@ -41,7 +39,7 @@ $(function(){
     // 表格初始化
     var option = {
     	target: '.news-list',
-    	url: '/news/read/page',
+    	url: '/news/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<a href="newsEdit.html" class="btn bg-teal add-btn"> <i class="icon-plus2"></i>新增 </a>',

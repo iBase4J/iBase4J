@@ -7,7 +7,6 @@ import org.ibase4j.model.SysUser;
 import org.ibase4j.service.SysUserService;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,7 +37,7 @@ public class LoginController extends BaseController<SysUser, SysUserService> {
     // 登录
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
-    public Object login(@ApiParam(required = true, value = "登录帐号和密码") @RequestBody Login user, ModelMap modelMap,
+    public Object login(@ApiParam(required = true, value = "登录帐号和密码")  Login user, ModelMap modelMap,
         HttpServletRequest request) {
         Assert.notNull(user.getAccount(), "ACCOUNT");
         Assert.notNull(user.getPassword(), "PASSWORD");
@@ -62,7 +61,7 @@ public class LoginController extends BaseController<SysUser, SysUserService> {
     // 注册
     @ApiOperation(value = "用户注册")
     @PostMapping("/regin")
-    public Object regin(HttpServletRequest request, ModelMap modelMap, @RequestBody SysUser sysUser) {
+    public Object regin(HttpServletRequest request, ModelMap modelMap,  SysUser sysUser) {
         Assert.notNull(sysUser.getAccount(), "ACCOUNT");
         Assert.notNull(sysUser.getPassword(), "PASSWORD");
         service.update(sysUser);

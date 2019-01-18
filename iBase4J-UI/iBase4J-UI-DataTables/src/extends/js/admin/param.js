@@ -13,7 +13,7 @@ $(function(){
     // 表格初始化
     var option = {
     	target: '.param-list',
-    	url: '/param/read/page',
+    	url: '/param/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<button class="btn bg-teal add-btn" data-toggle="modal" data-target=".paramEdit"> <i class="icon-plus2"></i>新增 </button>'
@@ -86,7 +86,7 @@ $(function(){
     	$.ajax({
     		type: 'POST',
     		url: '/cache/update',
-    		data: JSON.stringify({key: 'sysParam'}),
+    		data: {key: 'sysParam'},
 			success : function(result) {
 				if (result.code == 200) {
 					notice('同步成功.');
@@ -102,11 +102,9 @@ $(function(){
 function update(id) {
 	$('.modal-title').text('编辑参数');
     $.ajax({
-    	type: 'PUT',
+    	type: 'GET',
     	url: '/param/read/detail',
-    	data: JSON.stringify({id: id}),
-		dataType: 'json',
-	    contentType:'application/json;charset=UTF-8',
+    	data: {id: id},
 		success : function(result) {
 			if (result.code == 200) {
 				$('#paramEdit').autofill(result.data);

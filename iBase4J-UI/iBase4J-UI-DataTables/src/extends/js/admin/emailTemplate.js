@@ -17,7 +17,7 @@ $(function(){
     // 表格初始化
     var option = {
     	target: '.emailTemplate-list',
-    	url: '/emailTemplate/read/page',
+    	url: '/emailTemplate/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	addButton: '<button class="btn bg-teal add-btn" data-toggle="modal" data-target=".emailTemplateEdit"> <i class="icon-plus2"></i>新增 </button>',
@@ -97,11 +97,9 @@ $(function(){
 function update(id) {
 	$('.modal-title').text('编辑邮件模版');
     $.ajax({
-    	type: 'PUT',
+    	type: 'GET',
     	url: '/emailTemplate/read/detail',
-    	data: JSON.stringify({id: id}),
-		dataType: 'json',
-	    contentType:'application/json;charset=UTF-8',
+    	data: {id: id},
 		success : function(result) {
 			if (result.code == 200) {
 				$('#emailTemplateEdit').autofill(result.data);

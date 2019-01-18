@@ -2,7 +2,7 @@ $(function () {
     //人员列表
 	var option = {
     	target: '.personnal-list',
-    	url: '/user/read/page',
+    	url: '/user/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '帐号/姓名/部门',
@@ -42,7 +42,7 @@ $(function () {
     // 角色
     var roleOption = {
     	target: '.personnal-role',
-    	url: '/role/read/page',
+    	url: '/role/read/list',
     	params: {keyword: ''},
     	searchable : false,
         bPaginate: false, //翻页功能
@@ -98,11 +98,9 @@ $(function () {
         	var userId = $(this).attr('data-tt-id');
         	$('#personalRole').text('人员[' + $(this).attr('data-tt-name') + ']的角色');
         	$.ajax({
-        		type: 'PUT',
+        		type: 'GET',
         		url: '/user/read/role',
-    			data : JSON.stringify({userId : userId}),
-    			dataType: 'json',
-    		    contentType:'application/json;charset=UTF-8',
+    			data : {userId : userId},
     			success : function(result) {
     				if (result.code == 200) {
     					for(var i=0; i<result.rows.length;i++) {
@@ -128,9 +126,7 @@ $(function () {
         	$.ajax({
         		type: 'POST',
         		url: '/user/update/role',
-    			data : JSON.stringify(data),
-    			dataType: 'json',
-    		    contentType:'application/json;charset=UTF-8',
+    			data : data,
     			success : function(result) {
     				if (result.code == 200) {
     					notice('保存成功.');
@@ -149,7 +145,7 @@ $(function () {
     	$.ajax({
     		type: 'POST',
     		url: '/cache/update',
-    		data: JSON.stringify({key: 'Permission'}),
+    		data: {key: 'Permission'},
 			success : function(result) {
 				if (result.code == 200) {
 					notice('同步成功.');

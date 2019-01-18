@@ -50,9 +50,7 @@
                 $.ajax({
                 	type: 'POST',
     				url : '/user',
-    	            dataType: 'json',
-    				contentType:'application/json;charset=UTF-8',
-    				data: angular.toJson(m)
+    				data: m
     			}).then(callback);
             }
             function callback(result){
@@ -93,11 +91,9 @@
         function activate(id) {
 	        $scope.loading = true;
         	$.ajax({
-        		type: 'PUT',
+        		type: 'get',
 				url : '/user/read/detail',
-	            dataType: 'json',
-				contentType:'application/json;charset=UTF-8',
-				data: angular.toJson({'id': id})
+				data: {'id': id}
 			}).then(function(result) {
 		        $scope.loading = false;
 				if (result.code == 200) {

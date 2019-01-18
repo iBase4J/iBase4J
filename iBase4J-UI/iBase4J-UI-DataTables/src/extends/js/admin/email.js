@@ -14,7 +14,7 @@ $(function () {
     // Basic initialization
     var option = {
     	target: '.email-list',
-    	url: '/email/read/page',
+    	url: '/email/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '邮件名称/使用发送',

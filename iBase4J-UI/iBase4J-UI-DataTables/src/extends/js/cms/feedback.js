@@ -12,11 +12,9 @@ $(function () {
 
     var feedbackTypes;
     $.ajax({
-    	type: 'PUT',
-        dataType: 'json',
-		contentType:'application/json;charset=UTF-8',
+    	type: 'GET',
  		url : '/dic/read/list',
- 		data: JSON.stringify({type: 'FEEDBACKTYPE'}),
+ 		data: {type: 'FEEDBACKTYPE'},
  		success : function(result) {
  			if (result.code == 200) {
  				feedbackTypes = result.rows;
@@ -34,7 +32,7 @@ $(function () {
     // 表格初始化
     var option = {
     	target: '.feedback-list',
-    	url: '/feedback/read/page',
+    	url: '/feedback/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '留言',

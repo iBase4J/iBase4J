@@ -2,11 +2,9 @@ $(function () {
   //获取数据
   function init() {
       $.ajax({
-      	type: 'PUT',
+      	type: 'GET',
       	url: '/msgConfig/read/list',
-      	data: JSON.stringify({pageSize: 1}),
-  		dataType: 'json',
-  	    contentType:'application/json;charset=UTF-8',
+      	data: {pageSize: 1},
   		success : function(result) {
   			if (result.code == 200) {
   				if(result.rows.length > 0) {

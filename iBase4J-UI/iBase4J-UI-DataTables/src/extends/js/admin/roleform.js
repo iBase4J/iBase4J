@@ -4,7 +4,7 @@ $(function(){
     	checkParent: true,
     	parentEle: 'department',
 		url: '/dept/read/list',
-		data: JSON.stringify({keyword:''}),
+		data: {keyword:''},
 		resetData: function(data) {
 		   for(var i=0;i<data.length;i++) {
 			   if(data[i].leaf == 0) {

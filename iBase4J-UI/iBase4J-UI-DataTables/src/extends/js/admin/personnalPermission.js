@@ -2,7 +2,7 @@ $(function () {
 	//人员列表
 	var option = {
     	target: '.personnal-list',
-    	url: '/user/read/page',
+    	url: '/user/read/list',
     	params: {keyword: ''},
     	searchable : true,
     	filterHolder: '帐号/姓名/部门',
@@ -58,11 +58,9 @@ $(function () {
     function getPermissionMenu(userId, permission) {
     	menuTree.checkAllNodes(false);
     	$.ajax({
-	    	type: 'PUT',
+	    	type: 'GET',
 			url: '/user/read/permission',
-			data : JSON.stringify({userId : userId}),
-			dataType: 'json',
-		    contentType:'application/json;charset=UTF-8',
+			data : {userId : userId},
 			success : function(result) {
 				if (result.code == 200) {
 					 var nodes = menuTree.getCheckedNodes(false);
@@ -102,9 +100,9 @@ $(function () {
     
     var menuTree;
     $.ajax({
-	   type: 'PUT',
+	   type: 'GET',
 	   url: '/menu/read/tree',
-	   data: JSON.stringify({keyword: ''}),
+	   data: {keyword: ''},
 	   success: function(result) {
 		   if(result.code == 200) {
 			   var data = result.rows;
@@ -137,9 +135,7 @@ $(function () {
         	$.ajax({
         		type: 'POST',
         		url: '/user/update/permission',
-    			data : JSON.stringify(data),
-    			dataType: 'json',
-    		    contentType:'application/json;charset=UTF-8',
+    			data : data,
     			success : function(result) {
     				if (result.code == 200) {
     					notice('保存成功.');
@@ -158,7 +154,7 @@ $(function () {
     	$.ajax({
     		type: 'POST',
     		url: '/cache/update',
-    		data: JSON.stringify({key: 'Permission'}),
+    		data: {key: 'Permission'},
 			success : function(result) {
 				if (result.code == 200) {
 					notice('同步成功.');
