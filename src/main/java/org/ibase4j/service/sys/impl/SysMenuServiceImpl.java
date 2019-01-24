@@ -16,7 +16,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.InstanceUtil;
@@ -124,6 +124,6 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> 
     @Transactional
     public void delete(Long id) {
         super.delete(id);
-        sysRoleMenuMapper.delete(new EntityWrapper<SysRoleMenu>(new SysRoleMenu().setMenuId(id)));
+        sysRoleMenuMapper.delete(new UpdateWrapper<SysRoleMenu>(new SysRoleMenu().setMenuId(id)));
     }
 }

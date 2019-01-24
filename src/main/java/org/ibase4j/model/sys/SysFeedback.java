@@ -1,8 +1,8 @@
 package org.ibase4j.model.sys;
 
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import top.ibase4j.core.base.BaseModel;
 

@@ -22,8 +22,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.util.InstanceUtil;
@@ -113,7 +113,7 @@ public class SysAuthorizeServiceImpl implements SysAuthorizeService {
     @Override
     public List<SysUserRole> getRolesByUserId(Long userId) {
         SysUserRole sysUserRole = new SysUserRole(userId, null);
-        Wrapper<SysUserRole> wrapper = new EntityWrapper<SysUserRole>(sysUserRole);
+        Wrapper<SysUserRole> wrapper = new QueryWrapper<SysUserRole>(sysUserRole);
         List<SysUserRole> userRoles = sysUserRoleMapper.selectList(wrapper);
         return userRoles;
     }

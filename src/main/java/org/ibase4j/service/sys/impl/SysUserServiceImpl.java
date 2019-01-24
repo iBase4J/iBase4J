@@ -22,7 +22,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.exception.BusinessException;
@@ -116,7 +116,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     @Transactional
     public void delete(Long id) {
         super.delete(id);
-        sysUserRoleMapper.delete(new EntityWrapper<SysUserRole>(new SysUserRole().setUserId(id)));
+        sysUserRoleMapper.delete(new UpdateWrapper<SysUserRole>(new SysUserRole().setUserId(id)));
     }
 
     /** 查询第三方帐号用户Id */

@@ -27,9 +27,9 @@ import com.aliyuncs.dyvmsapi.model.v20170525.SingleCallByTtsResponse;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import com.baomidou.mybatisplus.toolkit.IdWorker;
 
 import top.ibase4j.core.Constants.MSGCHKTYPE;
+import top.ibase4j.core.support.generator.Sequence;
 import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.DateUtil;
 import top.ibase4j.core.util.InstanceUtil;
@@ -107,7 +107,7 @@ public class SendMsgServiceImpl implements SendMsgService {
                     response.setMessage(paramService.getValue(response.getCode(), response.getMessage()));
                 }
             } else {
-                record.setBizId(IdWorker.get32UUID());
+                record.setBizId(Sequence.uuid());
                 record.setSendState("0");
             }
             record.setType(paramService.getName(type));
@@ -173,7 +173,7 @@ public class SendMsgServiceImpl implements SendMsgService {
                     record.setSendState("0");
                 }
             } else {
-                record.setBizId(IdWorker.get32UUID());
+                record.setBizId(Sequence.uuid());
                 record.setSendState("0");
             }
             record.setType(paramService.getName(type));
