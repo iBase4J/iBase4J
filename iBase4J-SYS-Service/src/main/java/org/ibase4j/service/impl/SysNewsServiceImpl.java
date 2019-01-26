@@ -6,7 +6,6 @@ import org.ibase4j.service.SysNewsService;
 import org.springframework.cache.annotation.CacheConfig;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 
@@ -16,7 +15,6 @@ import top.ibase4j.core.base.BaseServiceImpl;
  */
 @CacheConfig(cacheNames = "sysNews")
 @Service(interfaceClass = SysNewsService.class)
-@MotanService(interfaceClass = SysNewsService.class)
 public class SysNewsServiceImpl extends BaseServiceImpl<SysNews, SysNewsMapper> implements SysNewsService {
 
 }

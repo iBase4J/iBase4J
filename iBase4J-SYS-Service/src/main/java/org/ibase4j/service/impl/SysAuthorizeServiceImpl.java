@@ -22,9 +22,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.util.InstanceUtil;
@@ -35,7 +34,6 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @CacheConfig(cacheNames = "sysAuthorize")
 @Service(interfaceClass = SysAuthorizeService.class)
-@MotanService(interfaceClass = SysAuthorizeService.class)
 public class SysAuthorizeServiceImpl implements SysAuthorizeService {
     @Autowired
     private SysUserMenuMapper sysUserMenuMapper;
@@ -115,7 +113,7 @@ public class SysAuthorizeServiceImpl implements SysAuthorizeService {
     @Override
     public List<SysUserRole> getRolesByUserId(Long userId) {
         SysUserRole sysUserRole = new SysUserRole(userId, null);
-        Wrapper<SysUserRole> wrapper = new EntityWrapper<SysUserRole>(sysUserRole);
+        Wrapper<SysUserRole> wrapper = new QueryWrapper<SysUserRole>(sysUserRole);
         List<SysUserRole> userRoles = sysUserRoleMapper.selectList(wrapper);
         return userRoles;
     }

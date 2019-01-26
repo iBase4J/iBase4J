@@ -6,7 +6,6 @@ import org.ibase4j.service.SysArticleService;
 import org.springframework.cache.annotation.CacheConfig;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 
@@ -20,7 +19,6 @@ import top.ibase4j.core.base.BaseServiceImpl;
  */
 @CacheConfig(cacheNames = "sysArticle")
 @Service(interfaceClass = SysArticleService.class)
-@MotanService(interfaceClass = SysArticleService.class)
 public class SysArticleServiceImpl extends BaseServiceImpl<SysArticle, SysArticleMapper> implements SysArticleService {
 
 }

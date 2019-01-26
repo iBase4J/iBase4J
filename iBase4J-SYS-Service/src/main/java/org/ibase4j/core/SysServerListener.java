@@ -11,10 +11,6 @@ import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextStoppedEvent;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.dubbo.config.ProtocolConfig;
-import com.weibo.api.motan.common.MotanConstants;
-import com.weibo.api.motan.util.MotanSwitcherUtil;
-
 import top.ibase4j.core.listener.ApplicationReadyListener;
 
 @Component
@@ -27,11 +23,8 @@ public class SysServerListener extends ApplicationReadyListener {
             ConfigurableApplicationContext context = ((ApplicationReadyEvent)event).getApplicationContext();
             context.getBean(SysCacheService.class).flush();
             context.getBean(SysUserService.class).init();
-            MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
         } else if (event instanceof ContextStoppedEvent) { // 应用停止
-            ProtocolConfig.destroyAll();
         } else if (event instanceof ContextClosedEvent) { // 应用关闭
-            ProtocolConfig.destroyAll();
         }
         super.onApplicationEvent(event);
     }

@@ -9,7 +9,6 @@ import org.ibase4j.service.SysDeptService;
 import org.springframework.cache.annotation.CacheConfig;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 
@@ -19,7 +18,6 @@ import top.ibase4j.core.base.BaseServiceImpl;
  */
 @CacheConfig(cacheNames = "sysDept")
 @Service(interfaceClass = SysDeptService.class)
-@MotanService(interfaceClass = SysDeptService.class)
 public class SysDeptServiceImpl extends BaseServiceImpl<SysDept, SysDeptMapper> implements SysDeptService {
     @Override
     public List<SysDept> queryList(Map<String, Object> params) {

@@ -16,8 +16,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.InstanceUtil;
@@ -28,7 +27,6 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @CacheConfig(cacheNames = "sysMenu")
 @Service(interfaceClass = SysMenuService.class)
-@MotanService(interfaceClass = SysMenuService.class)
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> implements SysMenuService {
     @Autowired
     private SysDicService sysDicService;
@@ -125,6 +123,6 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu, SysMenuMapper> 
     @Transactional
     public void delete(Long id) {
         super.delete(id);
-        sysRoleMenuMapper.delete(new EntityWrapper<SysRoleMenu>(new SysRoleMenu().setMenuId(id)));
+        sysRoleMenuMapper.delete(new UpdateWrapper<SysRoleMenu>(new SysRoleMenu().setMenuId(id)));
     }
 }

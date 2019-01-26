@@ -7,13 +7,11 @@ import org.apache.logging.log4j.Logger;
 import org.ibase4j.service.SysCacheService;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.util.CacheUtil;
 
 @Service(interfaceClass = SysCacheService.class)
-@MotanService(interfaceClass = SysCacheService.class)
 public class SysCacheServiceImpl implements SysCacheService {
     Logger logger = LogManager.getLogger();
 

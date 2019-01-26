@@ -12,7 +12,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.base.BaseServiceImpl;
@@ -25,7 +24,6 @@ import top.ibase4j.core.util.InstanceUtil;
  */
 @CacheConfig(cacheNames = "sysSession")
 @Service(interfaceClass = SysSessionService.class)
-@MotanService(interfaceClass = SysSessionService.class)
 public class SysSessionServiceImpl extends BaseServiceImpl<SysSession, SysSessionMapper> implements SysSessionService {
 
     @Override

@@ -22,8 +22,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.exception.BusinessException;
@@ -41,7 +40,6 @@ import top.ibase4j.core.util.SecurityUtil;
  */
 @CacheConfig(cacheNames = "sysUser")
 @Service(interfaceClass = SysUserService.class)
-@MotanService(interfaceClass = SysUserService.class)
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> implements SysUserService {
     @Autowired
     private SysUserThirdpartyMapper thirdpartyMapper;
@@ -118,7 +116,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     @Transactional
     public void delete(Long id) {
         super.delete(id);
-        sysUserRoleMapper.delete(new EntityWrapper<SysUserRole>(new SysUserRole().setUserId(id)));
+        sysUserRoleMapper.delete(new UpdateWrapper<SysUserRole>(new SysUserRole().setUserId(id)));
     }
 
     /** 查询第三方帐号用户Id */

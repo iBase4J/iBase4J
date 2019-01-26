@@ -6,7 +6,6 @@ import org.ibase4j.service.SysNoticeService;
 import org.springframework.cache.annotation.CacheConfig;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 
@@ -16,7 +15,6 @@ import top.ibase4j.core.base.BaseServiceImpl;
  */
 @CacheConfig(cacheNames = "sysNotice")
 @Service(interfaceClass = SysNoticeService.class)
-@MotanService(interfaceClass = SysNoticeService.class)
 public class SysNoticeServiceImpl extends BaseServiceImpl<SysNotice, SysNoticeMapper> implements SysNoticeService {
 
 }
