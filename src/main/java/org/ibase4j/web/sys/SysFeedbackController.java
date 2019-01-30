@@ -2,18 +2,20 @@ package org.ibase4j.web.sys;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysFeedback;
 import org.ibase4j.service.sys.SysFeedbackService;
-import org.springframework.ui.ModelMap;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * <p>
@@ -23,37 +25,37 @@ import top.ibase4j.core.base.BaseController;
  * @author ShenHuaJie
  * @since 2017-03-12
  */
-@RestController
+@Controller
 @RequestMapping("/feedback")
 public class SysFeedbackController extends BaseController<SysFeedback, SysFeedbackService> {
-    @Override
     @ApiOperation(value = "查询反馈")
     @RequiresPermissions("cms.feedback.read")
     @GetMapping(value = "/read/page")
-    public Object query(ModelMap modelMap, Map<String, Object> param) {
-        return super.query(modelMap, param);
+    public Object query(HttpServletRequest request) {
+        Map<String, Object> param = WebUtil.getParameter(request);
+        return super.query(param);
     }
 
     @ApiOperation(value = "反馈详情")
     @RequiresPermissions("cms.feedback.read")
     @GetMapping(value = "/read/detail")
-    public Object get(ModelMap modelMap, SysFeedback param) {
-        return super.get(modelMap, param);
+    public Object get(SysFeedback param) {
+        return super.get(param);
     }
 
     @Override
     @PostMapping
     @ApiOperation(value = "修改反馈")
     @RequiresPermissions("cms.feedback.update")
-    public Object update(ModelMap modelMap, SysFeedback param) {
-        return super.update(modelMap, param);
+    public Object update(SysFeedback param) {
+        return super.update(param);
     }
 
     @Override
     @DeleteMapping
     @ApiOperation(value = "删除反馈")
     @RequiresPermissions("cms.feedback.delete")
-    public Object delete(ModelMap modelMap, SysFeedback param) {
-        return super.delete(modelMap, param);
+    public Object delete(SysFeedback param) {
+        return super.delete(param);
     }
 }

@@ -2,9 +2,6 @@ package org.ibase4j.web.sys;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.sys.SysRoleMenu;
@@ -33,9 +30,7 @@ import top.ibase4j.core.exception.IllegalParameterException;
 @RestController
 @Api(value = "权限管理", description = "权限管理")
 public class SysAuthorizeController extends AbstractController {
-    @Resource
     private SysAuthorizeService authorizeService;
-    @Resource
     private SysCacheService sysCacheService;
 
     @ApiOperation(value = "获取用户菜单编号")
@@ -196,8 +191,8 @@ public class SysAuthorizeController extends AbstractController {
     @ApiOperation(value = "清理缓存")
     @RequiresPermissions("sys.cache.update")
     @RequestMapping(value = "/cache/update", method = RequestMethod.POST)
-    public Object flush(Map<String, String> param) {
-        sysCacheService.flush(param);
+    public Object flush(String key) {
+        sysCacheService.flush(key);
         return setSuccessModelMap();
     }
 }
