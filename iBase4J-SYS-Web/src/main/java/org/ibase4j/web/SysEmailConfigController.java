@@ -2,10 +2,12 @@ package org.ibase4j.web;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysEmailConfig;
 import org.ibase4j.service.SysEmailConfigService;
-import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.util.DataUtil;
 import top.ibase4j.core.util.SecurityUtil;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 邮件配置管理控制类
@@ -26,26 +29,26 @@ import top.ibase4j.core.util.SecurityUtil;
 @Api(value = "邮件配置管理", description = "邮件配置管理")
 @RequestMapping(value = "emailConfig")
 public class SysEmailConfigController extends BaseController<SysEmailConfig, SysEmailConfigService> {
-    @Override
     @ApiOperation(value = "查询邮件配置")
     @RequiresPermissions("sys.email.config.read")
-    @RequestMapping(value = "/read/page", method = RequestMethod.PUT)
-    public Object query(ModelMap modelMap,  Map<String, Object> param) {
-        return super.query(modelMap, param);
+    @GetMapping("/read/page")
+    public Object query(HttpServletRequest request) {
+        Map<String, Object> param = WebUtil.getParameter(request);
+        return super.query(param);
     }
 
     @ApiOperation(value = "邮件配置详情")
     @RequiresPermissions("sys.email.config.read")
-    @RequestMapping(value = "/read/detail", method = RequestMethod.PUT)
-    public Object get(ModelMap modelMap,  SysEmailConfig param) {
-        return super.get(modelMap, param);
+    @GetMapping("/read/detail")
+    public Object get(SysEmailConfig param) {
+        return super.get(param);
     }
 
     @Override
     @ApiOperation(value = "修改邮件配置")
     @RequiresPermissions("sys.email.config.update")
     @RequestMapping(method = RequestMethod.POST)
-    public Object update(ModelMap modelMap,  SysEmailConfig param) {
+    public Object update(SysEmailConfig param) {
         if (param.getId() != null) {
             SysEmailConfig result = service.queryById(param.getId());
             if (param.getSenderPassword() != null && !param.getSenderPassword().equals(result.getSenderPassword())) {
@@ -54,14 +57,14 @@ public class SysEmailConfigController extends BaseController<SysEmailConfig, Sys
         } else if (DataUtil.isNotEmpty(param.getSenderPassword())) {
             param.setSenderPassword(SecurityUtil.encryptMd5(param.getSenderPassword()));
         }
-        return super.update(modelMap, param);
+        return super.update(param);
     }
 
     @Override
     @ApiOperation(value = "删除邮件配置")
     @RequiresPermissions("sys.email.config.delete")
     @RequestMapping(method = RequestMethod.DELETE)
-    public Object delete(ModelMap modelMap,  SysEmailConfig param) {
-        return super.delete(modelMap, param);
+    public Object delete(SysEmailConfig param) {
+        return super.delete(param);
     }
 }

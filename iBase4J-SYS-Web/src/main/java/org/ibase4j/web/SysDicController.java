@@ -2,10 +2,11 @@ package org.ibase4j.web;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysDic;
 import org.ibase4j.service.SysDicService;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.exception.BusinessException;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 字典管理
@@ -27,50 +29,50 @@ import top.ibase4j.core.exception.BusinessException;
 @Api(value = "字典管理", description = "字典管理")
 @RequestMapping(value = "/dic")
 public class SysDicController extends BaseController<SysDic, SysDicService> {
-    @Override
     @ApiOperation(value = "查询字典项")
     @RequiresPermissions("sys.base.dic.read")
     @GetMapping(value = "/read/page")
-    public Object query(ModelMap modelMap,  Map<String, Object> param) {
+    public Object query(HttpServletRequest request) {
+        Map<String, Object> param = WebUtil.getParameter(request);
         param.put("orderBy", "type_,sort_no");
-        return super.query(modelMap, param);
+        return super.query(param);
     }
 
-    @Override
     @ApiOperation(value = "查询字典项")
     @RequiresPermissions("sys.base.dic.read")
     @GetMapping(value = "/read/list")
-    public Object queryList(ModelMap modelMap,  Map<String, Object> param) {
+    public Object queryList(HttpServletRequest request) {
+        Map<String, Object> param = WebUtil.getParameter(request);
         param.put("orderBy", "type_,sort_no");
-        return super.queryList(modelMap, param);
+        return super.queryList(param);
     }
 
     @ApiOperation(value = "字典项详情")
     @RequiresPermissions("sys.base.dic.read")
     @GetMapping(value = "/read/detail")
-    public Object get(ModelMap modelMap,  SysDic param) {
-        return super.get(modelMap, param);
+    public Object get(SysDic param) {
+        return super.get(param);
     }
 
     @Override
     @PostMapping
     @ApiOperation(value = "修改字典项")
     @RequiresPermissions("sys.base.dic.update")
-    public Object update(ModelMap modelMap,  SysDic param) {
+    public Object update(SysDic param) {
         if (param.getId() != null) {
             SysDic result = service.queryById(param.getId());
             if ("0".equals(result.getEditable())) {
                 throw new BusinessException("不允许修改系统内置字典项");
             }
         }
-        return super.update(modelMap, param);
+        return super.update(param);
     }
 
     @Override
     @DeleteMapping
     @ApiOperation(value = "删除字典项")
     @RequiresPermissions("sys.base.dic.delete")
-    public Object delete(ModelMap modelMap,  SysDic param) {
-        return super.delete(modelMap, param);
+    public Object delete(SysDic param) {
+        return super.delete(param);
     }
 }

@@ -2,10 +2,11 @@ package org.ibase4j.web;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysRole;
 import org.ibase4j.service.SysRoleService;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.exception.BusinessException;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 角色管理
@@ -27,47 +29,48 @@ import top.ibase4j.core.exception.BusinessException;
 @Api(value = "角色管理", description = "角色管理")
 @RequestMapping(value = "role")
 public class SysRoleController extends BaseController<SysRole, SysRoleService> {
-    @Override
     @ApiOperation(value = "查询角色")
     @RequiresPermissions("sys.base.role.read")
     @GetMapping(value = "/read/page")
-    public Object query(ModelMap modelMap,  Map<String, Object> param) {
-        return super.query(modelMap, param);
+    public Object query(HttpServletRequest request) {
+        Map<String, Object> param = WebUtil.getParameter(request);
+        return super.query(param);
     }
 
     @ApiOperation(value = "查询角色")
     @RequiresPermissions("sys.base.role.read")
     @GetMapping(value = "/read/list")
-    public Object list(ModelMap modelMap,  Map<String, Object> param) {
-        return super.queryList(modelMap, param);
+    public Object queryList(HttpServletRequest request) {
+        Map<String, Object> param = WebUtil.getParameter(request);
+        return super.queryList(param);
     }
 
     @ApiOperation(value = "角色详情")
     @RequiresPermissions("sys.base.role.read")
     @GetMapping(value = "/read/detail")
-    public Object get(ModelMap modelMap,  SysRole param) {
-        return super.get(modelMap, param);
+    public Object get(SysRole param) {
+        return super.get(param);
     }
 
     @Override
     @PostMapping
     @ApiOperation(value = "修改角色")
     @RequiresPermissions("sys.base.role.update")
-    public Object update(ModelMap modelMap,  SysRole param) {
+    public Object update(SysRole param) {
         if (param.getId() != null) {
             SysRole result = service.queryById(param.getId());
             if ("3".equals(result.getRoleType())) {
                 throw new BusinessException("不允许修改系统内置角色");
             }
         }
-        return super.update(modelMap, param);
+        return super.update(param);
     }
 
     @Override
     @DeleteMapping
     @ApiOperation(value = "删除角色")
     @RequiresPermissions("sys.base.role.delete")
-    public Object delete(ModelMap modelMap,  SysRole param) {
-        return super.delete(modelMap, param);
+    public Object delete(SysRole param) {
+        return super.delete(param);
     }
 }

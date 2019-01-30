@@ -2,10 +2,11 @@ package org.ibase4j.web;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysNews;
 import org.ibase4j.service.SysNewsService;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 新闻管理控制类
@@ -26,37 +28,37 @@ import top.ibase4j.core.base.BaseController;
 @Api(value = "新闻管理", description = "新闻管理")
 @RequestMapping(value = "news")
 public class SysNewsController extends BaseController<SysNews, SysNewsService> {
-    @Override
     @ApiOperation(value = "查询新闻")
     @RequiresPermissions("sys.cms.news.read")
     @GetMapping(value = "/read/page")
-    public Object query(ModelMap modelMap,  Map<String, Object> param) {
-        return super.query(modelMap, param);
+    public Object query(HttpServletRequest request) {
+        Map<String, Object> param = WebUtil.getParameter(request);
+        return super.query(param);
     }
 
     @ApiOperation(value = "新闻详情")
     @RequiresPermissions("sys.cms.news.read")
     @GetMapping(value = "/read/detail")
-    public Object get(ModelMap modelMap,  SysNews param) {
-        return super.get(modelMap, param);
+    public Object get(SysNews param) {
+        return super.get(param);
     }
 
     @Override
     @PostMapping
     @ApiOperation(value = "修改新闻")
     @RequiresPermissions("sys.cms.news.update")
-    public Object update(ModelMap modelMap,  SysNews param) {
+    public Object update(SysNews param) {
         if (param.getStatus() == null) {
             param.setStatus("0");
         }
-        return super.update(modelMap, param);
+        return super.update(param);
     }
 
     @Override
     @DeleteMapping
     @ApiOperation(value = "删除新闻")
     @RequiresPermissions("sys.cms.news.delete")
-    public Object delete(ModelMap modelMap,  SysNews param) {
-        return super.delete(modelMap, param);
+    public Object delete(SysNews param) {
+        return super.delete(param);
     }
 }

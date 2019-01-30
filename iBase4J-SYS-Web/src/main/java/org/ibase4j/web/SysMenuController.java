@@ -3,10 +3,11 @@ package org.ibase4j.web;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysMenu;
 import org.ibase4j.service.SysMenuService;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import top.ibase4j.core.base.BaseController;
 import top.ibase4j.core.exception.BusinessException;
+import top.ibase4j.core.util.WebUtil;
 
 /**
  * 菜单管理
@@ -28,41 +30,43 @@ import top.ibase4j.core.exception.BusinessException;
 @Api(value = "菜单管理", description = "菜单管理")
 @RequestMapping(value = "menu")
 public class SysMenuController extends BaseController<SysMenu, SysMenuService> {
-    @Override
     @ApiOperation(value = "查询菜单")
     @GetMapping(value = "/read/page")
     @RequiresPermissions("sys.base.menu.read")
-    public Object query(ModelMap modelMap,  Map<String, Object> param) {
-        return super.query(modelMap, param);
+    public Object query(HttpServletRequest request) {
+        Map<String, Object> param = WebUtil.getParameter(request);
+        return super.query(param);
     }
 
     @ApiOperation(value = "查询菜单")
     @GetMapping(value = "/read/list")
     @RequiresPermissions("sys.base.menu.read")
-    public Object get(ModelMap modelMap,  Map<String, Object> param) {
-        return super.queryList(modelMap, param);
+    public Object queryList(HttpServletRequest request) {
+        Map<String, Object> param = WebUtil.getParameter(request);
+        return super.queryList(param);
     }
 
     @ApiOperation(value = "查询菜单")
     @GetMapping(value = "/read/tree")
     @RequiresPermissions("sys.base.menu.read")
-    public Object getTree(ModelMap modelMap,  Map<String, Object> param) {
+    public Object getTree(HttpServletRequest request) {
+        Map<String, Object> param = WebUtil.getParameter(request);
         List<?> list = service.queryTreeList(param);
-        return setSuccessModelMap(modelMap, list);
+        return setSuccessModelMap(list);
     }
 
     @ApiOperation(value = "菜单详情")
     @GetMapping(value = "/read/detail")
     @RequiresPermissions("sys.base.menu.read")
-    public Object get(ModelMap modelMap,  SysMenu param) {
-        return super.get(modelMap, param);
+    public Object get(SysMenu param) {
+        return super.get(param);
     }
 
     @Override
     @PostMapping
     @ApiOperation(value = "修改菜单")
     @RequiresPermissions("sys.base.menu.update")
-    public Object update(ModelMap modelMap,  SysMenu param) {
+    public Object update(SysMenu param) {
         if (param.getId() != null) {
             SysMenu result = service.queryById(param.getId());
             if ("1".equals(result.getMenuType())) {
@@ -72,22 +76,22 @@ public class SysMenuController extends BaseController<SysMenu, SysMenuService> {
         if (param.getIsShow() == null) {
             param.setIsShow("0");
         }
-        return super.update(modelMap, param);
+        return super.update(param);
     }
 
     @Override
     @DeleteMapping
     @ApiOperation(value = "删除菜单")
     @RequiresPermissions("sys.base.menu.delete")
-    public Object delete(ModelMap modelMap,  SysMenu param) {
-        return super.delete(modelMap, param);
+    public Object delete(SysMenu param) {
+        return super.delete(param);
     }
 
     @ApiOperation(value = "获取所有权限")
     @RequiresPermissions("sys.base.menu.read")
     @RequestMapping(value = "/read/permission")
-    public Object getPermissions(ModelMap modelMap) {
+    public Object getPermissions() {
         List<?> list = service.getPermissions();
-        return setSuccessModelMap(modelMap, list);
+        return setSuccessModelMap(list);
     }
 }

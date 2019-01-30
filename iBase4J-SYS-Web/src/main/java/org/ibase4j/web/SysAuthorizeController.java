@@ -67,7 +67,7 @@ public class SysAuthorizeController extends AbstractController {
     @ApiOperation(value = "获取用户角色")
     @GetMapping(value = "user/read/role")
     @RequiresPermissions("sys.permisson.userRole.read")
-    public Object getUserRole( SysUserRole param) {
+    public Object getUserRole(SysUserRole param) {
         List<?> menus = authorizeService.getRolesByUserId(param.getUserId());
         return setSuccessModelMap(menus);
     }
