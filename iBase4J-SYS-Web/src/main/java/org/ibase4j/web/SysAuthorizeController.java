@@ -2,7 +2,6 @@ package org.ibase4j.web;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.ibase4j.model.SysRoleMenu;
@@ -192,8 +191,8 @@ public class SysAuthorizeController extends AbstractController {
     @ApiOperation(value = "清理缓存")
     @RequiresPermissions("sys.cache.update")
     @RequestMapping(value = "/cache/update", method = RequestMethod.POST)
-    public Object flush(ModelMap modelMap,  Map<String, String> param) {
-        sysCacheService.flush(param);
-        return setSuccessModelMap(modelMap);
+    public Object flush(String key) {
+        sysCacheService.flush(key);
+        return setSuccessModelMap();
     }
 }

@@ -408,22 +408,6 @@
 						<useDefaultDelimiters>true</useDefaultDelimiters>
 					</configuration>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<configuration>
-						<encoding>UTF-8</encoding>
-						<webResources>
-							<resource>
-								<directory>${jar.dic}/libs</directory>
-								<targetPath>WEB-INF/lib</targetPath>
-								<excludes>
-									<exclude>${other.jar}</exclude>
-								</excludes>
-							</resource>
-						</webResources>
-					</configuration>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
