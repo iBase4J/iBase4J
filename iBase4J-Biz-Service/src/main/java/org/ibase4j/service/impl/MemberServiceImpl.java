@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
-import com.weibo.api.motan.config.springsupport.annotation.MotanService;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.util.DataUtil;
@@ -30,7 +29,6 @@ import top.ibase4j.core.util.UploadUtil;
  */
 @CacheConfig(cacheNames = "member")
 @Service(interfaceClass = MemberService.class)
-@MotanService(interfaceClass = MemberService.class)
 public class MemberServiceImpl extends BaseServiceImpl<TMember, TMemberMapper> implements MemberService {
 
     @Override
