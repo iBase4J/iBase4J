@@ -176,6 +176,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-pool2</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.0</version>
+		</dependency>
 		<!-- spring核心包 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -358,6 +363,16 @@
 					<artifactId>*</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<!--  -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>3.13.1</version>
 		</dependency>
 	</dependencies>
 
