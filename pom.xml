@@ -374,6 +374,11 @@
 			<artifactId>okhttp</artifactId>
 			<version>3.13.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>2.1.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
