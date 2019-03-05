@@ -75,7 +75,7 @@ public class Generator {
             @Override
             public void initMap() {
                 Map<String, Object> map = new HashMap<String, Object>();
-                map.put("rpcService", false);
+                map.put("rpcService", true);
                 this.setMap(map);
             }
         };
@@ -85,7 +85,7 @@ public class Generator {
         pc.setParent("org.ibase4j");
         pc.setEntity("model");
         pc.setMapper("mapper");
-        pc.setXml("mapper");
+        pc.setXml("mapper.xml");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
         pc.setController("web");
