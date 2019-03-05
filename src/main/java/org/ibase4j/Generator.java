@@ -83,12 +83,12 @@ public class Generator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent("org.ibase4j");
-        pc.setEntity("model");
-        pc.setMapper("mapper");
-        pc.setXml("mapper");
-        pc.setService("service");
-        pc.setServiceImpl("service.impl");
-        pc.setController("web");
+        pc.setEntity("model.biz");
+        pc.setMapper("mapper.biz");
+        pc.setXml("mapper.biz.xml");
+        pc.setService("service.biz");
+        pc.setServiceImpl("service.biz.impl");
+        pc.setController("web.biz");
         mpg.setPackageInfo(pc);
         // 放置自己项目的 src/main/resources/template 目录下, 默认名称一下可以不配置，也可以自定义模板名称
         TemplateConfig tc = new TemplateConfig();
