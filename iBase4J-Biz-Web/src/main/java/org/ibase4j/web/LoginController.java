@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dragon.model.Member;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -42,13 +44,8 @@ import top.ibase4j.core.util.SecurityUtil;
 @Api(value = "APP登录注册接口", description = "APP-登录注册接口")
 public class LoginController extends AppBaseController<TMember, MemberService> {
     @PostMapping("reginit")
-    @ApiOperation(value = "注册", produces = MediaType.APPLICATION_JSON_VALUE, notes = "" + "使用手机号+验证码进行注册或登录\n"
-            + "注册接口需要以下五个参数：\n" + "1. UUID(header): 客户端生成的唯一ID，用作用户令牌，服务端用之识别用户，验证权限，每接口必传\n"
-            + "2. sign: 请求参数的RSA签名(通过/app/secret获取RSA私钥)，用于防止请求参数被第三方拦截篡改，每接口必传。签名算法查看密钥接口\n"
-            + "3. account: 用户名，目前只支持手机号\n" + "4. password: 密码\n" + "5. authCode: 手机短信验证码(通过/app/msg发送短信验证码)\n"
-            + "注意：所有接口都需要传UUID和sign参数，UUID用作令牌，sign用作签名", response = TMember.class)
-    public Object register(@RequestHeader("UUID") @ApiParam(value = "客户端生成的唯一ID", required = true) String uuid,
-        @RequestParam @ApiParam(value = "手机号", required = true) String account,
+    @ApiOperation(value = "注册", produces = MediaType.APPLICATION_JSON_VALUE, notes = "使用手机号+密码+短信验证码进行注册", response = Member.class)
+    public Object register(@RequestParam @ApiParam(value = "手机号", required = true) String account,
         @RequestParam @ApiParam(value = "密码", required = true) String password,
         @RequestParam @ApiParam(value = "手机验证码", required = true) String authCode) throws Exception {
         String authCodeOnServer = (String)CacheUtil.getCache().get(MSGCHKTYPE.REGISTER + account);
@@ -74,13 +71,8 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
     }
 
     @PostMapping("login")
-    @ApiOperation(value = "登录", produces = MediaType.APPLICATION_JSON_VALUE, notes = "" + "使用手机号+密码登录\n"
-            + "登录接口需要以下四个参数：\n" + "1. UUID(header): 客户端生成的唯一ID，用作用户令牌，服务端用之识别用户，验证权限，每接口必传\n"
-            + "2. sign: 请求参数的RSA签名(通过/app/secret获取RSA私钥)，用于防止请求参数被第三方拦截篡改，每接口必传。签名算法查看密钥接口\n"
-            + "3. account: 用户名，目前只支持手机号\n" + "4. password: 密码\n"
-            + "注意：所有接口都需要传UUID和sign参数，UUID用作令牌，sign用作签名", response = TMember.class)
-    public Object login(@RequestHeader("UUID") @ApiParam(value = "客户端生成的唯一ID", required = true) String uuid,
-        @RequestHeader(required = false) @ApiParam("微信ID，暂不支持") String openId,
+    @ApiOperation(value = "登录", produces = MediaType.APPLICATION_JSON_VALUE, notes = "使用手机号+密码登录登录接口", response = Member.class)
+    public Object login(@RequestHeader(required = false) @ApiParam("微信ID，暂不支持") String openId,
         @RequestHeader(required = false) @ApiParam("极光推送ID，暂不支持") String registrationId,
         @RequestParam @ApiParam(value = "手机号", required = true) String account,
         @RequestParam @ApiParam(value = "密码", required = true) String password) {
@@ -155,13 +147,8 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
     }
 
     @PostMapping("updatePwd")
-    @ApiOperation(value = "修改密码", produces = MediaType.APPLICATION_JSON_VALUE, notes = "" + "接口需要以下五个参数：\n"
-            + "1. UUID(header): 客户端生成的唯一ID，用作用户令牌，服务端用之识别用户，验证权限，每接口必传\n"
-            + "2. sign: 请求参数的RSA签名(通过/app/secret获取RSA私钥)，用于防止请求参数被第三方拦截篡改，每接口必传。签名算法查看密钥接口\n"
-            + "3. account: 用户名，目前只支持手机号\n" + "4. password: 密码\n" + "5. authCode: 手机短信验证码(通过/app/msg发送短信验证码)\n"
-            + "注意：所有接口都需要传UUID和sign参数，UUID用作令牌，sign用作签名", response = TMember.class)
-    public Object updatePwd(@RequestHeader("UUID") @ApiParam(value = "客户端生成的唯一ID", required = true) String uuid,
-        @RequestParam @ApiParam(value = "手机号", required = true) String account,
+    @ApiOperation(value = "修改密码", produces = MediaType.APPLICATION_JSON_VALUE, notes = "", response = Member.class)
+    public Object updatePwd(@RequestParam @ApiParam(value = "手机号", required = true) String account,
         @RequestParam @ApiParam(value = "密码", required = true) String password,
         @RequestParam @ApiParam(value = "手机验证码", required = true) String authCode) throws Exception {
         String authCodeOnServer = (String)CacheUtil.getCache().get(MSGCHKTYPE.CHGPWD + account);
