@@ -43,7 +43,7 @@ import top.ibase4j.model.Login;
 @Api(value = "会员管理接口", description = "APP-个人中心-个人信息管理接口")
 public class TMemberController extends AppBaseController<TMember, MemberService> {
     @ApiOperation(value = "获取个人基本信息", produces = MediaType.APPLICATION_JSON_VALUE, response = TMember.class)
-    @RequestMapping(value = "getUserBaseInfo.api", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getUserBaseInfo", method = {RequestMethod.GET, RequestMethod.POST})
     public Object getBaseInfo(HttpServletRequest request, String id) {
         Member param = WebUtil.getParameter(request, Member.class);
         Assert.notNull(param.getId(), "ID");
@@ -53,7 +53,7 @@ public class TMemberController extends AppBaseController<TMember, MemberService>
     }
 
     @ApiOperation(value = "获取个人信息", produces = MediaType.APPLICATION_JSON_VALUE, response = TMember.class)
-    @RequestMapping(value = "getUserInfo.api", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getUserInfo", method = {RequestMethod.GET, RequestMethod.POST})
     public Object get(HttpServletRequest request, String id) {
         Member param = WebUtil.getParameter(request, Member.class);
         Long memberId = getCurrUser(request);
@@ -67,7 +67,7 @@ public class TMemberController extends AppBaseController<TMember, MemberService>
         return setSuccessModelMap(modelMap, result);
     }
 
-    @PostMapping("modifyUserInfo.api")
+    @PostMapping("modifyUserInfo")
     @ApiOperation(value = "修改个人信息", produces = MediaType.APPLICATION_JSON_VALUE)
     public Object update(HttpServletRequest request, Member member) {
         TMember param = WebUtil.getParameter(request, TMember.class);
@@ -87,7 +87,7 @@ public class TMemberController extends AppBaseController<TMember, MemberService>
         return super.update(request, modelMap, param);
     }
 
-    @PostMapping("uploadPhoto.api")
+    @PostMapping("uploadPhoto")
     @ApiOperation(value = "修改个人头像", produces = MediaType.APPLICATION_JSON_VALUE)
     public Object uploadPhoto(HttpServletRequest request, MemberPhoto param) {
         Long id = getCurrUser(request);
@@ -113,7 +113,7 @@ public class TMemberController extends AppBaseController<TMember, MemberService>
         return setSuccessModelMap(new ModelMap(), result);
     }
 
-    @PostMapping("updatePhoneByIdCard.api")
+    @PostMapping("updatePhoneByIdCard")
     @ApiOperation(value = "修改个人手机号", produces = MediaType.APPLICATION_JSON_VALUE)
     public Object updatePhone(HttpServletRequest request, String newPhone, String orderPhone, String idCard,
         String realname) {
@@ -122,7 +122,7 @@ public class TMemberController extends AppBaseController<TMember, MemberService>
         return setSuccessModelMap(new ModelMap(), result);
     }
 
-    @PostMapping("updatePhoneByPhone.api")
+    @PostMapping("updatePhoneByPhone")
     @ApiOperation(value = "修改个人手机号", produces = MediaType.APPLICATION_JSON_VALUE)
     public Object updatePhone(HttpServletRequest request, Login user, String memberId) {
         Assert.notNull(user.getAccount(), "ACCOUNT");
@@ -138,7 +138,7 @@ public class TMemberController extends AppBaseController<TMember, MemberService>
     }
 
     @ApiOperation("实名认证")
-    @PostMapping("/authentication.api")
+    @PostMapping("/authentication")
     public Object authentication(HttpServletRequest request, String memberId, String realName, String idCard) {
         Map<String, Object> parame = WebUtil.getParameter(request);
         Object result = service.authentication(parame);

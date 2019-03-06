@@ -30,7 +30,7 @@ import top.ibase4j.core.util.WebUtil;
 public class SysMsgController extends AbstractController {
     private SendMsgService sendMsgService;
 
-    @PostMapping("msg.api")
+    @PostMapping("msg")
     @ApiOperation(value = "发送短信", produces = MediaType.APPLICATION_JSON_VALUE)
     public Object update(HttpServletRequest request, SendMsg record) {
         record = WebUtil.getParameter(request, SendMsg.class);

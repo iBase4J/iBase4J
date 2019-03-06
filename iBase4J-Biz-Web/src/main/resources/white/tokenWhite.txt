@@ -1,1 +1,3 @@
 /app/login
+/app/reginit
+/app/memberOrder/wxPayReturn

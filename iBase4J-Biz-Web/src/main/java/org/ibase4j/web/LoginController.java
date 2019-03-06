@@ -41,7 +41,7 @@ import top.ibase4j.core.util.SecurityUtil;
 @RequestMapping("/app/")
 @Api(value = "APP登录注册接口", description = "APP-登录注册接口")
 public class LoginController extends AppBaseController<TMember, MemberService> {
-    @PostMapping("reginit.api")
+    @PostMapping("reginit")
     @ApiOperation(value = "注册", produces = MediaType.APPLICATION_JSON_VALUE, notes = "" + "使用手机号+验证码进行注册或登录\n"
             + "注册接口需要以下五个参数：\n" + "1. UUID(header): 客户端生成的唯一ID，用作用户令牌，服务端用之识别用户，验证权限，每接口必传\n"
             + "2. sign: 请求参数的RSA签名(通过/app/secret.api获取RSA私钥)，用于防止请求参数被第三方拦截篡改，每接口必传。签名算法查看密钥接口\n"
@@ -73,7 +73,7 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
         }
     }
 
-    @PostMapping("login.api")
+    @PostMapping("login")
     @ApiOperation(value = "登录", produces = MediaType.APPLICATION_JSON_VALUE, notes = "" + "使用手机号+密码登录\n"
             + "登录接口需要以下四个参数：\n" + "1. UUID(header): 客户端生成的唯一ID，用作用户令牌，服务端用之识别用户，验证权限，每接口必传\n"
             + "2. sign: 请求参数的RSA签名(通过/app/secret.api获取RSA私钥)，用于防止请求参数被第三方拦截篡改，每接口必传。签名算法查看密钥接口\n"
@@ -134,7 +134,7 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
         }
     }
 
-    @PostMapping("logout.api")
+    @PostMapping("logout")
     @ApiOperation(value = "APP会员登出", produces = MediaType.APPLICATION_JSON_VALUE)
     public Object logout(HttpServletRequest request) {
         String token = request.getHeader("token");
@@ -154,7 +154,7 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
         return setSuccessModelMap(modelMap);
     }
 
-    @PostMapping("updatePwd.api")
+    @PostMapping("updatePwd")
     @ApiOperation(value = "修改密码", produces = MediaType.APPLICATION_JSON_VALUE, notes = "" + "接口需要以下五个参数：\n"
             + "1. UUID(header): 客户端生成的唯一ID，用作用户令牌，服务端用之识别用户，验证权限，每接口必传\n"
             + "2. sign: 请求参数的RSA签名(通过/app/secret.api获取RSA私钥)，用于防止请求参数被第三方拦截篡改，每接口必传。签名算法查看密钥接口\n"

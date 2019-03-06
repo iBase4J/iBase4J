@@ -1,1 +1,1 @@
-/app/memberOrder/wxPayReturn.api 
+/app/memberOrder/wxPayReturn
