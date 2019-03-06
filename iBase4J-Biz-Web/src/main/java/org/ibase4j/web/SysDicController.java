@@ -29,7 +29,7 @@ import top.ibase4j.core.util.WebUtil;
 @RequestMapping(value = "/app/dic/")
 public class SysDicController extends AppBaseController<SysDic, SysDicService> {
     @ApiOperation(value = "查询字典项", produces = MediaType.APPLICATION_JSON_VALUE, response = SysDic.class)
-    @RequestMapping(value = "query.api", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "query", method = {RequestMethod.GET, RequestMethod.POST})
     public Object queryList(HttpServletRequest request, String type) {
         Map<String, Object> param = WebUtil.getParameter(request);
         Assert.notNull(param.get("type"), "类型type不能为空.");
