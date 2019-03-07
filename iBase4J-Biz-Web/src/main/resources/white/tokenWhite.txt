@@ -1,4 +1,5 @@
 /error
+/app/msg
 /app/login
 /app/reginit
 /app/memberOrder/wxPayReturn
