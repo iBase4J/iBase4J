@@ -108,5 +108,11 @@
 			<artifactId>javase</artifactId>
 			<version>${zxing.version}</version>
 		</dependency>
+		<!-- 融云 -->
+		<dependency>
+	        <groupId>cn.rongcloud.im</groupId>
+	        <artifactId>server-sdk-java</artifactId>
+	        <version>3.0.2</version>
+	    </dependency>
 	</dependencies>
 </project>
