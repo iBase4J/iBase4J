@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dragon.model.Member;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -44,7 +42,7 @@ import top.ibase4j.core.util.SecurityUtil;
 @Api(value = "APP登录注册接口", description = "APP-登录注册接口")
 public class LoginController extends AppBaseController<TMember, MemberService> {
     @PostMapping("reginit")
-    @ApiOperation(value = "注册", produces = MediaType.APPLICATION_JSON_VALUE, notes = "使用手机号+密码+短信验证码进行注册", response = Member.class)
+    @ApiOperation(value = "注册", produces = MediaType.APPLICATION_JSON_VALUE, notes = "使用手机号+密码+短信验证码进行注册", response = TMember.class)
     public Object register(@RequestParam @ApiParam(value = "手机号", required = true) String account,
         @RequestParam @ApiParam(value = "密码", required = true) String password,
         @RequestParam @ApiParam(value = "手机验证码", required = true) String authCode) throws Exception {
@@ -71,7 +69,7 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
     }
 
     @PostMapping("login")
-    @ApiOperation(value = "登录", produces = MediaType.APPLICATION_JSON_VALUE, notes = "使用手机号+密码登录登录接口", response = Member.class)
+    @ApiOperation(value = "登录", produces = MediaType.APPLICATION_JSON_VALUE, notes = "使用手机号+密码登录登录接口", response = TMember.class)
     public Object login(@RequestHeader(required = false) @ApiParam("微信ID，暂不支持") String openId,
         @RequestHeader(required = false) @ApiParam("极光推送ID，暂不支持") String registrationId,
         @RequestParam @ApiParam(value = "手机号", required = true) String account,
@@ -147,7 +145,7 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
     }
 
     @PostMapping("updatePwd")
-    @ApiOperation(value = "修改密码", produces = MediaType.APPLICATION_JSON_VALUE, notes = "", response = Member.class)
+    @ApiOperation(value = "修改密码", produces = MediaType.APPLICATION_JSON_VALUE, notes = "", response = TMember.class)
     public Object updatePwd(@RequestParam @ApiParam(value = "手机号", required = true) String account,
         @RequestParam @ApiParam(value = "密码", required = true) String password,
         @RequestParam @ApiParam(value = "手机验证码", required = true) String authCode) throws Exception {
