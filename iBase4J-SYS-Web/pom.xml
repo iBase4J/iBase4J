@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>iBase4J-SYS-Web</artifactId>
 	<name>iBase4J-SYS-Web</name>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<url>http://maven.apache.org</url>
 
 	<parent>
@@ -23,7 +24,6 @@
 		<dependency>
 			<groupId>org.ibase4j</groupId>
 			<artifactId>iBase4J-Biz-Facade</artifactId>
-			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>*</groupId>
@@ -34,7 +34,6 @@
 		<dependency>
 			<groupId>org.ibase4j</groupId>
 			<artifactId>iBase4J-SYS-Facade</artifactId>
-			<version>${project.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>*</groupId>
@@ -65,32 +64,14 @@
 			<version>2.1.0</version>
 		</dependency>
 		<!-- excel -->
-		<!-- <dependency>
-			<groupId>net.sourceforge.jexcelapi</groupId>
-			<artifactId>jxl</artifactId>
-			<version>${jxl.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>${poi.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>${poi.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml-schemas</artifactId>
-			<version>${poi.version}</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>net.sourceforge.jexcelapi</groupId> <artifactId>jxl</artifactId> 
+			<version>${jxl.version}</version> <exclusions> <exclusion> <groupId>log4j</groupId> 
+			<artifactId>log4j</artifactId> </exclusion> </exclusions> </dependency> <dependency> 
+			<groupId>org.apache.poi</groupId> <artifactId>poi</artifactId> <version>${poi.version}</version> 
+			</dependency> <dependency> <groupId>org.apache.poi</groupId> <artifactId>poi-ooxml</artifactId> 
+			<version>${poi.version}</version> </dependency> <dependency> <groupId>org.apache.poi</groupId> 
+			<artifactId>poi-ooxml-schemas</artifactId> <version>${poi.version}</version> 
+			</dependency> -->
 		<!-- 文件图片处理 -->
 		<dependency>
 			<groupId>net.coobird</groupId>
@@ -114,4 +95,13 @@
 			<version>${springfox.version}</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>

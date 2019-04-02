@@ -42,11 +42,9 @@
     	 	SysServiceApplication.java
     	 	SysWebApplication.java
     * 测试环境打包命令：
-    	 clean package -P test -f pom-sys-service-server.xml
-    	 clean package -P test -f pom-sys-web-server.xml
+    	 clean package -P test
     * 生产环境打包命令：
-    	 clean package -P product -f pom-sys-service-server.xml
-    	 clean package -P product -f pom-sys-web-server.xml
+    	 clean package -P product
     
 ## 版权声明
 iBase4J使用 [Apache License 2.0][] 协议.
