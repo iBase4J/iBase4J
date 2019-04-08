@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import top.ibase4j.core.Constants;
-import top.ibase4j.core.Constants.MSGCHKTYPE;
+import top.ibase4j.core.Constants.MsgChkType;
 import top.ibase4j.core.base.AppBaseController;
 import top.ibase4j.core.exception.LoginException;
 import top.ibase4j.core.support.Assert;
@@ -46,7 +46,7 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
     public Object register(@RequestParam @ApiParam(value = "手机号", required = true) String account,
         @RequestParam @ApiParam(value = "密码", required = true) String password,
         @RequestParam @ApiParam(value = "手机验证码", required = true) String authCode) throws Exception {
-        String authCodeOnServer = (String)CacheUtil.getCache().get(MSGCHKTYPE.REGISTER + account);
+        String authCodeOnServer = (String)CacheUtil.getCache().get(MsgChkType.REGISTER + account);
         if (!authCode.equals(authCodeOnServer)) {
             logger.warn(account + "=" + authCode + "-" + authCodeOnServer);
             throw new IllegalArgumentException("手机验证码错误");
@@ -149,7 +149,7 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
     public Object updatePwd(@RequestParam @ApiParam(value = "手机号", required = true) String account,
         @RequestParam @ApiParam(value = "密码", required = true) String password,
         @RequestParam @ApiParam(value = "手机验证码", required = true) String authCode) throws Exception {
-        String authCodeOnServer = (String)CacheUtil.getCache().get(MSGCHKTYPE.CHGPWD + account);
+        String authCodeOnServer = (String)CacheUtil.getCache().get(MsgChkType.CHGPWD + account);
         if (!authCode.equals(authCodeOnServer)) {
             throw new IllegalArgumentException("手机验证码错误");
         }
