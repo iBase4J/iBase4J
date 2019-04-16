@@ -5,6 +5,10 @@ server:
     tomcat:
         max-threads: 1000
         min-spare-threads: 30
+    compression:
+        enabled: true
+        min-response-siz: 1024
+        mime-types: application/json,application/xml,application/octet-stream,text/html,text/xml,text/plain,text/css,text/javascript
 # mysql
 spring:
     # 环境 dev|test|prod
