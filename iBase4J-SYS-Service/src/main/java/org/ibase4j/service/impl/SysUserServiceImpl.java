@@ -21,7 +21,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 
 import top.ibase4j.core.base.BaseServiceImpl;

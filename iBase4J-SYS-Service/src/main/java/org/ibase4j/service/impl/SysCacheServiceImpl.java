@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.service.SysCacheService;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.util.CacheUtil;

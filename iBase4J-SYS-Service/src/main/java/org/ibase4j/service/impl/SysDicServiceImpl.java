@@ -10,7 +10,7 @@ import org.ibase4j.service.SysDicService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 
 import top.ibase4j.core.Constants;
 import top.ibase4j.core.base.BaseServiceImpl;

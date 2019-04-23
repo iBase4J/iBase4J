@@ -5,7 +5,7 @@ import org.ibase4j.model.SysEmailConfig;
 import org.ibase4j.service.SysEmailConfigService;
 import org.springframework.cache.annotation.CacheConfig;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 

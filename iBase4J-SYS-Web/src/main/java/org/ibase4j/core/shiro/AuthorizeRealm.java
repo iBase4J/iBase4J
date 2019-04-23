@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.config.annotation.Reference;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -25,8 +26,6 @@ import org.ibase4j.service.SysAuthorizeService;
 import org.ibase4j.service.SysSessionService;
 import org.ibase4j.service.SysUserService;
 import org.springframework.stereotype.Component;
-
-import com.alibaba.dubbo.config.annotation.Reference;
 
 import top.ibase4j.core.support.http.SessionUser;
 import top.ibase4j.core.support.shiro.Realm;

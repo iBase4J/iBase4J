@@ -8,7 +8,7 @@ import org.ibase4j.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 
 import top.ibase4j.core.base.BaseServiceImpl;
 import top.ibase4j.core.support.Pagination;

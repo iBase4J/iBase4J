@@ -39,30 +39,19 @@
 	</appenders>
 
 	<loggers>
-		<logger name="io.netty" level="info" />
-		<logger name="org.slf4j" level="info" />
-		<logger name="io.lettuce" level="info" />
 		<logger name="springfox" level="error" />
-		<logger name="io.swagger" level="info" />
 		<logger name="org.quartz" level="warn" />
-		<logger name="org.redisson" level="info" />
 		<logger name="com.atomikos" level="warn" />
-		<logger name="org.apache.shiro" level="info" />
-		<logger name="com.alibaba.dubbo" level="info" />
-		<logger name="org.apache.activemq" level="info" />
-		<logger name="org.springframework" level="info" />
 		<logger name="serviceStatsLog" level="warn" />
-		<logger name="org.mybatis.spring" level="info" />
 		<logger name="org.apache.zookeeper" level="warn" />
 		<logger name="org.springframework.web" level="debug" />
-		<logger name="org.springframework.web.servlet.handler" level="info" />
-		<Logger name="top.ibase4j" level="info">  
+		<AsyncLogger name="top.ibase4j" level="info">  
             <AppenderRef ref="ProductLog" />
-        </Logger>
-		<Logger name="org.ibase4j" level="debug">
+        </AsyncLogger>
+		<AsyncLogger name="org.ibase4j" level="debug">
             <AppenderRef ref="ProductLog" />
-        </Logger>
-		<Root level="debug">
+        </AsyncLogger>
+		<Root level="info">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
 		</Root >

@@ -3,6 +3,7 @@ package org.ibase4j.service.impl;
 import java.io.File;
 import java.util.Map;
 
+import org.apache.dubbo.config.annotation.Service;
 import org.ibase4j.bean.Member;
 import org.ibase4j.mapper.TMemberMapper;
 import org.ibase4j.model.TMember;
@@ -10,7 +11,6 @@ import org.ibase4j.service.MemberService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 
 import top.ibase4j.core.base.BaseServiceImpl;

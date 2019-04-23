@@ -1,5 +1,6 @@
 package org.ibase4j.core;
 
+import org.apache.dubbo.config.DubboShutdownHook;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ibase4j.service.SysCacheService;
@@ -24,7 +25,9 @@ public class SysServerListener extends ApplicationReadyListener {
             context.getBean(SysCacheService.class).flush();
             context.getBean(SysUserService.class).init();
         } else if (event instanceof ContextStoppedEvent) { // 应用停止
+            DubboShutdownHook.getDubboShutdownHook().doDestroy();
         } else if (event instanceof ContextClosedEvent) { // 应用关闭
+            DubboShutdownHook.getDubboShutdownHook().doDestroy();
         }
         super.onApplicationEvent(event);
     }

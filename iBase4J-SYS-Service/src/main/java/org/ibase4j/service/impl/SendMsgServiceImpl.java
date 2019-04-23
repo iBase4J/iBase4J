@@ -16,7 +16,7 @@ import org.ibase4j.service.SysMsgService;
 import org.ibase4j.service.SysParamService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.dubbo.config.annotation.Service;
+import org.apache.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;

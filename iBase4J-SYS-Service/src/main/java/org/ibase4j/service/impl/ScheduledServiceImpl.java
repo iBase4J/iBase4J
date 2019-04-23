@@ -1,8 +1,7 @@
 package org.ibase4j.service.impl;
 
+import org.apache.dubbo.config.annotation.Service;
 import org.ibase4j.service.SchedulerService;
-
-import com.alibaba.dubbo.config.annotation.Service;
 
 import top.ibase4j.core.support.scheduler.SchedulerServiceImpl;
 
