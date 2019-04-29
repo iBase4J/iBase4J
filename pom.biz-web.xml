@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>iBase4J-Biz-Web-Server</artifactId>
+	<name>${project.artifactId}</name>
+	<packaging>pom</packaging>
+	<url>http://maven.apache.org</url>
+	<parent>
+		<groupId>org.ibase4j</groupId>
+		<artifactId>iBase4J</artifactId>
+		<version>1.3.0</version>
+		<relativePath>./</relativePath>
+	</parent>
+	<modules>
+		<module>iBase4J-SYS-Facade</module>
+		<module>iBase4J-Biz-Facade</module>
+		<module>iBase4J-Biz-Web</module>
+	</modules>
+	<!-- 单独构建时使用：clean package -P test -f pom.biz-web.xml -->
+</project>
