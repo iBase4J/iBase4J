@@ -24,6 +24,7 @@ import top.ibase4j.core.Constants.MsgChkType;
 import top.ibase4j.core.base.AppBaseController;
 import top.ibase4j.core.exception.LoginException;
 import top.ibase4j.core.support.Assert;
+import top.ibase4j.core.support.http.SessionUser;
 import top.ibase4j.core.support.security.coder.HmacCoder;
 import top.ibase4j.core.util.CacheUtil;
 import top.ibase4j.core.util.DataUtil;
@@ -113,7 +114,8 @@ public class LoginController extends AppBaseController<TMember, MemberService> {
 
                 String token = SecurityUtil.initHmacKey(HmacCoder.MD5);
                 String tokenKey = SecurityUtil.encryptMd5(token);
-                CacheUtil.getCache().set(Constants.TOKEN_KEY + tokenKey, "1",
+                SessionUser user = new SessionUser(member.getId(), member.getNickName(), member.getAvatar(), false);
+                CacheUtil.getCache().set(Constants.TOKEN_KEY + tokenKey, user,
                     PropertiesUtil.getInt("APP-TOKEN-EXPIRE", 60 * 60 * 24 * 5));
                 member.setToken(token);
                 member.setPassword(null);
