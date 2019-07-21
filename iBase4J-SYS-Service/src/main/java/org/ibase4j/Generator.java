@@ -69,6 +69,7 @@ public class Generator {
         // public User setName(String name) {this.name = name; return this;}
         // strategy.setEntityBuliderModel(true);
         strategy.setLogicDeleteFieldName("enable");
+        strategy.setRestControllerStyle(true);
         mpg.setStrategy(strategy);
         // 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
         InjectionConfig cfg = new InjectionConfig() {
@@ -76,6 +77,7 @@ public class Generator {
             public void initMap() {
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("rpcService", true);
+                map.put("permissions", true);
                 this.setMap(map);
             }
         };
