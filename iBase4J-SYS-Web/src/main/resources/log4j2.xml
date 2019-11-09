@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="WARN"  monitorInterval="30">
+<configuration status="WARN" monitorInterval="30">
 	<properties>
 		<property name="LOG_HOME">${logs.path}</property>
 		<!-- 日志备份目录 -->
@@ -7,18 +7,15 @@
 	</properties>
 	<appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{1}:%L] - %msg%n" />
+			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level-[%thread]-%c{1}(%L) - %msg%n" />
 		</Console>
 		<RollingFile name="RollingFile"
-			fileName="${LOG_HOME}/${SERVER_NAME}-dev/${SERVER_NAME}.log"
-			filePattern="${LOG_HOME}/${SERVER_NAME}-dev/${SERVER_NAME}.%d{yyyy-MM-dd}.%i.log">
-			<PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M] - %msg%n" />
+			fileName="${LOG_HOME}/${SERVER_NAME}.log"
+			filePattern="${LOG_HOME}/${SERVER_NAME}-back/${SERVER_NAME}.%d{yyyyMMddHHmmss}.log">
+			<PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss.SSS} %-5level-[%thread]-%c(%L) - %msg%xEx%n" />
             <Policies>  
                 <SizeBasedTriggeringPolicy size="10MB" />
             </Policies>
-			<Filters>
-				<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
-			</Filters>
             <DefaultRolloverStrategy>
                 <!-- 删除指定目录下7天之前的日志-->
                 <Delete basePath="${LOG_HOME}" maxDepth="2">
@@ -27,33 +24,20 @@
                 </Delete>
             </DefaultRolloverStrategy>
 		</RollingFile>
-		<!-- 产品数据分析日志 -->
-        <RollingRandomAccessFile name="ProductLog"  
-			fileName="${LOG_HOME}/${SERVER_NAME}.log"
-			filePattern="${LOG_HOME}/${SERVER_NAME}-back/${SERVER_NAME}.%d{yyyyMMddHHmmss}.log">
-			<PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M:%L] - %msg%xEx%n" />
-            <Policies>
-                <SizeBasedTriggeringPolicy size="10MB" />
-            </Policies>
-        </RollingRandomAccessFile>
 	</appenders>
 
 	<loggers>
-		<logger name="springfox" level="error" />
-		<logger name="org.quartz" level="warn" />
-		<logger name="com.atomikos" level="warn" />
-		<logger name="serviceStatsLog" level="warn" />
-		<logger name="org.apache.zookeeper" level="warn" />
-		<logger name="org.springframework.web" level="debug" />
-		<AsyncLogger name="top.ibase4j" level="info">  
-            <AppenderRef ref="ProductLog" />
-        </AsyncLogger>
-		<AsyncLogger name="org.ibase4j" level="debug">
-            <AppenderRef ref="ProductLog" />
-        </AsyncLogger>
-		<Root level="info">
+		<logger name="springfox" level="error" includeLocation="true"/>
+		<logger name="org.quartz" level="warn" includeLocation="true"/>
+		<logger name="com.atomikos" level="warn" includeLocation="true"/>
+		<logger name="serviceStatsLog" level="warn" includeLocation="true"/>
+		<logger name="org.apache.zookeeper" level="warn" includeLocation="true"/>
+		<logger name="org.springframework.web" level="debug" includeLocation="true"/>
+		<logger name="com.zswl.sec" level="info" includeLocation="true"/>
+		<logger name="com.zswl.sec.core" level="debug" includeLocation="true"/>
+		<AsyncRoot level="info" includeLocation="true">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
-		</Root >
+		</AsyncRoot>
 	</loggers>
 </configuration>
